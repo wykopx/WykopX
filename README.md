@@ -16,6 +16,6 @@ Here are some ideas to get you started:
 -->
 
 
-Instrukcja dotycząca stylu Wykop X oraz skryptu Wykop XS dostępne są tutaj:
+Instrukcja dotycząca stylu Wykop X oraz skryptu Wykop XS, lista wszystkich funkcji, changelog i wiele innych materiałów dostępnych jest tutaj:
 
 https://github.com/wykopx/WykopX/wiki
