@@ -1,4 +1,4 @@
-### Hi there 👋
+### Wykop X
 
 <!--
 **wykopx/WykopX** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
