@@ -14,3 +14,8 @@ Here are some ideas to get you started:
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
+
+
+Instrukcja dotycząca stylu Wykop X oraz skryptu Wykop XS dostępne są tutaj:
+
+https://github.com/wykopx/WykopX/wiki
