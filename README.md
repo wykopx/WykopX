@@ -1,4 +1,4 @@
-### Hi there 👋
+### Wykop X
 
 <!--
 **wykopx/WykopX** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
@@ -14,3 +14,8 @@ Here are some ideas to get you started:
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
+
+
+Instrukcja dotycząca stylu Wykop X oraz skryptu Wykop XS, lista wszystkich funkcji, changelog i wiele innych materiałów dostępnych jest tutaj:
+
+https://github.com/wykopx/WykopX/wiki
