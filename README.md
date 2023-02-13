@@ -15,7 +15,12 @@ Here are some ideas to get you started:
 - ⚡ Fun fact: ...
 -->
 
+Dodatek Wykop X oraz skrypt Wykop XS to dziesiątki usprawnień dla strony wykop.pl
 
-Instrukcja dotycząca stylu Wykop X oraz skryptu Wykop XS, lista wszystkich funkcji, changelog i wiele innych materiałów dostępnych jest tutaj:
+Instrukcja dotycząca stylu Wykop X oraz skryptu Wykop XS,  
+lista wszystkich funkcji, changelog i wiele innych materiałów dostępnych jest tutaj:
 
 https://github.com/wykopx/WykopX/wiki
+
+Zerknij co nowego na wykopie:
+http://wykop.pl/tag/wykopwnowymstylu
