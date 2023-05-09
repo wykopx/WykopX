@@ -26,7 +26,7 @@ dostępne są w Wiki projektu:
 https://github.com/wykopx/WykopX/wiki
 
 Propozycje nowych funkcji można zgłaszać tutaj:
-https://github.com/users/wykopx/projects/1/views/1?filterQuery=-status%3A%22%E2%9C%85+Done%22++-status%3A%22%E2%9B%94+No%2C+no%2C+no%22+&groupedBy%5BcolumnId%5D=Status
+[Wykop X Project Dashboard](https://github.com/users/wykopx/projects/1/views/1?filterQuery=-status%3A%22%E2%9C%85+Done%22++-status%3A%22%E2%9B%94+No%2C+no%2C+no%22+&groupedBy%5BcolumnId%5D=Status)
 
 
 Możesz też tu zobaczyć nad czym obecnie pracuję i co pojawi się w przyszłych wersjach Wykop X
