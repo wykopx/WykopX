@@ -21,9 +21,8 @@ Wszystkie informacje takie jak:
 - Instrukcja dotycząca instalacji i działania stylu Wykop X oraz skryptu Wykop XS
 - lista wszystkich funkcji
 - changelog
-dostępne są w Wiki projektu:
+dostępne są w Wiki projektu https://github.com/wykopx/WykopX/wiki
 
-https://github.com/wykopx/WykopX/wiki
 
 Propozycje nowych funkcji można zgłaszać tutaj:
 [Wykop X Project Dashboard](https://github.com/users/wykopx/projects/1/views/1?filterQuery=-status%3A%22%E2%9C%85+Done%22++-status%3A%22%E2%9B%94+No%2C+no%2C+no%22+&groupedBy%5BcolumnId%5D=Status)
