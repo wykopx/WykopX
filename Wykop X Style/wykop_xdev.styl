@@ -1,0 +1,237 @@
+/* ==UserStyle==
+@name         Wykop XDev
+@version      2.0.1
+@namespace    userstyles.world/user/wykopchanger
+@description  Testowanie nowych funkcji nad którymi pracuję, a które zostaną (lub nie) dodane po jakimś czasie do Wykop X Style: 
+
+
+Zainstaluj WYKOP X STYLE:
+https://userstyles.world/style/8174/wykop-x
+
+Więcej info na tagu #wykopwnowymstylu na Wykopie:
+https://wykop.pl/tag/wykopwnowymstylu
+@author       Wykop X
+@license      No License
+
+
+@preprocessor   stylus
+@var range      HR_READING_PROGRESS      `PROGRESS BAR`            [0, 0, 99900, 1, 'mm']
+@var checkbox   readingProgressBar                                  `Włącz progress bar czytania`                                              1
+@var checkbox   readingProgressBarOnHomepage                        `Na Głównej`                                                               1
+@var checkbox   readingProgressBarOnUpcoming                        `W Wykopalisku`                                                            1
+@var checkbox   readingProgressBarOnLink                            `W znaleziskach`                                                           1
+@var checkbox   readingProgressBarOnMicroblog                       `Na Mikroblogu`                                                            1
+@var checkbox   readingProgressBarOnEntries                         `We wpisach`                                                               1
+
+
+@var select     readingProgressBarAlignment                         `Położenie progress bar` {
+                                                                                  "Na samej górze":"nadbelka",
+                                                                                  "Na dole strony":"nadolestrony"
+                                                                                }
+@var select     readingProgressBarTheme                             `Kolorystyka` {
+                                                                                 "Wykop X":"progressbar_theme_wykopx",
+                                                                                 "Wykop X - Bordo":"progressbar_theme_burgundy",
+                                                                                 "Wykop X - Pomarańczka":"progressbar_theme_orange",
+                                                                                 "Wykop X - Zielonka":"progressbar_theme_green",
+                                                                                 "Instagram":"progressbar_theme_instagram",
+                                                                                 "YouTube":"progressbar_theme_youtube"
+                                                                                }
+                                                                                
+@var range      readingProgressBarHeight                            `Wysokość`                                                     [2, 1, 30, 1, 'px']
+
+
+
+==/UserStyle== */
+
+
+
+@-moz-document domain("wykop.pl")
+{
+
+    :root
+    {
+        --readingProgressBarHeight: readingProgressBarHeight;
+        --readingProgressBarBackgroundColor: rgba(0, 0, 0, 0); /* TODO */
+
+        if(readingProgressBarTheme == "progressbar_theme_wykopx")
+        {
+            --readingProgressBarBackground0: rgb(34, 34, 37);
+            --readingProgressBarBackground50: rgb(255, 23, 23);
+            --readingProgressBarBackground75: rgb(220, 120, 50);
+            --readingProgressBarBackground100: lime;
+        }
+        else if(readingProgressBarTheme == "progressbar_theme_burgundy")
+        {
+            --readingProgressBarBackground0: --nicknameBordeaux1;
+            --readingProgressBarBackground50: --nicknameBordeaux1;
+            --readingProgressBarBackground75: --nicknameBordeaux1;
+            --readingProgressBarBackground100: --nicknameBordeaux1;
+        }
+        else if(readingProgressBarTheme == "progressbar_theme_orange")
+        {
+            --readingProgressBarBackground0: --nicknameOrange1;
+            --readingProgressBarBackground50: --nicknameOrange1;
+            --readingProgressBarBackground75: --nicknameOrange1;
+            --readingProgressBarBackground100: --nicknameOrange1;
+        }
+        else if(readingProgressBarTheme == "progressbar_theme_green")
+        {
+            --readingProgressBarBackground0: --nicknameGreen1;
+            --readingProgressBarBackground50: --nicknameGreen1;
+            --readingProgressBarBackground75: --nicknameGreen1;
+            --readingProgressBarBackground100: --nicknameGreen1;
+        }
+        else if(readingProgressBarTheme == "progressbar_theme_instagram")
+        {
+            --readingProgressBarBackground0:  linear-gradient(90deg, rgba(255, 144, 0, 1) 0%, rgba(255,34,76, 1) 0%, rgba(131,71,226, 1) 1%, rgba(255,214,0, 1) 100%);
+            --readingProgressBarBackground50: linear-gradient(90deg, rgba(255, 144, 0, 1) 0%, rgba(255,34,76, 1) 0%, rgba(131,71,226, 1) 60%, rgba(255,214,0, 1) 100%);
+            --readingProgressBarBackground75: linear-gradient(90deg, rgba(255, 144, 0, 1) 0%, rgba(255,34,76, 1) 20%, rgba(131,71,226, 1) 80%, rgba(255,214,0, 1) 100%);
+            --readingProgressBarBackground100: linear-gradient(90deg, rgba(255, 144, 0, 1) 20%, rgba(255,34,76, 1) 79%, rgba(131,71,226, 1) 100%, rgba(255,214,0, 1) 100%);
+        }
+        else if(readingProgressBarTheme == "progressbar_theme_youtube")
+        {
+            --readingProgressBarBackgroundColor: rgb(63, 63, 63);
+            
+            --readingProgressBarBackground0: rgb(255, 0, 0);
+            --readingProgressBarBackground50: rgb(255, 0, 0);
+            --readingProgressBarBackground75: rgb(255, 0, 0);
+            --readingProgressBarBackground100: rgb(255, 0, 0);
+        }
+    }
+        
+    @keyframes scaleProgress
+    {
+      0%    {  width: 0%;      }
+      100%  {  width: 105%;    }
+    }
+
+    @keyframes colorChange
+    { 
+        0%      {  background: var(--readingProgressBarBackground0); }  
+        50%     {  background: var(--readingProgressBarBackground50); }   
+        75%     {  background: var(--readingProgressBarBackground75); }   
+        100%    {  background: var(--readingProgressBarBackground100); }
+    }
+    
+    
+    body > section > div.main-content > main.main
+    {
+        position: relative;   
+    }
+    
+    body::before, body::after
+    {
+        display: none;
+    }
+    if(readingProgressBar)
+    {
+        
+        if(readingProgressBarOnHomepage)
+        {
+            body:has(> section > div.main-content > main.main > section > div.content > section.home-page)::before, 
+            body:has(> section > div.main-content > main.main > section > div.content > section.home-page)::after
+            {          
+                display: flex !important;
+            }
+        }
+        if(readingProgressBarOnUpcoming)
+        {
+            body:has(> section > div.main-content > main.main > section > div.content > section.upcoming-page)::before, 
+            body:has(> section > div.main-content > main.main > section > div.content > section.upcoming-page)::after,
+            body:has(> section > div.main-content > main.main > section > div.content > section.bucket-page)::before, 
+            body:has(> section > div.main-content > main.main > section > div.content > section.bucket-page)::after,
+            body:has(> section > div.main-content > main.main > section > div.content > section.category-page)::before, 
+            body:has(> section > div.main-content > main.main > section > div.content > section.category-page)::after
+            {          
+                display: flex !important;
+            }
+        }
+        if(readingProgressBarOnLink)
+        {
+            body:has(> section > div.main-content > main.main > section > div.content > section.link-page)::before, 
+            body:has(> section > div.main-content > main.main > section > div.content > section.link-page)::after
+            {          
+                display: flex !important;
+            }
+        }
+        if(readingProgressBarOnMicroblog)
+        {
+            body:has(> section > div.main-content > main.main > section > div.content > section > section.microblog)::before, 
+            body:has(> section > div.main-content > main.main > section > div.content > section > section.microblog)::after,
+            
+            body:has(> section > div.main-content > main.main > section > div.content > section.favourites-page)::before, 
+            body:has(> section > div.main-content > main.main > section > div.content > section.favourites-page)::after,
+            body:has(> section > div.main-content > main.main > section > div.content > section.tag-page)::before, 
+            body:has(> section > div.main-content > main.main > section > div.content > section.tag-page)::after,
+            body:has(> section > div.main-content > main.main > section > div.content > section.observed-page)::before, 
+            body:has(> section > div.main-content > main.main > section > div.content > section.observed-page)::after,
+            body:has(> section > div.main-content > main.main > section > div.content > section.profile-page)::before, 
+            body:has(> section > div.main-content > main.main > section > div.content > section.profile-page)::after 
+            {          
+                display: flex !important;
+            }
+        }
+        if(readingProgressBarOnEntries)
+        {
+            body:has(> section > div.main-content > main.main > section > div.content > section.entry-page)::before, 
+            body:has(> section > div.main-content > main.main > section > div.content > section.entry-page)::after
+            {          
+                display: flex !important;
+            }
+        }
+        
+        body::before, body::after
+        {
+            height: var(--readingProgressBarHeight) !important;
+            content: " " !important;
+            left: 0px !important;
+            position: fixed !important;
+            border: none !important;
+        }
+        
+        body::after
+        {
+            background-color: var(--readingProgressBarBackgroundColor) !important;
+            z-index: 8888 !important;    
+            width: 100%;
+        }
+        
+        body::before
+        {
+            
+            animation: scaleProgress auto linear, colorChange auto linear;
+            animation-timeline: scroll(root);
+            z-index: 9999 !important;         
+        }
+            
+        if(readingProgressBarAlignment == "nadolestrony" || readingProgressBarAlignment == "nadbelka")
+        {
+            
+            if(readingProgressBarAlignment == "nadolestrony")
+            {
+            
+                body::before, body::after
+                {
+                    bottom: 1px !important;
+                    box-shadow: 1px 3px 5px 5px rgba(0, 0, 0, 0.3);
+                }  
+            }
+            else if(readingProgressBarAlignment == "nadbelka")
+            {
+                body::before, body::after
+                {
+                    top: 0px !important;
+                }
+                body > section > header.header
+                {
+                    padding-top: var(--readingProgressBarHeight);
+                    height: calc(46px + var(--readingProgressBarHeight)) !important; /* tu wysokosc belki */
+                }
+            }
+        }
+    }
+
+    
+    
+    
+}
