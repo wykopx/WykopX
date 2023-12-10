@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style
-@version        2.36.0
+@version        2.38.0
 @description    Ponad 400 funkcji usprawniających i naprawiających Wykop.pl
 
 
@@ -16,6 +16,38 @@
 @namespace      userstyles.world/user/wykopchanger
 @license        No License (YOU CAN USE THIS CODE ONLY IN STYLUS EXTENSIONS. You are not allowed to: copy any part of the code, share, and use it anywhere)
 
+
+@var range      HR_NEW_238                    `DODAWANIE NOWEGO ZNALEZISKA ⭐ Nowe v.2.38`                                                                                                                                                                                                                                       [0, 0, 99900, 1, 'mm']
+@var checkbox   disableNewLinkEditorPastedTextLimit               `❎⭐ Wyłącz limity wklejanego tekstu przy dodawaniu Znaleziska`                                1 
+
+@var range      HR_FAVORITE_TAG                    `ULUBIONY TAG ⭐ Nowe v.2.37`                                                                                                                                                                                                                                       [0, 0, 99900, 1, 'mm']
+
+@var checkbox   favoriteTagEnable                               `⭐ Ulubiony #tag`                                   1 
+@var text       favoriteTag1                                    `⭐ Wpisz swój ulubiony tag: #`                            `wykopwnowymstylu`
+var checkbox   topNavFavoriteTagButton                          `TODO: Skrót do ulubionego #tagu w górnej belce`               1 
+
+
+@var range      HR_ANTY_RUMUN      `🚫 BLOKOWANIE SPAMU, PORNOGRAFII I ZIELONEK`            [0, 0, 99900, 1, 'mm']
+@var checkbox   hideEntriesWithoutAnyContent                    `🚫🔷 Blokuj wpisy z samym #tagiem (bez treści, dodane przez pomyłkę)`                                     1                                     
+
+@var checkbox    userGreenEntriesWithPhotos                     `🚯🟢🔷 Blokuj wpisy zielonek ze zdjęciami (AntyRumun)`                                      1
+@var checkbox    userGreenEntriesWithVideos                     `🚯🟢🔷 Blokuj wpisy zielonek z filmikami (AntyRumun)`                                       1
+@var checkbox    userGreenEntriesWithURLS                       `🚯🟢🔷 Blokuj wpisy zielonek z linkami URL (AntySpam)`                                      1
+@var select      userGreenEntries                               `🚯🟢🔷 Pozostałe wpisy zielonek na mikroblogu` {
+                                                                           `Pokazuj normalnie (domyślnie)`:`domyslnie`, 
+                                                                           `Zwinięte`:`minimized`,
+                                                                           `Ukrywaj wszystkie wpisy zielonek`:`niepokazuj`,
+                                                                        }
+@var select     userGreenLinks                                  `🚯🟢🔶 Ukrywaj znaleziska zielonek (najczęściej jest to spam)` {
+                                                                           `Pokazuj normalnie (domyślnie)`:`domyslnie`, 
+                                                                           `Ukrywaj znaleziska zielonek w Wykopalisku*`:`niepokazuj_w_wykopalisku`,
+                                                                           `Ukrywaj wszystkie znaleziska zielonek`:`niepokazuj`,
+                                                                        }
+@var checkbox    blockEntriesWithURLSDiscord                    `📵🔷 Blokuj wpisy spamujące linkami na Discordy: https://discord.gg/xxxx (AntySpam) ⭐`  1
+@var checkbox    blockLinksWithURLSDiscord                      `📵🔶 Blokuj znaleziska spamujące linkami na Discordy: https://discord.gg/xxxx (AntySpam) ⭐`  1
+
+
+@var checkbox    blockRumun                                     `🚫🔶 Blokuj znaleziska z pornografią (AntyRumun)`                                              0
 
 
 
@@ -200,7 +232,7 @@ var checkbox   topNavSnowMan2                                  `⛄ Snow Man2`  
 
 
 
-@var range      HR_AVATARS                          `🧑 AVATARY UŻYTKOWNIKÓW`                                                                                               [0, 0, 99900, 1, 'mm']
+@var range      HR_AVATARS                          `🧑 AVATARY UŻYTKOWNIKÓW ⭐ Nowe v.2.34`                                                                                               [0, 0, 99900, 1, 'mm']
 @var select     avatarAndSexBarThemes                          `Predefiniowane ustawienia avatarów i pasków ⭐` {
                                                                                 "Domyślny wygląd Wykop":"domyslny",
                                                                                 "Skórka 1 - Wykop X":"skin_1",
@@ -288,9 +320,6 @@ var checkbox   topNavSnowMan2                                  `⛄ Snow Man2`  
 
 @var range      HR_NEW_232                       `⭐ Nowe v.2.32`                                                    [0, 0, 99900, 1, 'mm']                                                                                                                           
 
-var text       favoriteTag                                     `TODO: Wpisz swój ulubiony tag: #`                            `wykopwnowymstylu`
-var checkbox   topNavFavoriteTagButton                         `TODO: Skrót do ulubionego #tagu w górnej belce`               1 
-
 @var select     hidePMIcon                                      `💻⭐ Ikonka wiadomości ✉`  {
                                                                                     "Nie ukrywaj (domyślnie)":"nie_ukrywaj",
                                                                                     "Ukryj gdy brak nowych wiadomości":"ukryj_gdy_brak_powiadomien",
@@ -347,8 +376,8 @@ var checkbox   hideEntriesWithOnlyPhotos                       `🚫🔷🌆 TOD
 var checkbox   hideEntriesWithVideos                           `🚫🔷🎬 TODO: Ukrywaj wpisy z filmikami`                                          0
 var checkbox   hideEntriesWithOnlyVideos                       `🚫🔷🎬 TODO: Ukrywaj wpisy tylko z filmikami (bez żadnej treści)`                0
 var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TODO: Ukrywaj wpisy z linkami URL`                                       0
-var range      hideEntriesWithMoreThanXMentions                `🚫🔷 TODO: Ukrywaj wpisy zawierające więcej niż X @wołań`         [150, 1, 150, 1, '']
-var range      hideCommentsWithMoreThanXMentions               `🚫🗨️ TODO: Ukrywaj komentarze zawierające więcej niż X @wołań`         [150, 1, 150, 1, '']
+var range      hideEntriesWithMoreThanXMentions                `🚫🔷 TODO: Ukrywaj wpisy zawierające więcej niż X wołań`              [150, 1, 150, 1, '']
+var range      hideCommentsWithMoreThanXMentions               `🚫🗨️ TODO: Ukrywaj komentarze zawierające więcej niż X wołań`         [150, 1, 150, 1, '']
 var checkbox   userGreenEntriesWithPhotos                      `🟢🔷🌆🚯 Blokuj wpisy zielonek ze zdjęciami (AntyRumun) ⭐`                                      1
 var checkbox   userGreenEntriesWithVideos                      `🟢🔷🎬🚯 Blokuj wpisy zielonek z filmikami (AntyRumun) ⭐`                                       1
 var checkbox   userGreenEntriesWithURLS                        `🟢🔷🔗🚯 Blokuj wpisy zielonek z linkami URL (AntySpam) ⭐`                                      1
@@ -721,7 +750,7 @@ var checkbox   hidePMIcon                                      `💻⭐ Ukryj ik
                                                                                 }
 var checkbox   hideMentionsIcon                                `💻⭐ Ukryj ikonkę wołania 🕭`  {
                                                                                     "Nie ukrywaj (domyślnie)":"nie_ukrywaj",
-                                                                                    "Ukryj gdy brak nowych @wołań":"ukryj_gdy_brak_powiadomien",
+                                                                                    "Ukryj gdy brak nowych wołań":"ukryj_gdy_brak_powiadomien",
                                                                                     "Nie pokazuj ikonki":"nie_pokazuj"
                                                                                 }
 
@@ -1448,56 +1477,41 @@ var select     editorNewComments                             `Edytor dodawania k
                                                                 
                                                                 
                                                                 
-@var range      HR_ANTY_RUMUN      `🚫 BLOKOWANIE SPAMU, PORNOGRAFII I ZIELONEK ⭐ Nowe v.2.22`            [0, 0, 99900, 1, 'mm']
-@var checkbox   hideEntriesWithoutAnyContent                    `🔷🚫 Ukrywaj wpisy z samym #tagiem (bez żadnej treści) ⭐`                                     1                                     
-@var checkbox   blockRumun                                      `🔶🚫 Blokuj znaleziska z pornografią (AntyRumun)`                                              0
-@var select     userGreenLinks                                  `🟢🔶🚯 Ukrywaj znaleziska zielonek (najczęściej jest to spam)` {
-                                                                           `Pokazuj normalnie (domyślnie)`:`domyslnie`, 
-                                                                           `Nie pokazuj znalezisk*`:`niepokazuj`,
-                                                                        }
-@var checkbox    userGreenEntriesWithPhotos                     `🟢🔷🚯 Blokuj wpisy zielonek ze zdjęciami (AntyRumun) ⭐`                                      1
-@var checkbox    userGreenEntriesWithVideos                     `🟢🔷🚯 Blokuj wpisy zielonek z filmikami (AntyRumun) ⭐`                                       1
-@var checkbox    userGreenEntriesWithURLS                       `🟢🔷🚯 Blokuj wpisy zielonek z linkami URL (AntySpam) ⭐`                                      1
-@var select      userGreenEntries                               `🟢🔷🚯 Pozostałe wpisy zielonek na mikroblogu` {
-                                                                           `Pokazuj normalnie (domyślnie)`:`domyslnie`, 
-                                                                           `Zwinięte`:`minimized`,
-                                                                           `Ukrywaj wszystkie wpisy zielonek`:`niepokazuj`,
-                                                                        }
-
 
 @var range      HR_GREEN_ENTRIES             `🟢 WPISY I ZNALEZISKA ZIELONEK`                                                                                                                                      [0, 0, 99900, 1, 'mm']                                                                               
-@var select     userGreenComments                               `🟢 Ukrywaj komentarze zielonek` {
+
+@var checkbox   userGreenCommentsHighlight                       `🟢 Komentarze zielonek wyróżniaj na zielono`                                                           1
+@var checkbox   userGreenEntriesHighlight                        `🟢 Wpisy zielonek wyróżniaj na zielono `                                                            1
+@var checkbox   userGreenLinksHighlight                          `🟢 Znaleziska zielonek wyróżniaj na zielono`                                                        1
+@var select     userGreenComments                                `🟢🚯 Ukrywaj komentarze zielonek` {
                                                                            `Pokazuj normalnie (domyślnie)`:`domyslnie`,
                                                                            `Zwinięte`:`minimized`,
                                                                            `Nie pokazuj komentarzy zielonek`:`niepokazuj`,
                                                                         }
-@var checkbox   userGreenCommentsHighlight                       `🟢 Komentarze zielonek wyróżniaj na zielono`                                                     1
-@var checkbox   userGreenEntriesHighlight                        `🟢🔷 Wpisy zielonek wyróżniaj na zielono `                                                         1
-@var checkbox   userGreenLinksHighlight                          `🟢🔶 Znaleziska zielonek wyróżniaj na zielono`                                                     1
 @var range      HR_BORDO_ENTRIES            `🔴 WPISY I ZNALEZISKA BORDO`                                                                                                                                      [0, 0, 99900, 1, 'mm']
-@var checkbox   userBordeauxEntriesHighlight                     `🔴 Wpisy bordo na mikroblogu wyróżnione kolorem `                                    0
-@var checkbox   userBordeauxCommentsHighlight                    `🔴 Komentarze bordo wyróżnione kolorem`                                              0
-@var checkbox   userBordeauxLinksHighlight                       `🔴 Znaleziska bordo wyróżnione kolorem`                                              1
+@var checkbox   userBordeauxEntriesHighlight                     `🔴 Wpisy bordo na mikroblogu wyróżnione kolorem `                                                     0
+@var checkbox   userBordeauxCommentsHighlight                    `🔴 Komentarze bordo wyróżnione kolorem`                                                               0
+@var checkbox   userBordeauxLinksHighlight                       `🔴 Znaleziska bordo wyróżnione kolorem`                                                               0
 @var select     userBordeauxEntries                              `🔴 Ukrywaj wpisy bordo na mikroblogu` {
                                                                                    `Pokazuj normalnie (domyślnie)`:`domyslnie`, 
-                                                                                   `Zwinięte`:`minimized`,
+                                                                                   `Zwinięte`:`mi nimized`,
                                                                                    `Nie pokazuj wpisów użytkowników bordo`:`niepokazuj`,
                                                                                 }
-@var select     userBordeauxComments                             `🔴 Ukrywaj komentarze bordo` {
+@var select     userBordeauxComments                             `🔴🚯 Ukrywaj komentarze bordo` {
                                                                                    `Pokazuj normalnie (domyślnie)`:`domyslnie`, 
                                                                                    `Zwinięte`:`minimized`,
                                                                                    `Nie pokazuj komentarzy użytkowników bordo`:`niepokazuj`,
                                                                                 } 
 @var range      HR_ORANGE_ENTRIES           `🟠 WPISY I ZNALEZISKA POMARAŃCZEK`                                                                                                                                      [0, 0, 99900, 1, 'mm']
-@var checkbox   userOrangeEntriesHighlight                       `🟠 Wpisy pomarańczek na mikroblogu wyróżnione kolorem`                             0
-@var checkbox   userOrangeCommentsHighlight                      `🟠 Komentarze pomarańczek wyróżnione kolorem`                                      0
-@var checkbox   userOrangeLinksHighlight                         `🟠 Znaleziska pomarańczek wyróżnione kolorem`                                      0
-@var select     userOrangeEntries                                `🟠 Ukrywaj wpisy pomarańczek` {
+@var checkbox   userOrangeEntriesHighlight                       `🟠 Wpisy pomarańczek na mikroblogu wyróżnione kolorem`                                                0
+@var checkbox   userOrangeCommentsHighlight                      `🟠 Komentarze pomarańczek wyróżnione kolorem`                                                         0
+@var checkbox   userOrangeLinksHighlight                         `🟠 Znaleziska pomarańczek wyróżnione kolorem`                                                         0
+@var select     userOrangeEntries                                `🟠🚯 Ukrywaj wpisy pomarańczek` {
                                                                                    `Pokazuj normalnie (domyślnie)`:`domyslnie`, 
                                                                                    `Zwinięte`:`minimized`,
                                                                                    `Nie pokazuj wpisów użytkowników pomarańczowych`:`niepokazuj`,
                                                                                 }
-@var select     userOrangeComments                               `🟠 Ukrywaj komentarze pomarańczek` {
+@var select     userOrangeComments                               `🟠🚯 Ukrywaj komentarze pomarańczek` {
                                                                                    `Pokazuj normalnie (domyślnie)`:`domyslnie`, 
                                                                                    `Zwinięte`:`minimized`,
                                                                                    `Nie pokazuj komentarzy użytkowników pomarańczowych`:`niepokazuj`,
@@ -1505,25 +1519,25 @@ var select     editorNewComments                             `Edytor dodawania k
 @var range      HR_BLUE_ENTRIES             `🔵 WPISY I KOMENTARZE NIEBIESKICH PASKÓW`                                                                                                                                      [0, 0, 99900, 1, 'mm']
 @var checkbox   userBlueEntriesHighlight                         `🔵 Wpisy niebieskich wyróżnione na niebiesko`                                                       0
 @var checkbox   userBlueCommentsHighlight                        `🔵 Komentarze niebieskich wyróżnione na niebiesko`                                                  0
-@var select     userBlueEntries                                  `🔵 Ukrywaj wpisy niebieskich na mikroblogu` {
+@var select     userBlueEntries                                  `🔵🚯 Ukrywaj wpisy niebieskich na mikroblogu` {
                                                                            `Pokazuj normalnie (domyślnie)`:`domyslnie`, 
                                                                            `Zwinięte`:`minimized`,
                                                                            `Nie pokazuj wpisów niebieskich`:`niepokazuj`,
                                                                         }
-@var select     userBlueComments                                 `🔵 Ukrywaj komentarze niebieskich pasków` {
+@var select     userBlueComments                                 `🔵🚯 Ukrywaj komentarze niebieskich pasków` {
                                                                            `Pokazuj normalnie (domyślnie)`:`domyslnie`,
                                                                            `Zwinięte`:`minimized`,
                                                                            `Nie pokazuj komentarzy niebieskich pasków`:`niepokazuj`,
                                                                         }          
 @var range      HR_PINK_ENTRIES             `🟣 WPISY I KOMENTARZE RÓŻOWYCH PASKÓW`                                                                                                                                      [0, 0, 99900, 1, 'mm']                                                                       
-@var checkbox   userPinkEntriesHighlight                         `🟣 Wpisy różowych wyróżnione na różowo`                                                               1
-@var checkbox   userPinkCommentsHighlight                        `🟣 Komentarze różowych wyróżnione na różowo`                                                          1
-@var select     userPinkEntries                                  `🟣 Ukrywaj wpisy różowych na mikroblogu` {
+@var checkbox   userPinkEntriesHighlight                         `🟣 Wpisy różowych wyróżnione na różowo`                                                               0
+@var checkbox   userPinkCommentsHighlight                        `🟣 Komentarze różowych wyróżnione na różowo`                                                          0
+@var select     userPinkEntries                                  `🟣🚯 Ukrywaj wpisy różowych na mikroblogu` {
                                                                            `Pokazuj normalnie (domyślnie)`:`domyslnie`, 
                                                                            `Zwinięte`:`minimized`,
                                                                            `Nie pokazuj wpisów różowych`:`niepokazuj`,
                                                                         }
-@var select     userPinkComments                                 `🟣 Ukrywaj komentarze różowych pasków` {
+@var select     userPinkComments                                 `🟣🚯 Ukrywaj komentarze różowych pasków` {
                                                                            `Pokazuj normalnie (domyślnie)`:`domyslnie`,
                                                                            `Zwinięte`:`minimized`,
                                                                            `Nie pokazuj komentarzy różowych pasków`:`niepokazuj`,
@@ -1531,12 +1545,12 @@ var select     editorNewComments                             `Edytor dodawania k
 @var range      HR_NOSEX_ENTRIES             `⚫ WPISY I KOMENTARZE UŻYTKOWNIKÓW BEZ PASKA`                                                                                                                                      [0, 0, 99900, 1, 'mm']
 @var checkbox   userNoSexEntriesHighlight                        `⚫ Wpisy użytkowników bez płci wyróżnione na szaro `                                                  0
 @var checkbox   userNoSexCommentsHighlight                       `⚫ Komentarze użytkowników bez płci wyróżnione na szaro`                                              0
-@var select     userNoSexEntries                                 `⚫ Ukrywaj wpisy użytkowników bez płci na mikroblogu` {
+@var select     userNoSexEntries                                 `⚫🚯 Ukrywaj wpisy użytkowników bez płci na mikroblogu` {
                                                                            `Pokazuj normalnie (domyślnie)`:`domyslnie`, 
                                                                            `Zwinięte`:`minimized`,
                                                                            `Nie pokazuj wpisów użytkowników bez płci`:`niepokazuj`,
                                                                         }
-@var select     userNoSexComments                                `⚫ Ukrywaj komentarze użytkowników bez płci` {
+@var select     userNoSexComments                                `⚫🚯 Ukrywaj komentarze użytkowników bez płci` {
                                                                            `Pokazuj normalnie (domyślnie)`:`domyslnie`,
                                                                            `Zwinięte`:`minimized`,
                                                                            `Nie pokazuj komentarzy użytkowników bez płci`:`niepokazuj`,
@@ -1585,17 +1599,18 @@ var checkbox  iHaveWykopXSInstalled                        `Tak, mam skrypt 𝗪
 
 @-moz-document url-prefix("https://wykop.pl"), url-prefix("http://wykopx.pl")
 {    
-    version = "2.36";
+    version = "2.38";
     i = !important;
     
    
     /* Wykop XS Settings  */
-    body { --version:   version;    }    
-    body { --homepagePinnedEntriesHideBelowLimit:   homepagePinnedEntriesHideBelowLimit;    }    
-    body { --mouseClickOpensImageInNewTab:          mouseClickOpensImageInNewTab;           }
-    
-    
-    
+    body 
+    { 
+        --version:   version;       
+        --mouseClickOpensImageInNewTab:          mouseClickOpensImageInNewTab;           
+        --disableNewLinkEditorPastedTextLimit:   disableNewLinkEditorPastedTextLimit; /* 0 / 1 */
+        --homepagePinnedEntriesHideBelowLimit:   homepagePinnedEntriesHideBelowLimit;
+    }
 
     
     if(votingExplosion == 1)                                { body { --votingExplosion: "true"; }}                                                         
@@ -4213,7 +4228,7 @@ var checkbox  iHaveWykopXSInstalled                        `Tak, mam skrypt 𝗪
         else
         {
           /* menu na pc bo position:sticky */
-          left: 'calc(%s - 2px)' % leftMenuAlignedToSide i;                          
+          left: 'calc(%s - 2px)' % leftMenuAlignedToSide i;       /* STYLUS VARIABLE */                    
         }
       }
     }
@@ -9486,7 +9501,7 @@ var checkbox  iHaveWykopXSInstalled                        `Tak, mam skrypt 𝗪
     }
     section.editor.expand section.inline-autocomplete section.inline-autocomplete-stream div.content:after,
     header.header div.right section.search-input section.inline-autocomplete section.inline-autocomplete-stream div.content:after
-    /* wykopxs-promo */
+    /* wykopxs_promo */
     /* lista tagów */
     {
         padding: 10px 16px!important;
@@ -9512,7 +9527,27 @@ var checkbox  iHaveWykopXSInstalled                        `Tak, mam skrypt 𝗪
     }
 
  
-
+    if(disableNewLinkEditorPastedTextLimit == 1)
+    {
+        .wykopxs_textinput_limit_info
+        {
+            color: var(--whiteOpacity08);
+            font-size: 14rem!important;
+            margin-top: 10px!important;
+        }
+        .wykopxs_textinput_limit_info span
+        {
+        
+        }
+        .wykopxs_textinput_limit_info span.withinLimit strong /* liczba znaków np. 199/300 */
+        {
+            color: inherit!important;
+        }
+        .wykopxs_textinput_limit_info span.over_limit strong /* liczba znaków np. 399/300 */
+        {
+            color: blue!important;
+        }
+    }
     
     
     
@@ -11080,6 +11115,68 @@ var checkbox  iHaveWykopXSInstalled                        `Tak, mam skrypt 𝗪
     
     
     
+    /* ULUBIONY TAG XXX */
+    if(favoriteTagEnable = 1)  
+    {
+        /* NIEPRZECZYTANE POWIADOMIENIE O WPISIE/ZNALEZISKU Z ULUBIONEGO TAGU */
+        body > section > header > div.right > nav > ul > li.notifications.tags > section.dropdown-body > section.notifications > section.stream > div.content > section.notify:has(div.content > p.notification-content > a[href={"\/tag\/" + favoriteTag1}])
+        { 
+            border: 1px solid rgba(0, 255, 0, .2)!important;
+            border-radius: 4px!important;
+            background-color: rgba(0, 255, 120, 0.06)!important;
+        }
+        body > section > header > div.right > nav > ul > li.notifications.tags > section.dropdown-body > section.notifications > section.stream > div.content > section.notify:has(div.content > p.notification-content > a[href={"\/tag\/" + favoriteTag1}]):hover
+        { 
+            border: 1px solid rgba(0, 255, 0, .3)!important;
+            background-color: rgba(0, 215, 0, 0.11)!important;
+        }
+        body > section > header > div.right > nav > ul > li.notifications.tags > section.dropdown-body > section.notifications[data-v-719a8b7a] > section.stream > div.content > section.notify:has(div.content > p.notification-content > a[href={"\/tag\/" + favoriteTag1}]):before
+        { 
+        background-color: unset!important;
+        }
+        
+        /* #tag w powiadomieniu */
+        body > section > header > div.right > nav > ul > li.notifications.tags > section.dropdown-body > section.notifications > section.stream > div.content > section.notify > div.content > p.notification-content > a[href={"\/tag\/" + favoriteTag1}]
+        { 
+            color: rgba(0, 255, 0, .5)!important; 
+        }
+        
+        /* PRZECZYTANE POWIADOMIENIE O WPISIE/ZNALEZISKU Z ULUBIONEGO TAGU */
+        body > section > header > div.right > nav > ul > li.notifications.tags > section.dropdown-body > section.notifications > section.stream > div.content > section.notify.read:has(div.content > p.notification-content > a[href={"\/tag\/" + favoriteTag1}])
+        { 
+            border: 1px solid rgba(0, 255, 0, .05)!important;
+            border-radius: 4px!important;
+            background-color: rgba(0, 120, 0, 0.06)!important;
+        }
+        body > section > header > div.right > nav > ul > li.notifications.tags > section.dropdown-body > section.notifications > section.stream > div.content > section.notify.read:has(div.content > p.notification-content > a[href={"\/tag\/" + favoriteTag1}]):hover
+        { 
+            border: 1px solid rgba(0, 255, 0, .3)!important;
+            background-color: rgba(0, 215, 0, 0.11)!important;
+        }
+        body > section > header > div.right > nav > ul > li.notifications.tags > section.dropdown-body > section.notifications[data-v-719a8b7a] > section.stream > div.content > section.notify.read:has(div.content > p.notification-content > a[href={"\/tag\/" + favoriteTag1}]):before
+        { 
+        background-color: unset!important;
+        }
+        
+        body > section > header > div.right > nav > ul > li.notifications.tags > section.dropdown-body > section.notifications > section.stream > div.content > section.notify.read > div.content > p.notification-content > a[href={"\/tag\/" + favoriteTag1}]
+        { 
+            color: rgba(0, 255, 0, .5)!important; 
+        }
+        
+        
+        /* #tag w twoich ulubionych tagach w prawym sidebarze xxx */
+        /* body > section > div.main-content > main.main > section > section.sidebar a[href={"\/tag\/" + favoriteTag1}], */
+        body > section > div.main-content > main.main > section > section.sidebar > section.entries-sidebar     > div.content > section.entries > section.entry > div.content > div.inner-content > section.entry-content > div.wrapper > a[href={"\/tag\/" + favoriteTag1}],
+        body > section > div.main-content > main.main > section > section.sidebar > section.tags-sidebar        > div.content > section.tags    > ul > li > a[href={"\/tag\/" + favoriteTag1}],
+        body > section > div.main-content > main.main > section > section.sidebar > section.tags-sidebar        > div.content > section.tags    > ul > li > a[href={"https\:\/\/go\.wykopx\.pl\/\#" + favoriteTag1}]
+        {
+            font-weight: bolder!important;
+            color: rgba(0, 255, 0, .5)!important; 
+        }
+    }
+
+    
+    
     
     
     
@@ -12399,8 +12496,15 @@ var checkbox  iHaveWykopXSInstalled                        `Tak, mam skrypt 𝗪
             if(blackListTesting == 0) { display: none!important };
         }
     }
-    
-    
+    /* blokowanie wpisów (dowolnych kolorów z linkami do discordów */
+    if(blockEntriesWithURLSDiscord)
+    {
+        main.main > section > div.content > section:not(.entry-page) > section > section.stream:not(.entry-comments):not(.link-comments):not(.links-entries-stream-profile) section.entry:not(.reply):has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href^="https://discord.gg/"])
+        {
+            border: 10px solid rgb(13, 200, 32)!important;
+            if(blackListTesting == 0) { display: none!important };
+        }
+    }
     
     
     /*  UKRYWANIE WPISÓW NA MIKROBLOGU - 🟢 ZIELONKI*/
@@ -13085,11 +13189,20 @@ var checkbox  iHaveWykopXSInstalled                        `Tak, mam skrypt 𝗪
     /* UKRYWANIE ZNALEZISK ZIELONEK */
     if(userGreenLinks == "niepokazuj")
     {
-        main.main > section > div.content section.stream > div.content > section.link-block:has(> section > article > div.content > section.info > span > div.tooltip-slot > span > a.green-profile)
+        body > section > div.main-content > main.main > section > div.content > section > section > section.stream > div.content > section.link-block:has(> section > article > div.content > section.info > span > div.tooltip-slot > span > a.green-profile)
         {
             display: none i;
         }
     }
+    else if(userGreenLinks == "niepokazuj_w_wykopalisku")
+    {
+        body > section > div.main-content > main.main > section > div.content > section.upcoming-page > section.upcoming > section.stream > div.content > section.link-block:has(> section > article > div.content > section.info > span > div.tooltip-slot > span > a.green-profile)
+        {
+            display: none i;
+        }
+    }
+
+    
     /*  nie dodajemy opcji ukrywania znalezisk pomarańczek i bordo
     if(userOrangeLinks == "niepokazuj")
     {
@@ -14259,7 +14372,7 @@ var checkbox  iHaveWykopXSInstalled                        `Tak, mam skrypt 𝗪
     {
         margin-left: 14px;
     }
-    .wykopxs-vote-animation
+    .wykopxs_vote_animation
     {
         opacity: 0;
         cursor: crosshair;
@@ -14275,27 +14388,27 @@ var checkbox  iHaveWykopXSInstalled                        `Tak, mam skrypt 𝗪
     
     if(votingExplosionAnimation == "animacja2")
     {
-        .wykopxs-vote-animation 
+        .wykopxs_vote_animation 
         {
             animation-name: explodePluses, explodePlusesAnimacja2;
         }
     }
     else if(votingExplosionAnimation == "animacja3")
     {
-        .wykopxs-vote-animation 
+        .wykopxs_vote_animation 
         {
             animation-name: explodePluses, explodePlusesAnimacja3;
         }
     }
     
     /* plusy */
-    .wykopxs-vote-animation.wykopxs-green
+    .wykopxs_vote_animation.wykopxs_green
     {
         color: var(--green)!important;
 /*         text-shadow: 0px 0px 2px var(--green); */
     }
   
-    .wykopxs-vote-animation.wykopxs-golden
+    .wykopxs_vote_animation.wykopxs_golden
     {
         font-size: 35rem;
         color: var(--golden)!important;
@@ -14303,7 +14416,7 @@ var checkbox  iHaveWykopXSInstalled                        `Tak, mam skrypt 𝗪
     }
 
     /* minusy */
-    .wykopxs-vote-animation.wykopxs-red
+    .wykopxs_vote_animation.wykopxs_red
     {
         color: var(--red)!important;
     }
@@ -14980,6 +15093,19 @@ var checkbox  iHaveWykopXSInstalled                        `Tak, mam skrypt 𝗪
     }
 
 
+
+
+    // BLOKOWANIE ZNALEZISK SPAMUJĄCYCH DISCORDAMI
+    if(blockLinksWithURLSDiscord == 1)
+    {
+        body > section > div.main-content > main.main > section > div.content > section > section > section.stream > div.content > section.link-block[data-slug*="discord"],
+        body > section > div.main-content > main.main > section > div.content > section > section > section.stream > div.content > section.link-block[data-description*="discord.gg" i]
+        {
+            display: none!important;
+        }
+    }
+    
+    
     if(blockRumun == 1) /*anty rumun */
     {
         section.link-block:has(a[href$="c20m1"]),
@@ -15916,9 +16042,6 @@ var checkbox  iHaveWykopXSInstalled                        `Tak, mam skrypt 𝗪
 			}
 		}
 }
-
-
-
     
 @-moz-document url-prefix("https://userstyles.world/")
 {   
@@ -15974,5 +16097,3 @@ var checkbox  iHaveWykopXSInstalled                        `Tak, mam skrypt 𝗪
     main.main > section > div.content > section.microblog-page  > section.microblog                 > section.stream > div.content > section.entry
     
 */
-  
-  

@@ -21,7 +21,7 @@
 // @description Wykop XS służy do wspomagania działania stylu "Wykop X Style", który jest wymagany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na: http://style.wykopx.pl
 // @description:en Wykop XS is a helper script for userstyle "Wykop X Style" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://style.wykopx.pl
 
-// @version     2.36.0
+// @version     2.38.0
 // ==/UserScript==
 
 (async function ()
@@ -29,8 +29,8 @@
 	'use strict';
 
 
-	const currentVersion = "2.36.0";
-	const dev = false;
+	const currentVersion = "2.38.0";
+	const dev = true;
 
 	// user.username - nazwa zalogowanego uzytkownika
 
@@ -65,6 +65,8 @@
 	settings.linksAnalyzerSortByVotesCount = (wykopxSettings.getPropertyValue("--linksAnalyzerSortByVotesCount") == `"true"`); // boolean
 	settings.showObservedTagsAlphabetically = (wykopxSettings.getPropertyValue("--showObservedTagsAlphabetically") == `"true"`); // boolean
 	settings.showObservedTagsInRightSidebar = (wykopxSettings.getPropertyValue("--showObservedTagsInRightSidebar") == `"true"`); // boolean
+
+	settings.disableNewLinkEditorPastedTextLimit = wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") ? wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") === '1' : true; // domyslnie włączone bez Wykop X Style
 
 	settings.notatkowatorUpdateInterval = parseFloat(wykopxSettings.getPropertyValue("--notatkowatorUpdateInterval")); // number
 	settings.homepagePinnedEntriesHideBelowLimit = parseFloat(wykopxSettings.getPropertyValue("--homepagePinnedEntriesHideBelowLimit")); // number
@@ -1035,7 +1037,7 @@
 		/* hide wykopxs features if wykopx is not installed */
 		.wykopxs { display: none; }
 	
-		/* wykopxs-promo OFF */
+		/* wykopxs_promo OFF */
 		body div.main-content section > section.sidebar:after,
 		section.editor.expand section.inline-autocomplete section.inline-autocomplete-stream div.content:after,
 		header.header div.right section.search-input section.inline-autocomplete section.inline-autocomplete-stream div.content:after
@@ -1514,10 +1516,6 @@
 
 
 
-
-
-
-
 	// RATING BOX - <section class="rating-box"> -> PLUSOWANIE I MINUSOWANIE
 
 	waitForKeyElements("section.rating-box", ratingBox, false);
@@ -1624,7 +1622,7 @@
 						var newDiv = document.createElement('div');
 						newDiv.textContent = sign;
 
-						newDiv.classList.add(`wykopxs-vote-animation`, `wykopxs-${vote}`, `wykopxs-${action}`); // class="wykopxs-vote-animation wykopxs-voted wykopxs-plused"
+						newDiv.classList.add(`wykopxs_vote_animation`, `wykopxs_${vote}`, `wykopxs_${action}`); // class="wykopxs_vote_animation wykopxs_voted wykopxs_plused"
 
 						let color = (sign === "+" ? "green" : "red");
 						if (sign === "+")
@@ -1638,7 +1636,7 @@
 							min_y -= getRandomInt(-30, 30); max_y -= getRandomInt(-30, 30);
 						}
 
-						newDiv.classList.add(`wykopxs-${color}`);
+						newDiv.classList.add(`wykopxs_${color}`);
 
 						newDiv.style.setProperty('--position_x', getRandomInt(min_x, max_x, "px"));
 						newDiv.style.setProperty('--position_y', getRandomInt(min_y, max_y, "px"));
@@ -1680,7 +1678,7 @@
 	{
 		const entryBlock = jNodeEntryBlock[0]; // jNode => DOMElement
 
-		alert(entryBlock)
+		// alert(entryBlock)
 		// Select the section with class 'rating-box'
 		let section = document.querySelector('.rating-box');
 
@@ -1829,6 +1827,62 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				});
 		}
 	}
+
+
+
+
+
+
+
+
+
+	/* ZNIESIENIE LIMITÓW W TEXTAREA I INPUT PODCZAS WKLEJANIA TEKSTU */
+	// <input data-v-6486857b="" data-v-99298700="" type="text" placeholder="Wpisz tytuł Znaleziska..." maxlength="80" class="">
+	// <textarea data-v-8f9e192e="" data-v-99298700="" placeholder="Wpisz opis Znaleziska..." maxlength="300" class=""></textarea>
+	// <input data-v-714efcd5="" id="title" type="text" placeholder="Wpisz tytuł..." maxlength="80" class="highlight">
+	if (settings.disableNewLinkEditorPastedTextLimit)
+	{
+		waitForKeyElements("[maxlength]", disableNewLinkEditorPastedTextLimit, false);
+	}
+
+	function disableNewLinkEditorPastedTextLimit(jNodeInput)
+	{
+		const input = jNodeInput[0];
+		const maxLength = input.getAttribute('maxlength');
+		input.removeAttribute('maxlength');
+
+
+		let divElement = document.createElement('div');
+		let spanElement = document.createElement('span');
+
+		// xxx
+		divElement.className = 'wykopxs_textinput_limit_info';
+		divElement.style.color = 'rgba(120, 120, 120, 1)';
+		divElement.style.fontSize = '14px';
+		divElement.style.marginTop = '10px';
+
+		input.parentNode.appendChild(divElement, input);
+
+		function handleInputEvent()
+		{
+			let charCount = input.value.length;
+			divElement.innerHTML = `
+			Wykop X: wprowadzono: 
+			<span class="${charCount > maxLength ? 'overLimit' : 'withinLimit'}" style="color: ${charCount > maxLength ? 'red' : 'inherit'}">
+				<strong>${charCount}</strong> / 
+				<strong>${maxLength}</strong>
+			</span> 
+			znaków`;
+		}
+
+		input.addEventListener('keyup', handleInputEvent);
+		input.addEventListener('change', handleInputEvent);
+		input.addEventListener('paste', handleInputEvent);
+	}
+
+
+
+
 
 
 
