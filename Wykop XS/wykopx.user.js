@@ -21,7 +21,7 @@
 // @description Wykop XS służy do wspomagania działania stylu "Wykop X Style", który jest wymagany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na: http://style.wykopx.pl
 // @description:en Wykop XS is a helper script for userstyle "Wykop X Style" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://style.wykopx.pl
 
-// @version     2.38.0
+// @version     2.38.1
 // ==/UserScript==
 
 (async function ()
@@ -29,7 +29,7 @@
 	'use strict';
 
 
-	const currentVersion = "2.38.0";
+	const currentVersion = "2.38.1";
 	const dev = true;
 
 	// user.username - nazwa zalogowanego uzytkownika
@@ -1859,7 +1859,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		divElement.className = 'wykopxs_textinput_limit_info';
 		divElement.style.color = 'rgba(120, 120, 120, 1)';
 		divElement.style.fontSize = '14px';
-		divElement.style.marginTop = '10px';
+		divElement.style.margin = '10px 0px 10px 0px';
 
 		input.parentNode.appendChild(divElement, input);
 
@@ -1875,9 +1875,29 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			znaków`;
 		}
 
-		input.addEventListener('keyup', handleInputEvent);
 		input.addEventListener('change', handleInputEvent);
 		input.addEventListener('paste', handleInputEvent);
+
+
+		let timeout = null;
+		input.addEventListener('keyup', function (e)
+		{
+			if (e.key === ' ' || e.key === '.')
+			{
+				handleInputEvent(e);
+			}
+			else
+			{
+				clearTimeout(timeout);
+				timeout = setTimeout(function ()
+				{
+					handleInputEvent(e);
+				}, 500);
+			}
+
+
+		});
+
 	}
 
 
