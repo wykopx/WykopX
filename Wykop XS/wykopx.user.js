@@ -21,7 +21,7 @@
 // @description Wykop XS służy do wspomagania działania stylu "Wykop X Style", który jest wymagany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na: http://style.wykopx.pl
 // @description:en Wykop XS is a helper script for userstyle "Wykop X Style" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://style.wykopx.pl
 
-// @version     2.38.1
+// @version     2.38.2
 // ==/UserScript==
 
 (async function ()
@@ -29,8 +29,8 @@
 	'use strict';
 
 
-	const currentVersion = "2.38.1";
-	const dev = true;
+	const currentVersion = "2.38.2";
+	const dev = false;
 
 	// user.username - nazwa zalogowanego uzytkownika
 
@@ -1876,6 +1876,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		}
 
 		input.addEventListener('change', handleInputEvent);
+		input.addEventListener('focus', handleInputEvent);
 		input.addEventListener('paste', handleInputEvent);
 
 
