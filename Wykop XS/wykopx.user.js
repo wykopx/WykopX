@@ -66,11 +66,17 @@
 	settings.showObservedTagsAlphabetically = (wykopxSettings.getPropertyValue("--showObservedTagsAlphabetically") == `"true"`); // boolean
 	settings.showObservedTagsInRightSidebar = (wykopxSettings.getPropertyValue("--showObservedTagsInRightSidebar") == `"true"`); // boolean
 
-	settings.disableNewLinkEditorPastedTextLimit = wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") ? wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") === '1' : true; // domyslnie włączone bez Wykop X Style
+	settings.disableNewLinkEditorPastedTextLimit = wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") ? wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") === '1' : true; //boolean - domyslnie WŁĄCZONE bez Wykop X Style
+
 
 	settings.notatkowatorUpdateInterval = parseFloat(wykopxSettings.getPropertyValue("--notatkowatorUpdateInterval")); // number
 	settings.homepagePinnedEntriesHideBelowLimit = parseFloat(wykopxSettings.getPropertyValue("--homepagePinnedEntriesHideBelowLimit")); // number
 	settings.showObservedTagsInRightSidebarUpdateInterval = parseFloat(wykopxSettings.getPropertyValue("--showObservedTagsInRightSidebarUpdateInterval")); // number
+
+	settings.tabTitleSelect = (wykopxSettings.getPropertyValue("--tabTitleSelect"));
+	settings.tabTitleCustom = (wykopxSettings.getPropertyValue("--tabTitleCustom"));
+
+
 
 	settings.WykopXStyleVersion = (wykopxSettings.getPropertyValue("--version").trim().slice(1, -1));
 
@@ -148,8 +154,6 @@
 
 
 
-
-
 	function redirectToSearchUserEntriesInTag(user, tag)
 	{
 		window.location.replace(`https://wykop.pl/szukaj/wszystkie/@${user}?tags=${tag}`);
@@ -210,21 +214,7 @@
 
 
 
-	(async () =>
-	{
-		consoleX("(async () => {", 1);
-		let showNotificationsNumberInTitleEntries = wykopxSettings.getPropertyValue("--showNotificationsNumberInTitleEntries");
-		let showNotificationsNumberInTitleTags = wykopxSettings.getPropertyValue("--showNotificationsNumberInTitleTags");
-		let showNotificationsNumberInTitleMessages = wykopxSettings.getPropertyValue("--showNotificationsNumberInTitleMessages");
-	});
 
-
-	/* dodaj liczbe powiadomien do tytulu strony na karcie */
-	function setNewTitle()
-	{
-
-
-	}
 
 
 
@@ -662,19 +652,28 @@
 		let html = `
 		<div class="wykopxs wykopx_modal" id="wykopx_modal_mirkoukrywacz">
 			<div class="wykopx_modal-content">
-			   <aside class="wykopxs_info_bar wykopx_hide_this_if_stylus_is_installed">Masz już działający skrypt Wykop XS. Aby Mirkoukrywacz działał, musisz zainstalować i włączyć w Stylusie <a href="http://wiki.wykopx.pl" target="_blank">Wykop X</a></aside>
-			   <aside class="wykopxs wykopx_modal_mirkoukrywacz_is_turned_off wykopx_hide_this_if_mirkoukrywanie_is_turned_on">Wykop XS oraz Wykop X są zainstalowane poprawnie, ale Mirkoukrywacz jest wyłączony. Aby Mirkoukrywacz działał, włącz go w ustawieniach Stylusa. <A href="https://github.com/wykopx/WykopX/wiki/Extra#mirkoukrywacz" target="_blank">Zobacz instrukcję obsługi Mirkoukrywacza</a></aside>
-			   <header class="wykopxs"><span>Mirkoukrywacz: </span?><span>Lista ukrytych elementów</span></header>
-			   <section class="wykopxs wykopx_mirkoukrywacz_list_of_hidden_items">
-				  <span class="wykopx_mirkoukrywacz_hidden_list_is_empty">Żadne treści nie zostały jeszcze zaznaczone do ukrycia</span>
-			   </section>
+				<aside class="wykopxs_info_bar wykopx_hide_this_if_stylus_is_installed">Masz już działający skrypt Wykop XS. Aby Mirkoukrywacz działał, musisz zainstalować i włączyć w Stylusie <a href="http://wiki.wykopx.pl" target="_blank">Wykop X</a></aside>
+				<aside class="wykopxs wykopx_modal_mirkoukrywacz_is_turned_off wykopx_hide_this_if_mirkoukrywanie_is_turned_on">Wykop XS oraz Wykop X są zainstalowane poprawnie, ale Mirkoukrywacz jest wyłączony. Aby Mirkoukrywacz działał, włącz go w ustawieniach Stylusa. <A href="https://github.com/wykopx/WykopX/wiki/Extra#mirkoukrywacz" target="_blank">Zobacz instrukcję obsługi Mirkoukrywacza</a></aside>
+				<header class="wykopxs"><span>Mirkoukrywacz: </span?><span>Lista ukrytych elementów</span></header>
+				<section class="wykopxs wykopx_mirkoukrywacz_list_of_hidden_items">
+					<span class="wykopx_mirkoukrywacz_hidden_list_is_empty">Żadne treści nie zostały jeszcze zaznaczone do ukrycia</span>
+				</section>
 			</div>
 		</div>`;
 
 		$("body").prepend(html);
 
-		createNewProfileDropdownMenuItem("Wykop X - Mirkoukrywacz", "Wykop X - lista elementów ukrytych przez Mirkoukrywacz", "mirkoukrywacz", "mirkoukrywacz_open_modal_button");
-
+		createNewProfileDropdownMenuItem(
+			{
+				text: `Wykop X - Mirkoukrywacz`,
+				title: "Wykop X - lista elementów ukrytych przez Mirkoukrywacz",
+				className: `mirkoukrywacz`,
+				id: "mirkoukrywacz_open_modal_button",
+				url: null,
+				target: null,
+				icon: null,
+				number: null
+			})
 		let modal = document.getElementById("wykopx_modal_mirkoukrywacz");
 		let btn = document.getElementById("mirkoukrywacz_open_modal_button");
 		//var span = document.getElementsByClassName("wykopx_close")[0];
@@ -1230,20 +1229,53 @@
 
 		if (unreadNotifications.tags > 0)
 		{
-			createNewProfileDropdownMenuItem(`Powiadomienia z #tagów: (${unreadNotifications.tags})`, "Masz nowe powiadomienia z obserwowanych #tagów", "wykopx_notifications_tags", undefined, "/powiadomienia/tagi", "_self", null, unreadNotifications.tags);
+			createNewProfileDropdownMenuItem(
+				{
+					text: `Powiadomienia z #tagów: (${unreadNotifications.tags})`,
+					title: "Masz nowe powiadomienia z obserwowanych #tagów",
+					className: `wykopx_notifications_tags`,
+					id: undefined,
+					url: "/powiadomienia/tagi",
+					target: "_self",
+					icon: null,
+					number: unreadNotifications.tags
+				})
 		}
 		if (unreadNotifications.entries > 0)
 		{
-			createNewProfileDropdownMenuItem(`Zawołania w komentarzach: (${unreadNotifications.entries})`, "Zawołano Cię w komentarzu", "wykopx_notifications_entries", undefined, "/powiadomienia/moje", "_self", null, unreadNotifications.entries);
+			createNewProfileDropdownMenuItem(
+				{
+					text: `Zawołania w komentarzach: (${unreadNotifications.entries})`,
+					title: "Zawołano Cię w komentarzu",
+					className: `wykopx_notifications_entries`,
+					id: undefined,
+					url: "/powiadomienia/moje",
+					target: "_self",
+					icon: null,
+					number: unreadNotifications.entries
+				})
 		}
 		if (unreadNotifications.pm > 0)
 		{
-			createNewProfileDropdownMenuItem(`Nowe wiadomości: (${unreadNotifications.pm})`, "Masz nowe, nieprzeczytane wiadomości prywatne", "wykopx_notifications_pm", undefined, "/wiadomosci", "_self", null, unreadNotifications.entries);
+			createNewProfileDropdownMenuItem(
+				{
+					text: `Nowe wiadomości: (${unreadNotifications.pm})`,
+					title: "Masz nowe, nieprzeczytane wiadomości prywatne",
+					className: `wykopx_notifications_pm`,
+					id: undefined,
+					url: "/wiadomosci",
+					target: "_self",
+					icon: null,
+					number: unreadNotifications.pm
+				})
 		}
 	}
 
 
 	const promoString = " [Tę funkcję sponsoruje dodatek Wykop X #wykopwnowymstylu]";
+
+
+
 
 	function addWykopXButtonsToNavBar()
 	{
@@ -1272,9 +1304,6 @@
 			.find("span")
 			.text("Mój Wykop");
 
-
-
-
 		$cloneHits
 			.attr({
 				class: "wykopxs wykopx_hits_li"
@@ -1288,8 +1317,6 @@
 			})
 			.find("span")
 			.text("Hity");
-
-
 
 		$cloneFavorites
 			.attr({
@@ -1305,8 +1332,6 @@
 			.find("span")
 			.text("Ulubione");
 
-
-
 		$cloneAddNewLink
 			.attr({
 				class: "wykopxs wykopx_add_new_link_li wykopx_plus_li"
@@ -1320,9 +1345,6 @@
 			})
 			.find("span")
 			.text("+");
-
-
-
 
 		$cloneAddNewEntry
 			.attr({
@@ -1338,9 +1360,6 @@
 			.find("span")
 			.text("+");
 
-
-
-
 		$cloneInstallWykopX
 			.attr({
 				class: "wykopx-promo wykopx_install_wykopx_li hybrid"
@@ -1355,9 +1374,6 @@
 			.find("span")
 			.text("Zainstaluj Wykop X Style");
 
-
-
-
 		$cloneHits.insertAfter(`body header nav.main ul li:has(a[href="/wykopalisko"])`);
 		$cloneFavorites.insertAfter(`body header nav.main ul li:has(a[href="/wykopalisko"])`);
 		$cloneAddNewLink.insertAfter(`body header nav.main ul li:has(a[href="/wykopalisko"])`);
@@ -1366,23 +1382,64 @@
 		$cloneInstallWykopX.appendTo(`body header nav.main ul`);
 	}
 
-	function createNewProfileDropdownMenuItem(text, title, className, id = null, url = null, target = "_blank", icon = null, number = null)
-	{
-		$(`body header div.right nav ul li.account.dropdown ul.dropdown-body li.${className}_li`).remove();
-		let $clonedDropdownItem = $(`body header div.right nav ul li.account.dropdown ul.dropdown-body li.settings`).clone();
-		$clonedDropdownItem.attr({
-			class: `${className}_li`
-		});
+	createNewNavBarButton({ title: "Mój Wykop" })
 
-		let $clonedDropdownItemLink = $clonedDropdownItem.find("a");
-		$clonedDropdownItemLink.attr("href", url);
-		$clonedDropdownItemLink.attr("target", target);
-		$clonedDropdownItemLink.attr("class", className + "_button");
-		$clonedDropdownItemLink.attr("id", id);
-		$clonedDropdownItemLink.attr("title", title);
-		$clonedDropdownItemLink.text(text);
-		$clonedDropdownItem.appendTo(`body header div.right nav ul li.account.dropdown ul.dropdown-body`);
+	// options: { text: ``, title: ``, className: ``, id: null, url: null, target: "_blank", icon: null, number: null
+	function createNewNavBarButton(options)
+	{
+		let li = document.createElement("li");
+		li.setAttribute("class", "wykopxs wykopx_mywykop_li");
+
+		let a = document.createElement("a");
+		a.setAttribute("href", "/obserwowane");
+		a.setAttribute("class", "wykopxs wykopx_mywykop_button hybrid");
+		a.setAttribute("title", "Mój Wykop  [Tę funkcję sponsoruje dodatek Wykop X #wykopwnowymstylu]");
+
+		let span = document.createElement("span");
+		span.setAttribute("data-v-5182b5f6", "");
+		span.textContent = options.title;
+
+		a.appendChild(span);
+		li.appendChild(a);
+
+		document.querySelector("body header nav.main ul li:has(a[href='/mikroblog'])").insertAdjacentElement("afterend", li);
 	}
+
+	// options: { text: null, title: null, className: ``, id: null, url: null, target: "_blank", icon: null, number: null
+	function createNewProfileDropdownMenuItem(options)
+	{
+		let dropdownBody = document.querySelector("body header div.right nav ul li.account.dropdown ul.dropdown-body");
+		if (dropdownBody)
+		{
+			let dropdownItem = dropdownBody.querySelector(`li.${options.className}_li`);
+
+			if (dropdownItem)
+			{
+				dropdownItem.remove();
+			}
+
+			let clonedDropdownItem = dropdownBody.querySelector("li.settings").cloneNode(true);
+			if (options.className)
+			{
+				clonedDropdownItem.setAttribute("class", `${options.className}_li`);
+				let clonedDropdownItemLink = clonedDropdownItem.querySelector("a");
+				clonedDropdownItemLink.setAttribute("class", `${options.className}_button`);
+				if (options.url) clonedDropdownItemLink.setAttribute("href", options.url);
+				if (options.target) clonedDropdownItemLink.setAttribute("target", options.target);
+				if (options.id) clonedDropdownItemLink.setAttribute("id", options.id);
+				if (options.title) clonedDropdownItemLink.setAttribute("title", options.title);
+				if (options.text) clonedDropdownItemLink.textContent = options.text;
+				dropdownBody.appendChild(clonedDropdownItem);
+			}
+		}
+		else // niezalogowany brak menu, zamiast tego przyciski Zaloguj/Zarejestruj
+		{
+
+		}
+	}
+
+
+
 
 	function addNotificationSummaryButtonToNavBar()
 	{
@@ -1391,19 +1448,58 @@
 		if (typeof mojeLubTagi == "string")
 		{
 			mojeLubTagi = mojeLubTagi.split("/").pop();
+
 			if (mojeLubTagi == "tagi")
 			{
-				createNewProfileDropdownMenuItem(`Powiadomienia z #tagów`, "Masz nowe powiadomienia z obserwowanych #tagów", "wykopx_notifications_tags", undefined, "/powiadomienia/tagi", "_self", null, null);
+				createNewProfileDropdownMenuItem(
+					{
+						text: `Powiadomienia z #tagów`,
+						title: "Masz nowe powiadomienia z obserwowanych #tagów",
+						className: `wykopx_notifications_tags`,
+						id: undefined,
+						url: "/powiadomienia/tagi",
+						target: "_self",
+						icon: null,
+						number: null
+					})
 			}
 			if (mojeLubTagi == "moje")
 			{
-				createNewProfileDropdownMenuItem(`Powiadomienia z #tagów`, "Masz nowe powiadomienia z obserwowanych #tagów", "wykopx_notifications_tags", undefined, "/powiadomienia/tagi", "_self", null, null);
-				createNewProfileDropdownMenuItem(`Zawołania w komentarzach`, "Zawołano Cię w komentarzu", "wykopx_notifications_entries", undefined, "/powiadomienia/moje", "_self", null, null);
+				createNewProfileDropdownMenuItem(
+					{
+						text: `Powiadomienia z #tagów`,
+						title: "Masz nowe powiadomienia z obserwowanych #tagów",
+						className: `wykopx_notifications_tags`,
+						id: undefined,
+						url: "/powiadomienia/tagi",
+						target: "_self",
+						icon: null,
+						number: null
+					})
+				createNewProfileDropdownMenuItem(
+					{
+						text: `Zawołania w komentarzach`,
+						title: "Zawołano Cię w komentarzu",
+						className: `wykopx_notifications_entries`,
+						id: undefined,
+						url: "/powiadomienia/moje",
+						target: "_self",
+						icon: null,
+						number: null
+					})
 			}
 			wykopx_notification_summary_url += mojeLubTagi;
 		}
-		let wykopx_notification_summary = `<li class="wykopxs wykopx_notification_summary notifications dropdown" title="Nowe powiadomienia ${promoString}"><a href="${wykopx_notification_summary_url}"><figure></figure></a></li>`;
-		$(wykopx_notification_summary).prependTo(`header.header > .right > nav > ul`);
+
+		let li = document.createElement("li");
+		li.setAttribute("class", "wykopxs wykopx_notification_summary notifications dropdown");
+		li.setAttribute("title", `Nowe powiadomienia ${promoString}`);
+		let a = document.createElement("a");
+		a.setAttribute("href", wykopx_notification_summary_url);
+		let figure = document.createElement("figure");
+		a.appendChild(figure);
+		li.appendChild(a);
+		document.querySelector("header.header > .right > nav > ul").insertAdjacentElement("afterbegin", li);
 	}
 
 
@@ -1516,28 +1612,280 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	// RATING BOX - <section class="rating-box"> -> PLUSOWANIE I MINUSOWANIE
 
-	waitForKeyElements("section.rating-box", ratingBox, false);
 
-	function ratingBox(jNodeRatingBox)
+	let observerOptions = {
+		root: null,
+		rootMargin: "-120px 0px -120px 0px",
+		threshold: 1.0, // [0.25, 0.5, 0.75, 1.0]
+	};
+	const intersectionCallback = (intersectingPluses, observer) => // function intersectionCallback(entries, observer)
 	{
-		const ratingBox = jNodeRatingBox[0]; //  =jNode > DOMElement
+		let timeoutId = null;
+		let fetchSeconds = 25;
 
-		const homepagePinnedEntriesPlusesLimit = settings.homepagePinnedEntriesHideBelowLimit; // limit ukrywania wpisow przypietych na glownej
+		intersectingPluses.forEach((plus) =>
+		{
+			let plus_target = plus.target;
+			console.log("plus_target");
+			console.log(plus_target);
+			if (plus.isIntersecting)
+			{
+				plus_target.style.borderBottom = "2px solid green";
+				timeoutId = setInterval(() => checkPluses(plus_target), fetchSeconds * 1000);
+			}
+			else
+			{
+				clearInterval(timeoutId);
+				plus_target.style.borderBottom = "6px solid red";
+			}
+		});
+	};
+	const visiblePlusesObserver = new IntersectionObserver(intersectionCallback, observerOptions)
 
+
+
+
+
+
+
+
+
+	/* returns:
+	{
+		resource: "entry"
+		block: DOMElement,
+		id: 123456,
+		entry: DOMElement,
+		entry_id: 123456,
+	}
+	or
+	{
+		resource: "entry_comment"
+		block: DOMElement
+		id: 12345678,
+		entry: DOMElement,
+		entry_id: 123456,
+		comment: DOMElement,
+		comment_id: 12345678,
+	}*/
+
+	function getEntryBlocks(elem)
+	{
+		let blocks = {};
+
+		blocks.block = elem.closest('section.entry'); // returns the section element
+		blocks.id = blocks.block.id.replace('comment-', '');
+
+		console.log("blocks.block");
+		console.log(blocks.block);
+
+		if (blocks.block.classList.contains("reply"))
+		{
+			blocks.comment = blocks.block;
+			blocks.entry = blocks.comment.parentNode.closest('section.entry');
+			blocks.resource = "entry_comment"; // komentarzp od wpisem
+			blocks.comment_id = blocks.comment.id.replace('comment-', '');
+			blocks.entry_id = blocks.entry.id.replace('comment-', '');
+			blocks.fetchURL = `https://wykop.pl/api/v3/entries/${blocks.entry_id}/comments/${blocks.comment_id}`;
+
+			blocks.comment.dataset.resource = "entry_comment";
+		}
+		else
+		{
+			blocks.entry = blocks.block;
+			blocks.entry_id = blocks.entry.id.replace('comment-', '');
+			blocks.resource = "entry";
+			blocks.fetchURL = `https://wykop.pl/api/v3/entries/${blocks.entry_id}`;
+
+			blocks.entry.dataset.resource = "entry";
+		}
+
+		let plusElement = blocks.block.querySelector(".rating-box li.plus"); // 12 <li class="plus separated">
+		console.log(blocks.block);
+		console.log(plusElement);
+
+		if (plusElement) blocks.pluses = plusElement.textContent;
+
+		let zeroElement = blocks.block.querySelector(".rating-box li.zero"); // 0 <li class="zero separated">
+		if (zeroElement) blocks.zero = zeroElement.textContent;
+		let minusElement = blocks.block.querySelector(".rating-box li.minus"); // -8
+		if (minusElement) blocks.minuses = minusElement.textContent;
+
+		console.log(plusElement.textContent)
+		console.log(zeroElement.textContent)
+		console.log(minusElement.textContent)
+
+
+		return blocks;
+	}
+
+
+	function checkPluses(entryElem)
+	{
+		if (entryElem)
+		{
+			const entryBlocks = getEntryBlocks(entryElem);
+
+			let entryBlock = entryBlocks.block;
+
+			console.log("API fetch: " + entryBlocks.fetchURL);
+
+			fetch(entryBlocks.fetchURL,
+				{
+					method: "GET", // or 'PUT'
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: "Bearer " + window.localStorage.token,
+					},
+				})
+				.then(x => x.json())
+				.then(data =>
+				{
+					const entry_data = data.data;
+					console.log(entry_data);
+
+					entryBlock.dataset.votesUp = entry_data.votes.up;								// 10
+					entryBlock.dataset.votesDown = entry_data.votes.down;							// -20  nie dotyczy entry, entry_comment
+
+					entryBlock.dataset.votesCount = entry_data.votes.count ? entry_data.votes.count : 0;	// -10 (suma plusów i minusów nie dotyczy entry, entry_comment)
+					entryBlock.dataset.votesAll = entry_data.votes.up + entry_data.votes.down; 		// 30  (łączna liczba głosów nie dotyczy entry, entry_comment)
+
+					entry_data.votes.votesUpPercent = 0;											// dla nie dotyczy entry, entry_comment zawsze 100%
+					entry_data.votes.votesDownPercent = 0;											// nie dotyczy entry, entry_comment
+
+					if (entryBlock.dataset.votesAll > 0)
+					{
+						entry_data.votes.votesDownPercent = Math.ceil(entry_data.votes.down * 100 / entryBlock.dataset.votesAll);
+						entry_data.votes.votesUpPercent = Math.ceil(entry_data.votes.up * 100 / entryBlock.dataset.votesAll);
+					}
+					entryBlock.dataset.voted = entry_data.voted;
+
+					if (entryBlocks.resource == "entry")
+					{
+						entryBlock.dataset.commentsCount = entry_data.comments.count;
+					}
+
+					let plusesDelta = entryBlock.dataset.votesUp - entryBlock.pluses;
+					if (plusesDelta != 0)
+					{
+						console.log("Zmienila sie liczba plusow:" + plusesDelta);
+						console.log("entryBlock.pluses:" + entryBlock.pluses);
+						console.log("entryBlock.dataset.votesUp:" + entryBlock.dataset.votesUp);
+					}
+					// if (entryBlock.dataset.votesDown != entryBlock.minuses)
+					// {
+					// 	let minusesDelta = entryBlock.dataset.votesUp - entryBlock.pluses;
+					// 	alert("Zmienila sie liczba minusow:" + minusesDelta);
+					// }
+
+					console.log("entryBlock:")
+					console.log(entryBlock)
+
+					// entryBlock.dataset.tags = entry_data.tags;
+					// entryBlock.dataset.device = entry_data.device;
+					// entryBlock.dataset.voted = entry_data.voted;
+					// entryBlock.dataset.adult = entry_data.adult;
+					// entryBlock.dataset.tags = entry_data.tags;
+					// entryBlock.dataset.favourite = entry_data.favourite;
+					// entryBlock.dataset.deletable = entry_data.deletable;
+					// entryBlock.dataset.editable = entry_data.editable;
+					// entryBlock.dataset.slug = entry_data.slug;
+					// entryBlock.dataset.parent_id = entry_data.parent_id;
+					// entryBlock.dataset.resource = entry_data.resource; // "entry"
+					// entryBlock.dataset.deleted = entry_data.deleted;
+				});
+		}
+	}
+
+
+
+
+
+
+
+
+	// KARTA W TLE
+	// https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
+	// https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilitychange_event
+	function handleVisibilityChange()
+	{
+		// document.visibilityState > "visible"/"hidden"
+		// document.hidden > true/false
+		// document.title = document.visibilityState;
+
+		if (document.hidden)
+		{
+
+		}
+		else
+		{
+
+		}
+	}
+	document.addEventListener("visibilitychange", handleVisibilityChange, false);
+
+
+
+
+
+	// <section class="rating-box" data-pluses="269" data-minuses="0" data-pluses-minuses-total="269" data-pluses-below-limit="true">
+	function addRatingCountData(ratingBox)
+	{
 		const plusBtn = ratingBox.querySelector('li.plus');
 		let plusesCount = plusBtn ? plusBtn.textContent : 0;
 		const minusBtn = ratingBox.querySelector('li.minus');
 		let minusesCount = minusBtn ? -1 * minusBtn.textContent : 0;
 		let plusesMinusesTotal = plusesCount - minusesCount;
+		ratingBox.dataset.pluses = plusesCount;
+		ratingBox.dataset.minuses = minusesCount;
+		ratingBox.dataset.plusesMinusesTotal = plusesMinusesTotal;
 
-		let plusesBelowLimit = (plusesMinusesTotal < homepagePinnedEntriesPlusesLimit ? true : false); // czy wpis jest poniżej limitu ukrywania wpisow przypietych na glownej
-
+		const homepagePinnedEntriesPlusesLimit = settings.homepagePinnedEntriesHideBelowLimit; // limit ukrywania wpisow przypietych na glownej
 		if (homepagePinnedEntriesPlusesLimit > 0)
 		{
-			addRatingCountData(ratingBox);
+			let plusesBelowLimit = (plusesMinusesTotal < homepagePinnedEntriesPlusesLimit ? true : false); // czy wpis jest poniżej limitu ukrywania wpisow przypietych na glownej
+			ratingBox.dataset.plusesBelowLimit = plusesBelowLimit;
 		}
+	}
+
+
+
+	// plusy we wpisach (.rating-box), plusy wpisow w sidebarze (bez rating-box), plusy w znaleziskach
+
+
+	// rating box - mozliwosc plusowania / minusowania
+
+	// xxx
+	// waitForKeyElements("section.rating-box", ratingBox, false);
+
+	function ratingBox(jNodeRatingBox)
+	{
+
+		const ratingBox = jNodeRatingBox[0]; //  =jNode > DOMElement
+		visiblePlusesObserver.observe(ratingBox); // IntersectionObserver
+
+		console.log("ratingBox - dodano nowy visiblePlusesObserver dla plusa:")
+		console.log(ratingBox);
+
+
+		addRatingCountData(ratingBox);
 
 		if (settings.votingExplosion)
 		{
@@ -1545,14 +1893,7 @@
 		}
 
 
-		// <section class="rating-box" data-pluses="269" data-minuses="0" data-pluses-minuses-total="269" data-pluses-below-limit="true">
-		function addRatingCountData(ratingBox)
-		{
-			ratingBox.dataset.pluses = plusesCount;
-			ratingBox.dataset.minuses = minusesCount;
-			ratingBox.dataset.plusesMinusesTotal = plusesMinusesTotal;
-			ratingBox.dataset.plusesBelowLimit = plusesBelowLimit;
-		}
+
 
 
 		// VOTING EXPLOSION
@@ -1758,15 +2099,15 @@
 					linkBlock.dataset.votesUp = link_data.votes.up;							// 10
 					linkBlock.dataset.votesDown = link_data.votes.down;						// -20
 					linkBlock.dataset.votesCount = link_data.votes.count;					// -10 (suma wykopów i zakopów)
-					link_data.votes.all = link_data.votes.up + link_data.votes.down; 		// 30  (łączna liczba głosów)
-					linkBlock.dataset.votesAll = link_data.votes.all;
+
+					linkBlock.dataset.votesAll = link_data.votes.up + link_data.votes.down; 		// 30  (łączna liczba głosów)
 					link_data.votes.votesDownPercent = 0;
 					link_data.votes.votesUpPercent = 0;
 
-					if (link_data.votes.all > 0)
+					if (linkBlock.dataset.votesAll > 0)
 					{
-						link_data.votes.votesDownPercent = Math.ceil(link_data.votes.down * 100 / link_data.votes.all);
-						link_data.votes.votesUpPercent = Math.ceil(link_data.votes.up * 100 / link_data.votes.all);
+						link_data.votes.votesDownPercent = Math.ceil(link_data.votes.down * 100 / linkBlock.dataset.votesAll);
+						link_data.votes.votesUpPercent = Math.ceil(link_data.votes.up * 100 / linkBlock.dataset.votesAll);
 					}
 					linkBlock.dataset.voted = link_data.voted;
 					linkBlock.dataset.commentsCount = link_data.comments.count;
@@ -1819,7 +2160,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 					sectionVoteBox.appendChild(votesDownInfo);
-					if (link_data.votes.all > 0)
+					if (linkBlock.dataset.votesAll > 0)
 					{
 						sectionVoteBox.appendChild(votesMeter);
 					}
@@ -1855,7 +2196,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		let divElement = document.createElement('div');
 		let spanElement = document.createElement('span');
 
-		// xxx
 		divElement.className = 'wykopxs_textinput_limit_info';
 		divElement.style.color = 'rgba(120, 120, 120, 1)';
 		divElement.style.fontSize = '14px';
@@ -1904,6 +2244,48 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
+
+
+
+	// TAB TITLE
+
+	/* dodaj liczbe powiadomien do tytulu strony na karcie */
+	function setNewTitle()
+	{
+
+		let showNotificationsNumberInTitleEntries = wykopxSettings.getPropertyValue("--showNotificationsNumberInTitleEntries");
+		let showNotificationsNumberInTitleTags = wykopxSettings.getPropertyValue("--showNotificationsNumberInTitleTags");
+		let showNotificationsNumberInTitleMessages = wykopxSettings.getPropertyValue("--showNotificationsNumberInTitleMessages");
+
+
+		if (settings.tabTitleSelect != "domyslnie")
+		{
+			switch (settings.tabTitleSelect)
+			{
+				case "wlasny":
+					document.title = settings.tabTitleCustom;
+					break;
+				case "interia":
+					document.title = `Interia - Polska i świat: informacje, sport, gwiazdy.`;
+					break;
+				case "digg":
+					document.title = `News and Trending Stories Around the Internet | Digg`;
+					break;
+				case "onet":
+					document.title = `Onet – Jesteś na bieżąco`;
+					break;
+				case "reddit":
+					document.title = `Reddit - Dive into anything`;
+					break;
+				case "wp":
+					document.title = `Wirtualna Polska - Wszystko co ważne`;
+					break;
+				default:
+					break;
+			}
+		}
+
+	}
 
 
 
@@ -1960,8 +2342,23 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+	/* NEW WYKOP PAGE REDIRECTION */
 	navigation.addEventListener("navigate", (event) =>
 	{
+		console.log("navigation.event: " + event.type)
+
 		consoleX(`navigation.addEventListener("navigate", (event) =>`, 1);
 		runWithDelay(hashAndPathNameLoad, 1000);
 		categoryRedirectToMicroblogButton();
@@ -1971,7 +2368,37 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		runWithDelay(quickSearchLoad, 5000);
 
 		runWithDelay(addActionBoxesToAllEntriesAndComments, 2000);
+
+		// runWithDelay(, 3000);
+		setNewTitle()
 	});
+
+	navigation.addEventListener("popstate", (event) =>
+	{
+		console.log("navigation.event: " + event.type)
+	});
+	navigation.addEventListener("hashchange", (event) =>
+	{
+		console.log("navigation.event: " + event.type)
+	});
+	navigation.addEventListener("pushstate", (event) =>
+	{
+		console.log("navigation.event: " + event.type)
+	});
+	navigation.addEventListener("replacestate", (event) =>
+	{
+		console.log("navigation.event: " + event.type)
+	});
+
+	/*
+	“popstate”: This event is fired when the active history entry changes, either by the user navigating to a different state, or by the code calling the history.pushState() or history.replaceState() methods. This event can be used to update the page content according to the new state.
+	“hashchange”: This event is fired when the fragment identifier of the URL (the part after the “#”) changes. This event can be used to implement single-page applications that use different hash values to load different views.
+	“pushstate”: This event is fired when the history.pushState() method is called, which adds a new state to the history stack. This event can be used to perform some actions when a new state is created.
+	“replacestate”: This event is fired when the history.replaceState() method is called, which modifies the current state in the history stack. This event can be used to perform some actions when the current state is changed.
+	*/
+
+
+
 
 
 	let user = {
@@ -1979,11 +2406,12 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		username: null
 	};
 
+	// lOADED PAGE
 	window.onload = function (event)
 	{
-		const topHeaderProfileButton = document.querySelector("body header > div.right > nav > ul > li.account a.avatar");
-		user.username = topHeaderProfileButton.getAttribute("href").split('/')[2];
 		// user = $("body > section > aside").data("user");
+		const topHeaderProfileButton = document.querySelector("body header > div.right > nav > ul > li.account a.avatar");
+		if (topHeaderProfileButton) user.username = topHeaderProfileButton.getAttribute("href").split('/')[2];
 
 		if (user.username == null)
 		{
@@ -2001,7 +2429,17 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		addWykopXButtonsToNavBar();
 
-		createNewProfileDropdownMenuItem("Wykop X - Informacje", "Otwórz stronę Wiki z informacjami o dodatku Wykop X", "wykopx_wiki", undefined, "http://wiki.wykopx.pl/", "_blank", null, null);
+		createNewProfileDropdownMenuItem(
+			{
+				text: `Wykop X - Informacje`,
+				title: "Otwórz stronę Wiki z informacjami o dodatku Wykop X",
+				className: `wykopx_wiki`,
+				id: undefined,
+				url: "http://wiki.wykopx.pl/",
+				target: "_self",
+				icon: null,
+				number: null
+			})
 
 		unrollDropdowns();
 		focusOnAddingNewMicroblogEntry();
@@ -2018,6 +2456,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		quickSearchLoad();
 		runWithDelay(addActionBoxesToAllEntriesAndComments, 2000);
 		addObservedTagsToRightSidebar();
+		//runWithDelay(setNewTitle(), 3000);
+		setNewTitle()
 	};
 
 })();
