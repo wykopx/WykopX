@@ -30,7 +30,7 @@
 
 
 	const currentVersion = "2.40.1";
-	const dev = false;
+	const dev = true;
 	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
 
 	// user.username - nazwa zalogowanego uzytkownika
@@ -59,8 +59,11 @@
 	let wykopxSettings = getComputedStyle(document.querySelector("body"));
 	let settings = {};
 
+	// boolean
 	settings.hitsInTopNavJS = (wykopxSettings.getPropertyValue("--hitsInTopNavJS") == `"true"`); // boolean
 	settings.votingExplosion = (wykopxSettings.getPropertyValue("--votingExplosion") == `"true"`); // boolean
+	settings.tabTitleEnabled = (wykopxSettings.getPropertyValue("--tabTitleEnabled") == `"true"`); // boolean
+	settings.tabFaviconEnabled = (wykopxSettings.getPropertyValue("--tabFaviconEnabled") == `"true"`); // boolean
 	settings.tagHeaderEditable = (wykopxSettings.getPropertyValue("--tagHeaderEditable") == `"true"`); // boolean
 	settings.myWykopInTopNavJS = (wykopxSettings.getPropertyValue("--myWykopInTopNavJS") == `"true"`); // boolean
 	settings.enableNotatkowator = (wykopxSettings.getPropertyValue("--enableNotatkowator") == `"true"`); // boolean
@@ -68,32 +71,36 @@
 	settings.favoritesInTopNavJS = (wykopxSettings.getPropertyValue("--favoritesInTopNavJS") == `"true"`); // boolean
 	settings.addNewLinkInTopNavJS = (wykopxSettings.getPropertyValue("--addNewLinkInTopNavJS") == `"true"`); // boolean
 	settings.addNewEntryInTopNavJS = (wykopxSettings.getPropertyValue("--addNewEntryInTopNavJS") == `"true"`); // boolean
+	settings.tabChangeOnlyOnHiddenState = (wykopxSettings.getPropertyValue("--tabChangeOnlyOnHiddenState") == `"true"`); // boolean
 	settings.linksAnalyzerSortByVotesCount = (wykopxSettings.getPropertyValue("--linksAnalyzerSortByVotesCount") == `"true"`); // boolean
 	settings.showObservedTagsAlphabetically = (wykopxSettings.getPropertyValue("--showObservedTagsAlphabetically") == `"true"`); // boolean
 	settings.showObservedTagsInRightSidebar = (wykopxSettings.getPropertyValue("--showObservedTagsInRightSidebar") == `"true"`); // boolean
 
 	settings.fixCaseSensitiveTagsRedirection = (wykopxSettings.getPropertyValue("--fixCaseSensitiveTagsRedirection") == `"true"`); // boolean
 
+	settings.tabTitleShowNotificationsCountPM = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountPM") == `"true"`); // boolean
+	settings.tabTitleShowNotificationsCountEntries = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountEntries") == `"true"`); // boolean
+	settings.tabTitleShowNotificationsCountTagsNewLink = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountTagsNewLink") == `"true"`); // boolean
+	settings.tabTitleShowNotificationsCountTagsNewEntry = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountTagsNewEntry") == `"true"`); // boolean
 
 
-	settings.disableNewLinkEditorPastedTextLimit = wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") ? wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") === '1' : true; //boolean - domyslnie WŁĄCZONE bez Wykop X Style
+	// boolean - domyslnie WŁĄCZONE bez Wykop X Style
+	settings.disableNewLinkEditorPastedTextLimit = wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") ? wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") === '1' : true;
 
 	settings.notatkowatorUpdateInterval = parseFloat(wykopxSettings.getPropertyValue("--notatkowatorUpdateInterval")); // number
 	settings.homepagePinnedEntriesHideBelowLimit = parseFloat(wykopxSettings.getPropertyValue("--homepagePinnedEntriesHideBelowLimit")); // number
 	settings.showObservedTagsInRightSidebarUpdateInterval = parseFloat(wykopxSettings.getPropertyValue("--showObservedTagsInRightSidebarUpdateInterval")); // number
 
-	settings.tabTitleSelect = (wykopxSettings.getPropertyValue("--tabTitleSelect"));
-	settings.tabTitleCustom = (wykopxSettings.getPropertyValue("--tabTitleCustom"));
 
-
-
-	settings.WykopXStyleVersion = (wykopxSettings.getPropertyValue("--version").trim().slice(1, -1));
+	// strings
+	settings.WykopXStyleVersion = (wykopxSettings.getPropertyValue("--version").trim().slice(1, -1)); // "2.40"
+	settings.tabTitleSelect = wykopxSettings.getPropertyValue("--tabTitleSelect").trim()
+	settings.tabTitleCustom = wykopxSettings.getPropertyValue("--tabTitleCustom").trim();
+	settings.tabFaviconSelect = wykopxSettings.getPropertyValue("--tabFaviconSelect").trim()
 
 
 	if (dev) consoleX("Settings: ", 1);
 	if (dev) console.log(settings);
-
-
 
 	// przenoszenie na tagi:                              wykop.pl/#heheszki
 	// i na profile użytkownikow:                         wykop.pl/@m__b
@@ -157,7 +164,9 @@
 		{
 			if (at || (at = getUserFromUrl(pathname))) { }
 		}
-		smartRedirectBasedOnUserAndTag(at, tag);
+
+		if (at || tag) smartRedirectBasedOnUserAndTag(at, tag);
+
 	})();
 
 
@@ -1235,21 +1244,27 @@
 				.each(function (index, value)
 				{
 					++numberOfNotifications;
+
 					$(this).addClass(`unread_${numberOfNotifications}`);
 
 					if (lastWord == "tags")
 					{
-						unreadNotifications["tags"]++;
+						++unreadNotifications["total"];
+
 						if ($(this).find(`div.content p.new-entry-with-observed-tag`).length > 0)
 						{
 							unreadNotifications["tags_new_entry_with_observed_tag"]++;
-						} else if ($(this).find(`div.content p.new-link-with-observed-tag`).length > 0)
+							++unreadNotifications["total"];
+						}
+						else if ($(this).find(`div.content p.new-link-with-observed-tag`).length > 0)
 						{
 							unreadNotifications["tags_new_link_with_observed_tag"]++;
+							++unreadNotifications["total"];
 						}
 					} else if (lastWord == "entries")
 					{
 						unreadNotifications["entries"]++;
+						++unreadNotifications["total"];
 					}
 				})
 				.parents(`.notifications.dropdown`)
@@ -1324,6 +1339,8 @@
 					number: unreadNotifications.pm
 				})
 		}
+
+		executeTabAndFaviconChanges();
 	}
 
 
@@ -1443,38 +1460,42 @@
 		</aside>*/
 		else nav_ul = document.querySelector("body header div.right nav ul");
 
-		let nav_ul_li = nav_ul.querySelector(`li.wykopx_${options.class}_li`);
-		if (!nav_ul_li)
+		if (nav_ul) // brak na wersji mobilnej
 		{
-			nav_ul_li = document.createElement("li");
-			if (options.hideWithoutXStyle == true) nav_ul_li.classList.add("wykopxs");
-			addWykopXSClassesToElement(nav_ul_li, options.class, "li") // class="wykopx_aaaaaa_li"
-
-			let nav_ul_li_a = document.createElement("a");
-			if (options.url) nav_ul_li_a.setAttribute("href", options.url);
-			if (options.href) nav_ul_li_a.setAttribute("href", options.href);
-			if (options.target) nav_ul_li_a.setAttribute("target", options.target);
-			if (options.title) nav_ul_li_a.setAttribute("title", options.title);
-			nav_ul_li_a.classList.add("hybrid");
-			if (options.class) addWykopXSClassesToElement(nav_ul_li_a, options.class);
-
-
-			let nav_ul_li_a_span = document.createElement("span");
-			nav_ul_li_a_span.textContent = options.text;
-
-			nav_ul_li_a.appendChild(nav_ul_li_a_span);
-			nav_ul_li.appendChild(nav_ul_li_a);
-
-			if (options.insertAfter != null)
+			let nav_ul_li = nav_ul.querySelector(`li.wykopx_${options.class}_li`);
+			if (!nav_ul_li)
 			{
-				let section = nav_ul.querySelector(options.insertAfter);
-				section.insertAdjacentElement('afterend', nav_ul_li);
-			}
-			else
-			{
-				nav_ul.appendChild(nav_ul_li);
+				nav_ul_li = document.createElement("li");
+				if (options.hideWithoutXStyle == true) nav_ul_li.classList.add("wykopxs");
+				addWykopXSClassesToElement(nav_ul_li, options.class, "li") // class="wykopx_aaaaaa_li"
+
+				let nav_ul_li_a = document.createElement("a");
+				if (options.url) nav_ul_li_a.setAttribute("href", options.url);
+				if (options.href) nav_ul_li_a.setAttribute("href", options.href);
+				if (options.target) nav_ul_li_a.setAttribute("target", options.target);
+				if (options.title) nav_ul_li_a.setAttribute("title", options.title);
+				nav_ul_li_a.classList.add("hybrid");
+				if (options.class) addWykopXSClassesToElement(nav_ul_li_a, options.class);
+
+
+				let nav_ul_li_a_span = document.createElement("span");
+				nav_ul_li_a_span.textContent = options.text;
+
+				nav_ul_li_a.appendChild(nav_ul_li_a_span);
+				nav_ul_li.appendChild(nav_ul_li_a);
+
+				if (options.insertAfter != null)
+				{
+					let section = nav_ul.querySelector(options.insertAfter);
+					section.insertAdjacentElement('afterend', nav_ul_li);
+				}
+				else
+				{
+					nav_ul.appendChild(nav_ul_li);
+				}
 			}
 		}
+
 	}
 
 
@@ -1730,6 +1751,201 @@
 
 
 
+	/* ------ TAB TITLE AND WEBSITE FAVICON CHANGES --------- */
+
+	let originalTabTitle = document.title;
+	const defaultWykopFacoviconURL = "https://wykop.pl/static/img/favicons/favicon.png";
+
+	let tabTitles = new Map([
+		["wlasny", settings.tabTitleCustom],
+		["wykop", "Wykop"],
+		["pusty_tytul", "ᅟᅟ"],
+		["adres_url", "           "],
+		["digg", "News and Trending Stories Around the Internet | Digg"],
+		["google", "Google"],
+		["interia", "Interia - Polska i świat: informacje, sport, gwiazdy."],
+		["onet", "Onet – Jesteś na bieżąco"],
+		["reddit", "Reddit - Dive into anything"],
+		["wp", "Wirtualna Polska - Wszystko co ważne"],
+		["x", "Home / X"],
+		["youtube", "YouTube"],
+	])
+
+	let tabFavicons = new Map([
+		["wykop", defaultWykopFacoviconURL],
+		["wykop_white", defaultWykopFacoviconURL],
+		["wykop_gray", defaultWykopFacoviconURL],
+
+		["digg", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/digg.png"],
+		["google", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/google.svg"],
+		["interia", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/interia.ico"],
+		["onet", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/onet.png"],
+		["reddit", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/reddit.png"],
+		["wp", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/wp.png"],
+		["x", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/x.png"],
+		["youtube", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/youtube.ico"],
+	])
+
+
+
+	// TAB TITLE
+	function changeDocumentTitle(new_document_title)
+	{
+		console.log("unreadNotifications")
+		console.log(unreadNotifications)
+		// changeDocumentTitle()
+		// changeDocumentTitle("youtube")
+		// changeDocumentTitle("Example new title")
+
+		/* dodaj liczbe powiadomien do tytulu strony na karcie */
+		/*
+		const unreadNotifications = {
+			tags: 0,
+			tags_new_entry_with_observed_tag: 0,
+			tags_new_link_with_observed_tag: 0,
+			entries: 0,
+			pm: 0,
+			total: 0,
+		};
+		*/
+
+		//xxx
+		let tabTitleNotifications = "";
+		let notificationsTotalCount = 0;
+
+		if (unreadNotifications["total"] > 0
+			&& (settings.tabTitleShowNotificationsCountPM
+				|| settings.tabTitleShowNotificationsCountTagsNewLink
+				|| settings.tabTitleShowNotificationsCountTagsNewEntry
+				|| settings.tabTitleShowNotificationsCountEntries))
+		{
+			let notificationsEmoji = ""; // 🔗✉📧📩
+
+			if (settings.tabTitleShowNotificationsCountTagsNewLink && unreadNotifications["tags_new_entry_with_observed_tag"] > 0)
+			{
+				notificationsTotalCount += unreadNotifications["tags_new_entry_with_observed_tag"];
+				notificationsEmoji = "#";
+			}
+
+			if (settings.tabTitleShowNotificationsCountTagsNewEntry && unreadNotifications["tags_new_entry_with_observed_tag"] > 0)
+			{
+				notificationsTotalCount += unreadNotifications["tags_new_entry_with_observed_tag"];
+				notificationsEmoji = "#";
+			}
+
+			if (settings.tabTitleShowNotificationsCountEntries && unreadNotifications["entries"] > 0)
+			{
+				notificationsTotalCount += unreadNotifications["entries"];
+				notificationsEmoji = "🔔";
+			}
+
+			if (settings.tabTitleShowNotificationsCountPM && unreadNotifications["pm"] > 0)
+			{
+				notificationsTotalCount += unreadNotifications["pm"];
+				notificationsEmoji = "📧";
+			}
+
+			tabTitleNotifications = `${notificationsEmoji}${notificationsTotalCount}ᅟ`;
+		}
+
+		console.log(new_document_title)
+		console.log("new_document_title")
+		if (tabTitles.has(new_document_title))
+		{
+			document.title = `${notificationsTotalCount == 0 ? "" : tabTitleNotifications}${tabTitles.get(new_document_title)}`;
+		}
+		else document.title = `${notificationsTotalCount == 0 ? "" : tabTitleNotifications}${new_document_title}`;
+
+
+	}
+
+
+	// FAVICON ICO
+	function changeDocumentFavicon(new_favicon = defaultWykopFacoviconURL)
+	{
+		// changeDocumentFavicon()
+		// changeDocumentFavicon("reddit")
+		// changeDocumentFavicon("https://www.interia.pl/favicon.ico")
+		// <link rel="icon" type="image/svg+xml" href="/static/img/favicons/favicon.svg">
+		// <link rel="alternate icon" type="image/png" href="/static/img/favicons/favicon.png">
+		let oldFaviconElement = document.querySelector('link[rel="icon"]');
+		let alternateFaviconElement = document.querySelector('link[rel="alternate icon"]');
+		if (oldFaviconElement) document.head.removeChild(oldFaviconElement);
+		if (alternateFaviconElement) document.head.removeChild(alternateFaviconElement);
+
+		let selectedFaviconURL = new_favicon;
+		if (tabFavicons.has(new_favicon)) selectedFaviconURL = tabFavicons.get(new_favicon);
+
+		const faviconLinkElement = document.createElement('link');
+		faviconLinkElement.rel = 'icon';
+		faviconLinkElement.type = 'image/x-icon'; // "image/svg+xml" "image/png"
+		faviconLinkElement.href = selectedFaviconURL + '?=' + Math.random();
+
+		document.head.appendChild(faviconLinkElement);
+	}
+
+
+
+	function executeTabAndFaviconChanges()
+	{
+		if (document.hidden || !settings.tabChangeOnlyOnHiddenState)
+		{
+			if (settings.tabFaviconEnabled) changeDocumentFavicon(settings.tabFaviconSelect);
+			if (settings.tabTitleEnabled) changeDocumentTitle(settings.tabTitleSelect);
+		}
+	}
+
+
+	// TITLE MUTATION
+
+	let titleMutationObserver = new MutationObserver(mutationsList =>
+	{
+		// console.log("titleMutationObserver")
+		// console.log(mutationsList);
+
+		for (let mutation of mutationsList)
+		{
+			if (mutation.type === 'childList')
+			{
+				console.log(`Nowy tytuł strony: ${mutation.addedNodes[0].textContent}`);
+
+				titleMutationObserver.disconnect();
+				executeTabAndFaviconChanges();
+				titleMutationObserver.observe(document.querySelector('title'), { childList: true, })
+
+			}
+		}
+	});
+	titleMutationObserver.observe(document.querySelector('title'), { childList: true, })
+
+
+	// EVENT: KARTA JEST W TLE document.hidden == true
+	// https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
+	// https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilitychange_event
+	function handleVisibilityChange()
+	{
+		// document.visibilityState > "visible"/"hidden"
+		// document.hidden > true/false
+		// document.title = document.visibilityState;
+
+		if (document.hidden)
+		{
+			executeTabAndFaviconChanges();
+			console.log(`document.hidden -> true > document.visibilityState: ${document.visibilityState}`);
+		}
+		else
+		{
+			if (settings.tabChangeOnlyOnHiddenState)
+			{
+				if (settings.tabTitleEnabled) changeDocumentTitle(originalTabTitle);
+				if (settings.tabFaviconEnabled) changeDocumentFavicon();
+			}
+		}
+	}
+	document.addEventListener("visibilitychange", handleVisibilityChange, false); // ICO PNG GIF JPEG SVG
+
+
+
 
 
 
@@ -1737,68 +1953,119 @@
 
 	// RATING BOX - <section class="rating-box"> -> PLUSOWANIE I MINUSOWANIE
 
+	// plusy we wpisach (.rating-box), plusy wpisow w sidebarze (bez rating-box), plusy w znaleziskach
+	// rating box - mozliwosc plusowania / minusowania
+	// runWithDelay(1000, function ()
+	// {
+	// 	waitForKeyElements("section.entry:not(.reply) > article > header > div.right > div > section.rating-box", ratingBoxDetected, false);
+	// })
+	waitForKeyElements("section.entry:not(.deleted) > article > header > div.right > div > section.rating-box", ratingBoxDetected, false);
+	// waitForKeyElements("section.entry:not(.reply) > article > header > div.right > div > section.rating-box", ratingBoxDetected, false);
 
-	let observerOptions = {
-		root: null,
-		rootMargin: "-120px 0px -120px 0px",
-		threshold: 1.0, // [0.25, 0.5, 0.75, 1.0]
-	};
+	function ratingBoxDetected(jNodeRatingBoxSection)
+	{
+		const ratingBoxSection = jNodeRatingBoxSection[0]; //  =jNode > DOMElement
+		visiblePlusesObserver.observe(ratingBoxSection); // IntersectionObserver 
+	}
+
 	const intersectionCallback = (intersectingPluses, observer) => // function intersectionCallback(entries, observer)
 	{
 		let timeoutId = null;
-		let fetchSeconds = 30;
+		let fetchSeconds = 12;
 
 		intersectingPluses.forEach((plus) =>
 		{
 			let plus_target = plus.target; // element <select class="rating-box">
-			// console.log("plus_target");
+			console.log("intersectionCallback: possible intersection element detected 'plus_target'");
 			// console.log(plus_target);
+
+			if (settings.votingExplosion) votingExplosionEventListener(plus_target);
 
 			if (plus.isIntersecting)
 			{
-				plus_target.style.borderBottom = "2px solid green";
+				// console.log("intersectionCallback: new ratingBox is intersecting")
+				plus_target.classList.add("isIntersecting");
+				plus_target.classList.remove("notIntersecting");
+				parseRatingBoxCurrentContentAndCreateDataValues(plus_target);
+
 				timeoutId = setInterval(() => checkPluses(plus_target), fetchSeconds * 1000);
 			}
 			else
 			{
 				clearInterval(timeoutId);
-				plus_target.style.borderBottom = "6px solid red";
+				plus_target.classList.remove("isIntersecting");
+				plus_target.classList.add("notIntersecting");
 			}
 		});
+
+		// intersectingPluses.forEach((plus) =>
+		// {
+		// 	let plus_target = plus.target; // element <select class="rating-box">
+		// 	console.log("possible intersectionElement detected plus_target");
+
+		// 	let plusTimeoutId = null;
+		// 	if (plus.isIntersecting)
+		// 	{
+		// 		console.log("new intersecting plus")
+		// 		if (settings.votingExplosion) votingExplosionEventListener(plus_target);
+		// 		plus_target.classList.add("isIntersecting");
+		// 		plus_target.classList.remove("notIntersecting");
+		// 		parseRatingBoxCurrentContentAndCreateDataValues(plus_target);
+
+		// 		plusTimeoutId = setTimeout(() =>
+		// 		{
+		// 			clearTimeout(plusTimeoutId);
+		// 			plusTimeoutId = setInterval(() => checkPluses(plus_target), fetchSeconds * 1000);
+		// 		});
+		// 	}
+		// 	else
+		// 	{
+		// 		clearTimeout(plusTimeoutId);
+		// 		plus_target.classList.remove("isIntersecting");
+		// 		plus_target.classList.add("notIntersecting");
+		// 	}
+		// });
+
+
+
+
 	};
+	let observerOptions = { root: null, rootMargin: "-70px 0px -120px 0px", threshold: 1.0, /* [0.25, 0.5, 0.75, 1.0] */ };
 	const visiblePlusesObserver = new IntersectionObserver(intersectionCallback, observerOptions)
 
-	/* returns:
-	{
-		resource: "entry"
-		block: DOMElement,
-		id: 123456,
-		entry: DOMElement,
-		entry_id: 123456,
-	}
-	or
-	{
-		resource: "entry_comment"
-		block: DOMElement
-		id: 12345678,
-		entry: DOMElement,
-		entry_id: 123456,
-		comment: DOMElement,
-		comment_id: 12345678,
-	}
-	or
-	{
-		resource: "link_comment"
-		block: DOMElement
-		id: 12345678,
-		entry: DOMElement,
-		entry_id: 123456,
-		link_id: 12345678,
-	}
-	*/
+
 
 	function getEntryBlocks(elem)
 	{
+		/* returns:
+		{
+			resource: "entry"
+			element: DOMElement,
+			id: 123456,
+			entry: DOMElement,
+			entry_id: 123456,
+		}
+		or
+		{
+			resource: "entry_comment"
+			element: DOMElement
+			id: 12345678,
+			entry: DOMElement,
+			entry_id: 123456,
+			comment: DOMElement,
+			comment_id: 12345678,
+		}
+		or
+		{
+			resource: "link_comment"
+			element: DOMElement
+			id: 12345678,
+			entry: DOMElement,
+			entry_id: 123456,
+			link_id: 12345678,
+		}
+		*/
+
 		let blocks = {
 			votesUp: 0,
 			votesDown: 0,
@@ -1808,8 +2075,8 @@
 			separated: false,
 		};
 
-		blocks.block = elem.closest('section.entry'); // returns the section element
-		blocks.id = blocks.block.id.replace('comment-', '');
+		blocks.element = elem.closest('section.entry'); // returns the section element above .rating-box
+		blocks.id = blocks.element.id.replace('comment-', ''); // entry/comment id
 
 		/*
 			['', 'wpis', '74111643', 'dobranoc-panstwu']
@@ -1819,75 +2086,72 @@
 		if (pathnameArray[1] == "link") // znalezisko
 		{
 			// PODKOMENTARZ W ZNALEZISKU
-			if (blocks.block.classList.contains("reply"))
+			if (blocks.element.classList.contains("reply"))
 			{
 				return null;
 			}
 			// KOMENTARZ POD ZNALEZISKIEM
 			else
 			{
+				return null;
 				blocks.link_id = pathnameArray[2]; // id
-
-				blocks.entry = blocks.block;
-				blocks.entry_id = blocks.entry.id.replace('comment-', '');
+				blocks.entry_element = blocks.element;
+				blocks.entry_id = blocks.entry_element.id.replace('comment-', '');
 				blocks.resource = "link_comment";
 				blocks.fetchURL = `https://wykop.pl/api/v3/links/${blocks.link_id}/comments/${blocks.entry_id}`;
-				blocks.entry.dataset.resource = "link_comment";
+				blocks.entry_element.dataset.resource = "link_comment";
 			}
 		}
 		// KOMENTARZP OD WPISEM
-		else if (blocks.block.classList.contains("reply"))
+		else if (blocks.element.classList.contains("reply"))
 		{
-			blocks.comment = blocks.block;
-			blocks.entry = blocks.comment.parentNode.closest('section.entry');
-			blocks.resource = "entry_comment"; // komentarz pod wpisem
-			blocks.comment_id = blocks.comment.id.replace('comment-', '');
-			blocks.entry_id = blocks.entry.id.replace('comment-', '');
-			blocks.fetchURL = `https://wykop.pl/api/v3/entries/${blocks.entry_id}/comments/${blocks.comment_id}`;
+			// return null;
 
-			blocks.comment.dataset.resource = "entry_comment";
+			blocks.comment_element = blocks.element;
+			blocks.entry_element = blocks.comment_element.parentNode.closest('section.entry');
+			blocks.entry_id = blocks.entry_element.id.replace('comment-', '');
+
+			blocks.resource = "entry_comment"; // komentarz pod wpisem
+			blocks.comment_id = blocks.comment_element.id.replace('comment-', '');
+			blocks.fetchURL = `https://wykop.pl/api/v3/entries/${blocks.entry_id}/comments/${blocks.comment_id}`;
+			blocks.comment_element.dataset.resource = "entry_comment";
 		}
 		// WPIS NA MIKROBLOGU
 		else
 		{
-			blocks.entry = blocks.block;
-			blocks.entry_id = blocks.entry.id.replace('comment-', '');
+			blocks.entry_element = blocks.element;
+			blocks.entry_id = blocks.entry_element.id.replace('comment-', '');
 			blocks.resource = "entry";
 			blocks.fetchURL = `https://wykop.pl/api/v3/entries/${blocks.entry_id}`;
 
-			blocks.entry.dataset.resource = "entry";
+			blocks.entry_element.dataset.resource = "entry";
 		}
 
-		// console.log("blocks.block");
-		// console.log(blocks.block);
+		// console.log("blocks.element");
+		// console.log(blocks.element);
 
 
-		let plusElement = blocks.block.querySelector("section.rating-box > ul > li.plus"); // 12 <li class="plus separated">
-		if (plusElement)
+		let plus_element = blocks.element.querySelector("section.rating-box > ul > li.plus"); // 12 <li class="plus separated">
+		if (plus_element)
 		{
-			console.log("plusElement");
-			console.log(plusElement);
-			blocks.separated = plusElement.classList.contains('separated');
-			blocks.votesUp = parseInt(plusElement.textContent);
+			blocks.separated = plus_element.classList.contains('separated');
+			blocks.votesUp = parseInt(plus_element.textContent);
 		}
 
-		let zeroElement = blocks.block.querySelector(".rating-box li.zero"); // 0 <li class="zero separated">
-		if (zeroElement)
+		// let zero_element = blocks.element.querySelector(".rating-box li.zero"); // 0 <li class="zero separated">
+		// if (zero_element)
+		// {
+		// 	blocks.separated = zero_element.classList.contains('separated');
+		// 	blocks.votesUp = 0;
+		// }
+
+		let minus_element = blocks.element.querySelector(".rating-box li.minus"); // -8
+		if (minus_element)
 		{
-			console.log("zeroElement");
-			console.log(zeroElement);
-
-			blocks.separated = zeroElement.classList.contains('separated');
-			blocks.votesUp = 0;
+			blocks.votesDown = Math.abs(parseInt(minus_element.textContent));	// 3 (dodatnia)
 		}
-
-		let minusElement = blocks.block.querySelector(".rating-box li.minus"); // -8
-		if (minusElement)
-		{
-			console.log("minusElement");
-			console.log(minusElement);
-			blocks.votesDown = Math.abs(parseInt(minusElement.textContent));	// 3 (dodatnia)
-		}
+		blocks.entry_element.dataset.votesUp = blocks.votesUp;
+		blocks.entry_element.dataset.votesDown = blocks.votesDown;
 
 		// console.log("blocks");
 		// console.log(blocks);
@@ -1896,15 +2160,27 @@
 	}
 
 
-	function checkPluses(entryElem)
+	function checkPluses(entry_element)
 	{
-		if (entryElem)
+		// console.log("checkPluses: entry_element")
+		// console.log(entry_element);
+
+		if (entry_element)
 		{
-			const entryBlocksData = getEntryBlocks(entryElem);
+			const entryBlocksData = getEntryBlocks(entry_element);
 
 			if (entryBlocksData) // nie dla subkomentarzy
 			{
-				let entryBlock = entryBlocksData.block;
+				let entry_element = entryBlocksData.element;
+				entry_element.classList.remove("addedPluses");
+				entry_element.classList.remove("removedPluses");
+				entry_element.classList.remove("addedMinuses");
+				entry_element.classList.remove("removedMinuses");
+
+				entry_element.style.removeProperty('--addedPluses');
+				entry_element.style.removeProperty('--removedPluses');
+				entry_element.style.removeProperty('--addedMinuses');
+				entry_element.style.removeProperty('--removedMinuses');
 
 				console.log("API fetch: " + entryBlocksData.fetchURL);
 
@@ -1919,73 +2195,112 @@
 					.then(x => x.json())
 					.then(data =>
 					{
-						const entry_data = data.data;
-						console.log(entry_data);
+						const entry_fetched_data = data.data;
+						// console.log("fetched data from API: entry_fetched_data");
+						// console.log(entry_fetched_data);
 
-						entryBlock.dataset.votesUp = entry_data.votes.up;								// 10
-						entryBlock.dataset.votesDown = entry_data.votes.down;							// 20  - dodatnia nie dotyczy entry, entry_comment
-
-						entryBlock.dataset.votesCount = entryBlock.dataset.votesUp - entryBlock.dataset.votesDown;		// -10 (suma plusów i minusów nie dotyczy entry, entry_comment)
-						entryBlock.dataset.votesAll = entryBlock.dataset.votesUp - entryBlock.dataset.votesDown; 		// 30  (łączna liczba głosów nie dotyczy entry, entry_comment)
-
-						entry_data.votes.votesUpPercent = 0;											// nie dotyczy entry, entry_comment zawsze 100%
-						entry_data.votes.votesDownPercent = 0;											// nie dotyczy entry, entry_comment
-
-						if (entryBlock.dataset.votesAll > 0)
-						{
-							entry_data.votes.votesDownPercent = Math.ceil(entry_data.votes.down * 100 / entryBlock.dataset.votesAll);
-							entry_data.votes.votesUpPercent = Math.ceil(entry_data.votes.up * 100 / entryBlock.dataset.votesAll);
-						}
-						entryBlock.dataset.voted = entry_data.voted;
-
-						if (entryBlocksData.resource == "entry" || entryBlocksData.resource == "link_comment")
-						{
-							entryBlock.dataset.commentsCount = entry_data.comments.count;
-						}
+						entry_fetched_data.votes.votesCount = entry_fetched_data.votes.up - entry_fetched_data.votes.down; 		// -10 (suma plusów i minusów nie dotyczy entry, entry_comment)
+						entry_fetched_data.votes.votesAll = entry_fetched_data.votes.up + entry_fetched_data.votes.down; 		// 30  (łączna liczba głosów nie dotyczy entry, entry_comment)
+						entry_fetched_data.votes.votesUpPercent = 0;															// nie dotyczy entry, entry_comment zawsze 100%
+						entry_fetched_data.votes.votesDownPercent = 0;															// nie dotyczy entry, entry_comment
 
 						// ile plusów przybyło/ubyło
-						let plusesDelta = entryBlock.dataset.votesUp - entryBlocksData.votesUp;
-						if (plusesDelta != 0)
+						let plusesDelta = entry_fetched_data.votes.up - entry_element.dataset.votesUp;
+						let minusesDelta = entry_fetched_data.votes.down - entry_element.dataset.votesDown;
+
+						// console.log("entry_element.dataset.votesUp: " + entry_element.dataset.votesUp)
+						// console.log("entry_element.dataset.votesDown: " + entry_element.dataset.votesDown)
+						// console.log("entry_fetched_data.votes.up: " + entry_fetched_data.votes.up)
+						// console.log("entry_fetched_data.votes.down: " + entry_fetched_data.votes.down)
+						// console.log("plusesDelta " + plusesDelta)
+						// console.log("minusesDelta:  " + minusesDelta)
+
+
+						entry_element.dataset.votesUp = entry_fetched_data.votes.up;											// 10
+						entry_element.dataset.votesDown = entry_fetched_data.votes.down;										// 20  - dodatnia nie dotyczy entry, entry_comment
+						entry_element.dataset.votesCount = entry_fetched_data.votes.votesCount;									// -10 (suma plusów i minusów nie dotyczy entry, entry_comment)
+						entry_element.dataset.votesAll = entry_fetched_data.votes.votesAll; 									// 30  (łączna liczba głosów nie dotyczy entry, entry_comment)
+
+
+						if (entry_fetched_data.votes.votesAll > 0)
 						{
-							console.log("Zmienila sie liczba plusow - plusesDelta:" + plusesDelta);
-							console.log("entryBlock.votesUp:" + entryBlock.votesUp);
-							console.log("entryBlock.dataset.votesUp:" + entryBlock.dataset.votesUp);
-							// if() zamiana li.zero na li.plus
-							entryBlock.querySelector("section.rating-box > ul > li.plus").textContent = entryBlock.dataset.votesUp;
+							entry_fetched_data.votes.votesDownPercent = Math.ceil(entry_fetched_data.votes.down * 100 / entry_fetched_data.votes.votesAll);
+							entry_fetched_data.votes.votesUpPercent = Math.ceil(entry_fetched_data.votes.up * 100 / entry_fetched_data.votes.votesAll);
 						}
 
-						let minusesDelta = entryBlock.dataset.votesDown - entryBlocksData.votesDown;
+						entry_element.dataset.voted = entry_fetched_data.voted;
+						if (entryBlocksData.resource == "entry" || entryBlocksData.resource == "link_comment")
+						{
+							entry_element.dataset.commentsCount = entry_fetched_data.comments.count;
+						}
+
+						console.log("entryBlocksData:");
+						console.log(entryBlocksData);
+
+						console.log("entry_element.dataset:");
+						console.log(entry_element.dataset);
+
+
+						if (plusesDelta != 0)
+						{
+							// console.log("Zmienila sie liczba plusow - plusesDelta:" + plusesDelta);
+							// console.log("entry_element.dataset.votesUp:" + entry_element.dataset.votesUp);
+							// if() zamiana li.zero na li.plus
+							let plusLi = entry_element.querySelector("section.rating-box > ul > li.plus");
+							if (!plusLi) plusLi = entry_element.querySelector("section.rating-box > ul > li.zero");
+							plusLi.textContent = entry_element.dataset.votesUp;
+
+							if (plusesDelta > 0)
+							{
+								entry_element.style.setProperty('--addedPluses', JSON.stringify(plusesDelta.toString()));
+								entry_element.classList.add("addedPluses");
+							}
+							else
+							{
+								entry_element.style.setProperty('--removedPluses', JSON.stringify(plusesDelta.toString()));
+								entry_element.classList.add("removedPluses");
+							}
+						}
+
 						if (minusesDelta != 0)
 						{
-							console.log("Zmienila sie liczba minusow - minusesDelta:" + minusesDelta);
-							console.log("entryBlock.votesDown:" + entryBlock.votesDown);
-							console.log("entryBlock.dataset.votesDown:" + entryBlock.dataset.votesDown);
+							let minusLi = entry_element.querySelector("section.rating-box > ul > li.minus");
+							if (minusLi) minusLi.textContent = entry_element.dataset.votesDown;
 
-							entryBlock.querySelector("section.rating-box > ul > li.minus").textContent = entryBlock.dataset.votesDown;
 
+							if (minusesDelta > 0)
+							{
+								entry_element.style.setProperty('--addedMinuses', JSON.stringify(plusesDelta.toString()));
+								entry_element.classList.add("addedMinuses");
+							}
+							else
+							{
+								entry_element.style.setProperty('--removedMinuses', JSON.stringify(plusesDelta.toString()));
+								entry_element.classList.add("removedMinuses");
+							}
 						}
 
 						// console.log("entryBlocksData:")
 						// console.log(entryBlocksData)
 
-						// console.log("entryBlock.dataset:")
-						// console.log(entryBlock.dataset)
+						// console.log("entry_element.dataset:")
+						// console.log(entry_element.dataset)
 
-						// console.log("entry_data (fetched):")
-						// console.log(entry_data)
+						// console.log("entry_fetched_data (fetched):")
+						// console.log(entry_fetched_data)
 
-						// entryBlock.dataset.tags = entry_data.tags;
-						// entryBlock.dataset.device = entry_data.device;
-						// entryBlock.dataset.voted = entry_data.voted;
-						// entryBlock.dataset.adult = entry_data.adult;
-						// entryBlock.dataset.tags = entry_data.tags;
-						// entryBlock.dataset.favourite = entry_data.favourite;
-						// entryBlock.dataset.deletable = entry_data.deletable;
-						// entryBlock.dataset.editable = entry_data.editable;
-						// entryBlock.dataset.slug = entry_data.slug;
-						// entryBlock.dataset.parent_id = entry_data.parent_id;
-						// entryBlock.dataset.resource = entry_data.resource; // "entry"
-						// entryBlock.dataset.deleted = entry_data.deleted;
+						// entry_element.dataset.tags = entry_fetched_data.tags;
+						// entry_element.dataset.device = entry_fetched_data.device;
+						// entry_element.dataset.voted = entry_fetched_data.voted;
+						// entry_element.dataset.adult = entry_fetched_data.adult;
+						// entry_element.dataset.tags = entry_fetched_data.tags;
+						// entry_element.dataset.favourite = entry_fetched_data.favourite;
+						// entry_element.dataset.deletable = entry_fetched_data.deletable;
+						// entry_element.dataset.editable = entry_fetched_data.editable;
+						// entry_element.dataset.slug = entry_fetched_data.slug;
+						// entry_element.dataset.parent_id = entry_fetched_data.parent_id;
+						// entry_element.dataset.resource = entry_fetched_data.resource; // "entry"
+						// entry_element.dataset.deleted = entry_fetched_data.deleted;
 					});
 			}
 		}
@@ -1998,199 +2313,156 @@
 
 
 
-	// KARTA W TLE
-	// https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
-	// https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilitychange_event
-	function handleVisibilityChange()
-	{
-		// document.visibilityState > "visible"/"hidden"
-		// document.hidden > true/false
-		// document.title = document.visibilityState;
-
-		if (document.hidden)
-		{
-
-		}
-		else
-		{
-
-		}
-	}
-	document.addEventListener("visibilitychange", handleVisibilityChange, false);
-
-
-
-
 
 	// <section class="rating-box" data-pluses="269" data-minuses="0" data-pluses-minuses-total="269" data-pluses-below-limit="true">
-	function addRatingCountData(ratingBox)
+	function parseRatingBoxCurrentContentAndCreateDataValues(ratingBoxSection)
 	{
-		console.log("addRatingCountData(ratingBox)")
-		console.log(ratingBox);
+		// dodanie data-pluses na podstawie aktualnych wartosci plusow w HTML
+		// console.log("parseRatingBoxCurrentContentAndCreateDataValues(ratingBoxSection)")
 
-		let plusBtn = ratingBox.querySelector('li.plus');
-		if (!plusBtn) plusBtn = ratingBox.querySelector('li.zero')
+		const minusLi = ratingBoxSection.querySelector('li.minus');
+		let plusLi = ratingBoxSection.querySelector('li.plus');
+		if (!plusLi) plusLi = ratingBoxSection.querySelector('li.zero')
+		let votesUp = plusLi ? plusLi.textContent : 0; 				// 5liczba plusów
+		let votesDown = minusLi ? -1 * minusLi.textContent : 0; 	// 15 liczba minusów (dodatnia)
+		let votesCount = votesUp - votesDown;						// -10 suma plusów i minusów
+		let votesAll = votesUp + votesDown;							// 20 liczba glosow
 
-		let plusesCount = plusBtn ? plusBtn.textContent : 0;
-		const minusBtn = ratingBox.querySelector('li.minus');
-		let minusesCount = minusBtn ? -1 * minusBtn.textContent : 0;
-		let plusesMinusesTotal = plusesCount - minusesCount;
-		ratingBox.dataset.pluses = plusesCount;
-		ratingBox.dataset.minuses = minusesCount;
-		ratingBox.dataset.plusesMinusesTotal = plusesMinusesTotal;
 
-		const homepagePinnedEntriesPlusesLimit = settings.homepagePinnedEntriesHideBelowLimit; // limit ukrywania wpisow przypietych na glownej
+		ratingBoxSection.dataset.votesUp = votesUp;
+		ratingBoxSection.dataset.votesDown = votesDown;
+		ratingBoxSection.dataset.votesCount = votesCount;
+		ratingBoxSection.dataset.votesAll = votesAll;
+
+		// limit ukrywania wpisow przypietych na glownej
+		const homepagePinnedEntriesPlusesLimit = settings.homepagePinnedEntriesHideBelowLimit;
 		if (homepagePinnedEntriesPlusesLimit > 0)
 		{
-			let plusesBelowLimit = (plusesMinusesTotal < homepagePinnedEntriesPlusesLimit ? true : false); // czy wpis jest poniżej limitu ukrywania wpisow przypietych na glownej
-			ratingBox.dataset.plusesBelowLimit = plusesBelowLimit;
+			// czy wpis jest poniżej limitu ukrywania wpisow przypietych na glownej
+			let plusesBelowLimit = (votesCount < homepagePinnedEntriesPlusesLimit ? true : false);
+			ratingBoxSection.dataset.plusesBelowLimit = plusesBelowLimit;
 		}
 	}
 
 
 
-	// plusy we wpisach (.rating-box), plusy wpisow w sidebarze (bez rating-box), plusy w znaleziskach
-
-
-	// rating box - mozliwosc plusowania / minusowania
-
-	// xxx
-	runWithDelay(100, function ()
+	// VOTING EXPLOSION
+	function votingExplosionEventListener(ratingBoxSection)
 	{
-		waitForKeyElements("section.rating-box", ratingBox, false);
-	})
-
-
-	function ratingBox(jNodeRatingBox)
-	{
-
-		const ratingBox = jNodeRatingBox[0]; //  =jNode > DOMElement
-		visiblePlusesObserver.observe(ratingBox); // IntersectionObserver
-		addRatingCountData(ratingBox);
-
-		if (settings.votingExplosion)
+		ratingBoxSection.addEventListener('click', function (event)
 		{
-			votingExplosion(ratingBox);
-		}
+			var clickedButton = event.target;
 
+			console.log(clickedButton);
 
+			let count = 0;
+			let vote = "voted"; // "voted", "unvoted"
+			let action = "plused"; // "plused", "minused"
+			let sign = "+";
 
+			let plusLi = ratingBoxSection.querySelector('li.plus');
+			if (!plusLi) plusLi = ratingBoxSection.querySelector('li.zero');
+			let minusLi = ratingBoxSection.querySelector('button.plus');
 
+			let votesUp = plusLi ? plusLi.textContent : 0;
+			let votesDown = minusLi ? -1 * minusLi.textContent : 0;
 
-		// VOTING EXPLOSION
-		function votingExplosion(ratingBox)
-		{
-			ratingBox.addEventListener('click', function (event)
+			if (clickedButton.matches('button.plus.voted'))			// dodano plusa
 			{
-				var clickedButton = event.target;
+				action = "plused";
+				vote = "voted";
+				count = votesUp;
+			}
+			else if (clickedButton.matches('button.plus:not(.voted)'))	// usunieto plusa
+			{
+				action = "plused";
+				vote = "unvoted";
+				count = votesUp;
+			}
+			else if (clickedButton.matches('button.minus.voted')) 		//  dodano minusa
+			{
+				action = "minused";
+				vote = "voted";
+				sign = "-";
+				count = votesDown;
+			}
+			else if (clickedButton.matches('button.minus:not(.voted)')) // usunięto minusa
+			{
+				action = "minused";
+				vote = "unvoted";
+				sign = "-";
+				count = votesDown;
+			}
 
-				let count = 0;
-				let vote = "voted"; // "voted", "unvoted"
-				let action = "plused"; // "plused", "minused"
-				let sign = "+";
+			if (vote == "voted")
+			{
+				let min_x = -60;
+				let max_x = 60;
+				let min_y = -60;
+				let max_y = -20;
 
-				plusesCount = plusBtn ? plusBtn.textContent : 0;
-				minusesCount = minusBtn ? -1 * minusBtn.textContent : 0;
+				if (count > 30) max_y = 60;
+				if (count > 300) { min_x = -90; max_x = 90; }
 
-				if (clickedButton.matches('button.plus.voted'))			// dodano plusa
+				// let particlesCount = (count > 110 ? Math.ceil(count / 10) : count);
+				let particlesCount = count;
+				if (particlesCount > 2000) particlesCount = 200;
+				else if (particlesCount > 690) particlesCount = particlesCount / 10;
+				else if (particlesCount > 345) particlesCount = particlesCount / 5;
+				else if (particlesCount > 39) particlesCount = 39;
+
+
+				var newDivs = [];
+
+				for (var i = 0; i < particlesCount; i++)
 				{
-					action = "plused";
-					vote = "voted";
-					count = plusesCount;
-				}
-				else if (clickedButton.matches('button.plus:not(.voted)'))	// usunieto plusa
-				{
-					action = "plused";
-					vote = "unvoted";
-					count = plusesCount;
-				}
-				else if (clickedButton.matches('button.minus.voted')) 		//  dodano minusa
-				{
-					action = "minused";
-					vote = "voted";
-					sign = "-";
-					count = minusesCount;
-				}
-				else if (clickedButton.matches('button.minus:not(.voted)')) // usunięto minusa
-				{
-					action = "minused";
-					vote = "unvoted";
-					sign = "-";
-					count = minusesCount;
-				}
+					var newDiv = document.createElement('div');
+					newDiv.textContent = sign;
 
-				if (vote == "voted")
-				{
-					let min_x = -60;
-					let max_x = 60;
-					let min_y = -60;
-					let max_y = -20;
+					newDiv.classList.add(`wykopxs_vote_animation`, `wykopxs_${vote}`, `wykopxs_${action}`); // class="wykopxs_vote_animation wykopxs_voted wykopxs_plused"
 
-					if (count > 30) max_y = 60;
-					if (count > 300) { min_x = -90; max_x = 90; }
-
-					// let particlesCount = (count > 110 ? Math.ceil(count / 10) : count);
-					let particlesCount = count;
-					if (particlesCount > 2000) particlesCount = 200;
-					else if (particlesCount > 690) particlesCount = particlesCount / 10;
-					else if (particlesCount > 345) particlesCount = particlesCount / 5;
-					else if (particlesCount > 39) particlesCount = 39;
-
-
-					var newDivs = [];
-
-					for (var i = 0; i < particlesCount; i++)
+					let color = (sign === "+" ? "green" : "red");
+					if (sign === "+")
 					{
-						var newDiv = document.createElement('div');
-						newDiv.textContent = sign;
-
-						newDiv.classList.add(`wykopxs_vote_animation`, `wykopxs_${vote}`, `wykopxs_${action}`); // class="wykopxs_vote_animation wykopxs_voted wykopxs_plused"
-
-						let color = (sign === "+" ? "green" : "red");
-						if (sign === "+")
-						{
-							if (count >= 666 && getRandomInt(1, 10) == 1) color = "golden";
-							if (count > 100 && count < 666 && getRandomInt(1, 80) == 1) newDiv.textContent = "💚";;
-						}
-						if (count > 100 && getRandomInt(1, 30) == 1) 
-						{
-							min_x += getRandomInt(-30, 30); max_x += getRandomInt(-30, 30)
-							min_y -= getRandomInt(-30, 30); max_y -= getRandomInt(-30, 30);
-						}
-
-						newDiv.classList.add(`wykopxs_${color}`);
-
-						newDiv.style.setProperty('--position_x', getRandomInt(min_x, max_x, "px"));
-						newDiv.style.setProperty('--position_y', getRandomInt(min_y, max_y, "px"));
-						newDiv.style.setProperty('--position_z', 0);
-						if (count > 30)
-						{
-							newDiv.style.setProperty('--explosionTiming',
-								getRandomString("linear", "ease", "ease-in-out", "ease-in", "ease-out")); // "cubic-bezier(0.1, 0.7, 1, 0.1)"
-							newDiv.style.setProperty('--explosionDelay', getRandomInt(0, getRandomInt(0, Math.max(800, count)), "ms"));
-							newDiv.style.setProperty('--explosionDuration', getRandomInt(900, 1300), "ms");
-						}
-
-						clickedButton.after(newDiv);
-						newDivs.push(newDiv);
+						if (count >= 666 && getRandomInt(1, 10) == 1) color = "golden";
+						if (count > 100 && count < 666 && getRandomInt(1, 80) == 1) newDiv.textContent = "💚";;
+					}
+					if (count > 100 && getRandomInt(1, 30) == 1) 
+					{
+						min_x += getRandomInt(-30, 30); max_x += getRandomInt(-30, 30)
+						min_y -= getRandomInt(-30, 30); max_y -= getRandomInt(-30, 30);
 					}
 
-					addRatingCountData(ratingBox);
+					newDiv.classList.add(`wykopxs_${color}`);
 
-					setTimeout(function ()
+					newDiv.style.setProperty('--position_x', getRandomInt(min_x, max_x, "px"));
+					newDiv.style.setProperty('--position_y', getRandomInt(min_y, max_y, "px"));
+					newDiv.style.setProperty('--position_z', 0);
+					if (count > 30)
 					{
-						for (var i = 0; i < newDivs.length; i++)
-						{
-							newDivs[i].parentNode.removeChild(newDivs[i]);
-						}
+						newDiv.style.setProperty('--explosionTiming',
+							getRandomString("linear", "ease", "ease-in-out", "ease-in", "ease-out")); // "cubic-bezier(0.1, 0.7, 1, 0.1)"
+						newDiv.style.setProperty('--explosionDelay', getRandomInt(0, getRandomInt(0, Math.max(800, count)), "ms"));
+						newDiv.style.setProperty('--explosionDuration', getRandomInt(900, 1300), "ms");
+					}
 
-					}, 2500);
+					clickedButton.after(newDiv);
+					newDivs.push(newDiv);
 				}
-			});
-		}
+
+				parseRatingBoxCurrentContentAndCreateDataValues(ratingBoxSection);
+
+				setTimeout(function ()
+				{
+					for (var i = 0; i < newDivs.length; i++)
+					{
+						newDivs[i].parentNode.removeChild(newDivs[i]);
+					}
+
+				}, 2500);
+			}
+		});
 	}
-
-
 
 	//	waitForKeyElements(`body > section > div.main-content > main.main > section > div.content > section.entry-page > section.entry > section.stream > div.content > section.entry`, minusyTutaj, false);
 
@@ -2248,7 +2520,7 @@
 		data-votes-up="183" data-votes-down="5" data-votes-count="178" data-voted="0" data-comments-count="10" data-comments-hot="false" data-hot="false" data-adult="false" data-created-at="2023-11-27 21:12:49" data-published-at="2023-11-28 15:22:38" data-title="Dwie awarie..." data-slug="dwie-awarie-w-ec-bedzin-wznowienie-dostaw-ciepla-w-koncu-tygodnia-rmf-24" data-description="Dwie awarie w (...)" data-source-label="www.rmf24.pl" data-source-u-r-l="https://www.rmf24.pl/regiony/slaskie/news..." data-source-type="anchor" data-tags="slaskie,bedzin,awaria,wydarzenia">
 	*/
 
-	function linkBlock(jNodeLinkBlock)
+	function linkBlockDetected(jNodeLinkBlock)
 	{
 		const linkBlock = jNodeLinkBlock[0]; // jNode => DOMElement
 		const link_id = linkBlock.id.replace("link-", ""); // 78643212
@@ -2273,9 +2545,9 @@
 					link_data = data.data;
 					// console.log(link_data);
 
-					linkBlock.dataset.votesUp = link_data.votes.up;							// 10
-					linkBlock.dataset.votesDown = link_data.votes.down;						// -20
-					linkBlock.dataset.votesCount = link_data.votes.count;					// -10 (suma wykopów i zakopów)
+					linkBlock.dataset.votesUp = link_data.votes.up;									// 10
+					linkBlock.dataset.votesDown = link_data.votes.down;								// -20
+					linkBlock.dataset.votesCount = link_data.votes.count;							// -10 (suma wykopów i zakopów)
 					linkBlock.dataset.votesAll = link_data.votes.up + link_data.votes.down; 		// 30  (łączna liczba głosów)
 
 					link_data.votes.votesDownPercent = 0;
@@ -2410,8 +2682,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 					handleInputEvent(e);
 				}, 2000);
 			}
-
-
 		});
 
 	}
@@ -2422,48 +2692,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
-	// TAB TITLE
-
-	/* dodaj liczbe powiadomien do tytulu strony na karcie */
-	function setNewTitle()
-	{
-		console.log("setNewTitle();")
-		let showNotificationsNumberInTitleEntries = wykopxSettings.getPropertyValue("--showNotificationsNumberInTitleEntries");
-		let showNotificationsNumberInTitleTags = wykopxSettings.getPropertyValue("--showNotificationsNumberInTitleTags");
-		let showNotificationsNumberInTitleMessages = wykopxSettings.getPropertyValue("--showNotificationsNumberInTitleMessages");
-
-		settings.tabTitleSelect = (wykopxSettings.getPropertyValue("--tabTitleSelect"));
-		settings.tabTitleCustom = (wykopxSettings.getPropertyValue("--tabTitleCustom"));
-
-
-		if (settings.tabTitleSelect != "domyslnie")
-		{
-			switch (settings.tabTitleSelect)
-			{
-				case "wlasny":
-					document.title = settings.tabTitleCustom;
-					break;
-				case "interia":
-					document.title = `Interia - Polska i świat: informacje, sport, gwiazdy.`;
-					break;
-				case "digg":
-					document.title = `News and Trending Stories Around the Internet | Digg`;
-					break;
-				case "onet":
-					document.title = `Onet – Jesteś na bieżąco`;
-					break;
-				case "reddit":
-					document.title = `Reddit - Dive into anything`;
-					break;
-				case "wp":
-					document.title = `Wirtualna Polska - Wszystko co ważne`;
-					break;
-				default:
-					break;
-			}
-		}
-
-	}
 
 
 
@@ -2475,8 +2703,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 	/* HELPER FUNCTIONS */
-
-
 
 
 
@@ -2541,6 +2767,9 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	navigation.addEventListener("navigate", (event) =>
 	{
 		console.log("navigation - navigate event - " + event.type)
+		originalTabTitle = document.title;
+
+		visiblePlusesObserver.disconnect();
 
 		// consoleX(`navigation.addEventListener("navigate", (event) =>`, 1);
 
@@ -2556,10 +2785,17 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			if (settings.tagHeaderEditable && pathnameArray[1] == "tag") runWithDelay(5000, tagHeaderEditableLoad);
 		});
 
+		if (!settings.tabChangeOnlyOnHiddenState)
+		{
+			runWithDelay(7000, () =>
+			{
+				executeTabAndFaviconChanges();
+			})
+		}
+
 		// runWithDelay(1000, countNumberOfNotificationsOnDesktop);
 		// runWithDelay(2000, autoOpenMoreContentEverywhere);
 		// runWithDelay2000, addActionBoxesToAllEntriesAndComments);
-		// setNewTitle()
 	});
 
 
@@ -2598,21 +2834,24 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		hashAndPathNameLoad();
 		focusOnAddingNewMicroblogEntry();
 
+		// 8s
+		runWithDelay(3000, function ()
+		{
+			if (settings.linksAnalyzerEnable)
+			{
+				waitForKeyElements(`section.link-block[id^="link-"]`, linkBlockDetected, false);
+				// GM_wrench.waitForKeyElements(`section.link-block[id^="link-"]`, linkBlockDetected, false);
+			}
+			addWykopXButtonsToNavBar();
 
+		});
 
 		// 8s
 		runWithDelay(8000, function ()
 		{
-			if (settings.linksAnalyzerEnable)
-			{
-				waitForKeyElements(`section.link-block[id^="link-"]`, linkBlock, false);
-				// GM_wrench.waitForKeyElements(`section.link-block[id^="link-"]`, linkBlock, false);
-			}
-
 			countNumberOfNotificationsOnDesktop();
 			addNotificationSummaryButtonToNavBar();
 			addNightModeButtonToNavBar();
-			addWykopXButtonsToNavBar();
 			unrollDropdowns();
 			addExtraButtons();
 			addWykopXPromoBanner();
@@ -2626,18 +2865,13 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			tagHeaderEditableLoad();
 			addActionBoxesToAllEntriesAndComments();
 			addObservedTagsToRightSidebar();
-			setNewTitle();
 		});
 
 
 		// 20s
 		runWithDelay(12000, function ()
 		{
-			if (settings.linksAnalyzerEnable)
-			{
-				waitForKeyElements(`section.link-block[id^="link-"]`, linkBlock, false);
-				// GM_wrench.waitForKeyElements(`section.link-block[id^="link-"]`, linkBlock, false);
-			}
+
 
 			checkVersionForUpdates();
 
