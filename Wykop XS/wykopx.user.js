@@ -78,10 +78,14 @@
 
 	settings.fixCaseSensitiveTagsRedirection = (wykopxSettings.getPropertyValue("--fixCaseSensitiveTagsRedirection") == `"true"`); // boolean
 
+	settings.tabTitleShowNotificationsEnabled = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsEnabled") == `"true"`); // boolean
 	settings.tabTitleShowNotificationsCountPM = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountPM") == `"true"`); // boolean
 	settings.tabTitleShowNotificationsCountEntries = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountEntries") == `"true"`); // boolean
 	settings.tabTitleShowNotificationsCountTagsNewLink = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountTagsNewLink") == `"true"`); // boolean
 	settings.tabTitleShowNotificationsCountTagsNewEntry = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountTagsNewEntry") == `"true"`); // boolean
+	settings.tabTitleShowNotificationsCountSeparated = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountSeparated") == `"true"`); // boolean
+
+
 
 
 	// boolean - domyslnie WŁĄCZONE bez Wykop X Style
@@ -1253,17 +1257,19 @@
 
 						if ($(this).find(`div.content p.new-entry-with-observed-tag`).length > 0)
 						{
-							unreadNotifications["tags_new_entry_with_observed_tag"]++;
+							++unreadNotifications["tags_new_entry_with_observed_tag"];
+							++unreadNotifications["tags"];
 							++unreadNotifications["total"];
 						}
 						else if ($(this).find(`div.content p.new-link-with-observed-tag`).length > 0)
 						{
-							unreadNotifications["tags_new_link_with_observed_tag"]++;
+							++unreadNotifications["tags_new_link_with_observed_tag"];
+							++unreadNotifications["tags"];
 							++unreadNotifications["total"];
 						}
 					} else if (lastWord == "entries")
 					{
-						unreadNotifications["entries"]++;
+						++unreadNotifications["entries"];
 						++unreadNotifications["total"];
 					}
 				})
@@ -1773,8 +1779,8 @@
 
 	let tabFavicons = new Map([
 		["wykop", defaultWykopFacoviconURL],
-		["wykop_white", defaultWykopFacoviconURL],
-		["wykop_gray", defaultWykopFacoviconURL],
+		["wykop_white", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/W_white.png"],
+		["wykop_gray", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/W_black.png"],
 
 		["digg", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/digg.png"],
 		["google", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/google.svg"],
@@ -1810,52 +1816,71 @@
 		*/
 
 		//xxx
+
+
 		let tabTitleNotifications = "";
-		let notificationsTotalCount = 0;
 
-		if (unreadNotifications["total"] > 0
-			&& (settings.tabTitleShowNotificationsCountPM
-				|| settings.tabTitleShowNotificationsCountTagsNewLink
-				|| settings.tabTitleShowNotificationsCountTagsNewEntry
-				|| settings.tabTitleShowNotificationsCountEntries))
+		if (settings.tabTitleShowNotificationsEnabled == true)
 		{
-			let notificationsEmoji = ""; // 🔗✉📧📩
+			let notificationsTotalCount = 0;
 
-			if (settings.tabTitleShowNotificationsCountTagsNewLink && unreadNotifications["tags_new_entry_with_observed_tag"] > 0)
+			let tabNotificationsSeparated = "";
+
+			if (unreadNotifications["total"] > 0
+				&& (settings.tabTitleShowNotificationsCountPM
+					|| settings.tabTitleShowNotificationsCountTagsNewLink
+					|| settings.tabTitleShowNotificationsCountTagsNewEntry
+					|| settings.tabTitleShowNotificationsCountEntries))
 			{
-				notificationsTotalCount += unreadNotifications["tags_new_entry_with_observed_tag"];
-				notificationsEmoji = "#";
+				let notificationsEmoji = ""; // 🔗✉📧📩
+
+
+				if (settings.tabTitleShowNotificationsCountPM && unreadNotifications["pm"] > 0)
+				{
+					notificationsTotalCount += unreadNotifications["pm"];
+					notificationsEmoji = "📧";
+					tabNotificationsSeparated += `${notificationsEmoji}${unreadNotifications["pm"]} `;
+				}
+
+				if (settings.tabTitleShowNotificationsCountEntries && unreadNotifications["entries"] > 0)
+				{
+					notificationsTotalCount += unreadNotifications["entries"];
+					notificationsEmoji = "🔔";
+					tabNotificationsSeparated += `${notificationsEmoji}${unreadNotifications["entries"]} `;
+				}
+
+				if (unreadNotifications["tags"] && settings.tabTitleShowNotificationsCountTagsNewLink || settings.tabTitleShowNotificationsCountTagsNewEntry)
+				{
+					notificationsEmoji = "#";
+					if (settings.tabTitleShowNotificationsCountTagsNewLink && unreadNotifications["tags_new_entry_with_observed_tag"] > 0)
+					{
+						notificationsTotalCount += unreadNotifications["tags_new_entry_with_observed_tag"];
+					}
+					if (settings.tabTitleShowNotificationsCountTagsNewEntry && unreadNotifications["tags_new_entry_with_observed_tag"] > 0)
+					{
+						notificationsTotalCount += unreadNotifications["tags_new_entry_with_observed_tag"];
+					}
+					tabNotificationsSeparated += `${notificationsEmoji}${unreadNotifications["tags"]} `;
+				}
+
+
+
+				if (settings.tabTitleShowNotificationsCountSeparated) tabTitleNotifications = tabNotificationsSeparated;
+				else tabTitleNotifications = `(${notificationsTotalCount}) `;
 			}
 
-			if (settings.tabTitleShowNotificationsCountTagsNewEntry && unreadNotifications["tags_new_entry_with_observed_tag"] > 0)
-			{
-				notificationsTotalCount += unreadNotifications["tags_new_entry_with_observed_tag"];
-				notificationsEmoji = "#";
-			}
-
-			if (settings.tabTitleShowNotificationsCountEntries && unreadNotifications["entries"] > 0)
-			{
-				notificationsTotalCount += unreadNotifications["entries"];
-				notificationsEmoji = "🔔";
-			}
-
-			if (settings.tabTitleShowNotificationsCountPM && unreadNotifications["pm"] > 0)
-			{
-				notificationsTotalCount += unreadNotifications["pm"];
-				notificationsEmoji = "📧";
-			}
-
-			tabTitleNotifications = `${notificationsEmoji}${notificationsTotalCount}ᅟ`;
+			console.log(new_document_title)
+			console.log("new_document_title")
 		}
 
-		console.log(new_document_title)
-		console.log("new_document_title")
-		if (tabTitles.has(new_document_title))
+		if (tabTitles.has(new_document_title)) // selected title from Map
 		{
-			document.title = `${notificationsTotalCount == 0 ? "" : tabTitleNotifications}${tabTitles.get(new_document_title)}`;
+			document.title = `${tabTitleNotifications}${tabTitles.get(new_document_title)}`;
 		}
-		else document.title = `${notificationsTotalCount == 0 ? "" : tabTitleNotifications}${new_document_title}`;
-
+		else
+		{
+			document.title = `${tabTitleNotifications}${new_document_title}`;
+		}
 
 	}
 
