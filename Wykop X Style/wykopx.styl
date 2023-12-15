@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style
-@version        2.41.2
+@version        2.41.3
 @description    Ponad 500 funkcji usprawniających i naprawiających Wykop.pl
 
 
@@ -96,6 +96,8 @@
                                                                             "Wykop - Raphael":                    `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykop_kolor_custom_2_transparent.png"`,
                                                                             "Wykop - Leonardo":                   `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykop_kolor_custom_3_transparent.png"`, 
                                                                             }
+@var checkbox   hideLogo                                        `𝕎 Ukryj sygnet Wykopu na górnej belce`                                                            0
+
 @var range      HR_NEW_241                                `ANTI-EMBARRASSMENT MODE ⭐ Nowe v.2.41`                                                                                                                                                                                              [0, 0, 99900, 1, 'mm']
 @var checkbox   presetAntiEmbarrassment                         `[PRESET] Włącz wszystkie funkcje ANTI EMBARRASSMENT MODE ⭐`            0
 @var checkbox   myWykopInTopNavJSObserwowane                    `💻❎ Zmień nazwę 𝗠𝗼𝗷 𝘄𝘆𝗸𝗼𝗽 na 𝗢𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 ⭐`                         0
@@ -106,24 +108,40 @@
 
 @var checkbox   tabChangeOnlyOnHiddenState                     `❎ Modyfikuj kartę Wykopu tylko gdy jest w tle ⭐`                        0
 
+@var checkbox   tabFaviconEnabled                              `❎ Zmień Favicon (ikonka karty) ⭐`                                   1
+@var select     tabFaviconSelect                               `❎ Favicon ⭐` {
+                                                                                `Wykop (domyślna)`:`wykop`,
+                                                                                `Wykop (biala)*`:`wykop_white`,
+                                                                                `Wykop (szara)`:`wykop_gray`,
+
+                                                                                `Google`:`google`,
+
+                                                                                `Interia`:`interia`,
+                                                                                `Digg`:`digg`,
+                                                                                `Onet`:`onet`,
+                                                                                `Reddit`:`reddit`,
+                                                                                `Wirtualna Polska`:`wp`,
+                                                                                `YouTube`:`youtube`,
+                                                                                `X (Twitter)`:`x`,
+                                                                            }   
 
 @var checkbox   tabTitleEnabled                                `❎ Zmień Tytuł kart z Wykopem ⭐`                                         0
 
 @var select     tabTitleSelect                                 `❎ Tytuł kart z Wykopem ⭐` {
-                                                                            `[-- Własny tytuł kart (wpisz poniżej) --]`:`wlasny`,
-                                                                            `[-- Pusty tytuł --]`:`pusty_tytul`,
-                                                                            `[-- Adres URL strony --]`:`adres_url`,
-                                                                            
-                                                                            `Wykop`:`wykop`,
-                                                                            `Google`:`google`,
+                                                                                `[-- Własny tytuł kart (wpisz poniżej) --]`:`wlasny`,
+                                                                                `[-- Pusty tytuł --]`:`pusty_tytul`,
+                                                                                `[-- Adres URL strony --]`:`adres_url`,
 
-                                                                            `Interia - Polska i świat: informacje, sport, gwiazdy.`:`interia`,
-                                                                            `News and Trending Stories Around the Internet | Digg`:`digg`,
-                                                                            `Onet – Jesteś na bieżąco`:`onet`,
-                                                                            `Reddit - Dive into anything`:`reddit`,
-                                                                            `Wirtualna Polska - Wszystko co ważne`:`wp`,
-                                                                            `YouTube`:`youtube`,
-                                                                            `Home / X`:`x`,
+                                                                                `Wykop`:`wykop`,
+                                                                                `Google`:`google`,
+
+                                                                                `Interia - Polska i świat: informacje, sport, gwiazdy.`:`interia`,
+                                                                                `News and Trending Stories Around the Internet | Digg`:`digg`,
+                                                                                `Onet – Jesteś na bieżąco`:`onet`,
+                                                                                `Reddit - Dive into anything`:`reddit`,
+                                                                                `Wirtualna Polska - Wszystko co ważne`:`wp`,
+                                                                                `YouTube`:`youtube`,
+                                                                                `Home / X`:`x`,
                                                                             }
 @var text       tabTitleCustom                                  `❎ Własny tytuł kart ⭐`                                         `Wykop X`
 
@@ -132,26 +150,11 @@
 
 @var checkbox   tabTitleShowNotificationsCountPM                `❎💻 ✉ Liczba nowych wiadomości prywatnych ⭐`                          1
 @var checkbox   tabTitleShowNotificationsCountEntries           `❎💻 🕭 Liczba powiadomień z wołaniami ⭐`                               1
-@var checkbox   tabTitleShowNotificationsCountTagsNewLink       `❎💻 # Liczba nowych znalezisk z obserwowwanych #tagów ⭐`               1
-@var checkbox   tabTitleShowNotificationsCountTagsNewEntry      `❎💻 # Liczba nowych wpisów z obserwowwanych #tagów ⭐`                  1
+@var checkbox   tabTitleShowNotificationsCountTagsNewLink       `❎💻 # Liczba nowych znalezisk z obserwowanych #tagów ⭐`               1
+@var checkbox   tabTitleShowNotificationsCountTagsNewEntry      `❎💻 # Liczba nowych wpisów z obserwowanych #tagów ⭐`                  1
 
 
-@var checkbox   tabFaviconEnabled                                `❎ Zmień Favicon (ikonka karty) ⭐`                                   1
-@var select     tabFaviconSelect                                 `❎ Favicon ⭐` {
-                                                                            `Wykop (domyślna)`:`wykop`,
-                                                                            `Wykop (biala)*`:`wykop_white`,
-                                                                            `Wykop (szara)`:`wykop_gray`,
-                                                                            
-                                                                            `Google`:`google`,
-
-                                                                            `Interia`:`interia`,
-                                                                            `Digg`:`digg`,
-                                                                            `Onet`:`onet`,
-                                                                            `Reddit`:`reddit`,
-                                                                            `Wirtualna Polska`:`wp`,
-                                                                            `YouTube`:`youtube`,
-                                                                            `X (Twitter)`:`x`,
-                                                                            }                                                                            
+                                                                         
 
 
 
@@ -174,10 +177,10 @@ var checkbox  topNavSnowGirl                                   `❄ Snow Girl`  
 @var checkbox   editorStickyHeader                              `Zawsze widoczny pasek z przyciskami formatowania `                      1
 
 
-@var range      HR_NEW_238                          `LIMITY I WKLEJANIE TEKSTU  ⭐ Nowe v.2.38`                                                                                                                                                                                              [0, 0, 99900, 1, 'mm']
-@var checkbox   disableNewLinkEditorPastedTextLimit             `❎⭐ Pokaż limity znaków + wyłącz limity przy wklejaniu`                                       1
+@var range      HR_NEW_238                          `✍ LIMITY I WKLEJANIE TEKSTU  ⭐ Nowe v.2.38`                                                                                                                                                                                              [0, 0, 99900, 1, 'mm']
+@var checkbox   disableNewLinkEditorPastedTextLimit             `❎⭐ Pokaż limity znaków + wklejanie tekstu o dowolnej długości`               1
 
-@var range      HR_FAVORITE_TAG                     `ULUBIONY TAG ⭐ Nowe v.2.37`                                                                                                                                                                                                        [0, 0, 99900, 1, 'mm']
+@var range      HR_FAVORITE_TAG                     `# ULUBIONY TAG ⭐ Nowe v.2.37`                                                                                                                                                                                                        [0, 0, 99900, 1, 'mm']
 
 @var checkbox   favoriteTagEnable                               `⭐ Ulubiony #tag`                                                                                           1
 @var text       favoriteTag1                                    `⭐ Wpisz swój ulubiony tag: #`                            `wykopwnowymstylu`
@@ -384,7 +387,7 @@ var checkbox  topNavSnowGirl                                   `❄ Snow Girl`  
                                                                             "Skórka 2":"skin_2",
                                                                             "Skórka 3 - minimalistyczne":"skin_3",
                                                                             "Skórka 4":"skin_4",
-                                                                            "Własne ustawienia (wybierz opcje poniżej)":"wlasne",
+                                                                            "Własne ustawienia (wybierz opcje poniżej)*":"wlasne",
                                                                             } 
 
 @var range      avatarSize                                      `Rozmiar avatarów we wpisach i komentarzach ⭐`         [40, 5, 69, 1, '']
@@ -405,7 +408,7 @@ var checkbox  topNavSnowGirl                                   `❄ Snow Girl`  
                                                                             "♀️ różowe 💜":"rozowe",
                                                                             "♂️ niebieskich 💙*":"niebieskich",
                                                                             } 
-@var checkbox   avatarTransparentBackground                     `Użytkownicy z domyślnym avatarem: przezroczyste tło`                 1
+@var checkbox   avatarTransparentBackground                     `Użytkownicy z domyślnym avatarem: przezroczyste tło`                 0
 @var checkbox   avatarHidden                                    `🚫 Nie pokazuj avatarów ⭐`                         0
 
 
@@ -417,11 +420,11 @@ var checkbox  topNavSnowGirl                                   `❄ Snow Girl`  
                                                                             "⍜ Pasek: z zaokrągleniem":"pasek_zaokraglony",
                                                                             "⌾ Pierścień / ▣ ramka*":"ramka",
                                                                             } 
-@var range      avatarSexBarBorderWidth                         `⌾⍜ Szerokość paska/pierścienia/ramki`    [2, 0, 15, 1, 'px']
+@var range      avatarSexBarBorderWidth                         `⌾⍜ Szerokość paska/pierścienia/ramki ⭐`    [2, 0, 15, 1, 'px']
 
-@var range      avatarSexBarPadding                             `⌾ Odstęp między avatarem a ramką/pierścieniem ⭐`                  [2, 0, 15, 1, 'px']
+@var range      avatarSexBarPadding                             `⌾ Odstęp między avatarem a ramką/pierścieniem ⭐`                  [4, 0, 15, 1, 'px']
 @var checkbox   avatarSexBarGradientBackground                  `⌾ Gradientowe, animowane tło ⭐`                       1
-@var checkbox   sexBarHidden                                    `🚫 Nie pokazuj oznaczeń płci `                          0
+@var checkbox   sexBarHidden                                    `🚫 Nie pokazuj oznaczeń płci`                          0
 
 
 
@@ -746,7 +749,6 @@ var checkbox  topNavSnowGirl                                   `❄ Snow Girl`  
 
 @var range      HR_LOGO                         `𝕎   𝗕𝗘𝗟𝗞𝗔: LOGO WYKOPU`                                                                                                                                      [0, 0, 99900, 1, 'mm']
 // 𝓦𝕎🆆𝐖𝑾ᏇW̳
-@var checkbox   hideLogo                                        `𝕎 Ukryj sygnet Wykopu na górnej belce`                                                            0
 
 
 

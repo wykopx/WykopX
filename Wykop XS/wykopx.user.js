@@ -21,7 +21,7 @@
 // @description Wykop XS służy do wspomagania działania stylu "Wykop X Style", który jest wymagany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na: http://style.wykopx.pl
 // @description:en Wykop XS is a helper script for userstyle "Wykop X Style" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://style.wykopx.pl
 
-// @version     2.41.2
+// @version     2.41.3
 // ==/UserScript==
 
 (async function ()
@@ -29,7 +29,7 @@
 	'use strict';
 
 
-	const currentVersion = "2.41.2";
+	const currentVersion = "2.41.3";
 	const dev = false;
 	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
 
@@ -101,6 +101,7 @@
 	settings.tabTitleSelect = wykopxSettings.getPropertyValue("--tabTitleSelect").trim()
 	settings.tabTitleCustom = wykopxSettings.getPropertyValue("--tabTitleCustom").trim();
 	settings.tabFaviconSelect = wykopxSettings.getPropertyValue("--tabFaviconSelect").trim()
+
 
 
 	if (dev) consoleX("Settings: ", 1);
