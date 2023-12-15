@@ -29,8 +29,8 @@
 	'use strict';
 
 
-	const currentVersion = "2.40.1";
-	const dev = true;
+	const currentVersion = "2.41.2";
+	const dev = false;
 	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
 
 	// user.username - nazwa zalogowanego uzytkownika
@@ -2013,11 +2013,11 @@
 				plus_target.classList.remove("notIntersecting");
 				parseRatingBoxCurrentContentAndCreateDataValues(plus_target);
 
-				timeoutId = setInterval(() => checkPluses(plus_target), fetchSeconds * 1000);
+				// timeoutId = setInterval(() => checkPluses(plus_target), fetchSeconds * 1000);
 			}
 			else
 			{
-				clearInterval(timeoutId);
+				// clearInterval(timeoutId);
 				plus_target.classList.remove("isIntersecting");
 				plus_target.classList.add("notIntersecting");
 			}
