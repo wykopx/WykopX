@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style
-@version        2.41.1
+@version        2.41.2
 @description    Ponad 500 funkcji usprawniających i naprawiających Wykop.pl
 
 
@@ -20,7 +20,31 @@
 
 
 
-@var range      HR_LOGO_2411                         `𝕎   𝗕𝗘𝗟𝗞𝗔: LOGO WYKOPU ⭐ NOWE v.2.41`                                                                                                                                      [0, 0, 99900, 1, 'mm']
+@var range      HR_TOPNAV_AVATAR                `🧑 𝗕𝗘𝗟𝗞𝗔: PRZYCISK PROFILU ⭐ NOWE v.2.41.2`                                                                                                                                                                                     [0, 0, 99900, 1, 'mm']                               
+@var select     avatarSelect                                    `🧑 Avatar ` {
+                                                                            "Pokaż swój avatar (domyślnie)":"pokaz_domyslny_avatar",
+                                                                            "Pokaż emoji 👤":"emoji_profile",
+                                                                            "Pokaż emoji ⚙":"emoji_gear",
+                                                                            "Pokaż emoji 🔻":"emoji_arrow_down",
+                                                                            "🚫 Nie pokazuj avatara":"niepokazuj",
+                                                                            }
+@var select     avatarUsernameShow                              `🧑 Wyświetl nazwę użytkownika ` {
+                                                                            "🚫 Nie pokazuj nazwy użytkownika (domyślnie)":"niepokazuj",
+                                                                            "Pokaż po lewej od avatara 🧑*":"pokaz_z_avatarem_po_lewej",
+                                                                            "🧑 Pokaż po prawej od avatara":"pokaz_z_avatarem_po_prawej",
+                                                                            "Pokaż zamiast avatara":"pokaz_zamiast_avatara",
+                                                                            }
+@var select     avatarUsernameSelect                            `🧑 Jako nazwę użytkownika pokaż` {
+                                                                            "Twoją prawdziwą nazwę użytkownika":"prawdziwa_nazwa",
+                                                                            "👥 Nickname (zmieniony w ustawieniach)":"zmieniony_nickname",
+                                                                            "👥 Własny tekst (wpisz poniżej)":"wlasny_tekst",
+                                                                            }
+@var text       avatarUsernameCustom                            `Własny tekst zamiast nazwy użytkownika`     `"Ustawienia"`
+@var checkbox   topNavProfileButtonHide                         `🧑🚫 Ukryj przycisku profilu`                          0 
+
+
+
+@var range      HR_LOGO_2411                         `𝕎   𝗕𝗘𝗟𝗞𝗔: LOGO WYKOPU ⭐ NOWE v.2.41.1`                                                                                                                                      [0, 0, 99900, 1, 'mm']
 @var select     topNavLogotype                                  `Logotyp 𝘄𝘆𝗸𝗼𝗽.𝗽𝗹 ⭐` {
                                                                             "𝘄𝘆𝗸𝗼𝗽.𝗽𝗹 (domyślny)": "wykop",
                                                                             "wykopx.pl": "wykopx",
@@ -73,7 +97,7 @@
                                                                             "Wykop - Leonardo":                   `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykop_kolor_custom_3_transparent.png"`, 
                                                                             }
 @var range      HR_NEW_241                                `ANTI-EMBARRASSMENT MODE ⭐ Nowe v.2.41`                                                                                                                                                                                              [0, 0, 99900, 1, 'mm']
-@var checkbox   presetAntiEmbarrassment                         `Włącz wszystkie funkcje ANTI EMBARRASSMENT MODE [PRESET]⭐`              0
+@var checkbox   presetAntiEmbarrassment                         `[PRESET] Włącz wszystkie funkcje ANTI EMBARRASSMENT MODE ⭐`              0
 @var checkbox   myWykopInTopNavJSObserwowane                    `💻❎ Zmień nazwę 𝗠𝗼𝗷 𝘄𝘆𝗸𝗼𝗽 na 𝗢𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 ⭐`                         0
 
 
@@ -354,7 +378,7 @@ var checkbox  topNavSnowGirl                                   `❄ Snow Girl`  
 
 
 @var range      HR_AVATARS                          `🧑 AVATARY UŻYTKOWNIKÓW ⭐ Nowe v.2.34`                                                                                                                          [0, 0, 99900, 1, 'mm']
-@var select     presetAvatarAndSexBarThemes                           `Predefiniowane ustawienia avatarów i pasków [PRESET] ⭐` {
+@var select     presetAvatarAndSexBarThemes                           `[PRESET] Predefiniowane ustawienia avatarów i pasków ⭐` {
                                                                             "Domyślny wygląd Wykop":"domyslny",
                                                                             "Skórka 1 - Wykop X":"skin_1",
                                                                             "Skórka 2":"skin_2",
@@ -777,17 +801,6 @@ var checkbox  topNavSnowGirl                                   `❄ Snow Girl`  
                                                                             "Nie pokazuj*":"niepokazuj"
                                                                             } 
 
-@var range      HR_TOPNAV_AVATAR                `🧑 𝗕𝗘𝗟𝗞𝗔: PRZYCISK PROFILU`                                                                                                                                                                                     [0, 0, 99900, 1, 'mm']                               
-@var select     avatarShowUsername                              `🧑 Wyświetl nazwę użytkownika ` {
-                                                                            "🚫 Nie pokazuj (domyślnie)":"niepokazuj",
-                                                                            "🧑 Pokaż obok avatara, po lewej*":"pokaz_z_avatarem_po_lewej",
-                                                                            "🧑 Pokaż obok avatara, po prawej":"pokaz_z_avatarem_po_prawej",
-                                                                            "🧑 Pokaż zamiast avatara":"pokaz_zamiast_avatara",
-                                                                            } 
-@var checkbox   avatarDefaultInTopNav                           `🧑 Zmień avatar na emoji: "👤"`                                        0
-@var checkbox   avatarHideInTopNav                              `🧑🚫 Nie pokazuj przycisku profilu na belce `                          0 
-
-xxx
                                                                             
                                                                             
 @var range      HR_TOPNAV_NOTIFIACTIONS        `✴️ 𝗕𝗘𝗟𝗞𝗔: IKONKI POWIADOMIEŃ`                                                                          [0, 0, 99900, 1, 'mm']                               
@@ -954,7 +967,7 @@ var select     hideTagsIcon                                     `💻⭐ Ukryj i
 
 
 
-@var checkbox   presetLookLikeClassicWykop                      `Włącz stylizacje wyglądu Wykop 1.0 [PRESET]`                           0
+@var checkbox   presetLookLikeClassicWykop                      `[PRESET] Włącz stylizacje wyglądu Wykop 1.0`                           0
 
 
 
@@ -1586,9 +1599,9 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 @var range     HR_SETTINGS_USER       `KONFIGURACJA UŻYTKOWNIKA Wykop X Style`                                     [0, 0, 99900, 1, 'mm']
 
 @var text       myUsername                                      `👤 Wpisz Twój login`                                               `WpiszTuSwojLogin`
-@var text       customUsername                                  `👥 Zmień wyświetlaną nazwę Twojego loginu`                         `""`
+@var text       customUsername                                  `👥 Nickname: Zmień wyświetlaną nazwę użytkownika`                         `""`
 
-@var select     myNicknameColor                                 `Twój kolor na wykopie` {
+@var select     myNicknameColor                                 `⚫ Twój kolor na wykopie` {
                                                                             "🔴 Bordo":"bordo",
                                                                             "🟠 Pomarańczowy*":"pomaranczowy",
                                                                             "🟢 Zielonka":"zielony",
@@ -1621,7 +1634,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         changeWykoplikeWordsEverywhere = 1
         hideLogo = 1;
         topNavLogotype = "youtube";
-        avatarShowUsername = "pokaz_zamiast_avatara";
+        avatarUsernameShow = "pokaz_zamiast_avatara";
         hideDefaultHomeLink = 1;
     }
     
@@ -10241,126 +10254,238 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
 
     
-    /* 👥 Zmień avatar na emoji: "👤" */
-    if(avatarDefaultInTopNav)
-    {
-        header.header div.right > nav ul li.account a.avatar figure img        { display: none!important; } 
-        header.header div.right > nav ul li.account a.avatar figure:after
-        { 
-            content: "👤";
-            text-align: center;
-        } 
 
-        header.header div.right > nav ul li.account a.avatar 
-        {
-            border: 1px solid rgba(255,255,255,0.01)!important;
-        } 
-    } 
-   
     
     /* AVATAR W PANELU POWIADOMIEŃ NA BELCE */
-    body > section > header.header > .right > nav > ul > li.account > a
-    {
-      padding: 0px 4px!important;
-      margin: 0px 10px!important;
-      align-items: center;
-    } 
-    body > section > header.header > .right > nav > ul > li.account > a > a.avatar
-    {
-        width: 26px!important;
-        height: 26px!important;
-        margin: 0px!important;
-    } 
+
     
-    /* Nie pokazuj avatara w panelu powiadomień */
-    if(avatarHideInTopNav)
+    /* NIE POKAZUJ PRZYCISKU PROFILU NA BELCE */
+    if(topNavProfileButtonHide == 1)
     {
-        header.header div.right > nav ul li.account { display: none!important; } 
+        body > section > header.header > div.right > nav > ul > li.account { display: none!important; } 
     } 
-
-    /* 📱 Ukryj kropkę nad avatarem 👤 */
-    if(avatarHideNotificationDot == 1)
-    {
-        header.header > .right > nav > ul li.account > a.new:after
-        {
-            display: none!important;
-        } 
-    } 
-    
-    /* Wyświetl nazwę użytkownika */
-    if(avatarShowUsername == "pokaz_z_avatarem_po_lewej" || avatarShowUsername == "pokaz_z_avatarem_po_prawej" || avatarShowUsername == "pokaz_zamiast_avatara")
-    {
-        header.header div.right > nav ul li.account
-        {
-          width: max-content!important;
-        } 
-
-        @media (min-width: 1251px)
-        {
-            header.header div.right > nav ul li.account
-            {
-                margin-right: 22px;
-                margin-left: 10px!important;
-            } 
-        } 
-        body > section > header.header > .right > nav > ul > li.account > a
-        {
-            overflow: visible!important; 
-            width: max-content!important;
-            display: flex!important;
-            flex-direction: row!important;
-            padding: 0px 15px!important;
-        } 
-
-        body > section > header.header > .right > nav > ul > li.account > a > a.avatar
-        {
-            width: unset!important;
-            display: flex!important;
-            border: 0!important;
-            column-gap: 10px!important;
-            box-shadow: none!important;
-            align-items: center!important;
-        } 
-
-        /* username koło avatara */
-        body > section header.header > .right > nav > ul > li.account > a > a.avatar span
-        {
-            font-size: 14rem;
-            color: var(--topNavTextColor) i;
-            display: block!important;
-            line-height: 0px!important;
-            order: 5!important;
-            margin-top: 4rem;
-        } 
-
-        if(avatarShowUsername == "pokaz_z_avatarem_po_lewej")  { body > section header.header > .right > nav > ul > li.account > a > a.avatar figure { order: 6!important; }} 
-        if(avatarShowUsername == "pokaz_z_avatarem_po_prawej") { body > section header.header > .right > nav > ul > li.account > a > a.avatar figure { order: 4!important; }} 
-        if(avatarShowUsername == "pokaz_zamiast_avatara")      { body > section header.header > .right > nav > ul > li.account > a > a.avatar figure { display: none!important; }} 
-    } 
-    // domyślnie wyświetlana ikonka avatara - brak tła
     else
     {
-        body > section > header.header > .right > nav > ul > li.account.dropdown > a
+        body > section > header.header > .right > nav > ul > li.account > a
         {
-            background-color: transparent !important;
+          padding: 0px 4px!important;
+          margin: 0px 10px!important;
+          align-items: center;
         } 
-    } 
+        body > section > header.header > .right > nav > ul > li.account > a > a.avatar
+        {
+            width: 26px!important;
+            height: 26px!important;
+            margin: 0px!important;
+        } 
+        
+        /* 📱 Ukryj kropkę nad avatarem 👤 */
+        if(avatarHideNotificationDot == 1)
+        {
+            header.header > .right > nav > ul li.account > a.new:after
+            {
+                display: none!important;
+            } 
+        } 
+        
+        /* 👥 Zmień avatar na emoji: "👤" */
+
+            
+        
+        // UKRYJ AVATAR Z PRZYCISKU
+        if(avatarUsernameShow == "pokaz_zamiast_avatara" || avatarSelect == "niepokazuj")      
+        {   
+            body > section > header.header > div.right > nav > ul > li.account > a > a.avatar figure { display: none!important; }
+        }
+        else
+        {
+            if(avatarSelect != "pokaz_domyslny_avatar")
+            {
+                body > section > header.header > div.right > nav > ul > li.account > a > a.avatar figure img        
+                { 
+                    display: none!important;
+                }
+                body > section > header.header > div.right > nav > ul > li.account > a > a.avatar figure:after
+                { 
+                    text-align: center;
+                    filter: grayscale(1) contrast(20%);
+                }
+                body > section > header.header > div.right > nav > ul > li.account:hover > a > a.avatar figure:after
+                { 
+                    filter: grayscale(0) hue-rotate(190deg) contrast(80%);
+                }
+                body > section > header.header > div.right > nav > ul > li.account.active > a > a.avatar figure
+                { 
+                    filter: grayscale(1) contrast(80%) invert(100%);
+                }
+                body > section > header.header > div.right > nav > ul > li.account > a > a.avatar
+                {
+                    border: 1px solid rgba(255,255,255,0.01)!important;
+                }
+                
+                if(avatarSelect == "emoji_profile")
+                {
+                    body > section > header.header > div.right > nav > ul > li.account > a > a.avatar figure:after
+                    { 
+                        font-size: 16rem;
+                        content: "👤";
+                    }
+                }
+                else if(avatarSelect == "emoji_gear")
+                {
+                    body > section > header.header > div.right > nav > ul > li.account > a > a.avatar figure:after
+                    {
+                        font-size: 21rem;
+                        content: "⚙";
+                    }
+                }
+                else if(avatarSelect == "emoji_arrow_down")
+                {
+                    body > section > header.header > div.right > nav > ul > li.account > a > a.avatar figure:after
+                    { 
+                        content: "🔻";
+                    }
+                }
+                
+            } 
+        }
 
 
-    /* biale tlo  z biala czcionka pod przyciskiem loginu uzytkowinka przy otwartym menu https://github.com/wykopx/WykopX/wiki/Changelog#2103 */
-    body > section header.header > .right > nav > ul[data-v-5182b5f6] > li.account.active > a
-    {
-      background-color: rgba(255, 255, 255, 0.1)!important; 
-    } 
+        /* Wyświetl nazwę użytkownika */
+        if(avatarUsernameShow == "pokaz_z_avatarem_po_lewej" || avatarUsernameShow == "pokaz_z_avatarem_po_prawej" || avatarUsernameShow == "pokaz_zamiast_avatara")
+        {
+            if(avatarUsernameShow == "pokaz_z_avatarem_po_lewej")  { body > section header.header > .right > nav > ul > li.account > a > a.avatar figure { order: 6!important; }} 
+            if(avatarUsernameShow == "pokaz_z_avatarem_po_prawej") { body > section header.header > .right > nav > ul > li.account > a > a.avatar figure { order: 4!important; }} 
+
+
+            
+
+            if(avatarUsernameSelect == "prawdziwa_nazwa")
+            {
+                body > section > header.header > div.right > nav > ul > li.account > a > a.avatar > span
+                {
+                }
+                body > section > header.header > div.right > nav > ul > li.account > a > a.avatar > span:after
+                {
+                }
+            }
+            else
+            {
+                body > section > header.header > div.right > nav > ul > li.account > a > a.avatar > span
+                {
+                    font-size: 0rem!important;
+                }
+                body > section > header.header > div.right > nav > ul > li.account > a > a.avatar > span:after
+                {
+                    font-size: 14rem!important;
+                }
+            
+                if(avatarUsernameSelect == "zmieniony_nickname" && customUsername != "")
+                {
+                    body > section > header.header > div.right > nav > ul > li.account > a > a.avatar > span:after
+                    {
+                        content: "" + customUsername!important;
+                    }
+                }
+                else if(avatarUsernameSelect == "wlasny_tekst" && avatarUsernameCustom != "")
+                {
+                    body > section > header.header > div.right > nav > ul > li.account > a > a.avatar > span:after
+                    {
+                        content: "" + avatarUsernameCustom!important;
+                    }
+                }
+            }
+            
+            
+
+
+
+
+
+
+
+
+            header.header div.right > nav ul li.account
+            {
+                width: max-content!important;
+            } 
+
+            @media (min-width: 1251px)
+            {
+                header.header div.right > nav ul li.account
+                {
+                    margin-right: 22px;
+                    margin-left: 10px!important;
+                } 
+            } 
+            body > section > header.header > .right > nav > ul > li.account > a
+            {
+                overflow: visible!important; 
+                width: max-content!important;
+                display: flex!important;
+                flex-direction: row!important;
+                padding: 0px 15px!important;
+            } 
+
+            body > section > header.header > .right > nav > ul > li.account > a > a.avatar
+            {
+                width: unset!important;
+                display: flex!important;
+                border: 0!important;
+                column-gap: 10px!important;
+                box-shadow: none!important;
+                align-items: center!important;
+            } 
+
+            /* username koło avatara */
+            body > section header.header > .right > nav > ul > li.account > a > a.avatar span
+            {
+                font-size: 14rem;
+                color: var(--topNavTextColor) i;
+                display: block!important;
+                line-height: 0px!important;
+                order: 5!important;
+                margin-top: 4rem;
+            } 
+
+
+        } 
+        // domyślnie wyświetlana ikonka avatara - brak tła
+        else
+        {
+            body > section > header.header > .right > nav > ul > li.account.dropdown > a
+            {
+                background-color: transparent !important;
+            } 
+        } 
+
+
+        /* biale tlo  z biala czcionka pod przyciskiem loginu uzytkowinka przy otwartym menu https://github.com/wykopx/WykopX/wiki/Changelog#2103 */
+        body > section header.header > .right > nav > ul[data-v-5182b5f6] > li.account.active > a
+        {
+          background-color: rgba(255, 255, 255, 0.1)!important; 
+        } 
+        
+        
+        
+    }
     
     
-
-
-
-    /* Zmień wyświetlaną nazwę Twojego loginu */
+    
+    
+    
+    
+   
+        
+    
+    
+    
+    
+    
+    
+    /* Zmień wyświetlaną nazwę "nickname" w całym wykopie */
     if(customUsername != "")
     {
-        header.header div.right > nav ul li.account a.avatar span,                                        /* przycisk menu login kolo avatara */
         section.entry>article>header>div.right>div a.username[href={"\/ludzie\/" + myUsername}] > span,   /* login autora komentarza */
         a[href={"\/ludzie\/" + myUsername}] > span:first-child,       
         div.wrapper a[href={"\/ludzie\/" + myUsername}]
@@ -10368,22 +10493,17 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             font-size: 0rem!important;
         } 
 
-
-
-        header.header div.right > nav ul li.account a.avatar span:after,
-        section.entry>article>header.header div.right > nav ul li.account a.avatar span:before,
-        section.entry>article>header>div.right>div a.username[href={"\/ludzie\/" + myUsername}] > span:before,
+        section.entry > article > header.header > div.right > nav ul li.account a.avatar span:before,
+        section.entry > article > header.header > div.right > div a.username[href={"\/ludzie\/" + myUsername}] > span:before,
         header.header li.account ul.dropdown-body li.profile a:not(:has(span)):after,
         div.wrapper a[href={"\/ludzie\/" + myUsername}]:not(:has(span)):before
         {
             content: "" + customUsername!important;
-        } 
-
+        }
         div.wrapper a[href={"\/ludzie\/" + myUsername}]:not(:has(span)):before  
         {
           font-size: 16rem!important;
         } 
-        header.header div.right > nav ul li.account a.avatar span:after,
         header.header li.account ul.dropdown-body li.profile a:not(:has(span)):after
         {
             font-size: 14rem!important;
@@ -16157,7 +16277,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 {    
     
     
-    version = "2.40";
+    version = "2.41";
     
     /* Wykop XS Settings  */
     body 
