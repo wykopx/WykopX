@@ -7,33 +7,37 @@
 // @match       https://wykop.pl/*
 
 
-// @require     https://unpkg.com/xhook@latest/dist/xhook.min.js
-// @require     https://greasyfork.org/scripts/458629-depaginator-for-wykop-pl/code/Depaginator%20for%20Wykoppl.user.js
-// @require     https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
-// @require     https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js
-// @require     http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
-// @require     https://greasyfork.org/scripts/383527-wait-for-key-elements/code/Wait_for_key_elements.js?version=701631
+// @require https://unpkg.com/xhook@latest/dist/xhook.min.js
+// @require https://greasyfork.org/scripts/458629-depaginator-for-wykop-pl/code/Depaginator%20for%20Wykoppl.user.js
+// @require https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
+// @require https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js
+// @require http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
+// @require https://greasyfork.org/scripts/383527-wait-for-key-elements/code/Wait_for_key_elements.js?version=701631
 
-// @supportURL  http://wykop.pl/tag/wykopwnowymstylu
-// @contributionURL  https://buycoffee.to/sebastiandosiadlgo
+// @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
+// @contributionURL  	https://buycoffee.to/sebastiandosiadlgo
 // @compatible  chrome, firefox, opera, safari, edge
 // @license     No License
 // @description Wykop XS służy do wspomagania działania stylu "Wykop X Style", który jest wymagany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na: http://style.wykopx.pl
 // @description:en Wykop XS is a helper script for userstyle "Wykop X Style" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://style.wykopx.pl
 
-// @version     2.41.3
+// @version     2.42.5
 // ==/UserScript==
 
 (async function ()
 {
 	'use strict';
 
-
-	const currentVersion = "2.41.3";
+	const currentVersion = "2.42.5";
 	const dev = false;
 	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
 
 	// user.username - nazwa zalogowanego uzytkownika
+
+	let user = {
+		data: null,
+		username: null
+	};
 
 
 	let wykopxStorageMirkoukrywacz = localforage.createInstance({
@@ -71,6 +75,7 @@
 	settings.favoritesInTopNavJS = (wykopxSettings.getPropertyValue("--favoritesInTopNavJS") == `"true"`); // boolean
 	settings.addNewLinkInTopNavJS = (wykopxSettings.getPropertyValue("--addNewLinkInTopNavJS") == `"true"`); // boolean
 	settings.addNewEntryInTopNavJS = (wykopxSettings.getPropertyValue("--addNewEntryInTopNavJS") == `"true"`); // boolean
+	settings.tabTitleRemoveWykopPL = (wykopxSettings.getPropertyValue("--tabTitleRemoveWykopPL") == `"true"`); // boolean
 	settings.tabChangeOnlyOnHiddenState = (wykopxSettings.getPropertyValue("--tabChangeOnlyOnHiddenState") == `"true"`); // boolean
 	settings.linksAnalyzerSortByVotesCount = (wykopxSettings.getPropertyValue("--linksAnalyzerSortByVotesCount") == `"true"`); // boolean
 	settings.showObservedTagsAlphabetically = (wykopxSettings.getPropertyValue("--showObservedTagsAlphabetically") == `"true"`); // boolean
@@ -84,7 +89,6 @@
 	settings.tabTitleShowNotificationsCountTagsNewLink = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountTagsNewLink") == `"true"`); // boolean
 	settings.tabTitleShowNotificationsCountTagsNewEntry = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountTagsNewEntry") == `"true"`); // boolean
 	settings.tabTitleShowNotificationsCountSeparated = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountSeparated") == `"true"`); // boolean
-
 
 
 
@@ -116,9 +120,9 @@
 	let pathnameArray = pathname.split("/");
 	/*
 
-['', 'wpis', '74111643', 'dobranoc-panstwu']
-['', 'wykopalisko']
-['', 'link', '7303053', 'braun-gasi-chanuke-gasnica-mem']
+		['', 'wpis', '74111643', 'dobranoc-panstwu']
+		['', 'wykopalisko']
+		['', 'link', '7303053', 'braun-gasi-chanuke-gasnica-mem']
 
 	*/
 	function hashAndPathNameLoad()
@@ -1237,6 +1241,8 @@
 	// ZLICZA NOWE POWIADOMIENIA Z MENU OD 1 DO 5+
 	function countNumberOfNotificationsOnDesktop()
 	{
+		unreadNotifications.tags = unreadNotifications.tags_new_entry_with_observed_tag = unreadNotifications.tags_new_link_with_observed_tag = unreadNotifications.entries = unreadNotifications.pm = unreadNotifications.total = 0;
+
 		$("header .right ul li.dropdown").removeClass("unread_5").removeClass("unread_4").removeClass("unread_3").removeClass("unread_2").removeClass("unread_1");
 
 		$("header .right ul li.dropdown:has(a.new)").each(function (index, value)
@@ -1758,16 +1764,28 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 	/* ------ TAB TITLE AND WEBSITE FAVICON CHANGES --------- */
 
 	let originalTabTitle = document.title;
 	const defaultWykopFacoviconURL = "https://wykop.pl/static/img/favicons/favicon.png";
 
 	let tabTitles = new Map([
+		["domyslny", "           "],
+		["adres_url", "           "],
+		["pusty_tytul", "ᅟᅟ"],
 		["wlasny", settings.tabTitleCustom],
 		["wykop", "Wykop"],
-		["pusty_tytul", "ᅟᅟ"],
-		["adres_url", "           "],
+		["wykopx", "Wykop X"],
 		["digg", "News and Trending Stories Around the Internet | Digg"],
 		["google", "Google"],
 		["interia", "Interia - Polska i świat: informacje, sport, gwiazdy."],
@@ -1795,29 +1813,29 @@
 
 
 
-	// TAB TITLE
+	/*  TAB TITLE
+		changeDocumentTitle()
+		changeDocumentTitle("youtube")
+		changeDocumentTitle("Example new title")
+	*/
+
+	let specialCharacter = "឴";
+
 	function changeDocumentTitle(new_document_title)
 	{
-		console.log("unreadNotifications")
-		console.log(unreadNotifications)
-		// changeDocumentTitle()
-		// changeDocumentTitle("youtube")
-		// changeDocumentTitle("Example new title")
+		console.log(`changeDocumentTitle() > start:  document.title:`);
+		console.log(document.title);
+		console.log(`changeDocumentTitle() > start:  originalTabTitle`);
+		console.log(originalTabTitle);
 
-		/* dodaj liczbe powiadomien do tytulu strony na karcie */
-		/*
-		const unreadNotifications = {
-			tags: 0,
-			tags_new_entry_with_observed_tag: 0,
-			tags_new_link_with_observed_tag: 0,
-			entries: 0,
-			pm: 0,
-			total: 0,
-		};
-		*/
+
+
+		if (settings.tabTitleRemoveWykopPL)
+		{
+			originalTabTitle = originalTabTitle.replace(":: Wykop.pl", "");
+		}
 
 		//xxx
-
 
 		let tabTitleNotifications = "";
 
@@ -1835,7 +1853,6 @@
 			{
 				let notificationsEmoji = ""; // 🔗✉📧📩
 
-
 				if (settings.tabTitleShowNotificationsCountPM && unreadNotifications["pm"] > 0)
 				{
 					notificationsTotalCount += unreadNotifications["pm"];
@@ -1852,7 +1869,7 @@
 
 				if (unreadNotifications["tags"] && settings.tabTitleShowNotificationsCountTagsNewLink || settings.tabTitleShowNotificationsCountTagsNewEntry)
 				{
-					notificationsEmoji = "#";
+					notificationsEmoji = "🏷"; // #
 					if (settings.tabTitleShowNotificationsCountTagsNewLink && unreadNotifications["tags_new_entry_with_observed_tag"] > 0)
 					{
 						notificationsTotalCount += unreadNotifications["tags_new_entry_with_observed_tag"];
@@ -1865,24 +1882,46 @@
 				}
 
 
+				if (settings.tabTitleShowNotificationsCountSeparated)
+				{
+					tabTitleNotifications = tabNotificationsSeparated; // 📧 2 🔔 3 # 14
+				}
+				else
+				{
+					tabTitleNotifications = notificationsTotalCount; 	// 19
+				}
 
-				if (settings.tabTitleShowNotificationsCountSeparated) tabTitleNotifications = tabNotificationsSeparated;
-				else tabTitleNotifications = `(${notificationsTotalCount}) `;
+				if (new_document_title == "pusty_tytul") // jesli pusty tytul - ikonki powiadomien bez nawiasow
+				{
+					tabTitleNotifications = `${specialCharacter}${tabTitleNotifications} `						// 📧 2 🔔 3 # 14 albo 19
+				}
+				else
+				{
+					tabTitleNotifications = `(${specialCharacter}${tabTitleNotifications}) `					// (📧 2 🔔 3 # 14) albo (19)
+				}
 			}
-
-			console.log(new_document_title)
-			console.log("new_document_title")
 		}
 
-		if (tabTitles.has(new_document_title)) // selected title from Map
+		let documentTitle = tabTitleNotifications;
+
+		if (settings.tabTitleEnabled && new_document_title != "domyslny")
 		{
-			document.title = `${tabTitleNotifications}${tabTitles.get(new_document_title)}`;
+			if (tabTitles.has(new_document_title)) // selected title from Map
+			{
+				documentTitle += `${tabTitles.get(new_document_title)}`;
+			}
+			else
+			{
+				documentTitle += `${new_document_title}`;
+			}
 		}
 		else
 		{
-			document.title = `${tabTitleNotifications}${new_document_title}`;
+			documentTitle += originalTabTitle;
 		}
 
+		console.log("changeDocumentTitle() > zmieniam document.title na: " + documentTitle);
+		document.title = documentTitle;
 	}
 
 
@@ -1914,16 +1953,19 @@
 
 	function executeTabAndFaviconChanges()
 	{
+		console.log("executeTabAndFaviconChanges()")
+
 		if (document.hidden || !settings.tabChangeOnlyOnHiddenState)
 		{
 			if (settings.tabFaviconEnabled) changeDocumentFavicon(settings.tabFaviconSelect);
-			if (settings.tabTitleEnabled) changeDocumentTitle(settings.tabTitleSelect);
+			if (settings.tabTitleEnabled || settings.tabTitleShowNotificationsEnabled) changeDocumentTitle(settings.tabTitleSelect);
 		}
 	}
 
 
-	// TITLE MUTATION
 
+
+	// TITLE MUTATION
 	let titleMutationObserver = new MutationObserver(mutationsList =>
 	{
 		// console.log("titleMutationObserver")
@@ -1933,16 +1975,32 @@
 		{
 			if (mutation.type === 'childList')
 			{
-				console.log(`Nowy tytuł strony: ${mutation.addedNodes[0].textContent}`);
+				let mutatedTitle = mutation.addedNodes[0].textContent;
+
+				console.log(`Nowy tytuł strony: ${mutatedTitle}`);
+				// if (mutatedTitle.endsWith(":: Wykop.pl"))
+				// {
+				// 	originalTabTitle = mutatedTitle;
+				// 	console.log(`mutatedTitle.endsWith(":: Wykop.pl")`);
+				// }
+				if (!mutatedTitle.includes(specialCharacter)) // tytul nie zostal jeszcze zmieniony i dodane są liczby powiadomien zeby sie nie powtarzalo (1)(1)
+				{
+					originalTabTitle = mutatedTitle;
+					console.log(`!mutatedTitle.includes("specialCharacter")`);
+				}
 
 				titleMutationObserver.disconnect();
 				executeTabAndFaviconChanges();
 				titleMutationObserver.observe(document.querySelector('title'), { childList: true, })
-
+				console.log("originalTabTitle: " + originalTabTitle)
 			}
 		}
 	});
 	titleMutationObserver.observe(document.querySelector('title'), { childList: true, })
+
+
+
+
 
 
 	// EVENT: KARTA JEST W TLE document.hidden == true
@@ -1950,9 +2008,10 @@
 	// https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilitychange_event
 	function handleVisibilityChange()
 	{
+		console.log("handleVisibilityChange(): " + document.visibilityState)
+
 		// document.visibilityState > "visible"/"hidden"
 		// document.hidden > true/false
-		// document.title = document.visibilityState;
 
 		if (document.hidden)
 		{
@@ -1963,7 +2022,7 @@
 		{
 			if (settings.tabChangeOnlyOnHiddenState)
 			{
-				if (settings.tabTitleEnabled) changeDocumentTitle(originalTabTitle);
+				if (settings.tabTitleEnabled || settings.tabTitleShowNotificationsEnabled) changeDocumentTitle(originalTabTitle);
 				if (settings.tabFaviconEnabled) changeDocumentFavicon();
 			}
 		}
@@ -2331,10 +2390,6 @@
 			}
 		}
 	}
-
-
-
-
 
 
 
@@ -2789,19 +2844,62 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
+
+
+
+
+	/* ------------- EVENTS ------------ */
+
+
+
+
+
+
+	function handleWindowEvent(event)
+	{
+		console.log(`Event ${event.type} was fired`);
+		console.log(event);
+	}
+	window.addEventListener('load', handleWindowEvent); 		// 1
+	window.addEventListener('pageshow', handleWindowEvent); 	// 2
+	// window.addEventListener('popstate', handleWindowEvent);
+	// window.addEventListener('hashchange', handleWindowEvent);
+	// window.addEventListener('pagehide', handleWindowEvent);
+	// window.addEventListener('beforeunload', handleWindowEvent);
+	// window.addEventListener('unload', handleWindowEvent);
+	/*	events in Wykop podczas ladowania strony:
+		1. 	window.addEventListener('load', callback); (Event) event.srcElement.URL > "https://wykop.pl/wpis/74180083/pytanie#comment-261404235"
+		2. 	window.addEventListener('pageshow', callback); (PageTransitionEvent)
+
+		przejscie na nowa strone, do innego #anchora po kliknieciu w permalink komentarza we wpisie
+
+		3. navigation.addEventListener("navigate", callback) (NavigateEvent)
+
+		“popstate”: This event is fired when the active history entry changes, either by the user navigating to a different state, or by the code calling the history.pushState() or history.replaceState() methods. This event can be used to update the page content according to the new state.
+		“hashchange”: This event is fired when the fragment identifier of the URL (the part after the “#”) changes. This event can be used to implement single-page applications that use different hash values to load different views.
+		“pushstate”: This event is fired when the history.pushState() method is called, which adds a new state to the history stack. This event can be used to perform some actions when a new state is created.
+		“replacestate”: This event is fired when the history.replaceState() method is called, which modifies the current state in the history stack. This event can be used to perform some actions when the current state is changed.
+	*/
+
+
+
 	/* NEW WYKOP PAGE REDIRECTION */
 	navigation.addEventListener("navigate", (event) =>
 	{
-		console.log("navigation - navigate event - " + event.type)
+		console.log("navigation - navigate event - " + event.type);
+		console.log(event);
 		originalTabTitle = document.title;
 
 		visiblePlusesObserver.disconnect();
 
+
+
+
 		// consoleX(`navigation.addEventListener("navigate", (event) =>`, 1);
 
-		// 
 		runWithDelay(2000, function ()
 		{
+			console.log("document.title: " + document.title);
 			hashAndPathNameLoad();
 			categoryRedirectToMicroblogButton();
 			countNumberOfNotificationsOnDesktop();
@@ -2825,29 +2923,42 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	});
 
 
-	/*
-	“popstate”: This event is fired when the active history entry changes, either by the user navigating to a different state, or by the code calling the history.pushState() or history.replaceState() methods. This event can be used to update the page content according to the new state.
-	“hashchange”: This event is fired when the fragment identifier of the URL (the part after the “#”) changes. This event can be used to implement single-page applications that use different hash values to load different views.
-	“pushstate”: This event is fired when the history.pushState() method is called, which adds a new state to the history stack. This event can be used to perform some actions when a new state is created.
-	“replacestate”: This event is fired when the history.replaceState() method is called, which modifies the current state in the history stack. This event can be used to perform some actions when the current state is changed.
-	*/
 
 
 
 
-
-	let user = {
-		data: null,
-		username: null
-	};
 
 
 
 	// lOADED PAGE
 	window.onload = function (event)
 	{
+		//changePageHashForTarget();
+
+		// Select all elements with class "entry"
+		let elements = document.querySelectorAll('.entry');
+
+		// Loop through each element
+		elements.forEach((element) =>
+		{
+			// Get the id of the element
+			let id = element.id;
+
+			// Check if the id starts with "comment-"
+			if (id.startsWith('comment-'))
+			{
+				// Remove "comment-" from the id
+				let newId = id.replace('comment-', '');
+
+				// Set the new id to the element
+				element.id = newId;
+			}
+		});
+
 		const topHeaderProfileButton = document.querySelector("body header > div.right > nav > ul > li.account a.avatar");
 		if (topHeaderProfileButton) user.username = topHeaderProfileButton.getAttribute("href").split('/')[2];
+
+
 
 		if (user.username == null)
 		{
@@ -2897,10 +3008,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		// 20s
 		runWithDelay(12000, function ()
 		{
-
-
 			checkVersionForUpdates();
-
 			createNewProfileDropdownMenuItem(
 				{
 					text: `Wykop X - Informacje`,
@@ -2912,11 +3020,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 					icon: null,
 					number: null
 				});
-
 		});
-
 	};
-
 
 
 

@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style
-@version        2.42.1
+@version        2.42.5
 @description    Ponad 500 funkcji usprawniających i naprawiających Wykop.pl
 
 
@@ -17,6 +17,67 @@
 @preprocessor   stylus
 @namespace      userstyles.world/user/wykopchanger
 @license        No License (YOU CAN USE THIS CODE ONLY IN STYLUS EXTENSIONS. You are not allowed to: copy any part of the code, share, and use it anywhere)
+
+
+
+
+@var range      HR_NEW_TAB_TITLE                          `KARTA Z WYKOPEM ⭐ Nowe v.2.41`                                                                                                                                                                                              [0, 0, 99900, 1, 'mm']
+@var checkbox   tabFaviconEnabled                              `❎ Włącz zmianę ikonki karty z Wykopem (favicon) ⭐`                                   1
+@var select     tabFaviconSelect                               `❎ Favicon ⭐` {
+                                                                                `Wykop (domyślna)`:`wykop`,
+                                                                                `Wykop (biala)*`:`wykop_white`,
+                                                                                `Wykop (szara)`:`wykop_gray`,
+
+                                                                                `Google`:`google`,
+
+                                                                                `Interia`:`interia`,
+                                                                                `Digg`:`digg`,
+                                                                                `Onet`:`onet`,
+                                                                                `Reddit`:`reddit`,
+                                                                                `Wirtualna Polska`:`wp`,
+                                                                                `YouTube`:`youtube`,
+                                                                                `X (Twitter)`:`x`,
+                                                                            }   
+@var checkbox   tabTitleEnabled                                `❎ Włącz zmianę Tytułu karty z Wykopem ⭐`                                         0
+@var checkbox   tabTitleRemoveWykopPL                          `❎ Usuń z tytułu karty tekst :: 𝗪𝘆𝗸𝗼𝗽.𝗽𝗹 ⭐`                                       1
+@var select     tabTitleSelect                                 `❎ Tytuł kart z Wykopem ⭐` {
+                                                                                `[-- Oryginalny tytuł strony --]`:`domyslny`,
+
+                                                                                `[-- Pusty tytuł --]`:`pusty_tytul`,
+                                                                                `[-- Adres URL strony --]`:`adres_url`,
+                                                                                `[-- Własny tytuł kart (wpisz poniżej) --]`:`wlasny`,
+
+                                                                                `Wykop`:`wykop`,
+                                                                                `Wykop X`:`wykopx`,
+                                                                                
+                                                                                `Google`:`google`,
+                                                                                `Interia - Polska i świat: informacje, sport, gwiazdy.`:`interia`,
+                                                                                `News and Trending Stories Around the Internet | Digg`:`digg`,
+                                                                                `Onet – Jesteś na bieżąco`:`onet`,
+                                                                                `Reddit - Dive into anything`:`reddit`,
+                                                                                `Wirtualna Polska - Wszystko co ważne`:`wp`,
+                                                                                `YouTube`:`youtube`,
+                                                                                `Home / X`:`x`,
+                                                                            }
+@var text       tabTitleCustom                                  `❎ Własny tytuł kart ⭐`                                         `Wykop X`
+@var checkbox   tabTitleShowNotificationsEnabled                `❎💻 Włącz liczbę powiadomień w tytule karty ⭐`                               1
+@var checkbox   tabTitleShowNotificationsCountSeparated         `❎💻 Osobne liczby zamiast sumy powiadomień: ✉/🕭/# ⭐`                 1
+@var checkbox   tabTitleShowNotificationsCountPM                `❎💻 ✉ Liczba nowych wiadomości prywatnych ⭐`                          1
+@var checkbox   tabTitleShowNotificationsCountEntries           `❎💻 🕭 Liczba powiadomień z wołaniami ⭐`                               1
+@var checkbox   tabTitleShowNotificationsCountTagsNewLink       `❎💻 # Liczba nowych znalezisk z obserwowanych #tagów ⭐`               0
+@var checkbox   tabTitleShowNotificationsCountTagsNewEntry      `❎💻 # Liczba nowych wpisów z obserwowanych #tagów ⭐`                  0
+@var checkbox   tabChangeOnlyOnHiddenState                      `❎ Modyfikuj kartę Wykopu tylko gdy jest w tle ⭐`                        0
+           
+           
+           
+@var range      HR_RIGHT_SIDEBAR_242                    `SIDEBAR PO PRAWEJ ⭐ Nowe v.2.42`                                                                                                                                                                                                  [0, 0, 99900, 1, 'mm']
+@var select     rightSidebarBanAlert                            `💻🍌 Panel "Twoje konto zostało zbanowane" ⭐` {
+                                                                            "🍌 Wyświetl jako pierwszy (domyślnie)": "domyslnie_na_gorze",
+                                                                            "🍌 Wyświetl na dole sidebara":"ban_alert_na_koncu",
+                                                                            "🚫 Ukryj panel z informacją o banie":"ukryj_ban_alert",
+                                                                            } 
+@var checkbox   tagPageFollowTagButton                          `Ładniejszy przycisk "Obserwuj tag" / "Obserwujesz tag" ⭐`                                 1
+
 
 
 @var range      HR_MIKRO_MIKROBLOG_231                `MIKROBLOG ⭐ Nowe v.2.42`                                                      [0, 0, 99900, 1, 'mm']                                                                                                                                                                                                                                         [0, 0, 99900, 1, 'mm']
@@ -47,8 +108,8 @@
                                                                     "🚫🌆 Ukrywaj wpisy z samym obrazkiem (bez treści)":"ukryj_wpis_z_obrazkiem_bez_tresci",
                                                                     "🚫🌆 Ukryj wszystkie wpisy z obrazkami":"ukryj_wpis_z_obrazkiem",
                                                                 }
-@var checkbox   hidePhotosInEntriesInStream                    `🚫🔷🌆 Ukrywaj obrazki we wpisach (na mikroblogu)⭐`                         0
-@var checkbox   hidePhotosInEntriesInEntryPage                 `🚫🔹🌆 Ukrywaj obrazki we wpisach (na stronie wpisu) ⭐`                     0
+@var checkbox   hidePhotosInEntriesInStream                    `🚫🔷🌆 Ukrywaj obrazki we wpisach (na mikroblogu)⭐`                                    0
+@var checkbox   hidePhotosInEntriesInEntryPage                 `🚫🔹🌆 Ukrywaj obrazki we wpisach (na stronie wpisu) ⭐`                                0
 
 
 
@@ -57,21 +118,20 @@
                                                                     "🚫🌆 Ukrywaj komentarze z samym obrazkiem (bez treści)":"ukryj_komentarz_z_obrazkiem_bez_tresci",
                                                                     "🚫🌆 Ukryj wszystkie komentarze z obrazkami":"ukryj_komentarz_z_obrazkiem",
                                                                 }                                                              
-@var checkbox   hidePhotosInCommentsInStream                   `🚫🔷🌆 Ukrywaj obrazki w komentarzach (na mikroblogu) ⭐`                     0
-@var checkbox   hidePhotosInCommentsInEntryPage                `🚫🔹🌆 Ukrywaj obrazki w komentarzach (na stronie wpisu) ⭐`                     0
-@var checkbox   hidePhotosInCommentsInLinkPage                 `🚫🔸🌆 Ukrywaj obrazki w komentarzach (w znalezisku) ⭐`                     0
+@var checkbox   hidePhotosInCommentsInStream                   `🚫🔷🌆 Ukrywaj obrazki w komentarzach (na mikroblogu) ⭐`                                0
+@var checkbox   hidePhotosInCommentsInEntryPage                `🚫🔹🌆 Ukrywaj obrazki w komentarzach (na stronie wpisu) ⭐`                             0
+@var checkbox   hidePhotosInCommentsInLinkPage                 `🚫🔸🌆 Ukrywaj obrazki w komentarzach (w znalezisku) ⭐`                                 0
 
 
-@var checkbox   hideEntriesWithoutAnyTag                        `🚫🔷 Ukrywaj wpisy bez żadnego #tagu`                                            0
-var checkbox    hideEntriesWithAnyTag                           `🚫🔷 Ukrywaj wpisy zawierające #tagi ("Tylko nocna")`                            0
+@var checkbox   hideEntriesWithoutAnyTag                       `🚫🔷 "Bez nocnej zmiany" - ukrywaj wpisy bez żadnego #tagu ⭐`                           0
+@var checkbox   hideEntriesWithAnyTag                          `🚫🔷 "Tylko nocna zmiana" - Ukrywaj wpisy zawierające #tagi ⭐`                              0
 
+@var checkbox   hideEntriesWithinRange                         `🚫🔷 Włącz ukrywanie wpisów z liczbą #tagów wg zakresu ustawionego poniżej ⭐`           0
 
-var checkbox   hideEntriesWithinRange                          `check: 🚫🔷 Włącz ukrywanie wpisów z liczbą #tagów wg zakresu`           0
-
-var range      hideEntriesWithLessThanXTags                    `check: 🚫🔷 Ukrywaj wpisy zawierające mniej niż X #tagów`          [0, 0, 6, 1, '']
-var range      hideEntriesWithMoreThanXTags                    `check: 🚫🔷 Ukrywaj wpisy zawierające X lub więcej #tagów`         [50, 1, 50, 1, '']
-var range      hideEntriesWithMoreThanXMentions                `🚫🔷 TODO: Ukrywaj wpisy zawierające więcej niż X wołań`              [150, 1, 150, 1, '']
-var range      hideCommentsWithMoreThanXMentions               `🚫🗨️ TODO: Ukrywaj komentarze zawierające więcej niż X wołań`         [150, 1, 150, 1, '']
+@var range      hideEntriesWithLessThanXTags                   `🚫🔷 Ukryj wpisy zawierające mniej niż 𝕏 #tagów ⭐`          [0, 0, 6, 1, '']
+@var range      hideEntriesWithMoreThanXTags                   `🚫🔷 Ukryj wpisy zawierające 𝗫 lub więcej #tagów ⭐`         [50, 1, 50, 1, '']
+var range       hideEntriesWithMoreThanXMentions               `🚫🔷 TODO: Ukrywaj wpisy zawierające więcej niż 𝕏 wołań`              [150, 1, 150, 1, '']
+var range       hideCommentsWithMoreThanXMentions              `🚫🗨️ TODO: Ukrywaj komentarze zawierające więcej niż 𝕏  wołań`         [150, 1, 150, 1, '']
 
                                                                 
 
@@ -193,58 +253,6 @@ var checkbox   hotLinksShowFirst                              `check: 🔸🔥 G
 @var checkbox   hideLogo                                        `𝕎 Ukryj sygnet Wykopu na górnej belce`                                                            0
 
 
-
-@var range      HR_NEW_TAB_TITLE                          `KARTA Z WYKOPEM ⭐ Nowe v.2.41`                                                                                                                                                                                              [0, 0, 99900, 1, 'mm']
-
-@var checkbox   tabChangeOnlyOnHiddenState                     `❎ Modyfikuj kartę Wykopu tylko gdy jest w tle ⭐`                        0
-
-@var checkbox   tabFaviconEnabled                              `❎ Zmień Favicon (ikonka karty) ⭐`                                   1
-@var select     tabFaviconSelect                               `❎ Favicon ⭐` {
-                                                                                `Wykop (domyślna)`:`wykop`,
-                                                                                `Wykop (biala)*`:`wykop_white`,
-                                                                                `Wykop (szara)`:`wykop_gray`,
-
-                                                                                `Google`:`google`,
-
-                                                                                `Interia`:`interia`,
-                                                                                `Digg`:`digg`,
-                                                                                `Onet`:`onet`,
-                                                                                `Reddit`:`reddit`,
-                                                                                `Wirtualna Polska`:`wp`,
-                                                                                `YouTube`:`youtube`,
-                                                                                `X (Twitter)`:`x`,
-                                                                            }   
-
-@var checkbox   tabTitleEnabled                                `❎ Zmień Tytuł kart z Wykopem ⭐`                                         0
-
-@var select     tabTitleSelect                                 `❎ Tytuł kart z Wykopem ⭐` {
-                                                                                `[-- Własny tytuł kart (wpisz poniżej) --]`:`wlasny`,
-                                                                                `[-- Pusty tytuł --]`:`pusty_tytul`,
-                                                                                `[-- Adres URL strony --]`:`adres_url`,
-
-                                                                                `Wykop`:`wykop`,
-                                                                                `Google`:`google`,
-
-                                                                                `Interia - Polska i świat: informacje, sport, gwiazdy.`:`interia`,
-                                                                                `News and Trending Stories Around the Internet | Digg`:`digg`,
-                                                                                `Onet – Jesteś na bieżąco`:`onet`,
-                                                                                `Reddit - Dive into anything`:`reddit`,
-                                                                                `Wirtualna Polska - Wszystko co ważne`:`wp`,
-                                                                                `YouTube`:`youtube`,
-                                                                                `Home / X`:`x`,
-                                                                            }
-@var text       tabTitleCustom                                  `❎ Własny tytuł kart ⭐`                                         `Wykop X`
-
-@var checkbox   tabTitleShowNotificationsEnabled                `❎💻 Liczba powiadomień w tytule karty ⭐`                               1
-@var checkbox   tabTitleShowNotificationsCountSeparated         `❎💻 Osobne liczby zamiast sumy powiadomień: ✉/🕭/# ⭐`                 1
-
-@var checkbox   tabTitleShowNotificationsCountPM                `❎💻 ✉ Liczba nowych wiadomości prywatnych ⭐`                          1
-@var checkbox   tabTitleShowNotificationsCountEntries           `❎💻 🕭 Liczba powiadomień z wołaniami ⭐`                               1
-@var checkbox   tabTitleShowNotificationsCountTagsNewLink       `❎💻 # Liczba nowych znalezisk z obserwowanych #tagów ⭐`               1
-@var checkbox   tabTitleShowNotificationsCountTagsNewEntry      `❎💻 # Liczba nowych wpisów z obserwowanych #tagów ⭐`                  1
-
-
-                                                                         
 
 @var range      HR_NEW_241                                `ANTI-EMBARRASSMENT MODE ⭐ Nowe v.2.41`                                                                                                                                                                                              [0, 0, 99900, 1, 'mm']
 @var checkbox   presetAntiEmbarrassment                         `[PRESET] Włącz wszystkie funkcje ANTI EMBARRASSMENT MODE ⭐`            0
@@ -605,8 +613,6 @@ var checkbox  topNavSnowGirl                                   `❄ Snow Girl`  
 
 @var range      HR_ALREADY_READ_LINKS               `🔸 ✔ PRZECZYTANE ZNALEZISKA ⭐ Nowe v.2.27`                                                    [0, 0, 99900, 1, 'mm']
 @var checkbox   visitedLinksGrayedOut                           `✔ Zaznaczaj 𝗣𝗥𝗭𝗘𝗖𝗭𝗬𝗧𝗔𝗡𝗘 znaleziska ⭐`                                                                1
-@var color      colorAccent                                     `🌞 Kolor wiodący (Tryb dzienny)`                            rgba(57, 131, 175, 1)
-@var color      colorAccentNight                                `🌘 Kolor wiodący (Tryb nocny)`                            rgba(57, 131, 175, 1)
 
 
 
@@ -1368,7 +1374,6 @@ var select     hideTagsIcon                                     `💻⭐ Ukryj i
                                                                             } 
 @var checkbox   hideVoters                                      `🚫 Ukryj listę plusujących wpis/komentarz`                                                                                                        0 
 @var checkbox   mikroHideNewContentButton                       `🚫 Ukryj komunikat "Pojawiły się nowe treści"`                                                                                                    0
-@var checkbox   hideEntriesWithoutAnyTag                        `🚫🔷 Ukrywaj wpisy bez żadnego #tagu`                                                                                                               0
 @var checkbox   microActionsInline                              `💻❎🐁 "Aktywne/Gorące/Najnowsze" jako przyciski zamiast rozwijanego menu`                                                                                   1
 
 
@@ -1491,7 +1496,7 @@ var select     editorNewComments                                `Edytor dodawani
                                                                             } 
 
 @var range      HR_WHITELIST      `WYRÓŻNIANIAJ @UŻYTKOWNIKÓW`            [0, 0, 99900, 1, 'mm']
-@var checkbox   highlightUsersON                                `Włącz wyróżnianie wybranych użytkowników`              1
+@var checkbox   highlightUsersEnabled                           `Włącz wyróżnianie wybranych użytkowników`              1
 
 @var text       highlightUser1                                  `😎 Wyróżniaj Mirka  @`                        `WykopX`
 @var text       highlightUser2                                  `😎 Wyróżniaj Mirka  @`                        `wykop`
@@ -1678,6 +1683,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     {
         tabTitleEnabled = 1;
         tabTitleSelect = "youtube";
+        tabTitleRemoveWykopPL = 1;
         tabFaviconEnabled = 1;
         tabFaviconSelect = "youtube";
         rightSidebarFooter = 1;
@@ -2545,6 +2551,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 
 
 
+    
 
 
 
@@ -2592,6 +2599,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
     
     
+ 
     
     
     /* STRONA GŁÓWNA */
@@ -2888,95 +2896,103 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     else if(textFontSize == "21px") {    html { font-size: 8.20%; }} 
 
 
-    
-      section.link-block > section > article > header h2                                /* tytuł znaleziska */
-      { font-size: 18rem!important; } 
+    a, span
+    { font-size: 14rem; }
+
+    section.link-block > section > article > header h2                         /* tytuł znaleziska */
+    { font-size: 18rem!important; } 
 
 
-      aside.left-panel > section.links > .content ul li a.hybrid                 /* kategorie */
-      { font-size: 16rem!important; } 
+    aside.left-panel > section.links > .content ul li a.hybrid                 /* kategorie */
+    { font-size: 16rem!important; } 
 
-      .night-mode-switch .switch label[for="switch-night-mode"] > span            /* przycisk zmiany Tryb nocny/dzienny */
-      { font-size: 15rem!important; } 
+    .night-mode-switch .switch label[for="switch-night-mode"] > span            /* przycisk zmiany Tryb nocny/dzienny */
+    { font-size: 15rem!important; } 
 
-      div.content section.entry-content div.wrapper,                               /* treść wpisu / komentarza */
-      header.header>.right>nav>ul> li,                                            /* panel powiadomień - przycisk z nazwa uzytkownika login */ 
-      aside.left-panel>section.links>.content>header h4,                          /* zwijacze kategorii */
-      section.add-to-bucket-btn>button,                                           /* przycisk "Utwórz kategorię */
-      section.actions>ul>li.reply,                                                /* przyciski akcji do komentarza */
-      button.toggle-to-favourite,                                                 /* gwiazdka dodaj komentarz do ulubionych  */
-      section.custom-sidebar>header h4,                                           /* sidebar po prawej - naglowek panelu */ 
-      section.tags ul li,                                                         /* right sidebar - tagi */
-      section.link>.content header h5 a,                                          /* right sidebar - tytul znaleziska */
-      section.link>.content footer span,                                          /* right sidebar - liczba wykopow */
-      footer.footer p,                                                            /* footer - naglowek panelu */
-      footer.footer>nav ul li,                                                    /* linki w stopce */
-      section.editor>.content textarea,                                           /* panel edycji komentarza */
-      header.stream-top>h1,                                                       /* naglowek kategorii znalezisk */
-      header.stream-top>h2, 
-      header.stream-top>h3, 
-      header.stream-top>h4, 
-      header.stream-top>h5, 
-      header.stream-top>h6,
-      div.action-btn .target,                                                     /* przycisk Zobacz wiecej */
-      aside.hits-slider .swiper-container .swiper-wrapper .swiper-slide a figure figcaption,  /* opis znaleziska hitów */
-      section.filter>header h3,                                                   /* filtr gorące/aktywne itd */
-      section.link-block>section>article section.info>p,                                  /* opis znaleziska */
-      header.header>.left>nav.main>ul li a,                                       /* top menu - przyciski */
-      section.actions.detailed:not(.compact)>ul>li.comments span,                 /* liczba komentarzy w znalezisku */
-      section.actions.detailed:not(.compact)>ul>li.comments a, 
-      ul.dropdown:not(.clear-styles) ul.actions li,                               /* akcje Zgłoś, udostepnij, usuń */
-      section.related-link>article>header h4 a,                                   /* tytuł linku powiązanego */
-      ul.tab-nav > li a,                                                          /* WYKOPUJACY, ZAKOPUJACY */
-      nav.new-pagination.hash ul li a,                                            /* paginacja POPRZEDNIA - NASTEPNA */ 
-      div.button .target                                                          /* przycisk OBSERWUJ TAG, DODAJ DO KATEGORII */
-      { font-size: 14rem!important; } 
-
-
-      section.entry>article>header>div.right>div a.username,                      /* nick autora wpisu / komentarza */
-      .switch label>span,                                                         /* 18+ w edytorze komentarza */
-      section.custom-sidebar>header p                                             /* right sidebar - nazwa filtru */
-      section.voters section.voters-link-stream>.content>ul li>section a.username /* UZYTKOWNIK ZAKOPUJACY, WYKOPUJACY */
-      section.entry > article > header > div.right > div a.username span          /* wpis - login autora */
-      { font-size: 13rem!important; } 
-
-      time.date,                                                                  /* data dodania wpisu / komentarza */
-      section.entry>header>.right>div>a,                                          /* right-sidebar nick autora wpisu / komentarza */
-      section.entry-voters ul,                                                    /* lista plusujących */
-      div.button.small .target,                                                   /* przycisk pokaż więcej */
-      section.entry>footer p,                                                     /* prawy sidebar - liczba odpowiedzi */
-      section.link-block>section>article section.info>span,                       /* nick autora  znalezisko */
-      section.related-link>article>header>span,                                   /* nick autora linku powiązanego */
-      section.actions>ul>li.tag,                                                  /* tagi w znalezisku */
-      section.link-block>section>article section.info>ul li,                      /* tagi w znalezisku */
-      span.comment-counter, a.comment-counter                                     /* liczba komentarzy znaleziska */
-      { font-size: 12rem!important; } 
-  
-  
-      aside.left-panel>section.buttons>.content ul li a>span,                     /* Lewe Menu > podpisy pod przyciskami Hity,ulubione,Obserwowane */
-      section.entry-content .wrapper button                                       /* przycisk Pokaz wiecej w komentarzu */
-      { font-size: 11rem!important; } 
+    div.content section.entry-content div.wrapper,                               /* treść wpisu / komentarza */
+    header.header>.right>nav>ul> li,                                            /* panel powiadomień - przycisk z nazwa uzytkownika login */ 
+    aside.left-panel>section.links>.content>header h4,                          /* zwijacze kategorii */
+    section.add-to-bucket-btn>button,                                           /* przycisk "Utwórz kategorię */
+    section.actions>ul>li.reply,                                                /* przyciski akcji do komentarza */
+    button.toggle-to-favourite,                                                 /* gwiazdka dodaj komentarz do ulubionych  */
+    section.custom-sidebar>header h4,                                           /* sidebar po prawej - naglowek panelu */ 
+    section.tags ul li,                                                         /* right sidebar - tagi */
+    section.link>.content header h5 a,                                          /* right sidebar - tytul znaleziska */
+    section.link>.content footer span,                                          /* right sidebar - liczba wykopow */
+    footer.footer p,                                                            /* footer - naglowek panelu */
+    footer.footer>nav ul li,                                                    /* linki w stopce */
+    section.editor>.content textarea,                                           /* panel edycji komentarza */
+    header.stream-top>h1,                                                       /* naglowek kategorii znalezisk */
+    header.stream-top>h2, 
+    header.stream-top>h3, 
+    header.stream-top>h4, 
+    header.stream-top>h5, 
+    header.stream-top>h6,
+    div.action-btn .target,                                                     /* przycisk Zobacz wiecej */
+    aside.hits-slider .swiper-container .swiper-wrapper .swiper-slide a figure figcaption,  /* opis znaleziska hitów */
+    section.filter>header h3,                                                   /* filtr gorące/aktywne itd */
+    section.link-block>section>article section.info>p,                                  /* opis znaleziska */
+    header.header>.left>nav.main>ul li a,                                       /* top menu - przyciski */
+    section.actions.detailed:not(.compact)>ul>li.comments span,                 /* liczba komentarzy w znalezisku */
+    section.actions.detailed:not(.compact)>ul>li.comments a, 
+    ul.dropdown:not(.clear-styles) ul.actions li,                               /* akcje Zgłoś, udostepnij, usuń */
+    section.related-link>article>header h4 a,                                   /* tytuł linku powiązanego */
+    ul.tab-nav > li a,                                                          /* WYKOPUJACY, ZAKOPUJACY */
+    nav.new-pagination.hash ul li a,                                            /* paginacja POPRZEDNIA - NASTEPNA */ 
+    div.button .target                                                          /* przycisk OBSERWUJ TAG, DODAJ DO KATEGORII */
+    { font-size: 14rem!important; } 
 
 
-      section.vote-box .dig button,                                               /* przycisk WYKOP */
-      section.vote-box .burry>span                                                /* przycisk zakop */
-      { font-size: 10rem!important; } 
+    section.entry>article>header>div.right>div a.username,                      /* nick autora wpisu / komentarza */
+    .switch label>span,                                                         /* 18+ w edytorze komentarza */
+    section.custom-sidebar>header p                                             /* right sidebar - nazwa filtru */
+    section.voters section.voters-link-stream>.content>ul li>section a.username /* UZYTKOWNIK ZAKOPUJACY, WYKOPUJACY */
+    section.entry > article > header > div.right > div a.username span          /* wpis - login autora */
+    { font-size: 13rem!important; } 
+
+    time.date,                                                                  /* data dodania wpisu / komentarza */
+    section.entry>header>.right>div>a,                                          /* right-sidebar nick autora wpisu / komentarza */
+    section.entry-voters ul,                                                    /* lista plusujących */
+    div.button.small .target,                                                   /* przycisk pokaż więcej */
+    section.entry>footer p,                                                     /* prawy sidebar - liczba odpowiedzi */
+    section.link-block>section>article section.info>span,                       /* nick autora  znalezisko */
+    section.related-link>article>header>span,                                   /* nick autora linku powiązanego */
+    section.actions>ul>li.tag,                                                  /* tagi w znalezisku */
+    section.link-block>section>article section.info>ul li,                      /* tagi w znalezisku */
+    span.comment-counter, a.comment-counter                                     /* liczba komentarzy znaleziska */
+    { font-size: 12rem!important; } 
 
 
+    aside.left-panel>section.buttons>.content ul li a>span,                     /* Lewe Menu > podpisy pod przyciskami Hity,ulubione,Obserwowane */
+    section.entry-content .wrapper button                                       /* przycisk Pokaz wiecej w komentarzu */
+    { font-size: 11rem!important; } 
+
+
+    section.vote-box .dig button,                                               /* przycisk WYKOP */
+    section.vote-box .burry>span                                                /* przycisk zakop */
+    { font-size: 10rem!important; } 
 
 
 
-      section.link-block > section[data-v-441f7cc5]
-      {
-            min-height: 150px!important;
-      } 
 
-      section.link-block > section > article > figure
-      {
-            width: 190px!important;
-            height: 127px!important;
-            top: 15px!important;
-      } 
+
+
+
+
+
+
+
+    section.link-block > section[data-v-441f7cc5]
+    {
+        min-height: 150px!important;
+    } 
+
+    section.link-block > section > article > figure
+    {
+        width: 190px!important;
+        height: 127px!important;
+        top: 15px!important;
+    } 
 
 
 
@@ -5876,10 +5892,11 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
     
     
-    /* BLACKLIST ENTRIES WITHOUT TAGS ON MICRO STREAM - Ukrywaj wpisy bez żadnego #tagu */
+    /* Ukrywaj wpisy bez żadnego #tagu */
     if(hideEntriesWithoutAnyTag == 1)
     {
-        section.stream.microblog > div.content > section.entry:not(.own):not(.reply):not(:has(div.wrapper button)):not(:has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href^="\/tag\/"]))
+        
+        main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own):not(.reply):not(:has(div.wrapper button)):not(:has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href^="\/tag\/"]))
         {
             border: 10px solid rgb(22, 224, 57)!important;
             opacity: 0.69!important;
@@ -5888,8 +5905,6 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     } 
     
     
-    
-
     /* Ukrywaj wpisy zawierające #tagi ("Tylko nocna") */
     if(hideEntriesWithAnyTag == 1)
     {
@@ -5900,7 +5915,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     /* Ukrywaj wpisy zawierające więcej niż X #tagów */
     if(hideEntriesWithinRange == 1 && hideEntriesWithMoreThanXTags < 50)
     {
-        section.entry:not(.reply):not(:has(div.wrapper button)):has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href^="\/tag\/"]:nth-child({hideEntriesWithMoreThanXTags}of a[href^="\/tag\/"]))
+        main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own):not(:has(div.wrapper button)):has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href^="\/tag\/"]:nth-child({hideEntriesWithMoreThanXTags} of a[href^="\/tag\/"]))
         {
             border: 10px solid rgb(242, 70, 208)!important;
             opacity: 0.69!important;
@@ -5908,11 +5923,10 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         } 
     } 
     
-
     /* Ukrywaj wpisy zawierające mniej niż X #tagów */
     if(hideEntriesWithinRange == 1 && hideEntriesWithLessThanXTags > 0)
     {
-        section.entry:not(.reply):not(:has(div.wrapper button)):not(:has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href^="\/tag\/"]:nth-child({hideEntriesWithLessThanXTags}of a[href^="\/tag\/"])))
+        main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own):not(:has(div.wrapper button)):not(:has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href^="\/tag\/"]:nth-child({hideEntriesWithLessThanXTags} of a[href^="\/tag\/"])))
         {
             border: 10px solid rgb(8, 211, 255)!important;
             opacity: 0.69!important;
@@ -5921,6 +5935,204 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     } 
     
     
+    
+    
+    
+    // UKRYWANIE WPISÓW Z OBRAZKAMI
+    if(hideEntriesWithPhotos == "ukryj_wpis_z_obrazkiem")
+    {
+        main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:has(> article > div.edit-wrapper > section.entry-photo)
+        {
+            border: 10px solid rgb(18, 27, 232)!important;
+            if(blackListTesting == 0) { display: none!important; }        
+        }
+    }
+    else if(hideEntriesWithPhotos == "ukryj_wpis_z_obrazkiem_bez_tresci")
+    {
+        main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:has(> article > div.edit-wrapper > section.entry-photo):not(:has(> article > div.edit-wrapper > div.content))
+        {
+            border: 10px solid rgb(217, 254, 0)!important;
+            if(blackListTesting == 0) { display: none!important; }        
+        }
+    }
+    // UKRYWANIE OBRAZKÓW WE WPISACH
+    else 
+    {
+        if(hidePhotosInEntriesInStream == 1)
+        {       
+            main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > article > div.edit-wrapper > section.entry-photo
+            {
+                border: 10px solid rgb(122, 104, 220)!important;
+                if(blackListTesting == 0) { display: none!important; }        
+            }
+        }
+        if(hidePhotosInEntriesInEntryPage == 1)
+        {     
+            main.main > section > div.content > section.entry-page > section.entry > section.stream > div.content > section.entry > article > div.edit-wrapper > section.entry-photo
+            {
+                border: 10px solid rgb(122, 104, 220)!important;
+                if(blackListTesting == 0) { display: none!important; }        
+            }
+        }
+    }
+    
+    
+    // todo: UKRYWANIE WPISÓW ZIELONEK Z OBRAZKAMI        
+    if(userGreenEntriesWithPhotos == 1)
+    {
+        main.main > section > div.content > section:not(.entry-page) > section > section.stream:not(.entry-comments):not(.link-comments):not(.links-entries-stream-profile) section.entry:not(.reply):has(> article > header > div.left > a > figure.green-profile):has(> article > div.edit-wrapper > section.entry-photo)
+        {
+            border: 10px solid rgb(11, 100, 20)!important;
+            opacity: 0.69!important;
+            if(blackListTesting == 0) { display: none!important };
+        } 
+    }
+
+
+
+
+    
+    // UKRYWANIE KOMENTARZY Z OBRAZKAMI
+    if(hideCommentsWithPhotos == "ukryj_komentarz_z_obrazkiem")
+    {   // nie sa blokowane obrazki na stronie komentarza pod znaleziskiem
+        
+        // komentarz z obrazkiem pod wpisem na stronach mikrobloga
+        main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply:has(> article > div.edit-wrapper > section.entry-photo), 
+        // komentarz z obrazkiem pod wpisem na stronie wpisu
+        main.main > section > div.content > section.entry-page > section.entry > section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply:has(> article > div.edit-wrapper > section.entry-photo), 
+        
+        // subkomentarz z obrazkiem w znalezisku
+        main.main > section > div.content > section.link-page > section.link > section.comments > section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply:has(> article > div.edit-wrapper > section.entry-photo), 
+        // komentarz z obrazkiem w znalezisku, bez subkomentarzy
+        main.main > section > div.content > section.link-page > section.link > section.comments > section.stream > div.content > section.entry:not(:has(> div.comments)):has(> article > div.edit-wrapper > section.entry-photo), 
+        // komentarz z obrazkiem w znalezisku, z subkomentarzami bez tresci (tez tylko z obrazkami)
+        main.main > section > div.content > section.link-page > section.link > section.comments > section.stream > div.content > section.entry:not(:has(> div.comments > footer)):not(:has(> div.comments > section.stream > div.content > section.entry.reply > article > div.edit-wrapper > div.content)):has(> article > div.edit-wrapper > section.entry-photo),
+        // jesli komentarz z obrazkiem w znalezisku ma subkomentarz z trescia to ukrywamy tylko zdjecie a nie komentarz
+        main.main > section > div.content > section.link-page > section.link > section.comments > section.stream > div.content > section.entry:has(> div.comments > section.stream > div.content > section.entry.reply > article > div.edit-wrapper > div.content) > article > div.edit-wrapper > section.entry-photo,
+        // UKRYWAMY ZDJĘCIE, A NIE KOMENTARZ - jesli komentarz z obrazkiem w znalezisku ma subkomentarz z trescia to ukrywamy tylko zdjecie a nie komentarz
+        main.main > section > div.content > section.link-page > section.link > section.comments > section.stream > div.content > section.entry:has( > div.comments > footer, > div.comments > section.stream > div.content > section.entry.reply > article > div.edit-wrapper > div.content) > article > div.edit-wrapper > section.entry-photo
+        {
+            border: 10px solid rgb(18, 27, 232)!important;
+            if(blackListTesting == 0) { display: none!important; }        
+        }
+    }
+    else if(hideCommentsWithPhotos == "ukryj_komentarz_z_obrazkiem_bez_tresci")
+    {
+        // komentarz bez treści z obrazkiem pod wpisem na stronach mikrobloga
+        main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply:has(> article > div.edit-wrapper > section.entry-photo):not(:has(> article > div.edit-wrapper > div.content)), 
+        // komentarz bez treści z obrazkiem pod wpisem na stronie wpisu
+        main.main > section > div.content > section.entry-page > section.entry > section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply:has(> article > div.edit-wrapper > section.entry-photo):not(:has(> article > div.edit-wrapper > div.content)), 
+        // subkomentarz bez tresci z obrazkiem pod znaleziskiem
+        main.main > section > div.content > section.link-page > section > section.comments > section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply:has(> article > div.edit-wrapper > section.entry-photo):not(:has(> article > div.edit-wrapper > div.content)),
+        // komentarz z obrazkiem pod znaleziskiem bez żadnej treści, bez subkomentarzy
+        main.main > section > div.content > section.link-page > section > section.comments > section.stream > div.content > section.entry:has(> article > div.edit-wrapper > section.entry-photo):not(:has(> article > div.edit-wrapper > div.content)):not(:has(> div.comments)), 
+        // komentarz z obrazkiem bez tresci pod znaleziskiem, który ma albo przycisk pokaz komentarze, albo 2 subkomentarze i ktorys jest z trescia - ukrywamy tylko obrazek
+        main.main > section > div.content > section.link-page > section > section.comments > section.stream > div.content > section.entry:has(> article > div.edit-wrapper > section.entry-photo):not(:has(> article > div.edit-wrapper > div.content)):has(> div.comments > footer, > div.comments > section.stream > div.content > section.entry.reply > article > div.edit-wrapper > div.content) > article > div.edit-wrapper > section.entry-photo,
+        // komentarz z obrazkiem bez tresci pod znaleziskiem z subkomentarzami, ale boz przycisku pokaz wiecej i subkomentarze bez tresci,
+        main.main > section > div.content > section.link-page > section > section.comments > section.stream > div.content > section.entry:has(> article > div.edit-wrapper > section.entry-photo):not(:has(> article > div.edit-wrapper > div.content)):not(:has(> div.comments > footer, > div.comments > section.stream > div.content > section.entry.reply > article > div.edit-wrapper > div.content)),
+        {
+            border: 10px solid rgb(217, 254, 0)!important;
+            if(blackListTesting == 0) { display: none!important; }        
+        }        
+    }
+    else 
+    {
+        // Ukrywaj obrazki w komentarzach (na mikroblogu)
+        if(hidePhotosInCommentsInStream == 1)
+        {     
+            main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply > article > div.edit-wrapper > section.entry-photo
+            {
+                border: 10px solid rgb(122, 104, 220)!important;
+                if(blackListTesting == 0) { display: none!important; }        
+            }
+        }
+        // Ukrywaj obrazki w komentarzach (na stronie wpisu)
+        if(hidePhotosInCommentsInEntryPage == 1)
+        {      
+            main.main > section > div.content > section.entry-page > section.entry > section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply > article > div.edit-wrapper > section.entry-photo
+            {
+                border: 10px solid rgb(122, 104, 220)!important;
+                if(blackListTesting == 0) { display: none!important; }        
+            }
+        }
+
+    }
+    // Ukrywaj obrazki w komentarzach (w znalezisku) - poza blokiem, bo nie ukrywamy calych komentarzy na stronie komentarza pod znaleziskiem
+    if(hidePhotosInCommentsInLinkPage == 1)
+    {
+        main.main > section > div.content > section.link-page           > section.link          > section.comments  > section.stream > div.content > section.entry > article > div.edit-wrapper > section.entry-photo,
+        main.main > section > div.content > section.link-comment-page   > section.link-comment                      > section.stream > div.content > section.entry > article > div.edit-wrapper > section.entry-photo,
+        main.main > section > div.content > section.link-page           > section.link          > section.comments  > section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply > article > div.edit-wrapper > section.entry-photo,
+        main.main > section > div.content > section.link-comment-page   > section.link-comment                      > section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply > article > div.edit-wrapper > section.entry-photo
+        {
+            border: 10px solid rgb(133, 213, 56)!important;
+            if(blackListTesting == 0) { display: none!important; }        
+        }
+    }
+
+                                                          
+                                                                
+                                                                
+  
+    
+    if(hideVideosInEntries == 1)
+    {
+        // przypiete wpisy z mirko na stronie głównej
+        main.main > section > div.content > section.home-page       > section.home                      > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed,
+        // WPISY
+        main.main > section > div.content > section.tag-page        > section.stream        > article   > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed,
+        main.main > section > div.content > section.profile-page    > section.profile       > section   > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed,
+        main.main > section > div.content > section.bucket-page     > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed,
+        main.main > section > div.content > section.category-page   > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed,
+        main.main > section > div.content > section.observed-page   > section.observed                  > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed,
+        main.main > section > div.content > section.favourites-page > section.favourites                > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed,
+        main.main > section > div.content > section.microblog-page  > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed
+        {
+            border: 3px solid rgb(23, 69, 255)!important;
+        }   
+    }
+    else
+    {
+        if(hideVideosInEntriesYouTube == 1)
+        {
+            // przypiete wpisy z mirko na stronie głównej
+            /*
+                section.embed.youtube
+                section.embed.streamable
+                section.embed.twitter
+                section.embed.instagram
+            */
+            main.main > section > div.content > section.home-page       > section.home                      > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube,
+            // WPISY
+            main.main > section > div.content > section.tag-page        > section.stream        > article   > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube,
+            main.main > section > div.content > section.profile-page    > section.profile       > section   > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube,
+            main.main > section > div.content > section.bucket-page     > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube,
+            main.main > section > div.content > section.category-page   > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube,
+            main.main > section > div.content > section.observed-page   > section.observed                  > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube,
+            main.main > section > div.content > section.favourites-page > section.favourites                > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube,
+            main.main > section > div.content > section.microblog-page  > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube
+            {
+                border: 3px solid rgb(247, 23, 255)!important;
+            }
+        }
+        if(hideVideosInEntriesStreamable == 1)
+        {
+            // przypiete wpisy z mirko na stronie głównej
+            main.main > section > div.content > section.home-page       > section.home                      > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable,
+            // WPISY
+            main.main > section > div.content > section.tag-page        > section.stream        > article   > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable,
+            main.main > section > div.content > section.profile-page    > section.profile       > section   > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable,
+            main.main > section > div.content > section.bucket-page     > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable,
+            main.main > section > div.content > section.category-page   > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable,
+            main.main > section > div.content > section.observed-page   > section.observed                  > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable,
+            main.main > section > div.content > section.favourites-page > section.favourites                > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable,
+            main.main > section > div.content > section.microblog-page  > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable
+            {
+                border: 3px solid rgb(51, 153, 51)!important;    
+            }
+        }
+ 
+    }
     
     
     
@@ -5935,15 +6147,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             if(blackListTesting == 0) { display: none!important };
         } 
     } 
-    if(userGreenEntriesWithPhotos == 1)
-    {
-        main.main > section > div.content > section:not(.entry-page) > section > section.stream:not(.entry-comments):not(.link-comments):not(.links-entries-stream-profile) section.entry:not(.reply):has(> article > header > div.left > a > figure.green-profile):has(> article > div.edit-wrapper > section.entry-photo)
-        {
-            border: 10px solid rgb(11, 100, 20)!important;
-            opacity: 0.69!important;
-            if(blackListTesting == 0) { display: none!important };
-        } 
-    } 
+
     
     if(userGreenEntriesWithURLS == 1)
     {
@@ -6029,10 +6233,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             } 
         } 
     } 
-    
-    
-    
- 
+
     
     /* BLOKOWANIE WPISÓW - END */
     
@@ -7112,11 +7313,11 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 
 
         /* Zmiana "Wykopalisko" na "Najnowsze" */
-        header.header > div.left > nav.main > ul > li > a[href*="wykopalisko"] > span
+        body > section > header.header > div.left > nav.main > ul > li > a[href*="wykopalisko"] > span
         {
              display: none!important;
         } 
-        header.header > div.left > nav.main > ul > li > a[href*="wykopalisko"]:after
+        body > section > header.header > div.left > nav.main > ul > li > a[href*="wykopalisko"]:after
         {
             color: #fff; // TODO
             content: "Najnowsze"!important;
@@ -7126,11 +7327,11 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     if(myWykopInTopNavJS == 1 && (myWykopInTopNavJSObserwowane == 1 || changeWykoplikeWordsEverywhere == 1))
     {
         /* Zmiana "Mój Wykop" na "Obserwowane" */
-        header.header > div.left > nav.main > ul > li.wykopx_mywykop_li > a > span
+        body > section > header.header > div.left > nav.main > ul > li.wykopx_mywykop_li > a > span
         {
              display: none!important;
         } 
-        header.header > div.left > nav.main > ul > li.wykopx_mywykop_li > a:after
+        body > section > header.header > div.left > nav.main > ul > li.wykopx_mywykop_li > a:after
         {
             color: #fff; // TODO
             content: "Obserwowane"!important;
@@ -7401,14 +7602,19 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     } 
     if(hideHomeButton == 1)
     {
-        header.header nav.main a[href="/"] { display: none!important; } 
-    } 
+        body > section > header.header > div.left > nav.main > ul > li:has(> a[href="/"]) { display: none!important; } 
+    }
     
     
     if(hideUpcomingButton == 1)
     {
-        header.header nav.main a[href*="/wykopalisko"] { display: none!important; } 
-        header.header nav.main strong.upcoming-count   { display: none!important; } 
+        body > section > header.header > div.left > nav.main > ul > li:has(> a[href="/wykopalisko"]) { display: none!important; } 
+            
+        body > section > header.header > div.left > nav.main > ul > li.wykopx_add_new_link_li > a > span:after
+        {
+            content: "Dodaj znalezisko";
+            padding-left: 6px;
+        } 
     } 
 
 
@@ -7510,7 +7716,13 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
     if(hideMicroblogButton == 1)
     {
-        header.header nav.main a[href*="/mikroblog"]   { display: none!important; } 
+        body > section > header.header > div.left > nav.main > ul > li:has(> a[href="/mikroblog"])   { display: none!important; } 
+
+        body > section > header.header > div.left > nav.main > ul > li.wykopx_add_new_entry_li > a > span:after
+        {
+            content: "Dodaj wpis";
+            padding-left: 6px;
+        } 
     } 
     
     
@@ -8059,7 +8271,8 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             width: rightSidebarWidth !important;
         } 
         
-        body > section > div.main-content > main.main > section > section.sidebar > section
+        body > section > div.main-content > main.main > section > section.sidebar > section,
+        body > section > div.main-content > main.main > section > section.sidebar > aside.ban-alert // panel z info o banie
         {
             width: rightSidebarWidth !important;
         } 
@@ -8396,9 +8609,23 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 
 
 
+        // KOLEJNOŚĆ PANELI W PRAWYM SIDEBARZE
 
+        /*  order:
+            0 - na gorze (info o banie section.ban-alert)
 
-        body > section > div.main-content > main.main > section > section.sidebar > section
+            10 - WykopXS - .wykopx_your_observed_tags
+
+            1- 1. miejsce
+            10- 2. miejsce
+            100- 3. miejsce (domyslnie)
+            1000- 4. miejsce
+            10000- 5. miejsce
+
+            99999 - footer ze stopka
+        */
+        body > section > div.main-content > main.main > section > section.sidebar > section,
+        body > section > div.main-content > main.main > section > section.sidebar > aside // aside.ban-alert // panel z info o banie
         {
             order: 100;
         }
@@ -8412,6 +8639,10 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         } 
 
 
+        body > section > div.main-content > main.main > section > section.sidebar > section.conversation-list // lista czatów na stronie /wiadomosci
+        {
+            order: 1;
+        }
 
 
         // KOLEJNOŚĆ W SIDEBARZE: 5
@@ -8585,9 +8816,31 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             {   order: 1;   } 
         } 
 
-
-
-
+    
+        // 🍌 Panel "Twoje konto zostało zbanowane"
+        if(rightSidebarBanAlert == "domyslnie_na_gorze")
+        {
+            body > section > div.main-content > main.main > section > section.sidebar > aside.ban-alert
+            {
+                order: 0;
+            }
+        }
+        else if(rightSidebarBanAlert == "ban_alert_na_koncu")
+        {
+            body > section > div.main-content > main.main > section > section.sidebar > aside.ban-alert
+            {
+                order: 88888;
+            }
+        }
+        else if(rightSidebarBanAlert == "ukryj_ban_alert")
+        {
+            body > section > div.main-content > main.main > section > section.sidebar > aside.ban-alert
+            {
+                display: none!important;
+            }
+        }
+        
+        
 
 
         /* TWOJE OBSERWOWANE TAGI */
@@ -10627,11 +10880,11 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         width: 100%;
         display: block!important;
         height: 300px!important;
-        background: url('https://raw.githubusercontent.com/wykopx/WykopX/main/promo-images/wykopxs-install-sidebar-day.png');
+        background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/promo-images/wykopxs-install-sidebar-day.png');
     } 
     [data-night-mode] div.main-content section > section.sidebar:after
     { 
-        background: url('https://raw.githubusercontent.com/wykopx/WykopX/main/promo-images/wykopxs-install-sidebar-night.png');
+        background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/promo-images/wykopxs-install-sidebar-night.png');
     } 
 
     if(disableNewLinkEditorPastedTextLimit == 1)
@@ -12267,10 +12520,10 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     } 
     
     
-    
+
     
     /* WHITE LIST */
-    if(highlightUsersON == 1)
+    if(highlightUsersEnabled == 1)
     {
         section.entry-voters ul li:has(a[href={"\/ludzie\/" + highlightUser1}]) { order: 1; }  /* plusujący wpis */
         section.entry-voters ul li:has(a[href={"\/ludzie\/" + highlightUser2}]) { order: 2; } 
@@ -12291,12 +12544,10 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 
         /* TODO:
         dodać wyróznianie komentarzy mireczka */
-        section.sidebar section.link-block:has(a[href*={"\/ludzie\/" + highlightUser1}]),                                                                       /* znalezisko wyróznionego mireczka */
-        section.sidebar section.link-block:has(a[href*={"\/ludzie\/" + highlightUser2}]),
-        section.sidebar section.link-block:has(a[href*={"\/ludzie\/" + highlightUser3}]),
-        section.sidebar section.custom-sidebar.entries-sidebar section.entries section.entry:has(a[href*={"\/ludzie\/" + highlightUser1}]),                     /* wpis wyróznionego mireczka w sidebarze */
-        section.sidebar section.custom-sidebar.entries-sidebar section.entries section.entry:has(a[href*={"\/ludzie\/" + highlightUser2}]),
-        section.sidebar section.custom-sidebar.entries-sidebar section.entries section.entry:has(a[href*={"\/ludzie\/" + highlightUser3}])
+        section.sidebar section.link-block:has(a[href={"\/ludzie\/" + highlightUser1}], a[href={"\/ludzie\/" + highlightUser2}], a[href={"\/ludzie\/" + highlightUser3}]),      /* znalezisko wyróznionego mireczka */
+        section.sidebar section.custom-sidebar.entries-sidebar section.entries section.entry:has(a[href={"\/ludzie\/" + highlightUser1}]),                     /* wpis wyróznionego mireczka w sidebarze */
+        section.sidebar section.custom-sidebar.entries-sidebar section.entries section.entry:has(a[href={"\/ludzie\/" + highlightUser2}]),
+        section.sidebar section.custom-sidebar.entries-sidebar section.entries section.entry:has(a[href={"\/ludzie\/" + highlightUser3}])
         {
             border: 1px solid rgba(0, 0, 0, 0.5)!important;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6)!important;
@@ -12306,21 +12557,20 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         } 
 
 
-
-        [data-night-mode] section.link-block:has(a[href*={"\/ludzie\/" + highlightUser1}]),                                                                     /* znalezisko wyróznionego mireczka */
-        [data-night-mode] section.link-block:has(a[href*={"\/ludzie\/" + highlightUser2}]),
-        [data-night-mode] section.link-block:has(a[href*={"\/ludzie\/" + highlightUser3}]),
-        [data-night-mode] section.sidebar section.custom-sidebar.entries-sidebar section.entries section.entry:has(a[href*={"\/ludzie\/" + highlightUser1}]),   /* wpis wyróznionego mireczka w sidebarze */
-        [data-night-mode] section.sidebar section.custom-sidebar.entries-sidebar section.entries section.entry:has(a[href*={"\/ludzie\/" + highlightUser2}]),
-        [data-night-mode] section.sidebar section.custom-sidebar.entries-sidebar section.entries section.entry:has(a[href*={"\/ludzie\/" + highlightUser3}])
+        [data-night-mode] section.link-block:has(a[href={"\/ludzie\/" + highlightUser1}]),                                                                     /* xxx znalezisko wyróznionego mireczka */
+        [data-night-mode] section.link-block:has(a[href={"\/ludzie\/" + highlightUser2}]),
+        [data-night-mode] section.link-block:has(a[href={"\/ludzie\/" + highlightUser3}]),
+        [data-night-mode] section.sidebar section.custom-sidebar.entries-sidebar section.entries section.entry:has(a[href={"\/ludzie\/" + highlightUser1}]),   /* wpis wyróznionego mireczka w sidebarze */
+        [data-night-mode] section.sidebar section.custom-sidebar.entries-sidebar section.entries section.entry:has(a[href={"\/ludzie\/" + highlightUser2}]),
+        [data-night-mode] section.sidebar section.custom-sidebar.entries-sidebar section.entries section.entry:has(a[href={"\/ludzie\/" + highlightUser3}])
         {
             border: 1px solid rgba(255, 255, 255, 0.5)!important;
             box-shadow: 0px 0px 40px inset rgba(255, 255, 255, 0.2)!important;
-        } 
+        }
 
-        section.link-block > section > article section.info span a.username[href*={"\/ludzie\/" + highlightUser1}] span,                             /* podświetla nick wyróżnionego mireczka w jego znalezisku */
-        section.link-block > section > article section.info span a.username[href*={"\/ludzie\/" + highlightUser2}] span,
-        section.link-block > section > article section.info span a.username[href*={"\/ludzie\/" + highlightUser3}] span
+        section.link-block > section > article section.info span a.username[href={"\/ludzie\/" + highlightUser1}] span,                                        /* podświetla nick wyróżnionego mireczka w jego znalezisku */
+        section.link-block > section > article section.info span a.username[href={"\/ludzie\/" + highlightUser2}] span,
+        section.link-block > section > article section.info span a.username[href={"\/ludzie\/" + highlightUser3}] span
         {
             color: var(--swiper-theme-color)!important;
         } 
@@ -12707,193 +12957,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
     
     
-    /* GRAFIKI W KOMENTARZACH I WPISACH */
-
-    /* Ukryj obrazki we wpisach */
-    if(hideEntriesWithPhotos == "ukryj_wpis_z_obrazkiem")
-    {
-        main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:has(> article > div.edit-wrapper > section.entry-photo)
-        {
-            border: 10px solid rgb(18, 27, 232)!important;
-            if(blackListTesting == 0) { display: none!important; }        
-        }
-    }
-    else if(hideEntriesWithPhotos == "ukryj_wpis_z_obrazkiem_bez_tresci")
-    {
-        main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:has(> article > div.edit-wrapper > section.entry-photo):not(:has(> article > div.edit-wrapper > div.content))
-        {
-            border: 10px solid rgb(217, 254, 0)!important;
-            if(blackListTesting == 0) { display: none!important; }        
-        }
-    }
-    else 
-    {
-        if(hidePhotosInEntriesInStream == 1)
-        {       
-            main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > article > div.edit-wrapper > section.entry-photo
-            {
-                border: 10px solid rgb(122, 104, 220)!important;
-                if(blackListTesting == 0) { display: none!important; }        
-            }
-        }
-        if(hidePhotosInEntriesInEntryPage == 1)
-        {     
-            main.main > section > div.content > section.entry-page > section.entry > section.stream > div.content > section.entry > article > div.edit-wrapper > section.entry-photo
-            {
-                border: 10px solid rgb(122, 104, 220)!important;
-                if(blackListTesting == 0) { display: none!important; }        
-            }
-        }
-    }
-
-
- 
-    
-    
-    if(hideCommentsWithPhotos == "ukryj_komentarz_z_obrazkiem")
-    {   // nie sa blokowane obrazki na stronie komentarza pod znaleziskiem
-        
-        // komentarz z obrazkiem pod wpisem na stronach mikrobloga
-        main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply:has(> article > div.edit-wrapper > section.entry-photo), 
-        // komentarz z obrazkiem pod wpisem na stronie wpisu
-        main.main > section > div.content > section.entry-page > section.entry > section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply:has(> article > div.edit-wrapper > section.entry-photo), 
-        
-        // subkomentarz z obrazkiem w znalezisku
-        main.main > section > div.content > section.link-page > section.link > section.comments > section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply:has(> article > div.edit-wrapper > section.entry-photo), 
-        // komentarz z obrazkiem w znalezisku, bez subkomentarzy
-        main.main > section > div.content > section.link-page > section.link > section.comments > section.stream > div.content > section.entry:not(:has(> div.comments)):has(> article > div.edit-wrapper > section.entry-photo), 
-        // komentarz z obrazkiem w znalezisku, z subkomentarzami bez tresci (tez tylko z obrazkami)
-        main.main > section > div.content > section.link-page > section.link > section.comments > section.stream > div.content > section.entry:not(:has(> div.comments > footer)):not(:has(> div.comments > section.stream > div.content > section.entry.reply > article > div.edit-wrapper > div.content)):has(> article > div.edit-wrapper > section.entry-photo),
-        // jesli komentarz z obrazkiem w znalezisku ma subkomentarz z trescia to ukrywamy tylko zdjecie a nie komentarz
-        main.main > section > div.content > section.link-page > section.link > section.comments > section.stream > div.content > section.entry:has(> div.comments > section.stream > div.content > section.entry.reply > article > div.edit-wrapper > div.content) > article > div.edit-wrapper > section.entry-photo,
-        // UKRYWAMY ZDJĘCIE, A NIE KOMENTARZ - jesli komentarz z obrazkiem w znalezisku ma subkomentarz z trescia to ukrywamy tylko zdjecie a nie komentarz
-        main.main > section > div.content > section.link-page > section.link > section.comments > section.stream > div.content > section.entry:has( > div.comments > footer, > div.comments > section.stream > div.content > section.entry.reply > article > div.edit-wrapper > div.content) > article > div.edit-wrapper > section.entry-photo
-        {
-            border: 10px solid rgb(18, 27, 232)!important;
-            if(blackListTesting == 0) { display: none!important; }        
-        }
-    }
-    else if(hideCommentsWithPhotos == "ukryj_komentarz_z_obrazkiem_bez_tresci")
-    {
-        // komentarz bez treści z obrazkiem pod wpisem na stronach mikrobloga
-        main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply:has(> article > div.edit-wrapper > section.entry-photo):not(:has(> article > div.edit-wrapper > div.content)), 
-        // komentarz bez treści z obrazkiem pod wpisem na stronie wpisu
-        main.main > section > div.content > section.entry-page > section.entry > section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply:has(> article > div.edit-wrapper > section.entry-photo):not(:has(> article > div.edit-wrapper > div.content)), 
-        // subkomentarz bez tresci z obrazkiem pod znaleziskiem
-        main.main > section > div.content > section.link-page > section > section.comments > section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply:has(> article > div.edit-wrapper > section.entry-photo):not(:has(> article > div.edit-wrapper > div.content)),
-        // komentarz z obrazkiem pod znaleziskiem bez żadnej treści, bez subkomentarzy
-        main.main > section > div.content > section.link-page > section > section.comments > section.stream > div.content > section.entry:has(> article > div.edit-wrapper > section.entry-photo):not(:has(> article > div.edit-wrapper > div.content)):not(:has(> div.comments)), 
-        // komentarz z obrazkiem bez tresci pod znaleziskiem, który ma albo przycisk pokaz komentarze, albo 2 subkomentarze i ktorys jest z trescia - ukrywamy tylko obrazek
-        main.main > section > div.content > section.link-page > section > section.comments > section.stream > div.content > section.entry:has(> article > div.edit-wrapper > section.entry-photo):not(:has(> article > div.edit-wrapper > div.content)):has(> div.comments > footer, > div.comments > section.stream > div.content > section.entry.reply > article > div.edit-wrapper > div.content) > article > div.edit-wrapper > section.entry-photo,
-        // komentarz z obrazkiem bez tresci pod znaleziskiem z subkomentarzami, ale boz przycisku pokaz wiecej i subkomentarze bez tresci,
-        main.main > section > div.content > section.link-page > section > section.comments > section.stream > div.content > section.entry:has(> article > div.edit-wrapper > section.entry-photo):not(:has(> article > div.edit-wrapper > div.content)):not(:has(> div.comments > footer, > div.comments > section.stream > div.content > section.entry.reply > article > div.edit-wrapper > div.content)),
-        {
-            border: 10px solid rgb(217, 254, 0)!important;
-            if(blackListTesting == 0) { display: none!important; }        
-        }        
-    }
-    else 
-    {
-        // Ukrywaj obrazki w komentarzach (na mikroblogu)
-        if(hidePhotosInCommentsInStream == 1)
-        {     
-            main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply > article > div.edit-wrapper > section.entry-photo
-            {
-                border: 10px solid rgb(122, 104, 220)!important;
-                if(blackListTesting == 0) { display: none!important; }        
-            }
-        }
-        // Ukrywaj obrazki w komentarzach (na stronie wpisu)
-        if(hidePhotosInCommentsInEntryPage == 1)
-        {      
-            main.main > section > div.content > section.entry-page > section.entry > section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply > article > div.edit-wrapper > section.entry-photo
-            {
-                border: 10px solid rgb(122, 104, 220)!important;
-                if(blackListTesting == 0) { display: none!important; }        
-            }
-        }
-
-    }
-    // Ukrywaj obrazki w komentarzach (w znalezisku) - poza blokiem, bo nie ukrywamy calych komentarzy na stronie komentarza pod znaleziskiem
-    if(hidePhotosInCommentsInLinkPage == 1)
-    {
-        main.main > section > div.content > section.link-page           > section.link          > section.comments  > section.stream > div.content > section.entry > article > div.edit-wrapper > section.entry-photo,
-        main.main > section > div.content > section.link-comment-page   > section.link-comment                      > section.stream > div.content > section.entry > article > div.edit-wrapper > section.entry-photo,
-        main.main > section > div.content > section.link-page           > section.link          > section.comments  > section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply > article > div.edit-wrapper > section.entry-photo,
-        main.main > section > div.content > section.link-comment-page   > section.link-comment                      > section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply > article > div.edit-wrapper > section.entry-photo
-        {
-            border: 10px solid rgb(133, 213, 56)!important;
-            if(blackListTesting == 0) { display: none!important; }        
-        }
-    }
-
-                                                          
-                                                                
-                                                                
-  
-    
-    if(hideVideosInEntries == 1)
-    {
-        // przypiete wpisy z mirko na stronie głównej
-        main.main > section > div.content > section.home-page       > section.home                      > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed,
-        // WPISY
-        main.main > section > div.content > section.tag-page        > section.stream        > article   > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed,
-        main.main > section > div.content > section.profile-page    > section.profile       > section   > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed,
-        main.main > section > div.content > section.bucket-page     > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed,
-        main.main > section > div.content > section.category-page   > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed,
-        main.main > section > div.content > section.observed-page   > section.observed                  > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed,
-        main.main > section > div.content > section.favourites-page > section.favourites                > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed,
-        main.main > section > div.content > section.microblog-page  > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed
-        {
-            border: 3px solid rgb(23, 69, 255)!important;
-        }   
-    }
-    else
-    {
-        if(hideVideosInEntriesYouTube == 1)
-        {
-            // przypiete wpisy z mirko na stronie głównej
-            /*
-                section.embed.youtube
-                section.embed.streamable
-                section.embed.twitter
-                section.embed.instagram
-            */
-            main.main > section > div.content > section.home-page       > section.home                      > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube,
-            // WPISY
-            main.main > section > div.content > section.tag-page        > section.stream        > article   > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube,
-            main.main > section > div.content > section.profile-page    > section.profile       > section   > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube,
-            main.main > section > div.content > section.bucket-page     > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube,
-            main.main > section > div.content > section.category-page   > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube,
-            main.main > section > div.content > section.observed-page   > section.observed                  > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube,
-            main.main > section > div.content > section.favourites-page > section.favourites                > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube,
-            main.main > section > div.content > section.microblog-page  > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube
-            {
-                border: 3px solid rgb(247, 23, 255)!important;
-            }
-        }
-        if(hideVideosInEntriesStreamable == 1)
-        {
-            // przypiete wpisy z mirko na stronie głównej
-            main.main > section > div.content > section.home-page       > section.home                      > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable,
-            // WPISY
-            main.main > section > div.content > section.tag-page        > section.stream        > article   > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable,
-            main.main > section > div.content > section.profile-page    > section.profile       > section   > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable,
-            main.main > section > div.content > section.bucket-page     > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable,
-            main.main > section > div.content > section.category-page   > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable,
-            main.main > section > div.content > section.observed-page   > section.observed                  > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable,
-            main.main > section > div.content > section.favourites-page > section.favourites                > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable,
-            main.main > section > div.content > section.microblog-page  > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable
-            {
-                border: 3px solid rgb(51, 153, 51)!important;    
-            }
-        }
- 
-    }
-
-    
-    
- 
+    /* GRAFIKI W KOMENTARZACH I WPISACH xxx */
 
     section.entry section.entry-photo figure
     {
@@ -13344,11 +13408,11 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         } 
         div.content > section.entry section.entry-photo figure figcaption.wykopx_download_image_ico a:before
         {
-            background: url('https://raw.githubusercontent.com/wykopx/WykopX/main/icons/download-b.png');
+            background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/download-b.png');
         } 
         [data-night-mode] div.content > section.entry section.entry-photo figure figcaption.wykopx_download_image_ico a:before
         {
-            background: url('https://raw.githubusercontent.com/wykopx/WykopX/main/icons/download.png');
+            background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/download.png');
         } 
 
         if(allowToDownloadImage == 1)
@@ -13505,7 +13569,8 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     /* 
     order:
     
-    -90000      - na poczatek z priorytetem
+    -90000      - na poczatek z priorytetem wpisy przypiete na glownej
+    -88888      - na poczatek znaleziska wyroznionego mireczka
     -80000      - na poczatek (znaleziska ze slowem kluczowym)
     -70000      - na początek (znaleziska gorące)
     -60000      - na poczatek (wpisy przypiete przez moderacje)
@@ -13527,7 +13592,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
     
     
-    
+
     
     
     
@@ -13730,8 +13795,29 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         } 
     } 
     
-
+    /* -88888 znaleziska z wyroznionym mireczkiem jako pierwsze */
+    if(highlightUsersEnabled == 1)
+    {
+        body > section > div.main-content > main > section > div.content > section > section > section > div.content > section.link-block:has(a[href*={"\/ludzie\/" + highlightUser1}], a[href*={"\/ludzie\/" + highlightUser2}], a[href*={"\/ludzie\/" + highlightUser3}])
+        {
+            order: -88888!important;
+        } 
+    } 
+    body > section > div.main-content > main > section > div.content > section > section > section > div.content > section.link-block:has(a[href="/ludzie/WykopX"])
+    {
+        order: -89999!important;
+        
+        background-image:  url("https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykopx-transparent.png") !important
+        background-size: 100px;
+        background-position: bottom 2px right 20px;
+        if(linkThumbnail == "polewej")
+        {
+            background-position: bottom 0px left 10px;
+        }
+        background-repeat: no-repeat;
+    } 
     
+
     
 
     /* WPISY MIRKO (MIKROBLOG) PRZYPIĘTE NA GŁÓWNEJ PRZEZ MODERACJĘ */
@@ -15305,11 +15391,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 
     
     
-    
-    
-    
-    
-    
+
     
     /* WYKOP XS PROMO AND UPDATE */
     .wykopx_hide_this_if_stylus_is_installed
@@ -15859,7 +15941,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         bottom: 0px;
         z-index: 0;
         right: -10px;
-        background-image:  url(https://raw.githubusercontent.com/wykopx/WykopX/main/icons/ai-generated-b.png);
+        background-image:  url(https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/ai-generated-b.png);
         background-size: 100%;
         background-position: bottom right;
         background-repeat: no-repeat; 
@@ -15867,7 +15949,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     [data-night-mode] section.link-page section.link-comments > div.content > section.entry:has(article header div.right a[href="/ludzie/autotldr"]) article:after,
     [data-night-mode] section.link-comment div.content > section.entry:has(article header div.right a[href="/ludzie/autotldr"]) article:after
     {
-        background-image:  url(https://raw.githubusercontent.com/wykopx/WykopX/main/icons/ai-generated.png);
+        background-image:  url(https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/ai-generated.png);
     } 
     
     
@@ -16017,8 +16099,19 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
     
 
-@-moz-document url-prefix("https://wykop.pl/tag/"), url-prefix("https://wykop.pl/mikroblog"), url-prefix("https://wykop.pl/k/"), url-prefix("https://wykop.pl/moje/"), url-prefix("https://wykop.pl/obserwowane"), url-prefix("https://wykop.pl/ulubione")
+@-moz-document url-prefix("https://wykop.pl/tag/"), url-prefix("https://wykop.pl/mikroblog"), url-prefix("https://wykop.pl/k/"), url-prefix("https://wykop.pl/moje/")
 {   
+    
+/* TODO:  
+nie dziala
+https://wykop.pl/ulubione
+https://wykop.pl/obserwowane 
+
+tylko jeden rzad:
+https://wykop.pl/k
+https://wykop.pl/mikroblog
+https://wykop.pl/moje/
+*/
     /* WYKOP X PHOTO VIEWER */
     if(photoViewerEnable == 1)
     {
@@ -16241,6 +16334,33 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     } 
     
     
+
+    if(tagPageFollowTagButton == 1)
+    {
+        // <div class="button follow-btn outline normal blue-color counter follow" title="Przestań obserwować">
+        // <div class="button follow-btn outline normal blue-color counter" title="Dodaj do obserwowanych">
+        main.main > aside.tag-top > div.content > header > aside > ul > li.follow > div.button.follow 
+        {
+            --steelBluish: rgb(88 195 122) !important;
+            --steelBluish: var(--colorAccent) !important;
+        }
+        main.main > aside.tag-top > div.content > header > aside > ul > li.follow > div.button.follow > button.target > strong
+        {
+            border-top-right-radius: borderRadius !important
+            
+        }
+        main.main > aside.tag-top > div.content > header > aside > ul > li.follow > div.button.follow > button.target > strong
+        {
+            
+        }
+            
+        main.main > aside.tag-top > div.content > header > aside > ul > li.follow > div.button.follow > button.target:before
+        {
+            content: "✔";
+            mask-image: unset!important;
+            background: none!important;
+        }
+    }
     
     /* edytowalne pole do edycji i przejscia na inny tag */
     if(tagHeaderEditable)
@@ -16506,7 +16626,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     {
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
         {
-            content: "❎ - do tych funkcji musisz zainstalować dodatek Wykop XS (Wejdź na 𝘅𝘀.𝘄𝘆𝗸𝗼𝗽𝘅.𝗽𝗹). Zaobserwuj tag #𝘄𝘆𝗸𝗼𝗽𝘄𝗻𝗼𝘄𝘆𝗺𝘀𝘁𝘆𝗹𝘂 na Wykopie.  ⭐ Informacje o najnowszych funkcjach 𝗪𝘆𝗸𝗼𝗽 𝗫 Style na stronie: "
+            content: "❎ - do tych funkcji zainstaluj "Wykop XS" (wejdź na 𝘅𝘀.𝘄𝘆𝗸𝗼𝗽𝘅.𝗽𝗹). Zaobserwuj tag #𝘄𝘆𝗸𝗼𝗽𝘄𝗻𝗼𝘄𝘆𝗺𝘀𝘁𝘆𝗹𝘂 na Wykopie.  ⭐ Informacje o najnowszych funkcjach 𝗪𝘆𝗸𝗼𝗽 𝗫 Style na stronie: ";
             text-decoration: none;
         } 
 
@@ -16649,6 +16769,9 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     } 
     
     if(tabTitleEnabled == 1)                                { body {  --tabTitleEnabled: "true"; }}
+    if(tabTitleRemoveWykopPL == 1)                          { body {  --tabTitleRemoveWykopPL: "true"; }}
+    
+    
     if(tabFaviconEnabled == 1)                              { body {  --tabFaviconEnabled: "true"; }}
     if(tabChangeOnlyOnHiddenState == 1)                     { body {  --tabChangeOnlyOnHiddenState: "true"; }}
 
