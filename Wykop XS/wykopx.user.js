@@ -1115,9 +1115,13 @@
 		}
 		body > section > header.header > div.left > nav.main > ul > li > a > span
 		{
-			color: var(--blackish)!important;
 			white-space: nowrap!important;
 		}
+		body > section > header.header > div.left > nav.main > ul > li.wykopx_promo_li > a > span
+		{
+			color: var(--blackish)!important;
+		}
+		
 	</style>`;
 
 	document.head.insertAdjacentHTML("beforeend", adjacentCode);
