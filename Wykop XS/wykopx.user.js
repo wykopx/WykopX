@@ -21,14 +21,14 @@
 // @description Wykop XS służy do wspomagania działania stylu "Wykop X Style", który jest wymagany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na: http://style.wykopx.pl
 // @description:en Wykop XS is a helper script for userstyle "Wykop X Style" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://style.wykopx.pl
 
-// @version     2.42.5
+// @version     2.43.0
 // ==/UserScript==
 
 (async function ()
 {
 	'use strict';
 
-	const currentVersion = "2.42.5";
+	const currentVersion = "2.43.0";
 	const dev = false;
 	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
 
@@ -101,7 +101,12 @@
 
 
 	// strings
-	settings.WykopXStyleVersion = (wykopxSettings.getPropertyValue("--version").trim().slice(1, -1)); // "2.40"
+	settings.version = (wykopxSettings.getPropertyValue("--version").trim().slice(1, -1)); 	// 2.40 string slice usuwa ""
+	settings.versor = (wykopxSettings.getPropertyValue("--versor").trim().slice(1, -1)); 	// "Style 2.42"
+	settings.xblocker = (wykopxSettings.getPropertyValue("--xblocker").trim());
+
+
+
 	settings.tabTitleSelect = wykopxSettings.getPropertyValue("--tabTitleSelect").trim()
 	settings.tabTitleCustom = wykopxSettings.getPropertyValue("--tabTitleCustom").trim();
 	settings.tabFaviconSelect = wykopxSettings.getPropertyValue("--tabFaviconSelect").trim()
@@ -1137,27 +1142,66 @@
 		if (!dev) console.clear();
 		consoleX("Sprawdzanie aktualizacji Wykop X Style i Wykop XS...");
 
-		$.get(`https://raw.githubusercontent.com/wykopx/wykopx-png/main/old-versions/wykopxs.${currentVersion}.gif`)
-			.done(function ()
+		try
+		{
+			let response = await fetch(`https://raw.githubusercontent.com/wykopx/wykopx-png/main/old-versions/wykopxs.${currentVersion}.gif`);
+			if (response.ok)
 			{
 				addWykopXSNewVersionAvailableToast(); // new version available
 				consoleX("Hej, jest nowa wersja skryptu Wykop XS. Wejdź na http://script.wykopx.pl i zaktualizuj go");
-			})
-			.fail(function ()
+			}
+			else
 			{
-				consoleX("Masz najnowszą wersję skryptu Wykop XS v." + currentVersion);
-			});
+				// consoleX(`Masz najnowszą wersję skryptu Wykop XS v.${currentVersion}`);
+			}
+		}
+		catch (error)
+		{
+			consoleX(`Masz najnowszą wersję skryptu Wykop XS v.${currentVersion}`);
+		}
 
-		$.get(`https://raw.githubusercontent.com/wykopx/wykopx-png/main/old-versions/wykopxstyle.${settings.WykopXStyleVersion}.gif`)
-			.done(function ()
+		if (settings.versor == "style" || settings.versor == "blank")
+		{
+			try
 			{
-				addWykopXStyleNewVersionAvailableToast(); // new version available
-				consoleX("Hej, jest dostępna nowa wersja styli Wykop X Style. Wejdź na http://style.wykopx.pl i zaktualizuj je");
-			})
-			.fail(function ()
+				let response = await fetch(`https://raw.githubusercontent.com/wykopx/wykopx-png/main/old-versions/wykopx${settings.versor}.${settings.version}.gif`);
+				if (response.ok)
+				{
+					addWykopXStyleNewVersionAvailableToast(); // new version available
+					consoleX(`Hej, jest dostępna nowa wersja styli wykop x ${settings.versor}. Wejdź na http://${settings.versor}.wykopx.pl i zaktualizuj je`);
+				}
+				else
+				{
+					consoleX(`Masz najnowszą wersję styli wykop x ${settings.versor} v.${settings.version}`);
+				}
+			}
+			catch (error)
 			{
-				consoleX("Masz najnowszą wersję styli Wykop X Style v." + settings.WykopXStyleVersion);
-			});
+				// consoleX(`Masz najnowszą wersję styli wykop x ${settings.versor} v.${settings.version}`);
+			}
+		}
+
+		if (settings.xblocker != "")
+		{
+			try
+			{
+				let response = await fetch(`https://raw.githubusercontent.com/wykopx/wykopx-png/main/old-versions/wykopxblocker.${settings.xblocker}.gif`);
+				if (response.ok)
+				{
+					addWykopXBlockerNewVersionAvailableToast();
+					consoleX(`Hej, jest dostępna nowa wersja Wykop X Blocker. Wejdź na http://blocker.wykopx.pl i zaktualizuj je`);
+				}
+				else
+				{
+					consoleX(`Masz najnowszą wersję Wykop X Blocker v.${settings.version}`);
+				}
+			}
+			catch (error)
+			{
+				// consoleX(`Masz najnowszą wersję styli Wykop X Blocker v.${settings.xblocker}`);
+			}
+		}
+
 	}
 
 
@@ -1205,25 +1249,58 @@
 
 	function addWykopXStyleNewVersionAvailableToast()
 	{
-		let wykopxstylenewversionavailabletoast = `
-		<aside class="wykopxs_new_version wykopxs_info_bar">
-			<span class="wykopxs_new_version_first">
-				Dostępna jest nowa wersja styli Wykop X Style.
-			</span>
-			<a href="https://userstyles.world/style/8174/wykop-x-style" target="_blank" style="color: #fff!important;">
-				Zaktualizuj Wykop X Style
-			</a>
-			<span class="wykopxs_new_version_second">
-				do najnowszej wersji
-			</span>
-			<footer>
-				Twoja wersja Wykop X Style to v.${settings.WykopXStyleVersion}
-			</footer>
-		</aside>`;
-		$(wykopxstylenewversionavailabletoast).insertAfter(`body > section > header.header`);
+		let wykopxstylenewversionavailabletoast = "";
+
+		if (settings.versor == "style")
+		{
+			wykopxstylenewversionavailabletoast = `
+			<aside class="wykopxs_new_version wykopxs_info_bar">
+					<span class="wykopxs_new_version_first">Dostępna jest nowa wersja styli Wykop X Style</strong>.
+				</span>
+				<a href="https://userstyles.world/style/8174/wykop-x-style" target="_blank" style="color: #fff!important;">
+					Zaktualizuj Wykop X Style
+				</a>
+					<span class="wykopxs_new_version_second">do najnowszej wersji</span>
+					<footer>Twoja wersja Wykop X Style to v.${settings.version}</footer>
+			</aside>`;
+		}
+		else if (settings.versor == "blank")
+		{
+			wykopxstylenewversionavailabletoast = `
+			<aside class="wykopxs_new_version wykopxs_info_bar">
+				<span class="wykopxs_new_version_first">Dostępna jest nowa wersja styli Wykop X Blank</strong>.</span>
+				<a href="https://userstyles.world/style/8174/wykop-x-style" target="_blank" style="color: #fff!important;">
+					Zaktualizuj Wykop X Blank
+				</a>
+				<span class="wykopxs_new_version_second">do najnowszej wersji</span>
+				<footer>Twoja wersja Wykop X Style to v.${settings.version}</footer>
+			</aside>`;
+		}
+
+		let div = document.createElement('div');
+		div.innerHTML = wykopxstylenewversionavailabletoast;
+		let newElement = div.firstChild;
+		let header = document.querySelector('body > section > header.header');
+		header.parentNode.insertBefore(newElement, header.nextSibling);
 	}
-
-
+	function addWykopXBlockerNewVersionAvailableToast()
+	{
+		let wykopxblockernewversionavailabletoast = `
+			<aside class="wykopxs_new_version wykopxs_info_bar">
+					<span class="wykopxs_new_version_first">Dostępna jest nowa wersja styli Wykop X Blocker</strong>.
+				</span>
+				<a href="https://userstyles.world/style/" target="_blank" style="color: #fff!important;">
+					Zaktualizuj Wykop X Blocker
+				</a>
+					<span class="wykopxs_new_version_second">do najnowszej wersji</span>
+					<footer>Twoja wersja Wykop X Blocker to v.${settings.xblocker}</footer>
+			</aside>`;
+		let div = document.createElement('div');
+		div.innerHTML = wykopxblockernewversionavailabletoast;
+		let newElement = div.firstChild;
+		let header = document.querySelector('body > section > header.header');
+		header.parentNode.insertBefore(newElement, header.nextSibling);
+	}
 
 
 
@@ -1240,7 +1317,6 @@
 		pm: 0,
 		total: 0,
 	};
-
 
 	// ZLICZA NOWE POWIADOMIENIA Z MENU OD 1 DO 5+
 	function countNumberOfNotificationsOnDesktop()
@@ -2874,11 +2950,11 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	/*	events in Wykop podczas ladowania strony:
 		1. 	window.addEventListener('load', callback); (Event) event.srcElement.URL > "https://wykop.pl/wpis/74180083/pytanie#comment-261404235"
 		2. 	window.addEventListener('pageshow', callback); (PageTransitionEvent)
-
+	
 		przejscie na nowa strone, do innego #anchora po kliknieciu w permalink komentarza we wpisie
-
+	
 		3. navigation.addEventListener("navigate", callback) (NavigateEvent)
-
+	
 		“popstate”: This event is fired when the active history entry changes, either by the user navigating to a different state, or by the code calling the history.pushState() or history.replaceState() methods. This event can be used to update the page content according to the new state.
 		“hashchange”: This event is fired when the fragment identifier of the URL (the part after the “#”) changes. This event can be used to implement single-page applications that use different hash values to load different views.
 		“pushstate”: This event is fired when the history.pushState() method is called, which adds a new state to the history stack. This event can be used to perform some actions when a new state is created.
