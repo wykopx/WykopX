@@ -23,6 +23,23 @@ Wszystkie informacje takie jak:
 - changelog
 dostępne są w Wiki projektu https://github.com/wykopx/WykopX/wiki
 
+***
+Chcesz wesprzeć i wysłać kilka złotych za dobrą robotę?   
+💲 Możesz postawić mi kawkę ☕ na [https://buycoffee.to/wykopx](https://buycoffee.to/wykopx) 💲
+***
+
+Szybkie linki:
+Style CSS:
+⭐ Wykop X Style: https://userstyles.world/style/8174/wykop-x-style
+⭐ Wykop X Blocker: https://userstyles.world/style/8175/wykop-x-blocker
+  
+- Wykop X Blank: https://userstyles.world/style/8419/wykop-x-blank
+- Wykop XS https://userstyles.world/style/8179/wykop-xs
+
+Skrypt JS:
+- Wykop XS https://greasyfork.org/en/scripts/458860-wykop-xs
+
+
 
 Propozycje nowych funkcji można zgłaszać tutaj:
 [Wykop X Project Dashboard](https://github.com/users/wykopx/projects/1/views/1?filterQuery=-status%3A%22%E2%9C%85+Done%22++-status%3A%22%E2%9B%94+No%2C+no%2C+no%22+&groupedBy%5BcolumnId%5D=Status)
