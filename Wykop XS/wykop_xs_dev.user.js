@@ -3582,7 +3582,232 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 	// WYKOP X PROMO 
 	let CSS = `<style>`;
+	if (settings.quickLinksEnable)
+	{
+		CSS += `
+		
+        :root
+        {
+            --quickLinksAFontSize: var(--textFontSize13, 13px);
+            --quickLinksSpanFontSize: var(--textFontSize11, 11px);
+            }
 
+        header.header > div.left > #wxs_quick_links > nav
+        {
+            font-size: var(--quickLinksAFontSize, 13px);
+        }
+        header.header > div.left > #wxs_quick_links > nav > section span
+        {
+            font-size: var(--quickLinksSpanFontSize, 11px);
+        }
+
+        header.header > div.left > #wxs_quick_links
+        {
+            display: flex;
+            top: calc(var(--topNavHeigh, 48px) - 3px);
+            position: absolute;
+            left: -1px;
+            width: 120%;
+            height: 1px;
+            z-index: -100;
+        }
+
+        @keyframes quickLinksAnimationOn
+        {
+          0% { display: none; top: -20px; opacity: 0; }
+          1% { display: flex; top: -20px; opacity: 0; }
+          99% { display: flex; top: -20px; opacity: 0; }
+          100% { display: flex; top: 0px; opacity: 1; }
+        }
+        @keyframes quickLinksAnimationOff
+        {
+          0% { display: flex; top: 0px; opacity: 1; }
+          50% { display: flex; top: 0px; opacity: 0; }
+          99% { display: flex; top: -20px; opacity: 0;}
+          100% { display: none; top: -20px; opacity: 0;}
+        }
+
+
+        header.header > div.left > #wxs_quick_links > nav
+        {
+            z-index: -999;
+            column-gap: 0px;
+            flex-wrap: nowrap;
+            position: absolute;
+            left: 0px;
+            width: 100%;
+        }
+        header.header > div.left > #wxs_quick_links > nav:not(:hover)
+        {
+            z-index: -1000!important;
+            display: flex;
+
+            animation-name: quickLinksAnimationOff!important;
+            animation-duration: 0s;
+            animation-delay: 0.4s;
+            animation-iteration-count: 1;
+            animation-direction: normal;
+            animation-fill-mode: forwards;
+        }
+        header.header > div.left > #wxs_quick_links > nav:hover
+        {
+            z-index: 999!important;
+            display: flex!important;
+            animation-name: quickLinksAnimationOn!important;
+            animation-duration: 0s!important;
+            animation-delay: 0s!important;
+            animation-direction: normal!important;
+            animation-fill-mode: forwards!important;
+        }
+
+        header.header > div.left > #wxs_quick_links > nav > section
+        {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+        }
+        header.header > div.left > #wxs_quick_links > nav > section div
+        {
+            display: flex;
+            height: 100%;
+        }
+        header.header > div.left > #wxs_quick_links > nav > section a,
+        header.header > div.left > #wxs_quick_links > nav > section span
+        {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        header.header > div.left:has( a[href="/"]:hover)                   						> #wxs_quick_links > nav.home,
+
+		header.header > div.left:has( > nav.main > ul > li:hover a[href="/"])                   > #wxs_quick_links > nav.home,
+        header.header > div.left:has( > nav.main > ul > li a[href="/"]:hover)                   > #wxs_quick_links > nav.home,
+        header.header > div.left:has( > nav.main > ul > li:hover a[href="/wykopalisko"])        > #wxs_quick_links > nav.upcoming,
+        header.header > div.left:has( > nav.main > ul > li:hover a[href="/mikroblog"])          > #wxs_quick_links > nav.microblog,
+        header.header > div.left:has( > nav.main > ul > li:hover a[href="/obserwowane"])        > #wxs_quick_links > nav.mywykop,
+        header.header > div.left:has( > nav.main > ul > li:hover a[href="/hity"])               > #wxs_quick_links > nav.hits,
+        header.header > div.left:has( > nav.main > ul > li:hover a[href="/ulubione"])           > #wxs_quick_links > nav.favorites,
+        header.header > div.left:has( > nav.main > ul > li:hover a[href="/dodaj-link"])         > #wxs_quick_links > nav.add_new,
+        header.header > div.left:has( > nav.main > ul > li:hover a[href="/mikroblog/#dodaj"])   > #wxs_quick_links > nav.add_new
+        {
+            z-index: 999;
+            display: flex!important;
+            animation-name: quickLinksAnimationOn!important;
+            animation-duration: 0.2s;
+            animation-delay: 0s;
+            animation-direction: normal;
+            animation-fill-mode: forwards;
+        }
+
+		/* colors */
+        header.header > div.left > #wxs_quick_links > nav
+        {
+            height: 37px;
+            color: var(--blackOpacity07, rgba(255, 255, 255, 0.7));
+            border-bottom: 1px solid var(--blackOpacity03, rgba(255, 255, 255, 0.3));
+            box-shadow: 0px 4px 4px var(--whiteOpacity04, rgba(0, 0, 0, 0.4));
+            
+        }
+
+        header.header > div.left > #wxs_quick_links > nav:hover
+        {
+
+        }
+
+        header.header > div.left > #wxs_quick_links > nav > section
+        {
+			background-color: var(--whiteOpacity1, rgba(18, 18, 20, 1));
+            column-gap: 5px;
+            padding-left: 20px;
+            padding-right: 0px;
+            border-left: 1px solid rgba(120, 120, 120, 0.2);
+        }
+
+        header.header > div.left > #wxs_quick_links > nav > section:hover
+        {
+            background-color: var(--whiteOpacity1, rgba(18, 18, 20, 1));
+        }
+        header.header > div.left > #wxs_quick_links > nav > section:hover span
+        {
+            color: var(--blackOpacity1, rgba(255, 255, 255, 1));
+        }
+
+        header.header > div.left > #wxs_quick_links > nav > section span
+        {
+            padding-right: 10px;
+            text-transform: uppercase;
+            font-weight: bolder;
+            cursor: default;
+            width: max-content;
+        }
+
+
+        header.header > div.left > #wxs_quick_links > nav > section a,
+        header.header > div.left > #wxs_quick_links > nav > section span
+        {
+            height: 100%;
+            min-width: 70px;
+            width: max-content;
+        }
+
+        header.header > div.left > #wxs_quick_links > nav > section .wxs_quicklink_short
+        {
+            min-width: 20px;
+        }
+
+
+        header.header > div.left > #wxs_quick_links > nav > section a
+        {
+            text-decoration: none;
+            padding: 0px 14px 0px 14px;
+        }
+
+        header.header > div.left > #wxs_quick_links > nav > section a:hover
+        {
+            color: var(--blackOpacity09, rgba(255, 255, 255, 1));
+            background-color: var(--blackOpacity01, rgba(255, 255, 255, 0.2));
+        }
+
+		/* MOBILE */
+		@media (max-width: 600px)
+		{
+			header.header > div.left > #wxs_quick_links > nav:not(:hover)
+			{
+
+				animation-name: quickLinksAnimationOff!important;
+				animation-delay: 4s;
+			}
+
+			header.header > div.left > #wxs_quick_links > nav,
+			header.header > div.left > #wxs_quick_links > nav > section,
+			header.header > div.left > #wxs_quick_links > nav > section > div
+			{
+				flex-direction: column!important;
+				align-items: start!important;
+			}
+			header.header > div.left > #wxs_quick_links > nav,
+			header.header > div.left > #wxs_quick_links > nav > section,
+			header.header > div.left > #wxs_quick_links > nav > section > div,
+			header.header > div.left > #wxs_quick_links > nav > section > span,
+			header.header > div.left > #wxs_quick_links > nav > section a
+			{
+				width: 100%;
+				justify-content: start;
+			}
+			header.header > div.left > #wxs_quick_links > nav > section
+			{
+				border-top: 1px solid rgba(120, 120, 120, 0.3);
+			}
+			header.header > div.left > #wxs_quick_links > nav > section,
+			header.header > div.left > #wxs_quick_links > nav > section > div,
+			header.header > div.left > #wxs_quick_links > nav > section > span,
+			header.header > div.left > #wxs_quick_links > nav > section a
+			{
+				padding: 10px;
+			}
+		}
+    }`;
+	}
 	CSS += `
 
 		/* HIDE ADS ALWAYS */
@@ -3669,208 +3894,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			body > section > aside.wykopxs_info_bar span.wykopxs_new_version_second,
 			body > section > aside.wykopxs_info_bar > footer { display: none; }
 		}
-
-
-
-
-	`
-
-
-	if (settings.quickLinksEnable)
-	{
-		CSS += `
-		
-        :root
-        {
-            --quickLinksAFontSize: var(--textFontSize13, 13px);
-            --quickLinksSpanFontSize: var(--textFontSize11, 11px);
-            }
-
-        header.header > div.left > #wxs_quick_links > nav
-        {
-            font-size: var(--quickLinksAFontSize, 13px);
-        }
-        header.header > div.left > #wxs_quick_links > nav > section span
-        {
-            font-size: var(--quickLinksSpanFontSize, 11px);
-        }
-
-        header.header > div.left > #wxs_quick_links
-        {
-            display: flex;
-            top: calc(var(--topNavHeigh, 48px) - 3px);
-            position: absolute;
-            left: -1px
-            width: 120%;
-            height: 1px;
-            z-index: -100;
-        }
-
-        @keyframes quickLinksAnimationOn
-        {
-          0% { display: none; top: -20px; opacity: 0; }
-          1% { display: flex; top: -20px; opacity: 0; }
-          99% { display: flex; top: -20px; opacity: 0; }
-          100% { display: flex; top: 0px; opacity: 1; }
-        }
-        @keyframes quickLinksAnimationOff
-        {
-          0% { display: flex; top: 0px; opacity: 1; }
-          50% { display: flex; top: 0px; opacity: 0; }
-          99% { display: flex; top: -20px; opacity: 0;}
-          100% { display: none; top: -20px; opacity: 0;}
-        }
-
-
-        header.header > div.left > #wxs_quick_links > nav
-        {
-            z-index: -999;
-            column-gap: 0px;
-            flex-wrap: nowrap;
-            position: absolute;
-            left: 0px;
-            width: 100%;
-        }
-        header.header > div.left > #wxs_quick_links > nav:not(:hover)
-        {
-            z-index: -1000!important;
-            display: flex;
-
-            animation-name: quickLinksAnimationOff!important;
-            animation-duration: 0s;
-            animation-delay: 0.4s;
-            animation-iteration-count: 1;
-            animation-direction: normal;
-            animation-fill-mode: forwards;
-        }
-        header.header > div.left > #wxs_quick_links > nav
-        {
-            z-index: -999;
-            column-gap: 0px;
-            flex-wrap: nowrap;
-            position: absolute;
-            left: 0px;
-            width: 100%;
-        }
-        header.header > div.left > #wxs_quick_links > nav:hover
-        {
-            z-index: 999!important;
-            display: flex!important;
-            animation-name: quickLinksAnimationOn!important;
-            animation-duration: 0s!important;
-            animation-delay: 0s!important;
-            animation-direction: normal!important;
-            animation-fill-mode: forwards!important;
-        }
-
-        header.header > div.left > #wxs_quick_links > nav > section
-        {
-            display: flex;
-            flex-wrap: nowrap;
-            align-items: center;
-        }
-        header.header > div.left > #wxs_quick_links > nav > section div
-        {
-            display: flex;
-            height: 100%;
-        }
-        header.header > div.left > #wxs_quick_links > nav > section a,
-        header.header > div.left > #wxs_quick_links > nav > section span
-        {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/"])                   > #wxs_quick_links > nav.home,
-        header.header > div.left:has( > nav.main > ul > li a[href="/"]:hover)                   > #wxs_quick_links > nav.home,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/wykopalisko"])        > #wxs_quick_links > nav.upcoming,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/mikroblog"])          > #wxs_quick_links > nav.microblog,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/obserwowane"])        > #wxs_quick_links > nav.mywykop,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/hity"])               > #wxs_quick_links > nav.hits,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/ulubione"])           > #wxs_quick_links > nav.favorites,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/dodaj-link"])         > #wxs_quick_links > nav.add_new,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/mikroblog/#dodaj"])   > #wxs_quick_links > nav.add_new
-        {
-            z-index: 999;
-            display: flex!important;
-            animation-name: quickLinksAnimationOn!important;
-            animation-duration: 0.2s;
-            animation-delay: 0s;
-            animation-direction: normal;
-            animation-fill-mode: forwards;
-        }
-
-
-        header.header > div.left > #wxs_quick_links > nav
-        {
-            height: 37px;
-            color: var(--blackOpacity07, rgba(255, 255, 255, 0.7));
-            border-bottom: 1px solid var(--blackOpacity03, rgba(255, 255, 255, 0.3));
-            box-shadow: 0px 4px 4px var(--whiteOpacity04, rgba(0, 0, 0, 0.4));
-
-            background-color: var(--whiteOpacity08, rgba(0, 0, 0, 0.8));
-        }
-
-        header.header > div.left > #wxs_quick_links > nav:hover
-        {
-
-        }
-
-        header.header > div.left > #wxs_quick_links > nav > section
-        {
-            column-gap: 5px;
-            padding-left: 20px;
-            padding-right: 0px;
-            border-left: 1px solid rgba(120, 120, 120, 0.2);
-        }
-
-        header.header > div.left > #wxs_quick_links > nav > section:hover
-        {
-            background-color: var(--whiteOpacity1, rgba(18, 18, 20, 1));
-        }
-        header.header > div.left > #wxs_quick_links > nav > section:hover span
-        {
-            color: var(--blackOpacity1, rgba(255, 255, 255, 1));
-        }
-
-        header.header > div.left > #wxs_quick_links > nav > section span
-        {
-            padding-right: 10px;
-            text-transform: uppercase;
-            font-weight: bolder;
-            cursor: default;
-            width: max-content;
-        }
-
-
-        header.header > div.left > #wxs_quick_links > nav > section a,
-        header.header > div.left > #wxs_quick_links > nav > section span
-        {
-            height: 100%;
-            min-width: 70px;
-            width: max-content;
-        }
-
-        header.header > div.left > #wxs_quick_links > nav > section .wxs_quicklink_short
-        {
-            min-width: 20px;
-        }
-
-
-        header.header > div.left > #wxs_quick_links > nav > section a
-        {
-            text-decoration: none;
-            padding: 0px 14px 0px 14px;
-        }
-
-        header.header > div.left > #wxs_quick_links > nav > section a:hover
-        {
-            color: var(--blackOpacity09, rgba(255, 255, 255, 1));
-            background-color: var(--blackOpacity01, rgba(255, 255, 255, 0.2));
-        }
-    }`;
-	}
-
+	`;
 
 
 
