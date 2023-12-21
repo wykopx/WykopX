@@ -2,7 +2,7 @@
 // @name        Wykop XS DEV
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
-// @version     2.43.0
+// @version     2.45.0
 
 
 // @author      Wykop X <wykopx@gmail.com>
@@ -23,39 +23,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // @require https://unpkg.com/xhook@latest/dist/xhook.min.js
 // @require https://greasyfork.org/scripts/458629-depaginator-for-wykop-pl/code/Depaginator%20for%20Wykoppl.user.js
 // @require https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
@@ -70,7 +37,7 @@
 {
 	'use strict';
 
-	const currentVersion = "2.43.0";
+	const currentVersion = "2.45.0";
 	const dev = true;
 	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
 
@@ -139,7 +106,7 @@
 	settings.addNewEntryInTopNavJS = wykopxSettings.getPropertyValue("--addNewEntryInTopNavJS") ? wykopxSettings.getPropertyValue("--addNewEntryInTopNavJS") === '1' : true;
 	settings.disableNewLinkEditorPastedTextLimit = wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") ? wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") === '1' : true;
 
-
+	settings.quickLinksEnable = false;
 
 
 	// strings
