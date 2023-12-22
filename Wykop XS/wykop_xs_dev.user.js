@@ -72,12 +72,24 @@
 	let wykopxSettings = getComputedStyle(document.querySelector("body"));
 	let settings = {};
 
+	// boolean - domyslnie WŁĄCZONE bez Wykop X Style
+	settings.hitsInTopNavJS = wykopxSettings.getPropertyValue("--hitsInTopNavJS") ? wykopxSettings.getPropertyValue("--hitsInTopNavJS") === '1' : true;
+	settings.quickLinksEnable = wykopxSettings.getPropertyValue("--quickLinksEnable") ? wykopxSettings.getPropertyValue("--quickLinksEnable") === '1' : true;
+	settings.myWykopInTopNavJS = wykopxSettings.getPropertyValue("--myWykopInTopNavJS") ? wykopxSettings.getPropertyValue("--myWykopInTopNavJS") === '1' : true;
+	settings.favoritesInTopNavJS = wykopxSettings.getPropertyValue("--favoritesInTopNavJS") ? wykopxSettings.getPropertyValue("--favoritesInTopNavJS") === '1' : true;
+	settings.imageUploaderEnable = wykopxSettings.getPropertyValue("--imageUploaderEnable") ? wykopxSettings.getPropertyValue("--imageUploaderEnable") === '1' : true;
+	settings.addNewLinkInTopNavJS = wykopxSettings.getPropertyValue("--addNewLinkInTopNavJS") ? wykopxSettings.getPropertyValue("--addNewLinkInTopNavJS") === '1' : true;
+	settings.addNewEntryInTopNavJS = wykopxSettings.getPropertyValue("--addNewEntryInTopNavJS") ? wykopxSettings.getPropertyValue("--addNewEntryInTopNavJS") === '1' : false; // default false
+	settings.disableNewLinkEditorPastedTextLimit = wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") ? wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") === '1' : true;
+
+	settings.enableNotatkowator = wykopxSettings.getPropertyValue("--enableNotatkowator") ? wykopxSettings.getPropertyValue("--favoritesInTopNavJS") === '1' : true;
+
+
 	// boolean
 	settings.votingExplosion = (wykopxSettings.getPropertyValue("--votingExplosion") == `"true"`); // boolean
 	settings.tabTitleEnabled = (wykopxSettings.getPropertyValue("--tabTitleEnabled") == `"true"`); // boolean
 	settings.tabFaviconEnabled = (wykopxSettings.getPropertyValue("--tabFaviconEnabled") == `"true"`); // boolean
 	settings.tagHeaderEditable = (wykopxSettings.getPropertyValue("--tagHeaderEditable") == `"true"`); // boolean
-	settings.enableNotatkowator = (wykopxSettings.getPropertyValue("--enableNotatkowator") == `"true"`); // boolean
 	settings.linksAnalyzerEnable = (wykopxSettings.getPropertyValue("--linksAnalyzerEnable") == `"true"`); // boolean
 	settings.tabTitleRemoveWykopPL = (wykopxSettings.getPropertyValue("--tabTitleRemoveWykopPL") == `"true"`); // boolean
 	settings.tabChangeOnlyOnHiddenState = (wykopxSettings.getPropertyValue("--tabChangeOnlyOnHiddenState") == `"true"`); // boolean
@@ -95,16 +107,6 @@
 	settings.notatkowatorUpdateInterval = parseFloat(wykopxSettings.getPropertyValue("--notatkowatorUpdateInterval")); // number
 	settings.homepagePinnedEntriesHideBelowLimit = parseFloat(wykopxSettings.getPropertyValue("--homepagePinnedEntriesHideBelowLimit")); // number
 	settings.showObservedTagsInRightSidebarUpdateInterval = parseFloat(wykopxSettings.getPropertyValue("--showObservedTagsInRightSidebarUpdateInterval")); // number
-
-	// boolean - domyslnie WŁĄCZONE bez Wykop X Style
-	settings.hitsInTopNavJS = wykopxSettings.getPropertyValue("--hitsInTopNavJS") ? wykopxSettings.getPropertyValue("--hitsInTopNavJS") === '1' : true;
-	settings.quickLinksEnable = wykopxSettings.getPropertyValue("--quickLinksEnable") ? wykopxSettings.getPropertyValue("--quickLinksEnable") === '1' : true;
-	settings.myWykopInTopNavJS = wykopxSettings.getPropertyValue("--myWykopInTopNavJS") ? wykopxSettings.getPropertyValue("--myWykopInTopNavJS") === '1' : true;
-	settings.favoritesInTopNavJS = wykopxSettings.getPropertyValue("--favoritesInTopNavJS") ? wykopxSettings.getPropertyValue("--favoritesInTopNavJS") === '1' : true;
-	settings.imageUploaderEnable = wykopxSettings.getPropertyValue("--imageUploaderEnable") ? wykopxSettings.getPropertyValue("--imageUploaderEnable") === '1' : true;
-	settings.addNewLinkInTopNavJS = wykopxSettings.getPropertyValue("--addNewLinkInTopNavJS") ? wykopxSettings.getPropertyValue("--addNewLinkInTopNavJS") === '1' : true;
-	settings.addNewEntryInTopNavJS = wykopxSettings.getPropertyValue("--addNewEntryInTopNavJS") ? wykopxSettings.getPropertyValue("--addNewEntryInTopNavJS") === '1' : true;
-	settings.disableNewLinkEditorPastedTextLimit = wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") ? wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") === '1' : true;
 
 
 
@@ -3590,7 +3592,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
         {
             --quickLinksAFontSize: var(--textFontSize13, 13px);
             --quickLinksSpanFontSize: var(--textFontSize11, 11px);
-            }
+        }
 
         header.header > div.left > #wxs_quick_links > nav
         {
@@ -3604,17 +3606,17 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
         header.header > div.left > #wxs_quick_links
         {
             display: flex;
-            top: calc(var(--topNavHeigh, 48px) - 3px);
+            top: calc(var(--topNavHeigh, 48px) - 1px);
             position: absolute;
             left: -1px;
-            width: 120%;
+            width: 100vw;
             height: 1px;
             z-index: -100;
         }
 
         @keyframes quickLinksAnimationOn
         {
-          0% { display: none; top: -20px; opacity: 0; }
+          0% { display: none; top: -20px; opacity: 1; }
           1% { display: flex; top: -20px; opacity: 0; }
           99% { display: flex; top: -20px; opacity: 0; }
           100% { display: flex; top: 0px; opacity: 1; }
@@ -3637,17 +3639,29 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
             left: 0px;
             width: 100%;
         }
+
+		@starting-style
+		{
+			header.header > div.left > #wxs_quick_links > nav:hover
+			{
+				
+			}
+		}
         header.header > div.left > #wxs_quick_links > nav:not(:hover)
         {
             z-index: -1000!important;
-            display: flex;
+            display: none;
+			transition: display 1s ease-out allow-discrete;
 
-            animation-name: quickLinksAnimationOff!important;
+
+/*          animation-name: quickLinksAnimationOff!important;
             animation-duration: 0s;
             animation-delay: 0.4s;
             animation-iteration-count: 1;
             animation-direction: normal;
-            animation-fill-mode: forwards;
+            animation-fill-mode: forwards;*/
+
+
         }
         header.header > div.left > #wxs_quick_links > nav:hover
         {
@@ -3693,7 +3707,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
             z-index: 999;
             display: flex!important;
             animation-name: quickLinksAnimationOn!important;
-            animation-duration: 0.2s;
+            animation-duration: 2s;
             animation-delay: 0s;
             animation-direction: normal;
             animation-fill-mode: forwards;
