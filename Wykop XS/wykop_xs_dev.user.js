@@ -2,7 +2,7 @@
 // @name        Wykop XS DEV
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
-// @version     2.45.2
+// @version     2.45.3
 
 
 // @author      Wykop X <wykopx@gmail.com>
