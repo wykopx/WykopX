@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style
-@version        2.45.0
+@version        2.44.4
 @description    Ponad 500 funkcji usprawniających i naprawiających Wykop.pl
 
 
@@ -23,37 +23,21 @@
 
 
 
-
-
-@var range      HR_NEW_QUICK_LINKS                      ` ⭐ Nowe v.2.45`                                                                  [0, 0, 99900, 1, 'mm']
-@var checkbox   quickLinksEnable                                `💻❎ QuickLinks - Szybkie linki do przycisków w górnej belce ⭐`     1
-@var checkbox   imageUploaderEnable                             `💻❎ CTRL+V ImageUploader - wklejanie zdjęć do wpisów ⭐`     1
-
-@var select     topNavCustomTextFontSize                                    `🆎 𝗕𝗘𝗟𝗞𝗔: Zmień rozmiar tekstu w belce nawigacyjnej ⭐` {
-                                                                            "14px - domyślny":"14rem",
-
-                                                                            "10px - najmniejszy":"10rem",
-                                                                            "11px - bardzo mały":"11rem",
-                                                                            "12px - mały":"12rem",
-                                                                            "13px - mały":"13rem",
-                                                                            "15px - średni":"15rem",
-                                                                            "16px - średni*":"16rem",
-                                                                            "17px - większy":"17rem",
-                                                                            "18px - większy":"18rem",
-                                                                            "19px - duży":"19rem",
-                                                                            "20px - bardzo duży":"20rem",
-                                                                            "21px - ogromny":"21rem",
-                                                                            } 
-@var select     topNavWallpaper                                 `🎨 𝗕𝗘𝗟𝗞𝗔: TAPETA W TLE - Tapeta górnej belki nawigacyjnej 🦊⭐` {
+@var range      HR_DOODLE                           `🎅 ZIMOWA BELKA`                                                                         [0, 0, 99900, 1, 'mm']
+@var checkbox  hideTopNavDoodle                                 `🎄 Ukryj Świąteczny obrazek z belki Wykopu`     0
+@var checkbox  topNavSanta                                      `🎅 Wolnorynkowy Mikołaj zamiast świątecznego obrazka`            0
+@var checkbox  topNavSnowMan                                    `⛄ Bałwan`                  1
+@var checkbox  topNavSnowMan2                                   `⛄ Bałwan 2`                0
+@var checkbox  topNavSnowGirl                                   `❄ Snow Girl`                1
+@var select     topNavWallpaper                                 `🎨 Tapeta górnej belki nawigacyjnej ❄ ` {
                                                                             "Brak tapety w tle (domyślnie)":        `domyslne`,
-                                                                            "🦊 Firefox ⭐*":                     `"https://wykopx.pl/img/background-firefox-blue.jpg"`,
-                                                                            "❄ Snow 1":                            `"https://wykopx.pl/img/background-snow-1.jpg"`,
-                                                                            "❄ Snow 2":                            `"https://wykopx.pl/img/background-snow-2.jpg"`,
-                                                                            "🏔 Snowy Mountain 1":                 `"https://wykopx.pl/img/background-snowy-mountain-1.jpg"`,
-                                                                            "🏔 Snowy Mountain 2":                 `"https://wykopx.pl/img/background-snowy-mountain-2.jpg"`,
-                                                                            "🎄 Christmas Trees (Blue)":          `"https://wykopx.pl/img/background-christmas-trees-1.png"`,
-                                                                            "🎄 Christmas Trees (Gray)":           `"https://wykopx.pl/img/background-christmas-trees-2.png"`,
-                                                                            "🎄 Christmas Trees (Black)":          `"https://wykopx.pl/img/background-christmas-trees-3.png"`,
+                                                                            "❄ Snow 1":                            `"https://i.imgur.com/ah041Sh.jpg"`,
+                                                                            "❄ Snow 2":                            `"https://i.imgur.com/HeoKeBi.jpg"`,
+                                                                            "🏔 Snowy Mountain":                    `"https://i.imgur.com/mv95FKt.jpg"`,
+                                                                            "🏔 Snowy Mountain":                    `"https://i.imgur.com/HRmsPu6.jpg"`,
+                                                                            "🎄 Christmas Trees":                  `"https://i.imgur.com/sNp7lFd.png"`,
+                                                                            "🎄 Christmas Trees 2*":                 `"https://i.imgur.com/yNp2Lll.png"`,
+                                                                            "🎄 Christmas Trees 3":                 `"https://i.imgur.com/l5tOmd1.png"`,
                                                                             "🔮 Cave":                             `"https://wykopx.pl/img/background-cave-1.jpg"`,
                                                                             "🏙 City":                              `"https://wykopx.pl/img/background-city-1.jpg"`,
                                                                             "🏙 Cyberpunk":                         `"https://wykopx.pl/img/background-cyberpunk-1.jpg"`,
@@ -67,7 +51,7 @@
                                                                             "🔡 Text Einstein":                    `"https://wykopx.pl/img/background-einstein-1.jpg"`,
                                                                             "🔡 Text Hahahahah":                   `"https://wykopx.pl/img/background-hahahah-1.jpg"`,
                                                                             "🔡 Text Never Give Up":               `"https://wykopx.pl/img/background-never-give-up-1.jpg"`,
-                                                                            "✨ Stars 1":                          `"https://wykopx.pl/img/background-stars-1.png"`,
+                                                                            "✨ Stars 1":                          `"https://wykopx.pl/img/background-stars-1.jpg"`,
                                                                             "✨ Stars 2":                          `"https://wykopx.pl/img/background-stars-2.jpg"`,
                                                                             "✨ Stars 3":                          `"https://wykopx.pl/img/background-stars-3.jpg"`,
                                                                             "✨ Stars 4":                          `"https://wykopx.pl/img/background-stars-4.jpg"`,
@@ -75,69 +59,9 @@
                                                                             "✨ Stars 6":                          `"https://wykopx.pl/img/background-stars-6.jpg"`,
                                                                             "✨ Stars 7":                          `"https://wykopx.pl/img/background-stars-7.jpg"`,
                                                                             } 
-@var select     topNavLogotype                                  `Logotyp 𝘄𝘆𝗸𝗼𝗽.𝗽𝗹 ⭐` {
-                                                                            "𝘄𝘆𝗸𝗼𝗽.𝗽𝗹 (domyślny)": "wykop",
-                                                                            "wykopx.pl*": "wykopx",
-                                                                            "⭐ YouTube": "youtube",
-                                                                            "🚫 Nie pokazuj logotypu": "niepokazuj"
-                                                                            }
-                                                                            
-@var select     selectLogoCustomIcon                `𝕎 Zmień sygnet Wykopu ⭐` {
-                                                                            "Domyślny sygnet":                   `domyslne`,
-                                                                            "Wykop (przezroczyste)":              `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykop_kolor_transparent.png"`,
-                                                                            "Wykop Zbożowy":                      `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykop_zboze_transparent.png"`,
-                                                                            "W (białe)":                          `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/W_white.png"`,
-                                                                            "W (pomarańczowe)":                   `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/W_orange.png"`,
-                                                                            "W (niebieskie)":                     `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/W_blue.png"`,
-                                                                            "W (czarne)":                         `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/W_black.png"`,
-                                                                            "W (poduszka)":                       `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykop_ai_frame_5_transparent.png"`,
-                                                                            "W (lodowe)":                         `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykop_ai_frame_7_transparent.png"`,
-                                                                            "Wykop - Donatello":                  `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykop_kolor_custom_1_transparent.png"`,
-                                                                            "Wykop - Raphael":                    `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykop_kolor_custom_2_transparent.png"`,
-                                                                            "Wykop - Leonardo":                   `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykop_kolor_custom_3_transparent.png"`,
-
-                                                                            "⭐ Firefox*":                       `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/firefox-blue.png"`,
-
-                                                                            "@m__b":                              `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/mb_transparent.png"`,                                                                            "Wykop":                              `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykop_kolor.png"`,
-                                                                            "@m__b - android":                    `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/mb_ai_1_transparent.png"`,
-                                                                            "@m__b - młodziak":                   `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/mb_ai_2_transparent.png"`,
-                                                                            "@m__b - motocyklista":               `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/mb_ai_3_transparent.png"`,
-                                                                            "@m__b - przystojniak":               `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/mb_ai_4_transparent.png"`,
-                                                                            "Batman":                             `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/batman.png"`,
-                                                                            "PacMan":                             `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/pacman.png"`,
-                                                                            "ᵍᶦᶠ Chomik":                         `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/chomik.gif"`,
-                                                                            "ᵍᶦᶠ Mucha":                          `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/mucha.gif"`,
-                                                                            "ᵍᶦᶠ Nyan Cat":                       `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/nyan1.gif"`,
-                                                                            "ᵍᶦᶠ Nyan Cat 2":                     `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/nyan2.gif"`,
-                                                                            "ᵍᶦᶠ Nike":                           `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/nike.gif"`,
-                                                                            "ᵍᶦᶠ Pepe":                           `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/pepe.gif"`,
-                                                                            "ᵍᶦᶠ Pepe 2":                         `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/pepe2.gif"`,
-                                                                            "ᵍᶦᶠ Luigi":                          `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/luigi.gif"`,
-                                                                            "Orlen":                              `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/orlen_kolor.png"`,
-                                                                            "Orlen (przezroczyste)":              `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/orlen_kolor_transparent.png"`,
-                                                                            "Orlen (białe)":                      `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/orlen_white.png"`,
-                                                                            "PiS":                                `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/pis_kolor.png"`,
-                                                                            "PiS (białe)":                        `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/pis_white.png"`,
-                                                                            "Posady i Spółki":                    `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/pis_posady_i_spolki-removebg-preview.png"`,
-                                                                            "PO Wykop (białe)":               `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/po-biale.png"`,
-                                                                            "PO Wykop":                       `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/po-kolor.png"`,
-                                                                            "PO Wykop 2":                     `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/po-kolor2.png"`,
-                                                                            "PO logo":                        `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/po-logo.png"`,
-                                                                            "PO logo (białe)":               `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/po-logo-biale.png"`,
-                                                                            "Tusk 1":                         `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/tusk1.png"`,
-                                                                            "Tusk 2":                         `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/tusk2.png"`,
-                                                                            "Tusk 3":                         `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/tusk0.png"`,
-                                                                            "Tusk Diabeł":                    `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/tusk-diabel.png"`,
-                                                                            }
-@var checkbox   hideLogo                                        `𝕎 Ukryj sygnet Wykopu na górnej belce`                                                            0
 
 
-                                                                            
-                                                                            
-                                                                            
-                                                                            
-                                                                            
-@var range      HR_PHOTO_VIEWER                         `🌆 Wykop X Photo Viewer`                                                                                [0, 0, 99900, 1, 'mm']
+@var range      HR_PHOTO_VIEWER                     `🌆 Wykop X Photo Viewer`                                                                                [0, 0, 99900, 1, 'mm']
 @var checkbox   photoViewerEnable                               `Włącz 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗣𝗵𝗼𝘁𝗼 𝗩𝗶𝗲𝘄𝗲𝗿 na #tagach`                                                      0
 @var checkbox   photoViewerUltraCompact                         `Widok ultra kompaktowy (same zdjęcia) `                                                      0
 @var range      photoViewerColumns                              `Liczba grafik w jednym wierszu`                                                              [3, 1, 7, 1, '']
@@ -165,11 +89,11 @@ var checkbox   hotLinksShowFirst                              `check: 🔸🔥 G
 
 
 @var range      HR_NEW_TAB                              `💠 KARTA Z WYKOPEM ⭐ Nowe v.2.41`                                                              [0, 0, 99900, 1, 'mm']
-@var checkbox   tabChangeOnlyOnHiddenState                      `❎💻 Modyfikuj kartę Wykopu tylko gdy jest w tle ⭐`                        1
+@var checkbox   tabChangeOnlyOnHiddenState                      `❎ Modyfikuj kartę Wykopu tylko gdy jest w tle ⭐`                        1
 
 @var range      HR_NEW_TAB_FAVICON                      `💠 KARTA Z WYKOPEM: FAVICON ⭐ Nowe v.2.41`                                                              [0, 0, 99900, 1, 'mm']
-@var checkbox   tabFaviconEnabled                              `❎💻 Włącz zmianę ikonki karty z Wykopem (favicon) ⭐`                                   1
-@var select     tabFaviconSelect                               `❎💻 Favicon ⭐` {
+@var checkbox   tabFaviconEnabled                              `❎ Włącz zmianę ikonki karty z Wykopem (favicon) ⭐`                                   1
+@var select     tabFaviconSelect                               `❎ Favicon ⭐` {
                                                                                 "Wykop (domyślna)":"wykop",
                                                                                 "Wykop (biala)*":"wykop_white",
                                                                                 "Wykop (szara)":"wykop_gray",
@@ -184,9 +108,9 @@ var checkbox   hotLinksShowFirst                              `check: 🔸🔥 G
                                                                             }
                                                                             
 @var range      HR_NEW_TAB_TITLE                        `💠 KARTA Z WYKOPEM: TYTUŁ STRONY ⭐ Nowe v.2.41`                                                              [0, 0, 99900, 1, 'mm']
-@var checkbox   tabTitleEnabled                                `❎💻 Włącz zmianę Tytułu karty z Wykopem ⭐`                                         0
-@var checkbox   tabTitleRemoveWykopPL                          `❎💻 Usuń z tytułu karty tekst :: 𝗪𝘆𝗸𝗼𝗽.𝗽𝗹 ⭐`                                       0
-@var select     tabTitleSelect                                 `❎💻 Tytuł kart z Wykopem ⭐` {
+@var checkbox   tabTitleEnabled                                `❎ Włącz zmianę Tytułu karty z Wykopem ⭐`                                         0
+@var checkbox   tabTitleRemoveWykopPL                          `❎ Usuń z tytułu karty tekst :: 𝗪𝘆𝗸𝗼𝗽.𝗽𝗹 ⭐`                                       0
+@var select     tabTitleSelect                                 `❎ Tytuł kart z Wykopem ⭐` {
                                                                                 "[-- Oryginalny tytuł strony --]":"domyslny",
                                                                                 "[-- Pusty tytuł --]":"pusty_tytul",
                                                                                 "[-- Adres URL strony --]":"adres_url",
@@ -202,7 +126,7 @@ var checkbox   hotLinksShowFirst                              `check: 🔸🔥 G
                                                                                 "YouTube":"youtube",
                                                                                 "Home / X":"x",
                                                                             }
-@var text       tabTitleCustom                                  `❎💻 Własny tytuł kart ⭐`                                         `Wykop X`
+@var text       tabTitleCustom                                  `❎ Własny tytuł kart ⭐`                                         `Wykop X`
 
 @var range      HR_NEW_TAB_NOTIFICATIONS                        `💠 KARTA Z WYKOPEM: (LICZBA POWIADOMIEŃ) ⭐ Nowe v.2.41`                         [0, 0, 99900, 1, 'mm']
 
@@ -220,7 +144,7 @@ var checkbox   hotLinksShowFirst                              `check: 🔸🔥 G
 
 
 @var range      HR_BANNED_USER_242                      `🍌 ZBANOWANE KONTO ⭐ Nowe v.2.42`                                                                  [0, 0, 99900, 1, 'mm']
-@var select     rightSidebarBanAlert                            `🍌💻 Panel "Twoje konto zostało zbanowane" ⭐` {
+@var select     rightSidebarBanAlert                            `💻🍌 Panel "Twoje konto zostało zbanowane" ⭐` {
                                                                             "🍌 Wyświetl jako pierwszy (domyślnie)": "domyslnie_na_gorze",
                                                                             "🍌 Wyświetl na dole sidebara":"ban_alert_na_koncu",
                                                                             "🚫 Ukryj panel z informacją o banie":"ukryj_ban_alert",
@@ -344,13 +268,66 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
 
 
 
+@var range      HR_LOGO_2411                        `𝕎 𝗕𝗘𝗟𝗞𝗔: LOGO WYKOPU ⭐ NOWE v.2.41.1`                                                     [0, 0, 99900, 1, 'mm']
+@var select     topNavLogotype                                  `Logotyp 𝘄𝘆𝗸𝗼𝗽.𝗽𝗹 ⭐` {
+                                                                            "𝘄𝘆𝗸𝗼𝗽.𝗽𝗹 (domyślny)": "wykop",
+                                                                            "wykopx.pl*": "wykopx",
+                                                                            "⭐ YouTube": "youtube",
+                                                                            "🚫 Nie pokazuj logotypu": "niepokazuj"
+                                                                            }
+                                                                            
+@var select     selectLogoCustomIcon                `𝕎 Zmień sygnet Wykopu ⭐` {
+                                                                            "Domyślny sygnet":                   `domyslne`,
+                                                                            "⭐ PO Wykop (białe)":               `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/po-biale.png"`,
+                                                                            "⭐ PO Wykop":                       `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/po-kolor.png"`,
+                                                                            "⭐ PO Wykop 2":                     `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/po-kolor2.png"`,
+                                                                            "⭐ PO logo":                        `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/po-logo.png"`,
+                                                                            "⭐ PO logo (białe)":               `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/po-logo-biale.png"`,
+                                                                            "⭐ Tusk 1":                         `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/tusk1.png"`,
+                                                                            "⭐ Tusk 2":                         `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/tusk2.png"`,
+                                                                            "⭐ Tusk 3":                         `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/tusk0.png"`,
+                                                                            "⭐ Tusk Diabeł":                    `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/tusk-diabel.png"`,
+                                                                            "@m__b":                              `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/mb_transparent.png"`,
+                                                                            "@m__b - android":                    `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/mb_ai_1_transparent.png"`,
+                                                                            "@m__b - młodziak":                   `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/mb_ai_2_transparent.png"`,
+                                                                            "@m__b - motocyklista":               `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/mb_ai_3_transparent.png"`,
+                                                                            "@m__b - przystojniak":               `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/mb_ai_4_transparent.png"`,
+                                                                            "Batman":                             `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/batman.png"`,
+                                                                            "PacMan":                             `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/pacman.png"`,
+                                                                            "ᵍᶦᶠ Chomik":                         `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/chomik.gif"`,
+                                                                            "ᵍᶦᶠ Mucha":                          `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/mucha.gif"`,
+                                                                            "ᵍᶦᶠ Nyan Cat":                       `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/nyan1.gif"`,
+                                                                            "ᵍᶦᶠ Nyan Cat 2":                     `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/nyan2.gif"`,
+                                                                            "ᵍᶦᶠ Nike":                           `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/nike.gif"`,
+                                                                            "ᵍᶦᶠ Pepe":                           `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/pepe.gif"`,
+                                                                            "ᵍᶦᶠ Pepe 2":                         `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/pepe2.gif"`,
+                                                                            "ᵍᶦᶠ Luigi":                          `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/luigi.gif"`,
+                                                                            "Orlen":                              `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/orlen_kolor.png"`,
+                                                                            "Orlen (przezroczyste)":              `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/orlen_kolor_transparent.png"`,
+                                                                            "Orlen (białe)":                      `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/orlen_white.png"`,
+                                                                            "PiS":                                `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/pis_kolor.png"`,
+                                                                            "PiS (białe)":                        `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/pis_white.png"`,
+                                                                            "Posady i Spółki":                    `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/pis_posady_i_spolki-removebg-preview.png"`,
+                                                                            "Wykop":                              `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykop_kolor.png"`,
+                                                                            "Wykop (przezroczyste)":              `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykop_kolor_transparent.png"`,
+                                                                            "Wykop Zbożowy":                      `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykop_zboze_transparent.png"`,
+                                                                            "W (białe)":                          `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/W_white.png"`,
+                                                                            "W (pomarańczowe)":                   `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/W_orange.png"`,
+                                                                            "W (niebieskie)":                     `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/W_blue.png"`,
+                                                                            "W (czarne)":                         `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/W_black.png"`,
+                                                                            "W (poduszka)":                       `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykop_ai_frame_5_transparent.png"`,
+                                                                            "W (lodowe)":                         `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykop_ai_frame_7_transparent.png"`,
+                                                                            "Wykop - Donatello":                  `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykop_kolor_custom_1_transparent.png"`,
+                                                                            "Wykop - Raphael":                    `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykop_kolor_custom_2_transparent.png"`,
+                                                                            "Wykop - Leonardo":                   `"https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykop_kolor_custom_3_transparent.png"`,
+                                                                            }
+@var checkbox   hideLogo                                        `𝕎 Ukryj sygnet Wykopu na górnej belce`                                                            0
 
 
 
 @var range      HR_NEW_241                          `ANTI-EMBARRASSMENT MODE ⭐ Nowe v.2.41`                                                                  [0, 0, 99900, 1, 'mm']
 @var checkbox   presetAntiEmbarrassment                         `[PRESET] Włącz wszystkie funkcje ANTI EMBARRASSMENT MODE ⭐`                                       0
 @var checkbox   myWykopInTopNavJSObserwowane                    `💻❎ Zmień nazwę 𝗠𝗼𝗷 𝘄𝘆𝗸𝗼𝗽 na 𝗢𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 ⭐`                                                    0
-@var checkbox   changeWykoplikeWordsEverywhere                  `Zmień wszędzie słowa 𝘄𝘆𝗸𝗼𝗽 i 𝘄𝘆𝗸𝗼𝗽𝗮𝗹𝗶𝘀𝗸𝗼 na mniej obciachowe`                    0
 
 
 
@@ -375,9 +352,9 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
                                                                             } 
 
 
-@var checkbox   showObservedTagsInRightSidebar                  `❎💻 Pokazuj  # 𝗧𝘄𝗼𝗷𝗲 𝗼𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 𝘁𝗮𝗴𝗶`                                                                      1
-@var checkbox   showObservedTagsAlphabetically                  `❎💻 # 𝗧𝘄𝗼𝗷𝗲 𝗼𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 𝘁𝗮𝗴𝗶 - sortuj alfabetycznie`                                                                                  0
-@var range      showObservedTagsInRightSidebarUpdateInterval    `❎💻💻 # 𝗧𝘄𝗼𝗷𝗲 𝗼𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 𝘁𝗮𝗴𝗶 - odświeżaj listę co X h`       [12, 0.5, 24, 0.5, '']
+@var checkbox   showObservedTagsInRightSidebar                  `💻❎ Pokazuj  # 𝗧𝘄𝗼𝗷𝗲 𝗼𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 𝘁𝗮𝗴𝗶`                                                                      1
+@var checkbox   showObservedTagsAlphabetically                  `💻❎ # 𝗧𝘄𝗼𝗷𝗲 𝗼𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 𝘁𝗮𝗴𝗶 - sortuj alfabetycznie`                                                                                  0
+@var range      showObservedTagsInRightSidebarUpdateInterval    `💻❎ # 𝗧𝘄𝗼𝗷𝗲 𝗼𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 𝘁𝗮𝗴𝗶 - odświeżaj listę co X h`       [12, 0.5, 24, 0.5, '']
 
 
 
@@ -539,18 +516,6 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
 
 
 
-
-
-
-@var range      HR_DOODLE                           `🎅 ZIMOWA BELKA ⭐ Nowe v.2.34`                                                                         [0, 0, 99900, 1, 'mm']
-var checkbox  hideTopNavDoodle                                `🏯 Ukryj 𝗦𝗘𝗝𝗠 z belki Wykopu ⭐`                                                                      0
-var checkbox  topNavSnowMan                                    `⛄ Bałwan w sejmie`                                                                                    1
-var checkbox  topNavSnowMan2                                   `⛄ Bałwan w sejmie 2`                                                                                  0
-var checkbox  topNavSanta                                      `🎅 Wolnorynkowy Mikołaj `                                                                              0
-var checkbox  topNavSnowGirl                                   `❄ Snow Girl`                                                                                           0
-
-
-
 @var range      HR_TOPNAV                       `𝗕𝗘𝗟𝗞𝗔 𝗡𝗔𝗪𝗜𝗚𝗔𝗖𝗬𝗝𝗡𝗔`                                                                                               [0, 0, 99900, 1, 'mm']
 @var select     topNavVisibility                                `Autoukrywanie górnej Belki` {
                                                                             `Zawsze widoczna (domyślnie)`:      `1`,
@@ -558,7 +523,7 @@ var checkbox  topNavSnowGirl                                   `❄ Snow Girl`  
                                                                             `Ukryj, pozostaw najważniejsze`:    `4`,
                                                                             `Ukryj belkę całkowicie`:           `5`
                                                                             } 
-@var select     topNavAlignment                                 `Położenie Belki` {
+@var select     topNavAlignment                                  `Położenie Belki` {
                                                                             "U góry (domyślnie)":               "ugory",
                                                                             "Na dole":                          "nadole"
                                                                             } 
@@ -566,8 +531,40 @@ var checkbox  topNavSnowGirl                                   `❄ Snow Girl`  
 
 
 
-@var range      HR_TAPETA_TOP_NAV                   `𝗕𝗘𝗟𝗞𝗔: TAPETA W TLE`                                                                                                [0, 0, 99900, 1, 'mm']
 
+
+
+@var range      HR_TAPETA_TOP_NAV                   `𝗕𝗘𝗟𝗞𝗔: TAPETA W TLE`                                                                                                [0, 0, 99900, 1, 'mm']
+@var select     topNavWallpaper                                 `🎨 Tapeta górnej belki nawigacyjnej ❄ ` {
+                                                                            "Brak tapety w tle (domyślnie)":        `domyslne`,
+                                                                            "❄ Snow 1":                            `"https://i.imgur.com/ah041Sh.jpg"`,
+                                                                            "❄ Snow 2":                            `"https://i.imgur.com/HeoKeBi.jpg"`,
+                                                                            "🏔 Snowy Mountain":                    `"https://i.imgur.com/mv95FKt.jpg"`,
+                                                                            "🏔 Snowy Mountain":                    `"https://i.imgur.com/HRmsPu6.jpg"`,
+                                                                            "🎄 Christmas Trees*":                  `"https://i.imgur.com/sNp7lFd.png"`,
+                                                                            "🎄 Christmas Trees 2":                 `"https://i.imgur.com/yNp2Lll.png"`,
+                                                                            "🎄 Christmas Trees 3":                 `"https://i.imgur.com/l5tOmd1.png"`,
+                                                                            "🔮 Cave":                             `"https://wykopx.pl/img/background-cave-1.jpg"`,
+                                                                            "🏙 City":                              `"https://wykopx.pl/img/background-city-1.jpg"`,
+                                                                            "🏙 Cyberpunk":                         `"https://wykopx.pl/img/background-cyberpunk-1.jpg"`,
+                                                                            "🏀 Dragonball":                       `"https://wykopx.pl/img/background-songoku-1.jpg"`,
+                                                                            "🌍 Earth":                            `"https://wykopx.pl/img/background-earth-1.jpg"`,
+                                                                            "🌿 Marijuana":                        `"https://wykopx.pl/img/background-marijuana-1.jpg"`,
+                                                                            "👨‍💻 Matrix":                           `"https://wykopx.pl/img/background-matrix-1.jpg"`,
+                                                                            "🌙 Moon":                             `"https://wykopx.pl/img/background-moon-1.jpg"`,
+                                                                            "🗻 Mountains 1":                      `"https://wykopx.pl/img/background-mountains-1.jpg"`,
+                                                                            "🗻 Mountains 2":                      `"https://wykopx.pl/img/background-mountains-2.jpg"`,
+                                                                            "🔡 Text Einstein":                    `"https://wykopx.pl/img/background-einstein-1.jpg"`,
+                                                                            "🔡 Text Hahahahah":                   `"https://wykopx.pl/img/background-hahahah-1.jpg"`,
+                                                                            "🔡 Text Never Give Up":               `"https://wykopx.pl/img/background-never-give-up-1.jpg"`,
+                                                                            "✨ Stars 1":                          `"https://wykopx.pl/img/background-stars-1.jpg"`,
+                                                                            "✨ Stars 2":                          `"https://wykopx.pl/img/background-stars-2.jpg"`,
+                                                                            "✨ Stars 3":                          `"https://wykopx.pl/img/background-stars-3.jpg"`,
+                                                                            "✨ Stars 4":                          `"https://wykopx.pl/img/background-stars-4.jpg"`,
+                                                                            "✨ Stars 5":                          `"https://wykopx.pl/img/background-stars-5.jpg"`,
+                                                                            "✨ Stars 6":                          `"https://wykopx.pl/img/background-stars-6.jpg"`,
+                                                                            "✨ Stars 7":                          `"https://wykopx.pl/img/background-stars-7.jpg"`,
+                                                                            } 
 
 @var checkbox   topNavButtonsBackground                         `💻 Zwiększ czytelność przycisków na tapecie`                         0
 @var checkbox   topNavNotificationsBackground                   `💻 Zwiększ czytelność ikonek powiadomień na tapecie `                0
@@ -598,10 +595,19 @@ var checkbox  topNavSnowGirl                                   `❄ Snow Girl`  
 // 𝓦𝕎🆆𝐖𝑾ᏇW̳
 
 
+
 @var text       selectLogoCustomURL                             `𝕎 Własny obrazek jako sygnet (adres URL pliku .png/.gif)`                     `""`
+
 @var checkbox   customLogotypeColorEnabled                      `Zmień kolory domyślnego logotypu Wykopu`                                        0
 @var color      topNavLogoColorCustom                           `🌞 Własny kolor domyślnego logo Wykopu`                                         rgba(255, 254, 253, 1)
 @var color      topNavLogoColorCustomNight                      `🌘 Własny kolor domyślnego logo Wykopu`                                         rgba(255, 254, 253, 1)
+
+
+
+
+
+
+@var checkbox   changeWykoplikeWordsEverywhere                  `Zmień wszędzie słowa 𝘄𝘆𝗸𝗼𝗽 i 𝘄𝘆𝗸𝗼𝗽𝗮𝗹𝗶𝘀𝗸𝗼 na mniej obciachowe`                    0
 @var checkbox   refreshOrRedirectOnHomeButtonClick              `💻❎🐁 Kliknięcie w logo wykopu odświeża stronę`                                0
 
 
@@ -630,6 +636,8 @@ var checkbox  topNavSnowGirl                                   `❄ Snow Girl`  
 
 
 @var range      HR_TOPNAV_RIGHT_BUTTONS             `𝗕𝗘𝗟𝗞𝗔: PRZYCISKI PO PRAWEJ I WYSZUKIWARKA`                                                                                                  [0, 0, 99900, 1, 'mm']
+
+
 @var checkbox   myWykopMobileInTopNav                           `❎ Pokaż przycisk "𝗠𝗪" (Mój Wykop)`                                  1
 @var checkbox   microblogMobileInTopNav                         `❎ Pokaż przycisk "𝗠" (Mikroblog) `                                   1
 @var checkbox   showNightModeSwitchOnTopNav                     `❎ Pokaż przycisk "🌙" (Tryb nocny/dzienny)`                          1
@@ -854,6 +862,10 @@ var checkbox  topNavSnowGirl                                   `❄ Snow Girl`  
                                                                             "🟢 Zielonka":"zielony",
                                                                             "💙/💜 Kolor paska ":"kolor_paska"
                                                                             } 
+
+
+
+
 
 
 
@@ -2827,7 +2839,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
     html { font-size: 62.5%; }                                              /* 62.5% -> 10px https://www.freecodecamp.org/news/override-root-font-size-for-a-better-user-experience/ */ 
     body { font-size: 1.6rem; }                                             /* 10px * 1.6rem = 16 px -- https://nekocalc.com/px-to-rem-converter */
-        
+
     if(textFontSize == "10px")      {    html { font-size: 3.91%; }} 
     else if(textFontSize == "11px") {    html { font-size: 4.30%; }} 
     else if(textFontSize == "12px") {    html { font-size: 4.69%; }} 
@@ -2841,27 +2853,9 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     else if(textFontSize == "20px") {    html { font-size: 7.81%; }} 
     else if(textFontSize == "21px") {    html { font-size: 8.20%; }} 
 
-    :root
-    {
-        --textFontSize10: 10rem;
-        --textFontSize11: 11rem;
-        --textFontSize12: 12rem;
-        --textFontSize13: 13rem;
-        --textFontSize14: 14rem;
-        --textFontSize15: 15rem;
-        --textFontSize16: 16rem;
-        --textFontSize17: 17rem;
-        --textFontSize18: 18rem;
-        --textFontSize19: 19rem;
-        --textFontSize20: 20rem;
-        --textFontSize21: 21rem;
 
-        --textFontSize: var(--textFontSize14);
-        
-        --topNavTextFontSize: topNavCustomTextFontSize;
-
-    }
-    
+    a, span
+    { font-size: 14rem; }
 
     section.link-block > section > article > header h1 a                        /* tytuł znaleziska */
     { font-size: 21rem!important; }
@@ -2873,8 +2867,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     aside.left-panel > section.links > .content ul li a.hybrid                 /* kategorie */
     { font-size: 16rem!important; } 
 
-    .night-mode-switch .switch label[for="switch-night-mode"] > span,            /* przycisk zmiany Tryb nocny/dzienny */
-    section.sidebar a.username span,                                            /* nazwa uzytkownika z ktorym rozmawiamy - w wiadomosciach */
+    .night-mode-switch .switch label[for="switch-night-mode"] > span            /* przycisk zmiany Tryb nocny/dzienny */
     { font-size: 15rem!important; } 
 
     div.content section.entry-content div.wrapper,                               /* treść wpisu / komentarza */
@@ -2896,10 +2889,10 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     header.stream-top>h4, 
     header.stream-top>h5, 
     header.stream-top>h6,
-    div.action-btn .target,                                                                 /* przycisk Zobacz wiecej */
+    div.action-btn .target,                                                     /* przycisk Zobacz wiecej */
     aside.hits-slider .swiper-container .swiper-wrapper .swiper-slide a figure figcaption,  /* opis znaleziska hitów */
-    section.filter>header h3,                                                               /* filtr gorące/aktywne itd */
-    section.link-block>section>article section.info>p,                                      /* opis znaleziska */
+    section.filter>header h3,                                                   /* filtr gorące/aktywne itd */
+    section.link-block>section>article section.info>p,                                  /* opis znaleziska */
     header.header>.left>nav.main>ul li a,                                       /* top menu - przyciski */
     section.actions.detailed:not(.compact)>ul>li.comments span,                 /* liczba komentarzy w znalezisku */
     section.actions.detailed:not(.compact)>ul>li.comments a, 
@@ -2911,11 +2904,11 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     { font-size: 14rem!important; } 
 
 
-    section.entry > article > header > div.right > div a.username,                      /* nick autora wpisu / komentarza */
-    section.voters section.voters-link-stream>.content>ul li > section a.username /* UZYTKOWNIK ZAKOPUJACY, WYKOPUJACY */
-    section.entry > article > header > div.right > div a.username span,          /* wpis - login autora */
+    section.entry>article>header>div.right>div a.username,                      /* nick autora wpisu / komentarza */
     .switch label>span,                                                         /* 18+ w edytorze komentarza */
     section.custom-sidebar>header p                                             /* right sidebar - nazwa filtru */
+    section.voters section.voters-link-stream>.content>ul li>section a.username /* UZYTKOWNIK ZAKOPUJACY, WYKOPUJACY */
+    section.entry > article > header > div.right > div a.username span          /* wpis - login autora */
     { font-size: 13rem!important; } 
 
     time.date,                                                                  /* data dodania wpisu / komentarza */
@@ -7417,11 +7410,9 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         white-space: nowrap!important;
     }
     
-   
-    body > section > header.header > div.left > nav.main > ul > li > a.hybrid
+    body > section > header.header a.hybrid
     {
-        color: var(--topNavTextColor) i; 
-        font-size: var(--topNavTextFontSize) i;
+      color: var(--topNavTextColor) i; 
     }
     
     body > section > header.header button::after
@@ -10854,7 +10845,72 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
     
     
-  
+    /* WYKOP X PROMO WYKOP XS */
+    
+    /* hide wykopx-promo added by wykopxs */
+    .wykopx_promo, .wykopx_promo_li, .wykopx_promo_button, .wykopx_promo_banner,    
+    {
+        display: none!important;   
+    } 
+    
+    section.editor.expand section.inline-autocomplete,
+    header.header div.right section.search-input section.inline-autocomplete
+    {
+        min-width: 390px!important;   
+    } 
+    section.editor.expand section.inline-autocomplete section.inline-autocomplete-stream div.content:after,
+    header.header div.right section.search-input section.inline-autocomplete section.inline-autocomplete-stream div.content:after
+    /* wykopxs_promo */
+    /* lista tagów */
+    {
+        padding: 10px 16px!important;
+        margin-top: 3px!important;
+        font-size: 11px!important;
+        position: relative!important;
+        border-top: 1px solid rgba(0,0,0,0.7)!important;
+        display: block;
+        content: "Zainstaluj skrypt 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦, aby zobaczyć liczbę obserwujących tagi";
+    } 
+    /* top linki po prawej */
+    div.main-content section > section.sidebar:after
+    { 
+        content: "";
+        width: 100%;
+        display: block!important;
+        height: 300px!important;
+        background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/promo-images/wykopxs-install-sidebar-day.png');
+    } 
+    [data-night-mode] div.main-content section > section.sidebar:after
+    { 
+        background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/promo-images/wykopxs-install-sidebar-night.png');
+    } 
+
+    if(disableNewLinkEditorPastedTextLimit == 1)
+    {
+        .wykopxs_textinput_limit_info
+        {
+            color: var(--whiteOpacity08);
+            font-size: 14rem!important;
+            margin: 10px 0px 10px 0px!important;
+        } 
+        .wykopxs_textinput_limit_info span
+        {
+
+        } 
+        .wykopxs_textinput_limit_info span.withinLimit strong /* liczba znaków np. 199/300 */
+        {
+            color: inherit!important;
+        } 
+        .wykopxs_textinput_limit_info span.over_limit strong /* liczba znaków np. 399/300 */
+        {
+            color: blue!important;
+        } 
+    } 
+    
+    
+    
+    
+
     
     
 
@@ -11533,7 +11589,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
                 section.entry > article > header > div.left > a.avatar:hover > figure > img,
                 aside.profile-top > section > header > a.avatar > figure > img
                 {     
-                    animation: avatarBackgroundAnimation 0.5s ease-in-out 0s 1;
+                    animation: Animation 0.5s ease-in-out 0s 1;
                     animation-direction: alternate;
                     animation-fill-mode: both; 
                     animation-play-state: running;
@@ -11544,7 +11600,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
     
 
-    @keyframes avatarBackgroundAnimation { 
+    @keyframes Animation { 
         0%{     background-position:   30% 60%; } 
         100%{    background-position:    220% 220%} 
     } 
@@ -11659,9 +11715,6 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         /* Wyświetl nazwę użytkownika */
         if(avatarUsernameShow == "pokaz_z_avatarem_po_lewej" || avatarUsernameShow == "pokaz_z_avatarem_po_prawej" || avatarUsernameShow == "pokaz_zamiast_avatara")
         {
-            
-       
-        
             if(avatarUsernameShow == "pokaz_z_avatarem_po_lewej")  { body > section header.header > .right > nav > ul > li.account > a > a.avatar figure { order: 6!important; }} 
             if(avatarUsernameShow == "pokaz_z_avatarem_po_prawej") { body > section header.header > .right > nav > ul > li.account > a > a.avatar figure { order: 4!important; }} 
 
@@ -11685,7 +11738,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
                 }
                 body > section > header.header > div.right > nav > ul > li.account > a > a.avatar > span:after
                 {
-                    font-size: var(--topNavTextFontSize)!important;
+                    font-size: 14rem!important;
                 }
             
                 if(avatarUsernameSelect == "zmieniony_nickname" && customUsername != "")
@@ -14831,7 +14884,182 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
     
     
+    
+    
+    // rating-box intersecting
+    .notIntersecting
+    {
+        border-bottom: 1px solid gray;
+    }
 
+    .isIntersecting
+    {    
+        border-radius: 0px!important;
+
+        border-left-width: 1px;
+        border-left-style: dotted;
+        padding-left: 6px;
+        
+        animation-name: isIntersectingAnimation;
+        animation-duration: 1s;
+        animation-iteration-count: infinite;
+    }
+    
+    .isIntersecting::before,
+    .isIntersecting::after
+    {
+        padding: 0px 3px;
+        font-size: 13rem;
+        animation-duration: 5s, 3s;
+        animation-fill-mode: forwards;
+        
+        position: absolute;
+        right: -14px;
+        top: 0px;
+    }
+
+    .addedPluses > article > header > div.right > div > section.rating-box:after
+    {
+        animation-name: fadeOutAnimation, slideUpAnimation;
+        color: #10af27;
+        content: var(--addedPluses);
+    }
+    .removedPluses > article > header > div.right > div > section.rating-box:after
+    {
+        animation-name: fadeOutAnimation, slideDownAnimation;
+        color: #d10909;
+        content: var(--removedPluses);
+    }
+    .addedMinuses > article > header > div.right > div > section.rating-box:after
+    {
+        color: #a10707;
+        content: var(--addedMinuses);
+    }
+    .removedMinuses > article > header > div.right > div > section.rating-box:after
+    {
+        color: #fff;
+        content: var(--removedMinuses);
+    }
+    
+    @keyframes isIntersectingAnimation
+    {
+        0%      { border-left-color: transparent; }
+        70%     { border-left-color: green; }
+        100%    { border-left-color: transparent; }
+    }
+    @keyframes fadeOutAnimation
+    {
+        0%      { scale: 1.0; opacity: 0.8; }
+        10%     { scale: 1.3; opacity: 1;   }
+        70%     { scale: 1;   opacity: 1;   }
+        90%     { scale: 0.8; opacity: 0.6; }
+        100%    { scale: 0.8; opacity: 0;   }
+    } 
+    @keyframes slideUpAnimation
+    {
+        0%      { translate: 0px 10px; }
+        20%     { translate: 0px 0px; }
+        70%     { translate: 0px 0px; }
+        100%    { translate: 0px -10px; }
+    } 
+    @keyframes slideDownAnimation
+    {
+        0%      { translate: 0px -10px; }
+        20%     { translate: 0px 0px; }
+        70%     { translate: 0px 0px; }
+        100%    { translate: 0px 10px; }
+    } 
+    // votingExplosion: animacja plusowania Wykop XS
+    section.rating-box
+    {
+        position: relative;
+        --explosionDelay: 0s;
+        --explosionDuration: 900ms;
+        --explosionTiming: linear;
+    }
+    
+    section.rating-box > div.buttons > button.minus
+    {
+        margin-left: 14px;
+    } 
+    .wykopxs_vote_animation
+    {
+        opacity: 0;
+        cursor: crosshair;
+        font-size: 12rem;
+        font-weight: bolder;
+        position: absolute;
+        top: -10px;
+        animation-name: explodePluses;
+        animation-delay: var(--explosionDelay);
+        animation-duration: var(--explosionDuration);
+        animation-timing-function: var(--explosionTiming);
+    } 
+    
+    if(votingExplosionAnimation == "animacja2")
+    {
+        .wykopxs_vote_animation 
+        {
+            animation-name: explodePluses, explodePlusesAnimacja2;
+        } 
+    } 
+    else if(votingExplosionAnimation == "animacja3")
+    {
+        .wykopxs_vote_animation 
+        {
+            animation-name: explodePluses, explodePlusesAnimacja3;
+        } 
+    } 
+    
+    /* plusy */
+    .wykopxs_vote_animation.wykopxs_green
+    {
+        color: var(--green)!important;
+/*         text-shadow: 0px 0px 2px var(--green); */
+    } 
+  
+    .wykopxs_vote_animation.wykopxs_golden
+    {
+        font-size: 35rem;
+        color: var(--golden)!important;
+        text-shadow: 0px 0px 5px var(--golden);
+    } 
+
+    /* minusy */
+    .wykopxs_vote_animation.wykopxs_red
+    {
+        color: var(--red)!important;
+    } 
+    
+    
+    @keyframes explodePluses
+    {
+        0%      { transform: translate3d(0, 0, 0); opacity: 0; } 
+        12%     { opacity: 0.2; } 
+        13%     { opacity: 1; } 
+        70%     { opacity: 1; } 
+        90%     { opacity: 0.4; } 
+        100%    { transform: translate3d(var(--position_x), var(--position_y), var(--position_z)); opacity: 0; } 
+    } 
+    @eyframes explodePlusesAnimacja2
+    {
+        0%      { scale: 60%;   } 
+        12%     { scale: 60%;   } 
+        13%     { scale: 60%;   } 
+        70%     { scale: 60%;   } 
+        90%     { scale: 120%;  } 
+        100%    { scale: 400%;  } 
+    } 
+    
+    @keyframes explodePlusesAnimacja3
+    {
+        0%      { scale: 60%;   } 
+        12%     { scale: 60%;   } 
+        13%     { scale: 60%;   } 
+        70%     { scale: 60%;   } 
+        90%     { scale: 120%;  } 
+        100%    { scale: 400%;  } 
+    } 
 
 
 
@@ -15162,6 +15390,312 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
     
 
+    
+    /* WYKOP XS PROMO AND UPDATE */
+    .wykopx_hide_this_if_stylus_is_installed
+    { 
+        display: none!important;   
+    } 
+    .wykopx_modal_mirkoukrywacz_is_turned_off
+    {
+        width: 80%;
+        height: 100%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    } 
+    
+    if(mirkoukrywacz == 0)
+    {
+       #wykopx_modal_mirkoukrywacz .wykopx_modal-content header,
+       section.wykopx_mirkoukrywacz_list_of_hidden_items
+       {
+           display: none!important;
+       } 
+    } 
+    
+    if(mirkoukrywacz == 1)
+    {
+        .wykopx_hide_this_if_mirkoukrywanie_is_turned_on
+        { 
+            display: none!important;   
+        } 
+
+
+
+        section.actions ul li.right 
+        {
+            display: flex!important;
+        } 
+        button.wykopxs.hideThisShit  
+        {
+            justify-content: right;
+            display: inline-flex!important;
+            color: var(--blackOpacity1);
+            opacity:0.3;
+
+            cursor: pointer;
+    
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            font-size: 14px;
+            font-weight: 400;
+    
+            justify-content: center;
+            padding: 0px 20px;
+            margin-right: 120px;
+        } 
+   
+        button.wykopxs.hideThisShit:before
+        {
+            content: "";
+            position: relative;
+            display: inline-block;
+            width: 20px;
+            top: -1px;
+            right: 7px;
+            height: 20px;
+            background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAFqSURBVHja5NS9Sx1REAXw31PTaWE+QLAQLNJYhtRCCIQYC8EiCoaIYJnCSiuFQNKIhPhHGIgBRTTwwEZFiYWBBKKIYCdoZaePJ7ppRrgurha+ztPs7j1zz9yZM3dLWZapJerUGDUXvCtG8C1daCgILOE5XsazBRkOsY4pDGMSE7dlfYvNEMjwG1/wNdb78D64xZuEWjCXCB2jO7iHaI73wSSmigW05sXa8S8JPEdXtORHiHfiHSrRt0oSv4unkux/EzLDSnDz8f0G/clmKOf27OAJzOSIDOORqBpl9ybcBdowes2+2boCpxtiRl+hKcpOUSmY4QfwGNu5TGsRMHDNKX4WlLwXxhIN3U2cex1uVmNsTnCKJTSGQWeJ2D468sdtDRN6YhYzzAb36LLheIGjRKwcPS3EYK6UX/iMT3FLLtf/YChu1ZUrluIDpjGG1TDlWZy+HgfYwjI2ouwb8R0f7/K3KN2/H+z/AQAb4nry9SB1ewAAAABJRU5ErkJggg==');
+        } 
+        [data-night-mode] button.wykopxs.hideThisShit:before
+        {
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAGGSURBVHja5JS/S5VRGMc/r942G9SEC3cQHFwco1kQIUwHwSEDpRAaG5xy0smWiKg/QiEFRSwQWiqMHBQK/BFBm1CTm8qV+rg8F4/n3ruIQ9ADL+ec58f3vM/5fs8pVK7TWrhm++cAp4HF1FFqklgAd4DBGMuAwC9gE3gBPAaeA3OXKtX8u69ueWE76kv1VfjH1YcRW8/r00VZXUmAjtSRiHWo7TF/lORU1TW1kgP2qLtJ4h/1nlpSlwO8X51UT9XFGGv2Xe2tAXao37xsH2Kj1VgPqw+SYtSNrGZf7UJdsN5mY6NqtD2WxP6q3erTBnVLLU2YLoWk7gI3geUsftpEcjdQb6l72U6foq2JBn/xrknLP9RyjZTeOJsac0PBZjVkc6yeqG/VtiDoLAH7qfblsqkECaOhRdWliHWqXTEfUH8nYBtxpnU6pIHOVL+oz9R5dTPxf1Wn1CKtL7Ln6wnwGpgBPgYpt4EK0AocAtvAe+AzcFZ3ZzPAN8ABMHvV16L4/x7Y8wEAafObxZ/Y7vUAAAAASUVORK5CYII=')
+        } 
+        button.wykopxs.hideThisShit:hover  
+        {
+            opacity:1;
+        } 
+    } 
+    
+    
+    if(mirkoukrywacz == 1 && dev == 0)
+    {
+            section.wykopx_mirkoukrywacz_hide { display: none!important; } 
+    } 
+    else if(mirkoukrywacz == 1 && dev == 1)
+    {
+            section.wykopx_mirkoukrywacz_hide { border: 13px solid green!important; } 
+    } 
+
+    
+
+    
+    
+    
+
+    
+    .wykopx_modal
+    {
+        display: none;
+        z-index: 2023;
+        width: 100%;
+        position: fixed;
+        height: 100%;
+        overflow: auto;
+        top:0px; left: 0px;
+
+        background: var(--whiteOpacity02) url("https://i.imgur.com/9MFCsXL.png") right bottom/contain no-repeat;
+        background-size: 30%;
+
+        backdrop-filter: blur(6px);
+        cursor: default;
+    } 
+
+    .wykopx_modal-content
+    {
+        width: 90%;
+        height: 90%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -60%);
+
+        display: flex;
+        flex-direction: column;
+        background-color: var(--whiteOpacity09);
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid var(--blackOpacity02);
+        min-height: 300px;
+        position: absolute;
+        border-radius: 4px;
+
+
+        overflow: auto;
+        z-index: 2023;
+        color: var(--blackOpacity08)!important;
+        box-shadow: 0px 0px 20px 6px rgba(0,0,0,0.2);
+    } 
+    
+
+    
+    
+    .wykopx_modal .wykopx_modal-content header
+    {
+        display: block;
+        font-size: 16px;
+        padding: 10px 0px;
+        color: var(--blackOpacity1);
+        border-bottom: 1px solid var(--blackOpacity04);
+        margin-bottom: 13px;
+    } 
+    .wykopx_modal .wykopx_modal-content header span:first-child
+    {
+        display: none;
+    } 
+    
+    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items
+    {
+        display: flex;
+        flex-direction: column;
+    } 
+    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element
+    {
+        display: flex;
+        flex-direction: row;
+        font-size: 13px;
+        margin: 4px 0px;
+        justify-content: flex-start;
+        padding-right: 10px;
+        row-gap: 5px;
+        column-gap: 6px;
+    } 
+    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element:nth-child(2n)
+    {
+        background-color: var(--blackOpacity01);
+    } 
+    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element:hover
+    {
+        background-color: var(--blackOpacity03);
+    } 
+    
+    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_hidden_list_is_empty
+    {
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        height: calc(100% - 100px);
+        width: calc(100% - 40px);
+        position: fixed;
+    } 
+    
+    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_hidden_list_is_empty:has(+ div)
+    {
+        display: none;
+    } 
+    
+    
+    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element > div
+    {
+        text-align: left;
+        overflow: hidden;
+        padding: 10px 0;
+        white-space: nowrap;
+        overflow: hidden;
+
+        align-items: center;
+        display: flex;
+
+    } 
+    
+    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_unhide
+    {
+        width: 40px;
+        cursor: pointer;
+        justify-content: center;
+        filter: grayscale(1);
+
+        border: 1px solid rgba(255, 120, 120, 0.3);
+    } 
+    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_unhide:hover
+    {
+        filter: grayscale(0);
+
+    } 
+    
+    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element:has(.wykopx_mirkoukrywacz_unhide:hover)
+    {
+        background-color: rgba(255, 120, 120, 0.3);
+
+    } 
+   
+    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_lp
+    {
+        width: 38px;
+    } 
+    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_text
+    {
+        width: 100%!important;
+        max-width: 100%!important;
+    } 
+    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_id
+    {
+        width: 80px
+        margin-left: auto;
+        font-size: 0.7em;
+        text-align: right;
+        color: var(--blackOpacity04);
+        display: none;
+    } 
+    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_type
+    {
+        width: 130px
+        font-size: 0.7em;
+        color: var(--blackOpacity04);
+        display: none;
+    } 
+    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_date
+    {
+        width: 141px
+        text-align: right;
+        font-size: 0.8em;
+        color: var(--blackOpacity04);
+        display: none;
+    } 
+    .wykopx_close
+    {
+       color: #aaa;
+       float: right;
+       font-size: 28px;
+       font-weight: bold;
+    } 
+
+    .wykopx_close:hover,
+    .wykopx_close:focus
+    {
+       color: black;
+       text-decoration: none;
+       cursor: pointer;
+    } 
+    
+    
+    @media (min-width: 640px)
+    {
+        .wykopx_modal-content
+        {
+            width: 50%;
+            height: 60%;
+            top: 20%;
+            transform: translate(-50%, -50%);
+        } 
+        .wykopx_modal .wykopx_modal-content header span:first-child,
+        .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_id,
+        .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_type,
+        .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_date
+        {
+            display: inline-block;
+        } 
+        .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_text
+        {
+            max-width: calc(100% - 300px);
+        } 
+    } 
 
     
   
@@ -15983,48 +16517,7 @@ https://wykop.pl/moje/
     } 
 } 
 
-@-moz-document regexp(".*")
-{    
-/*
-    // dummyClass - https://github.com/openstyles/stylus/issues/1719 
 
-    // WPISY - przypiete na stronie głównej
-    main.main > section > div.content > section.home-page       > section.home                      > section.stream > div.content > section.entry 
-    
-    // WPISY
-    main.main > section > div.content > section.bucket-page     > section.microblog                 > section.stream > div.content > section.entry,
-    main.main > section > div.content > section.category-page   > section.microblog                 > section.stream > div.content > section.entry,
-    main.main > section > div.content > section.favourites-page > section.favourites                > section.stream > div.content > section.entry,
-    main.main > section > div.content > section.observed-page   > section.observed                  > section.stream > div.content > section.entry,
-    main.main > section > div.content > section.profile-page    > section.profile       > section   > section.stream > div.content > section.entry,
-    main.main > section > div.content > section.tag-page        > section.stream        > article   > section.stream > div.content > section.entry,
-    
-    main.main > section > div.content > section.microblog-page  > section.microblog                 > section.stream > div.content > section.entry
-
-    // WPISY :is()
-    main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry
-    
-    main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own)
-
-    // przy uzywaniu dwoch selektorow jeden po drugim, dodac .dummyClassX - https://github.com/openstyles/stylus/issues/1719 
-
-    
-    // ZNALEZISKA
-    main.main > section > div.content > section.bucket-page     > section.bucket                    > section.stream > div.content > section.link-block,
-    main.main > section > div.content > section.category-page   > section.category                  > section.stream > div.content > section.link-block,
-    main.main > section > div.content > section.favourites-page > section.favourites                > section.stream > div.content > section.link-block,
-    main.main > section > div.content > section.observed-page   > section.observed                  > section.stream > div.content > section.link-block,
-    main.main > section > div.content > section.profile-page    > section.profile   > section       > section.stream > div.content > section.link-block,
-    main.main > section > div.content > section.tag-page        > section.stream    > article       > section.stream > div.content > section.link-block,
-
-    main.main > section > div.content > section.home-page       > section.home                      > section.stream > div.content > section.link-block,
-    main.main > section > div.content > section.hits-page       > section.hits                      > section.stream > div.content > section.link-block,
-    main.main > section > div.content > section.upcoming-page   > section.upcoming                  > section.stream > div.content > section.link-block,
-    
-    main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .hits-page, .upcoming-page) > section section.stream > div.content > section.link-block
-
-*/
-}
 
 @-moz-document url-prefix("moz-extension://"), url-prefix("chrome-extension://")
 {
@@ -16367,7 +16860,11 @@ https://wykop.pl/moje/
             grid-row-start: 2;
             grid-row-end: 3;
         }
-    }
+    } 
+    
+    
+    
+    
 } 
     
 @-moz-document url-prefix("https://userstyles.world/")
@@ -16400,876 +16897,10 @@ https://wykop.pl/moje/
 } 
 
 
-@-moz-document url-prefix("https://wykop.pl"), url-prefix("http://wykopx.pl")
-{    
-    // WYKOP XS
     
-    //  QUICK LINKS NAV BAR
-    if(quickLinksEnable == 1)
-    {
-        :root 
-        {
-            --quickLinksAFontSize: var(--textFontSize13, 13px);
-            --quickLinksSpanFontSize: var(--textFontSize11, 11px);
-            }
-
-        header.header > div.left > #wxs_quick_links > nav
-        {
-            font-size: var(--quickLinksAFontSize, 13px);
-        }
-        header.header > div.left > #wxs_quick_links > nav > section span
-        {
-            font-size: var(--quickLinksSpanFontSize, 11px);
-        }
-
-        header.header > div.left > #wxs_quick_links
-        {
-            display: flex;
-            top: calc(var(--topNavHeigh, 48px) - 3px);
-            position: absolute;
-            left: -1px
-            width: 120%;
-            height: 1px;
-            z-index: -100;
-        }
-
-        @keyframes quickLinksAnimationOn
-        {
-          0% { display: none; top: -20px; opacity: 0; }
-          1% { display: flex; top: -20px; opacity: 0; }
-          99% { display: flex; top: -20px; opacity: 0; }
-          100% { display: flex; top: 0px; opacity: 1; }
-        }
-        @keyframes quickLinksAnimationOff
-        {
-          0% { display: flex; top: 0px; opacity: 1; }
-          50% { display: flex; top: 0px; opacity: 0; }
-          99% { display: flex; top: -20px; opacity: 0;}
-          100% { display: none; top: -20px; opacity: 0;}
-        }
-
-
-        header.header > div.left > #wxs_quick_links > nav
-        {
-            z-index: -999;
-            column-gap: 0px;
-            flex-wrap: nowrap;
-            position: absolute;
-            left: 0px;
-            width: 100%;
-        }
-        header.header > div.left > #wxs_quick_links > nav:not(:hover)
-        {
-            z-index: -1000!important;
-            display: flex;
-
-            animation-name: quickLinksAnimationOff!important;
-            animation-duration: 0s;
-            animation-delay: 0.4s;
-            animation-iteration-count: 1;
-            animation-direction: normal;
-            animation-fill-mode: forwards;
-        }
-        header.header > div.left > #wxs_quick_links > nav
-        {
-            z-index: -999;
-            column-gap: 0px;
-            flex-wrap: nowrap;
-            position: absolute;
-            left: 0px;
-            width: 100%;
-        }
-        header.header > div.left > #wxs_quick_links > nav:hover
-        {
-            z-index: 999!important;
-            display: flex!important;
-            animation-name: quickLinksAnimationOn!important;
-            animation-duration: 0s!important;
-            animation-delay: 0s!important;
-            animation-direction: normal!important;
-            animation-fill-mode: forwards!important;
-        }
-        
-        header.header > div.left > #wxs_quick_links > nav > section
-        {
-            display: flex;
-            flex-wrap: nowrap;
-            align-items: center;
-        }
-        header.header > div.left > #wxs_quick_links > nav > section div
-        {
-            display: flex;
-            height: 100%;
-        }
-        header.header > div.left > #wxs_quick_links > nav > section a,
-        header.header > div.left > #wxs_quick_links > nav > section span
-        {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/"])                   > #wxs_quick_links > nav.home,
-        header.header > div.left:has( > nav.main > ul > li a[href="/"]:hover)                   > #wxs_quick_links > nav.home,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/wykopalisko"])        > #wxs_quick_links > nav.upcoming,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/mikroblog"])          > #wxs_quick_links > nav.microblog,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/obserwowane"])        > #wxs_quick_links > nav.mywykop,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/hity"])               > #wxs_quick_links > nav.hits,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/ulubione"])           > #wxs_quick_links > nav.favorites,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/dodaj-link"])         > #wxs_quick_links > nav.add_new,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/mikroblog/#dodaj"])   > #wxs_quick_links > nav.add_new
-        {
-            z-index: 999;
-            display: flex!important;
-            animation-name: quickLinksAnimationOn!important;
-            animation-duration: 0.2s;
-            animation-delay: 0s;
-            animation-direction: normal;
-            animation-fill-mode: forwards;
-        }
-
-
-        header.header > div.left > #wxs_quick_links > nav
-        {
-            height: 37px;
-            color: var(--blackOpacity07, rgba(255, 255, 255, 0.7));
-            border-bottom: 1px solid var(--blackOpacity03, rgba(255, 255, 255, 0.3));
-            box-shadow: 0px 4px 4px var(--whiteOpacity04, rgba(0, 0, 0, 0.4));
-            
-            background-color: var(--whiteOpacity08, rgba(0, 0, 0, 0.8));
-        }
-        
-        header.header > div.left > #wxs_quick_links > nav:hover
-        {
-
-        }
-
-        header.header > div.left > #wxs_quick_links > nav > section
-        {
-            column-gap: 5px;
-            padding-left: 20px;
-            padding-right: 0px;
-            border-left: 1px solid rgba(120, 120, 120, 0.2);
-        }
-
-        header.header > div.left > #wxs_quick_links > nav > section:hover
-        {
-            background-color: var(--whiteOpacity1, rgba(18, 18, 20, 1));
-        }
-        header.header > div.left > #wxs_quick_links > nav > section:hover span
-        {
-            color: var(--blackOpacity1, rgba(255, 255, 255, 1));
-        }
-
-        header.header > div.left > #wxs_quick_links > nav > section span
-        {
-            padding-right: 10px;
-            text-transform: uppercase;
-            font-weight: bolder;
-            cursor: default;
-            width: max-content;
-        }
-
-
-        header.header > div.left > #wxs_quick_links > nav > section a,
-        header.header > div.left > #wxs_quick_links > nav > section span
-        {
-            height: 100%;
-            min-width: 70px;
-            width: max-content;
-        }
-
-        header.header > div.left > #wxs_quick_links > nav > section .wxs_quicklink_short
-        {
-            min-width: 20px;
-        }
-
-
-        header.header > div.left > #wxs_quick_links > nav > section a
-        {
-            text-decoration: none;
-            padding: 0px 14px 0px 14px;
-        }
-
-        header.header > div.left > #wxs_quick_links > nav > section a:hover
-        {
-            color: var(--blackOpacity09, rgba(255, 255, 255, 1));
-            background-color: var(--blackOpacity01, rgba(255, 255, 255, 0.2));
-        }
-    }
-    /* QUICK LINKS - END */
-    
-   
-
-    
-    
-    
-    
-    
-    
-    
-    // IMAGE UPLOADER
-    if(imageUploaderEnable == 1)
-    {
-    
-        section.editor figure.wxs_uploaded_image_placeholder:has(canvas)
-        {
-            position: relative;
-            margin: 20px 0px;
-            border-radius: 4px!important;
-            display: flex;
-            flex-direction: row-reverse;
-            flex-wrap: wrap-reverse;
-            justify-content: start;
-            align-content: start;
-            gap: 10px;
-        }
-        section.editor figure.wxs_uploaded_image_placeholder > canvas
-        {
-            max-width: 400px!important;
-            border: 1px solid var(--whiteOpacity07)!important;
-            border-radius: 4px!important;
-            opacity: 0.7;
-            filter: brightness(0.8) grayscale(0.7);
-            box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3), -3px -3px 12px rgba(0, 0, 0, 0.3), 0px 0px 22px rgba(0, 0, 0, 0.3);
-        }
-        section.editor figure.wxs_uploaded_image_placeholder > canvas:hover
-        {
-            max-width: 400px!important;
-            opacity: 1;
-            filter: brightness(1.3) grayscale(0)!important;
-            border: 1px solid var(--whiteOpacity07)!important;
-        }
-
-        // ten plik zostanie wysłany (ostatni na liscie)
-        section.editor figure.wxs_uploaded_image_placeholder > canvas:nth-last-child(1 of canvas)
-        {
-            opacity: 1;
-            filter: brightness(1.1) grayscale(0.3);
-            border-color: rgba(21, 138, 255, .89)!important;
-        }
-
-        // lista wgranych plików wraz z nazwami
-        section.editor > aside > ul > li.photo:before
-        {
-            top: unset!important;
-            left: unset!important;
-        }
-        section.editor > aside > ul > li.photo
-        {
-            padding: 8px 0px 8px 10px; 
-            border-radius: 4px;
-
-            background-color: rgba(255, 0, 0, 0.1);
-            opacity: 0.6;
-        }
-        section.editor > aside > ul > li:nth-last-child(1 of li.photo)
-        {
-            opacity: 1;
-            background-color: rgba(21, 138, 255, .01);
-    /*         border: 1px solid rgba(21, 138, 255, .89)!important; */
-        }
-
-
-
-        section.editor figure.wxs_uploaded_image_placeholder:has(canvas.wxs_uploaded_image_preview)::after
-        {
-            display: flex !important;
-            font-size: 14px !important;
-            color: rgba(254, 255, 255, 0.3);
-            background-color: rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(0, 0, 0, 1) !important;
-            position: absolute !important;
-            left: 10px !important;
-            bottom: 7px !important;
-            padding: 4px 11px;
-            border-radius: 3px;
-        }
-        figure.wxs_uploaded_image_placeholder:has(.wxs_uploaded_image_png)::after
-        {
-            content: "PNG";
-        }
-        figure.wxs_uploaded_image_placeholder:has(.wxs_uploaded_image_jpeg)::after, 
-        figure.wxs_uploaded_image_placeholder:has(.wxs_uploaded_image_jpeg)::after
-        {
-            content: "JPEG";
-        }
-        figure.wxs_uploaded_image_placeholder:has(.wxs_uploaded_image_gif)::after
-        {
-            content: "GIF";
-        }
-        figure.wxs_uploaded_image_placeholder:has(.wxs_uploaded_image_webp)::after
-        {
-           content: "WEBP"; 
-        }
-    }
-    /* IMAGE UPLOADER - END */
-    
-    
-    
-    
-    
-    
-    
-    /* WYKOP X PROMO WYKOP XS */
-    
-    /* hide wykopx-promo added by wykopxs */
-    .wykopx_promo, .wykopx_promo_li, .wykopx_promo_button, .wykopx_promo_banner,    
-    {
-        display: none!important;   
-    } 
-    
-    section.editor.expand section.inline-autocomplete,
-    header.header div.right section.search-input section.inline-autocomplete
-    {
-        min-width: 390px!important;   
-    } 
-    section.editor.expand section.inline-autocomplete section.inline-autocomplete-stream div.content:after,
-    header.header div.right section.search-input section.inline-autocomplete section.inline-autocomplete-stream div.content:after
-    /* wykopxs_promo */
-    /* lista tagów */
-    {
-        padding: 10px 16px!important;
-        margin-top: 3px!important;
-        font-size: 11px!important;
-        position: relative!important;
-        border-top: 1px solid rgba(0,0,0,0.7)!important;
-        display: block;
-        content: "Zainstaluj skrypt 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦, aby zobaczyć liczbę obserwujących tagi";
-    } 
-    /* top linki po prawej */
-    div.main-content section > section.sidebar:after
-    { 
-        content: "";
-        width: 100%;
-        display: block!important;
-        height: 300px!important;
-        background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/promo-images/wykopxs-install-sidebar-day.png');
-    } 
-    [data-night-mode] div.main-content section > section.sidebar:after
-    { 
-        background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/promo-images/wykopxs-install-sidebar-night.png');
-    } 
-
-    if(disableNewLinkEditorPastedTextLimit == 1)
-    {
-        .wykopxs_textinput_limit_info
-        {
-            color: var(--whiteOpacity08);
-            font-size: 14rem!important;
-            margin: 10px 0px 10px 0px!important;
-        } 
-        .wykopxs_textinput_limit_info span
-        {
-
-        } 
-        .wykopxs_textinput_limit_info span.withinLimit strong /* liczba znaków np. 199/300 */
-        {
-            color: inherit!important;
-        } 
-        .wykopxs_textinput_limit_info span.over_limit strong /* liczba znaków np. 399/300 */
-        {
-            color: blue!important;
-        } 
-    } 
-    
-    
-        
-    
-    
-    
-    // RATING BOX INTERSECTING
-    
-    // rating-box intersecting
-    .notIntersecting
-    {
-        border-bottom: 1px solid gray;
-    }
-
-    .isIntersecting
-    {    
-        border-radius: 0px!important;
-
-        border-left-width: 1px;
-        border-left-style: dotted;
-        padding-left: 6px;
-        
-        animation-name: isIntersectingAnimation;
-        animation-duration: 1s;
-        animation-iteration-count: infinite;
-    }
-    
-    .isIntersecting::before,
-    .isIntersecting::after
-    {
-        padding: 0px 3px;
-        font-size: 13rem;
-        animation-duration: 5s, 3s;
-        animation-fill-mode: forwards;
-        
-        position: absolute;
-        right: -14px;
-        top: 0px;
-    }
-
-    .addedPluses > article > header > div.right > div > section.rating-box:after
-    {
-        animation-name: fadeOutAnimation, slideUpAnimation;
-        color: #10af27;
-        content: var(--addedPluses);
-    }
-    .removedPluses > article > header > div.right > div > section.rating-box:after
-    {
-        animation-name: fadeOutAnimation, slideDownAnimation;
-        color: #d10909;
-        content: var(--removedPluses);
-    }
-    .addedMinuses > article > header > div.right > div > section.rating-box:after
-    {
-        color: #a10707;
-        content: var(--addedMinuses);
-    }
-    .removedMinuses > article > header > div.right > div > section.rating-box:after
-    {
-        color: #fff;
-        content: var(--removedMinuses);
-    }
-    
-    @keyframes isIntersectingAnimation
-    {
-        0%      { border-left-color: transparent; }
-        70%     { border-left-color: green; }
-        100%    { border-left-color: transparent; }
-    }
-    @keyframes fadeOutAnimation
-    {
-        0%      { scale: 1.0; opacity: 0.8; }
-        10%     { scale: 1.3; opacity: 1;   }
-        70%     { scale: 1;   opacity: 1;   }
-        90%     { scale: 0.8; opacity: 0.6; }
-        100%    { scale: 0.8; opacity: 0;   }
-    } 
-    @keyframes slideUpAnimation
-    {
-        0%      { translate: 0px 10px; }
-        20%     { translate: 0px 0px; }
-        70%     { translate: 0px 0px; }
-        100%    { translate: 0px -10px; }
-    } 
-    @keyframes slideDownAnimation
-    {
-        0%      { translate: 0px -10px; }
-        20%     { translate: 0px 0px; }
-        70%     { translate: 0px 0px; }
-        100%    { translate: 0px 10px; }
-    } 
-        
-        
-        
-    // VOTINGEXPLOSION : animacja plusowania Wykop XS
-    section.rating-box
-    {
-        position: relative;
-        --explosionDelay: 0s;
-        --explosionDuration: 900ms;
-        --explosionTiming: linear;
-    }
-    
-    section.rating-box > div.buttons > button.minus
-    {
-        margin-left: 14px;
-    }
-    
-    .wykopxs_vote_animation
-    {
-        opacity: 0;
-        cursor: crosshair;
-        font-size: 12rem;
-        font-weight: bolder;
-        position: absolute;
-        top: -10px;
-        animation-name: explodePluses;
-        animation-delay: var(--explosionDelay);
-        animation-duration: var(--explosionDuration);
-        animation-timing-function: var(--explosionTiming);
-    } 
-    
-    if(votingExplosionAnimation == "animacja2")
-    {
-        .wykopxs_vote_animation 
-        {
-            animation-name: explodePluses, explodePlusesAnimacja2;
-        } 
-    } 
-    else if(votingExplosionAnimation == "animacja3")
-    {
-        .wykopxs_vote_animation 
-        {
-            animation-name: explodePluses, explodePlusesAnimacja3;
-        } 
-    } 
-    
-    /* plusy */
-    .wykopxs_vote_animation.wykopxs_green
-    {
-        color: var(--green)!important;
-    /*  text-shadow: 0px 0px 2px var(--green); */
-    } 
-  
-    .wykopxs_vote_animation.wykopxs_golden
-    {
-        font-size: 35rem;
-        color: var(--golden)!important;
-        text-shadow: 0px 0px 5px var(--golden);
-    } 
-
-    /* minusy */
-    .wykopxs_vote_animation.wykopxs_red
-    {
-        color: var(--red)!important;
-    } 
-    
-    
-    @keyframes explodePluses
-    {
-        0%      { transform: translate3d(0, 0, 0); opacity: 0; } 
-        12%     { opacity: 0.2; } 
-        13%     { opacity: 1; } 
-        70%     { opacity: 1; } 
-        90%     { opacity: 0.4; } 
-        100%    { transform: translate3d(var(--position_x), var(--position_y), var(--position_z)); opacity: 0; } 
-    } 
-    @eyframes explodePlusesAnimacja2
-    {
-        0%      { scale: 60%;   } 
-        12%     { scale: 60%;   } 
-        13%     { scale: 60%;   } 
-        70%     { scale: 60%;   } 
-        90%     { scale: 120%;  } 
-        100%    { scale: 400%;  } 
-    } 
-    
-    @keyframes explodePlusesAnimacja3
-    {
-        0%      { scale: 60%;   } 
-        12%     { scale: 60%;   } 
-        13%     { scale: 60%;   } 
-        70%     { scale: 60%;   } 
-        90%     { scale: 120%;  } 
-        100%    { scale: 400%;  } 
-    } 
-    
-
-        
-    
-    
-    /* WYKOP XS - PROMO AND UPDATE */
-    .wykopx_hide_this_if_stylus_is_installed
-    { 
-        display: none!important;   
-    } 
-    .wykopx_modal_mirkoukrywacz_is_turned_off
-    {
-        width: 80%;
-        height: 100%;
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    } 
-    
-    // MIRKOUKRYWACZ 
-
-    if(mirkoukrywacz == 0)
-    {
-       #wykopx_modal_mirkoukrywacz .wykopx_modal-content header,
-       section.wykopx_mirkoukrywacz_list_of_hidden_items
-       {
-           display: none!important;
-       } 
-    } 
-    
-    if(mirkoukrywacz == 1)
-    {
-        .wykopx_hide_this_if_mirkoukrywanie_is_turned_on
-        { 
-            display: none!important;   
-        } 
-
-
-
-        section.actions ul li.right 
-        {
-            display: flex!important;
-        } 
-        button.wykopxs.hideThisShit  
-        {
-            justify-content: right;
-            display: inline-flex!important;
-            color: var(--blackOpacity1);
-            opacity:0.3;
-
-            cursor: pointer;
-    
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            font-size: 14px;
-            font-weight: 400;
-    
-            justify-content: center;
-            padding: 0px 20px;
-            margin-right: 120px;
-        } 
-   
-        button.wykopxs.hideThisShit:before
-        {
-            content: "";
-            position: relative;
-            display: inline-block;
-            width: 20px;
-            top: -1px;
-            right: 7px;
-            height: 20px;
-            background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAFqSURBVHja5NS9Sx1REAXw31PTaWE+QLAQLNJYhtRCCIQYC8EiCoaIYJnCSiuFQNKIhPhHGIgBRTTwwEZFiYWBBKKIYCdoZaePJ7ppRrgurha+ztPs7j1zz9yZM3dLWZapJerUGDUXvCtG8C1daCgILOE5XsazBRkOsY4pDGMSE7dlfYvNEMjwG1/wNdb78D64xZuEWjCXCB2jO7iHaI73wSSmigW05sXa8S8JPEdXtORHiHfiHSrRt0oSv4unkux/EzLDSnDz8f0G/clmKOf27OAJzOSIDOORqBpl9ybcBdowes2+2boCpxtiRl+hKcpOUSmY4QfwGNu5TGsRMHDNKX4WlLwXxhIN3U2cex1uVmNsTnCKJTSGQWeJ2D468sdtDRN6YhYzzAb36LLheIGjRKwcPS3EYK6UX/iMT3FLLtf/YChu1ZUrluIDpjGG1TDlWZy+HgfYwjI2ouwb8R0f7/K3KN2/H+z/AQAb4nry9SB1ewAAAABJRU5ErkJggg==');
-        } 
-        [data-night-mode] button.wykopxs.hideThisShit:before
-        {
-            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAGGSURBVHja5JS/S5VRGMc/r942G9SEC3cQHFwco1kQIUwHwSEDpRAaG5xy0smWiKg/QiEFRSwQWiqMHBQK/BFBm1CTm8qV+rg8F4/n3ruIQ9ADL+ec58f3vM/5fs8pVK7TWrhm++cAp4HF1FFqklgAd4DBGMuAwC9gE3gBPAaeA3OXKtX8u69ueWE76kv1VfjH1YcRW8/r00VZXUmAjtSRiHWo7TF/lORU1TW1kgP2qLtJ4h/1nlpSlwO8X51UT9XFGGv2Xe2tAXao37xsH2Kj1VgPqw+SYtSNrGZf7UJdsN5mY6NqtD2WxP6q3erTBnVLLU2YLoWk7gI3geUsftpEcjdQb6l72U6foq2JBn/xrknLP9RyjZTeOJsac0PBZjVkc6yeqG/VtiDoLAH7qfblsqkECaOhRdWliHWqXTEfUH8nYBtxpnU6pIHOVL+oz9R5dTPxf1Wn1CKtL7Ln6wnwGpgBPgYpt4EK0AocAtvAe+AzcFZ3ZzPAN8ABMHvV16L4/x7Y8wEAafObxZ/Y7vUAAAAASUVORK5CYII=')
-        } 
-        button.wykopxs.hideThisShit:hover  
-        {
-            opacity:1;
-        } 
-    } 
-    
-    
-    if(mirkoukrywacz == 1 && dev == 0)
-    {
-            section.wykopx_mirkoukrywacz_hide { display: none!important; } 
-    } 
-    else if(mirkoukrywacz == 1 && dev == 1)
-    {
-            section.wykopx_mirkoukrywacz_hide { border: 13px solid green!important; } 
-    } 
-
-    
-
-    //  WYKOPXS MODAL
-    .wykopx_modal
-    {
-        display: none;
-        z-index: 2023;
-        width: 100%;
-        position: fixed;
-        height: 100%;
-        overflow: auto;
-        top:0px; left: 0px;
-
-        background: var(--whiteOpacity02) url("https://i.imgur.com/9MFCsXL.png") right bottom/contain no-repeat;
-        background-size: 30%;
-
-        backdrop-filter: blur(6px);
-        cursor: default;
-    } 
-
-    .wykopx_modal-content
-    {
-        width: 90%;
-        height: 90%;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -60%);
-
-        display: flex;
-        flex-direction: column;
-        background-color: var(--whiteOpacity09);
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid var(--blackOpacity02);
-        min-height: 300px;
-        position: absolute;
-        border-radius: 4px;
-
-
-        overflow: auto;
-        z-index: 2023;
-        color: var(--blackOpacity08)!important;
-        box-shadow: 0px 0px 20px 6px rgba(0,0,0,0.2);
-    } 
-    
-
-    
-    
-    .wykopx_modal .wykopx_modal-content header
-    {
-        display: block;
-        font-size: 16px;
-        padding: 10px 0px;
-        color: var(--blackOpacity1);
-        border-bottom: 1px solid var(--blackOpacity04);
-        margin-bottom: 13px;
-    } 
-    .wykopx_modal .wykopx_modal-content header span:first-child
-    {
-        display: none;
-    } 
-    
-    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items
-    {
-        display: flex;
-        flex-direction: column;
-    } 
-    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element
-    {
-        display: flex;
-        flex-direction: row;
-        font-size: 13px;
-        margin: 4px 0px;
-        justify-content: flex-start;
-        padding-right: 10px;
-        row-gap: 5px;
-        column-gap: 6px;
-    } 
-    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element:nth-child(2n)
-    {
-        background-color: var(--blackOpacity01);
-    } 
-    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element:hover
-    {
-        background-color: var(--blackOpacity03);
-    } 
-    
-    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_hidden_list_is_empty
-    {
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        display: flex;
-        height: calc(100% - 100px);
-        width: calc(100% - 40px);
-        position: fixed;
-    } 
-    
-    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_hidden_list_is_empty:has(+ div)
-    {
-        display: none;
-    } 
-    
-    
-    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element > div
-    {
-        text-align: left;
-        overflow: hidden;
-        padding: 10px 0;
-        white-space: nowrap;
-        overflow: hidden;
-
-        align-items: center;
-        display: flex;
-
-    } 
-    
-    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_unhide
-    {
-        width: 40px;
-        cursor: pointer;
-        justify-content: center;
-        filter: grayscale(1);
-
-        border: 1px solid rgba(255, 120, 120, 0.3);
-    } 
-    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_unhide:hover
-    {
-        filter: grayscale(0);
-
-    } 
-    
-    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element:has(.wykopx_mirkoukrywacz_unhide:hover)
-    {
-        background-color: rgba(255, 120, 120, 0.3);
-
-    } 
-   
-    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_lp
-    {
-        width: 38px;
-    } 
-    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_text
-    {
-        width: 100%!important;
-        max-width: 100%!important;
-    } 
-    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_id
-    {
-        width: 80px
-        margin-left: auto;
-        font-size: 0.7em;
-        text-align: right;
-        color: var(--blackOpacity04);
-        display: none;
-    } 
-    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_type
-    {
-        width: 130px
-        font-size: 0.7em;
-        color: var(--blackOpacity04);
-        display: none;
-    } 
-    .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_date
-    {
-        width: 141px
-        text-align: right;
-        font-size: 0.8em;
-        color: var(--blackOpacity04);
-        display: none;
-    } 
-    .wykopx_close
-    {
-       color: #aaa;
-       float: right;
-       font-size: 28px;
-       font-weight: bold;
-    } 
-
-    .wykopx_close:hover,
-    .wykopx_close:focus
-    {
-       color: black;
-       text-decoration: none;
-       cursor: pointer;
-    } 
-    
-    
-    @media (min-width: 640px)
-    {
-        .wykopx_modal-content
-        {
-            width: 50%;
-            height: 60%;
-            top: 20%;
-            transform: translate(-50%, -50%);
-        } 
-        .wykopx_modal .wykopx_modal-content header span:first-child,
-        .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_id,
-        .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_type,
-        .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_date
-        {
-            display: inline-block;
-        } 
-        .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_element .wykopx_mirkoukrywacz_text
-        {
-            max-width: calc(100% - 300px);
-        }
-    }
-}
     
 @-moz-document url-prefix("https://wykop.pl"), url-prefix("http://wykopx.pl")
 {    
-    // VARIABLES
     
     versor = "style"; // "style", "blank", "block"
     version = "2.44";   
@@ -17283,17 +16914,11 @@ https://wykop.pl/moje/
         //--xblocker:     xblocker;
         
         --mouseClickOpensImageInNewTab:          mouseClickOpensImageInNewTab;   
+        --disableNewLinkEditorPastedTextLimit:   disableNewLinkEditorPastedTextLimit; /* 0 / 1 */
         --homepagePinnedEntriesHideBelowLimit:   homepagePinnedEntriesHideBelowLimit;
         --tabTitleSelect:                        tabTitleSelect; 
         --tabFaviconSelect:                      tabFaviconSelect; 
         --tabTitleCustom:                        tabTitleCustom; 
-
-        
-        /* - domyslnie WŁĄCZONE bez Wykop X Style */
-        --disableNewLinkEditorPastedTextLimit:   disableNewLinkEditorPastedTextLimit;   /* 0 / 1 */
-        --quickLinksEnable:   quickLinksEnable;                                         /* 0 / 1 */
-        --imageUploaderEnable:   --imageUploaderEnable;                                 /* 0 / 1 */
-    
     } 
     
     if(tabTitleEnabled == 1)                                { body {  --tabTitleEnabled: "true"; }}
@@ -17334,7 +16959,10 @@ https://wykop.pl/moje/
                                                                       --showObservedTagsInRightSidebarUpdateInterval: showObservedTagsInRightSidebarUpdateInterval; 
                                                                     } 
                                                             }
-  
+    
+
+
+
     /* Wykop X Style version IN FOOTER */                                               
     body > section::after
     {
@@ -17348,13 +16976,58 @@ https://wykop.pl/moje/
         z-index: 69;
         font-size: 14px;
         color: rgba(220,220,220,0.2);
+        width: 100%;
         display: flex;
         justify-content: center;
-        padding-bottom: 20px;
-        width: 80%;
+        padding: 20px;
     }
 }
 
 
 
 
+@-moz-document url-prefix("https://github.com/wykopx/WykopX/")
+{   
+
+/*
+
+
+    // dummyClass - https://github.com/openstyles/stylus/issues/1719 
+
+    // WPISY - przypiete na stronie głównej
+    main.main > section > div.content > section.home-page       > section.home                      > section.stream > div.content > section.entry 
+    
+    // WPISY
+    main.main > section > div.content > section.bucket-page     > section.microblog                 > section.stream > div.content > section.entry,
+    main.main > section > div.content > section.category-page   > section.microblog                 > section.stream > div.content > section.entry,
+    main.main > section > div.content > section.favourites-page > section.favourites                > section.stream > div.content > section.entry,
+    main.main > section > div.content > section.observed-page   > section.observed                  > section.stream > div.content > section.entry,
+    main.main > section > div.content > section.profile-page    > section.profile       > section   > section.stream > div.content > section.entry,
+    main.main > section > div.content > section.tag-page        > section.stream        > article   > section.stream > div.content > section.entry,
+    
+    main.main > section > div.content > section.microblog-page  > section.microblog                 > section.stream > div.content > section.entry
+
+    // WPISY :is()
+    main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry
+    
+    main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own)
+
+    // przy uzywaniu dwoch selektorow jeden po drugim, dodac .dummyClassX - https://github.com/openstyles/stylus/issues/1719 
+
+    
+    // ZNALEZISKA
+    main.main > section > div.content > section.bucket-page     > section.bucket                    > section.stream > div.content > section.link-block,
+    main.main > section > div.content > section.category-page   > section.category                  > section.stream > div.content > section.link-block,
+    main.main > section > div.content > section.favourites-page > section.favourites                > section.stream > div.content > section.link-block,
+    main.main > section > div.content > section.observed-page   > section.observed                  > section.stream > div.content > section.link-block,
+    main.main > section > div.content > section.profile-page    > section.profile   > section       > section.stream > div.content > section.link-block,
+    main.main > section > div.content > section.tag-page        > section.stream    > article       > section.stream > div.content > section.link-block,
+
+    main.main > section > div.content > section.home-page       > section.home                      > section.stream > div.content > section.link-block,
+    main.main > section > div.content > section.hits-page       > section.hits                      > section.stream > div.content > section.link-block,
+    main.main > section > div.content > section.upcoming-page   > section.upcoming                  > section.stream > div.content > section.link-block,
+    
+    main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .hits-page, .upcoming-page) > section section.stream > div.content > section.link-block
+
+*/
+}
