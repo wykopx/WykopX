@@ -49,24 +49,6 @@
 	};
 
 
-	let wykopxStorageMirkoukrywacz = localforage.createInstance({
-		driver: localforage.LOCALSTORAGE,
-		name: "wykopx",
-		storeName: "mirkoukrywacz",
-	});
-
-	let wykopxStorageNotatkowator = localforage.createInstance({
-		driver: localforage.LOCALSTORAGE,
-		name: "wykopx",
-		storeName: "notatkowator",
-	});
-
-	let wykopxStorageObservedTags = localforage.createInstance({
-		driver: localforage.LOCALSTORAGE,
-		name: "wykopx",
-		storeName: "observedTags",
-	});
-
 
 	// getComputedStyle(document.documentElement) -- nie działa, nie wczytuje właściwości z :root
 	let wykopxSettings = getComputedStyle(document.querySelector("body"));
@@ -86,7 +68,10 @@
 
 
 	// boolean
+	settings.allowToDownloadImage = (wykopxSettings.getPropertyValue("--allowToDownloadImage") == `"true"`); // boolean
+	settings.topNavHamburgerHoverMinimize = (wykopxSettings.getPropertyValue("--topNavHamburgerHoverMinimize") == `"true"`); // boolean
 	settings.votingExplosion = (wykopxSettings.getPropertyValue("--votingExplosion") == `"true"`); // boolean
+	settings.mirkoukrywaczEnable = (wykopxSettings.getPropertyValue("--mirkoukrywaczEnable") == `"true"`); // boolean
 	settings.tabTitleEnabled = (wykopxSettings.getPropertyValue("--tabTitleEnabled") == `"true"`); // boolean
 	settings.tabFaviconEnabled = (wykopxSettings.getPropertyValue("--tabFaviconEnabled") == `"true"`); // boolean
 	settings.tagHeaderEditable = (wykopxSettings.getPropertyValue("--tagHeaderEditable") == `"true"`); // boolean
@@ -99,6 +84,7 @@
 	settings.tabTitleShowNotificationsEnabled = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsEnabled") == `"true"`); // boolean
 	settings.tabTitleShowNotificationsCountPM = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountPM") == `"true"`); // boolean
 	settings.tabTitleShowNotificationsCountEntries = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountEntries") == `"true"`); // boolean
+	settings.categoryRedirectToMicroblogButtonEnable = (wykopxSettings.getPropertyValue("--categoryRedirectToMicroblogButtonEnable") == `"true"`); // boolean
 	settings.tabTitleShowNotificationsCountSeparated = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountSeparated") == `"true"`); // boolean
 	settings.tabTitleShowNotificationsCountTagsNewLink = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountTagsNewLink") == `"true"`); // boolean
 	settings.tabTitleShowNotificationsCountTagsNewEntry = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountTagsNewEntry") == `"true"`); // boolean
@@ -111,6 +97,20 @@
 
 
 
+	// boolean - domyslnie WŁĄCZONE bez Wykop X Style
+	settings.hitsInTopNavJS = wykopxSettings.getPropertyValue("--hitsInTopNavJS") ? wykopxSettings.getPropertyValue("--hitsInTopNavJS") === '1' : true;
+	settings.quickLinksEnable = wykopxSettings.getPropertyValue("--quickLinksEnable") ? wykopxSettings.getPropertyValue("--quickLinksEnable") === '1' : true;
+	settings.myWykopInTopNavJS = wykopxSettings.getPropertyValue("--myWykopInTopNavJS") ? wykopxSettings.getPropertyValue("--myWykopInTopNavJS") === '1' : true;
+	settings.notatkowatorEnable = wykopxSettings.getPropertyValue("--notatkowatorEnable") ? wykopxSettings.getPropertyValue("--notatkowatorEnable") === '1' : true;
+	settings.favoritesInTopNavJS = wykopxSettings.getPropertyValue("--favoritesInTopNavJS") ? wykopxSettings.getPropertyValue("--favoritesInTopNavJS") === '1' : true;
+	settings.imageUploaderEnable = wykopxSettings.getPropertyValue("--imageUploaderEnable") ? wykopxSettings.getPropertyValue("--imageUploaderEnable") === '1' : true;
+	settings.addNewLinkInTopNavJS = wykopxSettings.getPropertyValue("--addNewLinkInTopNavJS") ? wykopxSettings.getPropertyValue("--addNewLinkInTopNavJS") === '1' : true;
+	settings.addNewEntryInTopNavJS = wykopxSettings.getPropertyValue("--addNewEntryInTopNavJS") ? wykopxSettings.getPropertyValue("--addNewEntryInTopNavJS") === '1' : true;
+	settings.notatkowatorVerticalBar = wykopxSettings.getPropertyValue("--notatkowatorVerticalBar") ? wykopxSettings.getPropertyValue("--notatkowatorVerticalBar") === '1' : true;
+	settings.disableNewLinkEditorPastedTextLimit = wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") ? wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") === '1' : true;
+
+
+
 	// strings
 	settings.version = (wykopxSettings.getPropertyValue("--version").trim().slice(1, -1)); 	// 2.40 string slice usuwa ""
 	settings.versor = (wykopxSettings.getPropertyValue("--versor").trim().slice(1, -1)); 	// "Style 2.42"
@@ -118,10 +118,46 @@
 
 
 	settings.linksAnalyzerSortBy = wykopxSettings.getPropertyValue("--linksAnalyzerSortBy").trim();
+	settings.notatkowatorStyle = wykopxSettings.getPropertyValue("--notatkowatorStyle").trim();
 
 	settings.tabTitleSelect = wykopxSettings.getPropertyValue("--tabTitleSelect").trim();
 	settings.tabTitleCustom = wykopxSettings.getPropertyValue("--tabTitleCustom").trim();
 	settings.tabFaviconSelect = wykopxSettings.getPropertyValue("--tabFaviconSelect").trim();
+
+	settings.categoryRedirectToMicroblogButtonFilter = wykopxSettings.getPropertyValue("--categoryRedirectToMicroblogButtonFilter").replaceAll("_", "/").replaceAll(" ", "");
+
+
+	let wykopxStorageMirkoukrywacz = null;
+	if (settings.mirkoukrywaczEnable)
+	{
+		wykopxStorageMirkoukrywacz = localforage.createInstance({
+			driver: localforage.LOCALSTORAGE,
+			name: "wykopx",
+			storeName: "mirkoukrywacz",
+		});
+	}
+
+
+	let wykopxStorageNotatkowator = null;
+	if (settings.notatkowatorEnable)
+	{
+		wykopxStorageNotatkowator = localforage.createInstance({
+			driver: localforage.LOCALSTORAGE,
+			name: "wykopx",
+			storeName: "notatkowator",
+		});
+	}
+
+
+	let wykopxStorageObservedTags = localforage.createInstance({
+		driver: localforage.LOCALSTORAGE,
+		name: "wykopx",
+		storeName: "observedTags",
+	});
+
+
+
+
 
 
 
@@ -329,6 +365,33 @@
 
 
 
+	// <body data-wxs_category_menu_minimized="false">
+	if (settings.topNavHamburgerHoverMinimize)
+	{
+		waitForKeyElements("body > section > header.header > div.left > button", topNavHamburgerHoverMinimize, false);
+	}
+	function topNavHamburgerHoverMinimize(jQueryHamburgerButton)
+	{
+		let hamburgerButton = jQueryHamburgerButton[0];
+		document.body.dataset.wxs_category_menu_minimized = 'true';
+
+		hamburgerButton.addEventListener("mouseover", () => 
+		{
+
+			if (document.body.dataset.wxs_category_menu_minimized === 'true')
+			{
+				//delete document.body.dataset.wxs_category_menu_minimized;
+				document.body.dataset.wxs_category_menu_minimized = 'false';
+			}
+			else
+			{
+				document.body.dataset.wxs_category_menu_minimized = 'true';
+			}
+		});
+	}
+
+
+
 	/* QUICK SEARCH */
 
 	/* Edytuj nagłówek tagu, aby przejść na inny tag */
@@ -409,11 +472,11 @@
 		<nav class="home">
 			<section>
 				<span>
-					<a href="/" target="_self">Główna</a>
+					<a href="/" target="_self" title="Wykop X: Przejdź na stronę główną Wykopu">Główna</a>
 				</span>
 				<div>
-					<a href="/najnowsze" target="_self">Najnowsze</a>
-					<a href="/aktywne" target="_self">Aktywne</a>
+					<a href="/najnowsze" target="_self" title="Wykop X: Najnowsze znaleziska, które dostały się na główną">Najnowsze</a>
+					<a href="/aktywne" target="_self" title="Wykop X: Najpopularniejsze znaleziska na stronie głównej z ostatnich 24 godzin">Aktywne</a>
 				</div>
 			</section>
 
@@ -432,8 +495,8 @@
 			<section>
 				<span>Ulubione</span>
 				<div>
-					<a href="/ulubione/znaleziska" target="_self">Znaleziska</a>
-					<a href="/ulubione/komentarze-znaleziska" target="_self">Komentarze do znalezisk</a>
+					<a href="/ulubione/znaleziska" target="_self" title="Wykop X: Znaleziska dodane przez Ciebie do Ulubionych">Znaleziska</a>
+					<a href="/ulubione/komentarze-znaleziska" target="_self" title="Wykop X: Komentarze pod znaleziskami dodane przez Ciebie do Ulubionych">Komentarze do znalezisk</a>
 				</div>
 			</section>
 		</nav>
@@ -442,7 +505,7 @@
 			<section>
 				<span>Dodaj</span>
 				<div>
-					<a href="/dodaj-link" target="_self">Nowe znalezisko</a>
+					<a href="/dodaj-link" target="_self" title="Wykop X: Dodaj nowe znalezisko (link do strony internetowej)">Nowe znalezisko</a>
 				</div>
 			</section>
 			<section>
@@ -458,8 +521,8 @@
 			<section>
 				<span>Ulubione</span>
 				<div>
-					<a href="/ulubione/znaleziska" target="_self">Znaleziska</a>
-					<a href="/ulubione/komentarze-znaleziska" target="_self">Komentarze do znalezisk</a>
+				<a href="/ulubione/znaleziska" target="_self" title="Wykop X: Znaleziska dodane przez Ciebie do Ulubionych">Znaleziska</a>
+				<a href="/ulubione/komentarze-znaleziska" target="_self" title="Wykop X: Komentarze pod znaleziskami dodane przez Ciebie do Ulubionych">Komentarze do znalezisk</a>
 				</div>
 			</section>
 		</nav>
@@ -481,27 +544,27 @@
 			<section>
 				<span>Dodaj</span>
 				<div>
-				<a href="/mikroblog/#dodaj" target="_self">Nowy wpis na Mirko</a>
+				<a href="/mikroblog/#dodaj" target="_self" title="Wykop X: Dodaj nowy wpis na Mikroblogu">Nowy wpis na Mirko</a>
 				</div>
 			</section>
 
 			<section>
 				<span>Mikroblog</span>
 				<div>
-					<a href="/mikroblog/najnowsze" target="_self">Najnowsze</a>
-					<a href="/mikroblog/aktywne" target="_self">Aktywne</a>
+					<a href="/mikroblog/najnowsze" target="_self" title="Wykop X: Najnowsze wpisy na Mikroblogu">Najnowsze</a>
+					<a href="/mikroblog/aktywne" target="_self" title="Wykop X: Nowe, angażujące wpisy na Mikroblogu">Aktywne</a>
 				</div>
 			</section>
 
 			<section>
 				<span>
-					<a href="/mikroblog/gorace" target="_self">Gorące</a>
+					<a href="/mikroblog/gorace" target="_self" title="Wykop X: Przejdź na ostatnio wybrane gorące">Gorące</a>
 				</span>
 				<div>
-					<a href="/mikroblog/gorace/2" class="wxs_quicklink_short" target="_self">2h</a>
-					<a href="/mikroblog/gorace/6" class="wxs_quicklink_short" target="_self">6h</a>
-					<a href="/mikroblog/gorace/12" class="wxs_quicklink_short" target="_self">12h</a>
-					<a href="/mikroblog/gorace/24" class="wxs_quicklink_short" target="_self">24h</a>
+					<a href="/mikroblog/gorace/2" class="wxs_quicklink_short" target="_self" title="Wykop X: Najbardziej gorące wpisy z ostatnich 2 godzin">2h</a>
+					<a href="/mikroblog/gorace/6" class="wxs_quicklink_short" target="_self" title="Wykop X: Najbardziej gorące wpisy z ostatnich 6 godzin">6h</a>
+					<a href="/mikroblog/gorace/12" class="wxs_quicklink_short" target="_self" title="Wykop X: Najbardziej gorące wpisy z ostatnich 12 godzin">12h</a>
+					<a href="/mikroblog/gorace/24" class="wxs_quicklink_short" target="_self" title="Wykop X: Najbardziej gorące wpisy z ostatnich 24 godzin">24h</a>
 				</div>
 			</section>
 
@@ -585,8 +648,8 @@
 			<section>
 				<span>Dodaj</span>
 				<div>
-					<a href="/dodaj-link" target="_self">Nowe znalezisko</a>
-					<a href="/mikroblog/#dodaj" target="_self">Nowy wpis na Mirko</a>
+					<a href="/dodaj-link" target="_self" title="Wykop X: Dodaj nowe znalezisko (link do strony internetowej)">Nowe znalezisko</a>
+					<a href="/mikroblog/#dodaj" target="_self" title="Wykop X: Dodaj nowy wpis na Mikroblogu">Nowy wpis na Mirko</a>
 				</div>
 			</section>
 		</nav>
@@ -749,12 +812,18 @@
 
 
 
+	/* ------------- NOTATKOWATOR ------------ */
 
+
+	if (settings.notatkowatorEnable)
+	{
+		//waitForKeyElements("section.entry", addWykopXActionBoxToEntryAndComment, false); // zapętla sie w nieskonczonosc
+	}
 
 
 	function addActionBoxesToAllEntriesAndComments()
 	{
-		// consoleX("addActionBoxesToAllEntriesAndComments()", 1)
+		consoleX("addActionBoxesToAllEntriesAndComments()", 1)
 		$("section.entry").each(function ()
 		{
 			addWykopXActionBoxToEntryAndComment($(this))
@@ -762,15 +831,13 @@
 	}
 
 
-
-	async function addWykopXActionBoxToEntryAndComment(jNode)
+	async function addWykopXActionBoxToEntryAndComment(jNodeSectionEntry)
 	{
-		// consoleX(`addWykopXActionBoxToEntryAndComment(jNode)`, 1);
-		// if (dev) console.log(jNode);
+		const sectionEntry = jNodeSectionEntry[0];
+		// consoleX(`addWykopXActionBoxToEntryAndComment(jNodeSectionEntry)`, 1);
+		// if (dev) console.log(jNodeSectionEntry);
 
-
-
-		if (settings.enableNotatkowator)
+		if (settings.notatkowatorEnable)
 		{
 			var elements = document.querySelectorAll(".wykopx_action_box_usernote");
 			elements.forEach(function (element)
@@ -778,7 +845,7 @@
 				element.parentNode.removeChild(element);
 			});
 
-			const comment_id = jNode.context.id.replace("comment-", "");
+			const comment_id = jNodeSectionEntry.context.id.replace("comment-", "");
 			const $entry_object = $(`#comment-${comment_id}`);
 			const comment_username = $entry_object.find("> article > header > div.left > a.avatar > span").text();
 
@@ -819,15 +886,6 @@
 				}
 			}
 		}
-
-
-
-
-
-
-
-
-
 		//   console.log("comment_id: " + comment_id);
 		//   console.log("$entry_object: ");
 		//   console.log($entry_object);
@@ -837,23 +895,78 @@
 		//                  id="wykopx_action_box-${ comment_id }"
 		//                  data-username="${ comment_username }"
 		//                  data-comment-id="${ comment_id }"
-		//                  data-base-uri="${ jNode.context.baseURI }"
+		//                  data-base-uri="${ jNodeSectionEntry.context.baseURI }"
 		//                  data-entry-type="entry-subcomment"
 		//                  data-parent-comment-id="123456789"
 		//                  data-grandparent-comment-id="123456789">
 		//   <div class="wykopx_action_box_username">${ comment_username }</div>
 		// </div>`;
-		//jNode.find("> article > header").after(html);
+		//jNodeSectionEntry.find("> article > header").after(html);
 	}
-
-
-	// NOTATKOWATOR 2000
 
 	async function displayUserNote(username, usernote, comment_id)
 	{
 		if (usernote.length > 0)
 		{
-			$(`section#comment-${comment_id} > article > header`).after(`<div class="wykopxs wykopx_action_box_usernote">Twoja notatka do <strong>${username}</strong> : <var>${usernote}</var></div>`);
+			// "⭐ Obok nicka (Notatkowator2000)":"obok_nicka",
+			// "Wyraźna, pod avatarem (Wykop X Style)":"pod_avatarem",
+
+			let elementToInsertNoteAfter = null;
+
+
+
+
+			switch (settings.notatkowatorStyle)
+			{
+				case "pod_avatarem":
+					elementToInsertNoteAfter = document.querySelector(`section#comment-${comment_id} > article > header`);
+					break;
+				case "obok_nicka":
+					elementToInsertNoteAfter = document.querySelector(`section#comment-${comment_id} > article > header > div.right > div > div.tooltip-slot`);
+					break;
+				default:
+					null;
+			}
+			// $(`section#comment-${comment_id} > article > header`).after(`<div class="wykopxs wykopx_action_box_usernote">Twoja notatka do <strong>${username}</strong> : <var>${usernote}</var></div>`);
+			if (elementToInsertNoteAfter)
+			{
+
+				let firstWord = "normal";
+				if (usernote.charAt(0) === '+')
+				{
+					const firstSpaceIndex = usernote.indexOf(' ');
+					firstWord = usernote.substring(1, firstSpaceIndex);
+					usernote = usernote.substring(firstSpaceIndex + 1);
+					// let wordsArray = usernote.split(' ');
+					// firstWord = wordsArray.shift().substring(1);
+					// usernote = wordsArray.join(' ');
+				}
+
+				let usernoteShow = usernote;
+
+				if (settings.notatkowatorVerticalBar)
+				{
+					let sepIndex = usernote.indexOf("|");
+					if (sepIndex != -1)
+					{
+						usernoteShow = `${usernote.substring(0, sepIndex).trim()} ...`;
+						//let remainingPart = usernote.substring(sepIndex + 1).trim();
+					}
+				}
+
+				let div = document.createElement('div');
+				// <div class="wykopxs wykopx_action_box_usernote wxs_notatkowator_normal">
+				// <div class="wykopxs wykopx_action_box_usernote wxs_notatkowator_r">
+				div.className = `wykopxs wykopx_action_box_usernote wxs_notatkowator_${firstWord}`;
+				div.innerHTML = `<var>${usernoteShow}</var>`;
+				div.title = `Wykop X Notatkowator · Notatka do użytkownika ${username}
+				ᅟᅟᅟᅟᅟᅟ
+${usernote}
+ᅟᅟᅟᅟᅟᅟ`;
+				elementToInsertNoteAfter.parentNode.insertBefore(div, elementToInsertNoteAfter.nextSibling);
+
+			}
+
 		}
 	}
 
@@ -861,7 +974,6 @@
 	async function getUserNotes(username, comment_id)
 	{
 		// consoleX(`async function getUserNotes(${username}, ${comment_id})`, 1);
-
 		const response = await fetch(apiGetNotes + username, {
 			method: "GET", // or 'PUT'
 			headers: {
@@ -873,17 +985,20 @@
 			.then((user) =>
 			{
 				const usernote = user.data.content;
-				wykopxStorageNotatkowator.setItem(username, { usernote: usernote, lastUpdate: dayjs() })
-					.then(function (value)
-					{
-						// consoleX(`Notatkowator zapisał notatkę o użytkowniku @${ username }: "${ usernote }"`);
-						displayUserNote(username, usernote, comment_id)
+				if (wykopxStorageNotatkowator)
+				{
+					wykopxStorageNotatkowator.setItem(username, { usernote: usernote, lastUpdate: dayjs() })
+						.then(function (value)
+						{
+							consoleX(`Notatkowator zapisał notatkę o użytkowniku @${username}: "${usernote}"`);
+							displayUserNote(username, usernote, comment_id)
 
-					})
-					.catch(function (err)
-					{
-						consoleX(`Notatkowator = error: ` + err);
-					});
+						})
+						.catch(function (err)
+						{
+							consoleX(`Notatkowator = error: ` + err);
+						});
+				}
 				return usernote;
 			});
 	}
@@ -897,17 +1012,23 @@
 
 
 
-
-
-	function mirkoukrywaczAddButtons(jNode)
+	/* ---------------- MIRKOUKRYWACZ ----------------- */
+	if (settings.mirkoukrywaczEnable)
 	{
-		// if (dev) consoleX("mirkoukrywaczAddButtons(jNode)", 1);
+		waitForKeyElements("section.actions", mirkoukrywaczAddButtons, false);
+	}
 
+
+	function mirkoukrywaczAddButtons(jNodeSectionActions)
+	{
+		// if (dev) consoleX("mirkoukrywaczAddButtons(jNodeSectionActions)", 1);
+
+		const sectionActions = jNodeSectionActions[0];
 		mirkoukrywaczHideAllBlockedElements();
 
 		let html = `<button class="wykopxs hideThisShit" title="Wykop X - Mirkoukrywacz - Ukryj to na zawsze">Ukryj</button>`;
 
-		jNode.find(`ul li.right`).prepend(html);
+		jNodeSectionActions.find(`ul li.right`).prepend(html);
 		// consoleX(`Dodano przycisk "Ukryj" z Mirkoukrywacza`, 1);
 
 		$(".hideThisShit").on("click", function ()
@@ -945,35 +1066,43 @@
 
 	function mirkoukrywaczAddNewBlockedElement(id, grandcomment_id, username, text, type)
 	{
-		wykopxStorageMirkoukrywacz
-			.setItem(id, {
-				id,
-				grandcomment_id,
-				type,
-				username,
-				text,
-				date: dayjs()
-			})
-			.then(function (value)
-			{
-				consoleX(`Mirkoukrywacz dodał do listy ukrywanych @${username}: ${text}`);
-			})
-			.catch(function (err)
-			{
-				consoleX(`mirkoukrywaczAddNewBlockedElement = error: ` + err);
-			});
-		mirkoukrywaczHideAllBlockedElements();
+		if (wykopxStorageMirkoukrywacz)
+		{
+			wykopxStorageMirkoukrywacz
+				.setItem(id, {
+					id,
+					grandcomment_id,
+					type,
+					username,
+					text,
+					date: dayjs()
+				})
+				.then(function (value)
+				{
+					consoleX(`Mirkoukrywacz dodał do listy ukrywanych @${username}: ${text}`);
+				})
+				.catch(function (err)
+				{
+					consoleX(`mirkoukrywaczAddNewBlockedElement = error: ` + err);
+				});
+			mirkoukrywaczHideAllBlockedElements();
+		}
+
 	}
 
 	function mirkoukrywaczHideAllBlockedElements()
 	{
-		wykopxStorageMirkoukrywacz
-			.iterate(function (value, key, iterationNumber)
-			{
-				$(`section#comment-${key}`).addClass("wykopx_mirkoukrywacz_hide");
-			})
-			.then(function () { })
-			.catch(function (err) { });
+		if (wykopxStorageMirkoukrywacz)
+		{
+			wykopxStorageMirkoukrywacz
+				.iterate(function (value, key, iterationNumber)
+				{
+					$(`section#comment-${key}`).addClass("wykopx_mirkoukrywacz_hide");
+				})
+				.then(function () { })
+				.catch(function (err) { });
+		}
+
 	}
 
 	function mirkoukrywaczAppendOneElementToHideList(value, key, iterationNumber = "⭐")
@@ -1000,13 +1129,17 @@
 
 	function mirkoukrywaczRefreshHideList()
 	{
-		wykopxStorageMirkoukrywacz
-			.iterate(function (value, key, iterationNumber)
-			{
-				mirkoukrywaczAppendOneElementToHideList(value, key, iterationNumber);
-			})
-			.then(function () { })
-			.catch(function (err) { });
+		if (wykopxStorageMirkoukrywacz)
+		{
+			wykopxStorageMirkoukrywacz
+				.iterate(function (value, key, iterationNumber)
+				{
+					mirkoukrywaczAppendOneElementToHideList(value, key, iterationNumber);
+				})
+				.then(function () { })
+				.catch(function (err) { });
+		}
+
 	}
 
 	function mirkoukrywaczBuildListOfHiddenElements()
@@ -1072,16 +1205,20 @@
 
 	function mirkoukrywaczRemoveHiddenElement(id)
 	{
-		wykopxStorageMirkoukrywacz
-			.removeItem(id)
-			.then(function ()
-			{
-				$(`#wykopx_mirkoukrywacz_element_${id}`).remove();
-			})
-			.catch(function (err)
-			{
-				console.log(err);
-			});
+		if (wykopxStorageMirkoukrywacz)
+		{
+			wykopxStorageMirkoukrywacz
+				.removeItem(id)
+				.then(function ()
+				{
+					$(`#wykopx_mirkoukrywacz_element_${id}`).remove();
+				})
+				.catch(function (err)
+				{
+					console.log(err);
+				});
+		}
+
 	}
 
 
@@ -1126,20 +1263,27 @@
 		});
 	}
 
-	/* add micro button on left menu open, 2 versions
-	$(`header.header > div.left > button`).on("click", function(){
-		//categoryRedirectToMicroblogButton();
-	}); */
 
 
+	if (settings.categoryRedirectToMicroblogButtonEnable)
+	{
+		waitForKeyElements(`ul.categories`, categoryRedirectToMicroblogButton, false); // waitForKeyElements sends jNode object, not DOM object
+	}
 
 	// przyciski MIRKO w kategoriach
 	function categoryRedirectToMicroblogButton()
 	{
-		consoleX("categoryRedirectToMicroblogButton()", 1);
-		let categoryRedirectToMicroblogButtonFilter = wykopxSettings.getPropertyValue("--categoryRedirectToMicroblogButtonFilter");
-		categoryRedirectToMicroblogButtonFilter = categoryRedirectToMicroblogButtonFilter.replaceAll("_", "/").replaceAll(" ", "");
+		// consoleX("categoryRedirectToMicroblogButton()", 1);
 
+		/*
+			"Najnowsze":"_mikroblog_najnowsze",
+			"Ostatnio wybrane":"_mikroblog",
+			"Aktywne":"_mikroblog_aktywne",
+			"Gorące (2h)":"_mikroblog_gorace_2",
+			"Gorące (6h)":"_mikroblog_gorace_6",
+			"Gorące (12h)":"_mikroblog_gorace_12",
+			"Gorące (24h)":"_mikroblog_gorace_24"
+		*/
 		if ($(`section.links div.content ul.categories .wykopx_categories_microblog_a`).length == 0)
 		{
 			$(`section.links div.content ul.categories li`).each(function (index)
@@ -1178,7 +1322,7 @@
 					default:
 						null;
 				}
-				href += categoryRedirectToMicroblogButtonFilter;
+				href += settings.categoryRedirectToMicroblogButtonFilter;
 				const microblogButtonHtml = `<li class="wykopxs wykopx_categories_microblog_li"><a class="wykopx_categories_microblog_a" href="${href}">M</a></li>`;
 				$(this).after(microblogButtonHtml);
 			});
@@ -1190,12 +1334,18 @@
 			{
 				let href = $(this).children("a").attr("href");
 				href = href.replaceAll("/mikroblog", "");
-				href += categoryRedirectToMicroblogButtonFilter;
-				const microblogButtonHtml = `<li class="wykopxs wykopx_categories_microblog_li"><a class="wykopxs wykopx_categories_microblog_a" href="${href}">M</a></li>`;
+				href += settings.categoryRedirectToMicroblogButtonFilter;
+				const microblogButtonHtml = `<li class="wykopxs wykopx_categories_microblog_li"><a class="wykopxs wykopx_categories_microblog_a" href="${href}"></a></li>`;
 				$(this).after(microblogButtonHtml);
 			});
 		}
 	}
+
+
+
+
+
+
 
 	// otwieranie powiadomienia SPM w nowejkacie 
 	if (wykopxSettings.getPropertyValue("--middleClickOpensNotificationsInNewTab"))
@@ -1219,6 +1369,8 @@
 			}
 		});
 	}
+
+
 
 	// otwieranie obrazka w nowej karcie klikając wybrany przycisk myszy
 	const mouseClickOpensImageInNewTab = wykopxSettings.getPropertyValue("--mouseClickOpensImageInNewTab").replaceAll(" ", "");
@@ -1667,6 +1819,7 @@
 			})
 		}
 
+		// TODO IF
 		createNewNavBarButton({
 			position: "left",
 			text: "Zainstaluj Wykop X Style",
@@ -1978,7 +2131,7 @@
 
 	/* ------ DEV waitForKeyElements --------- */
 
-	if (wykopxSettings.getPropertyValue("--allowToDownloadImage"))
+	if (settings.allowToDownloadImage)
 	{
 		waitForKeyElements("section.entry section.entry-photo figure", allowToDownloadImage, false);
 
@@ -1992,8 +2145,6 @@
 		}
 	}
 
-	waitForKeyElements(`ul.categories`, categoryRedirectToMicroblogButton, false); // waitForKeyElements sends jNode object, not DOM object
-	waitForKeyElements("section.actions", mirkoukrywaczAddButtons, false);
 
 
 
@@ -2088,60 +2239,63 @@
 
 			let tabNotificationsSeparated = "";
 
-			if (unreadNotifications["total"] > 0
-				&& (settings.tabTitleShowNotificationsCountPM
-					|| settings.tabTitleShowNotificationsCountTagsNewLink
-					|| settings.tabTitleShowNotificationsCountTagsNewEntry
-					|| settings.tabTitleShowNotificationsCountEntries))
+			if (unreadNotifications["total"] > 0)
 			{
-				let notificationsEmoji = ""; // 🔗✉📧📩
-
-				if (settings.tabTitleShowNotificationsCountPM && unreadNotifications["pm"] > 0)
+				if (settings.tabTitleShowNotificationsCountPM && unreadNotifications["pm"] > 0
+					|| settings.tabTitleShowNotificationsCountTagsNewLink && unreadNotifications["tags_new_link_with_observed_tag"] > 0
+					|| settings.tabTitleShowNotificationsCountTagsNewEntry && unreadNotifications["tags_new_entry_with_observed_tag"] > 0
+					|| settings.tabTitleShowNotificationsCountEntries && unreadNotifications["entries"] > 0)
 				{
-					notificationsTotalCount += unreadNotifications["pm"];
-					notificationsEmoji = "📧";
-					tabNotificationsSeparated += `${notificationsEmoji}${unreadNotifications["pm"]} `;
-				}
+					let notificationsEmoji = ""; // 🔗✉📧📩
 
-				if (settings.tabTitleShowNotificationsCountEntries && unreadNotifications["entries"] > 0)
-				{
-					notificationsTotalCount += unreadNotifications["entries"];
-					notificationsEmoji = "🔔";
-					tabNotificationsSeparated += `${notificationsEmoji}${unreadNotifications["entries"]} `;
-				}
-
-				if (unreadNotifications["tags"] && settings.tabTitleShowNotificationsCountTagsNewLink || settings.tabTitleShowNotificationsCountTagsNewEntry)
-				{
-					notificationsEmoji = "🏷"; // #
-					if (settings.tabTitleShowNotificationsCountTagsNewLink && unreadNotifications["tags_new_entry_with_observed_tag"] > 0)
+					if (settings.tabTitleShowNotificationsCountPM && unreadNotifications["pm"] > 0)
 					{
-						notificationsTotalCount += unreadNotifications["tags_new_entry_with_observed_tag"];
+						notificationsTotalCount += unreadNotifications["pm"];
+						notificationsEmoji = "📧";
+						tabNotificationsSeparated += `${notificationsEmoji}${unreadNotifications["pm"]} `;
 					}
-					if (settings.tabTitleShowNotificationsCountTagsNewEntry && unreadNotifications["tags_new_entry_with_observed_tag"] > 0)
+
+					if (settings.tabTitleShowNotificationsCountEntries && unreadNotifications["entries"] > 0)
 					{
-						notificationsTotalCount += unreadNotifications["tags_new_entry_with_observed_tag"];
+						notificationsTotalCount += unreadNotifications["entries"];
+						notificationsEmoji = "🔔";
+						tabNotificationsSeparated += `${notificationsEmoji}${unreadNotifications["entries"]} `;
 					}
-					tabNotificationsSeparated += `${notificationsEmoji}${unreadNotifications["tags"]} `;
-				}
 
-				if (settings.tabTitleShowNotificationsCountSeparated)
-				{
-					tabTitleNotifications = tabNotificationsSeparated; // 📧 2 🔔 3 # 14
-				}
-				else
-				{
-					tabTitleNotifications = notificationsTotalCount; 	// 19
-				}
+					if (unreadNotifications["tags"] && settings.tabTitleShowNotificationsCountTagsNewLink || settings.tabTitleShowNotificationsCountTagsNewEntry)
+					{
+						notificationsEmoji = "🏷"; // #
+						if (settings.tabTitleShowNotificationsCountTagsNewLink && unreadNotifications["tags_new_link_with_observed_tag"] > 0)
+						{
+							notificationsTotalCount += unreadNotifications["tags_new_link_with_observed_tag"];
+						}
+						if (settings.tabTitleShowNotificationsCountTagsNewEntry && unreadNotifications["tags_new_entry_with_observed_tag"] > 0)
+						{
+							notificationsTotalCount += unreadNotifications["tags_new_entry_with_observed_tag"];
+						}
+						tabNotificationsSeparated += `${notificationsEmoji}${unreadNotifications["tags"]} `;
+					}
 
-				if (new_document_title == "pusty_tytul") // jesli pusty tytul - ikonki powiadomien bez nawiasow
-				{
-					tabTitleNotifications = `${specialCharacter}${tabTitleNotifications} `						// 📧 2 🔔 3 # 14 albo 19
-				}
-				else
-				{
-					tabTitleNotifications = `(${specialCharacter}${tabTitleNotifications}) `					// (📧 2 🔔 3 # 14) albo (19)
+					if (settings.tabTitleShowNotificationsCountSeparated)
+					{
+						tabTitleNotifications = tabNotificationsSeparated; // 📧 2 🔔 3 # 14
+					}
+					else
+					{
+						tabTitleNotifications = notificationsTotalCount; 	// 19
+					}
+
+					if (new_document_title == "pusty_tytul") // jesli pusty tytul - ikonki powiadomien bez nawiasow
+					{
+						tabTitleNotifications = `${specialCharacter}${tabTitleNotifications} `						// 📧 2 🔔 3 # 14 albo 19
+					}
+					else
+					{
+						tabTitleNotifications = `(${specialCharacter}${tabTitleNotifications}) `					// (📧 2 🔔 3 # 14) albo (19)
+					}
 				}
 			}
+
 		}
 
 		let documentTitle = tabTitleNotifications;
@@ -3476,6 +3630,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		addWykopXButtonsToNavBar();
 
+
 		// 8s
 		runWithDelay(3000, function ()
 		{
@@ -3500,14 +3655,17 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			addWykopXPromoBanner();
 
 			hideWykopXSPromo();
-			// categoryRedirectToMicroblogButton();
-			mirkoukrywaczBuildListOfHiddenElements();
 			autoOpenMoreContentEverywhere();
 			refreshOrRedirectOnHomeButtonClick();
 			refreshOrRedirectOnMicroblogButtonClick();
 			tagHeaderEditableLoad();
-			addActionBoxesToAllEntriesAndComments();
 			addObservedTagsToRightSidebar();
+
+
+
+			if (settings.notatkowatorEnable) addActionBoxesToAllEntriesAndComments();
+			if (settings.mirkoukrywaczEnable) mirkoukrywaczBuildListOfHiddenElements();
+
 		});
 
 
@@ -3542,7 +3700,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		{
 			console.log("document.title: " + document.title);
 			hashAndPathNameLoad();
-			categoryRedirectToMicroblogButton();
+			//categoryRedirectToMicroblogButton();
 			countNumberOfNotificationsOnDesktop();
 			autoOpenMoreContentEverywhere();
 			addActionBoxesToAllEntriesAndComments();
@@ -3560,7 +3718,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		// runWithDelay(1000, countNumberOfNotificationsOnDesktop);
 		// runWithDelay(2000, autoOpenMoreContentEverywhere);
-		// runWithDelay2000, addActionBoxesToAllEntriesAndComments);
 	}
 
 
