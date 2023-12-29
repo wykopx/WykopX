@@ -2,7 +2,7 @@
 // @name        Wykop XS DEV
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
-// @version     2.45.4
+// @version     2.45.9
 
 
 // @author      Wykop X <wykopx@gmail.com>
@@ -37,7 +37,7 @@
 {
 	'use strict';
 
-	const currentVersion = "2.45.4";
+	const currentVersion = "2.45.9";
 	const dev = true;
 	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
 
