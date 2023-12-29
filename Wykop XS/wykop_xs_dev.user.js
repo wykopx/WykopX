@@ -2,7 +2,7 @@
 // @name        Wykop XS DEV
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
-// @version     2.45.3
+// @version     2.45.4
 
 
 // @author      Wykop X <wykopx@gmail.com>
@@ -37,7 +37,7 @@
 {
 	'use strict';
 
-	const currentVersion = "2.45.0";
+	const currentVersion = "2.45.4";
 	const dev = true;
 	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
 
@@ -48,6 +48,7 @@
 		username: null
 	};
 
+	let wxs_modal = null;
 
 
 	// getComputedStyle(document.documentElement) -- nie działa, nie wczytuje właściwości z :root
@@ -61,11 +62,15 @@
 	settings.favoritesInTopNavJS = wykopxSettings.getPropertyValue("--favoritesInTopNavJS") ? wykopxSettings.getPropertyValue("--favoritesInTopNavJS") === '1' : true;
 	settings.imageUploaderEnable = wykopxSettings.getPropertyValue("--imageUploaderEnable") ? wykopxSettings.getPropertyValue("--imageUploaderEnable") === '1' : true;
 	settings.addNewLinkInTopNavJS = wykopxSettings.getPropertyValue("--addNewLinkInTopNavJS") ? wykopxSettings.getPropertyValue("--addNewLinkInTopNavJS") === '1' : true;
-	settings.addNewEntryInTopNavJS = wykopxSettings.getPropertyValue("--addNewEntryInTopNavJS") ? wykopxSettings.getPropertyValue("--addNewEntryInTopNavJS") === '1' : false; // default false
 	settings.disableNewLinkEditorPastedTextLimit = wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") ? wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") === '1' : true;
+	settings.autoOpenMoreContentEverywhere = wykopxSettings.getPropertyValue("--autoOpenMoreContentEverywhere") ? wykopxSettings.getPropertyValue("--autoOpenMoreContentEverywhere") === '1' : true;
+	settings.autoOpenSpoilersEverywhere = wykopxSettings.getPropertyValue("--autoOpenSpoilersEverywhere") ? wykopxSettings.getPropertyValue("--autoOpenSpoilersEverywhere") === '1' : true;
+
+
+	settings.addNewEntryInTopNavJS = wykopxSettings.getPropertyValue("--addNewEntryInTopNavJS") ? wykopxSettings.getPropertyValue("--addNewEntryInTopNavJS") === '1' : false; // default false
+
 
 	settings.enableNotatkowator = wykopxSettings.getPropertyValue("--enableNotatkowator") ? wykopxSettings.getPropertyValue("--favoritesInTopNavJS") === '1' : true;
-
 
 	// boolean
 	settings.allowToDownloadImage = (wykopxSettings.getPropertyValue("--allowToDownloadImage") == `"true"`); // boolean
@@ -191,8 +196,6 @@
 
 	(async () =>
 	{
-		consoleX("(async () => {", 1);
-
 		let at, tag;
 		if (settings.fixCaseSensitiveTagsRedirection)
 		{
@@ -817,7 +820,7 @@
 
 	if (settings.notatkowatorEnable)
 	{
-		//waitForKeyElements("section.entry", addWykopXActionBoxToEntryAndComment, false); // zapętla sie w nieskonczonosc
+		//waitForKeyElements("section.entry", executeNotatkowatorForEntry, false); // zapętla sie w nieskonczonosc
 	}
 
 
@@ -826,15 +829,15 @@
 		consoleX("addActionBoxesToAllEntriesAndComments()", 1)
 		$("section.entry").each(function ()
 		{
-			addWykopXActionBoxToEntryAndComment($(this))
+			executeNotatkowatorForEntry($(this))
 		})
 	}
 
 
-	async function addWykopXActionBoxToEntryAndComment(jNodeSectionEntry)
+	async function executeNotatkowatorForEntry(jNodeSectionEntry)
 	{
 		const sectionEntry = jNodeSectionEntry[0];
-		// consoleX(`addWykopXActionBoxToEntryAndComment(jNodeSectionEntry)`, 1);
+		// consoleX(`executeNotatkowatorForEntry(jNodeSectionEntry)`, 1);
 		// if (dev) console.log(jNodeSectionEntry);
 
 		if (settings.notatkowatorEnable)
@@ -845,9 +848,9 @@
 				element.parentNode.removeChild(element);
 			});
 
-			const comment_id = jNodeSectionEntry.context.id.replace("comment-", "");
-			const $entry_object = $(`#comment-${comment_id}`);
-			const comment_username = $entry_object.find("> article > header > div.left > a.avatar > span").text();
+			const comment_id = sectionEntry.id.replace("comment-", "");
+			// const $entry_object = $(`#comment-${comment_id}`);
+			const comment_username = sectionEntry.querySelector("article > header > div.left > a.avatar > span").innerText;
 
 
 			if (comment_username.length > 0)
@@ -886,23 +889,31 @@
 				}
 			}
 		}
-		//   console.log("comment_id: " + comment_id);
-		//   console.log("$entry_object: ");
-		//   console.log($entry_object);
-		//   console.log("comment_username: " + comment_username);
-
-		// let html = `<div class="wykopxs wykopx_action_box"
-		//                  id="wykopx_action_box-${ comment_id }"
-		//                  data-username="${ comment_username }"
-		//                  data-comment-id="${ comment_id }"
-		//                  data-base-uri="${ jNodeSectionEntry.context.baseURI }"
-		//                  data-entry-type="entry-subcomment"
-		//                  data-parent-comment-id="123456789"
-		//                  data-grandparent-comment-id="123456789">
-		//   <div class="wykopx_action_box_username">${ comment_username }</div>
-		// </div>`;
-		//jNodeSectionEntry.find("> article > header").after(html);
 	}
+
+
+	// returns array of words prefixed with + in string 
+	// Output: ["r", "b", "f"]
+	// Output: ["normal"]
+	function getPlusWords(str)
+	{
+		console.log("getPlusWords(string): " + str)
+
+		let matches = str.match(/\+\w+/g);
+		if (matches)
+		{
+			console.log("ZNALEZIONO")
+			return matches.map(word => word.slice(1));
+		}
+		else
+		{
+			console.log("nie nzaleziono +word returns normal")
+
+			return ["normal"];
+		}
+	}
+
+
 
 	async function displayUserNote(username, usernote, comment_id)
 	{
@@ -913,57 +924,88 @@
 
 			let elementToInsertNoteAfter = null;
 
+			let sectionComment = document.querySelector(`section#comment-${comment_id}`);
 
-
-
-			switch (settings.notatkowatorStyle)
+			if (sectionComment)
 			{
-				case "pod_avatarem":
-					elementToInsertNoteAfter = document.querySelector(`section#comment-${comment_id} > article > header`);
-					break;
-				case "obok_nicka":
-					elementToInsertNoteAfter = document.querySelector(`section#comment-${comment_id} > article > header > div.right > div > div.tooltip-slot`);
-					break;
-				default:
-					null;
-			}
-			// $(`section#comment-${comment_id} > article > header`).after(`<div class="wykopxs wykopx_action_box_usernote">Twoja notatka do <strong>${username}</strong> : <var>${usernote}</var></div>`);
-			if (elementToInsertNoteAfter)
-			{
+				console.log(`Notatkowator - dodaje notatkę: ${comment_id} / ${username} / ${usernote}`);
 
-				let firstWord = "normal";
-				if (usernote.charAt(0) === '+')
+				switch (settings.notatkowatorStyle)
 				{
-					const firstSpaceIndex = usernote.indexOf(' ');
-					firstWord = usernote.substring(1, firstSpaceIndex);
-					usernote = usernote.substring(firstSpaceIndex + 1);
-					// let wordsArray = usernote.split(' ');
-					// firstWord = wordsArray.shift().substring(1);
-					// usernote = wordsArray.join(' ');
+					case "pod_avatarem":
+						elementToInsertNoteAfter = sectionComment.querySelector(`article > header`);
+						break;
+					case "obok_nicka":
+						elementToInsertNoteAfter = sectionComment.querySelector(`article > header > div.right > div > div.tooltip-slot`);
+						break;
+					default:
+						null;
 				}
 
-				let usernoteShow = usernote;
-
-				if (settings.notatkowatorVerticalBar)
+				if (elementToInsertNoteAfter)
 				{
-					let sepIndex = usernote.indexOf("|");
-					if (sepIndex != -1)
+
+					let firstWord = "normal";
+					let usernoteShow = usernote;
+
+					if (usernote.charAt(0) === '+')
 					{
-						usernoteShow = `${usernote.substring(0, sepIndex).trim()} ...`;
-						//let remainingPart = usernote.substring(sepIndex + 1).trim();
+						const firstSpaceIndex = usernote.indexOf(' ');
+						firstWord = usernote.substring(1, firstSpaceIndex);
+						usernoteShow = usernote.substring(firstSpaceIndex + 1);
+						// let wordsArray = usernote.split(' ');
+						// firstWord = wordsArray.shift().substring(1);
+						// usernote = wordsArray.join(' ');
 					}
-				}
 
-				let div = document.createElement('div');
-				// <div class="wykopxs wykopx_action_box_usernote wxs_notatkowator_normal">
-				// <div class="wykopxs wykopx_action_box_usernote wxs_notatkowator_r">
-				div.className = `wykopxs wykopx_action_box_usernote wxs_notatkowator_${firstWord}`;
-				div.innerHTML = `<var>${usernoteShow}</var>`;
-				div.title = `Wykop X Notatkowator · Notatka do użytkownika ${username}
-				ᅟᅟᅟᅟᅟᅟ
-${usernote}
-ᅟᅟᅟᅟᅟᅟ`;
-				elementToInsertNoteAfter.parentNode.insertBefore(div, elementToInsertNoteAfter.nextSibling);
+
+
+					if (settings.notatkowatorVerticalBar)
+					{
+						let sepIndex = usernote.indexOf("|");
+						if (sepIndex != -1)
+						{
+							usernoteShow = `${usernoteShow.substring(0, sepIndex).trim()} ...`;
+							//let remainingPart = usernote.substring(sepIndex + 1).trim();
+						}
+					}
+
+					let div = document.createElement('div');
+					// <div class="wykopxs wykopx_action_box_usernote wxs_notatkowator_normal">
+					// <div class="wykopxs wykopx_action_box_usernote wxs_notatkowator_r">
+					div.classList = `wykopxs wykopx_action_box_usernote`;
+
+					const plusWordsArray = getPlusWords(usernote);
+					console.log(`Do ${comment_id} plusWordsArray: `);
+					console.log(plusWordsArray);
+
+					plusWordsArray.forEach(plusWord =>
+					{
+						div.classList.add(`wxs_notatkowator_${plusWord}`);
+						console.log(`Do ${comment_id} dodaję klasę: wxs_notatkowator_${plusWord}`)
+					});
+
+					if (plusWordsArray.includes("k") || plusWordsArray.includes("f")) // różowy pasek // +k lub +f
+					{
+						let figureElement = sectionComment.querySelector("article > header > div.left > a.avatar > figure");
+						figureElement.classList.add("female");
+						figureElement.classList.remove("male");
+					}
+					else if (plusWordsArray.includes("m")) // niebieski pasek // +m
+					{
+						let figureElement = sectionComment.querySelector("article > header > div.left > a.avatar > figure");
+						figureElement.classList.remove("female");
+						figureElement.classList.add("male");
+					}
+
+					div.innerHTML = `<var>${usernoteShow}</var>`;
+					div.title = `Wykop X Notatkowator · Notatka do użytkownika ${username}
+					ᅟᅟᅟᅟᅟᅟ
+	${usernote}
+	ᅟᅟᅟᅟᅟᅟ`;
+					elementToInsertNoteAfter.parentNode.insertBefore(div, elementToInsertNoteAfter.nextSibling);
+
+				}
 
 			}
 
@@ -1007,107 +1049,371 @@ ${usernote}
 
 
 
-
-
-
-
-
-	/* ---------------- MIRKOUKRYWACZ ----------------- */
-	if (settings.mirkoukrywaczEnable)
+	document.addEventListener("click", (event) =>
 	{
-		waitForKeyElements("section.actions", mirkoukrywaczAddButtons, false);
-	}
+		if (event.target.closest("button.wxs_save")) saveThisEntryContent.call(event.target, event);
 
+		if (event.target.closest("button.wxs_minimize")) minimizeThisEntry.call(event.target, event);
+		if (event.target.closest("button.wxs_maximize")) maximizeThisEntry.call(event.target, event);
+		if (event.target.closest("button.wxs_hide")) hideThisEntry.call(event.target, event);
+		if (event.target.closest("button.wxs_hide")) hideThisLink.call(event.target, event);
 
-	function mirkoukrywaczAddButtons(jNodeSectionActions)
-	{
-		// if (dev) consoleX("mirkoukrywaczAddButtons(jNodeSectionActions)", 1);
+		if (event.target.closest("#wxs_mirkoukrywacz_delete_all")) mirkoukrywaczRemoveTooOld.call(event.target, event,
+			{
+				days: 0,
+				blockingType: "all",
+				resource: "all",
+			});
 
-		const sectionActions = jNodeSectionActions[0];
-		mirkoukrywaczHideAllBlockedElements();
-
-		let html = `<button class="wykopxs hideThisShit" title="Wykop X - Mirkoukrywacz - Ukryj to na zawsze">Ukryj</button>`;
-
-		jNodeSectionActions.find(`ul li.right`).prepend(html);
-		// consoleX(`Dodano przycisk "Ukryj" z Mirkoukrywacza`, 1);
-
-		$(".hideThisShit").on("click", function ()
+		if (event.target.closest("#wxs_mirkoukrywacz_delete_older_than_7_days"))
 		{
-			let type = "unknown";
+			mirkoukrywaczRemoveTooOld.call(event.target, event, {
+				days: document.getElementById("wxs_mirkoukrywacz_delete_timespan").value,
+				blockingType: document.getElementById("wxs_mirkoukrywacz_delete_block_type").value,
+				resource: document.getElementById("wxs_mirkoukrywacz_delete_resource").value,
+			});
+		}
+	});
 
-			let entry_stream = $(this).closest(".stream");
-			if (entry_stream.hasClass("microblog")) type = "entry";
-			else if (entry_stream.hasClass("entry-comments")) type = "entry";
-			else if (entry_stream.hasClass("entry-subcomments")) type = "entry-subcomments";
-			else if (entry_stream.hasClass("link-comments")) type = "link-comments";
 
-			let entry = $(this).closest(".entry");
 
-			let comment_id = entry.attr("id").split("-")[1];
-			let username = entry[0].querySelector("a.username span").innerText;
-			let text = entry[0].querySelector("div.content div.wrapper").innerText.replace(/\n/g, " ");
+
+
+
+
+
+
+
+
+	/* ---------------- MIRKOUKRYWACZ  MENU  ----------------- */
+
+
+	function saveThisEntryContent(PointerEvent)
+	{
+		console.log(this)
+
+
+
+		let resource = "unknown";
+		let entry_stream = this?.closest(".stream");
+		if (entry_stream)
+		{
+			if (entry_stream.classList.contains("microblog")) resource = "entry";
+			else if (entry_stream.classList.contains("entry-comments")) resource = "entry";
+			else if (entry_stream.classList.contains("entry-subcomments")) resource = "entry-subcomments";
+			else if (entry_stream.classList.contains("link-comments")) resource = "link-comments";
+
+			let entry = this.closest(".entry");
+			let comment_id = entry.id.split("-")[1];
+			let username = entry.querySelector("a.username span").innerText;
+			let text = entry.querySelector("div.content div.wrapper").innerText.replace(/\n/g, " ");
 
 			let grandcomment_id = comment_id; /* id nad-komentarza */
-			if (type == "entry-subcomments")
+			if (resource == "entry-subcomments")
 			{
-				let entry_grandparent = entry.parent().closest(".entry");
-				grandcomment_id = entry_grandparent.attr("id").split("-")[1];
+				let entry_grandparent = entry.parentNode.closest(".entry");
+				grandcomment_id = entry_grandparent.id.split("-")[1];
 			}
-
-			/*let link_id = null;
-			if (type == "link-comments")
-			{
-				link_id = link_aside.attr("data-url").split("/")[1];      // /link/7013759/tu-najwiecej-polskich-dzieci-probuje-popelnic-samobojstwo
-			}*/
-			if (text.length > 50) text = text.substring(0, 50);
-			mirkoukrywaczAddNewBlockedElement(comment_id, grandcomment_id, username, text, type);
-		});
+			mirkoukrywaczBlockNewElement(entry.id, grandcomment_id, username, text, resource, "saved");
+		}
 	}
 
-	function mirkoukrywaczAddNewBlockedElement(id, grandcomment_id, username, text, type)
+
+	function minimizeThisEntry(PointerEvent)		// PointerEvent.altKey, .ctrlKey, .shiftKey, .target (Element)
+	{
+		console.log("minimizeThisEntry", this)
+		let sectionEntry = this?.closest('.entry');
+		if (sectionEntry)
+		{
+			sectionEntry.classList.add('wxs_minimized');
+			mirkoukrywaczBlockNewElement(this?.dataset?.id, this?.dataset?.id, "username", "text", "entry", "minimized");
+		}
+	}
+
+	function maximizeThisEntry(PointerEvent)
+	{
+		console.log("maximizeThisEntry", this)
+		let sectionEntry = this?.closest('.entry');
+		if (sectionEntry)
+		{
+			sectionEntry.classList.remove(`wxs_minimized`);
+			mirkoukrywaczRemoveBlockedElement(this?.dataset?.id);
+		}
+	}
+
+	function hideThisLink(PointerEvent)
+	{
+		let resource = "link";
+		let link_stream = this?.closest("section.stream");
+		if (link_stream)
+		{
+			if (link_stream.classList.contains("upcoming-stream")) resource = "link"; // wykopalisko
+			else if (link_stream.classList.contains("home-stream")) resource = "link"; // główna
+
+		}
+		mirkoukrywaczBlockNewElement(this.dataset.id, this.dataset.id, "username", "linkTitle", resource, "hidden");
+		this.closest('.link-block').remove();
+		/*
+		let link_id = null;
+		if (resource == "link-comments")
+		{
+			link_id = link_aside.dataset.url.split("/")[1];      // /link/7013759/tu-najwiecej-polskich-dzieci-probuje-popelnic-samobojstwo
+		}
+		*/
+	}
+
+	// MIRKOUKRYWACZ DLA WPISU / komentarzy
+	function hideThisEntry(PointerEvent)
+	{
+		let resource = "unknown";
+		let entry_stream = this?.closest(".stream");
+		if (entry_stream)
+		{
+			// TODO
+			if (entry_stream.classList.contains("microblog")) resource = "entry";
+			else if (entry_stream.classList.contains("entry-comments")) resource = "entry";
+			else if (entry_stream.classList.contains("entry-subcomments")) resource = "entry-subcomments";
+			else if (entry_stream.classList.contains("link-comments")) resource = "link-comments";
+
+			let entry = this.closest(".entry");
+			let comment_id = entry.id.split("-")[1];
+			let username = entry.querySelector("a.username span").innerText;
+			let text = entry.querySelector("div.content div.wrapper").innerText.replace(/\n/g, " ");
+
+			let grandcomment_id = comment_id; /* id nad-komentarza */
+			if (resource == "entry-subcomments")
+			{
+				let entry_grandparent = entry.parentNode.closest(".entry");
+				grandcomment_id = entry_grandparent.id.split("-")[1];
+			}
+			if (text.length > 50) text = text.substring(0, 50);
+			mirkoukrywaczBlockNewElement(entry.id, grandcomment_id, username, text, resource, "hidden");
+
+			// usuniecie z DOM
+			this.closest('.entry').remove();
+		}
+	}
+
+
+
+
+	// TODO
+	// function autoOpenAllCommentsEverywhere()
+	// {
+	// 	if (settings.autoOpenSpoilersEverywhere) 
+	// 	{
+	// 		let showAllCommentsButtons = document.querySelectorAll("div.comments > footer > div.button > button.target");
+
+	// 		if (showAllCommentsButtons?.length > 0)
+	// 		{
+	// 			showAllCommentsButtons.forEach(button =>
+	// 			{
+	// 				button.style.border = "2px solid red!important";
+	// 				button.click()
+	// 			});
+	// 			consoleX(`Automatycznie rozwinięto ${showAllCommentsButtons.length} spoilerów`);
+	// 		}
+	// 	}
+	// }
+
+
+
+
+	// dla każdego wpisu i komentarza
+	// strona wpisu, caly wpis: section:is(.entry:has(> article), .link-block:has(> section > article)):not(.deleted)
+	// tylko czesc wpisu bez komentarzy "section.entry:not(.deleted):has(> article), section.link-block:not(.deleted) > section > article)
+	waitForKeyElements("section.entry:not(.deleted):has(> article), section.link-block:not(.deleted):has(> section > article)", sectionEntryDetected, false);
+	function sectionEntryDetected(jNodeSectionEntry)
+	{
+		console.log(`waitForKeyElements("section is(.entry > article, .link - block: has(> section > article)): not(.deleted)"`)
+		const sectionEntry = jNodeSectionEntry[0];
+		sectionEntryIntersectionObserver.observe(sectionEntry);
+	}
+
+	const sectionEntriesIntersecting = (intersectingEntries, observer) =>
+	{
+		intersectingEntries.forEach((sectionEntry) =>			// IntersectionObserverEntry
+		{
+			let sectionEntryElement = sectionEntry.target;		// element <section class="entry"> <section class="link-block">
+			let id = sectionEntryElement.id;
+
+			if (sectionEntry.isIntersecting)
+			{
+				consoleX(`section.entry IS intersecting: ${id}`, 1)
+				console.log(sectionEntryElement);				// xxx
+				// wykonaj za kazdym razem gdy sie pojawil:
+				sectionEntryElement.classList.add("isIntersecting");
+				sectionEntryElement.classList.remove("notIntersecting");
+
+				// wykonaj tylko pierwszy raz gdy sie pojawil
+				if (!sectionEntryElement.classList.contains("wasIntersecting"))
+				{
+
+					let resource = "";
+
+					if (id.startsWith("comment-"))
+					{
+						resource = "entry"; // comments, subcomments, entries
+					}
+					else if (id.startsWith("link-"))
+					{
+						resource = "link";
+					}
+
+					let wxs_entry_menu = document.createElement("div");
+					wxs_entry_menu.classList.add("wxs_entry_menu"); // 📰📑 🔖 ⎀⎊👁 🖾 🗙 ⌧ ⮽ 🗳 ☒ 🗵 🗷- ‐ ‑ – ‒ — ― _ ﹏🗖 ⎀ ⎊
+					wxs_entry_menu.innerHTML = `
+						<button data-id="${id}" data-resource="${resource}" class="wxs_save" title="Wykop XS - zapamiętaj treść na wypadek usunięcia lub edycji">Zapisz</button>
+						<button data-id="${id}" data-resource="${resource}" class="wxs_minimize" title="Wykop X Krawężnik - zminimalizuj">[ — ]</button>
+						<button data-id="${id}" data-resource="${resource}" class="wxs_maximize" title="Wykop X Krawężnik - pokaż cały">[ + ]</button>
+						<button data-id="${id}"	data-resource="${resource}" class="wxs_hide" title="Wykop X Mirkoukrywacz - ukryj"> Ukryj 🗙</button> `;
+
+					var sectionEntryHeader = sectionEntryElement.querySelector("article > header");
+					console.log("sectionEntryHeader", sectionEntryHeader)
+					sectionEntryHeader.parentNode.insertBefore(wxs_entry_menu, sectionEntryHeader);
+					sectionEntryElement.classList.add("wasIntersecting");
+
+
+
+					// SPRAWDZENIE I DODANIE NOTATKI
+
+
+
+				}
+
+
+			}
+			else
+			{
+				consoleX(`section.entry NOT intersecting: ${id}`, 1)
+				sectionEntryElement.classList.remove("isIntersecting");
+				sectionEntryElement.classList.add("notIntersecting");
+			}
+		});
+	};
+
+
+	const sectionEntryIntersectionObserverOptions =
+	{
+		root: null,
+		rootMargin: "-200px 0px -200px 0px",
+		threshold: 0.0,
+	};
+	const sectionEntryIntersectionObserver = new IntersectionObserver(sectionEntriesIntersecting, sectionEntryIntersectionObserverOptions)
+
+
+
+
+	function mirkoukrywaczBlockNewElement(id, grandcomment_id, username = "", text = "", resource = "", blockingType = "hidden")
 	{
 		if (wykopxStorageMirkoukrywacz)
 		{
 			wykopxStorageMirkoukrywacz
-				.setItem(id, {
-					id,
-					grandcomment_id,
-					type,
-					username,
-					text,
-					date: dayjs()
-				})
+				.setItem(id,
+					{
+						id,
+						grandcomment_id,
+						resource,
+						username,
+						text,
+						blockingType, // "hidden" / "minimized"
+						date: dayjs()
+					})
 				.then(function (value)
 				{
 					consoleX(`Mirkoukrywacz dodał do listy ukrywanych @${username}: ${text}`);
+					console.log(value);
 				})
 				.catch(function (err)
 				{
-					consoleX(`mirkoukrywaczAddNewBlockedElement = error: ` + err);
+					consoleX(`mirkoukrywaczBlockNewElement = error: ` + err);
 				});
-			mirkoukrywaczHideAllBlockedElements();
+			// mirkoukrywaczHideAllBlockedElements();
 		}
-
 	}
 
 	function mirkoukrywaczHideAllBlockedElements()
 	{
+		console.log("mirkoukrywaczHideAllBlockedElements()")
 		if (wykopxStorageMirkoukrywacz)
 		{
-			wykopxStorageMirkoukrywacz
-				.iterate(function (value, key, iterationNumber)
-				{
-					$(`section#comment-${key}`).addClass("wykopx_mirkoukrywacz_hide");
-				})
-				.then(function () { })
-				.catch(function (err) { });
-		}
+			let hiddenElements = 0;
+			let minimizedElements = 0;
 
+			wykopxStorageMirkoukrywacz.iterate(function (value, key, iterationNumber)
+			{
+				let foundElementToHide = document.getElementById(`${key}`); // comment-1234   link-12345
+				if (foundElementToHide)
+				{
+					console.log(value);
+
+					if (value.blockingType == "hidden")
+					{
+						foundElementToHide.remove();
+						hiddenElements++;
+					}
+					else if (value.blockingType == "minimized")
+					{
+						foundElementToHide.classList.add(`wxs_minimized`); // class="wxs_minimized"
+						minimizedElements++;
+					}
+				}
+			}).then(function ()
+			{
+				let wxs_mirkoukrywacz_summary = document.getElementById("wxs_mirkoukrywacz_summary");
+
+				if (hiddenElements + minimizedElements == 0)
+				{
+					if (wxs_mirkoukrywacz_summary) wxs_mirkoukrywacz_summary.innerHTML = "";
+				}
+				else
+				{
+					if (!wxs_mirkoukrywacz_summary)
+					{
+						let headerStreamTop = document.querySelector("main.main > section > div.content section.stream > header.stream-top");
+						if (headerStreamTop)
+						{
+							wxs_mirkoukrywacz_summary = document.createElement("div");
+							wxs_mirkoukrywacz_summary.id = "wxs_mirkoukrywacz_summary";
+							wxs_mirkoukrywacz_summary.innerHTML = `Wykop X ${minimizedElements > 0 ? " · " + minimizedElements + " zminimaliz." : ""}  ${hiddenElements > 0 ? " · " + hiddenElements + " ukryt." : ""}`;
+							wxs_mirkoukrywacz_summary.title = `Wykop X Mirkoukrywacz:
+		
+- ${minimizedElements} zminimalizowanych
+- ${hiddenElements} ukrytych`;
+							headerStreamTop.appendChild(wxs_mirkoukrywacz_summary);
+						}
+					}
+					else
+					{
+						wxs_mirkoukrywacz_summary.innerHTML = `Wykop X ${minimizedElements > 0 ? " · " + minimizedElements + " zminimaliz." : ""}  ${hiddenElements > 0 ? " · " + hiddenElements + " ukryt." : ""}`;
+						wxs_mirkoukrywacz_summary.title = `Wykop X Mirkoukrywacz:
+		
+- ${minimizedElements} zminimalizowanych
+- ${hiddenElements} ukrytych`;
+					}
+				}
+
+
+			}).catch(function (err)
+			{
+				console.log(err);
+			});
+
+		}
+		/* 
+		value = {
+		"id": "74301447",
+		"grandcomment_id": "74301447",
+		"resource": "entry",
+		"username": "Jadowityssak",
+		"text": "Zawsze jak widzę tego typa z Afromental to mi gość",
+		"date": "2023-12-26T02:44:23.039Z"
+		"blockingType": "minimize"/"hide" }*/
 	}
 
 	function mirkoukrywaczAppendOneElementToHideList(value, key, iterationNumber = "⭐")
 	{
-		if ($(`#wykopx_modal_mirkoukrywacz .wykopx_mirkoukrywacz_list_of_hidden_items #wykopx_mirkoukrywacz_element_${key}`).length == 0)
+		if ($(`#wxs_modal .wykopx_mirkoukrywacz_list_of_hidden_items #wykopx_mirkoukrywacz_element_${key}`).length == 0)
 		{
 			let hidden_element_html = ``;
 			hidden_element_html += `
@@ -1116,13 +1422,14 @@ ${usernote}
 						<div class="wykopx_mirkoukrywacz_lp">${iterationNumber}</div>
 						<div class="wykopx_mirkoukrywacz_text">${value.text}</div>
 						<div class="wykopx_mirkoukrywacz_id">${key}</div>
-						<div class="wykopx_mirkoukrywacz_type">${value.type}</div>
+						<div class="wykopx_mirkoukrywacz_resource">${value.resource}</div>
 						<div class="wykopx_mirkoukrywacz_date">${dayjs(value.date).format("YYYY-MM-DD HH:mm")}</div>
+						<div class="wykopx_mirkoukrywacz_blocking_type">${value.blockingType}</div>
 					</div>`;
-			$("#wykopx_modal_mirkoukrywacz .wykopx_mirkoukrywacz_list_of_hidden_items").append(hidden_element_html);
+			$("#wxs_modal .wykopx_mirkoukrywacz_list_of_hidden_items").append(hidden_element_html);
 			$(".wykopx_mirkoukrywacz_unhide").on("click", function ()
 			{
-				mirkoukrywaczRemoveHiddenElement($(this).attr("id"));
+				mirkoukrywaczRemoveBlockedElement($(this).attr("id"));
 			});
 		}
 	}
@@ -1142,100 +1449,234 @@ ${usernote}
 
 	}
 
-	function mirkoukrywaczBuildListOfHiddenElements()
+
+	function createMenuItemForMirkoukrywacz()
 	{
-		let html = `
-		<div class="wykopxs wykopx_modal" id="wykopx_modal_mirkoukrywacz">
-			<div class="wykopx_modal-content">
-				<aside class="wykopxs_info_bar wykopx_hide_this_if_stylus_is_installed">
-					Masz już działający skrypt Wykop XS. Aby Mirkoukrywacz działał, musisz zainstalować i włączyć w Stylusie <a href="http://wiki.wykopx.pl" target="_blank">Wykop X</a>
-				</aside>
-
-				<aside class="wykopxs wykopx_modal_mirkoukrywacz_is_turned_off wykopx_hide_this_if_mirkoukrywanie_is_turned_on">
-					Wykop XS oraz Wykop X są zainstalowane poprawnie, ale Mirkoukrywacz jest wyłączony. Aby Mirkoukrywacz działał, włącz go w ustawieniach Stylusa. <a href="https://github.com/wykopx/WykopX/wiki/Extra#mirkoukrywacz" target="_blank">Zobacz instrukcję obsługi Mirkoukrywacza</a>
-				</aside>
-				<header class="wykopxs">
-					<span>Mirkoukrywacz:</span>
-					<span>Lista ukrytych elementów</span>
-				</header>
-				<section class="wykopxs wykopx_mirkoukrywacz_list_of_hidden_items">
-					<span class="wykopx_mirkoukrywacz_hidden_list_is_empty">
-						Żadne treści nie zostały jeszcze zaznaczone do ukrycia
-					</span>
-				</section>
-			</div>
-		</div>`;
-
-
-		// $("body").prepend(html);
-		document.body.insertAdjacentHTML('afterbegin', html);
-
-		createNewProfileDropdownMenuItem(
-			{
-				text: `Wykop X - Mirkoukrywacz`,
-				title: "Wykop X - lista elementów ukrytych przez Mirkoukrywacz",
-				className: `mirkoukrywacz`,
-				id: "mirkoukrywacz_open_modal_button",
-				url: null,
-				target: null,
-				icon: null,
-				number: null
-			});
-
-		let wykopx_modal_mirkoukrywacz = document.getElementById("wykopx_modal_mirkoukrywacz");
-		let mirkoukrywacz_open_modal_button = document.getElementById("mirkoukrywacz_open_modal_button");
-		//var span = document.getElementsByClassName("wykopx_close")[0];
-		mirkoukrywacz_open_modal_button.onclick = function (event)
+		if (settings.mirkoukrywaczEnable)
 		{
-			mirkoukrywaczRefreshHideList();
-			event.preventDefault();
-			wykopx_modal_mirkoukrywacz.style.display = "block";
-		};
-		/*	span.onclick = function() {
-			wykopx_modal_mirkoukrywacz.style.display = "none";
-		}*/
-		window.onclick = function (event)
-		{
-			if (event.target == wykopx_modal_mirkoukrywacz)
+			if (document.getElementById("wxs_open_modal_mirkoukrywacz_button") == null)
 			{
-				wykopx_modal_mirkoukrywacz.style.display = "none";
+				createNewProfileDropdownMenuItem(
+					{
+						text: `Wykop X - Mirkoukrywacz`,
+						title: "Wykop X - lista elementów ukrytych przez Mirkoukrywacz",
+						className: `mirkoukrywacz`,
+						id: "wxs_open_modal_mirkoukrywacz_button",
+						url: null,
+						target: null,
+						icon: null,
+						number: null
+					});
+				document.getElementById("wxs_open_modal_mirkoukrywacz_button").onclick = function (event)
+				{
+					event.preventDefault();
+					if (wxs_modal == null)
+					{
+						createModalBox();
+					}
+					mirkoukrywaczRefreshHideList();
+					wxs_modal.style.display = "block";
+				};
 			}
-		};
+		}
+	}
+	function createMenuItemForNotatkowator()
+	{
+		if (settings.notatkowatorEnable)
+		{
+			createNewProfileDropdownMenuItem(
+				{
+					text: `Wykop X - Notatkowator`,
+					title: "Wykop X - Notatkowator - Twoje notatki do innych użytkowników",
+					className: `notatkowator`,
+					id: "wxs_open_modal_notatkowator_button",
+					url: null,
+					target: null,
+					icon: null,
+					number: null
+				});
+			document.getElementById("wxs_open_modal_notatkowator_button").onclick = function (event)
+			{
+				//mirkoukrywaczRefreshHideList();
+				event.preventDefault();
+				if (wxs_modal == null) createModalBox();
+				wxs_modal.style.display = "block";
+			};
+		}
 	}
 
-	function mirkoukrywaczRemoveHiddenElement(id)
+	function createModalBox()
 	{
+		if (wxs_modal == null)
+		{
+			let html = `
+			<div class="wykopxs wykopx_modal" id="wxs_modal">
+				<div class="wykopx_modal-content">
+					<aside class="wykopxs_info_bar wykopx_hide_this_if_stylus_is_installed">
+						Masz już działający skrypt Wykop XS. Aby Mirkoukrywacz działał, musisz zainstalować i włączyć w Stylusie <a href="http://wiki.wykopx.pl" target="_blank">Wykop X</a>
+					</aside>
+	
+					<aside class="wxs_modal_is_turned_off wykopx_hide_this_if_mirkoukrywanie_is_turned_on">
+						Wykop XS oraz Wykop X są zainstalowane poprawnie, ale Mirkoukrywacz jest wyłączony. Aby Mirkoukrywacz działał, włącz go w ustawieniach Stylusa. <a href="https://github.com/wykopx/WykopX/wiki/Extra#mirkoukrywacz" target="_blank">Zobacz instrukcję obsługi Mirkoukrywacza</a>
+					</aside>
+					<header class="wykopxs">
+						<span>Mirkoukrywacz:</span>
+						<span>Lista ukrytych elementów</span>
+					</header>
+					<section class="wykopxs wykopx_mirkoukrywacz_list_of_hidden_items">
+						<span class="wykopx_mirkoukrywacz_hidden_list_is_empty">
+							Żadne treści nie zostały jeszcze zaznaczone do ukrycia
+						</span>
+					</section>
+					<footer>
+						<span>Usuń z Mirkoukrywacza</span>
+						
+						<section>
+	
+						<select id="wxs_mirkoukrywacz_delete_block_type">
+							<option value="all" selected>wszystkie</option>
+							<option value="minimized">zminimalizowane (Krawężnik)</option>
+							<option value="hidden">ukryte (Mirkoukrywacz)</option>
+						</select>
+	
+						<select id="wxs_mirkoukrywacz_delete_resource">
+							<option value="all" selected>znaleziska, wpisy i komentarze</option>
+							<option value="links">znaleziska</option>
+							<option value="entries">wpisy</option>
+							<option value="comments">komentarze</option>
+						</select>					
+						
+						<select id="wxs_mirkoukrywacz_delete_timespan">
+							<option value="30">starsze niż miesiąc</option>
+							<option value="14">starsze niż 2 tygodnie</option>
+							<option value="7">starsze niż 7 dni</option>
+							<option value="3" selected>starsze niż 3 dni</option>
+							<option value="1">starsze niż 1 dzień</option>
+							<option value="0">wszystkie</option>
+						</select> 
+	
+						</section>
+	
+						<button id="wxs_mirkoukrywacz_delete_older_than_7_days">Usuń</button>
+	
+						<button id="wxs_mirkoukrywacz_delete_all" style="color: rgb(255, 60, 60); margin-left: auto;">Usuń wszystkie</button>
+					</footer>
+				</div>
+			</div>`;
+
+			document.body.insertAdjacentHTML('afterbegin', html);
+			wxs_modal = document.getElementById("wxs_modal");
+
+			window.onclick = function (event)
+			{
+				if (event.target == wxs_modal)
+				{
+					wxs_modal.style.display = "none";
+				}
+			};
+		}
+	}
+
+	function mirkoukrywaczRemoveBlockedElement(id)
+	{
+		console.log(`mirkoukrywaczRemoveBlockedElement(${id})`)
 		if (wykopxStorageMirkoukrywacz)
 		{
 			wykopxStorageMirkoukrywacz
 				.removeItem(id)
 				.then(function ()
 				{
-					$(`#wykopx_mirkoukrywacz_element_${id}`).remove();
+					document.getElementById(`wykopx_mirkoukrywacz_element_${id}`)?.remove();
 				})
 				.catch(function (err)
 				{
 					console.log(err);
 				});
 		}
+	}
+	function mirkoukrywaczRemoveTooOld(PointerEvent, options) 
+	{
+		if (wykopxStorageMirkoukrywacz && options)
+		{
+			const now = dayjs();
+			let numberOfRemovedItems = 0;
 
+			wykopxStorageMirkoukrywacz.iterate(function (value, id, iterationNumber)
+			{
+				if (value.blockingType == options.blockingType || options.blockingType == "all") // "hidden", "minimized"
+				{
+					const itemDate = dayjs(value.date);
+					const diffInDays = now.diff(itemDate, 'day', true); // true - floating point
+
+					if (diffInDays >= options.days)
+					{
+						numberOfRemovedItems++;
+
+						wykopxStorageMirkoukrywacz.removeItem(id).then(function ()
+						{
+							document.getElementById(`wykopx_mirkoukrywacz_element_${id}`).remove();
+						}).catch(function (err) { console.log(err); });
+					}
+				}
+			}).then(function ()
+			{
+				if (numberOfRemovedItems > 0)
+				{
+					if (options.days == 0) alert(`Wykop X Mirkowołacz: 
+
+Usunięto wszystkie elementy z listy.
+Od teraz będą się one znów wyświetlać na Wykopie`);
+					else alert(`Wykop X Mirkowołacz: 
+
+${numberOfRemovedItems} ukrytych elementów starszych niż ${options.days} dni
+zostało usuniętych z listy Mirkoukrywacza.
+
+Od teraz będą się one znów wyświetlać na Wykopie`);
+				}
+			}).catch(function (err)
+			{
+				console.log(err);
+			});
+		}
 	}
 
-
-
-	/* Automatycznie "pokaż całość" długich treści */
+	/* AUTOMATYCZNIE POKAŻ CAŁOŚĆ DŁUGICH TREŚCI */
 	function autoOpenMoreContentEverywhere()
 	{
-		if (wykopxSettings.getPropertyValue("--autoOpenMoreContentEverywhere"))
+		if (settings.autoOpenMoreContentEverywhere)
 		{
-			let numberOfShowMoreButtons = $("div.wrapper button.more").length;
-			if (numberOfShowMoreButtons > 0)
+			let showMoreButtons = document.querySelectorAll("div.wrapper button.more");
+			if (showMoreButtons?.length > 0)
 			{
-				$("div.wrapper button.more").click();
-				consoleX(`Automatycznie rozwinięto ${numberOfShowMoreButtons} długich wpisów i komentarzy`);
+				showMoreButtons.forEach(button =>
+				{
+					button.click()
+				});
+				consoleX(`Automatycznie rozwinięto ${showMoreButtons.length} długich wpisów i komentarzy`);
 			}
 		}
 	}
+	/* AUTOMATYCZNIE ROZWIJAJ SPOILERY */
+	function autoOpenSpoilersEverywhere()
+	{
+		if (settings.autoOpenSpoilersEverywhere) 
+		{
+			let showSpoilerButtons = document.querySelectorAll("div.wrapper section.content-spoiler button");
+			if (showSpoilerButtons?.length > 0)
+			{
+				showSpoilerButtons.forEach(button =>
+				{
+					button.click()
+				});
+				consoleX(`Automatycznie rozwinięto ${showSpoilerButtons.length} spoilerów`);
+			}
+		}
+	}
+
+
+
+
+
 	/* Kliknięcie w logo wykopu odświeża stronę */
 	function refreshOrRedirectOnHomeButtonClick()
 	{
@@ -1347,7 +1788,7 @@ ${usernote}
 
 
 
-	// otwieranie powiadomienia SPM w nowejkacie 
+	// otwieranie powiadomienia SPM w nowej karcie 
 	if (wykopxSettings.getPropertyValue("--middleClickOpensNotificationsInNewTab"))
 	{
 		/* środkowy przycisk na powiadomieniu otwiera je w nowej karcie */
@@ -1430,10 +1871,6 @@ ${usernote}
 
 
 	/* checking for new versions */
-
-
-
-
 	async function checkVersionForUpdates()
 	{
 		if (!dev) console.clear();
@@ -1505,7 +1942,6 @@ ${usernote}
 
 	function hideWykopXSPromo()
 	{
-		//$(`body div.main-content section > section.sidebar:after`).css("display: none!important;");
 		let style = document.createElement('style');
 		style.innerHTML = `body div.main-content section > section.sidebar:after { display: none !important; }`;
 		document.head.appendChild(style);
@@ -1529,7 +1965,6 @@ ${usernote}
 	function addWykopXSNewVersionAvailableToast()
 	{
 		// <a href="http://script.wykopx.pl" target="_blank" style="color: #fff!important;">
-
 		let wykopxsnewversionavailabletoast = `
 		<aside class="wykopxs_new_version wykopxs_info_bar">
 			<span class="wykopxs_new_version_first">
@@ -2129,21 +2564,7 @@ ${usernote}
 
 
 
-	/* ------ DEV waitForKeyElements --------- */
 
-	if (settings.allowToDownloadImage)
-	{
-		waitForKeyElements("section.entry section.entry-photo figure", allowToDownloadImage, false);
-
-		function allowToDownloadImage(jNode)
-		{
-			if (wykopxSettings.getPropertyValue("--allowToDownloadImage"))
-			{
-				let html = `<figcaption class="wykopxs wykopx_download_image_ico"><a title="Pobierz ten obrazek w pełnej rozdzielczości ${promoString}" href="${jNode.find("figcaption a").attr("href")}" download>Pobierz ten obrazek</a></figcaption>`;
-				$(jNode).append(html);
-			}
-		}
-	}
 
 
 
@@ -2213,23 +2634,19 @@ ${usernote}
 		changeDocumentTitle("Example new title")
 	*/
 
-	let specialCharacter = "឴";
+	let specialCharacter = "."; // ឴= "឴";
 
 	function changeDocumentTitle(new_document_title)
 	{
-		console.log(`changeDocumentTitle() > start:  document.title:`);
-		console.log(document.title);
-		console.log(`changeDocumentTitle() > start:  originalTabTitle`);
-		console.log(originalTabTitle);
-
-
+		// console.log(`changeDocumentTitle() > start:  document.title:`);
+		// console.log(document.title);
+		// console.log(`changeDocumentTitle() > start:  originalTabTitle`);
+		// console.log(originalTabTitle);
 
 		if (settings.tabTitleRemoveWykopPL)
 		{
 			originalTabTitle = originalTabTitle.replace(":: Wykop.pl", "");
 		}
-
-		//xxx
 
 		let tabTitleNotifications = "";
 
@@ -2246,25 +2663,25 @@ ${usernote}
 					|| settings.tabTitleShowNotificationsCountTagsNewEntry && unreadNotifications["tags_new_entry_with_observed_tag"] > 0
 					|| settings.tabTitleShowNotificationsCountEntries && unreadNotifications["entries"] > 0)
 				{
-					let notificationsEmoji = ""; // 🔗✉📧📩
+					let notificationsEmoji = "";
 
 					if (settings.tabTitleShowNotificationsCountPM && unreadNotifications["pm"] > 0)
 					{
 						notificationsTotalCount += unreadNotifications["pm"];
-						notificationsEmoji = "📧";
+						notificationsEmoji = "✉"; // 🔗✉📧📩✉ 🖂 🖃 🖄 🖅 🖆
 						tabNotificationsSeparated += `${notificationsEmoji}${unreadNotifications["pm"]} `;
 					}
 
 					if (settings.tabTitleShowNotificationsCountEntries && unreadNotifications["entries"] > 0)
 					{
 						notificationsTotalCount += unreadNotifications["entries"];
-						notificationsEmoji = "🔔";
+						notificationsEmoji = "🕭"; // 🕭🔔
 						tabNotificationsSeparated += `${notificationsEmoji}${unreadNotifications["entries"]} `;
 					}
 
 					if (unreadNotifications["tags"] && settings.tabTitleShowNotificationsCountTagsNewLink || settings.tabTitleShowNotificationsCountTagsNewEntry)
 					{
-						notificationsEmoji = "🏷"; // #
+						notificationsEmoji = "#"; // #🏷
 						if (settings.tabTitleShowNotificationsCountTagsNewLink && unreadNotifications["tags_new_link_with_observed_tag"] > 0)
 						{
 							notificationsTotalCount += unreadNotifications["tags_new_link_with_observed_tag"];
@@ -2316,7 +2733,7 @@ ${usernote}
 			documentTitle += originalTabTitle;
 		}
 
-		console.log("changeDocumentTitle() > zmieniam document.title na: " + documentTitle);
+		// console.log("changeDocumentTitle() > zmieniam document.title na: " + documentTitle);
 		document.title = documentTitle;
 	}
 
@@ -2349,7 +2766,7 @@ ${usernote}
 
 	function executeTabAndFaviconChanges()
 	{
-		console.log("executeTabAndFaviconChanges()")
+		// console.log("executeTabAndFaviconChanges()")
 
 		if (document.hidden || !settings.tabChangeOnlyOnHiddenState)
 		{
@@ -2363,9 +2780,9 @@ ${usernote}
 	// EVENT: KARTA JEST W TLE document.hidden == true
 	// https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
 	// https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilitychange_event
-	function handleVisibilityChange()
+	function tabVisibilityChanged()
 	{
-		console.log("handleVisibilityChange(): " + document.visibilityState)
+		// console.log("tabVisibilityChanged(): " + document.visibilityState)
 
 		// document.visibilityState > "visible"/"hidden"
 		// document.hidden > true/false
@@ -2373,7 +2790,7 @@ ${usernote}
 		if (document.hidden)
 		{
 			executeTabAndFaviconChanges();
-			console.log(`document.hidden -> true > document.visibilityState: ${document.visibilityState}`);
+			// console.log(`document.hidden -> true > document.visibilityState: ${document.visibilityState}`);
 		}
 		else
 		{
@@ -2385,7 +2802,9 @@ ${usernote}
 		}
 	}
 	// EVENT LISTENER
-	document.addEventListener("visibilitychange", handleVisibilityChange, false); // ICO PNG GIF JPEG SVG
+	document.addEventListener("visibilitychange", tabVisibilityChanged, false); // ICO PNG GIF JPEG SVG
+
+
 
 
 	// TITLE MUTATION
@@ -2399,7 +2818,7 @@ ${usernote}
 			{
 				let mutatedTitle = mutation.addedNodes[0].textContent;
 
-				console.log(`Nowy tytuł strony: ${mutatedTitle}`);
+				// console.log(`Nowy tytuł strony: ${mutatedTitle}`);
 				// if (mutatedTitle.endsWith(":: Wykop.pl"))
 				// {
 				// 	originalTabTitle = mutatedTitle;
@@ -2408,13 +2827,13 @@ ${usernote}
 				if (!mutatedTitle.includes(specialCharacter)) // tytul nie zostal jeszcze zmieniony i dodane są liczby powiadomien zeby sie nie powtarzalo (1)(1)
 				{
 					originalTabTitle = mutatedTitle;
-					console.log(`!mutatedTitle.includes("specialCharacter")`);
+					// console.log(`!mutatedTitle.includes("specialCharacter")`);
 				}
 
 				titleMutationObserver.disconnect();
 				executeTabAndFaviconChanges();
 				titleMutationObserver.observe(document.querySelector('title'), { childList: true, })
-				console.log("originalTabTitle: " + originalTabTitle)
+				// console.log("originalTabTitle: " + originalTabTitle)
 			}
 		}
 	});
@@ -2429,17 +2848,15 @@ ${usernote}
 
 
 
-
-	// RATING BOX - <section class="rating-box"> -> PLUSOWANIE I MINUSOWANIE
+	// ----------------- RATING BOX - <section class="rating-box"> -> PLUSOWANIE I MINUSOWANIE
 
 	// plusy we wpisach (.rating-box), plusy wpisow w sidebarze (bez rating-box), plusy w znaleziskach
 	// rating box - mozliwosc plusowania / minusowania
 	// runWithDelay(1000, function ()
-	// {
-	// 	waitForKeyElements("section.entry:not(.reply) > article > header > div.right > div > section.rating-box", ratingBoxDetected, false);
-	// })
+	// { waitForKeyElements("section.entry:not(.reply) > article > header > div.right > div > section.rating-box", ratingBoxDetected, false); })
 	waitForKeyElements("section.entry:not(.deleted) > article > header > div.right > div > section.rating-box", ratingBoxDetected, false);
 	// waitForKeyElements("section.entry:not(.reply) > article > header > div.right > div > section.rating-box", ratingBoxDetected, false);
+
 
 	function ratingBoxDetected(jNodeRatingBoxSection)
 	{
@@ -2447,7 +2864,7 @@ ${usernote}
 		visiblePlusesObserver.observe(ratingBoxSection); // IntersectionObserver 
 	}
 
-	const intersectionCallback = (intersectingPluses, observer) => // function intersectionCallback(entries, observer)
+	const intersectingPlusesCallback = (intersectingPluses, observer) => // function intersectingPlusesCallback(entries, observer)
 	{
 		let timeoutId = null;
 		let fetchSeconds = 12;
@@ -2455,14 +2872,14 @@ ${usernote}
 		intersectingPluses.forEach((plus) =>
 		{
 			let plus_target = plus.target; // element <select class="rating-box">
-			console.log("intersectionCallback: possible intersection element detected 'plus_target'");
+			// console.log("intersectingPlusesCallback: possible intersection element detected 'plus_target'");
 			// console.log(plus_target);
 
 			if (settings.votingExplosion) votingExplosionEventListener(plus_target);
 
 			if (plus.isIntersecting)
 			{
-				// console.log("intersectionCallback: new ratingBox is intersecting")
+				// console.log("intersectingPlusesCallback: new ratingBox is intersecting")
 				plus_target.classList.add("isIntersecting");
 				plus_target.classList.remove("notIntersecting");
 				parseRatingBoxCurrentContentAndCreateDataValues(plus_target);
@@ -2504,14 +2921,9 @@ ${usernote}
 		// 		plus_target.classList.add("notIntersecting");
 		// 	}
 		// });
-
-
-
-
 	};
-	let observerOptions = { root: null, rootMargin: "-70px 0px -120px 0px", threshold: 1.0, /* [0.25, 0.5, 0.75, 1.0] */ };
-	const visiblePlusesObserver = new IntersectionObserver(intersectionCallback, observerOptions)
-
+	let visiblePlusesIntersectionObserverOptions = { root: null, rootMargin: "-70px 0px -120px 0px", threshold: 1.0, /* [0.25, 0.5, 0.75, 1.0] */ };
+	const visiblePlusesObserver = new IntersectionObserver(intersectingPlusesCallback, visiblePlusesIntersectionObserverOptions)
 
 
 	function getEntryBlocks(elem)
@@ -2661,7 +3073,7 @@ ${usernote}
 				entry_element.style.removeProperty('--addedMinuses');
 				entry_element.style.removeProperty('--removedMinuses');
 
-				console.log("API fetch: " + entryBlocksData.fetchURL);
+				// console.log("API fetch: " + entryBlocksData.fetchURL);
 
 				fetch(entryBlocksData.fetchURL,
 					{
@@ -2713,11 +3125,10 @@ ${usernote}
 							entry_element.dataset.commentsCount = entry_fetched_data.comments.count;
 						}
 
-						console.log("entryBlocksData:");
-						console.log(entryBlocksData);
-
-						console.log("entry_element.dataset:");
-						console.log(entry_element.dataset);
+						// console.log("entryBlocksData:");
+						// console.log(entryBlocksData);
+						// console.log("entry_element.dataset:");
+						// console.log(entry_element.dataset);
 
 
 						if (plusesDelta != 0)
@@ -2761,10 +3172,8 @@ ${usernote}
 
 						// console.log("entryBlocksData:")
 						// console.log(entryBlocksData)
-
 						// console.log("entry_element.dataset:")
 						// console.log(entry_element.dataset)
-
 						// console.log("entry_fetched_data (fetched):")
 						// console.log(entry_fetched_data)
 
@@ -2827,9 +3236,6 @@ ${usernote}
 		ratingBoxSection.addEventListener('click', function (event)
 		{
 			var clickedButton = event.target;
-
-			console.log(clickedButton);
-
 			let count = 0;
 			let vote = "voted"; // "voted", "unvoted"
 			let action = "plused"; // "plused", "minused"
@@ -3091,7 +3497,6 @@ ${usernote}
 						}
 					}
 
-					// xxx
 
 					const votesMeter = document.createElement('progress');
 					votesMeter.className = "wykopxs wykopx_votesMeter";
@@ -3141,7 +3546,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
-	/* ZNIESIENIE LIMITÓW W TEXTAREA I INPUT PODCZAS WKLEJANIA TEKSTU */
+	/* ------ ZNIESIENIE LIMITÓW W TEXTAREA I INPUT PODCZAS WKLEJANIA TEKSTU ------ */
+
 	// <input data-v-6486857b="" data-v-99298700="" type="text" placeholder="Wpisz tytuł Znaleziska..." maxlength="80" class="">
 	// <textarea data-v-8f9e192e="" data-v-99298700="" placeholder="Wpisz opis Znaleziska..." maxlength="300" class=""></textarea>
 	// <input data-v-714efcd5="" id="title" type="text" placeholder="Wpisz tytuł..." maxlength="80" class="highlight">
@@ -3217,20 +3623,23 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
-	/* HELPER FUNCTIONS */
 
-
+	/* ------ HELPER FUNCTIONS --------- */
 
 	// consoleX("TEXT")
-	// consoleX("TEXT", 1)
-	// consoleX("TEXT", false)
-	function consoleX(text, dev_mode = false)
+	// consoleX("TEXT", false) 
+	// consoleX("TEXT", 1) -- wyświetla tylko w trybie dev
+	function consoleX(text, only_on_dev_mode = false)
 	{
-		let tpl = `background-color:black; border:1px solid rgba(244, 244, 244, 0.4); font-weight: bolder; padding: 0px 9px; font-family: "Segoe UI", "Open Sans", sans-serif; margin-right: 10px;`;
-		if (dev_mode) tpl += `color:rgba(43, 255, 75, 1);`;
-		else tpl += `color:rgba(255, 255, 255, 0.8);`;
+		if (only_on_dev_mode == false || dev == true)
+		{
+			let tpl = `background-color:black; border:1px solid rgba(244, 244, 244, 0.4); font-weight: bolder; padding: 0px 9px; font-family: "Segoe UI", "Open Sans", sans-serif; margin-right: 10px;`;
+			if (only_on_dev_mode) tpl += `color:rgba(43, 255, 75, 1);`;
+			else tpl += `color:rgba(255, 255, 255, 0.8);`;
 
-		if (dev_mode == false || dev == true) console.log(`%cWykop X%c` + text, `${tpl}`, `font-family: "Segoe UI", "Open Sans"`);
+			console.log(`%cWykop X%c` + text, `${tpl}`, `font-family: "Segoe UI", "Open Sans"`);
+		}
+
 	}
 
 
@@ -3317,9 +3726,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	}
 
 
-	// if (wykopxSettings.getPropertyValue("--enableNotatkowator")) {
-	//	waitForKeyElements("section.entry", addWykopXActionBoxToEntryAndComment, false);
-	// }
 
 
 
@@ -3327,11 +3733,29 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
+	/* ------ PRZYCISK DO POBIERANIA OBRAZKÓW --------- */
+
+	if (settings.allowToDownloadImage)
+	{
+		waitForKeyElements("section.entry section.entry-photo figure", allowToDownloadImage, false);
+
+		function allowToDownloadImage(jNode)
+		{
+			if (wykopxSettings.getPropertyValue("--allowToDownloadImage"))
+			{
+				let html = `<figcaption class="wykopxs wykopx_download_image_ico"><a title="Pobierz ten obrazek w pełnej rozdzielczości ${promoString}" href="${jNode.find("figcaption a").attr("href")}" download>Pobierz ten obrazek</a></figcaption>`;
+				$(jNode).append(html);
+			}
+		}
+	}
 
 
 
 
-	// IMAGE UPLOADER CTRL+V
+
+
+	/* ------ IMAGE UPLOADER CTRL+V --------- */
+
 	if (settings.imageUploaderEnable)
 	{
 		waitForKeyElements("section.editor", testClipboard, false);
@@ -3342,8 +3766,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		const textareaWrapper = jNodeTextareaWrapper[0]; // jNode => DOMElement
 		const textarea = textareaWrapper.querySelector("textarea");
-
-		console.log(textarea);
+		// console.log(textarea);
 		const imageUploadPreview = document.createElement('figure');
 		imageUploadPreview.classList.add("wykopxs", "wxs_uploaded_image_placeholder")
 		textarea.parentNode.appendChild(imageUploadPreview);
@@ -3356,12 +3779,12 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			// e.preventDefault();
 			// e.stopPropagation(); 
 			console.clear();
-			console.log("e.clipboardData.items") // object DataTransferItemList {0: DataTransferItem, 1: DataTransferItem, ...}
-			console.log(e.clipboardData.items)
-			console.log("clipboardData.types")
-			console.log(e.clipboardData.types) //  Array: ['Files', 'text/plain', 'text/html', 'application/vnd.code.copymetadata', 'vscode-editor-data']
-			console.log("clipboardData.files")
-			console.log(e.clipboardData.files)
+			// console.log("e.clipboardData.items") // object DataTransferItemList {0: DataTransferItem, 1: DataTransferItem, ...}
+			// console.log(e.clipboardData.items)
+			// console.log("clipboardData.types")
+			// console.log(e.clipboardData.types) //  Array: ['Files', 'text/plain', 'text/html', 'application/vnd.code.copymetadata', 'vscode-editor-data']
+			// console.log("clipboardData.files")
+			// console.log(e.clipboardData.files)
 			/*
 				FileList = { 0: File, length: 1 }
 				FileList = { 0: 
@@ -3390,7 +3813,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			if (e.clipboardData.files.length > 0)
 			{
 				console.log(e.clipboardData.files[0]);
-
 				let imageFile = e.clipboardData.files[0];
 				console.log("imageFile (original)");
 				console.log(imageFile);
@@ -3537,19 +3959,19 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 	// CHANGING ALL ENTRIES ID TO comment-1234567
 	/* let elements = document.querySelectorAll('.entry');
-	
+		
 	// Loop through each element
 	elements.forEach((element) =>
 	{
 		// Get the id of the element
 		let id = element.id;
-	
+		
 		// Check if the id starts with "comment-"
 		if (id.startsWith('comment-'))
 		{
 			// Remove "comment-" from the id
 			let newId = id.replace('comment-', '');
-	
+		
 			// Set the new id to the element
 			element.id = newId;
 		}
@@ -3570,11 +3992,9 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 	/* ------------- EVENTS ------------ */
-
-
 	function handleWindowEvent(event)
 	{
-		console.log(`Event ${event.type} was fired`);
+		console.log(`handleWindowEvent(event) - event.type: ${event.type} was fired`);
 		console.log(event);
 	}
 	window.addEventListener('load', handleWindowEvent); 		// 1
@@ -3617,7 +4037,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
-
+	// ---- PAGE OPENED
 
 	async function executeWhenPageLoadsFirstTime()
 	{
@@ -3631,7 +4051,22 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		addWykopXButtonsToNavBar();
 
 
-		// 8s
+		runWithDelay(1000, function ()
+		{
+			if (settings.mirkoukrywaczEnable)
+			{
+				mirkoukrywaczHideAllBlockedElements(); // ukrycie elementow blokowanych przez Mirkowolacz oraz Kraweznik
+
+				createMenuItemForMirkoukrywacz();
+			}
+
+			if (settings.notatkowatorEnable)
+			{
+				createMenuItemForNotatkowator();
+			}
+
+		});
+		// 3s
 		runWithDelay(3000, function ()
 		{
 			if (settings.linksAnalyzerEnable)
@@ -3639,10 +4074,9 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				waitForKeyElements(`section.link-block[id^="link-"]`, linkBlockDetected, false);
 				// GM_wrench.waitForKeyElements(`section.link-block[id^="link-"]`, linkBlockDetected, false);
 			}
-
-
-
 		});
+
+		if (settings.autoOpenMoreContentEverywhere) runWithDelay(3000, function () { autoOpenMoreContentEverywhere(); });
 
 		// 8s
 		runWithDelay(8000, function ()
@@ -3655,18 +4089,20 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			addWykopXPromoBanner();
 
 			hideWykopXSPromo();
-			autoOpenMoreContentEverywhere();
 			refreshOrRedirectOnHomeButtonClick();
 			refreshOrRedirectOnMicroblogButtonClick();
 			tagHeaderEditableLoad();
 			addObservedTagsToRightSidebar();
 
-
-
 			if (settings.notatkowatorEnable) addActionBoxesToAllEntriesAndComments();
-			if (settings.mirkoukrywaczEnable) mirkoukrywaczBuildListOfHiddenElements();
 
 		});
+
+		// 10s
+		if (settings.autoOpenSpoilersEverywhere) runWithDelay(10000, function () { autoOpenSpoilersEverywhere(); });
+
+
+
 
 
 		// 20s
@@ -3688,36 +4124,39 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	}
 
 
-	async function executeWhenPageChanges()
+	// ----- NAVIGATION PAGE CHANGES
+
+	async function executeWhenPageChanges(event)
 	{
 		console.log("navigation - navigate event - " + event.type);
 		console.log(event);
+
 		originalTabTitle = document.title;
+
 		visiblePlusesObserver.disconnect();
+		sectionEntryIntersectionObserver.disconnect();
+
 		// consoleX(`navigation.addEventListener("navigate", (event) =>`, 1);
 
 		runWithDelay(2000, function ()
 		{
-			console.log("document.title: " + document.title);
 			hashAndPathNameLoad();
 			//categoryRedirectToMicroblogButton();
 			countNumberOfNotificationsOnDesktop();
-			autoOpenMoreContentEverywhere();
 			addActionBoxesToAllEntriesAndComments();
 
+
+			if (settings.autoOpenMoreContentEverywhere) autoOpenMoreContentEverywhere();
 			if (settings.tagHeaderEditable && pathnameArray[1] == "tag") runWithDelay(5000, tagHeaderEditableLoad);
+
+			if (settings.mirkoukrywaczEnable) mirkoukrywaczHideAllBlockedElements(); // ukrycie elementow blokowanych przez Mirkowolacz oraz Kraweznik
 		});
 
-		if (!settings.tabChangeOnlyOnHiddenState)
-		{
-			runWithDelay(7000, () =>
-			{
-				executeTabAndFaviconChanges();
-			})
-		}
+		// 7s
+		if (!settings.tabChangeOnlyOnHiddenState) runWithDelay(7000, () => { executeTabAndFaviconChanges() })
 
-		// runWithDelay(1000, countNumberOfNotificationsOnDesktop);
-		// runWithDelay(2000, autoOpenMoreContentEverywhere);
+		// 10s
+		if (settings.autoOpenMoreContentEverywhere) runWithDelay(8000, function () { autoOpenSpoilersEverywhere() });
 	}
 
 
@@ -3731,7 +4170,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	/* NEW WYKOP PAGE REDIRECTION */
 	navigation.addEventListener("navigate", (event) =>
 	{
-		executeWhenPageChanges();
+		executeWhenPageChanges(event);
 	});
 
 
