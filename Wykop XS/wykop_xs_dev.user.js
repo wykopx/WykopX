@@ -816,131 +816,200 @@
 
 
 	/* ------------- NOTATKOWATOR ------------ */
-
-
-	if (settings.notatkowatorEnable)
+	async function executeNotatkowatorForEntry(sectionEntryElement)
 	{
-		//waitForKeyElements("section.entry", executeNotatkowatorForEntry, false); // zapętla sie w nieskonczonosc
-	}
-
-
-	function addActionBoxesToAllEntriesAndComments()
-	{
-		consoleX("addActionBoxesToAllEntriesAndComments()", 1)
-		$("section.entry").each(function ()
-		{
-			executeNotatkowatorForEntry($(this))
-		})
-	}
-
-
-	async function executeNotatkowatorForEntry(jNodeSectionEntry)
-	{
-		const sectionEntry = jNodeSectionEntry[0];
-		// consoleX(`executeNotatkowatorForEntry(jNodeSectionEntry)`, 1);
-		// if (dev) console.log(jNodeSectionEntry);
+		consoleX(`executeNotatkowatorForEntry(sectionEntryElement)`, 1);
 
 		if (settings.notatkowatorEnable)
 		{
-			var elements = document.querySelectorAll(".wykopx_action_box_usernote");
-			elements.forEach(function (element)
+			if (sectionEntryElement != null)
 			{
-				element.parentNode.removeChild(element);
-			});
+				const object_id = sectionEntryElement.id; 				// "comment-1234567"
+				let id;
+				let username;
+				let usernote = "";
+				let resource;
 
-			const comment_id = sectionEntry.id.replace("comment-", "");
-			// const $entry_object = $(`#comment-${comment_id}`);
-			const comment_username = sectionEntry.querySelector("article > header > div.left > a.avatar > span").innerText;
-
-
-			if (comment_username.length > 0)
-			{
-				let usernoteObject = wykopxStorageNotatkowator.getItem(comment_username);
-				try
+				if (object_id != null)
 				{
-					usernoteObject = await wykopxStorageNotatkowator.getItem(comment_username);
-					// usernoteObject == "" -> Notatkowator do wersji 2.14 zapisywał tylko notatkę, bez daty
-					if (usernoteObject == null || usernoteObject == "")
+					if (object_id.startsWith("comment-"))
 					{
-						// brak notatki o tym użytkowniku w localforage więc pobieramy z serwera Wykopu
-						// console.log(`Brak notatki o użytkowniku ${ comment_username }. Sprawdzam na serwerze. Wywołuję getUserNotes( ${ comment_username }, ${ comment_id })`)
-						getUserNotes(comment_username, comment_id);
+						resource = "entry"; // comments, subcomments, entries
+						id = object_id.replace("comment-", ""); 		// 1234567
+						username = sectionEntryElement.querySelector("article > header > div.left > a.avatar > span").innerText;
 					}
-					else
+					else if (object_id.startsWith("link-"))
 					{
-						const date1 = dayjs();
-						const date2 = dayjs(usernoteObject.lastUpdate);
+						resource = "link";
+						id = object_id.replace("link-", ""); 		// 1234567
+						username = sectionEntryElement.querySelector("section > article > div.content > section.info > span > div > span > a.username > span").innerText;
+					}
 
-						// consoleX(`Update interval: ${date1.diff(date2, "second")}s <?> ${settings.notatkowatorUpdateInterval * 3600}s`, 1)
-
-						if (date1.diff(date2, "second") > parseFloat(settings.notatkowatorUpdateInterval * 3600))
+					if (username != null)
+					{
+						username = username.trim(); // " NadiaFrance"
+						try
 						{
-							getUserNotes(comment_username, comment_id);
+
+
+							if (settings.notatkowatorUpdateInterval > 0)
+							{
+								let usernoteObject = await wykopxStorageNotatkowator.getItem(username);
+
+								if (usernoteObject == null || usernoteObject == "")
+								{
+									console.log("typeof usernoteObject", typeof usernoteObject)
+									console.log(usernoteObject);
+
+									const now = dayjs();
+									const date2 = dayjs(usernoteObject.lastUpdate);
+
+									if (now.diff(date2, "second") > parseFloat(settings.notatkowatorUpdateInterval * 3600))
+									{
+										// notatka jest zbyt stara
+										usernoteObject = null;
+									}
+									else
+									{
+										// mamy aktualną notatkę z localforage
+										consoleX(`Notatkowator wczytał notatkę z LocalStorage. Użytkownik: @${username}`);
+										console.log("usernoteObject")
+										console.log(usernoteObject)
+										console.log("usernoteObject.usernote")
+										console.log(usernoteObject.usernote)
+										usernote = usernoteObject.usernote;
+									}
+								}
+							}
+							if (usernote != "")
+							{
+								displayUserNote(usernote, object_id, username)
+							}
+							else
+							{
+								// Notatka z API - brak notatki o tym użytkowniku w localforage lub była zbyt stara więc pobieramy z API Wykopu
+								getUserNotes(username)
+									.then((jsonResponse) =>
+									{
+										/* user.data = { username: 'NadiaFrance', content: 'Treść notatki' } */
+										/* user.data = { username: 'NadiaFrance', content: '' } */
+										usernote = jsonResponse?.data?.content;
+										if (usernote != "")
+										{
+											displayUserNote(usernote, object_id, username)
+											if (wykopxStorageNotatkowator)
+											{
+												wykopxStorageNotatkowator.setItem(username, { usernote: usernote, lastUpdate: dayjs() })
+													.then(function (value)
+													{
+														consoleX(`Notatkowator zapisał notatkę o użytkowniku @${username}: "${usernote}"`);
+													})
+													.catch(function (err)
+													{
+														consoleX(`Notatkowator = error: ` + err);
+													});
+												return usernote;
+											}
+										}
+										else
+										{
+											consoleX(`Użytkownik ${username} nie ma żadnej notatki`)
+										}
+									})
+									.catch(error => console.error(`Error: ${error}`));
+							}
 						}
-						else
+						catch (err)
 						{
-							// consoleX(`Notatkowator wczytał notatkę z LocalStorage. Użytkownik: @${ comment_username }. Notatka: "${ usernote }"`);
-							displayUserNote(comment_username, usernoteObject.usernote, comment_id)
+							console.log(err);
 						}
 					}
-				} catch (err)
-				{
-					console.log(err);
 				}
 			}
 		}
 	}
 
-
-	// returns array of words prefixed with + in string 
-	// Output: ["r", "b", "f"]
-	// Output: ["normal"]
-	function getPlusWords(str)
+	const apiGetNotes = "https://wykop.pl/api/v3/notes/";
+	async function getUserNotes(username)
 	{
-		console.log("getPlusWords(string): " + str)
-
-		let matches = str.match(/\+\w+/g);
-		if (matches)
+		try
 		{
-			console.log("ZNALEZIONO")
-			return matches.map(word => word.slice(1));
-		}
-		else
-		{
-			console.log("nie nzaleziono +word returns normal")
+			const response = await fetch(apiGetNotes + username, {
+				method: "GET", // or 'PUT'
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + window.localStorage.token,
+				},
+			});
 
-			return ["normal"];
+			if (!response.ok)
+			{
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+			const data = await response.json();
+			return data;
+		} catch (error)
+		{
+			console.error(`Fetch failed: ${error}`);
+			throw error;
 		}
 	}
 
 
 
-	async function displayUserNote(username, usernote, comment_id)
+
+
+
+
+
+	async function displayUserNote(usernote, object_id, username = "")
 	{
-		if (usernote.length > 0)
+		if (usernote?.length > 0 && object_id)
 		{
 			// "⭐ Obok nicka (Notatkowator2000)":"obok_nicka",
 			// "Wyraźna, pod avatarem (Wykop X Style)":"pod_avatarem",
 
-			let elementToInsertNoteAfter = null;
+			let elementToInsertNoteAfter;
+			let resource;
+			let id;
+			let sectionElement = document.querySelector(`section#${object_id}`)
 
-			let sectionComment = document.querySelector(`section#comment-${comment_id}`);
 
-			if (sectionComment)
+			if (object_id.startsWith("comment-"))
 			{
-				console.log(`Notatkowator - dodaje notatkę: ${comment_id} / ${username} / ${usernote}`);
+				resource = "entry";
+				id = object_id.replace("comment-", "");
+			}
+			else if (object_id.startsWith("link-"))
+			{
+				resource = "link";
+				id = object_id.replace("link-", "");
+			}
 
-				switch (settings.notatkowatorStyle)
+
+			if (sectionElement)
+			{
+				console.log(`Notatkowator - dodaje notatkę: ${object_id} / ${username} / ${usernote}`);
+
+				if (resource == "entry")
 				{
-					case "pod_avatarem":
-						elementToInsertNoteAfter = sectionComment.querySelector(`article > header`);
-						break;
-					case "obok_nicka":
-						elementToInsertNoteAfter = sectionComment.querySelector(`article > header > div.right > div > div.tooltip-slot`);
-						break;
-					default:
-						null;
+					switch (settings.notatkowatorStyle)
+					{
+						case "pod_avatarem":
+							elementToInsertNoteAfter = sectionElement.querySelector(`article > header`);
+							break;
+						case "obok_nicka":
+							elementToInsertNoteAfter = sectionElement.querySelector(`article > header > div.right > div > div.tooltip-slot`);
+							break;
+						default:
+							null;
+					}
 				}
+				else if (resource == "link")
+				{
+					elementToInsertNoteAfter = sectionElement.querySelector("section > article > div.content > section.info > span > div.tooltip-slot");
+				}
+
 
 				if (elementToInsertNoteAfter)
 				{
@@ -976,35 +1045,34 @@
 					div.classList = `wykopxs wykopx_action_box_usernote`;
 
 					const plusWordsArray = getPlusWords(usernote);
-					console.log(`Do ${comment_id} plusWordsArray: `);
+					console.log(`Do ${object_id} plusWordsArray: `);
 					console.log(plusWordsArray);
 
 					plusWordsArray.forEach(plusWord =>
 					{
 						div.classList.add(`wxs_notatkowator_${plusWord}`);
-						console.log(`Do ${comment_id} dodaję klasę: wxs_notatkowator_${plusWord}`)
+						console.log(`Do ${object_id} dodaję klasę: wxs_notatkowator_${plusWord}`)
 					});
 
 					if (plusWordsArray.includes("k") || plusWordsArray.includes("f")) // różowy pasek // +k lub +f
 					{
-						let figureElement = sectionComment.querySelector("article > header > div.left > a.avatar > figure");
+						let figureElement = sectionElement.querySelector("article > header > div.left > a.avatar > figure");
 						figureElement.classList.add("female");
 						figureElement.classList.remove("male");
 					}
 					else if (plusWordsArray.includes("m")) // niebieski pasek // +m
 					{
-						let figureElement = sectionComment.querySelector("article > header > div.left > a.avatar > figure");
+						let figureElement = sectionElement.querySelector("article > header > div.left > a.avatar > figure");
 						figureElement.classList.remove("female");
 						figureElement.classList.add("male");
 					}
 
 					div.innerHTML = `<var>${usernoteShow}</var>`;
 					div.title = `Wykop X Notatkowator · Notatka do użytkownika ${username}
-					ᅟᅟᅟᅟᅟᅟ
-	${usernote}
-	ᅟᅟᅟᅟᅟᅟ`;
+ᅟᅟᅟᅟᅟᅟ
+${usernote}
+ᅟᅟᅟᅟᅟᅟ`;
 					elementToInsertNoteAfter.parentNode.insertBefore(div, elementToInsertNoteAfter.nextSibling);
-
 				}
 
 			}
@@ -1012,38 +1080,6 @@
 		}
 	}
 
-	const apiGetNotes = "https://wykop.pl/api/v3/notes/";
-	async function getUserNotes(username, comment_id)
-	{
-		// consoleX(`async function getUserNotes(${username}, ${comment_id})`, 1);
-		const response = await fetch(apiGetNotes + username, {
-			method: "GET", // or 'PUT'
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: "Bearer " + window.localStorage.token,
-			},
-		})
-			.then((response) => response.json())
-			.then((user) =>
-			{
-				const usernote = user.data.content;
-				if (wykopxStorageNotatkowator)
-				{
-					wykopxStorageNotatkowator.setItem(username, { usernote: usernote, lastUpdate: dayjs() })
-						.then(function (value)
-						{
-							consoleX(`Notatkowator zapisał notatkę o użytkowniku @${username}: "${usernote}"`);
-							displayUserNote(username, usernote, comment_id)
-
-						})
-						.catch(function (err)
-						{
-							consoleX(`Notatkowator = error: ` + err);
-						});
-				}
-				return usernote;
-			});
-	}
 
 
 
@@ -1225,7 +1261,7 @@
 	waitForKeyElements("section.entry:not(.deleted):has(> article), section.link-block:not(.deleted):has(> section > article)", sectionEntryDetected, false);
 	function sectionEntryDetected(jNodeSectionEntry)
 	{
-		console.log(`waitForKeyElements("section is(.entry > article, .link - block: has(> section > article)): not(.deleted)"`)
+		// console.log(`waitForKeyElements("section is(.entry > article, .link - block: has(> section > article)): not(.deleted)"`)
 		const sectionEntry = jNodeSectionEntry[0];
 		sectionEntryIntersectionObserver.observe(sectionEntry);
 	}
@@ -1240,7 +1276,7 @@
 			if (sectionEntry.isIntersecting)
 			{
 				consoleX(`section.entry IS intersecting: ${id}`, 1)
-				console.log(sectionEntryElement);				// xxx
+				//console.log(sectionEntryElement);				// xxx
 				// wykonaj za kazdym razem gdy sie pojawil:
 				sectionEntryElement.classList.add("isIntersecting");
 				sectionEntryElement.classList.remove("notIntersecting");
@@ -1269,23 +1305,18 @@
 						<button data-id="${id}"	data-resource="${resource}" class="wxs_hide" title="Wykop X Mirkoukrywacz - ukryj"> Ukryj 🗙</button> `;
 
 					var sectionEntryHeader = sectionEntryElement.querySelector("article > header");
-					console.log("sectionEntryHeader", sectionEntryHeader)
 					sectionEntryHeader.parentNode.insertBefore(wxs_entry_menu, sectionEntryHeader);
 					sectionEntryElement.classList.add("wasIntersecting");
 
 
 
 					// SPRAWDZENIE I DODANIE NOTATKI
-
-
-
+					executeNotatkowatorForEntry(sectionEntryElement);
 				}
-
-
 			}
 			else
 			{
-				consoleX(`section.entry NOT intersecting: ${id}`, 1)
+				// consoleX(`section.entry NOT intersecting: ${id}`, 1)
 				sectionEntryElement.classList.remove("isIntersecting");
 				sectionEntryElement.classList.add("notIntersecting");
 			}
@@ -3725,6 +3756,28 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		return (bytes / (1024 * 1024)).toFixed(decimalDigits) + ' MB';
 	}
 
+	// returns array of words prefixed with + in string 
+	// Output: ["r", "b", "f"]
+	// Output: ["normal"]
+	function getPlusWords(str)
+	{
+		console.log("getPlusWords(string): " + str)
+
+		let matches = str.match(/\+\w+/g);
+		if (matches)
+		{
+			console.log("ZNALEZIONO")
+			return matches.map(word => word.slice(1));
+		}
+		else
+		{
+			console.log("nie nzaleziono +word returns normal")
+
+			return ["normal"];
+		}
+	}
+
+
 
 
 
@@ -4093,9 +4146,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			refreshOrRedirectOnMicroblogButtonClick();
 			tagHeaderEditableLoad();
 			addObservedTagsToRightSidebar();
-
-			if (settings.notatkowatorEnable) addActionBoxesToAllEntriesAndComments();
-
 		});
 
 		// 10s
@@ -4143,7 +4193,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			hashAndPathNameLoad();
 			//categoryRedirectToMicroblogButton();
 			countNumberOfNotificationsOnDesktop();
-			addActionBoxesToAllEntriesAndComments();
 
 
 			if (settings.autoOpenMoreContentEverywhere) autoOpenMoreContentEverywhere();
