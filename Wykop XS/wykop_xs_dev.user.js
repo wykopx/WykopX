@@ -2,7 +2,7 @@
 // @name        Wykop XS DEV
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
-// @version     2.45.9
+// @version     2.46.0
 
 
 // @author      Wykop X <wykopx@gmail.com>
@@ -37,9 +37,11 @@
 {
 	'use strict';
 
-	const currentVersion = "2.45.9";
+	const currentVersion = "2.46.0";
 	const dev = true;
 	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
+
+	let loadTime = dayjs();
 
 	// user.username - nazwa zalogowanego uzytkownika
 
@@ -132,10 +134,10 @@
 	settings.categoryRedirectToMicroblogButtonFilter = wykopxSettings.getPropertyValue("--categoryRedirectToMicroblogButtonFilter").replaceAll("_", "/").replaceAll(" ", "");
 
 
-	let wykopxStorageMirkoukrywacz = null;
+	let localStorageMirkoukrywacz = null;
 	if (settings.mirkoukrywaczEnable)
 	{
-		wykopxStorageMirkoukrywacz = localforage.createInstance({
+		localStorageMirkoukrywacz = localforage.createInstance({
 			driver: localforage.LOCALSTORAGE,
 			name: "wykopx",
 			storeName: "mirkoukrywacz",
@@ -143,10 +145,10 @@
 	}
 
 
-	let wykopxStorageNotatkowator = null;
+	let localStorageNotatkowator = null;
 	if (settings.notatkowatorEnable)
 	{
-		wykopxStorageNotatkowator = localforage.createInstance({
+		localStorageNotatkowator = localforage.createInstance({
 			driver: localforage.LOCALSTORAGE,
 			name: "wykopx",
 			storeName: "notatkowator",
@@ -154,7 +156,7 @@
 	}
 
 
-	let wykopxStorageObservedTags = localforage.createInstance({
+	let localStorageObservedTags = localforage.createInstance({
 		driver: localforage.LOCALSTORAGE,
 		name: "wykopx",
 		storeName: "observedTags",
@@ -675,7 +677,7 @@
 		{
 			// consoleX("addObservedTagsToRightSidebar()", 1)
 
-			checkLocalForageupdatedDate(wykopxStorageObservedTags, getObservedTags, settings.showObservedTagsInRightSidebarUpdateInterval * 3600);
+			checkLocalForageupdatedDate(localStorageObservedTags, getObservedTags, settings.showObservedTagsInRightSidebarUpdateInterval * 3600);
 
 			let section_html = `
 				<section class="wykopxs wykopx_your_observed_tags custom-sidebar tags-sidebar" data-v-3f88526c="" data-v-89888658="" data-v-5d67dfc3="">
@@ -692,7 +694,7 @@
 						<section class="tags" data-v-89888658="" data-v-3f88526c="" >
 							<ul data-v-89888658="" data-v-3f88526c="">`;
 
-			wykopxStorageObservedTags.iterate(function (value, key, iterationNumber)
+			localStorageObservedTags.iterate(function (value, key, iterationNumber)
 			{
 				if (key != "storageUpdatedDate")
 				{
@@ -769,11 +771,11 @@
 				if (dev) console.log(observedTagsJson)
 				const observedTagsArray = observedTagsJson.data;
 
-				wykopxStorageObservedTags.setItem("storageUpdatedDate", dayjs())
+				localStorageObservedTags.setItem("storageUpdatedDate", dayjs())
 
 				observedTagsArray.forEach(function (tag)
 				{
-					wykopxStorageObservedTags.setItem(tag.name, tag.name)
+					localStorageObservedTags.setItem(tag.name, tag.name)
 						.then(function (value)
 						{
 							consoleX(`Zapisano do LocalStorage Twój obserwowany tag: #${tag.name}"`);
@@ -800,291 +802,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	/* ------------- NOTATKOWATOR ------------ */
-	async function executeNotatkowatorForEntry(sectionEntryElement)
-	{
-		consoleX(`executeNotatkowatorForEntry(sectionEntryElement)`, 1);
-
-		if (settings.notatkowatorEnable)
-		{
-			if (sectionEntryElement != null)
-			{
-				const object_id = sectionEntryElement.id; 				// "comment-1234567"
-				let id;
-				let username;
-				let usernote = "";
-				let resource;
-
-				if (object_id != null)
-				{
-					if (object_id.startsWith("comment-"))
-					{
-						resource = "entry"; // comments, subcomments, entries
-						id = object_id.replace("comment-", ""); 		// 1234567
-						username = sectionEntryElement.querySelector("article > header > div.left > a.avatar > span").innerText;
-					}
-					else if (object_id.startsWith("link-"))
-					{
-						resource = "link";
-						id = object_id.replace("link-", ""); 		// 1234567
-						username = sectionEntryElement.querySelector("section > article > div.content > section.info > span > div > span > a.username > span").innerText;
-					}
-
-					if (username != null)
-					{
-						username = username.trim(); // " NadiaFrance"
-						try
-						{
-
-
-							if (settings.notatkowatorUpdateInterval > 0)
-							{
-								let usernoteObject = await wykopxStorageNotatkowator.getItem(username);
-
-								if (usernoteObject == null || usernoteObject == "")
-								{
-									console.log("typeof usernoteObject", typeof usernoteObject)
-									console.log(usernoteObject);
-
-									const now = dayjs();
-									const date2 = dayjs(usernoteObject.lastUpdate);
-
-									if (now.diff(date2, "second") > parseFloat(settings.notatkowatorUpdateInterval * 3600))
-									{
-										// notatka jest zbyt stara
-										usernoteObject = null;
-									}
-									else
-									{
-										// mamy aktualną notatkę z localforage
-										consoleX(`Notatkowator wczytał notatkę z LocalStorage. Użytkownik: @${username}`);
-										console.log("usernoteObject")
-										console.log(usernoteObject)
-										console.log("usernoteObject.usernote")
-										console.log(usernoteObject.usernote)
-										usernote = usernoteObject.usernote;
-									}
-								}
-							}
-							if (usernote != "")
-							{
-								displayUserNote(usernote, object_id, username)
-							}
-							else
-							{
-								// Notatka z API - brak notatki o tym użytkowniku w localforage lub była zbyt stara więc pobieramy z API Wykopu
-								getUserNotes(username)
-									.then((jsonResponse) =>
-									{
-										/* user.data = { username: 'NadiaFrance', content: 'Treść notatki' } */
-										/* user.data = { username: 'NadiaFrance', content: '' } */
-										usernote = jsonResponse?.data?.content;
-										if (usernote != "")
-										{
-											displayUserNote(usernote, object_id, username)
-											if (wykopxStorageNotatkowator)
-											{
-												wykopxStorageNotatkowator.setItem(username, { usernote: usernote, lastUpdate: dayjs() })
-													.then(function (value)
-													{
-														consoleX(`Notatkowator zapisał notatkę o użytkowniku @${username}: "${usernote}"`);
-													})
-													.catch(function (err)
-													{
-														consoleX(`Notatkowator = error: ` + err);
-													});
-												return usernote;
-											}
-										}
-										else
-										{
-											consoleX(`Użytkownik ${username} nie ma żadnej notatki`)
-										}
-									})
-									.catch(error => console.error(`Error: ${error}`));
-							}
-						}
-						catch (err)
-						{
-							console.log(err);
-						}
-					}
-				}
-			}
-		}
-	}
-
-	const apiGetNotes = "https://wykop.pl/api/v3/notes/";
-	async function getUserNotes(username)
-	{
-		try
-		{
-			const response = await fetch(apiGetNotes + username, {
-				method: "GET", // or 'PUT'
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + window.localStorage.token,
-				},
-			});
-
-			if (!response.ok)
-			{
-				throw new Error(`HTTP error! status: ${response.status}`);
-			}
-			const data = await response.json();
-			return data;
-		} catch (error)
-		{
-			console.error(`Fetch failed: ${error}`);
-			throw error;
-		}
-	}
-
-
-
-
-
-
-
-
-	async function displayUserNote(usernote, object_id, username = "")
-	{
-		if (usernote?.length > 0 && object_id)
-		{
-			// "⭐ Obok nicka (Notatkowator2000)":"obok_nicka",
-			// "Wyraźna, pod avatarem (Wykop X Style)":"pod_avatarem",
-
-			let elementToInsertNoteAfter;
-			let resource;
-			let id;
-			let sectionElement = document.querySelector(`section#${object_id}`)
-
-
-			if (object_id.startsWith("comment-"))
-			{
-				resource = "entry";
-				id = object_id.replace("comment-", "");
-			}
-			else if (object_id.startsWith("link-"))
-			{
-				resource = "link";
-				id = object_id.replace("link-", "");
-			}
-
-
-			if (sectionElement)
-			{
-				console.log(`Notatkowator - dodaje notatkę: ${object_id} / ${username} / ${usernote}`);
-
-				if (resource == "entry")
-				{
-					switch (settings.notatkowatorStyle)
-					{
-						case "pod_avatarem":
-							elementToInsertNoteAfter = sectionElement.querySelector(`article > header`);
-							break;
-						case "obok_nicka":
-							elementToInsertNoteAfter = sectionElement.querySelector(`article > header > div.right > div > div.tooltip-slot`);
-							break;
-						default:
-							null;
-					}
-				}
-				else if (resource == "link")
-				{
-					elementToInsertNoteAfter = sectionElement.querySelector("section > article > div.content > section.info > span > div.tooltip-slot");
-				}
-
-
-				if (elementToInsertNoteAfter)
-				{
-
-					let firstWord = "normal";
-					let usernoteShow = usernote;
-
-					if (usernote.charAt(0) === '+')
-					{
-						const firstSpaceIndex = usernote.indexOf(' ');
-						firstWord = usernote.substring(1, firstSpaceIndex);
-						usernoteShow = usernote.substring(firstSpaceIndex + 1);
-						// let wordsArray = usernote.split(' ');
-						// firstWord = wordsArray.shift().substring(1);
-						// usernote = wordsArray.join(' ');
-					}
-
-
-
-					if (settings.notatkowatorVerticalBar)
-					{
-						let sepIndex = usernote.indexOf("|");
-						if (sepIndex != -1)
-						{
-							usernoteShow = `${usernoteShow.substring(0, sepIndex).trim()} ...`;
-							//let remainingPart = usernote.substring(sepIndex + 1).trim();
-						}
-					}
-
-					let div = document.createElement('div');
-					// <div class="wykopxs wykopx_action_box_usernote wxs_notatkowator_normal">
-					// <div class="wykopxs wykopx_action_box_usernote wxs_notatkowator_r">
-					div.classList = `wykopxs wykopx_action_box_usernote`;
-
-					const plusWordsArray = getPlusWords(usernote);
-					console.log(`Do ${object_id} plusWordsArray: `);
-					console.log(plusWordsArray);
-
-					plusWordsArray.forEach(plusWord =>
-					{
-						div.classList.add(`wxs_notatkowator_${plusWord}`);
-						console.log(`Do ${object_id} dodaję klasę: wxs_notatkowator_${plusWord}`)
-					});
-
-					if (plusWordsArray.includes("k") || plusWordsArray.includes("f")) // różowy pasek // +k lub +f
-					{
-						let figureElement = sectionElement.querySelector("article > header > div.left > a.avatar > figure");
-						figureElement.classList.add("female");
-						figureElement.classList.remove("male");
-					}
-					else if (plusWordsArray.includes("m")) // niebieski pasek // +m
-					{
-						let figureElement = sectionElement.querySelector("article > header > div.left > a.avatar > figure");
-						figureElement.classList.remove("female");
-						figureElement.classList.add("male");
-					}
-
-					div.innerHTML = `<var>${usernoteShow}</var>`;
-					div.title = `Wykop X Notatkowator · Notatka do użytkownika ${username}
-ᅟᅟᅟᅟᅟᅟ
-${usernote}
-ᅟᅟᅟᅟᅟᅟ`;
-					elementToInsertNoteAfter.parentNode.insertBefore(div, elementToInsertNoteAfter.nextSibling);
-				}
-
-			}
-
-		}
-	}
-
-
-
-
-
-
+	// ACTION BOX BUTTONS
 	document.addEventListener("click", (event) =>
 	{
 		if (event.target.closest("button.wxs_save")) saveThisEntryContent.call(event.target, event);
@@ -1122,13 +840,9 @@ ${usernote}
 
 
 	/* ---------------- MIRKOUKRYWACZ  MENU  ----------------- */
-
-
 	function saveThisEntryContent(PointerEvent)
 	{
 		console.log(this)
-
-
 
 		let resource = "unknown";
 		let entry_stream = this?.closest(".stream");
@@ -1177,18 +891,22 @@ ${usernote}
 		}
 	}
 
+	// UKRYWANIE ZNALEZISK W MIRKOUKRYWACZU
 	function hideThisLink(PointerEvent)
 	{
 		let resource = "link";
 		let link_stream = this?.closest("section.stream");
+		const sectionLink = this.closest('.link-block');
+
 		if (link_stream)
 		{
 			if (link_stream.classList.contains("upcoming-stream")) resource = "link"; // wykopalisko
 			else if (link_stream.classList.contains("home-stream")) resource = "link"; // główna
-
 		}
+		if (sectionObjectIntersectionObserver) sectionObjectIntersectionObserver.unobserve(sectionLink);
 		mirkoukrywaczBlockNewElement(this.dataset.id, this.dataset.id, "username", "linkTitle", resource, "hidden");
-		this.closest('.link-block').remove();
+		sectionLink.remove();
+
 		/*
 		let link_id = null;
 		if (resource == "link-comments")
@@ -1198,7 +916,7 @@ ${usernote}
 		*/
 	}
 
-	// MIRKOUKRYWACZ DLA WPISU / komentarzy
+	// UKRYWANIE WPISU I KOMENTARZY - DODAWANIE DO MIRKOUKRYWACZA
 	function hideThisEntry(PointerEvent)
 	{
 		let resource = "unknown";
@@ -1211,22 +929,22 @@ ${usernote}
 			else if (entry_stream.classList.contains("entry-subcomments")) resource = "entry-subcomments";
 			else if (entry_stream.classList.contains("link-comments")) resource = "link-comments";
 
-			let entry = this.closest(".entry");
-			let comment_id = entry.id.split("-")[1];
-			let username = entry.querySelector("a.username span").innerText;
-			let text = entry.querySelector("div.content div.wrapper").innerText.replace(/\n/g, " ");
+			let entrySection = this.closest(".entry");
+			let comment_id = entrySection.id.split("-")[1];
+			let username = entrySection.querySelector("a.username span").innerText;
+			let text = entrySection.querySelector("div.content div.wrapper").innerText.replace(/\n/g, " ");
 
 			let grandcomment_id = comment_id; /* id nad-komentarza */
 			if (resource == "entry-subcomments")
 			{
-				let entry_grandparent = entry.parentNode.closest(".entry");
+				let entry_grandparent = entrySection.parentNode.closest(".entry");
 				grandcomment_id = entry_grandparent.id.split("-")[1];
 			}
 			if (text.length > 50) text = text.substring(0, 50);
-			mirkoukrywaczBlockNewElement(entry.id, grandcomment_id, username, text, resource, "hidden");
 
-			// usuniecie z DOM
-			this.closest('.entry').remove();
+			if (sectionObjectIntersectionObserver) sectionObjectIntersectionObserver.unobserve(entrySection);
+			mirkoukrywaczBlockNewElement(entrySection.id, grandcomment_id, username, text, resource, "hidden");
+			entrySection.remove();
 		}
 	}
 
@@ -1234,6 +952,7 @@ ${usernote}
 
 
 	// TODO
+
 	// function autoOpenAllCommentsEverywhere()
 	// {
 	// 	if (settings.autoOpenSpoilersEverywhere) 
@@ -1255,91 +974,449 @@ ${usernote}
 
 
 
+
 	// dla każdego wpisu i komentarza
 	// strona wpisu, caly wpis: section:is(.entry:has(> article), .link-block:has(> section > article)):not(.deleted)
+
 	// tylko czesc wpisu bez komentarzy "section.entry:not(.deleted):has(> article), section.link-block:not(.deleted) > section > article)
-	waitForKeyElements("section.entry:not(.deleted):has(> article), section.link-block:not(.deleted):has(> section > article)", sectionEntryDetected, false);
-	function sectionEntryDetected(jNodeSectionEntry)
+
+	waitForKeyElements("section.entry:not(.deleted):has(> article), section.link-block:not(.deleted):has(> section > article)", sectionObjectDetected, false);
+	function sectionObjectDetected(jNodeSectionElement)
 	{
 		// console.log(`waitForKeyElements("section is(.entry > article, .link - block: has(> section > article)): not(.deleted)"`)
-		const sectionEntry = jNodeSectionEntry[0];
-		sectionEntryIntersectionObserver.observe(sectionEntry);
+		const sectionObjectElement = jNodeSectionElement[0];
+		sectionObjectIntersectionObserver.observe(sectionObjectElement);
 	}
 
-	const sectionEntriesIntersecting = (intersectingEntries, observer) =>
+	const sectionObjectsAreIntersecting = (intersectingObject, observer) =>
 	{
-		intersectingEntries.forEach((sectionEntry) =>			// IntersectionObserverEntry
+		intersectingObject.forEach((IntersectionObserverEntry) =>			// InterIntersectionObserverEntry
 		{
-			let sectionEntryElement = sectionEntry.target;		// element <section class="entry"> <section class="link-block">
-			let id = sectionEntryElement.id;
+			let sectionObjectElement = IntersectionObserverEntry.target;		// element <section class="entry"> <section class="link-block">
 
-			if (sectionEntry.isIntersecting)
+
+			// pierwszy raz dodajemy data-abcd
+			if (!sectionObjectElement.dataset.authorUsername && sectionObjectElement.__vue__?.item)
 			{
-				consoleX(`section.entry IS intersecting: ${id}`, 1)
-				//console.log(sectionEntryElement);				// xxx
-				// wykonaj za kazdym razem gdy sie pojawil:
-				sectionEntryElement.classList.add("isIntersecting");
-				sectionEntryElement.classList.remove("notIntersecting");
+				// <section data-author-username="NadiaFrance">
+				sectionObjectElement.dataset.authorUsername = sectionObjectElement.__vue__.item.author.username;
+				sectionObjectElement.dataset.id = sectionObjectElement.__vue__.item.id;
+				sectionObjectElement.dataset.resource = sectionObjectElement.__vue__.item.resource;
 
-				// wykonaj tylko pierwszy raz gdy sie pojawil
-				if (!sectionEntryElement.classList.contains("wasIntersecting"))
+				if (sectionObjectElement.__vue__.item.parent)
+				{
+					sectionObjectElement.dataset.parentResource = sectionObjectElement.__vue__.item.parent.resource;;	// data-parent-resource="entry"
+					sectionObjectElement.dataset.parentId = sectionObjectElement.__vue__.item.parent.id;	// data-parent-id="1234567"
+				}
+
+				if (sectionObjectElement.__vue__.item.author?.status) sectionObjectElement.dataset.authorStatus = sectionObjectElement.__vue__.item.author.status;	// data-author-status="banned"
+				if (sectionObjectElement.__vue__.item.author?.blacklist) sectionObjectElement.dataset.authorBlacklist = sectionObjectElement.__vue__.item.author.blacklist;	// data-author-blacklist="true"
+				if (sectionObjectElement.__vue__.item.author?.follow) sectionObjectElement.dataset.authorFollow = sectionObjectElement.__vue__.item.author.follow;	// data-author-follow="true"
+				if (sectionObjectElement.__vue__.item.author?.gender) sectionObjectElement.dataset.authorGender = sectionObjectElement.__vue__.item.author.gender;	// data-author-gender="m"
+				if (sectionObjectElement.__vue__.item.author?.online) sectionObjectElement.dataset.authorOnline = sectionObjectElement.__vue__.item.author.online;	// data-author-online="true"
+				if (sectionObjectElement.__vue__.item.created_at) sectionObjectElement.dataset.createdAt = sectionObjectElement.__vue__.item.author.created_at;	// data-created-at="2023-12-31 2359"
+				if (sectionObjectElement.__vue__.item.favourite) sectionObjectElement.dataset.favourite = sectionObjectElement.__vue__.item.author.favourite;	// data-favourite="true"
+				if (sectionObjectElement.__vue__.item.voted) sectionObjectElement.dataset.voted = sectionObjectElement.__vue__.item.voted;	// data-voted="0" / "1"
+				if (sectionObjectElement.__vue__.item.votes) sectionObjectElement.dataset.votesUp = sectionObjectElement.__vue__.item.votes.up;	// data-votes-up="23"
+				if (sectionObjectElement.__vue__.item.votes) sectionObjectElement.dataset.votesDown = sectionObjectElement.__vue__.item.votes.down;	// data-votes-up="23"
+			}
+
+
+			// IS INTERSECTING!
+			if (IntersectionObserverEntry.isIntersecting)
+			{
+				//console.log(sectionObjectElement);			
+				// wykonaj za kazdym razem gdy sie pojawil:
+				sectionObjectElement.classList.add("isIntersecting");
+				sectionObjectElement.classList.remove("notIntersecting");
+
+				// TODO dodać sprawdzanie plusów/wykopów na żywo
+
+
+
+				// PIERWSZY RAZ WIDZIMY WPIS/KOMENTARZ/ZNALEZISKO
+				if (!sectionObjectElement.classList.contains("wasIntersecting"))
 				{
 
-					let resource = "";
+					let object_id = sectionObjectElement.id;  // object_id > id="comment-1234567"
+					let id = sectionObjectElement.__vue__.item.id;
+					let resource = sectionObjectElement.__vue__.item.resource;
+					let parent_resource, parent_id;
 
-					if (id.startsWith("comment-"))
+					if (sectionObjectElement.__vue__.item.parent)
 					{
-						resource = "entry"; // comments, subcomments, entries
-					}
-					else if (id.startsWith("link-"))
-					{
-						resource = "link";
+						parent_resource = sectionObjectElement.__vue__.item.parent.resource;;	// data-parent-resource="entry"
+						parent_id = sectionObjectElement.__vue__.item.parent.id;	// data-parent-id="1234567"
 					}
 
 					let wxs_entry_menu = document.createElement("div");
 					wxs_entry_menu.classList.add("wxs_entry_menu"); // 📰📑 🔖 ⎀⎊👁 🖾 🗙 ⌧ ⮽ 🗳 ☒ 🗵 🗷- ‐ ‑ – ‒ — ― _ ﹏🗖 ⎀ ⎊
 					wxs_entry_menu.innerHTML = `
-						<button data-id="${id}" data-resource="${resource}" class="wxs_save" title="Wykop XS - zapamiętaj treść na wypadek usunięcia lub edycji">Zapisz</button>
-						<button data-id="${id}" data-resource="${resource}" class="wxs_minimize" title="Wykop X Krawężnik - zminimalizuj">[ — ]</button>
-						<button data-id="${id}" data-resource="${resource}" class="wxs_maximize" title="Wykop X Krawężnik - pokaż cały">[ + ]</button>
-						<button data-id="${id}"	data-resource="${resource}" class="wxs_hide" title="Wykop X Mirkoukrywacz - ukryj"> Ukryj 🗙</button> `;
+						<button data-object-id="${object_id}" data-id="${id}" data-resource="${resource}" data-parent-id="${parent_id}" data-parent-resource="${parent_resource}" class="wxs_save" title="Wykop XS - zapamiętaj treść na wypadek usunięcia lub edycji">Zapisz</button>
+						<button data-object-id="${object_id}" data-id="${id}" data-resource="${resource}" data-parent-id="${parent_id}" data-parent-resource="${parent_resource}" class="wxs_minimize" title="Wykop X Krawężnik - zminimalizuj">[ — ]</button>
+						<button data-object-id="${object_id}" data-id="${id}" data-resource="${resource}" data-parent-id="${parent_id}" data-parent-resource="${parent_resource}" class="wxs_maximize" title="Wykop X Krawężnik - pokaż cały">[ + ]</button>
+						<button data-object-id="${object_id}" data-id="${id}" data-resource="${resource}" data-parent-id="${parent_id}" data-parent-resource="${parent_resource}" class="wxs_hide" title="Wykop X Mirkoukrywacz - ukryj"> Ukryj 🗙</button> `;
 
-					var sectionEntryHeader = sectionEntryElement.querySelector("article > header");
-					sectionEntryHeader.parentNode.insertBefore(wxs_entry_menu, sectionEntryHeader);
-					sectionEntryElement.classList.add("wasIntersecting");
 
+					const sectionEntryHeaderElement = sectionObjectElement.querySelector("article > header");
+					sectionEntryHeaderElement.parentNode.insertBefore(wxs_entry_menu, sectionEntryHeaderElement);
+					sectionObjectElement.classList.add("wasIntersecting");
 
 
 					// SPRAWDZENIE I DODANIE NOTATKI
-					executeNotatkowatorForEntry(sectionEntryElement);
+					checklistForWykopObject(sectionObjectElement);
+
 				}
 			}
 			else
 			{
+				// TODO usunąć sprawdzanie plusów/wykopów na żywo
+
 				// consoleX(`section.entry NOT intersecting: ${id}`, 1)
-				sectionEntryElement.classList.remove("isIntersecting");
-				sectionEntryElement.classList.add("notIntersecting");
+				sectionObjectElement.classList.remove("isIntersecting");
+				sectionObjectElement.classList.add("notIntersecting");
 			}
 		});
 	};
 
 
-	const sectionEntryIntersectionObserverOptions =
+	const sectionObjectIntersectionObserverOptions =
 	{
 		root: null,
-		rootMargin: "-200px 0px -200px 0px",
-		threshold: 0.0,
+		rootMargin: "0px 0px -200px 0px",
+		threshold: 0,
 	};
-	const sectionEntryIntersectionObserver = new IntersectionObserver(sectionEntriesIntersecting, sectionEntryIntersectionObserverOptions)
+	const sectionObjectIntersectionObserver = new IntersectionObserver(sectionObjectsAreIntersecting, sectionObjectIntersectionObserverOptions)
 
 
 
 
+
+
+	// dla WykopObject sprawdza użytkownika i wysyla request do API zA notatkowatora i o dane profilu
+	async function checklistForWykopObject(sectionObjectElement)
+	{
+		if (sectionObjectElement?.__vue__?.item)
+		{
+			if (settings.notatkowatorEnable) 
+			{
+				console.log("sectionObjectElement.dataset.wxsNote != true")
+				console.log(sectionObjectElement.dataset.wxsNote != true)
+				console.log("sectionObjectElement.__vue__.item.author.note")
+				console.log(sectionObjectElement.__vue__.item.author.note)
+
+				if (sectionObjectElement.dataset.wxsNote != "true" && sectionObjectElement.__vue__.item.author.note == true)
+				{
+					let username = sectionObjectElement.__vue__.item.author.username;
+					await findNoteByUsernameInLocalStorageOrFromAPI(sectionObjectElement, username);
+				}
+			}
+
+			settings.checkUserDetailsEnable = true; // TODO
+			if (settings.checkUserDetailsEnable && !sectionObjectElement.dataset.wxsProfile) 
+			{
+				let username = sectionObjectElement.__vue__.item.author.username;
+				await getUserDetailsForUsernameFromAPI(sectionObjectElement, username);
+			}
+		}
+
+	}
+
+
+
+	/* ------------- NOTATKOWATOR ------------ */
+	async function findNoteByUsernameInLocalStorageOrFromAPI(
+		sectionObjectElement,
+		username = sectionObjectElement.__vue__.item.author.username,
+		forceAPICheck = false)
+	{
+		if (sectionObjectElement || username)
+		{
+			if (sectionObjectElement.__vue__.item.author.note || forceAPICheck)
+			{
+				consoleX(`findNoteByUsernameInLocalStorageOrFromAPI()`, 1);
+
+				if (username)
+				{
+					let usernote = "";
+
+					if (forceAPICheck == false && settings.notatkowatorEnable && settings.notatkowatorUpdateInterval > 0)
+					{
+						// TODO check this
+						let usernoteObject = await localStorageNotatkowator.getItem(username);
+
+						if (usernoteObject == null || usernoteObject == "")
+						{
+							console.log("typeof usernoteObject", typeof usernoteObject)
+							console.log(usernoteObject);
+
+							const now = dayjs();
+							const date2 = dayjs(usernoteObject.lastUpdate);
+
+							if (now.diff(date2, "second") > parseFloat(settings.notatkowatorUpdateInterval * 3600))
+							{
+								// notatka jest zbyt stara
+								usernoteObject = null;
+							}
+							else
+							{
+								// mamy aktualną notatkę z localforage
+								consoleX(`Notatkowator wczytał notatkę z LocalStorage. Użytkownik: @${username}`);
+								console.log("usernoteObject")
+								console.log(usernoteObject)
+								console.log("usernoteObject.usernote")
+								console.log(usernoteObject.usernote)
+								usernote = usernoteObject.usernote;
+							}
+						}
+					}
+
+					if (usernote != "")
+					{
+						await displayUserNote(sectionObjectElement, usernote, username)
+					}
+					else // Notatka z API - brak notatki o tym użytkowniku w localforage lub była zbyt stara lub forceAPICheck = true 
+					{
+						try
+						{
+							let jsonResponse = await getWykopAPIData("notes", username);
+
+							console.log(jsonResponse);
+							/* user.data = { username: 'NadiaFrance', content: 'Treść notatki' } */
+							/* user.data = { username: 'NadiaFrance', content: '' } */
+
+							usernote = jsonResponse?.data?.content;
+
+							if (usernote != "")
+							{
+								console.log(`API zwróciło ${username} notatkę: ${usernote}`);
+
+								await displayUserNote(sectionObjectElement, usernote, username)
+
+								if (localStorageNotatkowator)
+								{
+									localStorageNotatkowator.setItem(username, { usernote: usernote, lastUpdate: dayjs() })
+										.then(function (value)
+										{
+											consoleX(`Notatkowator zapisał notatkę o użytkowniku @${username}: "${usernote}"`);
+										})
+										.catch(function (err)
+										{
+											consoleX(`Notatkowator = error: ` + err);
+										});
+									return usernote;
+								}
+							}
+							else
+							{
+								// consoleX(`Użytkownik ${username} nie ma żadnej notatki`)
+							}
+						}
+						catch (error)
+						{
+							console.error(`Failed to get data: ${error}`);
+						}
+					}
+				}
+			}
+		}
+
+	}
+
+	/* wyświetlenie danych o autorze */
+	async function getUserDetailsForUsernameFromAPI(
+		sectionObjectElement = null,
+		username = sectionObjectElement.__vue__.item.author.username)
+	{
+
+		if (settings.checkUserDetailsEnable && username)
+		{
+			try
+			{
+				// profile/users/{username}
+				// profile/users/{username}/short
+				// let jsonResponse = await getWykopAPIData("profile", "users", username, "short");
+				let jsonResponse = await getWykopAPIData("profile", "users", username);
+				if (jsonResponse.data)
+				{
+					let userData = jsonResponse.data;
+
+					console.log("userData");
+					console.log(userData);
+
+					await displayUserDetails(sectionObjectElement, username)
+				}
+				else
+				{
+				}
+			}
+			catch (error)
+			{
+				console.error(`Failed to get data: ${error}`);
+			}
+		}
+	}
+
+
+
+	// calls Wykop API url: getWykopAPIData("profile") -> https://wykop.pl/api/v3/profile
+	// getWykopAPIData("profile", "users", username } -> https://wykop.pl/api/v3/profile/users/NadiaFrance
+	async function getWykopAPIData(...pathAPIargs)
+	{
+		//console.log("getWykopAPIData(), pathAPIargs: ", pathAPIargs)
+		try
+		{
+			const response = await fetch(`https://wykop.pl/api/v3/${pathAPIargs.join('/')}`, {
+				method: "GET", // or 'PUT'
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + window.localStorage.token,
+				},
+			});
+
+			console.log("getWykopAPIData, URL: " + `https://wykop.pl/api/v3/${pathAPIargs.join('/')}`)
+			// console.log(response)
+
+			if (!response.ok)
+			{
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+
+			const data = await response.json();
+			// console.log("getWykopAPIData - data from API: ")
+			// console.log(data)
+			return data;
+
+		} catch (error)
+		{
+			console.error(`Fetch failed: ${error}`);
+			throw error;
+		}
+	}
+
+
+	// DOPISUJE NOTATKĘ DO UZYTKOWNIKA
+	async function displayUserNote(
+		sectionObjectElement = null,
+		usernote,
+		username = sectionObjectElement.__vue__.item.author.username)
+	{
+		if (usernote?.length > 0 && username)
+		{
+			// "⭐ Obok nicka (Notatkowator2000)":"obok_nicka",
+			// "Wyraźna, pod avatarem (Wykop X Style)":"pod_avatarem",
+
+			let elementToInsertNoteAfter;
+
+			const sectionObjectElementsAll = document.querySelectorAll(`section[data-author-username="${username}"]`)
+			sectionObjectElementsAll.forEach((section) =>
+			{
+				if (section.dataset.wxsNote != "true")
+				{
+					section.dataset.wxsNote = "true"; // <section data-wxs-note="true">
+					console.log(`Notatkowator - dodaje notatkę: ${username} / ${usernote}`);
+					let resource = section.__vue__.item.resource;
+
+
+					if (resource == "entry" || resource == "entry_comment" || resource == "link_comment")
+					{
+						switch (settings.notatkowatorStyle)
+						{
+							case "pod_avatarem":
+								elementToInsertNoteAfter = section.querySelector(`article > header`);
+								break;
+							case "obok_nicka":
+								elementToInsertNoteAfter = section.querySelector(`article > header > div.right > div > div.tooltip-slot`);
+								break;
+							default:
+								null;
+						}
+					}
+					else if (resource == "link")
+					{
+						elementToInsertNoteAfter = section.querySelector("section > article > div.content > section.info > span > div.tooltip-slot");
+					}
+
+
+					if (elementToInsertNoteAfter)
+					{
+
+						let usernoteParsedToDisplay = removePlusWords(usernote);
+
+						if (settings.notatkowatorVerticalBar)
+						{
+							let sepIndex = usernote.indexOf("|");
+							if (sepIndex != -1)
+							{
+								usernoteParsedToDisplay = `${usernoteParsedToDisplay.substring(0, sepIndex).trim()}...`;
+								//let remainingPart = usernote.substring(sepIndex + 1).trim();
+							}
+						}
+
+						let div = document.createElement('div');
+						// <div class="wykopxs wykopx_action_box_usernote wxs_notatkowator_normal">
+						// <div class="wykopxs wykopx_action_box_usernote wxs_notatkowator_r">
+						div.classList = `wykopxs wykopx_action_box_usernote`;
+
+						const plusWordsArray = getPlusWords(usernote);
+						console.log(plusWordsArray);
+
+						plusWordsArray.forEach(plusWord =>
+						{
+							div.classList.add(`wxs_notatkowator_${plusWord}`);
+						});
+
+						if (resource != "link")
+						{
+							if (plusWordsArray.includes("k") || plusWordsArray.includes("f")) // różowy pasek // +k lub +f
+							{
+								let figureElement = section.querySelector("article > header > div.left > a.avatar > figure");
+								figureElement.classList.add("female");
+								figureElement.classList.remove("male");
+							}
+							else if (plusWordsArray.includes("m")) // niebieski pasek // +m
+							{
+								let figureElement = section.querySelector("article > header > div.left > a.avatar > figure");
+								figureElement.classList.remove("female");
+								figureElement.classList.add("male");
+							}
+						}
+
+
+
+						div.innerHTML = `<var>${usernoteParsedToDisplay}</var>`;
+						div.title = `𝗪𝘆𝗸𝗼𝗽 𝗫 𝗡𝗼𝘁𝗮𝘁𝗸𝗼𝘄𝗮𝘁𝗼𝗿 
+	Notatka do użytkownika ${username ? username : ""}
+	ᅟᅟᅟᅟᅟᅟ
+	${usernote}
+	ᅟᅟᅟᅟᅟᅟ`;
+						elementToInsertNoteAfter.parentNode.insertBefore(div, elementToInsertNoteAfter.nextSibling);
+					}
+				}
+
+			});
+		}
+	}
+
+	async function displayUserDetails(
+		sectionObjectElement = null,
+		username = sectionObjectElement.__vue__.item.author.username)
+	{
+
+
+
+	}
+
+
+
+
+
+	/*     MIRKOUKRYWA   */
 	function mirkoukrywaczBlockNewElement(id, grandcomment_id, username = "", text = "", resource = "", blockingType = "hidden")
 	{
-		if (wykopxStorageMirkoukrywacz)
+		if (localStorageMirkoukrywacz)
 		{
-			wykopxStorageMirkoukrywacz
+			localStorageMirkoukrywacz
 				.setItem(id,
 					{
 						id,
@@ -1366,12 +1443,12 @@ ${usernote}
 	function mirkoukrywaczHideAllBlockedElements()
 	{
 		console.log("mirkoukrywaczHideAllBlockedElements()")
-		if (wykopxStorageMirkoukrywacz)
+		if (localStorageMirkoukrywacz)
 		{
 			let hiddenElements = 0;
 			let minimizedElements = 0;
 
-			wykopxStorageMirkoukrywacz.iterate(function (value, key, iterationNumber)
+			localStorageMirkoukrywacz.iterate(function (value, key, iterationNumber)
 			{
 				let foundElementToHide = document.getElementById(`${key}`); // comment-1234   link-12345
 				if (foundElementToHide)
@@ -1380,6 +1457,7 @@ ${usernote}
 
 					if (value.blockingType == "hidden")
 					{
+						if (sectionObjectIntersectionObserver) sectionObjectIntersectionObserver.unobserve(foundElementToHide);
 						foundElementToHide.remove();
 						hiddenElements++;
 					}
@@ -1467,9 +1545,9 @@ ${usernote}
 
 	function mirkoukrywaczRefreshHideList()
 	{
-		if (wykopxStorageMirkoukrywacz)
+		if (localStorageMirkoukrywacz)
 		{
-			wykopxStorageMirkoukrywacz
+			localStorageMirkoukrywacz
 				.iterate(function (value, key, iterationNumber)
 				{
 					mirkoukrywaczAppendOneElementToHideList(value, key, iterationNumber);
@@ -1479,7 +1557,6 @@ ${usernote}
 		}
 
 	}
-
 
 	function createMenuItemForMirkoukrywacz()
 	{
@@ -1611,9 +1688,9 @@ ${usernote}
 	function mirkoukrywaczRemoveBlockedElement(id)
 	{
 		console.log(`mirkoukrywaczRemoveBlockedElement(${id})`)
-		if (wykopxStorageMirkoukrywacz)
+		if (localStorageMirkoukrywacz)
 		{
-			wykopxStorageMirkoukrywacz
+			localStorageMirkoukrywacz
 				.removeItem(id)
 				.then(function ()
 				{
@@ -1627,12 +1704,12 @@ ${usernote}
 	}
 	function mirkoukrywaczRemoveTooOld(PointerEvent, options) 
 	{
-		if (wykopxStorageMirkoukrywacz && options)
+		if (localStorageMirkoukrywacz && options)
 		{
 			const now = dayjs();
 			let numberOfRemovedItems = 0;
 
-			wykopxStorageMirkoukrywacz.iterate(function (value, id, iterationNumber)
+			localStorageMirkoukrywacz.iterate(function (value, id, iterationNumber)
 			{
 				if (value.blockingType == options.blockingType || options.blockingType == "all") // "hidden", "minimized"
 				{
@@ -1643,7 +1720,7 @@ ${usernote}
 					{
 						numberOfRemovedItems++;
 
-						wykopxStorageMirkoukrywacz.removeItem(id).then(function ()
+						localStorageMirkoukrywacz.removeItem(id).then(function ()
 						{
 							document.getElementById(`wykopx_mirkoukrywacz_element_${id}`).remove();
 						}).catch(function (err) { console.log(err); });
@@ -1670,6 +1747,16 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			});
 		}
 	}
+
+
+
+
+
+
+
+
+
+
 
 	/* AUTOMATYCZNIE POKAŻ CAŁOŚĆ DŁUGICH TREŚCI */
 	function autoOpenMoreContentEverywhere()
@@ -1703,8 +1790,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			}
 		}
 	}
-
-
 
 
 
@@ -3766,17 +3851,20 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		let matches = str.match(/\+\w+/g);
 		if (matches)
 		{
-			console.log("ZNALEZIONO")
 			return matches.map(word => word.slice(1));
 		}
 		else
 		{
-			console.log("nie nzaleziono +word returns normal")
-
 			return ["normal"];
 		}
 	}
-
+	function removePlusWords(str)
+	{
+		let words = str.split(' ');
+		let filteredWords = words.filter(word => word[0] !== '+');
+		let stringWithout = filteredWords.join(' ');
+		return stringWithout;
+	}
 
 
 
@@ -4094,6 +4182,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 	async function executeWhenPageLoadsFirstTime()
 	{
+		loadTime = dayjs();
+
 		const topHeaderProfileButton = document.querySelector("body header > div.right > nav > ul > li.account a.avatar");
 		if (topHeaderProfileButton) user.username = topHeaderProfileButton.getAttribute("href").split('/')[2];
 		// if (user.username == null) consoleX(`Cześć Anon. Nie jesteś zalogowany na Wykopie (⌐ ͡■ ͜ʖ ͡■)`);
@@ -4181,10 +4271,12 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		console.log("navigation - navigate event - " + event.type);
 		console.log(event);
 
+		loadTime = dayjs();
+
 		originalTabTitle = document.title;
 
 		visiblePlusesObserver.disconnect();
-		sectionEntryIntersectionObserver.disconnect();
+		sectionObjectIntersectionObserver.disconnect();
 
 		// consoleX(`navigation.addEventListener("navigate", (event) =>`, 1);
 
