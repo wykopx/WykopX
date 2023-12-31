@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop XDev
-@version        2.45.9
+@version        2.46.0
 @description    Wykop X Dev 
 @preprocessor   stylus
 @namespace      userstyles.world/user/wykopchanger
@@ -25,8 +25,15 @@
 @var checkbox   entryVotersListShowRealUserColorsOrange         `🟠⭐ Pokazuj kolory pomarańczek`                                0
 @var checkbox   entryVotersListShowRealUserColorsBordeaux       `🔴⭐ Pokazuj kolory bordo`                                      1
 @var checkbox   entryVotersListShowRealUserColorsOther          `⚪⭐ Pokazuj kolory moderacji i innych kont specjalnych`        1
-@var checkbox   entryVotersListNoUnderline                      `⭐ Usuń podkreślenie po najechaniu na profil`                 1
-@var checkbox   entryVotersListSortByColor                      `⭐ Sortuj listę według kolorów nicków`                        1
+@var checkbox   entryVotersListShowRealUserColorsBanned         `⛔⭐ Zbanowani użytkownicy na szaro`                            1
+@var checkbox   entryVotersListEmojiBannedUser                  `⭐ Emoji ⛔ przy zbanowanych użytkownikach`                   1
+@var checkbox   entryVotersListEmojiRemovedUser                 `⭐ Emoji ✖ przy usuniętych kontach`                           1
+@var checkbox   entryVotersListEmojiYourProfile                 `⭐ Emoji 🟠 przy Twoim profilu`                               1
+
+
+
+@var checkbox   entryVotersListNoUnderline                      `⭐ Usuń podkreślenie po najechaniu na profil`                   1
+@var checkbox   entryVotersListSortByColor                      `⭐ Sortuj listę według kolorów nicków`                          1
 @var select     entryVotersListSortOrder                        `⭐ Sortowanie listy` {
                                                                                 "🟢 zielonki ➜ 🟠 pomarańczki ➜ 🔴 bordoᅟ"  :  "zpb",
                                                                                 "🟢 zielonki ➜ 🔴 bordo ➜ 🟠 pomarańczki *"  :  "zbp",
@@ -694,9 +701,9 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
                                                                             } 
 
 
-@var checkbox   showObservedTagsInRightSidebar                  `❎💻 Pokazuj  # 𝗧𝘄𝗼𝗷𝗲 𝗼𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 𝘁𝗮𝗴𝗶`                                                                      1
-@var checkbox   showObservedTagsAlphabetically                  `❎💻 # 𝗧𝘄𝗼𝗷𝗲 𝗼𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 𝘁𝗮𝗴𝗶 - sortuj alfabetycznie`                                                                                  0
-@var range      showObservedTagsInRightSidebarUpdateInterval    `❎💻💻 # 𝗧𝘄𝗼𝗷𝗲 𝗼𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 𝘁𝗮𝗴𝗶 - odświeżaj listę co X h`       [12, 0.5, 24, 0.5, '']
+@var checkbox   observedTagsInRightSidebarEnable                `❎💻 Pokazuj  # 𝗧𝘄𝗼𝗷𝗲 𝗼𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 𝘁𝗮𝗴𝗶`                                                                      1
+@var checkbox   observedTagsInRightSidebarSortAlphabetically    `❎💻 # 𝗧𝘄𝗼𝗷𝗲 𝗼𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 𝘁𝗮𝗴𝗶 - sortuj alfabetycznie`                                                                                  0
+@var range      observedTagsInRightSidebarUpdateInterval        `❎💻💻 # 𝗧𝘄𝗼𝗷𝗲 𝗼𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 𝘁𝗮𝗴𝗶 - odświeżaj listę co X h`       [12, 0.5, 24, 0.5, '']
 
 
 
@@ -3549,12 +3556,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             } 
         }
         
-        #wxs_mirkoukrywacz_summary
-        {
-            font-size: 12rem;
-            color: var(--blackOpacity05);
-            margin-left: auto;
-        }
+        
         
 
     
@@ -3697,8 +3699,6 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     /* jeśli ktoś ma zainstalowany Wykop JS pojawia sie przycisk zachecajacy do isntalacji Wykop X CSS, ukrywamy go */
     div.left nav.main ul li a.wykopx_install_wykopx_button { display: none!important; } 
 
-
-
     body header.header > .left > nav.main > ul > li:has(a.wykopx_plus_button)
     {
         margin-left: 0px!important;
@@ -3709,6 +3709,8 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         font-size: 16px!important;
         padding: 0px 6px!important;
     } 
+    
+    
 
     if(presetLookLikeClassicWykop == 0)
     {
@@ -9483,7 +9485,26 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         if(entryVotersListShowRealUserColorsGreen == 1)     { section.entry-voters ul li[data-v-6e6ed6ee] a.username.green-profile                      span { color: unset!important; }}
         if(entryVotersListShowRealUserColorsOrange == 1)    { section.entry-voters ul li[data-v-6e6ed6ee] a.username.orange-profile:not(.removed)       span { color: unset!important; }}
         if(entryVotersListShowRealUserColorsOther == 1)     { section.entry-voters ul li[data-v-6e6ed6ee] a.username:not(.orange-profile, .green-profile, .burgundy-profile)   span { color: unset!important; }}
+        if(entryVotersListShowRealUserColorsBanned == 1)    { section.entry-voters ul li[data-v-6e6ed6ee] a.username.banned:not(.removed)               span { color: var(--gullGray)!important; }}
+        if(entryVotersListEmojiRemovedUser == 1)            { section.entry-voters ul li[data-v-6e6ed6ee] a.removed:not(.dummy)                       span:before { content:"✖"!important; padding-right: 2rem; font-size: 10rem; }}
+        if(entryVotersListEmojiBannedUser == 1)             { section.entry-voters ul li[data-v-6e6ed6ee] a.username.banned:not(.removed)               span:before { content:"⛔"!important; padding-right: 2rem; font-size: 10rem; }}
+        
+        if(entryVotersListEmojiYourProfile == 1)
+        {
+            section.entry-voters ul li[data-v-6e6ed6ee] a.username[href={"\/ludzie\/" + myUsername}]:not(.removed) span:before
+            { 
+                if(myNicknameColor == "pomaranczowy")   { content:"🟠"!important;  }
+                else if(myNicknameColor == "zielony")   { content:"🟢"!important;  }
+                else if(myNicknameColor == "bordo")     { content:"🔴"!important;  }
+                    
+                padding-right: 2rem;
+                font-size: 10rem;
+            }
+        }
 
+
+        
+        
         if(entryVotersListNoUnderline == 1)
         {
             section.entry-voters ul li[data-v-6e6ed6ee] a.username:hover
@@ -10232,17 +10253,27 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             }
 
             /* TWOJE OBSERWOWANE TAGI */
-            if(showObservedTagsInRightSidebar == 1)
+            section.wykopx_your_observed_tags
+            {
+                border: 10px solid red;
+                display: flex!important;
+                flex-direction: column;
+                gap: 16px;
+            } 
+            if(observedTagsInRightSidebarEnable == 1)
             {
               section.wykopx_your_observed_tags
               {
+                border: 10px solid red;
                 display: flex!important;
                 flex-direction: column;
                 gap: 16px;
               } 
 
-              section.wykopx_your_observed_tags .wykopx_quick_search_container
+              section.wykopx_your_observed_tags div.wykopx_quick_search_container
               {
+                display: flex!important;
+                border: 1px solid red!important;
                 width: 100%;
                 position: relative;
               } 
@@ -18226,66 +18257,34 @@ https://wykop.pl/moje/
     // rating-box intersecting
     .notIntersecting
     {
-        // border-bottom: 1px solid gray;
     }
 
     .isIntersecting
     {    
-        border-radius: 0px!important;
-
-        // outline: 1px solid green!important;
-        // box-shadow: -2px 0px 3px  blue!important;
-        border-left-width: 3px!important;
-        border-left-style: dotted!important;
-        border-left-color: green!important;
-        // padding-left: 6px!important;
-        
-        animation-name: isIntersectingAnimation!important;
-        animation-duration: 1s!important;
-        animation-iteration-count: infinite!important;
     }
-    
-    .isIntersecting::before,
-    .isIntersecting::after
+    section.link-block > section
     {
-        padding: 0px 3px;
-        font-size: 13rem;
-        animation-duration: 5s, 3s;
-        animation-fill-mode: forwards;
+        position: relative;
+    }
+    section.link-block.isIntersecting > section::after,
+    section.entry.isIntersecting::after
+    {
+        content: "🟢";
+        font-size: 10rem;
+        animation-name: isIntersectingAnimation!important;
+        animation-duration: 2s!important;
+        animation-iteration-count: infinite!important;
         
         position: absolute;
-        right: -14px;
+        left: 0px;
         top: 0px;
     }
-
-    .addedPluses > article > header > div.right > div > section.rating-box:after
-    {
-        animation-name: fadeOutAnimation, slideUpAnimation;
-        color: #10af27;
-        content: var(--addedPluses);
-    }
-    .removedPluses > article > header > div.right > div > section.rating-box:after
-    {
-        animation-name: fadeOutAnimation, slideDownAnimation;
-        color: #d10909;
-        content: var(--removedPluses);
-    }
-    .addedMinuses > article > header > div.right > div > section.rating-box:after
-    {
-        color: #a10707;
-        content: var(--addedMinuses);
-    }
-    .removedMinuses > article > header > div.right > div > section.rating-box:after
-    {
-        color: #fff;
-        content: var(--removedMinuses);
-    }
-    
+        
     @keyframes isIntersectingAnimation
     {
-        0%      { border-left-color: transparent; }
-        70%     { border-left-color: green; }
-        100%    { border-left-color: transparent; }
+        0%      { opacity: 0; scale: 0.3; }
+        50%     { opacity: 1; scale: 0.5; }
+        100%    { opacity: 0; scale: 0.3}
     }
     @keyframes fadeOutAnimation
     {
@@ -18309,6 +18308,31 @@ https://wykop.pl/moje/
         70%     { translate: 0px 0px; }
         100%    { translate: 0px 10px; }
     } 
+    
+
+    .addedPluses > article > header > div.right > div > section.rating-box:after
+    {
+        animation-name: fadeOutAnimation, slideUpAnimation;
+        color: #10af27;
+        content: var(--addedPluses);
+    }
+    .removedPluses > article > header > div.right > div > section.rating-box:after
+    {
+        animation-name: fadeOutAnimation, slideDownAnimation;
+        color: #d10909;
+        content: var(--removedPluses);
+    }
+    .addedMinuses > article > header > div.right > div > section.rating-box:after
+    {
+        color: #a10707;
+        content: var(--addedMinuses);
+    }
+    .removedMinuses > article > header > div.right > div > section.rating-box:after
+    {
+        color: #fff;
+        content: var(--removedMinuses);
+    }
+
         
         
         
@@ -18431,6 +18455,54 @@ https://wykop.pl/moje/
         justify-content: center;
         align-items: center;
     } 
+    
+        
+    // WXS CONSOLE
+    #wxs_console_container
+    {
+        display: flex;
+        flex-direction: row;
+        font-size: 12rem;
+        color: var(--blackOpacity08, rgba(140, 140, 140, 1))
+        
+        margin-left: auto;
+        
+    }
+    #wxs_console
+    {
+        display: flex;
+        flex-direction: column;
+        font-size: 11rem;
+        color: var(--blackOpacity06, rgba(140, 140, 140, 1));
+        align-items: end;
+        width: fit-content;
+        align-items: start;
+        margin-left: auto;
+        row-gap: 2px;
+        padding-right: 10px;
+    }
+    #wxs_console > div
+    {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-items: space-between;
+        column-gap: 30px;
+    }
+    #wxs_console > div > span.wxs_console_count
+    {
+        display: inline-block;
+        min-width: 20rem;
+        text-align: center;
+    }
+    #wxs_console > div > span.wxs_console_text
+    {
+        display: inline-block;
+        text-align: right;
+        width: 100%;
+        flex-basis: 1 0 0;
+    }
+    
     
     // MIRKOUKRYWACZ 
 
@@ -18762,7 +18834,7 @@ https://wykop.pl/moje/
     // VARIABLES
     
     versor = "style"; // "style", "blank", "block"
-    version = "2.45";   
+    version = "2.46";   
     // xblocker = 2.49
     
     /* Wykop XS Settings  */
@@ -18792,10 +18864,16 @@ https://wykop.pl/moje/
         --disableNewLinkEditorPastedTextLimit:      disableNewLinkEditorPastedTextLimit;
         --autoOpenMoreContentEverywhere:            autoOpenMoreContentEverywhere;
         --autoOpenSpoilersEverywhere:               autoOpenSpoilersEverywhere;
+        --observedTagsInRightSidebarEnable:         observedTagsInRightSidebarEnable;
+        --observedTagsInRightSidebarUpdateInterval: observedTagsInRightSidebarUpdateInterval; 
+        --observedTagsInRightSidebarSortAlphabetically: observedTagsInRightSidebarSortAlphabetically;
+
     } 
 
-    
-    
+   
+                                                                    
+                                                                    
+                                                                    
     if(topNavHamburgerHoverMinimize == 1)                   { body {  --topNavHamburgerHoverMinimize: "true"; }}
 
     if(notatkowatorEnable == 1)                             { body {  --notatkowatorUpdateInterval: notatkowatorUpdateInterval; }} 
@@ -18814,7 +18892,6 @@ https://wykop.pl/moje/
     if(tabTitleShowNotificationsCountSeparated == 1)        { body {  --tabTitleShowNotificationsCountSeparated: "true"; }}
 
     if(allowToDownloadImage == 1)                           { body {  --allowToDownloadImage: "true"; }} 
-    if(showObservedTagsAlphabetically == 1)                 { body {  --showObservedTagsAlphabetically: "true"; }} 
     if(fixCaseSensitiveTagsRedirection == 1)                { body {  --fixCaseSensitiveTagsRedirection: "true"; }} 
     if(refreshOrRedirectOnHomeButtonClick == 1)             { body {  --refreshOrRedirectOnHomeButtonClick: "true"; }} 
     if(tabTitleShowNotificationsCountTagsNewLink == 1)      { body {  --tabTitleShowNotificationsCountTagsNewLink: "true"; }} 
@@ -18825,13 +18902,10 @@ https://wykop.pl/moje/
     if(refreshOrRedirectOnMicroblogButtonClick == 1)        { body {  --refreshOrRedirectOnMicroblogButtonClick: "true"; }} 
     
     if(categoryRedirectToMicroblogButtonEnable == 1)        { body {  --categoryRedirectToMicroblogButtonEnable: "true"; 
-                                                                      --categoryRedirectToMicroblogButtonFilter: categoryRedirectToMicroblogButtonFilter; }} 
+                                                                      --categoryRedirectToMicroblogButtonFilter: categoryRedirectToMicroblogButtonFilter;
+                                                                   }
+                                                            } 
 
-    
-    if(showObservedTagsInRightSidebar == 1)                 { body {  --showObservedTagsInRightSidebar: "true"; 
-                                                                      --showObservedTagsInRightSidebarUpdateInterval: showObservedTagsInRightSidebarUpdateInterval; 
-                                                                    } 
-                                                            }
     if(notatkowatorEnable == 1)                             { body {  --notatkowatorEnable: notatkowatorEnable;             // 1/0
                                                                       --notatkowatorVerticalBar: notatkowatorVerticalBar;  // 1 / 0
                                                                       --notatkowatorStyle: notatkowatorStyle;               // string
