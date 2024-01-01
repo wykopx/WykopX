@@ -31,13 +31,12 @@ Chcesz wesprzeć i wysłać kilka złotych za dobrą robotę?
    
 Szybkie linki:   
 
-**Skrypt JS**:  
-⭐ **Wykop XS** https://greasyfork.org/en/scripts/458860-wykop-xs   
+Skrypt JavaScript
+- **Wykop XS** https://greasyfork.org/en/scripts/458860-wykop-xs   
    
-**Style CSS**:  
-⭐ **Wykop X Style**: https://userstyles.world/style/8174/wykop-x-style   
-⭐ **Wykop X Blocker**: https://userstyles.world/style/8175/wykop-x-blocker   
-     
+Style CSS:
+- **Wykop X Style**: https://userstyles.world/style/8174/wykop-x-style   
+
 - **Wykop X Blank** https://userstyles.world/style/8419/wykop-x-blank   
 - **Wykop XS** https://userstyles.world/style/8179/wykop-xs
     
