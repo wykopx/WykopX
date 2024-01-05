@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop XDev
-@version        2.46.0
+@version        2.47.0
 @description    Wykop X Dev 
 @preprocessor   stylus
 @namespace      userstyles.world/user/wykopchanger
@@ -9,47 +9,169 @@
 
 
 
-@var range      HT_NEW_2456                             `⭐ Nowe`                                                                                           [0, 0, 99900, 1, 'mm']
+@var range      HR_NEW_247                          `⭐ Nowe`                                                                                           [0, 0, 99900, 1, 'mm']
 
+                                                                            
 @var checkbox   autoOpenSpoilersEverywhere                      `❎ 𝗣𝗢𝗞𝗔𝗭̇ 𝗦𝗣𝗢𝗜𝗟𝗘𝗥 - rozwijaj spoilery ⭐`                                      1
-@var checkbox   floatingNextPreviousButtons                     `Przyciski Następna/Poprzednia strona zawsze widoczne ⭐`                      1
-@var checkbox   betterPhotosInEntries                           `Lepsze obrazki we wpisach i komentarzach ⭐`                      1
-@var range      betterPhotosInEntries_INFO                      `Poprawienie wyświetlania obrazków. Jeśli obrazek jest ma wysoką rozdzielczość próbuje wyświetlić go w jak największych rozmiarach. Poziome obrazk zostaną rozciągnięte do pełnej szerokości strony przy limicie wysokości wybranym poniżej. Obrazki pionowe zostaną wyświetlone do maksymalnej wysokości. Obrazki niewielkie nie bedą rozciągane ani w szerokości, ani w wysokości.`             [0, 0,88800, 1, 'mm']
+@var checkbox   floatingNextPreviousButtons                     `Przyciski paginacji ◀ Poprzednia / Następna ▶ zawsze widoczne ⭐`             1
+@var checkbox   betterPhotosInEntries                           `Lepsze obrazki we wpisach i komentarzach ⭐`                                    1
+@var range      betterPhotosInEntries_INFO                      `Poprawienie wyświetlania obrazków. Jeśli obrazek jest ma wysoką rozdzielczość próbuje wyświetlić go w jak największych rozmiarach. Poziome obrazki zostaną rozciągnięte do pełnej szerokości strony przy limicie wysokości wybranym poniżej. Obrazki pionowe zostaną wyświetlone do maksymalnej wysokości. Obrazki niewielkie nie bedą rozciągane ani w szerokości, ani w wysokości.`             [0, 0,88800, 1, 'mm']
 
 @var range      betterPhotosInEntriesMaxHeight                  `Maksymalna wysokość obrazków`             [500, 150, 1500, 50, 'px']
 
         
         
-@var range      HR_ENTRY_VOTERS                         `LISTA PLUSUJĄCYCH WPIS/KOMENTARZ ⭐ Nowe`                                                                                           [0, 0, 99900, 1, 'mm']
-@var checkbox   entryVotersListShowRealUserColorsGreen          `🟢⭐ Pokazuj kolory zielonek`                                   1
-@var checkbox   entryVotersListShowRealUserColorsOrange         `🟠⭐ Pokazuj kolory pomarańczek`                                0
-@var checkbox   entryVotersListShowRealUserColorsBordeaux       `🔴⭐ Pokazuj kolory bordo`                                      1
-@var checkbox   entryVotersListShowRealUserColorsOther          `⚪⭐ Pokazuj kolory moderacji i innych kont specjalnych`        1
-@var checkbox   entryVotersListShowRealUserColorsBanned         `⛔⭐ Zbanowani użytkownicy na szaro`                            1
-@var checkbox   entryVotersListEmojiBannedUser                  `⭐ Emoji ⛔ przy zbanowanych użytkownikach`                   1
-@var checkbox   entryVotersListEmojiRemovedUser                 `⭐ Emoji ✖ przy usuniętych kontach`                           1
-@var checkbox   entryVotersListEmojiYourProfile                 `⭐ Emoji 🟠 przy Twoim profilu`                               1
+        
+        
+@var range      HR_NICKNAME_COLORS                  `🔴🟠🟢 KOLORY NICKÓW ⭐ Nowe`                                                                                [0, 0, 99900, 1, 'mm']
+
+@var select     nicknameColorsYours                             `💛 Zmień kolor Twojego nicka ⭐` {
+                                                                            "Nie zmieniaj koloru (domyślny)":"domyslny", 
+                                                                            "🟢 Zielonka":"zielony", 
+                                                                            "🔴 Bordo":"bordo",
+                                                                            "🟠 Pomarańczowy":"pomaranczowy",
+                                                                            "💙/💜 Kolor Twojego paska":"kolor_paska",
+                                                                            "💛 Własny kolor (wybierz poniżej)":"wlasny", 
+                                                                    } 
+@var color      nicknameColorsYoursCustom                       `💛 Własny kolor Twojego nicka ⭐`                    rgba(255, 185, 0, 1)
 
 
+@var select     nicknameColorsGreen                             `🟢 Kolory nicków: zielonki` {
+                                                                            "🟢 Zielonka (domyślny)":"zielony", 
+                                                                            "🔴 Bordo":"bordo",
+                                                                            "🟠 Pomarańczowy":"pomaranczowy",
+                                                                            "💙/💜 Kolor paska":"kolor_paska",
+                                                                    } 
+@var select     nicknameColorsOrange                            `🟠 Kolory nicków: pomarańczowe` {
+                                                                            "🟠 Pomarańczowy (domyślny)":"pomaranczowy",
+                                                                            "🔴 Bordo":"bordo",
+                                                                            "🟢 Zielonka":"zielony",
+                                                                            "💙/💜 Kolor paska ":"kolor_paska"
+                                                                    }
+@var select     nicknameColorsBordeaux                          `🔴 Kolory nicków: bordo` {
+                                                                            "🔴 Bordo (domyślny)":"bordo",
+                                                                            "🟠 Pomarańczowy":"pomaranczowy",
+                                                                            "🟢 Zielonka":"zielony",
+                                                                            "💙/💜 Kolor paska":"kolor_paska",
+                                                                    }                                                                    
+                                                                    
 
-@var checkbox   entryVotersListNoUnderline                      `⭐ Usuń podkreślenie po najechaniu na profil`                   1
-@var checkbox   entryVotersListSortByColor                      `⭐ Sortuj listę według kolorów nicków`                          1
-@var select     entryVotersListSortOrder                        `⭐ Sortowanie listy` {
-                                                                                "🟢 zielonki ➜ 🟠 pomarańczki ➜ 🔴 bordoᅟ"  :  "zpb",
-                                                                                "🟢 zielonki ➜ 🔴 bordo ➜ 🟠 pomarańczki *"  :  "zbp",
-                                                                                "🔴 bordo ➜ 🟢 zielonki ➜ 🟠 pomarańczki "   :  "bzp",
-                                                                                "🔴 bordo ➜ 🟠 pomarańczki ➜ 🟢 zielonki "   :  "bpz",
-                                                                                "🟠 pomarańczki ➜ 🔴 bordo ➜ 🟢 zielonki "   :  "pbz",
-                                                                                "🟠 pomarańczki ➜ 🟢 zielonki ➜ 🔴 bordo "   :  "pzb",
+                                                                    
+@var select     nicknameColorsBanned                            `🍌 Kolory nicków: użytkownicy z banem ⭐` {
+                                                                            "🟢🟠🔴 Kolor konta (domyślny)":"domyslny",
+                                                                            "🔘 Szary":"szary",
+                                                                            "🍌 Bananowy*":"bananowy",
+                                                                            "🔴 Czerwony":"czerwony",
+                                                                            "💙/💜 Kolor paska ":"kolor_paska"
+                                                                    }
+@var checkbox   nicknameColorsBannedWithStrikethrough           `🍌 Nazwa zbanowanego użytkownika p̵r̵z̵e̵k̵r̵e̵ś̵l̵o̵n̵a̵ ⭐`                        0
+@var checkbox   nicknameEmojiBanned                             `🍌 Pokaż emoji przy nickach zbanowanych użytkowników ⭐`               1
+@var select     emojiBanned                                     `🍌 Emoji do oznaczania użytkowników z banem ⭐` {
+                                                                                "🍌 Banan":"banan",
+                                                                                "❌ Czerwony X":"czerwony_x",
+                                                                                "✖ W kolorze nicka"  :  "szary_x",
+                                                                                "❗ Czerwony wykrzyknik"  :  "czerwony_wykrzyknik",
+                                                                                "❕ Biały wykrzyknik"  :  "bialy_wykrzyknik",
+                                                                                "❓ Czerwony znak zapytania"  :  "czerwony_znak_zapytania",
+                                                                                "❔ Biały znak zapytania"  :  "bialy_znak_zapytania",
+                                                                                "⚫ Czarna kropa"  :  "czarna_kropa",
+                                                                                "🔴 Czerwona kropa"  :  "czerwona_kropa",
+                                                                                "⛔ Zakaz wjazdu"  :  "zakaz_wjazdu",
+                                                                                "📛 Zakaz wjazdu 2"  :  "zakaz_wjazdu_2",
+                                                                                "🚯 Zakaz śmieci"  :  "zakaz_smieci",
+                                                                                "🚷 Zakaz ruchu pieszych"  :  "zakaz_ruchu_pieszych",
+                                                                                "🚫 Zakaz postoju"  :  "zakaz_postoju",
+                                                                    }
+@var select     nicknameColorsRemoved                           `❌ Kolory nicków: k̶o̶n̶t̶ ̶u̶s̶u̶n̶i̶ę̶t̶y̶c̶h̶ ⭐` {
+                                                                            "🔘 Szary (domyślnie)":"domyslnie",
+                                                                            "🔴 Czerwony":"czerwony",
+                                                                            "⚫ Czarny":"czarny",
+                                                                            "🟢🟠🔴 Kolor konta":"kolor_konta",
+                                                                            "💙/💜 Kolor paska":"kolor_paska"
+                                                                            
+                                                                    }
+@var checkbox   nicknameColorsRemovedNoStrikethrough            `❌ Nazwa 'k̶o̶n̶t̶o̶ ̶u̶s̶u̶n̶i̶ę̶t̶e̶' bez przekreślenia ⭐`               1
+@var checkbox   nicknameEmojiRemoved                            `❌ Pokaż emoji przy nickach k̶o̶n̶t̶ ̶u̶s̶u̶n̶i̶ę̶t̶y̶c̶h̶ ⭐`               1
+@var select     emojiRemoved                                    `❌ Emoji do oznaczania k̶o̶n̶t̶ ̶u̶s̶u̶n̶i̶ę̶t̶y̶c̶h̶ ⭐` {
+                                                                                "❌ Czerwony X"  :  "czerwony_x",
+                                                                                "✖ W kolorze nicka"  :  "szary_x",
+                                                                                "❗ Czerwony wykrzyknik"  :  "czerwony_wykrzyknik",
+                                                                                "❕ Biały wykrzyknik"  :  "bialy_wykrzyknik",
+                                                                                "❓ Czerwony znak zapytania"  :  "czerwony_znak_zapytania",
+                                                                                "❔ Biały znak zapytania"  :  "bialy_znak_zapytania",
+                                                                                "⚫ Czarna kropa"  :  "czarna_kropa",
+                                                                                "🔴 Czerwona kropa"  :  "czerwona_kropa",
+                                                                                "⛔ Zakaz wjazdu"  :  "zakaz_wjazdu",
+                                                                                "📛 Zakaz wjazdu 2"  :  "zakaz_wjazdu_2",
+                                                                                "🚯 Zakaz śmieci"  :  "zakaz_smieci",
+                                                                                "🚷 Zakaz ruchu pieszych"  :  "zakaz_ruchu_pieszych",
+                                                                                "🚫 Zakaz postoju"  :  "zakaz_postoju",
+                                                                    }
+
+                                                                    
+
+                                                                            
+@var range      HR_ENTRY_VOTERS                         `LISTA PLUSUJĄCYCH ⭐ Nowe`                                                                                           [0, 0, 99900, 1, 'mm']
+
+@var checkbox   entryVotersListUsersStartWithAt                 `Wyświetl @ przed nazwami użytkowników ⭐`                       1
+@var checkbox   entryVotersListNoUnderline                      ` Bez podkreślenia po najechaniu na profil ⭐`                       1
+
+@var checkbox   entryVotersListEmojiYourProfile                 `Emoji 🟠 przy Twoim nicku ⭐`                                   1
+@var checkbox   entryVotersListShowRealNicknameColorsYours      `Twój nick w kolorze ⭐`                                         1
+@var checkbox   entryVotersListSortOrderyYourNicknameFirst      `Twój nick zawsze pierwszy na liście ⭐`                         1
+
+
+@var checkbox   entryVotersListShowRealNicknameColorsGreen      `🟢 Pokazuj kolory zielonek ⭐`                                   1
+@var checkbox   entryVotersListShowRealNicknameColorsOrange     `🟠 Pokazuj kolory pomarańczek ⭐`                                0
+@var checkbox   entryVotersListShowRealNicknameColorsBordeaux   `🔴 Pokazuj kolory bordo ⭐`                                      1
+@var checkbox   entryVotersListShowRealNicknameColorsOther      `⚪ Pokazuj kolory moderacji i innych kont specjalnych ⭐`        1
+
+
+@var select     entryVotersListShowRealNicknameColorsBanned     `🍌 Kolory nicków: użytkownicy z banem ⭐` {
+                                                                            "🟢🟠🔴 Kolor konta (domyślny)":"domyslny",
+                                                                            "🔘 Szary":"szary",
+                                                                            "🍌 Bananowy*":"bananowy",
+                                                                            "🔴 Czerwony":"czerwony",
+                                                                        }
+@var checkbox   entryVotersListEmojiBannedUser                  `🍌 Emoji przy użytkownikach z banem ⭐`                           1
+@var select     entryVotersListBannedLast                       `🍌 Użytkownicy z banem ⭐ ` {
+                                                                                "Wyświetlaj normalnie (domyślnie)":"domyslnie",
+                                                                                "Wyświetlaj na końcu listy":"na_koncu"
                                                                             }
+@var checkbox   entryVotersListBannedHide                       `🚫 Ukryj konta zbanowane z listy plusujących ⭐`           0
 
-@var checkbox   entryVotersListUsersBlackFirst                  `⭐ Plusująca moderacja na początku listy (@a__s, @m__b, @wykop)`  1
-@var select     entryVotersListUsersRemoved                     `⭐ Konta usunięte` {
-                                                                                "Wyświetlaj normalnie":"domyslnie",
+
+
+@var select     entryVotersListRemovedLast                      `❌ Konta usunięte ⭐ ` {
+                                                                                "Wyświetlaj normalnie (domyślnie)":"domyslnie",
                                                                                 "Wyświetlaj na końcu listy*":"na_koncu"
                                                                             }
+@var select     entryVotersListShowRealNicknameColorsRemoved    `❌ Kolory nicków: k̶o̶n̶t̶ ̶u̶s̶u̶n̶i̶ę̶t̶y̶c̶h̶ ⭐ ` {
+                                                                            "🔘 Szary (domyślnie)"  :  "szary",
+                                                                            "🔴 Czerwony"  :  "czerwony",
+                                                                            "⚫ Czarny"  :  "czarny",
+                                                                            "🟢🟠🔴 Kolor konta"  :  "kolor_konta",
+                                                                    }
+@var checkbox   entryVotersListNicknameColorsRemovedNoStrikethrough `❌ Tekst 'k̶o̶n̶t̶o̶ ̶u̶s̶u̶n̶i̶ę̶t̶e̶' bez przekreślenia ⭐`                  1
+@var checkbox   entryVotersListEmojiRemovedUser                     `❌ Emoji przy k̶o̶n̶t̶a̶c̶h̶ ̶u̶s̶u̶n̶i̶ę̶t̶y̶c̶h̶ ⭐`                              1
+@var checkbox   entryVotersListEmojiRemovedUserTextHide             `❌ Ukryj tekst 'k̶o̶n̶t̶o̶ ̶u̶s̶u̶n̶i̶ę̶t̶e̶' (wyświetl tylko emoji) ⭐`       0
+@var checkbox   entryVotersListRemovedHide                      `🚫 Ukryj k̵o̵n̵t̵a̵ ̵u̵s̵u̵n̵i̵ę̵t̵e̵ z listy plusujących ⭐`                                   0
+
+                   
+@var checkbox   entryVotersListUsersBlackFirst                  ` Plusująca moderacja na początku listy (@a__s, @m__b, @wykop) ⭐`   1
+@var checkbox   entryVotersListSortByColor                      ` Sortuj listę według kolorów nicków ⭐`                             1
+@var select     entryVotersListSortOrder                        ` Sortowanie listy ⭐` {
+                                                                            "🟢 zielonki ➜ 🟠 pomarańczki ➜ 🔴 bordo  " : "zpb",
+                                                                            "🟢 zielonki ➜ 🔴 bordo ➜ 🟠 pomarańczki *" : "zbp",
+                                                                            "🔴 bordo ➜ 🟢 zielonki ➜ 🟠 pomarańczki  " : "bzp",
+                                                                            "🔴 bordo ➜ 🟠 pomarańczki ➜ 🟢 zielonki  " : "bpz",
+                                                                            "🟠 pomarańczki ➜ 🔴 bordo ➜ 🟢 zielonki  " : "pbz",
+                                                                            "🟠 pomarańczki ➜ 🟢 zielonki ➜ 🔴 bordo  " : "pzb",
+                                                                        }
+
+
                                                                             
-@var select     entryVotersListUsersSeparator                   `⭐ Znak oddzielający profile` {
+@var select     entryVotersListUsersSeparator                   `Znak oddzielający profile ⭐` {
                                                                         " , Przecinek (domyślny)":"przecinek",
                                                                         " [ ] Spacja":"spacja",
                                                                         " • Punktor*":"punktor",
@@ -66,12 +188,9 @@
                                                                         " ✖️ Emoji ":"emoji_3",
                                                                         " Własny (wpisz poniżej)":"wlasny",
                                                                     }
-@var text       entryVotersListUsersSeparatorCustom             `📝❎ Własny separator notatek:` `' / '`
-@var checkbox   entryVotersListUsersStartWithAt                 `Wyświetl @ na początku nazw użytkowników`                       1
+@var text       entryVotersListUsersSeparatorCustom             `📝❎ Własny separator notatek: ⭐` `' / '`
 
-
-@var checkbox   entryVotersListUsersRemovedHide                 `🚫 Ukryj k̵o̵n̵t̵a̵ ̵u̵s̵u̵n̵i̵ę̵t̵e̵ z listy plusujących`                       0
-                                                         
+@var checkbox   entryVotersListRawHide                          `🚫 Wyświetl tylko nicki pierwszych 300 plusujących ⭐`          0 
 @var checkbox   entryVotersListHide                             `🚫 Ukryj listy plusujących`                                     0 
 
 
@@ -89,9 +208,9 @@
 @var range      notatkowatorUpdateInterval_INFO                 `Opis jak dziala notatkowatorVerticalBar`             [0, 0,88800, 1, 'mm']
 
 @var select     notatkowatorStyle                               `📝❎ Styl notatek ⭐` {
-                                                                                "⭐ Obok nicka (Notatkowator2000)":"obok_nicka",
-                                                                                "Wyraźna, pod avatarem (Wykop X Style)":"pod_avatarem",
-                                                                            }
+                                                                        "⭐ Obok nicka (Notatkowator2000)":"obok_nicka",
+                                                                        "Wyraźna, pod avatarem (Wykop X Style)":"pod_avatarem",
+                                                                    }
 @var select     notatkowatorIcon                                `📝❎ Ikonka/separator notatki ⭐` {
                                                                         " 📝 Notatnik":"notatnik",
                                                                         " 💡 Żarówka":"zarowka",
@@ -110,14 +229,14 @@
 
 @var checkbox   categoryRedirectToMicroblogButtonEnable         `🔷❎ 𝗣𝗿𝘇𝘆𝗰𝗶𝘀𝗸𝗶 𝗠𝗜𝗥𝗞𝗢 - przenoszące na mikroblog wybranej kategorii`       1
 @var select     categoryRedirectToMicroblogButtonFilter         `🔷❎ 𝗣𝗿𝘇𝘆𝗰𝗶𝘀𝗸 𝗠𝗜𝗥𝗞𝗢 otwiera` {
-                                                                            "Najnowsze":"_mikroblog_najnowsze",
-                                                                            "Ostatnio wybrane":"_mikroblog",
-                                                                            "Aktywne":"_mikroblog_aktywne",
-                                                                            "Gorące (2h)":"_mikroblog_gorace_2",
-                                                                            "Gorące (6h)":"_mikroblog_gorace_6",
-                                                                            "Gorące (12h)":"_mikroblog_gorace_12",
-                                                                            "Gorące (24h)":"_mikroblog_gorace_24"
-                                                                            } 
+                                                                        "Najnowsze":"_mikroblog_najnowsze",
+                                                                        "Ostatnio wybrane":"_mikroblog",
+                                                                        "Aktywne":"_mikroblog_aktywne",
+                                                                        "Gorące (2h)":"_mikroblog_gorace_2",
+                                                                        "Gorące (6h)":"_mikroblog_gorace_6",
+                                                                        "Gorące (12h)":"_mikroblog_gorace_12",
+                                                                        "Gorące (24h)":"_mikroblog_gorace_24"
+                                                                    } 
 @var checkbox   categoryMenuRedirectToMicroblogButtonShowOnMinimized   `❎ categoryMenuRedirectToMicroblogButtonShowOnMinimized ⭐`    1
 
 
@@ -127,10 +246,10 @@
 @var checkbox   topNavHamburgerButtonHide                       `🚫 Ukryj przycisk minimalizowania menu "☰"`                  0
 @var checkbox   categoryMenuMiniCompact                         `☰ Minimalistyczne Menu po zminimalizowaniu `                1
 @var select     categoryMenuMiniCompactVerticalAlign            `☰ Minimalistyczne Menu - położenie ` {
-                                                                            "Na górze":"gora",
-                                                                            "Na środku*":"srodek",
-                                                                            "Na dole":"dol",
-                                                                            } 
+                                                                        "Na górze":"gora",
+                                                                        "Na środku*":"srodek",
+                                                                        "Na dole":"dol",
+                                                                    } 
 
 @var checkbox   categoryMenuButtonsOnBottom                     `💻 Wyświetl przyciski na dole ⭐`                             0
                                             
@@ -140,9 +259,9 @@
 @var checkbox   categoryMenuButtonsLabelsHide                   `💻 Ukryj nazwy przycisków ⭐`                                  1
 
 @var select     categoryMenuNightModeSwitchPosition             `🌘 Przycisk 𝗧𝗿𝘆𝗯 𝗻𝗼𝗰𝗻𝘆/𝗧𝗿𝘆𝗯 𝗱𝘇𝗶𝗲𝗻𝗻𝘆 ⭐` {
-                                                                            "Na dole (domyślnie)":"nadole",
-                                                                            "Na górze*":"nagorze"
-                                                                            } 
+                                                                        "Na dole (domyślnie)":"nadole",
+                                                                        "Na górze*":"nagorze"
+                                                                    } 
 @var checkbox   categoryMenuNightModeSwitchHide                 `🚫 Ukryj przycisk 𝗧𝗿𝘆𝗯 𝗻𝗼𝗰𝗻𝘆/𝗧𝗿𝘆𝗯 𝗱𝘇𝗶𝗲𝗻𝗻𝘆 ⭐`                    0
 @var checkbox   categoryMenuScrollbarHide                       `🚫💻 Ukryj pasek przewijania przy dużej liczbie kategorii`     0
 
@@ -156,26 +275,26 @@
                                                                             "Nie ukrywaj (domyślnie)":"nieukrywaj",
                                                                             "👤 Ukrywaj jeśli niezalogowany*":"ukrywaj_niezalogowany",
                                                                             "🚫 Ukrywaj zawsze":"ukrywaj_zawsze"
-                                                                            } 
+                                                                        } 
 @var checkbox   categoryActiveFirst                             `Przeglądana kategoria pierwsza na liście`                              1
 @var select     categoryNoNewNotifications                      `Kategorie bez nowych wpisów` {
                                                                             "Wyświetlaj normalnie (domyślnie)":"domyslnie",
                                                                             "Wyszarzone*":"wyszarzone",
                                                                             "🚫 Nie pokazuj kategorii bez nowych wpisów":"niepokazuj"
-                                                                            } 
+                                                                        } 
 @var checkbox   categoryNewNotificationFirst                    `Kategorie z nowymi wpisami pierwsze na liście`                         1
 @var checkbox   categoryNewNotificationBolder                   `Wyróżniaj kategorie z nowymi wpisami`                                  1
 @var select     categoryNotificationBadgePosition               `⭕ Kropka powiadomienia informująca o nowych w kategorii` {
                                                                             "Kropka po lewej (domyślnie)":"pokazujkropke",
                                                                             "Kropka po prawej*":"pokazujkropkepoprawej",
                                                                             "Nie pokazuj powiadomień":"niepokazuj"
-                                                                            } 
+                                                                        } 
 @var select     categoryNotificationBadgeStyle                  `Wygląd i kolor kropki powiadomień` {
                                                                             "🟠 Pomarańczowa (domyślnie)":"pomaranczowa_domyslna",
                                                                             "🔵 Niebieska*":"niebieska",
                                                                             "🔴 Czerwone kółko (styl iPhone)":"czerwona_iphone",
                                                                             "🟧 Pomarańczowy kwadrat (styl Wykop 1.0)":"pomaranczowy_wykop10",
-                                                                            } 
+                                                                        } 
 @var checkbox   categoryNotificationBadgeAnimation              `Animacja kropki`                                                         0
 @var checkbox   ignoreCategoryColor                             `💻 Nie zmieniaj kolorystyki w kategoriach `                              0
 
@@ -187,10 +306,10 @@
 @var checkbox   topNavHamburgerHoverMinimize                    `❎ topNavHamburgerHoverMinimize ⭐`                     1
 @var checkbox   categoryMenuMaximizeOnHover                     `❎ categoryMenuMaximizeOnHover ⭐`                      1
 @var select     categoryMenuPosition                            `categoryMenuPosition ⭐` {
-                                                                    "sticky":"sticky",
-                                                                    "relative":"relative",
-                                                                    "third":"third"
-                                                                }
+                                                                        "sticky":"sticky",
+                                                                        "relative":"relative",
+                                                                        "third":"third"
+                                                                    }
 @var checkbox   categoryMenuHide                                `🚫 Usuń menu kategorii ⭐`                              0
 @var checkbox   categoryMenuMyWykopObserwowane                  `💻 Zmień nazwę 𝗢𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 na 𝗠𝗼𝗷 𝘄𝘆𝗸𝗼𝗽 ⭐`      1
 
@@ -295,10 +414,10 @@
                                                                     } 
 @var checkbox   justifyLinksDescription                         `☰ Wyjustowany opis znaleziska `                           1
 @var checkbox   showFullDescription                             `☰ Nie ucinaj długich opisów znalezisk`                    0
-@var checkbox   linkShowRealUserColorOrange                     `🟠 Wyświetl nazwę pomarańczki w kolorze ⭐ `              1
-@var checkbox   linkShowRealUserColorBordeaux                   `🔴 Wyświetl nazwę bordo w kolorze ⭐`                     1
-@var checkbox   linkShowRealUserColorGreen                      `🟢 Wyświetl nazwę zielonki w kolorze ⭐`                   1
-@var checkbox   linkShowRealUserColorOther                      `⚪ Wyświetl nazwę kont specjalnych w kolorze ⭐`           1
+@var checkbox   linkShowRealNicknameColorOrange                     `🟠 Wyświetl nazwę pomarańczki w kolorze ⭐ `              1
+@var checkbox   linkShowRealNicknameColorBordeaux                   `🔴 Wyświetl nazwę bordo w kolorze ⭐`                     1
+@var checkbox   linkShowRealNicknameColorGreen                      `🟢 Wyświetl nazwę zielonki w kolorze ⭐`                   1
+@var checkbox   linkShowRealNicknameColorOther                      `⚪ Wyświetl nazwę kont specjalnych w kolorze ⭐`           1
 @var checkbox   linkUserHide                                    `🚫 Ukryj nazwę użytkownika ⭐`                            0
 @var checkbox   linkDomainHide                                  `🚫 Ukryj źródło (domenę) ⭐`                              0
 @var checkbox   linkPublishedDateHide                           `🚫 Ukryj czas umieszczenia znaleziska na głównej`         0
@@ -348,9 +467,9 @@
                                                                             "25px - ogromny":"25rem",
                                                                             }
 
+
 @var range      HR_TOPNAV_245                       `𝗕𝗘𝗟𝗞𝗔 𝗡𝗔𝗪𝗜𝗚𝗔𝗖𝗬𝗝𝗡𝗔  ⭐ Nowe`                                                                                               [0, 0, 99900, 1, 'mm']
 
-@var checkbox   quickLinksEnable                                `💻❎ QuickLinks - Szybkie linki do przycisków w górnej belce ⭐`     1
 
 @var select     topNavCustomTextFontSize                        `🆎 𝗕𝗘𝗟𝗞𝗔: Zmień rozmiar tekstu w belce nawigacyjnej ⭐` {
                                                                             "14px - domyślny":"14rem",
@@ -839,18 +958,18 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
                                                                             "👤 Szare (avatary domyślne)":"szare_default",
                                                                             "💙/💜 Odcień różowego/niebieskiego paska":"sex_color",
                                                                             } 
-@var select     treatNeutralSexAs                               `🖤⚥ Uznaj użytkowników bez zaznaczonej płci jako` {
-                                                                            "⚥ bez płci 🖤 (domyślnie)":"bez_plci",
-                                                                            "♀️ różowe 💜":"rozowe",
-                                                                            "♂️ niebieskich 💙*":"niebieskich",
-                                                                            } 
+
 @var checkbox   avatarTransparentBackground                     `Użytkownicy z domyślnym avatarem: przezroczyste tło`                 0
 @var checkbox   avatarHidden                                    `🚫 Nie pokazuj avatarów ⭐`                                         0
 
 
 @var range      HR_SEX_BAR                          `💜💙 PASKI PŁCI   ⭐ Nowe v.2.34`                                    [0, 0, 99900, 1, 'mm']
 
-
+@var select     treatNeutralSexAs                               `🖤⚥ Traktuj użytkowników bez paska płci jako` {
+                                                                            "⚥ bez paska 🖤 (domyślnie)":"bez_plci",
+                                                                            "♀️ różowe 💜":"rozowe",
+                                                                            "♂️ niebieskich 💙*":"niebieskich",
+                                                                        }
 @var select     avatarSexBarBorder                              `💜💙 Oznaczenie płci ⭐` {
                                                                             "⍜ Pasek: styl Wykopowy (domyślny)":"pasek_domyslny",
                                                                             "⍜ Pasek: z zaokrągleniem":"pasek_zaokraglony",
@@ -863,25 +982,6 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
 @var checkbox   sexBarHidden                                    `🚫 Nie pokazuj oznaczeń płci`                          0
 
 
-@var range      HR_NICKNAME_COLORS                  `🔴🟠🟢 KOLORY NICKÓW `                                                                                [0, 0, 99900, 1, 'mm']
-@var select    nicknameColorsGreen                              `🟢 Kolory nicków: zielonki` {
-                                                                            "🟢 Zielonka (domyślny)":"zielony", 
-                                                                            "🔴 Bordo":"bordo",
-                                                                            "🟠 Pomarańczowy":"pomaranczowy",
-                                                                            "💙/💜 Kolor paska":"kolor_paska",
-                                                                            } 
-@var select     nicknameColorsBordeaux                          `🔴 Kolory nicków: bordo` {
-                                                                            "🔴 Bordo (domyślny)":"bordo",
-                                                                            "🟠 Pomarańczowy":"pomaranczowy",
-                                                                            "🟢 Zielonka":"zielony",
-                                                                            "💙/💜 Kolor paska":"kolor_paska",
-                                                                            } 
-@var select     nicknameColorsOrange                            `🟠 Kolory nicków: pomarańczowe` {
-                                                                            "🟠 Pomarańczowy (domyślny)":"pomaranczowy",
-                                                                            "🔴 Bordo":"bordo",
-                                                                            "🟢 Zielonka":"zielony",
-                                                                            "💙/💜 Kolor paska ":"kolor_paska"
-                                                                            } 
 
 
 
@@ -1704,7 +1804,10 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 
 
 @var range      HR_FIXWYKOPBUGS                    `✔ NAPRAW BŁĘDY WYKOPU`                                                                                   [0, 0, 99900, 1, 'mm']
-@var checkbox   hidePrivacySettingsAndEnableScrollAgain         `✔ Napraw błąd zablokowanego scrollowania strony przez AdBlocka`                             1
+@var checkbox   fixScrollingAndGDPRAlertHide       `✔ Ukryj okno GDPR/Cookies i napraw błąd zablokowanego scrollowania strony przez AdBlocka`         1
+@var checkbox   fixScrollingAndGDPRAlertRemoveJS   `✔❎ Usuń okno GDPR/Cookies i napraw błąd zablokowanego scrollowania strony ⭐`                    1
+
+
 @var checkbox   hideMultipleErrorAlerts                         `✔ Ukrywaj zwielokrotnione alerty (np. 𝗪𝘆𝘀𝘁𝗮̨𝗽𝗶𝗹 𝗯𝗹𝗮̨𝗱)`                                        1
 @var checkbox   fixWrongImageRatio                              `✔🌆 Napraw błąd skurczonej wysokości wysokich obrazków we wpisach i komentarzach`             1
 @var checkbox   fixCaseSensitiveTagsRedirection                 `✔🔹❎ Przekierowania tagów zapisanych z wielkimi literami (np. #Heheszki albo #WYKOP) `    1
@@ -1799,19 +1902,25 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 
 @var range     HR_SETTINGS_USER             `KONFIGURACJA UŻYTKOWNIKA Wykop X Style`                                                                 [0, 0, 99900, 1, 'mm']
 
-@var text       myUsername                                      `👤 Wpisz Twój login`                                                                `WpiszTuSwojLogin`
+@var text       myUsername                                      `👤 Twój nick`                                                                       `WpiszTuSwojNick`
 @var text       customUsername                                  `👥 Nickname: Zmień wyświetlaną nazwę użytkownika`                                   `""`
 
-@var select     myNicknameColor                                 `⚫ Twój kolor na wykopie` {
+@var select     myNicknameColor                                 `🟢🟠🔴 Twój kolor na wykopie` {
+                                                                            "🟠 Pomarańczowy":"pomaranczowy",
                                                                             "🔴 Bordo":"bordo",
-                                                                            "🟠 Pomarańczowy*":"pomaranczowy",
                                                                             "🟢 Zielonka":"zielony",
-                                                                            } 
+                                                                        } 
+@var select     mySexBarColor                                   `💙/💜 Kolor Twojego paska` {
+                                                                            "💙 Jestem niebieskim":"niebieski",
+                                                                            "💜 Jestem różową":"rozowy",
+                                                                            "🖤 Nie mam paska":"bezplciowy",
+                                                                        } 
+
 @var select     device                                          `💻 📱 Urządzenie` {
                                                                             "💻 Komputer":"komputer",
                                                                             "💻 Tablet":"tablet",
                                                                             "📱 Smartfon":"smartfon"
-                                                                            } 
+                                                                        } 
 ==/UserStyle== */   
 
 
@@ -1910,7 +2019,11 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         wykopMobileBreakpointWidth = 1042px
     }
     
-    @keyframes rotate { to {--angle: 360deg; }} 
+    @keyframes rotatingAnimation
+    { 
+        to { --angle: 360deg; }
+    } 
+
     @property --angle
     {
       syntax: '<angle>';
@@ -1922,7 +2035,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     {
         /* WykopX special */
         --gradient-border-width: 2px;
-        --gradient-animation: 3s rotate linear infinite;
+        --gradient-animation: 3s rotatingAnimation linear infinite;
 
         --microblogEntriesSpacing: microblogEntriesSpacing; /* odległość pomiędzy wpisami na mikroblogu */
         --linksSpacing: linksSpacing;   /* odstępy pomiędzy znaleziskami */
@@ -1954,6 +2067,23 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 
 
         /* KOLORY */
+        --nicknameColorsYoursCustom                             nicknameColorsYoursCustom;
+
+        --kolorBananowy1                                        rgba(255, 185, 0, 1)
+        --kolorBananowy09:                                      rgba(255, 185, 0, 0.9);
+        --kolorBananowy08:                                      rgba(255, 185, 0, 0.8);
+        --kolorBananowy07:                                      rgba(255, 185, 0, 0.7);
+        --kolorBananowy06:                                      rgba(255, 185, 0, 0.6);
+        --kolorBananowy05:                                      rgba(255, 185, 0, 0.5);
+        --kolorBananowy04:                                      rgba(255, 185, 0, 0.4);
+        --kolorBananowy03:                                      rgba(255, 185, 0, 0.3);
+        --kolorBananowy02:                                      rgba(255, 185, 0, 0.2);
+        --kolorBananowy01:                                      rgba(255, 185, 0, 0.1);
+        --kolorBananowy005:                                     rgba(255, 185, 0, 0.05);
+        --kolorBananowy002:                                     rgba(255, 185, 0, 0.02);
+        --kolorBananowy001:                                     rgba(255, 185, 0, 0.01);
+        --kolorBananowyBackground:                              rgb(241, 238, 228);
+
         --niebieskiPasek1:                                    rgba(70, 171, 242, 1);
         --niebieskiPasek09:                                   rgba(70, 171, 242, 0.9);
         --niebieskiPasek08:                                   rgba(70, 171, 242, 0.8);
@@ -2116,6 +2246,22 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     {
 
         /* KOLORY */
+        --kolorBananowy1                                        rgba(255, 185, 0, 1)
+        --kolorBananowy09:                                      rgba(255, 185, 0, 0.9);
+        --kolorBananowy08:                                      rgba(255, 185, 0, 0.8);
+        --kolorBananowy07:                                      rgba(255, 185, 0, 0.7);
+        --kolorBananowy06:                                      rgba(255, 185, 0, 0.6);
+        --kolorBananowy05:                                      rgba(255, 185, 0, 0.5);
+        --kolorBananowy04:                                      rgba(255, 185, 0, 0.4);
+        --kolorBananowy03:                                      rgba(255, 185, 0, 0.3);
+        --kolorBananowy02:                                      rgba(255, 185, 0, 0.2);
+        --kolorBananowy01:                                      rgba(255, 185, 0, 0.1);
+        --kolorBananowy005:                                     rgba(255, 185, 0, 0.05);
+        --kolorBananowy002:                                     rgba(255, 185, 0, 0.02);
+        --kolorBananowy001:                                     rgba(255, 185, 0, 0.01);
+        --kolorBananowyBackground:                              rgba(241, 238, 228, 0.05);
+        
+        
         --niebieskiPasek1:                                    rgba(67, 131, 175, 1);
         --niebieskiPasek09:                                   rgba(67, 131, 175, 0.9);
         --niebieskiPasek08:                                   rgba(67, 131, 175, 0.8);
@@ -3032,8 +3178,15 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     section.link-page > section.link > section.related section.stream div.content > section.related-link > article
     { background-color: var(--entryBackgroundColor); } 
     
-    
-    
+    // wciecia w komentarzach
+    section.entry.reply[data-v-2aacfeb5]
+    {
+        padding-right: 0px!important;
+    }
+    section.entry[data-v-2aacfeb5]:has(> div.comments)
+    {
+        padding-bottom: 0px!important;
+    }
     
 
 
@@ -3125,6 +3278,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
     html { font-size: 62.5%; }                                              /* 62.5% -> 10px https://www.freecodecamp.org/news/override-root-font-size-for-a-better-user-experience/ */ 
     body { font-size: 1.6rem; }                                             /* 10px * 1.6rem = 16 px -- https://nekocalc.com/px-to-rem-converter */
+
         
     if(textFontSize == "10px")      {    html { font-size: 3.91%; }} 
     else if(textFontSize == "11px") {    html { font-size: 4.30%; }} 
@@ -3155,11 +3309,17 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         --textFontSize21: 21rem;
 
         --textFontSize: var(--textFontSize14);
-        
+
         --topNavTextFontSize: topNavCustomTextFontSize;
         --editorTextFontSize: editorTextFontSize;
     }
     
+    body * 
+    { font-size: 14px; }
+    
+    
+    aside.profile-top>section>header>div h1[data-v-fbd45de4] > a.username > span/* nazwa nicku na profilu */
+    { font-size: 22rem!important; }
 
     section.link-block > section > article > header h1 a                        /* tytuł znaleziska */
     { font-size: 21rem!important; }
@@ -3168,14 +3328,14 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     { font-size: 18rem!important; } 
 
 
-    aside.left-panel > section.links > .content ul li a.hybrid                 /* kategorie */
+    aside.left-panel > section.links > .content ul li a.hybrid                  /* kategorie */
     { font-size: 16rem!important; } 
 
-    .night-mode-switch .switch label[for="switch-night-mode"] > span,            /* przycisk zmiany Tryb nocny/dzienny */
+    .night-mode-switch .switch label[for="switch-night-mode"] > span,           /* przycisk zmiany Tryb nocny/dzienny */
     section.sidebar a.username span,                                            /* nazwa uzytkownika z ktorym rozmawiamy - w wiadomosciach */
     { font-size: 15rem!important; } 
 
-    div.content section.entry-content div.wrapper,                               /* treść wpisu / komentarza */
+    div.content section.entry-content div.wrapper,                              /* treść wpisu / komentarza */
     header.header>.right>nav>ul> li,                                            /* panel powiadomień - przycisk z nazwa uzytkownika login */ 
     aside.left-panel>section.links>.content>header h4,                          /* zwijacze kategorii */
     section.add-to-bucket-btn>button,                                           /* przycisk "Utwórz kategorię */
@@ -3214,9 +3374,9 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
     
 
-    section.entry > article > header > div.right > div a.username,                      /* nick autora wpisu / komentarza */
+    section.entry > article > header > div.right > div a.username,              /* nick autora wpisu / komentarza */
     section.voters section.voters-link-stream>.content>ul li > section a.username /* UZYTKOWNIK ZAKOPUJACY, WYKOPUJACY */
-    section.entry > article > header > div.right > div a.username span,          /* wpis - login autora */
+    section.entry > article > header > div.right > div a.username span,         /* wpis - login autora */
     .switch label>span,                                                         /* 18+ w edytorze komentarza */
     section.custom-sidebar>header p                                             /* right sidebar - nazwa filtru */
     { font-size: 13rem!important; } 
@@ -3266,34 +3426,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 
 
 
-    if(nicknameColorsBordeaux == "bordo")               { a.burgundy-profile { color: var(--nicknameBordeaux1)!important; }} 
-    else if(nicknameColorsBordeaux == "pomaranczowy")   { a.burgundy-profile { color: var(--nicknameOrange1)!important; }} 
-    else if(nicknameColorsBordeaux == "zielony")        { a.burgundy-profile { color: var(--nicknameGreen1)!important; }} 
-    else if(nicknameColorsBordeaux == "kolor_paska")
-    { 
-        div.right > div > div > span > a.username.burgundy-profile { color: var(--bezplciowyPasekNegative)!important; } 
-        header:has(div.left > a.avatar > figure.male) > div.right > div > div > span > a.username.burgundy-profile { color: var(--niebieskiPasek1)!important; } 
-        header:has(div.left > a.avatar > figure.female) > div.right > div > div > span > a.username.burgundy-profile { color: var(--rozowyPasek1)!important; } 
-    } 
-    
-    if(nicknameColorsOrange == "bordo")               { a.orange-profile { color: var(--nicknameBordeaux1)!important; }} 
-    else if(nicknameColorsOrange == "pomaranczowy")   { a.orange-profile { color: var(--nicknameOrange1)!important; }} 
-    else if(nicknameColorsOrange == "zielony")        { a.orange-profile { color: var(--nicknameGreen1)!important; }} 
-    else if(nicknameColorsOrange == "kolor_paska")
-    { 
-        div.right > div > div > span > a.username.orange-profile { color: var(--bezplciowyPasekNegative)!important; } 
-        header:has(div.left > a.avatar > figure.male) > div.right > div > div > span > a.username.orange-profile { color: var(--niebieskiPasek1)!important; } 
-        header:has(div.left > a.avatar > figure.female) > div.right > div > div > span > a.username.orange-profile { color: var(--rozowyPasek1)!important; } 
-    } 
-    if(nicknameColorsGreen == "bordo")               { a.green-profile { color: var(--nicknameBordeaux1)!important; }} 
-    else if(nicknameColorsGreen == "pomaranczowy")   { a.green-profile { color: var(--nicknameOrange1)!important; }} 
-    else if(nicknameColorsGreen == "zielony")        { a.green-profile { color: var(--nicknameGreen1)!important; }} 
-    else if(nicknameColorsGreen == "kolor_paska")
-    { 
-        div.right > div > div > span > a.username.green-profile { color: var(--bezplciowyPasekNegative)!important; } 
-        header:has(div.left > a.avatar > figure.male) > div.right > div > div > span > a.username.green-profile { color: var(--niebieskiPasek1)!important; } 
-        header:has(div.left > a.avatar > figure.female) > div.right > div > div > span > a.username.green-profile { color: var(--rozowyPasek1)!important; } 
-    } 
+
 
 
 
@@ -3359,7 +3492,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             --buttonsBorderRadius: 5px;
             width: fit-content;
             position: absolute;
-            height: 27px;
+            height: 30px;
             border-style: solid;
             border-color: var(--blackOpacity01);
             color: var(--blackOpacity02);
@@ -3377,17 +3510,28 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 
         
         // action box w komentarzach pod wpisem
-        main.main > section > div.content > section:is(.entry-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section div.comments > section.stream > div.content > section.entry .wxs_entry_menu
+        main.main > section > div.content > section:is(.entry-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section div.comments > section.stream > div.content > section.entry .wxs_entry_menu
         {
-            //right: 98px;
+
         }
         
         section.entry .wxs_entry_menu
         {
-            top: 0px;
+            top: -16px;
             border-radius: 0px 0px var(--buttonsBorderRadius) var(--buttonsBorderRadius);
             border-width: 0px 1px 1px 1px;
-        } 
+        }
+        section.link-page section.entry .wxs_entry_menu
+        {
+            top: 0px;
+        }
+        
+        
+        section.entry.wxs_minimized .wxs_entry_menu
+        {
+            top: -3px; // padding-top wxs_minimized
+        }
+        
         section.link-block .wxs_entry_menu
         {
             bottom: 0px;
@@ -3408,6 +3552,16 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         main.main > section > section.sidebar > section.custom-sidebar > div.content > section.entries > section.entry .wxs_entry_menu
         {
             display: none!important;
+        }
+        
+        section .wxs_entry_menu:hover
+        {
+            background-color: var(--contentBackgroundColor);
+        }
+        section .wxs_entry_menu button:hover
+        {
+            background-color: var(--blackOpacity005);
+            color: var(--blackOpacity1);
         }
         
         section.entry .wxs_entry_menu:hover
@@ -3432,11 +3586,6 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             height: 100%;
             color: inherit;
         }
-        section .wxs_entry_menu button:hover
-        {
-            background-color: var(--blackOpacity005);
-            color: var(--blackOpacity1);
-        }
         
         
         section .wxs_entry_menu button:first-child
@@ -3460,13 +3609,13 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         }
         
         
-        main.main > section > div.content > section:is(.dummyClass, .entry-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry,
+        main.main > section > div.content > section:is(.dummyClass, .entry-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry,
         {
             width: 100%!important;
             padding-right: 0px!important;            
         }
        
-        main.main > section > div.content > section:is(.entry-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > article
+        main.main > section > div.content > section:is(.entry-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > article
         {
             width: 100%!important;
             padding-right: 0px!important;
@@ -3475,13 +3624,13 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             margin: 0px!important;
         }
         
-        main.main > section > div.content > section:is(.dummyClassA, .entry-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > article > header
-        main.main > section > div.content > section:is(.entry-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > article > div.edit-wrapper,
+        main.main > section > div.content > section:is(.dummyClassA, .entry-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > article > header
+        main.main > section > div.content > section:is(.entry-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > article > div.edit-wrapper,
         {
             padding-right: 10px;
         }
         
-        main.main > section > div.content > section:is(.entry-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > article:hover
+        main.main > section > div.content > section:is(.entry-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > article:hover
         {
             background: unset!important;
         }
@@ -3489,52 +3638,52 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         
         
         // ----- ZMINIMALIZOWANE WPISY I KOMENTARZE
-        main.main > section > div.content > section:is(.entry-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized:not(.own)
+        main.main > section > div.content > section:is(.entry-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized
         {
-            padding: 0rem 0rem 0rem 20rem !important;
-            margin: 2px 0px 2px 0px!important;
+            padding: 3rem 0rem 3rem 20rem !important;
+            //margin: 2px 0px 2px 0px!important;
+            //margin: var(--microblogEntriesSpacing) 0px var(--microblogEntriesSpacing) 0px!important;
         }
-        main.main > section > div.content > section:is(.entry-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized:not(.own) > article
+        main.main > section > div.content > section:is(.entry-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized > article
         {
             filter: grayscale(100%);
             padding: 0rem 0rem 0rem 0rem !important;
         }
         
-        // komentarze pod wpisem
-        main.main > section > div.content > section:is(.entry-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section div.comments > section.stream > div.content > section.entry.wxs_minimized:not(.own)
+        // zminimalizowane komentarze pod wpisem
+        main.main > section > div.content > section:is(.entry-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section div.comments > section.stream > div.content > section.entry.wxs_minimized
         {
-            padding: 10rem 0rem 10rem 20rem !important;
         }
        
-        main.main > section > div.content > section:is(.entry-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized:not(.own) > article > header > div.right > div > span
+        main.main > section > div.content > section:is(.entry-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized > article > header > div.right > div > span
         {
             display: none!important;
         }
-        main.main > section > div.content > section:is(.entry-page, .bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized:not(.own) > article > header > div.left
+        main.main > section > div.content > section:is(.entry-page, .bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized > article > header > div.left
         {
             width: 35px!important;
         } 
-        main.main > section > div.content > section:is(.entry-page, .bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized:not(.own) > article > header > div.left a.avatar
+        main.main > section > div.content > section:is(.entry-page, .bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized > article > header > div.left a.avatar
         {
             width: 20px!important;
             height: 20px!important;
         } 
-        main.main > section > div.content > section:is(.entry-page, .bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized:not(.own) > article > header > div.right
+        main.main > section > div.content > section:is(.entry-page, .bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized > article > header > div.right
         {
             width: calc(100% - 30px)!important;
             align-items: center i;
         }
-        main.main > section > div.content > section:is(.entry-page, .bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized:not(.own) > article > header > div.right a.username:after
+        main.main > section > div.content > section:is(.entry-page, .bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized > article > header > div.right a.username:after
         {
             margin-left: 10rem;
 /*             content: "(Wykop X Krawężnik)" i; */
         }
-        main.main > section > div.content > section:is(.entry-page, .bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized:not(.own) > article > div.edit-wrapper
+        main.main > section > div.content > section:is(.entry-page, .bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized > article > div.edit-wrapper
         {
             display: none!important;
         }
         /* ukrycie 2 najlepszych komentarzy pod wpisem w streamie */
-        main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized:not(.own) > div.comments
+        main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized > div.comments
         {
             display: none!important;
         }
@@ -3543,14 +3692,14 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         if(mirkoukrywaczEnable == 1 && dev == 0)
         {
             // TODO LINK
-            main.main > section > div.content > section:is(.category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_hidden:not(.own)
+            main.main > section > div.content > section:is(.search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_hidden
             {
                 display: none!important;
             } 
         }
         else if(mirkoukrywaczEnable == 1 && dev == 1)
         {
-            main.main > section > div.content > section:is(.category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_hidden:not(.own)
+            main.main > section > div.content > section:is(.search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_hidden
             {
                 border: 13px solid green!important;
             } 
@@ -3562,19 +3711,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
       /* NOTATKOWATOR */
       if(notatkowatorEnable == 1)
-      {
-        
-        .wykopx_action_box
-        {
-            display: none;
-            display: flex;
-            flex-direction: row;
-            column-gap: 20px;
-            width: 100%;
-            justify-content: flex-start;
-            align-items: stretch;
-        } 
-        
+      {        
         section > article > header > div.right > div
         {
             display: flex;
@@ -3588,71 +3725,115 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         
   
 
-        section > article div.wykopx_action_box_usernote
+        section > article > header > div.right > div > div.wxs_user_info
         {
-            display: inline-block!important;
+            display: flex!important;
+            align-items: center;
+            gap: 3rem;
             font-size: 11rem;
             cursor: help;
+            color: var(--colorText);
         }
-        section.entry > article div.wykopx_action_box_usernote
+        
+        // wpisy  {}
+        section.entry > article div.wxs_user_info
         {
             margin-left: 6px;
         }
-        section.link-block article div.wykopx_action_box_usernote
+        // znaleziska {}
+        section.link-block article div.wxs_user_info
         {
             margin-right: 5px;
         }
-        section > article div.wykopx_action_box_usernote > var
+        
+        section > article div.wxs_user_info > var
         {
             opacity: 0.7;
             font-style: normal;
         }
+        
+       
+        
+        
               
-        div.wykopx_action_box_usernote
+        div.wxs_user_info_usernote
         {
             --notatkowator_color_red:       rgb(255, 0, 0);
             --notatkowator_color_green:     rgb(14, 137, 39);
-            --notatkowator_color_blue:      rgb(66, 141, 255);
+            --notatkowator_color_blue:      rgb(66, 141, 255)f;
             --notatkowator_color_orange:    rgb(179, 89, 30);
             --notatkowator_color_pink:      rgb(219, 14, 191);
             --notatkowator_color_yellow:    rgb(253, 246, 50);
         }
-        section > article div.wykopx_action_box_usernote                            > var { color: var(--colorText); }
-        section > article div.wykopx_action_box_usernote.wxs_notatkowator_c         > var { color: var(--notatkowator_color_red); }
-        section > article div.wykopx_action_box_usernote.wxs_notatkowator_z         > var { color: var(--notatkowator_color_green); }
-        section > article div.wykopx_action_box_usernote.wxs_notatkowator_n         > var { color: var(--notatkowator_color_blue); }
-        section > article div.wykopx_action_box_usernote.wxs_notatkowator_p         > var { color: var(--notatkowator_color_orange); }
-        section > article div.wykopx_action_box_usernote.wxs_notatkowator_r         > var { color: var(--notatkowator_color_pink); }
-        section > article div.wykopx_action_box_usernote.wxs_notatkowator_ż         > var { color: var(--notatkowator_color_yellow); }
+        section > article div.wxs_user_info_usernote                            > var {  }
+        section > article div.wxs_user_info_usernote.wxs_notatkowator_c         > var { color: var(--notatkowator_color_red); }
+        section > article div.wxs_user_info_usernote.wxs_notatkowator_z         > var { color: var(--notatkowator_color_green); }
+        section > article div.wxs_user_info_usernote.wxs_notatkowator_n         > var { color: var(--notatkowator_color_blue); }
+        section > article div.wxs_user_info_usernote.wxs_notatkowator_p         > var { color: var(--notatkowator_color_orange); }
+        section > article div.wxs_user_info_usernote.wxs_notatkowator_r         > var { color: var(--notatkowator_color_pink); }
+        section > article div.wxs_user_info_usernote.wxs_notatkowator_ż         > var { color: var(--notatkowator_color_yellow); }
         
-        section:hover > article div.wykopx_action_box_usernote > var
+        section:hover > article div.wxs_user_info > var
         {
             opacity: 1;
         }
-        section > article div.wykopx_action_box_usernote:hover > var
+        section > article div.wxs_user_info:hover > var
         {
             color: var(--colorTextBolder);
         }
-        section > article div.wykopx_action_box_usernote > var:before
+        
+        
+        // status online
+        section.entry > article > header > div.left
+        {
+            // border: 1px solid red; xxx 
+        }
+        
+        section.entry[data-wxs-user-online="true"] > article > header > div.left > a.avatar:before
+        {
+            content: "🟢";
+            font-size: calc(0.13 * var(--avatarSize)); //8rem;
+            position: absolute;
+            top: calc(-0.09 * var(--avatarSize) + -1 * var(--sexBarPadding));
+            left:  calc(-0.09 * var(--avatarSize) + -1 * var(--sexBarPadding));
+            background-color: var(--entryBackgroundColor);
+            border-radius: 50%;
+            padding: var(--sexBarPadding);
+            z-index: 1;
+        }
+        
+    
+        
+       
+        
+        section > article div.wxs_user_info > var.wxs_user_online
+        {
+            font-size: 5rem;
+        }
+        
+        // ikonka separatora {}
+        section > article div.wxs_user_info > var:before
         {
             color: var(--blackOpacity06)!important;
         }
         
-  
-        
-        section > article div.wykopx_action_box_usernote > var:before
+        section > article div.wxs_user_info_usernote > var:before
         {
             if(notatkowatorIcon == "notatnik")                  { content: " 📝 ";  }
             if(notatkowatorIcon == "zarowka")                   { content: " 💡 ";  }
             if(notatkowatorIcon == "serce")                     { content: " 🤍 ";  }
             if(notatkowatorIcon == "pionowa_kreska")            { content: " | ";   }
             if(notatkowatorIcon == "srodkowa_kropka")           { content: " · ";   }
-            if(notatkowatorIcon == "info")                      { content: "  ℹ "; }
+            if(notatkowatorIcon == "info")                      { content: " ℹ "; }
             if(notatkowatorIcon == "wlasny")                    { content: " " + notatkowatorIconCustom + " "!important; }
         }
+        section > article div.wxs_user_info_year > var:before
+        {
+/*              content: " · " */
+        }
         
-        
-        section.entry > article > header + div.wykopx_action_box_usernote, 
+        // notatka pod avatarem
+        section.entry > article > header + div.wxs_user_info_usernote
         {
             display: block!important;
             border-bottom: 1px solid rgba(128,128,128,0.1);
@@ -3666,7 +3847,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
         } 
 
-        section.entry > article > header + div.wykopx_action_box_usernote var
+        section.entry > article > header + div.wxs_user_info_usernote var
         {
             color: var(--blackOpacity07);
         } 
@@ -4418,15 +4599,15 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     /* TODO: zamienić na gap w grid zamiast nargin top bottom */ 
 
     /* dummyClass - https://github.com/openstyles/stylus/issues/1719 */
-/*     main.main > section > div.content > section:is(.dummyClassA, .bucket-page, .category-page, .home-page, .favourites-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry,
-    main.main > section > div.content > section:is(.dummyClassB, .category-page, .home-page, .favourites-page, .observed-page, .profile-page, .tag-page, .hits-page, .upcoming-page) > section section.stream > div.content > section.link-block
+/*     main.main > section > div.content > section:is(.dummyClassA, .bucket-page, .search-page, .category-page, .home-page, .favourites-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry,
+    main.main > section > div.content > section:is(.dummyClassB, .search-page, .category-page, .home-page, .favourites-page, .observed-page, .profile-page, .tag-page, .hits-page, .upcoming-page) > section section.stream > div.content > section.link-block
     {
         margin-top: var(--linksSpacing);
         margin-bottom: var(--linksSpacing); 
 
     }
-    main.main > section > div.content > section:is(.dummyClassA, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:nth-child(1 of .entry),
-    main.main > section > div.content > section:is(.dummyClassB, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .hits-page, .upcoming-page)    > section section.stream > div.content > section.link-block:nth-child(1 of .link-block)
+    main.main > section > div.content > section:is(.dummyClassA, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:nth-child(1 of .entry),
+    main.main > section > div.content > section:is(.dummyClassB, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .hits-page, .upcoming-page)    > section section.stream > div.content > section.link-block:nth-child(1 of .link-block)
     {
         margin-top: 0px;
     }  */
@@ -4457,16 +4638,14 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         }
         else
         {
-            if(linkShowRealUserColorOrange == 1)    { section.link-block>section>article section.info>span[data-v-441f7cc5] a.username.orange-profile   span { color: unset!important; }}
-            if(linkShowRealUserColorBordeaux == 1)  { section.link-block>section>article section.info>span[data-v-441f7cc5] a.username.burgundy-profile span { color: unset!important; }}
-            if(linkShowRealUserColorGreen == 1)     { section.link-block>section>article section.info>span[data-v-441f7cc5] a.username.green-profile    span { color: unset!important; }}
-            if(linkShowRealUserColorOther == 1)     { section.link-block>section>article section.info>span[data-v-441f7cc5] a.username:not(.orange-profile, .green-profile, .burgundy-profile) span { color: unset!important; }}
+            if(linkShowRealNicknameColorOrange == 1)    { section.link-block>section>article section.info>span[data-v-441f7cc5] a.username.orange-profile   span { color: unset!important; }}
+            if(linkShowRealNicknameColorBordeaux == 1)  { section.link-block>section>article section.info>span[data-v-441f7cc5] a.username.burgundy-profile span { color: unset!important; }}
+            if(linkShowRealNicknameColorGreen == 1)     { section.link-block>section>article section.info>span[data-v-441f7cc5] a.username.green-profile    span { color: unset!important; }}
+            if(linkShowRealNicknameColorOther == 1)     { section.link-block>section>article section.info>span[data-v-441f7cc5] a.username:not(.orange-profile, .green-profile, .burgundy-profile) span { color: unset!important; }}
         }
     }
     
 
-
-    // xxx
 
     
     if(linkTagsHide == 1)
@@ -4482,7 +4661,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     /* Ukryj liczbe komentarzy */
     if(actionMenuLinkHideCommentsCountOnHomepage == 1)
     { 
-        main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .hits-page, .upcoming-page) > section section.stream > div.content > section.link-block > section > article > section.actions > ul > li.comments
+        main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .hits-page, .upcoming-page) > section section.stream > div.content > section.link-block > section > article > section.actions > ul > li.comments
         {
             display: none!important;
         }
@@ -6435,6 +6614,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             } 
             */
 
+            /* AVATAR W ZMINIMALIZOWANYM WPISIE */
             section.stream.link-comments section.entry:not(:hover) > article:has(> header > div.left > a > figure.orange-profile) > header > div.left > a.avatar,
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has(> header > div.left > a > figure.orange-profile) > header > div.left > a.avatar
             {
@@ -6895,7 +7075,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             - własne wpisy 
             - komentarze (odpowiedzi)
             - wpisy, które mają dodatkową sekcję np. obrazek, ankietę, video
-          zostawia tylko wpisy, które mają dokładnie jeden użyty #tag
+        zostawia tylko wpisy, które mają dokładnie jeden użyty #tag
     */
 
 
@@ -6904,22 +7084,23 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     main.main > section > div.content > section.profile-page    > section.profile       > section   > section.stream > div.content > section.entry,
     main.main > section > div.content > section.bucket-page     > section.microblog                 > section.stream > div.content > section.entry,
     main.main > section > div.content > section.category-page   > section.microblog                 > section.stream > div.content > section.entry,
+    main.main > section > div.content > section.search-page     > section.search                    > section.stream > div.content > section.entry,
     main.main > section > div.content > section.observed-page   > section.observed                  > section.stream > div.content > section.entry,
     main.main > section > div.content > section.favourites-page > section.favourites                > section.stream > div.content > section.entry,
     main.main > section > div.content > section.microblog-page  > section.microblog                 > section.stream > div.content > section.entry
     
-    main.main > section > div.content > section:is(.home-page, .tag-page, .profile-page, .bucket-page, .category-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry
+    main.main > section > div.content > section:is(.home-page, .tag-page, .profile-page, .bucket-page, .search-page, .category-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry
 */
-    
 
-       
-                                                                
+
+
+
     // wpisy NSFW i 18+
     if(entriesNSFW == "ukrywaj_nsfw")
     {
         // section.entry:not(.own)
         // UKRYWANIE WPISÓW Z #NSFW
-        main.main > section > div.content > section:is(.home-page, .tag-page, .profile-page, .bucket-page, .category-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own):has(> article > div.edit-wrapper > div.content > section.entry-content > span.adult-ribbon > span.nsfw)
+        main.main > section > div.content > section:is(.home-page, .tag-page, .profile-page, .bucket-page, .search-page, .category-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own):has(> article > div.edit-wrapper > div.content > section.entry-content > span.adult-ribbon > span.nsfw)
         {
             border: 10px solid rgb(133, 19, 77)!important;
             opacity: 0.69!important;
@@ -6931,7 +7112,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         if(entriesAdult == "pokazuj_tylko_adult")
         {
             // POKAZUJE ZARÓWNO WPISY 18+ ORAZ #nsfw (not a bug, it's a feature)
-            main.main > section > div.content > section:is(.home-page, .tag-page, .profile-page, .bucket-page, .category-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own):not(:has(> article > div.edit-wrapper > div.content > section.entry-content > span.adult-ribbon))
+            main.main > section > div.content > section:is(.home-page, .tag-page, .profile-page, .bucket-page, .search-page, .category-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own):not(:has(> article > div.edit-wrapper > div.content > section.entry-content > span.adult-ribbon))
             {
                 border: 10px solid rgb(225, 106, 17)!important;
                 opacity: 0.69!important;
@@ -6940,7 +7121,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         }
         else
         {   // POKAZYWANIE TYLKO WPISÓW #NSFW
-            main.main > section > div.content > section:is(.home-page, .tag-page, .profile-page, .bucket-page, .category-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own):not(:has(> article > div.edit-wrapper > div.content > section.entry-content > span.adult-ribbon > span.nsfw))
+            main.main > section > div.content > section:is(.home-page, .tag-page, .profile-page, .bucket-page, .search-page, .category-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own):not(:has(> article > div.edit-wrapper > div.content > section.entry-content > span.adult-ribbon > span.nsfw))
             {
                 border: 10px solid rgb(225, 106, 17)!important;
                 opacity: 0.69!important;
@@ -6952,7 +7133,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     {
         // section.entry:not(.own)
         // UKRYWANIE WPISÓW 18+
-        main.main > section > div.content > section:is(.home-page, .tag-page, .profile-page, .bucket-page, .category-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own):has(> article > div.edit-wrapper > div.content > section.entry-content > span.adult-ribbon > span.adult)
+        main.main > section > div.content > section:is(.home-page, .tag-page, .profile-page, .bucket-page, .search-page, .category-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own):has(> article > div.edit-wrapper > div.content > section.entry-content > span.adult-ribbon > span.adult)
         {
             border: 10px solid rgb(183, 39, 14)!important;
             opacity: 0.69!important;
@@ -6967,7 +7148,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         }
         else
         {   // POKAZYWANIE TYLKO WPISÓW 18+
-            main.main > section > div.content > section:is(.home-page, .tag-page, .profile-page, .bucket-page, .category-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own):not(:has(> article > div.edit-wrapper > div.content > section.entry-content > span.adult-ribbon > span.adult))
+            main.main > section > div.content > section:is(.home-page, .tag-page, .profile-page, .bucket-page, .search-page, .category-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own):not(:has(> article > div.edit-wrapper > div.content > section.entry-content > span.adult-ribbon > span.adult))
             {
                 border: 10px solid rgb(183, 39, 14)!important;
                 opacity: 0.69!important;
@@ -6998,7 +7179,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         */
         if(hideEntriesWithoutAnyContent == "ukrywaj_wszystkie_wpisy_z_samym_tagiem")
         {   // 
-            main.main > section > div.content > section:is(.home-page, .tag-page, .profile-page, .bucket-page, .category-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own):not(:has(> article > div.edit-wrapper > section:not(.entry-voters))):has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href^="\/tag\/"]:first-child:last-child)
+            main.main > section > div.content > section:is(.home-page, .tag-page, .profile-page, .bucket-page, .search-page, .category-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own):not(:has(> article > div.edit-wrapper > section:not(.entry-voters))):has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href^="\/tag\/"]:first-child:last-child)
             {
                 border: 10px dashed rgb(181, 52, 127)!important;
                 opacity: 0.69!important;
@@ -7007,7 +7188,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         }
         else if(hideEntriesWithoutAnyContent == "ukrywaj_wpisy_zielonek_z_samym_tagiem")
         {
-            main.main > section > div.content > section:is(.home-page, .tag-page, .profile-page, .bucket-page, .category-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own):has(article > header > div.left > a > figure.green-profile):not(:has(> article > div.edit-wrapper > section:not(.entry-voters))):has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href^="\/tag\/"]:first-child:last-child)
+            main.main > section > div.content > section:is(.home-page, .tag-page, .profile-page, .bucket-page, .search-page, .category-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own):has(article > header > div.left > a > figure.green-profile):not(:has(> article > div.edit-wrapper > section:not(.entry-voters))):has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href^="\/tag\/"]:first-child:last-child)
             {
                 border: 10px dashed #f0f!important;
                 opacity: 0.69!important;
@@ -7072,7 +7253,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     // UKRYWANIE WPISÓW Z OBRAZKAMI
     if(hideEntriesWithPhotos == "ukryj_wpis_z_obrazkiem")
     {
-        main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:has(> article > div.edit-wrapper > section.entry-photo)
+        main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:has(> article > div.edit-wrapper > section.entry-photo)
         {
             border: 10px solid rgb(18, 27, 232)!important;
             if(blackListTesting == 0) { display: none!important; }        
@@ -7080,7 +7261,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     }
     else if(hideEntriesWithPhotos == "ukryj_wpis_z_obrazkiem_bez_tresci")
     {
-        main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:has(> article > div.edit-wrapper > section.entry-photo):not(:has(> article > div.edit-wrapper > div.content))
+        main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:has(> article > div.edit-wrapper > section.entry-photo):not(:has(> article > div.edit-wrapper > div.content))
         {
             border: 10px solid rgb(217, 254, 0)!important;
             if(blackListTesting == 0) { display: none!important; }        
@@ -7091,7 +7272,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     {
         if(hidePhotosInEntriesInStream == 1)
         {       
-            main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > article > div.edit-wrapper > section.entry-photo
+            main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > article > div.edit-wrapper > section.entry-photo
             {
                 border: 10px solid rgb(122, 104, 220)!important;
                 if(blackListTesting == 0) { display: none!important; }        
@@ -7128,7 +7309,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     {   // nie sa blokowane obrazki na stronie komentarza pod znaleziskiem
         
         // komentarz z obrazkiem pod wpisem na stronach mikrobloga
-        main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply:has(> article > div.edit-wrapper > section.entry-photo), 
+        main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply:has(> article > div.edit-wrapper > section.entry-photo), 
         // komentarz z obrazkiem pod wpisem na stronie wpisu
         main.main > section > div.content > section.entry-page > section.entry > section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply:has(> article > div.edit-wrapper > section.entry-photo), 
         
@@ -7150,7 +7331,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     else if(hideCommentsWithPhotos == "ukryj_komentarz_z_obrazkiem_bez_tresci")
     {
         // komentarz bez treści z obrazkiem pod wpisem na stronach mikrobloga
-        main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply:has(> article > div.edit-wrapper > section.entry-photo):not(:has(> article > div.edit-wrapper > div.content)), 
+        main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply:has(> article > div.edit-wrapper > section.entry-photo):not(:has(> article > div.edit-wrapper > div.content)), 
         // komentarz bez treści z obrazkiem pod wpisem na stronie wpisu
         main.main > section > div.content > section.entry-page > section.entry > section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply:has(> article > div.edit-wrapper > section.entry-photo):not(:has(> article > div.edit-wrapper > div.content)), 
         // subkomentarz bez tresci z obrazkiem pod znaleziskiem
@@ -7171,7 +7352,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         // Ukrywaj obrazki w komentarzach (na mikroblogu)
         if(hidePhotosInCommentsInStream == 1)
         {     
-            main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply > article > div.edit-wrapper > section.entry-photo
+            main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > div.comments > section.stream > div.content > section.entry.reply > article > div.edit-wrapper > section.entry-photo
             {
                 border: 10px solid rgb(122, 104, 220)!important;
                 if(blackListTesting == 0) { display: none!important; }        
@@ -7201,11 +7382,9 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         }
     }
 
-                                                          
-                                                                
-                                                                
-  
-    
+
+
+
     if(hideVideosInEntries == 1)
     {
         // przypiete wpisy z mirko na stronie głównej
@@ -7215,6 +7394,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         main.main > section > div.content > section.profile-page    > section.profile       > section   > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed,
         main.main > section > div.content > section.bucket-page     > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed,
         main.main > section > div.content > section.category-page   > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed,
+        main.main > section > div.content > section.search-page     > section.search        > section   > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed,
         main.main > section > div.content > section.observed-page   > section.observed                  > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed,
         main.main > section > div.content > section.favourites-page > section.favourites                > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed,
         main.main > section > div.content > section.microblog-page  > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed
@@ -7239,6 +7419,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             main.main > section > div.content > section.profile-page    > section.profile       > section   > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube,
             main.main > section > div.content > section.bucket-page     > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube,
             main.main > section > div.content > section.category-page   > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube,
+            main.main > section > div.content > section.search-page     > section.search        > section   > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube,
             main.main > section > div.content > section.observed-page   > section.observed                  > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube,
             main.main > section > div.content > section.favourites-page > section.favourites                > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube,
             main.main > section > div.content > section.microblog-page  > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.youtube
@@ -7255,6 +7436,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             main.main > section > div.content > section.profile-page    > section.profile       > section   > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable,
             main.main > section > div.content > section.bucket-page     > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable,
             main.main > section > div.content > section.category-page   > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable,
+            main.main > section > div.content > section.search-page     > section.search        > section   > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable,
             main.main > section > div.content > section.observed-page   > section.observed                  > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable,
             main.main > section > div.content > section.favourites-page > section.favourites                > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable,
             main.main > section > div.content > section.microblog-page  > section.microblog                 > section.stream > div.content > section.entry > article > div.edit-wrapper > section.embed.streamable
@@ -7913,6 +8095,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             position: fixed;
             bottom: 0px;
             right: 100px;
+            z-index: 1;
         } 
     }
     
@@ -9328,8 +9511,10 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         Ukrywa przycisk ⚙ 𝗣𝗿𝗶𝘃𝗮𝗰𝘆 𝘀𝗲𝘁𝘁𝗶𝗻𝗴𝘀 
         ukrywa okienko "We value your privacy"
         przywraca możliwość scrollowania na całej stronie
+        
+        // domyślnie włączone także w Wykop XS
     */
-    if(hidePrivacySettingsAndEnableScrollAgain == 1)
+    if(fixScrollingAndGDPRAlertHide == 1)
     {
       body
       {
@@ -9444,6 +9629,296 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 
     
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /* ---------- KOLORY NICKÓW ------------ */
+
+    if(nicknameColorsBordeaux == "bordo")               { a.burgundy-profile:not(.banned, .removed) { color: var(--nicknameBordeaux1)!important;   }} 
+    else if(nicknameColorsBordeaux == "pomaranczowy")   { a.burgundy-profile:not(.banned, .removed) { color: var(--nicknameOrange1)!important;     }} 
+    else if(nicknameColorsBordeaux == "zielony")        { a.burgundy-profile:not(.banned, .removed) { color: var(--nicknameGreen1)!important;      }} 
+    else if(nicknameColorsBordeaux == "kolor_paska")
+    { 
+        div.right > div a.username.burgundy-profile:not(.banned, .removed)                                                      { color: var(--bezplciowyPasekNegative)!important;      } 
+        header:has(div.left > a.avatar > figure.male) > div.right > div a.username.burgundy-profile:not(.banned, .removed)      { color: var(--niebieskiPasek1)!important;              } 
+        header:has(div.left > a.avatar > figure.female) > div.right > div a.username.burgundy-profile:not(.banned, .removed)    { color: var(--rozowyPasek1)!important;                 } 
+    } 
+    
+    if(nicknameColorsOrange == "bordo")               { a.orange-profile:not(.banned, .removed) { color: var(--nicknameBordeaux1)!important;       }} 
+    else if(nicknameColorsOrange == "pomaranczowy")   { a.orange-profile:not(.banned, .removed) { color: var(--nicknameOrange1)!important;         }} 
+    else if(nicknameColorsOrange == "zielony")        { a.orange-profile:not(.banned, .removed) { color: var(--nicknameGreen1)!important;          }} 
+    else if(nicknameColorsOrange == "kolor_paska")
+    { 
+        div.right > div a.username.orange-profile:not(.banned, .removed)                                                    { color: var(--bezplciowyPasekNegative)!important;          } 
+        header:has(div.left > a.avatar > figure.male) > div.right > div a.username.orange-profile:not(.banned, .removed)    { color: var(--niebieskiPasek1)!important;                  } 
+        header:has(div.left > a.avatar > figure.female) > div.right > div a.username.orange-profile:not(.banned, .removed)  { color: var(--rozowyPasek1)!important;                     } 
+    } 
+    if(nicknameColorsGreen == "bordo")               { a.green-profile:not(.banned, .removed) { color: var(--nicknameBordeaux1)!important;         }} 
+    else if(nicknameColorsGreen == "pomaranczowy")   { a.green-profile:not(.banned, .removed) { color: var(--nicknameOrange1)!important;           }} 
+    else if(nicknameColorsGreen == "zielony")        { a.green-profile:not(.banned, .removed) { color: var(--nicknameGreen1)!important;            }} 
+    else if(nicknameColorsGreen == "kolor_paska")
+    { 
+        div.right > div a.username.green-profile:not(.banned, .removed)                                                     { color: var(--bezplciowyPasekNegative)!important;          } 
+        header:has(div.left > a.avatar > figure.male) > div.right > div a.username.green-profile:not(.banned, .removed)     { color: var(--niebieskiPasek1)!important;                  } 
+        header:has(div.left > a.avatar > figure.female) > div.right > div a.username.green-profile:not(.banned, .removed)   { color: var(--rozowyPasek1)!important;                     } 
+    }
+    
+    // KOLOR TWOJEGO NICKA
+    if(nicknameColorsYours == "domyslny")            {{  }} 
+    else if(nicknameColorsYours == "bordo")          { header a.username[href={"\/ludzie\/" + myUsername}] { color: var(--nicknameBordeaux1)!important;           }} 
+    else if(nicknameColorsYours == "pomaranczowy")   { header a.username[href={"\/ludzie\/" + myUsername}] { color: var(--nicknameOrange1)!important;             }} 
+    else if(nicknameColorsYours == "zielony")        { header a.username[href={"\/ludzie\/" + myUsername}] { color: var(--nicknameGreen1)!important;              }} 
+    else if(nicknameColorsYours == "kolor_paska")
+    { 
+        header a.username[href={"\/ludzie\/" + myUsername}]                                                                             { color: var(--bezplciowyPasekNegative)!important; } 
+        header:has(div.left > a.avatar > figure.male) > div.right > div a.username[href={"\/ludzie\/" + myUsername}]     { color: var(--niebieskiPasek1)!important;         } 
+        header:has(div.left > a.avatar > figure.female) > div.right > div a.username[href={"\/ludzie\/" + myUsername}]   { color: var(--rozowyPasek1)!important;            } 
+    }
+    else if(nicknameColorsYours == "wlasny")         { header a.username[href={"\/ludzie\/" + myUsername}] { color: var(--nicknameColorsYoursCustom)!important;    }} 
+
+    
+    
+    // TWÓJ NICK NA LIŚCIE PLUSUJĄCYCH
+    // EMOJI PRZY WŁASNEJ NAZWIE UŻYTKOWNIKA NA LIŚCIE PLUSUJĄCYCH
+    if(entryVotersListEmojiYourProfile == 1)
+    {
+        section.entry-voters ul li:not(.raw)[data-v-6e6ed6ee] a.username[href={"\/ludzie\/" + myUsername}] span:before
+        { 
+            padding-right: 2rem;
+            font-size: 10rem;
+            vertical-align: bottom;
+                
+            if(nicknameColorsYours      == "kolor_paska")
+            {
+                if(mySexBarColor        == "niebieski")                                                 {  content:"🔵"!important;  }
+                else if(mySexBarColor   == "rozowy")                                                    {  content:"🟣"!important;  }
+                else if(mySexBarColor   == "bezplciowy")                                                {  content:"⚫"!important;  }
+            }
+            else if(myNicknameColor     == "pomaranczowy"   || nicknameColorsYours == "pomaranczowy")   { content:"🟠"!important;   }
+            else if(myNicknameColor     == "zielony"        || nicknameColorsYours == "zielony")        { content:"🟢"!important;   }
+            else if(myNicknameColor     == "bordo"          || nicknameColorsYours == "bordo")          { content:"🔴"!important;   }
+        }
+    }
+    if(entryVotersListShowRealNicknameColorsYours == 1)
+    {
+        
+        if(nicknameColorsYours == "domyslny")            {  section.entry-voters ul li[data-v-6e6ed6ee] a.username[href={"\/ludzie\/" + myUsername}] span { color: unset!important; } } 
+        else if(nicknameColorsYours == "bordo")          {  section.entry-voters ul li[data-v-6e6ed6ee] a.username[href={"\/ludzie\/" + myUsername}] span { color: var(--nicknameBordeaux1)!important;           }} 
+        else if(nicknameColorsYours == "pomaranczowy")   {  section.entry-voters ul li[data-v-6e6ed6ee] a.username[href={"\/ludzie\/" + myUsername}] span { color: var(--nicknameOrange1)!important;             }} 
+        else if(nicknameColorsYours == "zielony")        {  section.entry-voters ul li[data-v-6e6ed6ee] a.username[href={"\/ludzie\/" + myUsername}] span { color: var(--nicknameGreen1)!important;              }} 
+        else if(nicknameColorsYours == "kolor_paska")
+        { 
+            if(mySexBarColor == "niebieski")            {  section.entry-voters ul li[data-v-6e6ed6ee] a.username[href={"\/ludzie\/" + myUsername}] span  { color: var(--niebieskiPasek1)!important;               }}
+            else if(mySexBarColor == "rozowy")          {  section.entry-voters ul li[data-v-6e6ed6ee] a.username[href={"\/ludzie\/" + myUsername}] span  { color: var(--rozowyPasek1)!important;                  }}
+            else if(mySexBarColor == "bezplciowy")      {  section.entry-voters ul li[data-v-6e6ed6ee] a.username[href={"\/ludzie\/" + myUsername}] span  { color: var(--bezplciowyPasek1)!important;              }}
+        }
+        else if(nicknameColorsYours == "wlasny")        {  section.entry-voters ul li[data-v-6e6ed6ee] a.username[href={"\/ludzie\/" + myUsername}] span  { color: var(--nicknameColorsYoursCustom)!important;    }} 
+    }
+        
+    
+    
+    
+    // KOLORY NICKÓW ZBANOWANYCH
+    if(nicknameColorsBanned == "domyslny")          { header a.username.banned:not(.removed) { }} 
+    else if(nicknameColorsBanned == "szary")        { header a.username.banned:not(.removed) { color: rgba(78, 78, 78, 1)!important;             }} 
+    else if(nicknameColorsBanned == "bananowy")     { header a.username.banned:not(.removed) { color: var(--kolorBananowy1)!important;             }} 
+    else if(nicknameColorsBanned == "czerwony")     { header a.username.banned:not(.removed) { color: rgb(153, 71, 60)!important;                }} 
+    else if(nicknameColorsBanned == "kolor_paska")
+    { 
+        div.right > div a.username.banned:not(.removed)                                                            { color: var(--bezplciowyPasekNegative)!important; } 
+        header:has(div.left > a.avatar > figure.male) > div.right > div a.username.banned:not(.removed)            { color: var(--niebieskiPasek1)!important; } 
+        header:has(div.left > a.avatar > figure.female) > div.right > div a.username.banned:not(.removed)          { color: var(--rozowyPasek1)!important; } 
+    }
+    if(nicknameColorsBannedWithStrikethrough == 1)
+    {
+        header a.username.banned[data-v-ed9f6c56]:not(.removed) > span
+        {
+            text-decoration: line-through;
+        }
+    }
+    
+    // KOLORY KONT USUNIĘTYCH
+    if(nicknameColorsRemoved == "domyslnie")         { header a.username.removed { }} 
+    else if(nicknameColorsRemoved == "czerwony")     { header a.username.removed { color: rgb(165, 76, 64)!important;           }} 
+    else if(nicknameColorsRemoved == "czarny")       
+    {
+        header a.username.removed { color: rgb(0, 0, 0)!important; }
+        [data-night-mode] header a.username.removed { background-color: rgba(255, 255, 255, 0.3); padding-left: 5rem; padding-right: 5rem;}
+    }
+    else if(nicknameColorsRemoved == "kolor_konta")
+    {
+        div.right > div a.username.orange-profile.removed     { color: var(--nicknameOrange1)!important;             } 
+        div.right > div a.username.burgundy-profile.removed   { color: var(--nicknameBordeaux1)!important;           } 
+        div.right > div a.username.green-profile.removed      { color: var(--nicknameGreen1)!important;              } 
+    }
+    else if(nicknameColorsRemoved == "kolor_paska")
+    { 
+        div.right > div a.username.removed                                                            { color: var(--bezplciowyPasekNegative)!important; } 
+        header:has(div.left > a.avatar > figure.male) > div.right > div a.username.removed            { color: var(--niebieskiPasek1)!important; } 
+        header:has(div.left > a.avatar > figure.female) > div.right > div a.username.removed          { color: var(--rozowyPasek1)!important; } 
+    }
+    
+    // NICK KONT USUNIETYCH BEZ PRZEKREŚLENIA
+    if(nicknameColorsRemovedNoStrikethrough == 1)
+    {
+        header a.username.removed[data-v-ed9f6c56]
+        {
+            text-decoration: none!important;
+        }
+    }
+
+
+    
+    
+    // EMOJI ZA NICKNAME
+    a.username > span:after
+    {
+        font-size: 11rem;
+        margin-left: 3rem;
+        text-decoration: none!important;
+    }
+    
+    // TODO: wykopXSCheckBannedInfo == 0 wlaczyc wykrywanie WykopXS i wtedy nie wyswietlac tego emoji w Wykop X Style bo dodawany jest osobny element
+    if(nicknameEmojiBanned == 1 && wykopXSCheckBannedInfo != 1)
+    { 
+        header a.username.banned:not(.removed) > span:after
+        {
+            text-decoration: none!important;
+            if(emojiBanned == "banan")                          { content: "🍌"!important;  }
+            else if(emojiBanned == "czerwony_x")                { content: "❌"!important;  }
+            else if(emojiBanned == "szary_x")                   { content: "✖"!important;   }
+            else if(emojiBanned == "czerwony_wykrzyknik")       { content: "❗"!important;   }
+            else if(emojiBanned == "bialy_wykrzyknik")          { content: "❕"!important;   }
+            else if(emojiBanned == "czerwony_znak_zapytania")   { content: "❓"!important;   }
+            else if(emojiBanned == "bialy_znak_zapytania")      { content: "❔"!important;   }
+            else if(emojiBanned == "czarna_kropa")              { content: "⚫"!important;  }
+            else if(emojiBanned == "czerwona_kropa")            { content: "🔴"!important;  }
+            else if(emojiBanned == "zakaz_wjazdu")              { content: "⛔"!important;  }
+            else if(emojiBanned == "zakaz_wjazdu_2")            { content: "📛"!important;  }
+            else if(emojiBanned == "zakaz_smieci")              { content: "🚯"!important;  }
+            else if(emojiBanned == "zakaz_ruchu_pieszych")      { content: "🚷"!important;  }
+            else if(emojiBanned == "zakaz_postoju")             { content: "🚫"!important;  }
+        }
+    }
+    // ZBANOWANI NA LIŚCIE PLUSUJĄCYCH
+    if(entryVotersListEmojiBannedUser == 1)
+    {
+        section.entry-voters ul li:not(.raw)[data-v-6e6ed6ee] a.username.banned:not(.removed) span:before
+        {
+            text-decoration: none!important;
+            padding-right: 2rem;
+            font-size: 12rem;
+            vertical-align: bottom;
+            
+            if(emojiBanned == "banan")                          { content: "🍌"!important;  }
+            else if(emojiBanned == "czerwony_x")                { content: "❌"!important;  }
+            else if(emojiBanned == "szary_x")                   { content: "✖"!important;   }
+            else if(emojiBanned == "czerwony_wykrzyknik")       { content: "❗"!important;   }
+            else if(emojiBanned == "bialy_wykrzyknik")          { content: "❕"!important;   }
+            else if(emojiBanned == "czerwony_znak_zapytania")   { content: "❓"!important;   }
+            else if(emojiBanned == "bialy_znak_zapytania")      { content: "❔"!important;   }
+            else if(emojiBanned == "czarna_kropa")              { content: "⚫"!important;  }
+            else if(emojiBanned == "czerwona_kropa")            { content: "🔴"!important;  }
+            else if(emojiBanned == "zakaz_wjazdu")              { content: "⛔"!important;  }
+            else if(emojiBanned == "zakaz_wjazdu_2")            { content: "📛"!important;  }
+            else if(emojiBanned == "zakaz_smieci")              { content: "🚯"!important;  }
+            else if(emojiBanned == "zakaz_ruchu_pieszych")      { content: "🚷"!important;  }
+            else if(emojiBanned == "zakaz_postoju")             { content: "🚫"!important;  }
+        }
+    }
+    
+    if(nicknameEmojiRemoved == 1)
+    {
+        header a.username.removed > span:after
+        {
+            text-decoration: none!important;
+            display: inline-block; // żeby nie było przekreślenia line-through w moji
+            
+            if(emojiRemoved == "czerwony_x")                     { content: "❌"!important;  }
+            else if(emojiRemoved == "szary_x")                   { content: "✖"!important;   }
+            else if(emojiRemoved == "czerwony_wykrzyknik")       { content: "❗"!important;   }
+            else if(emojiRemoved == "bialy_wykrzyknik")          { content: "❕"!important;   }
+            else if(emojiRemoved == "czerwony_znak_zapytania")   { content: "❓"!important;   }
+            else if(emojiRemoved == "bialy_znak_zapytania")      { content: "❔"!important;   }
+            else if(emojiRemoved == "czarna_kropa")              { content: "⚫"!important;  }
+            else if(emojiRemoved == "czerwona_kropa")            { content: "🔴"!important;  }
+            else if(emojiRemoved == "zakaz_wjazdu")              { content: "⛔"!important;  }
+            else if(emojiRemoved == "zakaz_wjazdu_2")            { content: "📛"!important;  }
+            else if(emojiRemoved == "zakaz_smieci")              { content: "🚯"!important;  }
+            else if(emojiRemoved == "zakaz_ruchu_pieszych")      { content: "🚷"!important;  }
+            else if(emojiRemoved == "zakaz_postoju")             { content: "🚫"!important;  }
+        }
+    }
+    
+    // EMOJI PRZY USUNIETYCH KONTACH NA LIŚCIE PLUSUJĄCYCH 
+    if(entryVotersListEmojiRemovedUser == 1 || entryVotersListEmojiRemovedUserTextHide == 1)      
+    {
+        section.entry-voters ul li:not(.raw)[data-v-6e6ed6ee] a.username.removed[data-v-ed9f6c56]
+        {
+            text-decoration: none!important;
+        }
+        section.entry-voters ul li:not(.raw)[data-v-6e6ed6ee] a.username.removed[data-v-ed9f6c56] span
+        {
+            text-decoration: line-through;
+        }
+        section.entry-voters ul li:not(.raw)[data-v-6e6ed6ee] a.username.removed[data-v-ed9f6c56] span:before
+        {
+            text-decoration: none!important;
+            display: inline-block; // żeby nie było przekreślenia line-through w emoji
+            padding-right: 2rem;
+            font-size: 12rem;
+            vertical-align: bottom;
+            
+            if(emojiRemoved == "czerwony_x")                     { content: "❌"!important;  }
+            else if(emojiRemoved == "szary_x")                   { content: "✖"!important;   }
+            else if(emojiRemoved == "czerwony_wykrzyknik")       { content: "❗"!important;   }
+            else if(emojiRemoved == "bialy_wykrzyknik")          { content: "❕"!important;   }
+            else if(emojiRemoved == "czerwony_znak_zapytania")   { content: "❓"!important;   }
+            else if(emojiRemoved == "bialy_znak_zapytania")      { content: "❔"!important;   }
+            else if(emojiRemoved == "czarna_kropa")              { content: "⚫"!important;  }
+            else if(emojiRemoved == "czerwona_kropa")            { content: "🔴"!important;  }
+            else if(emojiRemoved == "zakaz_wjazdu")              { content: "⛔"!important;  }
+            else if(emojiRemoved == "zakaz_wjazdu_2")            { content: "📛"!important;  }
+            else if(emojiRemoved == "zakaz_smieci")              { content: "🚯"!important;  }
+            else if(emojiRemoved == "zakaz_ruchu_pieszych")      { content: "🚷"!important;  }
+            else if(emojiRemoved == "zakaz_postoju")             { content: "🚫"!important;  }
+        }
+        
+        if(entryVotersListEmojiRemovedUserTextHide == 1)
+        {
+            section.entry-voters ul li:not(.raw)[data-v-6e6ed6ee] a.username.removed[data-v-ed9f6c56] span
+            {
+                font-size: 0px;
+            }
+        }
+    }
+    // NICKI KONT USUNIETYCH BEZ PRZEKREŚLENIA NA LIŚCIE PLUSUJĄCYCH
+    if(entryVotersListNicknameColorsRemovedNoStrikethrough == 1)
+    {
+        section.entry-voters ul li:not(.raw)[data-v-6e6ed6ee] a.username.removed[data-v-ed9f6c56],
+        section.entry-voters ul li:not(.raw)[data-v-6e6ed6ee] a.username.removed[data-v-ed9f6c56] span
+        {
+            text-decoration: none!important;
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
     /* -------- LISTA PLUSUJĄCYCH --------- */
 
     if(entryVotersListHide == 1)
@@ -9452,6 +9927,15 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     }
     else
     {
+        if(entryVotersListRawHide == 1)
+        {
+            section.entry-voters ul li.raw[data-v-6e6ed6ee]
+            {
+                display: none!important;
+            }
+        }
+        
+        
         section.entry-voters ul
         {
             display: flex!important;
@@ -9479,44 +9963,68 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         {
             margin-left: unset!important;
         }
-        
-        // pokazywanie prawdziwych kolorów nicków zamiast szarego */
-        if(entryVotersListShowRealUserColorsBordeaux == 1)  { section.entry-voters ul li[data-v-6e6ed6ee] a.username.burgundy-profile                   span { color: unset!important; }}
-        if(entryVotersListShowRealUserColorsGreen == 1)     { section.entry-voters ul li[data-v-6e6ed6ee] a.username.green-profile                      span { color: unset!important; }}
-        if(entryVotersListShowRealUserColorsOrange == 1)    { section.entry-voters ul li[data-v-6e6ed6ee] a.username.orange-profile:not(.removed)       span { color: unset!important; }}
-        if(entryVotersListShowRealUserColorsOther == 1)     { section.entry-voters ul li[data-v-6e6ed6ee] a.username:not(.orange-profile, .green-profile, .burgundy-profile)   span { color: unset!important; }}
-        if(entryVotersListShowRealUserColorsBanned == 1)    { section.entry-voters ul li[data-v-6e6ed6ee] a.username.banned:not(.removed)               span { color: var(--gullGray)!important; }}
-        if(entryVotersListEmojiRemovedUser == 1)            { section.entry-voters ul li[data-v-6e6ed6ee] a.removed:not(.dummy)                       span:before { content:"✖"!important; padding-right: 2rem; font-size: 10rem; }}
-        if(entryVotersListEmojiBannedUser == 1)             { section.entry-voters ul li[data-v-6e6ed6ee] a.username.banned:not(.removed)               span:before { content:"⛔"!important; padding-right: 2rem; font-size: 10rem; }}
-        
-        if(entryVotersListEmojiYourProfile == 1)
-        {
-            section.entry-voters ul li[data-v-6e6ed6ee] a.username[href={"\/ludzie\/" + myUsername}]:not(.removed) span:before
-            { 
-                if(myNicknameColor == "pomaranczowy")   { content:"🟠"!important;  }
-                else if(myNicknameColor == "zielony")   { content:"🟢"!important;  }
-                else if(myNicknameColor == "bordo")     { content:"🔴"!important;  }
-                    
-                padding-right: 2rem;
-                font-size: 10rem;
-            }
-        }
-
-
-        
-        
         if(entryVotersListNoUnderline == 1)
         {
-            section.entry-voters ul li[data-v-6e6ed6ee] a.username:hover
+            section.entry-voters ul li:not(.raw)[data-v-6e6ed6ee] a.username:hover
             {
                 transition: none!important;
                 text-decoration: none!important;
                 filter: brightness(1.3)!important;
             }
-            
+        }
+        if(entryVotersListUsersStartWithAt == 1)
+        {
+            section.entry-voters ul li:not(.raw)[data-v-6e6ed6ee] > a > span:before
+            {
+                content: "@"!important;
+                margin-right: -3px!important; /* nick użytkownika ma spację na początku */
+                padding-right: 0rem;
+                font-size: inherit;
+            }
         }
         
         
+        
+    
+        // KOLORY KONT ZAMIAST SZAREGO KOLORU NICKA */
+        if(entryVotersListShowRealNicknameColorsBordeaux    == 1)  { section.entry-voters ul li[data-v-6e6ed6ee] a.username.burgundy-profile:not(.removed)                             span { color: unset!important; }}
+        if(entryVotersListShowRealNicknameColorsGreen       == 1)  { section.entry-voters ul li[data-v-6e6ed6ee] a.username.green-profile:not(.removed)                                span { color: unset!important; }}
+        if(entryVotersListShowRealNicknameColorsOrange      == 1)  { section.entry-voters ul li[data-v-6e6ed6ee] a.username.orange-profile:not(.removed)                               span { color: unset!important; }}
+        if(entryVotersListShowRealNicknameColorsOther       == 1)  { section.entry-voters ul li[data-v-6e6ed6ee] a.username:not(.removed, .orange-profile, .green-profile, .burgundy-profile)    span { color: unset!important; }}
+        
+
+    
+        // ZBANOWANE KONTA NA LIŚCIE
+        if(entryVotersListShowRealNicknameColorsBanned == "domyslny")       {}
+        else if(entryVotersListShowRealNicknameColorsBanned == "szary")     { section.entry-voters ul li[data-v-6e6ed6ee] a.username.banned:not(.removed) span  { color: var(--gullGray)!important;         }}
+        else if(entryVotersListShowRealNicknameColorsBanned == "bananowy")  { section.entry-voters ul li[data-v-6e6ed6ee] a.username.banned:not(.removed) span  { color: var(--kolorBananowy1)!important;   }}
+        else if(entryVotersListShowRealNicknameColorsBanned == "czerwony")  { section.entry-voters ul li[data-v-6e6ed6ee] a.username.banned:not(.removed) span  { color: rgba(213, 55, 34, 1)!important;   }}
+        
+        // KONTA USUNIĘTE NA LIŚCIE PLUSUJĄCYCH
+        if(entryVotersListShowRealNicknameColorsRemoved == "domyslny")       {}
+        else if(entryVotersListShowRealNicknameColorsRemoved == "szary")     { section.entry-voters ul li[data-v-6e6ed6ee] a.username.removed span              { color: var(--gullGray)!important;         }}
+        else if(entryVotersListShowRealNicknameColorsRemoved == "czerwony")  { section.entry-voters ul li[data-v-6e6ed6ee] a.username.removed span              { color: rgba(213, 55, 34, 1)!important;   }}
+        else if(entryVotersListShowRealNicknameColorsRemoved == "czarny")    
+        {
+            section.entry-voters ul li[data-v-6e6ed6ee] a.username.removed span              { color: rgb(0, 0, 0)!important;   }
+            [data-night-mode] section.entry-voters ul li[data-v-6e6ed6ee] a.username.removed span { background-color: rgba(255, 255, 255, 0.3); padding-left: 3rem; padding-right: 3rem;}
+
+        }
+        else if(entryVotersListShowRealNicknameColorsRemoved == "kolor_konta")
+        { 
+            section.entry-voters ul li[data-v-6e6ed6ee] a.username.orange-profile.removed span    { color: var(--nicknameOrange1)!important;             } 
+            section.entry-voters ul li[data-v-6e6ed6ee] a.username.burgundy-profile.removed span  { color: var(--nicknameBordeaux1)!important;           } 
+            section.entry-voters ul li[data-v-6e6ed6ee] a.username.green-profile.removed span     { color: var(--nicknameGreen1)!important;              } 
+        }
+ 
+
+
+        
+
+    
+
+
+        /* SORTOWANIE LISTY PLUSUJĄCYCH */
         if(entryVotersListSortByColor == 1)
         {
             if(entryVotersListSortOrder == "bpz")   {section.entry-voters ul { --burgundyOrder: 11; --orangeOrder: 12;  --greenOrder: 13;} }
@@ -9526,35 +10034,63 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             if(entryVotersListSortOrder == "zbp")   {section.entry-voters ul { --burgundyOrder: 12; --orangeOrder: 13;  --greenOrder: 11;} }
             if(entryVotersListSortOrder == "zpb")   {section.entry-voters ul { --burgundyOrder: 13; --orangeOrder: 12;  --greenOrder: 11} }
             
-            section.entry-voters ul li:has(a.username.burgundy-profile)     { order: var(--burgundyOrder)!important }
-            section.entry-voters ul li:has(a.username.orange-profile:not(.removed))       { order: var(--orangeOrder)!important }
-            section.entry-voters ul li:has(a.username.green-profile)        { order: var(--greenOrder)!important }
+            section.entry-voters ul li:has(a.username.burgundy-profile)                     { order: var(--burgundyOrder)!important }
+            section.entry-voters ul li:has(a.username.orange-profile:not(.removed))         { order: var(--orangeOrder)!important }
+            section.entry-voters ul li:has(a.username.green-profile)                        { order: var(--greenOrder)!important }
         }
-        if(entryVotersListUsersRemovedHide == 1)
+        
+        // NIE POKAZUJ KONT ZBANOWANYCH ĘTYCH NA LIŚCIE PLUSUJĄCYCH
+        if(entryVotersListBannedHide == 1)
         {
-            section.entry-voters ul li:has(a.username.removed) { display: none!important; }
+            section.entry-voters ul li:has(a.username.banned:not(.removed))
+            { display: none!important; }
+        }
+        else
+        {               
+            if(entryVotersListBannedLast == "domyslnie")
+            { }
+            // KONTA ZBANOWANE NA KOŃCU LISTY
+            else if(entryVotersListBannedLast == "na_koncu")
+            {
+                section.entry-voters ul li:has(a.username.banned:not(.removed))              { order: 99!important; }
+            }    
+        }
+        
+        // NIE POKAZUJ KONT USUNIĘTYCH NA LIŚCIE PLUSUJĄCYCH
+        if(entryVotersListRemovedHide == 1)
+        {
+            section.entry-voters ul li:has(a.username.removed)
+            { display: none!important; }
         }
         else
         {
-            section.entry-voters > ul > li > a.username.removed { color: var(--heather)!important; }
+            section.entry-voters > ul > li > a.username.removed                             { color: var(--heather)!important; }
                 
-            if(entryVotersListUsersRemoved == "domyslnie")
+            if(entryVotersListRemovedLast == "domyslnie")
             { }
-            else if(entryVotersListUsersRemoved == "na_koncu")
+            // KONTA USUNIĘTE NA KOŃCU LISTY
+            else if(entryVotersListRemovedLast == "na_koncu")
             {
-                section.entry-voters ul li:has(a.username.removed) { order: 100!important; }
+                section.entry-voters ul li:has(a.username.removed)                          { order: 100!important; }
             }    
         }
         
         
+        
+        
+        // NA POCZĄTKU LISTY PLUSUJĄCYCH
         if(entryVotersListUsersBlackFirst == 1)
         {
-            section.entry-voters ul li:has(a.username.black-profile) { order: 9!important; }
+            section.entry-voters ul li:has(a.username.black-profile)                        { order: 9!important; }
+        }
+        if(entryVotersListSortOrderyYourNicknameFirst == 1)
+        {
+            section.entry-voters ul li:has(a.username[href={"\/ludzie\/" + myUsername}])    { order: 7!important; margin-right: 0rem;}
         }
         
         
         // jest wybrana któraś z opcji zmiany kolejności plusujących
-        if(entryVotersListSortByColor == 1 || entryVotersListUsersRemoved == "na_koncu")
+        if(entryVotersListSortByColor == 1 || entryVotersListRemovedLast == "na_koncu" || entryVotersListBannedLast == "na_koncu")
         {
             // lista raw na końcu
             section.entry-voters ul li.raw[data-v-6e6ed6ee] { order: 101!important; }
@@ -9574,16 +10110,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
                 
         }
         
-        if(entryVotersListUsersStartWithAt == 1)
-        {
-            section.entry-voters ul li:not(.raw)[data-v-6e6ed6ee] > a > span:before
-            {
-                content: "@"!important;
-                margin-right: -3px!important; /* nick użytkownika ma spację na początku */
-            }
-        }
-        
-            
+
         
         if(entryVotersListUsersSeparator == "wlasny")
         {
@@ -9594,7 +10121,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         }
         else if(entryVotersListUsersSeparator != przecinek)
         {
-            if(entryVotersListUsersSeparator == "spacja")                           { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " " !important; } }
+            if(entryVotersListUsersSeparator      == "spacja")                      { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " " !important; } }
             else if(entryVotersListUsersSeparator == "punktor")                     { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " • "!important; } }
             else if(entryVotersListUsersSeparator == "bialy_punktor")               { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " ◦ "!important; } }
             else if(entryVotersListUsersSeparator == "punktor_trojkatny")           { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " ‣ "!important; } }
@@ -9608,8 +10135,6 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             else if(entryVotersListUsersSeparator == "emoji_2")                     { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " ◻️ "!important; } }
             else if(entryVotersListUsersSeparator == "emoji_3")                     { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " ✖️ "!important; } }
         }
-        
-        
     }
 
     
@@ -12647,9 +13172,15 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 
     
         section.entry > article > header > div.left > a.avatar
+        section.entry > article > header > div.left > a.avatar > figure,
+        section.entry > article > header > div.left > a.avatar > figure > img
         {
             width: var(--avatarSize)!important;
             height: var(--avatarSize)!important;
+            min-height: var(--avatarSize)!important;
+            max-height: var(--avatarSize)!important;
+            min-width: var(--avatarSize)!important;
+            max-width: var(--avatarSize)!important;
         } 
 
         section.entry > article > header > div.right[data-v-2aacfeb5]
@@ -12669,9 +13200,6 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             section.entry > article > header[data-v-2aacfeb5]
             {
                 align-items: center!important;
-            } 
-            section.entry > article > header > div.left
-            {
             } 
         } 
         if(avatarSize < 29rem)
@@ -13128,7 +13656,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
     
     
-    /* Zmień wyświetlaną nazwę "nickname" w całym wykopie */
+    /* Zmień wyświetlaną nazwę "nickname" w całym wykopie  */
     if(customUsername != "")
     {
         section.entry>article>header>div.right>div a.username[href={"\/ludzie\/" + myUsername}] > span,   /* login autora komentarza */
@@ -13150,7 +13678,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         div.wrapper a[href={"\/ludzie\/" + myUsername}]:not(:has(span)):before  
         {
             border: 10px solid #00ff2f!important;
-          font-size: 16rem!important;
+            font-size: 16rem!important;
         } 
         header.header li.account ul.dropdown-body li.profile a:not(:has(span)):after
         {
@@ -15051,12 +15579,23 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         /* wyróżnianie wpisów */
         if(homepagePinnedEntriesHighlight == 1)
         {
-
+            main.main > section > div.content > section.home-page > section.home > section.stream > div.content
+            {
+/*                 gap: 120px!important; */
+            }
             main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.entry
             {
                 --microblogEntriesSpacing: microblogEntriesSpacing + 15px!important;   
                 margin-top: calc(var(--linksSpacing) + 30px);
                 margin-bottom: calc(var(--linksSpacing) + 2px);
+                translate: 0px 20px!important;
+            }
+            
+            main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.entry.wxs_minimized
+            {
+                margin-top: 13px!important;
+                margin-bottom: 26px!important
+                translate: 0px 20px!important;
             } 
 
             main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.entry:before
@@ -15065,9 +15604,9 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
                 color: var(--colorText) !important;
                 background-color: var(--microblogBackgroundColor);
                 --boxShadowColor: var(--microblogBoxShadowColor);
-                box-shadow: 0 0 0 1px var(--microblogBoxShadowColor);
+                /* box-shadow: 0 0 0 1px var(--microblogBoxShadowColor); */
                 font-size: 11rem;
-                top: -28px;
+                top: -29px;
                 right: unset;
                 left: 0px;
                 bottom: unset;
@@ -15076,7 +15615,8 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
                 display: flex;
                 position: absolute;
                 border-radius: 5px 5px 0px 0px!important;
-                z-index: 20;
+                z-index: 0;
+                
             } 
             main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.entry:hover:before
             {
@@ -16424,6 +16964,8 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             body:has(> section > div.main-content > main.main > section > div.content > section.upcoming-page)::after,
             body:has(> section > div.main-content > main.main > section > div.content > section.bucket-page)::before, 
             body:has(> section > div.main-content > main.main > section > div.content > section.bucket-page)::after,
+            body:has(> section > div.main-content > main.main > section > div.content > section.search-page)::before, 
+            body:has(> section > div.main-content > main.main > section > div.content > section.search-page)::after,
             body:has(> section > div.main-content > main.main > section > div.content > section.category-page)::before, 
             body:has(> section > div.main-content > main.main > section > div.content > section.category-page)::after
             {  
@@ -16449,6 +16991,8 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             body:has(> section > div.main-content > main.main > section > div.content > section.tag-page)::after,
             body:has(> section > div.main-content > main.main > section > div.content > section.observed-page)::before, 
             body:has(> section > div.main-content > main.main > section > div.content > section.observed-page)::after,
+            body:has(> section > div.main-content > main.main > section > div.content > section.search-page)::before, 
+            body:has(> section > div.main-content > main.main > section > div.content > section.search-page)::after,
             body:has(> section > div.main-content > main.main > section > div.content > section.profile-page)::before, 
             body:has(> section > div.main-content > main.main > section > div.content > section.profile-page)::after 
             {  
@@ -17350,6 +17894,7 @@ https://wykop.pl/moje/
     // WPISY
     main.main > section > div.content > section.bucket-page     > section.microblog                 > section.stream > div.content > section.entry,
     main.main > section > div.content > section.category-page   > section.microblog                 > section.stream > div.content > section.entry,
+    main.main > section > div.content > section.search-page     > section.search        > section   > section.stream > div.content > section.entry,
     main.main > section > div.content > section.favourites-page > section.favourites                > section.stream > div.content > section.entry,
     main.main > section > div.content > section.observed-page   > section.observed                  > section.stream > div.content > section.entry,
     main.main > section > div.content > section.profile-page    > section.profile       > section   > section.stream > div.content > section.entry,
@@ -17358,8 +17903,8 @@ https://wykop.pl/moje/
     main.main > section > div.content > section.microblog-page  > section.microblog                 > section.stream > div.content > section.entry
 
     // WPISY :is()
-    main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry
-    main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own)
+    main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry
+    main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own)
 
     // przy uzywaniu dwoch selektorow jeden po drugim, dodac .dummyClassX - https://github.com/openstyles/stylus/issues/1719 
 
@@ -17370,6 +17915,7 @@ https://wykop.pl/moje/
     // ZNALEZISKA
     main.main > section > div.content > section.bucket-page     > section.bucket                    > section.stream > div.content > section.link-block,
     main.main > section > div.content > section.category-page   > section.category                  > section.stream > div.content > section.link-block,
+    main.main > section > div.content > section.search-page     > section.search        > section   > section.stream > div.content > section.link-block,
     main.main > section > div.content > section.favourites-page > section.favourites                > section.stream > div.content > section.link-block,
     main.main > section > div.content > section.observed-page   > section.observed                  > section.stream > div.content > section.link-block,
     main.main > section > div.content > section.profile-page    > section.profile   > section       > section.stream > div.content > section.link-block,
@@ -17379,7 +17925,7 @@ https://wykop.pl/moje/
     main.main > section > div.content > section.hits-page       > section.hits                      > section.stream > div.content > section.link-block,
     main.main > section > div.content > section.upcoming-page   > section.upcoming                  > section.stream > div.content > section.link-block,
     
-    main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .hits-page, .upcoming-page) > section section.stream > div.content > section.link-block
+    main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .hits-page, .upcoming-page) > section section.stream > div.content > section.link-block
 
 */
 }
@@ -18269,14 +18815,19 @@ https://wykop.pl/moje/
     section.link-block.isIntersecting > section::after,
     section.entry.isIntersecting::after
     {
-        content: "🟢";
-        font-size: 10rem;
-        animation-name: isIntersectingAnimation!important;
-        animation-duration: 2s!important;
-        animation-iteration-count: infinite!important;
+        content: "🍤"; // 🍤💠🔄🔷🔶
+        rotate: var(--angle);
+        transform: scaleX(-1);
+
+        animation-name: isIntersectingAnimation, rotatingAnimation!important;
+        animation-duration: 6s, 1s!important;
+        animation-timing-function: ease-in, linear!important;
+        animation-iteration-count: infinite, infinite!important;
+        
+        font-size: 14rem;
         
         position: absolute;
-        left: 0px;
+        right: 0px;
         top: 0px;
     }
         
@@ -18834,7 +19385,7 @@ https://wykop.pl/moje/
     // VARIABLES
     
     versor = "style"; // "style", "blank", "block"
-    version = "2.46";   
+    version = "2.47";   
     // xblocker = 2.49
     
     /* Wykop XS Settings  */
@@ -18868,6 +19419,7 @@ https://wykop.pl/moje/
         --observedTagsInRightSidebarUpdateInterval: observedTagsInRightSidebarUpdateInterval; 
         --observedTagsInRightSidebarSortAlphabetically: observedTagsInRightSidebarSortAlphabetically;
 
+        --fixScrollingAndGDPRAlertRemoveJS: fixScrollingAndGDPRAlertRemoveJS;
     } 
 
    
@@ -18912,9 +19464,7 @@ https://wykop.pl/moje/
                                                                     } 
                                                             }
                                         
-     
-    
-                                                            
+
     /* Wykop X Style version IN FOOTER */                                               
     body > section::after
     {

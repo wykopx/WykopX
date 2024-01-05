@@ -2,7 +2,7 @@
 // @name        Wykop XS DEV
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
-// @version     2.46.0
+// @version     2.47.0
 
 
 // @author      Wykop X <wykopx@gmail.com>
@@ -26,7 +26,8 @@
 // @require https://unpkg.com/xhook@latest/dist/xhook.min.js
 // @require https://greasyfork.org/scripts/458629-depaginator-for-wykop-pl/code/Depaginator%20for%20Wykoppl.user.js
 // @require https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
-// @require https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js
+// @require https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js 
+// @require https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js
 // @require http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
 // @require https://greasyfork.org/scripts/383527-wait-for-key-elements/code/Wait_for_key_elements.js?version=701631
 
@@ -37,13 +38,13 @@
 {
 	'use strict';
 
-	const currentVersion = "2.46.0";
+	const currentVersion = "2.47.0";
 	const dev = true;
 	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
 
+	//dayjs.extend(relativeTime); // https://day.js.org/docs/en/plugin/relative-time // https://www.jsdelivr.com/package/npm/dayjs?tab=files&path=plugin
+	dayjs.extend(window.dayjs_plugin_relativeTime);
 	let loadTime = dayjs();
-
-	let removedAnnoyancesAndAds = 0;
 
 	// user.username - nazwa zalogowanego uzytkownika
 
@@ -61,6 +62,7 @@
 
 	// boolean - domyslnie WŁĄCZONE bez Wykop X Style
 	settings.hitsInTopNavJS = wykopxSettings.getPropertyValue("--hitsInTopNavJS") ? wykopxSettings.getPropertyValue("--hitsInTopNavJS") === '1' : true;
+
 	settings.quickLinksEnable = wykopxSettings.getPropertyValue("--quickLinksEnable") ? wykopxSettings.getPropertyValue("--quickLinksEnable") === '1' : true;
 	settings.myWykopInTopNavJS = wykopxSettings.getPropertyValue("--myWykopInTopNavJS") ? wykopxSettings.getPropertyValue("--myWykopInTopNavJS") === '1' : true;
 	settings.enableNotatkowator = wykopxSettings.getPropertyValue("--enableNotatkowator") ? wykopxSettings.getPropertyValue("--favoritesInTopNavJS") === '1' : true;
@@ -71,6 +73,8 @@
 	settings.autoOpenMoreContentEverywhere = wykopxSettings.getPropertyValue("--autoOpenMoreContentEverywhere") ? wykopxSettings.getPropertyValue("--autoOpenMoreContentEverywhere") === '1' : true;
 	settings.autoOpenSpoilersEverywhere = wykopxSettings.getPropertyValue("--autoOpenSpoilersEverywhere") ? wykopxSettings.getPropertyValue("--autoOpenSpoilersEverywhere") === '1' : true;
 	settings.observedTagsInRightSidebarEnable = wykopxSettings.getPropertyValue("--observedTagsInRightSidebarEnable") ? wykopxSettings.getPropertyValue("--observedTagsInRightSidebarEnable") === '1' : true;
+	settings.fixScrollingAndGDPRAlertRemoveJS = wykopxSettings.getPropertyValue("--fixScrollingAndGDPRAlertRemoveJS") ? wykopxSettings.getPropertyValue("--fixScrollingAndGDPRAlertRemoveJS") === '1' : true;
+
 
 	// boolean - domyślnie wyłączone bez Wykop X Style
 	settings.observedTagsInRightSidebarSortAlphabetically = wykopxSettings.getPropertyValue("--observedTagsInRightSidebarSortAlphabetically") ? wykopxSettings.getPropertyValue("--observedTagsInRightSidebarSortAlphabetically") === '1' : false;
@@ -415,27 +419,66 @@
 	let consoleData = {
 		mirkoukrywacz_hidden: {
 			count: 0,
-			text: "Ukrytych"
+			text: "Ukrytych",
+			title: "Mirkoukrywacz ukryte",
 		},
 
 		mirkoukrywacz_minimized: {
 			count: 0,
-			text: "Zminimalizowanych"
+			text: "Zminimalizowanych",
+			title: "Mirkoukrywacz zminimalizowan",
 		},
 
 		annoyances: {
 			count: 0,
-			text: "Złośliwego kodu"
+			text: "Uciążliwych obiektów",
+			title: "Annoyances title",
+
+
+			ads: {
+				count: 0,
+				text: "Usuniętych reklam",
+				title: "Annoyances ads",
+
+			},
+
+			iframe: {
+				count: 0,
+				text: "ads iframes",
+				title: "Annoyances iframes with ads",
+
+			},
+
+			script: {
+				count: 0,
+				text: "ads scripts",
+				title: "Annoyances scripts",
+
+			},
+
+			other: {
+				count: 0,
+				text: "inne",
+				title: "Annoyances other",
+
+			},
+
+			div: {
+				count: 0,
+				text: "inne",
+				title: "Annoyances div",
+
+			},
+
+
 		},
 
-		ads: {
-			count: 0,
-			text: "Usuniętych reklam"
-		},
+
 
 		notatkowator: {
 			count: 0,
-			text: "Dodanych Notatek"
+			text: "Dodanych Notatek",
+			title: "Notatki do użytkowników",
 		},
 	}
 
@@ -475,11 +518,12 @@
 
 	}
 
-	let wxs_console;
 
+	let wxs_console;
 	function refreshConsole()
 	{
-		console.log("--- refresh console")
+		// console.log("refresh console()")
+
 		if (!wxs_console) wxs_console = document.getElementById("wxs_console");
 
 		if (wxs_console)
@@ -492,10 +536,31 @@
 				{
 					let div = document.createElement("div");
 					div.classList.add(`wcs_console_${field}`)
-					div.innerHTML = `<span class="wxs_console_count">${consoleData[field].count}</span><span class="wxs_console_text">${consoleData[field].text}</span>`;
+					div.title = consoleData[field].title;
+					div.innerHTML = `<span class="wxs_console_count">
+										${consoleData[field].count}
+									</span>
+									<span class="wxs_console_text">
+										${consoleData[field].text}
+									</span>`;
 					wxs_console.appendChild(div);
 				}
-
+			}
+			for (let field in consoleData.annoyances)
+			{
+				if (consoleData.annoyances[field].count > 0)
+				{
+					let div = document.createElement("div");
+					div.title = consoleData.annoyances[field].title;
+					div.classList.add(`wcs_console_${field}`)
+					div.innerHTML = `<span class="wxs_console_count">
+										${consoleData.annoyances[field].count}
+									</span>
+									<span class="wxs_console_text">
+										${consoleData.annoyances[field].text}
+									</span>`;
+					wxs_console.appendChild(div);
+				}
 			}
 		}
 
@@ -1480,7 +1545,7 @@
 					console.log("userData");
 					console.log(userData);
 
-					await displayUserDetails(sectionObjectElement, userData)
+					await displayUserDetails(sectionObjectElement, userData, username)
 				}
 				else
 				{
@@ -1537,26 +1602,155 @@
 
 	async function displayUserDetails(
 		sectionObjectElement,
-		userData)
+		userData,
+		username = userData.username)
 	{
-		if (sectionObjectElement && userData)
-		{
-			if (userData.status == "banned")
-			{
-				let banReason = userData.banned.reason;
-				let banEndDateString = userData.banned.expired; // "2024-01-04 17:22:31"
-				let banEndDateObject = dayjs(banEndDateString);
-				// let banEndDateDuration = banEndDateObject.toNow()
-				let span = document.createElement('span');
-				span.classList.add("wxs_banned_user")
-				span.innerHTML = `🍌 Ban za <var>${banReason}`
-			}
-		}
 
+		let userInfoElementTitle = `𝗪𝘆𝗸𝗼𝗽 𝗫 \n Informacje o użytkowniku @${userData.username} \n  \n `;
+
+		const sectionObjectElementsAll = document.querySelectorAll(`section[data-author-username="${username}"]`);
+		//const sectionObjectElementsAll = document.querySelectorAll(`section.entry-voters > ul > li > a.username[href="/ludzie/${username}"]`);
+
+		sectionObjectElementsAll.forEach((section) =>
+		{
+			if (section.dataset.wxsUserData != "true")
+			{
+
+				section.dataset.wxsUserData = "true"; // <section data-wxs-user-data="true">
+
+				let resource = section.__vue__.item.resource;
+				let elementToInsertUserInfo;
+
+				if (resource == "entry" || resource == "entry_comment" || resource == "link_comment")
+				{
+					elementToInsertUserInfo = section.querySelector(`article > header > div.right > div > div.tooltip-slot`);
+				}
+				else if (resource == "link")
+				{
+					elementToInsertUserInfo = section.querySelector("section > article > div.content > section.info > span > div.tooltip-slot");
+				}
+
+				if (elementToInsertUserInfo)
+				{
+					let div = document.createElement('div');
+					div.classList = `wykopxs wxs_user_info wxs_user_info_year`;  // <div class="wykopxs wxs_user_info wxs_user_info_year"
+
+
+
+					if (userData.online == true)
+					{
+						section.dataset.wxsUserOnline = "true"; // <section data-wxs-user-online="true">
+						// div.innerHTML += `<var class="wxs_user_online" title="Użytkownik @${userData.username} jest teraz aktywny online">🟢</var>`
+					}
+
+
+					if (userData.blacklist == true)
+					{
+						section.dataset.wxsUserBlacklist = "true"; // <section data-wxs-user-blacklist="true">
+						div.innerHTML += `<var class="wxs_user_blacklist" title="@${userData.username} jest na Twojej czarnej liście">🚯</var>`
+					}
+					if (userData.follow == true)
+					{
+						section.dataset.wxsUserFollow = "true"; // <section data-wxs-user-follow="true">
+						div.innerHTML += `<var class="wxs_user_follow" title="Obserwujesz użytkownika @${userData.username}">🔔</var>`
+					}
+
+
+					if (userData.status == "banned")
+					{
+						section.dataset.wxsUserBanned = "true"; // <section data-wxs-user-banned="true">
+						let banEndDateString = userData.banned.expired; // "2024-01-04 17:22:31"
+						let banEndDateObject = dayjs(banEndDateString);
+						let banEndDateInYears = banEndDateObject.diff(loadTime, 'year');
+						let banEndDateInMonths = banEndDateObject.diff(loadTime, 'month');
+						let banEndDateInDays = banEndDateObject.diff(loadTime, 'day');
+
+
+						let banReason = userData.banned.reason.toLowerCase();
+						// let banEndDateDuration = banEndDateObject.toNow()
+						div.innerHTML += `<var class="wxs_user_banned" title=" 🍌 Użytkownik ${userData.username} ${userData.gender == "f" ? "dostała" : "dostał"} bana za ${banReason}. \n \n Koniec bana za ${banEndDateInYears > 1 ? banEndDateInYears + " lat(a)" : banEndDateInMonths > 1 ? banEndDateInMonths + " miesiące(ęcy)" : banEndDateInDays + " dni"} \n \n Ban trwa do ${banEndDateString} \n \n">🍌</var>`
+
+						userInfoElementTitle += ` Ban za "${banReason}" trwa do ${banEndDateString}  \n  \n `;
+					}
+
+
+					let memberSinceDate = dayjs(userData.member_since);
+
+					let membersSinceInYears = loadTime.diff(memberSinceDate, 'year');
+					let membersSinceInMonths = loadTime.diff(memberSinceDate, 'month');
+					let membersSinceInDays = loadTime.diff(memberSinceDate, 'day');
+
+
+					// wyświetlony obok nazwy użytkownika rok założenia konta
+					div.innerHTML += ` · <var class="wxs_user_member_since">${memberSinceDate.year()}</var>`;
+
+					userInfoElementTitle += userData.online ? ` \n @${userData.username} jest teraz online 🟢 \n ` : "";
+
+					userInfoElementTitle += userData.name != "" ? `Nazwa: ${userData.name} \n ` : "";
+					userInfoElementTitle += userData.city != "" ? `Miasto: ${userData.city} \n ` : "";
+
+					userInfoElementTitle += userData.public_email != "" ? `\n E-mail: ${userData.public_email} \n ` : "";
+					userInfoElementTitle += `\n`;
+
+					if (userData.gender == "f")
+					{
+						userInfoElementTitle += userData.follow ? `🔔 Obserwujesz tę Mirabelkę. \n ` : "";
+						userInfoElementTitle += userData.blacklist ? `🚯 Ta Mirabelka jest na Twojej czarnej liście. \n ` : "";
+						userInfoElementTitle += userData.summary.followers > 0 ? ` Jest obserwowana przez ${userData.summary.followers} osób` : "Nikt jej nie obserwuje";
+						userInfoElementTitle += userData.summary.following_users > 0 ? `, a ona sama obserwuje ${userData.summary.following_users} innych osób oraz ` : `. Nie obserwuje żadnych użytkowników i `;
+						userInfoElementTitle += userData.summary.following_tags > 0 ? `${userData.summary.following_tags} #tagów  \n ` : `nie obserwuje żadnych #tagów \n `;
+					}
+					else
+					{
+						userInfoElementTitle += userData.follow ? `🔔 Obserwujesz tego Mireczka \n ` : "";
+						userInfoElementTitle += userData.blacklist ? `🚯 Ten Mireczek jest na Twojej czarnej liście \n ` : "";
+						userInfoElementTitle += userData.summary.followers > 0 ? ` Jest obserwowany przez ${userData.summary.followers} osób \n ` : "Nikt go nie obserwuje";
+						userInfoElementTitle += `\n On sam obserwuje`;
+						userInfoElementTitle += `\n - ${userData.summary.following_users} osób `;
+						userInfoElementTitle += userData.summary.following_tags > 0 ? `\n - ${userData.summary.following_tags} #tagów  \n ` : `i nie obserwuje żadnych #tagów \n `;
+					}
+
+
+					userInfoElementTitle += `\n Na Wykopie od: ${userData.member_since} \n  \n `;
+
+					userInfoElementTitle += `Przez ${membersSinceInYears > 1 ? membersSinceInYears + " lat(a)" : membersSinceInMonths > 1 ? membersSinceInMonths + " miesiące(ęcy)" : membersSinceInDays + " dni"} na Wykopie ${userData.gender == "f" ? "dodała" : "dodał"}: \n `; // Rzeczownik
+
+					userInfoElementTitle += `\n Na Mikroblogu: \n `;
+					userInfoElementTitle += `- ${userData.summary.entries_details.added} wpisów\n `;
+					userInfoElementTitle += `- ${userData.summary.entries_details.commented} komentarzy pod wpisami \n `;
+					userInfoElementTitle += `- ${userData.summary.entries_details.voted} zaplusowanych wpisów \n `;
+
+					userInfoElementTitle += `\n Na Głównej: \n `;
+					userInfoElementTitle += `- ${userData.summary.links_details.up} wykopanych znalezisk \n `;
+
+					userInfoElementTitle += `- ${userData.summary.links_details.published} znalezisk na głównej \n `;
+					userInfoElementTitle += `- ${userData.summary.links_details.added} znalezisk \n `;
+					userInfoElementTitle += `- ${userData.summary.links_details.commented} komentarzy pod znaleziskami \n `;
+					userInfoElementTitle += `- ${userData.summary.links_details.related} powiązanych do znalezisk \n `;
+
+					section.dataset.wxsUserEntriesAdded = userData.summary.entries_details.added; 			// <section data-wxs-user-entries-added="12">
+					section.dataset.wxsUserEntriesCommented = userData.summary.entries_details.commented; 	// <section data-wxs-user-entries-commented="12">
+					section.dataset.wxsUserEntriesVoted = userData.summary.entries_details.voted; 			// <section data-wxs-user-entries-voted="12">
+
+					section.dataset.wxsUserLinksAdded = userData.summary.links_details.up; 					// <section data-wxs-user-links-up="12">
+					section.dataset.wxsUserLinksAdded = userData.summary.links_details.published; 			// <section data-wxs-user-links-published="12">
+					section.dataset.wxsUserLinksAdded = userData.summary.links_details.added; 				// <section data-wxs-user-links-added="12">
+					section.dataset.wxsUserLinksAdded = userData.summary.links_details.commented; 			// <section data-wxs-user-links-commented="12">
+					section.dataset.wxsUserLinksAdded = userData.summary.links_details.related; 			// <section data-wxs-user-links-related="12">
+					section.dataset.wxsUserLinksAdded = userData.summary.links_details.added; 				// <section data-wxs-user-links-added="12">
+
+
+					userInfoElementTitle += userData.about != "" ? ` \n  \n O sobie: \n${userData.about} \n \n \n ` : "";
+
+					div.title = userInfoElementTitle;
+
+					elementToInsertUserInfo.parentNode.insertBefore(div, elementToInsertUserInfo.nextSibling);
+
+				}
+			}
+		});
 
 	}
-
-
 
 	// DOPISUJE NOTATKĘ DO UZYTKOWNIKA
 	async function displayUserNote(
@@ -1571,15 +1765,14 @@
 
 			let elementToInsertNoteAfter;
 
-			const sectionObjectElementsAll = document.querySelectorAll(`section[data-author-username="${username}"]`)
+			const sectionObjectElementsAll = document.querySelectorAll(`section[data-author-username= "${username}"]`)
 			sectionObjectElementsAll.forEach((section) =>
 			{
 				if (section.dataset.wxsNote != "true")
 				{
 					section.dataset.wxsNote = "true"; // <section data-wxs-note="true">
-					// console.log(`Notatkowator - dodaje notatkę: ${username} / ${usernote}`);
+					// console.log(`Notatkowator - dodaje notatkę: ${ username } / ${usernote}`);
 					let resource = section.__vue__.item.resource;
-
 
 					if (resource == "entry" || resource == "entry_comment" || resource == "link_comment")
 					{
@@ -1600,7 +1793,6 @@
 						elementToInsertNoteAfter = section.querySelector("section > article > div.content > section.info > span > div.tooltip-slot");
 					}
 
-
 					if (elementToInsertNoteAfter)
 					{
 
@@ -1617,9 +1809,9 @@
 						}
 
 						let div = document.createElement('div');
-						// <div class="wykopxs wykopx_action_box_usernote wxs_notatkowator_normal">
-						// <div class="wykopxs wykopx_action_box_usernote wxs_notatkowator_r">
-						div.classList = `wykopxs wykopx_action_box_usernote`;
+						// <div class="wykopxs wxs_user_info wxs_user_info_usernote wxs_notatkowator_normal">
+						// <div class="wykopxs wxs_user_info wxs_user_info_usernote wxs_notatkowator_r">
+						div.classList = `wykopxs wxs_user_info wxs_user_info_usernote`;
 
 						const plusWordsArray = getPlusWords(usernote);
 						// console.log(plusWordsArray);
@@ -1649,10 +1841,9 @@
 
 						div.innerHTML = `<var>${usernoteParsedToDisplay}</var>`;
 						div.title = `𝗪𝘆𝗸𝗼𝗽 𝗫 𝗡𝗼𝘁𝗮𝘁𝗸𝗼𝘄𝗮𝘁𝗼𝗿 
-	Notatka do użytkownika ${username ? username : ""}
-	ᅟᅟᅟᅟᅟᅟ
-	${usernote}
-	ᅟᅟᅟᅟᅟᅟ`;
+ᅟᅟᅟᅟᅟᅟ
+${usernote}
+ᅟᅟᅟᅟᅟᅟ`;
 						elementToInsertNoteAfter.parentNode.insertBefore(div, elementToInsertNoteAfter.nextSibling);
 					}
 				}
@@ -4602,7 +4793,10 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		}
 
 
-		waitForKeyElements("html iframe", removeFromDOM, false);
+		//waitForKeyElements(`html > iframe, html > body > iframe`, removeFromDOM, false);
+		// waitForKeyElements(`html head script[src^="https://"]`, removeFromDOM, false);
+
+
 		removeIframes();
 		runWithDelay(13000, function ()
 		{
@@ -4620,43 +4814,85 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	{
 		console.log("REMOVING iframes")
 
-		document.querySelectorAll("html iframe").forEach(el => removeFromDOM(el));
-		document.querySelectorAll(".pub-slot-wrapper:not(:has(section.premium-pub.link-block))").forEach((el) =>
+		document.querySelectorAll("html > iframe, html > body > iframe").forEach((el) =>
 		{
-			removeFromDOM(el);
-			consoleData.ads.count++;
-			refreshConsole();
+			//consoleData.annoyances.iframes.count++;
+			removeFromDOM(el)
 		});
-		removeFromDOM(document.querySelector(`div[class^= "app_gdpr"]`))
+
+		document.querySelectorAll(`.pub-slot-wrapper:not(:has(section.premium-pub.link-block))`).forEach((el) =>
+		{
+			consoleData.annoyances.ads.count++;
+			removeFromDOM(el);
+		});
 
 
+		if (settings.fixScrollingAndGDPRAlertRemoveJS)
+		{
+			document.querySelectorAll(`div[class^="app_gdpr"]`).forEach((el) =>
+			{
+				document.querySelector("body").style = "overflow: initial!important;";
+				consoleData.annoyances.other.count++;
+				removeFromDOM(el);
+			});
+		}
+
+
+		document.querySelectorAll(`html > head > script[src^="https://"]`).forEach((el) =>
+		{
+			//consoleData.annoyances.scripts.count++;
+			removeFromDOM(el);
+		});
+		document.querySelectorAll(`html > head > script[src^="//"]`).forEach((el) =>
+		{
+			//consoleData.annoyances.scripts.count++;
+			removeFromDOM(el);
+		});
 	}
 	function removeFromDOM(Node)
 	{
 		if (Node)
 		{
-			console.log("REMOVING ANNOYANCES from DOM", Node)
-
 			if (Node instanceof jQuery)
 			{
-				console.log("REMOVING jQuery Node");
-				Node[0].remove();
-				Node.remove();
-				removedAnnoyancesAndAds++;
+				if (Node[0])
+				{
+					console.log("removeFromDOM(): REMOVING jQuery Node");
+					console.log(Node[0])
+					Node[0].remove();
+					let nodeName = Node[0].nodeName;
+					nodeName = nodeName.toLowerCase()
+					console.log("nodeName:" + nodeName)
+					if (!consoleData.annoyances[nodeName])
+					{
+						consoleData.annoyances[nodeName] = { count: 0 };
+					}
+					consoleData.annoyances[nodeName].count++;
+					// Node.remove();
+				}
+
 			}
 			else if (Node instanceof Element)
 			{
-				console.log("REMOVING DOM Node");
+				console.log("removeFromDOM(): REMOVING DOM Node");
+				console.log(Node)
+				let nodeName = Node.nodeName;
+				nodeName = nodeName.toLowerCase()
+				console.log("nodeName:" + nodeName)
+				if (!consoleData.annoyances[nodeName])
+				{
+					consoleData.annoyances[nodeName] = { count: 0 };
+				}
+				consoleData.annoyances[nodeName].count++;
 				Node.remove();
-
-				removedAnnoyancesAndAds++;
 			}
 
-			console.log("REMOVED TOTAL: ", removedAnnoyancesAndAds)
-
 			consoleData.annoyances.count++;
-			refreshConsole();
+			console.log("removeFromDOM(): REMOVED TOTAL: ", consoleData.annoyances.count)
+			console.log("removeFromDOM(): consoleData:");
+			console.log(consoleData);
 
+			refreshConsole();
 		}
 	}
 
