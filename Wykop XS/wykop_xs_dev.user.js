@@ -2,7 +2,7 @@
 // @name        Wykop XS DEV
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
-// @version     2.47.0
+// @version     2.48.0
 
 
 // @author      Wykop X <wykopx@gmail.com>
@@ -1181,29 +1181,7 @@
 		}
 	}
 
-	// UKRYWANIE ZNALEZISK W MIRKOUKRYWACZU
-	function hideThisLink(PointerEvent)
-	{
-		let resource = "link";
-		let link_stream = this?.closest("section.stream");
 
-		if (link_stream)
-		{
-			if (link_stream.classList.contains("upcoming-stream")) resource = "link"; // wykopalisko
-			else if (link_stream.classList.contains("home-stream")) resource = "link"; // główna
-		}
-		if (sectionObjectIntersectionObserver) sectionObjectIntersectionObserver.unobserve(sectionLink);
-		mirkoukrywaczBlockNewElement(this.dataset.id, this.dataset.id, "username", "linkTitle", resource, "hidden");
-		sectionLink.remove();
-
-		/*
-		let link_id = null;
-		if (resource == "link-comments")
-		{
-			link_id = link_aside.dataset.url.split("/")[1];      // /link/7013759/tu-najwiecej-polskich-dzieci-probuje-popelnic-samobojstwo
-		}
-		*/
-	}
 
 
 	// TODO
@@ -1226,337 +1204,6 @@
 	// 	}
 	// }
 
-
-
-
-
-	// INFO NA STRNIE PROFILU O BANIE
-	//	waitForKeyElements("main.main > aside.profile-top", pageProfile, true); // infinite loop
-
-
-
-	async function pageProfile(jNodeAsideProfileTop)
-	{
-		console.log("----------- pageprofile");
-		const asideProfileTopElement = document.querySelector("aside.profile-top");
-
-		// const asideProfileTopElement = jNodeAsideProfileTop[0];
-		const avatarElement = asideProfileTopElement.querySelector("section > header > a.avatar");
-		const username = avatarElement.outerText;
-
-		console.log("username: " + username)
-		let userData = await getUserDetailsForUsernameFromAPI(null, username)
-
-		console.log("page profile userData: ", userData)
-
-
-		// zbanowany użytkownik
-		if (avatarElement.classList.contains("banned"))
-		{
-
-		}
-	}
-
-
-
-	// dla każdego wpisu i komentarza
-	// strona wpisu, caly wpis: section:is(.entry:has(> article), .link-block:has(> section > article)):not(.deleted)
-
-	// tylko czesc wpisu bez komentarzy "section.entry:not(.deleted):has(> article), section.link-block:not(.deleted) > section > article)
-
-	waitForKeyElements("section.entry:not(.deleted):has(> article), section.link-block:not(.deleted):has(> section > article)", sectionObjectDetected, false);
-	function sectionObjectDetected(jNodeSectionElement)
-	{
-		// console.log(`waitForKeyElements("section is(.entry > article, .link - block: has(> section > article)): not(.deleted)"`)
-		const sectionObjectElement = jNodeSectionElement[0];
-		sectionObjectIntersectionObserver.observe(sectionObjectElement);
-	}
-
-	const sectionObjectsAreIntersecting = (intersectingObject, observer) =>
-	{
-		intersectingObject.forEach((IntersectionObserverEntry) =>			// InterIntersectionObserverEntry
-		{
-			let sectionObjectElement = IntersectionObserverEntry.target;		// element <section class="entry"> <section class="link-block">
-
-
-			// pierwszy raz dodajemy data-abcd
-			if (!sectionObjectElement.dataset.authorUsername && sectionObjectElement.__vue__?.item)
-			{
-				// <section data-author-username="NadiaFrance">
-				sectionObjectElement.dataset.authorUsername = sectionObjectElement.__vue__.item.author.username;
-				sectionObjectElement.dataset.id = sectionObjectElement.__vue__.item.id;
-				sectionObjectElement.dataset.resource = sectionObjectElement.__vue__.item.resource;
-
-				if (sectionObjectElement.__vue__.item.parent)
-				{
-					sectionObjectElement.dataset.parentResource = sectionObjectElement.__vue__.item.parent.resource;;	// data-parent-resource="entry"
-					sectionObjectElement.dataset.parentId = sectionObjectElement.__vue__.item.parent.id;	// data-parent-id="1234567"
-				}
-
-				if (sectionObjectElement.__vue__.item.author?.status) sectionObjectElement.dataset.authorStatus = sectionObjectElement.__vue__.item.author.status;	// data-author-status="banned"
-				if (sectionObjectElement.__vue__.item.author?.blacklist) sectionObjectElement.dataset.authorBlacklist = sectionObjectElement.__vue__.item.author.blacklist;	// data-author-blacklist="true"
-				if (sectionObjectElement.__vue__.item.author?.follow) sectionObjectElement.dataset.authorFollow = sectionObjectElement.__vue__.item.author.follow;	// data-author-follow="true"
-				if (sectionObjectElement.__vue__.item.author?.gender) sectionObjectElement.dataset.authorGender = sectionObjectElement.__vue__.item.author.gender;	// data-author-gender="m"
-				if (sectionObjectElement.__vue__.item.author?.online) sectionObjectElement.dataset.authorOnline = sectionObjectElement.__vue__.item.author.online;	// data-author-online="true"
-				if (sectionObjectElement.__vue__.item.created_at) sectionObjectElement.dataset.createdAt = sectionObjectElement.__vue__.item.author.created_at;	// data-created-at="2023-12-31 2359"
-				if (sectionObjectElement.__vue__.item.favourite) sectionObjectElement.dataset.favourite = sectionObjectElement.__vue__.item.author.favourite;	// data-favourite="true"
-				if (sectionObjectElement.__vue__.item.voted) sectionObjectElement.dataset.voted = sectionObjectElement.__vue__.item.voted;	// data-voted="0" / "1"
-				if (sectionObjectElement.__vue__.item.votes) sectionObjectElement.dataset.votesUp = sectionObjectElement.__vue__.item.votes.up;	// data-votes-up="23"
-				if (sectionObjectElement.__vue__.item.votes) sectionObjectElement.dataset.votesDown = sectionObjectElement.__vue__.item.votes.down;	// data-votes-up="23"
-			}
-
-
-			// IS INTERSECTING!
-			if (IntersectionObserverEntry.isIntersecting)
-			{
-				//console.log(sectionObjectElement);			
-				// wykonaj za kazdym razem gdy sie pojawil:
-				sectionObjectElement.classList.add("isIntersecting");
-				sectionObjectElement.classList.remove("notIntersecting");
-
-				// TODO dodać sprawdzanie plusów/wykopów na żywo
-
-
-
-				// PIERWSZY RAZ WIDZIMY WPIS/KOMENTARZ/ZNALEZISKO
-				if (!sectionObjectElement.classList.contains("wasIntersecting"))
-				{
-
-
-
-
-					let object_id = sectionObjectElement.id;  // object_id > id="comment-1234567"
-					let id = sectionObjectElement.__vue__.item.id;
-					let resource = sectionObjectElement.__vue__.item.resource;
-					let parent_resource, parent_id;
-
-					if (sectionObjectElement.__vue__.item.parent)
-					{
-						parent_resource = sectionObjectElement.__vue__.item.parent.resource;;	// data-parent-resource="entry"
-						parent_id = sectionObjectElement.__vue__.item.parent.id;	// data-parent-id="1234567"
-					}
-
-					let wxs_entry_menu = document.createElement("div");
-					wxs_entry_menu.classList.add("wxs_entry_menu"); // 📰📑 🔖 ⎀⎊👁 🖾 🗙 ⌧ ⮽ 🗳 ☒ 🗵 🗷- ‐ ‑ – ‒ — ― _ ﹏🗖 ⎀ ⎊
-					wxs_entry_menu.innerHTML = `
-						<button data-object-id="${object_id}" data-id="${id}" data-resource="${resource}" data-parent-id="${parent_id}" data-parent-resource="${parent_resource}" class="wxs_save" title="Wykop XS - zapamiętaj treść na wypadek usunięcia lub edycji">Zapisz</button>
-						<button data-object-id="${object_id}" data-id="${id}" data-resource="${resource}" data-parent-id="${parent_id}" data-parent-resource="${parent_resource}" class="wxs_minimize" title="Wykop X Krawężnik - zminimalizuj">[ — ]</button>
-						<button data-object-id="${object_id}" data-id="${id}" data-resource="${resource}" data-parent-id="${parent_id}" data-parent-resource="${parent_resource}" class="wxs_maximize" title="Wykop X Krawężnik - pokaż cały">[ + ]</button>
-						<button data-object-id="${object_id}" data-id="${id}" data-resource="${resource}" data-parent-id="${parent_id}" data-parent-resource="${parent_resource}" class="wxs_hide" title="Wykop X Mirkoukrywacz - ukryj"> Ukryj 🗙</button> `;
-
-
-					const sectionEntryHeaderElement = sectionObjectElement.querySelector("article > header");
-					sectionEntryHeaderElement.parentNode.insertBefore(wxs_entry_menu, sectionEntryHeaderElement);
-					sectionObjectElement.classList.add("wasIntersecting");
-
-
-					// SPRAWDZENIE I DODANIE NOTATKI
-					checklistForWykopObject(sectionObjectElement);
-
-
-
-					if (resource == "link")
-					{
-						if (settings.linksAnalyzerEnable)
-						{
-							linkBlockIntersected(sectionObjectElement)  // waitForKeyElements(`section.link-block[id^="link-"]`, , false);  // GM_wrench.waitForKeyElements(`section.link-block[id^="link-"]`, linkBlockIntersected, false);
-						}
-					}
-
-				}
-			}
-			else
-			{
-				// TODO usunąć sprawdzanie plusów/wykopów na żywo
-
-				// consoleX(`section.entry NOT intersecting: ${id}`, 1)
-				sectionObjectElement.classList.remove("isIntersecting");
-				sectionObjectElement.classList.add("notIntersecting");
-			}
-		});
-	};
-
-
-	const sectionObjectIntersectionObserverOptions =
-	{
-		root: null,
-		rootMargin: "0px 0px -200px 0px",
-		threshold: 0,
-	};
-	const sectionObjectIntersectionObserver = new IntersectionObserver(sectionObjectsAreIntersecting, sectionObjectIntersectionObserverOptions)
-
-
-
-
-
-
-	// dla WykopObject sprawdza użytkownika i wysyla request do API zA notatkowatora i o dane profilu
-	async function checklistForWykopObject(sectionObjectElement)
-	{
-		if (sectionObjectElement?.__vue__?.item)
-		{
-			if (settings.notatkowatorEnable) 
-			{
-				// console.log("sectionObjectElement.dataset.wxsNote != true")
-				// console.log(sectionObjectElement.dataset.wxsNote != true)
-				// console.log("sectionObjectElement.__vue__.item.author.note")
-				// console.log(sectionObjectElement.__vue__.item.author.note)
-
-				if (sectionObjectElement.dataset.wxsNote != "true" && sectionObjectElement.__vue__.item.author.note == true)
-				{
-					consoleData.notatkowator.count++;
-					refreshConsole();
-
-					let username = sectionObjectElement.__vue__.item.author.username;
-					await findNoteByUsernameInLocalStorageOrFromAPI(sectionObjectElement, username);
-				}
-			}
-
-			settings.checkUserDetailsEnable = true; // TODO
-			if (settings.checkUserDetailsEnable && !sectionObjectElement.dataset.wxsProfile) 
-			{
-				let username = sectionObjectElement.__vue__.item.author.username;
-				await getUserDetailsForUsernameFromAPI(sectionObjectElement, username);
-			}
-		}
-
-	}
-
-
-
-	/* ------------- NOTATKOWATOR ------------ */
-	async function findNoteByUsernameInLocalStorageOrFromAPI(
-		sectionObjectElement,
-		username = sectionObjectElement.__vue__.item.author.username,
-		forceAPICheck = false)
-	{
-		if (sectionObjectElement || username)
-		{
-			if (sectionObjectElement.__vue__.item.author.note || forceAPICheck)
-			{
-				consoleX(`findNoteByUsernameInLocalStorageOrFromAPI()`, 1);
-
-				if (username)
-				{
-					let usernote = "";
-
-					if (forceAPICheck == false && settings.notatkowatorEnable && settings.notatkowatorUpdateInterval > 0)
-					{
-						// TODO check this
-						let usernoteObject = await localStorageNotatkowator.getItem(username);
-
-						if (usernoteObject == null || usernoteObject == "")
-						{
-							console.log("typeof usernoteObject", typeof usernoteObject)
-							console.log(usernoteObject);
-
-							const now = dayjs();
-							const date2 = dayjs(usernoteObject.lastUpdate);
-
-							if (now.diff(date2, "second") > parseFloat(settings.notatkowatorUpdateInterval * 3600))
-							{
-								// notatka jest zbyt stara
-								usernoteObject = null;
-							}
-							else
-							{
-								// mamy aktualną notatkę z localforage
-								consoleX(`Notatkowator wczytał notatkę z LocalStorage. Użytkownik: @${username}`);
-								console.log("usernoteObject")
-								console.log(usernoteObject)
-								console.log("usernoteObject.usernote")
-								console.log(usernoteObject.usernote)
-								usernote = usernoteObject.usernote;
-							}
-						}
-					}
-
-					if (usernote != "")
-					{
-						await displayUserNote(sectionObjectElement, usernote, username)
-					}
-					else // Notatka z API - brak notatki o tym użytkowniku w localforage lub była zbyt stara lub forceAPICheck = true 
-					{
-						try
-						{
-							let jsonResponse = await getWykopAPIData("notes", username);
-
-							console.log(jsonResponse);
-							/* user.data = { username: 'NadiaFrance', content: 'Treść notatki' } */
-							/* user.data = { username: 'NadiaFrance', content: '' } */
-
-							usernote = jsonResponse?.data?.content;
-
-							if (usernote != "")
-							{
-								console.log(`API zwróciło ${username} notatkę: ${usernote}`);
-
-								await displayUserNote(sectionObjectElement, usernote, username)
-
-								if (localStorageNotatkowator)
-								{
-									localStorageNotatkowator.setItem(username, { usernote: usernote, lastUpdate: dayjs() })
-										.then(function (value)
-										{
-											consoleX(`Notatkowator zapisał notatkę o użytkowniku @${username}: "${usernote}"`);
-										})
-										.catch(function (err)
-										{
-											consoleX(`Notatkowator = error: ` + err);
-										});
-									return usernote;
-								}
-							}
-							else
-							{
-								// consoleX(`Użytkownik ${username} nie ma żadnej notatki`)
-							}
-						}
-						catch (error)
-						{
-							console.error(`Failed to get data: ${error}`);
-						}
-					}
-				}
-			}
-		}
-
-	}
-
-	/* wyświetlenie danych o autorze */
-	async function getUserDetailsForUsernameFromAPI(
-		sectionObjectElement = null,
-		username = sectionObjectElement.__vue__.item.author.username)
-	{
-
-		if (settings.checkUserDetailsEnable && username)
-		{
-			console.log("---- getUserDetailsForUsernameFromAPI - sprawdzanie użytkownika: " + username)
-			try
-			{
-				// profile/users/{username}
-				// profile/users/{username}/short
-				// let jsonResponse = await getWykopAPIData("profile", "users", username, "short");
-				let jsonResponse = await getWykopAPIData("profile", "users", username);
-				if (jsonResponse.data)
-				{
-					let userData = jsonResponse.data;
-
-					console.log("userData");
-					console.log(userData);
-
-					await displayUserDetails(sectionObjectElement, userData, username)
-				}
-				else
-				{
-				}
-			}
-			catch (error)
-			{
-				console.error(`Failed to get data: ${error}`);
-			}
-		}
-	}
 
 
 
@@ -1599,181 +1246,803 @@
 
 
 
+	// INFO NA STRONIE PROFILU O BANIE
+	//	waitForKeyElements("main.main > aside.profile-top", pageProfile, true); // infinite loop
 
-	async function displayUserDetails(
-		sectionObjectElement,
-		userData,
-		username = userData.username)
+	async function pageProfile(jNodeAsideProfileTop)
 	{
+		console.log("----------- pageprofile");
+		const asideProfileTopElement = document.querySelector("aside.profile-top");
 
-		let userInfoElementTitle = `𝗪𝘆𝗸𝗼𝗽 𝗫 \n Informacje o użytkowniku @${userData.username} \n  \n `;
+		// const asideProfileTopElement = jNodeAsideProfileTop[0];
+		const avatarElement = asideProfileTopElement.querySelector("section > header > a.avatar");
+		const username = avatarElement.outerText;
 
-		const sectionObjectElementsAll = document.querySelectorAll(`section[data-author-username="${username}"]`);
-		//const sectionObjectElementsAll = document.querySelectorAll(`section.entry-voters > ul > li > a.username[href="/ludzie/${username}"]`);
+		console.log("username: " + username)
+		let userData = await getUserDetailsForUsername(null, username)
 
-		sectionObjectElementsAll.forEach((section) =>
+		console.log("page profile userData: ", userData)
+
+
+		// zbanowany użytkownik
+		if (avatarElement.classList.contains("banned"))
 		{
-			if (section.dataset.wxsUserData != "true")
+
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/* INTERSECTION OBSERVER */
+
+
+
+
+
+	// dla każdego wpisu i komentarza
+	// strona wpisu, caly wpis: section:is(.entry:has(> article), .link-block:has(> section > article)):not(.deleted)
+
+	// tylko czesc wpisu bez komentarzy "section.entry:not(.deleted):has(> article), section.link-block:not(.deleted) > section > article)
+
+	waitForKeyElements("section.entry:not(.deleted):has(> article), section.link-block:not(.deleted):has(> section > article)", sectionObjectDetected, false);
+	function sectionObjectDetected(jNodeSectionElement)
+	{
+		// console.log(`waitForKeyElements("section is(.entry > article, .link - block: has(> section > article)): not(.deleted)"`)
+		const sectionObjectElement = jNodeSectionElement[0];
+		sectionObjectIntersectionObserver.observe(sectionObjectElement);
+	}
+
+
+	// INTERSECTION OBSERVED
+	const sectionObjectsAreIntersecting = async (intersectingObject, observer) =>
+	{
+		intersectingObject.forEach(async (IntersectionObserverEntry) =>															// InterIntersectionObserverEntry
+		{
+			let sectionObjectElement = IntersectionObserverEntry.target;													// element <section class="entry"> <section class="link-block">
+
+
+			// IS INTERSECTING!
+			if (IntersectionObserverEntry.isIntersecting)
 			{
+				//console.log(sectionObjectElement);			
+				// wykonaj za kazdym razem gdy sie pojawil:
+				sectionObjectElement.classList.add("isIntersecting");
+				sectionObjectElement.classList.remove("notIntersecting");
 
-				section.dataset.wxsUserData = "true"; // <section data-wxs-user-data="true">
+				// TODO dodać sprawdzanie plusów/wykopów na żywo
 
-				let resource = section.__vue__.item.resource;
-				let elementToInsertUserInfo;
 
-				if (resource == "entry" || resource == "entry_comment" || resource == "link_comment")
+
+				// PIERWSZY RAZ WIDZIMY WPIS/KOMENTARZ/ZNALEZISKO
+				if (!sectionObjectElement.classList.contains("wasIntersecting"))
 				{
-					elementToInsertUserInfo = section.querySelector(`article > header > div.right > div > div.tooltip-slot`);
-				}
-				else if (resource == "link")
-				{
-					elementToInsertUserInfo = section.querySelector("section > article > div.content > section.info > span > div.tooltip-slot");
-				}
+					let object_id = sectionObjectElement.id;  			// object_id > id="comment-1234567"
+					let id = sectionObjectElement.__vue__.item.id;		// id > 1234567
+					let resource = sectionObjectElement.__vue__.item.resource;
+					let parent_resource, parent_id;
 
-				if (elementToInsertUserInfo)
-				{
-					let div = document.createElement('div');
-					div.classList = `wykopxs wxs_user_info wxs_user_info_year`;  // <div class="wykopxs wxs_user_info wxs_user_info_year"
+					sectionObjectElement.classList.add("wasIntersecting");
 
 
 
-					if (userData.online == true)
+
+					// ZNALEZISKO WIĘC WŁĄCZAMY ANALIZĘ ZNALEZISKA
+					if (resource == "link")
 					{
-						section.dataset.wxsUserOnline = "true"; // <section data-wxs-user-online="true">
-						// div.innerHTML += `<var class="wxs_user_online" title="Użytkownik @${userData.username} jest teraz aktywny online">🟢</var>`
+						if (settings.linksAnalyzerEnable)
+						{
+							linkSectionIntersected(sectionObjectElement)  // waitForKeyElements(`section.link-block[id^="link-"]`, , false);  // GM_wrench.waitForKeyElements(`section.link-block[id^="link-"]`, linkSectionIntersected, false);
+						}
+					}
+
+					if (sectionObjectElement.__vue__.item.parent)
+					{
+						parent_resource = sectionObjectElement.__vue__.item.parent.resource;		// data-parent-resource="entry"
+						parent_id = sectionObjectElement.__vue__.item.parent.id;					// data-parent-id="1234567"
+					}
+
+					// TWORZYMY KRAWĘŻNIK
+					let wxs_entry_menu = document.createElement("div");
+					wxs_entry_menu.classList.add("wxs_entry_menu"); // 📰📑 🔖 ⎀⎊👁 🖾 🗙 ⌧ ⮽ 🗳 ☒ 🗵 🗷- ‐ ‑ – ‒ — ― _ ﹏🗖 ⎀ ⎊
+					wxs_entry_menu.innerHTML = `
+						<button data-object-id="${object_id}" data-id="${id}" data-resource="${resource}" data-parent-id="${parent_id}" data-parent-resource="${parent_resource}" class="wxs_save" title="Wykop X - zapamiętaj treść na wypadek usunięcia lub edycji">Zapisz</button>
+						<button data-object-id="${object_id}" data-id="${id}" data-resource="${resource}" data-parent-id="${parent_id}" data-parent-resource="${parent_resource}" class="wxs_minimize" title="Wykop X Krawężnik - zminimalizuj">[ — ]</button>
+						<button data-object-id="${object_id}" data-id="${id}" data-resource="${resource}" data-parent-id="${parent_id}" data-parent-resource="${parent_resource}" class="wxs_maximize" title="Wykop X Krawężnik - pokaż cały">[ + ]</button>
+						<button data-object-id="${object_id}" data-id="${id}" data-resource="${resource}" data-parent-id="${parent_id}" data-parent-resource="${parent_resource}" class="wxs_hide" title="Wykop X Mirkoukrywacz - ukryj"> Ukryj 🗙</button> `;
+
+					// DODAJEMY KRAWĘŻNIK
+					const sectionEntryHeaderElement = sectionObjectElement.querySelector("article > header");
+					sectionEntryHeaderElement.parentNode.insertBefore(wxs_entry_menu, sectionEntryHeaderElement);
+
+
+					// tworzymy USERINFOBOX do wszystkich nicków autora tego wpisu/komentarza/linka
+					// pierwszy raz widzimy ten wpis / komentarz użytkownika i nie były do niego dodawane userdata więc dodajemy data-wxs_username="NadiaFrance"
+					if (!sectionObjectElement.dataset.wxs_username && sectionObjectElement.__vue__?.item?.author?.username)
+					{
+
+
+						let userDataObject = sectionObjectElement.__vue__?.item?.author;
+
+
+						settings.checkUserDetailsEnable = true; // TOD
+						if (settings.checkUserDetailsEnable)
+						{
+							userDataObject = await getUserDetailsForUsername(userDataObject, undefined, true); // userDataObject, username, forceAPICheck
+						}
+
+
+						let userNoteObject = null;
+						// SPRAWDZENIE I DODANIE NOTATKI ORAZ DANYCH UZYTKOWNIKA
+						if (settings.notatkowatorEnable) 
+						{
+							// jeszcze nie dodawaliśmy notatki
+							if (userDataObject.note == true)
+							{
+								userNoteObject = await getUserNoteObjectByUsername(sectionObjectElement, undefined, true); //  username, forceAPICheck
+								sectionObjectElement.dataset.wxs_note_loaded = "true"; // <section data-wxs_note_loaded="true" data-wxs_username="NadiaFrance" data-wxs_user_note="true">
+							}
+						}
+
+						createInfoboxDivsForUserEverywhere(userDataObject, userNoteObject, undefined);
+
 					}
 
 
-					if (userData.blacklist == true)
+
+					// liczba komentarzy autora wpisu
+					if (resource == "entry" && sectionObjectElement.classList.contains("detailed")) 			// jestesmy na stronie wpisu i ta sekcja to glowny wpis
 					{
-						section.dataset.wxsUserBlacklist = "true"; // <section data-wxs-user-blacklist="true">
-						div.innerHTML += `<var class="wxs_user_blacklist" title="@${userData.username} jest na Twojej czarnej liście">🚯</var>`
-					}
-					if (userData.follow == true)
-					{
-						section.dataset.wxsUserFollow = "true"; // <section data-wxs-user-follow="true">
-						div.innerHTML += `<var class="wxs_user_follow" title="Obserwujesz użytkownika @${userData.username}">🔔</var>`
-					}
+						const wxs_comments_count = sectionObjectElement.__vue__.item.comments.items.length;			// .__vue__.item.comments.count -> bug wykopu - nie dziala, zawsze 0
+						sectionObjectElement.dataset.wxs_comments_count = wxs_comments_count;								// <section class="entry detailed" data-wxs_comments-count="99" data-comments-author-count="12" data-comments-author-percent="10%">
 
-
-					if (userData.status == "banned")
-					{
-						section.dataset.wxsUserBanned = "true"; // <section data-wxs-user-banned="true">
-						let banEndDateString = userData.banned.expired; // "2024-01-04 17:22:31"
-						let banEndDateObject = dayjs(banEndDateString);
-						let banEndDateInYears = banEndDateObject.diff(loadTime, 'year');
-						let banEndDateInMonths = banEndDateObject.diff(loadTime, 'month');
-						let banEndDateInDays = banEndDateObject.diff(loadTime, 'day');
-
-
-						let banReason = userData.banned.reason.toLowerCase();
-						// let banEndDateDuration = banEndDateObject.toNow()
-						div.innerHTML += `<var class="wxs_user_banned" title=" 🍌 Użytkownik ${userData.username} ${userData.gender == "f" ? "dostała" : "dostał"} bana za ${banReason}. \n \n Koniec bana za ${banEndDateInYears > 1 ? banEndDateInYears + " lat(a)" : banEndDateInMonths > 1 ? banEndDateInMonths + " miesiące(ęcy)" : banEndDateInDays + " dni"} \n \n Ban trwa do ${banEndDateString} \n \n">🍌</var>`
-
-						userInfoElementTitle += ` Ban za "${banReason}" trwa do ${banEndDateString}  \n  \n `;
+						if (wxs_comments_count > 0)
+						{
+							const wxs_comments_author_count = sectionObjectElement.__vue__.item.comments.items.filter(comment => comment.author.username === sectionObjectElement.__vue__.item.author.username).length;
+							const wxs_comments_author_percent = Math.round(wxs_comments_author_count / wxs_comments_count * 100);
+							sectionObjectElement.dataset.wxs_comments_author_count = wxs_comments_author_count;
+							sectionObjectElement.dataset.wxs_comments_author_percent = wxs_comments_author_percent;
+						}
 					}
 
 
-					let memberSinceDate = dayjs(userData.member_since);
-
-					let membersSinceInYears = loadTime.diff(memberSinceDate, 'year');
-					let membersSinceInMonths = loadTime.diff(memberSinceDate, 'month');
-					let membersSinceInDays = loadTime.diff(memberSinceDate, 'day');
-
-
-					// wyświetlony obok nazwy użytkownika rok założenia konta
-					div.innerHTML += ` · <var class="wxs_user_member_since">${memberSinceDate.year()}</var>`;
-
-					userInfoElementTitle += userData.online ? ` \n @${userData.username} jest teraz online 🟢 \n ` : "";
-
-					userInfoElementTitle += userData.name != "" ? `Nazwa: ${userData.name} \n ` : "";
-					userInfoElementTitle += userData.city != "" ? `Miasto: ${userData.city} \n ` : "";
-
-					userInfoElementTitle += userData.public_email != "" ? `\n E-mail: ${userData.public_email} \n ` : "";
-					userInfoElementTitle += `\n`;
-
-					if (userData.gender == "f")
-					{
-						userInfoElementTitle += userData.follow ? `🔔 Obserwujesz tę Mirabelkę. \n ` : "";
-						userInfoElementTitle += userData.blacklist ? `🚯 Ta Mirabelka jest na Twojej czarnej liście. \n ` : "";
-						userInfoElementTitle += userData.summary.followers > 0 ? ` Jest obserwowana przez ${userData.summary.followers} osób` : "Nikt jej nie obserwuje";
-						userInfoElementTitle += userData.summary.following_users > 0 ? `, a ona sama obserwuje ${userData.summary.following_users} innych osób oraz ` : `. Nie obserwuje żadnych użytkowników i `;
-						userInfoElementTitle += userData.summary.following_tags > 0 ? `${userData.summary.following_tags} #tagów  \n ` : `nie obserwuje żadnych #tagów \n `;
-					}
-					else
-					{
-						userInfoElementTitle += userData.follow ? `🔔 Obserwujesz tego Mireczka \n ` : "";
-						userInfoElementTitle += userData.blacklist ? `🚯 Ten Mireczek jest na Twojej czarnej liście \n ` : "";
-						userInfoElementTitle += userData.summary.followers > 0 ? ` Jest obserwowany przez ${userData.summary.followers} osób \n ` : "Nikt go nie obserwuje";
-						userInfoElementTitle += `\n On sam obserwuje`;
-						userInfoElementTitle += `\n - ${userData.summary.following_users} osób `;
-						userInfoElementTitle += userData.summary.following_tags > 0 ? `\n - ${userData.summary.following_tags} #tagów  \n ` : `i nie obserwuje żadnych #tagów \n `;
-					}
-
-
-					userInfoElementTitle += `\n Na Wykopie od: ${userData.member_since} \n  \n `;
-
-					userInfoElementTitle += `Przez ${membersSinceInYears > 1 ? membersSinceInYears + " lat(a)" : membersSinceInMonths > 1 ? membersSinceInMonths + " miesiące(ęcy)" : membersSinceInDays + " dni"} na Wykopie ${userData.gender == "f" ? "dodała" : "dodał"}: \n `; // Rzeczownik
-
-					userInfoElementTitle += `\n Na Mikroblogu: \n `;
-					userInfoElementTitle += `- ${userData.summary.entries_details.added} wpisów\n `;
-					userInfoElementTitle += `- ${userData.summary.entries_details.commented} komentarzy pod wpisami \n `;
-					userInfoElementTitle += `- ${userData.summary.entries_details.voted} zaplusowanych wpisów \n `;
-
-					userInfoElementTitle += `\n Na Głównej: \n `;
-					userInfoElementTitle += `- ${userData.summary.links_details.up} wykopanych znalezisk \n `;
-
-					userInfoElementTitle += `- ${userData.summary.links_details.published} znalezisk na głównej \n `;
-					userInfoElementTitle += `- ${userData.summary.links_details.added} znalezisk \n `;
-					userInfoElementTitle += `- ${userData.summary.links_details.commented} komentarzy pod znaleziskami \n `;
-					userInfoElementTitle += `- ${userData.summary.links_details.related} powiązanych do znalezisk \n `;
-
-					section.dataset.wxsUserEntriesAdded = userData.summary.entries_details.added; 			// <section data-wxs-user-entries-added="12">
-					section.dataset.wxsUserEntriesCommented = userData.summary.entries_details.commented; 	// <section data-wxs-user-entries-commented="12">
-					section.dataset.wxsUserEntriesVoted = userData.summary.entries_details.voted; 			// <section data-wxs-user-entries-voted="12">
-
-					section.dataset.wxsUserLinksAdded = userData.summary.links_details.up; 					// <section data-wxs-user-links-up="12">
-					section.dataset.wxsUserLinksAdded = userData.summary.links_details.published; 			// <section data-wxs-user-links-published="12">
-					section.dataset.wxsUserLinksAdded = userData.summary.links_details.added; 				// <section data-wxs-user-links-added="12">
-					section.dataset.wxsUserLinksAdded = userData.summary.links_details.commented; 			// <section data-wxs-user-links-commented="12">
-					section.dataset.wxsUserLinksAdded = userData.summary.links_details.related; 			// <section data-wxs-user-links-related="12">
-					section.dataset.wxsUserLinksAdded = userData.summary.links_details.added; 				// <section data-wxs-user-links-added="12">
-
-
-					userInfoElementTitle += userData.about != "" ? ` \n  \n O sobie: \n${userData.about} \n \n \n ` : "";
-
-					div.title = userInfoElementTitle;
-
-					elementToInsertUserInfo.parentNode.insertBefore(div, elementToInsertUserInfo.nextSibling);
 
 				}
 			}
+			else
+			{
+				// TODO usunąć sprawdzanie plusów/wykopów na żywo
+
+				// consoleX(`section.entry NOT intersecting: ${id}`, 1)
+				sectionObjectElement.classList.remove("isIntersecting");
+				sectionObjectElement.classList.add("notIntersecting");
+			}
 		});
+	};
+
+
+	const sectionObjectIntersectionObserverOptions =
+	{
+		root: null,
+		rootMargin: "0px 0px -200px 0px",
+		threshold: 0,
+	};
+	const sectionObjectIntersectionObserver = new IntersectionObserver(sectionObjectsAreIntersecting, sectionObjectIntersectionObserverOptions)
+
+
+
+	/*
+		__vue__.item.
+					.actions. [create/create_favourite/delete/delete_favourite/report/undo_vote/update/vote_up]
+					.adult
+					.atchive
+					.author
+					.comments [count: int, items: Array]
+					.content: "tresc"
+					.created_at: "2023-12..."
+					.deletable: false
+					.device: ""
+					.editable: false
+					.favourite: false
+					.id: 1234567
+					.media [embed/photo/survey]
+					.parent
+					.resource: "entry"
+					.slug: "wykop-to-portal"
+					.status: "visible"
+					,tags: Array
+					.voted: 0
+					.votes [.down: 1 / .up: 2 / .users: Array[]]
+
+		__vue__.item. author.
+							.avatar (url jpg)
+							.blacklist: false
+							.color: "orange"
+							.company: false
+							.follow: false
+							.gender: "m"
+							.note: true
+							.online: true
+							.rank [trend/position]
+							.status: ["active"/"banned"]
+							.username: "nick"
+							.verified: false
+	*/
+
+
+	async function createInfoboxDivsForUserEverywhere(userDataObject, userNoteObject, username = userDataObject.username)
+	{
+
+		console.log(`createInfoboxDivsForUserEverywhere(${username})`);
+		let userInfoElementTitle = `𝗪𝘆𝗸𝗼𝗽 𝗫 \n Informacje o użytkowniku @${userDataObject.username} \n  \n `;
+		const a_usernameAll = document.querySelectorAll(`a.username[href="/ludzie/${username}"]`);
+		let changeSexTo = false;
+
+
+		// const a_usernameAll = document.querySelectorAll(`section:is(.entry, .link-block):has(> article > header > div.right > div > div a.username[href="/ludzie/${username}"])`);
+		// const a_usernameAll = document.querySelectorAll(`section[data-wxs_username="${username}"]`);
+		// const a_usernameAll = document.querySelectorAll(`section.entry-voters > ul > li > a.username[href="/ludzie/${username}"]`);
+		// console.log(`--- xxx username ${username}`);
+		// console.log(`--- xxx a_usernameAll`);
+		// console.log(a_usernameAll);
+
+		// informacja o użytkowniku pobrana z __vue__ lub fetch z API
+		// DIV Z INFOBOXEM
+		let div = document.createElement('div');
+		{
+			div.classList = `wykopxs wxs_user_info wxs_user_info_year`;  					// <div class="wykopxs wxs_user_info wxs_user_info_year"
+
+
+			// basic data without fetch
+			if (userDataObject.blacklist == true) 											// basic
+			{
+				div.innerHTML += `<var class="wxs_user_blacklist" title="@${userDataObject.username} jest na Twojej czarnej liście">🚯</var>`
+			}
+			if (userDataObject.follow == true) 												// basic
+			{
+				div.innerHTML += `<var class="wxs_user_follow" title="Obserwujesz użytkownika @${userDataObject.username}">🔔</var>`
+			}
+
+			if (userDataObject.status == "banned") 											// basic
+			{
+				if (userDataObject.banned) 													// DETAILS from API
+				{
+					let banEndDateString = userDataObject.banned.expired; 					// "2024-01-04 17:22:31"
+					let banEndDateObject = dayjs(banEndDateString);
+					let banEndDateInYears = banEndDateObject.diff(loadTime, 'year');
+					let banEndDateInMonths = banEndDateObject.diff(loadTime, 'month');
+					let banEndDateInDays = banEndDateObject.diff(loadTime, 'day');
+
+					let banReason = userDataObject.banned.reason.toLowerCase();
+					// let banEndDateDuration = banEndDateObject.toNow()
+					div.innerHTML += `<var class="wxs_user_banned" title=" 🍌 Użytkownik ${userDataObject.username} ${userDataObject.gender == "f" ? "dostała" : "dostał"} bana za ${banReason}. \n \n Koniec bana za ${banEndDateInYears > 1 ? banEndDateInYears + " lat(a)" : banEndDateInMonths > 1 ? banEndDateInMonths + " miesiące(ęcy)" : banEndDateInDays + " dni"} \n \n Ban trwa do ${banEndDateString} \n \n">🍌</var>`
+
+					userInfoElementTitle += ` Ban za "${banReason}" trwa do ${banEndDateString}  \n  \n `;
+				}
+			}
+
+
+			let memberSinceDate = null
+			let membersSinceInYears = null
+			let membersSinceInMonths = null
+			let membersSinceInDays = null
+
+			if (userDataObject.member_since) // DETAILS from API
+			{
+
+				memberSinceDate = dayjs(userDataObject.member_since);
+				membersSinceInYears = loadTime.diff(memberSinceDate, 'year');
+				membersSinceInMonths = loadTime.diff(memberSinceDate, 'month');
+				membersSinceInDays = loadTime.diff(memberSinceDate, 'day');
+
+				// wyświetlony obok nazwy użytkownika rok założenia konta
+				div.innerHTML += ` · <var class="wxs_user_member_since">${memberSinceDate.year()}</var>`; // · 2011
+			}
+			else
+			{
+				div.innerHTML += `<var class="wxs_user_member_since"> ℹ </var>`; // · { i }
+			}
+
+
+			userInfoElementTitle += userDataObject.online ? ` \n @${userDataObject.username} jest teraz online 🟢 \n ` : "";
+
+			if (userDataObject.name) userInfoElementTitle += userDataObject.name != "" ? `Nazwa: ${userDataObject.name} \n ` : "";
+			if (userDataObject.city) userInfoElementTitle += userDataObject.city != "" ? `Miasto: ${userDataObject.city} \n ` : "";
+			if (userDataObject.public_email) userInfoElementTitle += userDataObject.public_email != "" ? `\n E-mail: ${userDataObject.public_email} \n ` : "";
+			userInfoElementTitle += `\n`;
+
+			if (userDataObject.gender == "f")
+			{
+				userInfoElementTitle += userDataObject.follow ? `🔔 Obserwujesz tę Mirabelkę. \n ` : "";
+				userInfoElementTitle += userDataObject.blacklist ? `🚯 Ta Mirabelka jest na Twojej czarnej liście. \n ` : "";
+
+				if (userDataObject.summary) // DETAILS from API
+				{
+					userInfoElementTitle += userDataObject.summary.followers > 0 ? ` Jest obserwowana przez ${userDataObject.summary.followers} osób` : "Nikt jej nie obserwuje";
+					userInfoElementTitle += userDataObject.summary.following_users > 0 ? `, a ona sama obserwuje ${userDataObject.summary.following_users} innych osób oraz ` : `. Nie obserwuje żadnych użytkowników i `;
+					userInfoElementTitle += userDataObject.summary.following_tags > 0 ? `${userDataObject.summary.following_tags} #tagów  \n ` : `nie obserwuje żadnych #tagów \n `;
+				}
+
+			}
+			else
+			{
+				userInfoElementTitle += userDataObject.follow ? `🔔 Obserwujesz tego Mireczka \n ` : "";
+				userInfoElementTitle += userDataObject.blacklist ? `🚯 Ten Mireczek jest na Twojej czarnej liście \n ` : "";
+
+				if (userDataObject.summary) // DETAILS from API
+				{
+					userInfoElementTitle += userDataObject.summary.followers > 0 ? ` Jest obserwowany przez ${userDataObject.summary.followers} osób \n ` : "Nikt go nie obserwuje";
+					userInfoElementTitle += `\n On sam obserwuje`;
+					userInfoElementTitle += `\n - ${userDataObject.summary.following_users} osób `;
+					userInfoElementTitle += userDataObject.summary.following_tags > 0 ? `\n - ${userDataObject.summary.following_tags} #tagów  \n ` : `i nie obserwuje żadnych #tagów \n `;
+				}
+			}
+
+			if (userDataObject.member_since)
+			{
+				userInfoElementTitle += `\n Na Wykopie od: ${userDataObject.member_since} \n  \n `;
+				userInfoElementTitle += `Przez ${membersSinceInYears > 1 ? membersSinceInYears + " lat(a)" : membersSinceInMonths > 1 ? membersSinceInMonths + " miesiące(ęcy)" : membersSinceInDays + " dni"} na Wykopie ${userDataObject.gender == "f" ? "dodała" : "dodał"}: \n `; // Rzeczownik
+			}
+
+			if (userDataObject.summary)
+			{
+				userInfoElementTitle += `\n Na Mikroblogu: \n `;
+				userInfoElementTitle += `- ${userDataObject.summary.entries_details.added} wpisów\n `;
+				userInfoElementTitle += `- ${userDataObject.summary.entries_details.commented} komentarzy pod wpisami \n `;
+				userInfoElementTitle += `- ${userDataObject.summary.entries_details.voted} zaplusowanych wpisów \n `;
+
+				userInfoElementTitle += `\n Na Głównej: \n `;
+				userInfoElementTitle += `- ${userDataObject.summary.links_details.up} wykopanych znalezisk \n `;
+
+				userInfoElementTitle += `- ${userDataObject.summary.links_details.published} znalezisk na głównej \n `;
+				userInfoElementTitle += `- ${userDataObject.summary.links_details.added} znalezisk \n `;
+				userInfoElementTitle += `- ${userDataObject.summary.links_details.commented} komentarzy pod znaleziskami \n `;
+				userInfoElementTitle += `- ${userDataObject.summary.links_details.related} powiązanych do znalezisk \n `;
+			}
+
+			if (userDataObject.about) userInfoElementTitle += userDataObject.about != "" ? ` \n  \n O sobie: \n${userDataObject.about} \n \n \n ` : "";
+
+
+
+
+
+
+			// NOTATKA
+
+
+			if (settings.enableNotatkowator && userDataObject.note == true && userNoteObject)
+			{
+
+				console.log("NOTATKI 222: ")
+				console.log("userDataObject.note")
+				console.log(userDataObject.note);
+
+				console.log("userNoteObject");
+				console.log(userNoteObject);
+
+				/* 
+					Notes from API:
+						user.data = { username: 'NadiaFrance', content: 'Treść notatki' } 
+						user.data = { username: 'NadiaFrance', content: '' } 
+
+					Notes from LocalStorage:
+					userNoteObject ->	wykopx/notatkowator/tomek123456789 = 
+					{
+						username: "Zenek",
+						usernote: "Notatka | +r",
+						lastUpdate: "2024-01-07T15:55:37.210Z"
+					}
+				*/
+
+
+				let usernoteParsedToDisplay = removePlusWords(userNoteObject.usernote);
+				console.log("usernoteParsedToDisplay");
+				console.log(usernoteParsedToDisplay);
+
+				if (settings.notatkowatorVerticalBar)
+				{
+					let sepIndex = userNoteObject.usernote.indexOf("|");
+					if (sepIndex != -1)
+					{
+						usernoteParsedToDisplay = `${usernoteParsedToDisplay.substring(0, sepIndex).trim()}...`;
+						//let remainingPart = usernote.substring(sepIndex + 1).trim();
+					}
+				}
+
+
+				let noteSpanElement = document.createElement('span');
+				// <span class="wxs_user_info_usernote wxs_notatkowator_normal">
+				// <span class="wxs_user_info_usernote wxs_notatkowator_r">
+				noteSpanElement.classList = `wxs_user_info_usernote`;
+
+				const plusWordsArray = getPlusWords(userNoteObject.usernote);
+				plusWordsArray.forEach(plusWord =>
+				{
+					noteSpanElement.classList.add(`wxs_notatkowator_${plusWord}`); // class="wxs_notatkowator_r"
+				});
+
+				console.log(plusWordsArray)
+
+				let femaleChecklistArray = ["k", "f", "female", "kobieta", "dziewczyna", "dziewczynka", "girl", "baba", "różowa", "rozowa", "rózowa", "rożowa"];
+				let maleChecklistArray = ["m", "mezczyzna", "mężczyzna", "męzczyzna", "meżczyzna", "male", "facet", "boy", "chlopak", "chłopak", "chłopiec", "chłop", "chlop", "niebieski"];
+				let isFemale = plusWordsArray.filter(item => femaleChecklistArray.includes(item));
+				let isMale = plusWordsArray.filter(item => maleChecklistArray.includes(item));
+
+				if (isFemale.length >= 1) 		// różowy pasek // +k lub +f
+				{
+					changeSexTo = "female";
+				}
+				else if (isMale.length >= 1) 				// niebieski pasek // +m
+				{
+					changeSexTo = "male";
+				}
+
+				noteSpanElement.innerHTML = `<var>${usernoteParsedToDisplay}</var>`;
+				div.appendChild(noteSpanElement);
+
+				userInfoElementTitle += `\n \n 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗡𝗼𝘁𝗮𝘁𝗸𝗼𝘄𝗮𝘁𝗼𝗿 \n \n ${userNoteObject.usernote} \n \n`;
+			}
+			div.title = userInfoElementTitle;
+		}
+
+		// console.log("gotowy user infobox div:")
+		// console.log(div)
+
+		// dołączenie info o użytkowniku do każdego wystąpienia jego nicka na stronie
+		a_usernameAll.forEach((a_username) =>
+		{
+			// console.log(`Dodaję infobox przy każdym linku a.username:`);
+			// console.log(a_username);
+			// console.log(a_username.parentNode.nodeName);
+
+			let a_username_type;
+			if (a_username.parentNode.nodeName == "SPAN") a_username_type = "section_entry_header";
+			if (a_username.parentNode.nodeName == "LI") a_username_type = "section_entry_voters_li";
+
+
+			// tylko dla section.entry, nie dla listy plusujących
+			if (a_username_type == "section_entry_header")
+			{
+				if (changeSexTo != false)
+				{
+					const figureElement = a_username.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector("div.left > a.avatar > figure"); // header
+					if (changeSexTo == "male")
+					{
+						figureElement.classList.remove("female");
+						figureElement.classList.add("male");
+					}
+					else if (changeSexTo == "female")
+					{
+						figureElement.classList.add("female");
+						figureElement.classList.remove("male");
+					}
+				}
+				let sectionObjectElement = a_username.closest('section.entry, section.link-block, aside.profile-top'); 	 // section.entry, section.link-block a w profilu <aside class="profile-top wide-top">
+
+				if (sectionObjectElement && (!sectionObjectElement.dataset.wxs_username || sectionObjectElement.dataset.wxs_username != userDataObject.username))
+				{
+
+					// USER DATRA BASIC
+					sectionObjectElement.dataset.wxs_username = userDataObject.username; 			// <section data-wxs-username="NadiaFrance">
+					sectionObjectElement.dataset.wxs_user_note = userDataObject.note;				// data-wxs_user_note="true"
+					sectionObjectElement.dataset.wxs_user_company = userDataObject.company;			// data-wxs_user_status="banned"
+					sectionObjectElement.dataset.wxs_user_status = userDataObject.status;			// data-wxs_user_status="banned"
+					sectionObjectElement.dataset.wxs_user_color = userDataObject.color;				// data-wxs_user_status="banned"
+					sectionObjectElement.dataset.wxs_user_verified = userDataObject.verified;		// data-wxs_user_status="banned"
+					sectionObjectElement.dataset.wxs_user_blacklist = userDataObject.blacklist;		// data-wxs_user_blacklist="true"
+					sectionObjectElement.dataset.wxs_user_follow = userDataObject.follow;			// data-wxs_user_follow="true"
+					sectionObjectElement.dataset.wxs_user_gender = userDataObject.gender;			// data-wxs_user_gender="m"
+					sectionObjectElement.dataset.wxs_user_online = userDataObject.online;			// data-wxs_user_online="true"
+					sectionObjectElement.dataset.wxs_user_rank_position = userDataObject.rank?.position;	// data-wxs_user_rank_position=34 // "null"
+					sectionObjectElement.dataset.wxs_user_rank_trend = userDataObject.rank?.trend;	// data-wxs_user_rank_trend=0
+
+					if (userDataObject.summary)
+					{
+						sectionObjectElement.dataset.wxs_user_entries_added = userDataObject.summary.entries_details.added; 			// <section data-wxs-user-entries-added="12">
+						sectionObjectElement.dataset.wxs_user_entries_commented = userDataObject.summary.entries_details.commented; 	// <section data-wxs-user-entries-commented="12">
+						sectionObjectElement.dataset.wxs_user_entries_voted = userDataObject.summary.entries_details.voted; 			// <section data-wxs-user-entries-voted="12">
+						sectionObjectElement.dataset.wxs_user_links_up = userDataObject.summary.links_details.up; 						// <section data-wxs-user-links-up="12">
+						sectionObjectElement.dataset.wxs_user_links_published = userDataObject.summary.links_details.published; 		// <section data-wxs-user-links-published="12">
+						sectionObjectElement.dataset.wxs_user_links_added = userDataObject.summary.links_details.added; 				// <section data-wxs-user-links-added="12">
+						sectionObjectElement.dataset.wxs_user_links_commented = userDataObject.summary.links_details.commented; 		// <section data-wxs-user-links-commented="12">
+						sectionObjectElement.dataset.wxs_user_links_related = userDataObject.summary.links_details.related; 			// <section data-wxs-user-links-related="12">
+					}
+
+					// WykopObject
+					sectionObjectElement.dataset.id = sectionObjectElement.__vue__.item.id;									// <section data-id="1234567">
+					sectionObjectElement.dataset.resource = sectionObjectElement.__vue__.item.resource;						// <section data-resource="entry_comment">
+
+					if (sectionObjectElement.__vue__.item.parent)
+					{
+						sectionObjectElement.dataset.parentResource = sectionObjectElement.__vue__.item.parent.resource;;	// data-parent-resource="entry"
+						sectionObjectElement.dataset.parentId = sectionObjectElement.__vue__.item.parent.id;					// data-parent-id="1234567"
+					}
+					if (sectionObjectElement.__vue__.item.created_at) sectionObjectElement.dataset.wxs_created_at = sectionObjectElement.__vue__.item.created_at;			// data-wxs_created_at="2023-12-31 2359"
+					if (sectionObjectElement.__vue__.item.favourite) sectionObjectElement.dataset.wxs_favourite = sectionObjectElement.__vue__.item.author.favourite;		// data-wxs_favourite="true"
+					if (sectionObjectElement.__vue__.item.voted)
+					{
+						sectionObjectElement.dataset.wxs_voted = sectionObjectElement.__vue__.item.voted;							// data-wxs_voted="0" / "1"
+						sectionObjectElement.dataset.wxs_votes_up = sectionObjectElement.__vue__.item.votes.up;						// data-wxs_votes-up="23"
+						sectionObjectElement.dataset.wxs_votes_down = sectionObjectElement.__vue__.item.votes.down;					// data-wxs_votes-up="23"
+					}
+				}
+			}
+
+			let div_tooltipSlot = a_username.closest("div.tooltip-slot");
+			let userInfoboxDiv = div.cloneNode(true);
+
+			if (div_tooltipSlot)
+			{
+				div_tooltipSlot.insertAdjacentElement('afterend', userInfoboxDiv);
+			}
+			else
+			{
+				a_username.title = userInfoElementTitle;
+				a_username.insertAdjacentElement('afterend', userInfoboxDiv);
+			}
+
+			// elementToInsertUserInfo.appendChild(div);
+			// elementToInsertUserInfo.parentNode.insertBefore(div, elementToInsertUserInfo.nextSibling);
+
+			// -- strona wpisu
+			// - wpis:
+			// section.entry.detailed 	> article 																													> header > div.right > div > div.tooltip-slot > span > a.username > span
+			// section.entry.detailed 	> article 																													> header > div.right > div > span > a.current.active > time
+			// - komentarze:
+			// section.entry.detailed 	> div.comments > section.stream > div.content > section.entry.reply > article 												> header > div.right > div > div.tooltip-slot > span > a.username > span
+			// section.entry.detailed 	> div.comments > section.stream > div.content > section.entry.reply > article 												> header > div.right > div > span > a > time
+
+
+			// -- mikroblog wpisy i komentarze:											
+			// - wpis: 											
+			// section.entry 			> article 																													> header > div.right > div > div.tooltip.slot > span > a.username > span
+			// section.entry 			> article 																													> header > div.right > div > span > a > time
+			// - komentarze:											
+			// section.entry 			> div.comments > section.stream > div.content > section.entry.reply > article 												> header > div.right > div > div.tooltip-slot > span > a.username > span
+			// section.entry 			> div.comments > section.stream > div.content > section.entry.reply > article 												> header > div.right > div > span > a > time
+
+			// główna (brak header div.right)
+			// section.link-block > section > article 																												> header > div.content > section.info > span > div.tooltip-slot > span > a.username > span
+			// section.link-block > section > article 																												> header > div.content > section.info > span > div.tooltip-slot (drugi) > span > a.external // domena linku
+			// section.link-block > section > article 																												> header > div.content > section.info > span > time
+
+			// strona znaleziska (brak header div.right)
+			// main.main > section > div.content > section.link-page > section.link > section.link-block.detailed > section > article > div.content > section.info > span > div.tooltip-slot > span > a.username > span
+			// main.main > section > div.content > section.link-page > section.link > section.link-block.detailed > section > article > div.content > section.info > span > div.tooltip-slot (drugi) > span > a.external
+			// main.main > section > div.content > section.link-page > section.link > section.link-block.detailed > section > article > div.content > section.info > span > time 
+
+			// wpisy na stronie profilu
+			// main.main > section > div.content > section.profile-page > section.profile > section.stream.link-entries > div.content > section.entry > article 	> header > div.right > div > div.tooltip-slot > span > a.username > span
+			// main.main > section > div.content > section.profile-page > section.profile > section.stream.link-entries > div.content > section.entry > article 	> header > div.right > div > span > a > time
+
+			// prawy sidebar (brak .tooltip-slot)
+			//main.main > section > section.sidebar > section > div.content > section.entries > section.entry 														> header > div.right > div > a.username > span 
+			//main.main > section > section.sidebar > section > div.content > section.entries > section.entry 														> header > div.right > div > span.plus // +16 liczba plusów
+			//main.main > section > section.sidebar > section > div.content > section.entries > section.entry 														> header > div.right > a > time
+
+			// strona PROFILU - naglowek profilu uzytkownika (brak .tooltip-slot)
+			// main.main > aside.profile-top > section 																												> header > div > h1 > a.username > span
+			// main.main > aside.profile-top > section 																												> header > div > time
+		});
+		div.remove();
+	}
+
+
+
+
+
+
+
+
+
+	/* ------------- NOTATKOWATOR ------------ */
+	async function getUserNoteObjectByUsername(sectionObjectElement, username = sectionObjectElement.__vue__.item.author.username, forceAPICheck = false)
+	{
+		if (username || (sectionObjectElement && sectionObjectElement.__vue__.item.author.note))
+		{
+			if (forceAPICheck)
+			{
+				if (username)
+				{
+					let usernote = "";
+					let userNoteObject = await localStorageNotatkowator.getItem(username);
+
+					//consoleX(`getUserNoteObjectByUsername()`, 1);
+					//console.log(username);
+
+					if (forceAPICheck == false && settings.notatkowatorEnable && settings.notatkowatorUpdateInterval > 0)
+					{
+						// TODO check this
+
+						if (userNoteObject == null || userNoteObject == "")
+						{
+							console.log("typeof userNoteObject", typeof userNoteObject)
+							console.log(userNoteObject);
+
+							const now = dayjs();
+							const date2 = dayjs(userNoteObject.lastUpdate);
+
+							if (now.diff(date2, "second") > parseFloat(settings.notatkowatorUpdateInterval * 3600))
+							{
+								// notatka jest zbyt stara
+								userNoteObject = null;
+							}
+							else
+							{
+								// mamy aktualną notatkę z localforage
+								consoleX(`Notatkowator wczytał notatkę z LocalStorage. Użytkownik: @${username}`);
+								console.log("userNoteObject")
+								console.log(userNoteObject)
+								console.log("userNoteObject.usernote")
+								console.log(userNoteObject.usernote)
+								usernote = userNoteObject.usernote;
+
+								return userNoteObject;
+							}
+						}
+					}
+
+					if (usernote != "")
+					{
+						return userNoteObject;
+					}
+
+
+					else // Notatka z API - brak notatki o tym użytkowniku w localforage lub była zbyt stara lub forceAPICheck = true 
+					{
+						try
+						{
+							let jsonResponse = await getWykopAPIData("notes", username);
+							usernote = jsonResponse?.data?.content;
+
+							userNoteObject =
+							{
+								username: jsonResponse?.data?.username,
+								usernote: jsonResponse?.data?.content,
+								lastUpdate: dayjs()
+							}
+							// console.log(jsonResponse);
+							// console.log("userNoteObject");
+							// console.log(userNoteObject);
+
+							/* 
+								Notes from API:
+									user.data = { username: 'NadiaFrance', content: 'Treść notatki' } 
+									user.data = { username: 'NadiaFrance', content: '' } 
+	
+								Notes from LocalStorage:
+								userNoteObject ->	wykopx/notatkowator/tomek123456789 = 
+								{
+									username: "Zenek",
+									usernote: "Notatka | +r",
+									lastUpdate: "2024-01-07T15:55:37.210Z"
+								}
+							*/
+
+
+							if (usernote != "" && userNoteObject.usernote != null && userNoteObject.usernote != "")
+							{
+								// console.log(`API zwróciło ${userNoteObject.username} notatkę: ${userNoteObject.usernote}`);
+								consoleData.notatkowator.count++;
+								refreshConsole();
+
+								// await displayUserNote(sectionObjectElement, usernote, username)
+
+								if (localStorageNotatkowator)
+								{
+									localStorageNotatkowator.setItem(username, { username: userNoteObject.username, usernote: userNoteObject.usernote, lastUpdate: userNoteObject.lastUpdate })
+										.then(function (value)
+										{
+											consoleX(`Notatkowator zapisał notatkę o użytkowniku @${userNoteObject.username}: "${userNoteObject.usernote}"`);
+										})
+										.catch(function (err)
+										{
+											consoleX(`Notatkowator = error: ` + err);
+										});
+									// return usernote;
+									return userNoteObject
+								}
+							}
+							else
+							{
+								// consoleX(`Użytkownik ${username} nie ma żadnej notatki`)
+							}
+						}
+						catch (error)
+						{
+							console.error(`Failed to get data: ${error}`);
+						}
+					}
+				}
+			}
+		}
 
 	}
 
+
+
+
+
+
+
+	/* wyświetlenie danych o autorze z __vue__ lub pobranie z API*/
+	async function getUserDetailsForUsername(userDataObject = null, username = userDataObject.username, forceAPICheck = false)
+	{
+
+		if (settings.checkUserDetailsEnable && username)
+		{
+			//console.log(`user: ${username}: `)
+			//console.log(userDataObject)
+
+			// jesli jest zbanowany lub chcemy wszystkie dane (np. followersi - wysylamy zapytanie do API)
+			if (userDataObject.status == "banned" || forceAPICheck == true)
+			{
+				console.log("---- getUserDetailsForUsername - sprawdzanie użytkownika w API: " + username)
+				try
+				{
+					// profile/users/{username}
+					// profile/users/{username}/short
+					// let jsonResponse = await getWykopAPIData("profile", "users", username, "short");
+					let jsonResponse = await getWykopAPIData("profile", "users", username);
+					if (jsonResponse.data)
+					{
+						let userDataFromAPI = jsonResponse.data;
+						//console.log("userData fetched from API");
+						//console.log(userDataFromAPI);
+						return userDataFromAPI; // return the data
+					}
+
+				}
+				catch (error)
+				{
+					console.error(`Failed to get data: ${error}`);
+				}
+			}
+			// jeśli wystarczą nam podstawowe informacje z __vue__ 
+			else
+			{
+				//console.log("---- getUserDetailsForUsername - zwracam danej użytkownika z vue: " + username)
+				return userDataObject;
+			}
+		}
+	}
+
+
+
+
 	// DOPISUJE NOTATKĘ DO UZYTKOWNIKA
-	async function displayUserNote(
-		sectionObjectElement = null,
-		usernote,
-		username = sectionObjectElement.__vue__.item.author.username)
+	/*async function displayUserNote(sectionObjectElement = null, usernote, username = sectionObjectElement.__vue__.item.author.username)
 	{
 		if (usernote?.length > 0 && username)
 		{
 			// "⭐ Obok nicka (Notatkowator2000)":"obok_nicka",
 			// "Wyraźna, pod avatarem (Wykop X Style)":"pod_avatarem",
-
+	
 			let elementToInsertNoteAfter;
-
-			const sectionObjectElementsAll = document.querySelectorAll(`section[data-author-username= "${username}"]`)
+	
+			const sectionObjectElementsAll = document.querySelectorAll(`section[data-wxs_username="${username}"]`)
 			sectionObjectElementsAll.forEach((section) =>
 			{
-				if (section.dataset.wxsNote != "true")
+				if (!section.dataset.wxs_note || section.dataset.wxs_username != username)
 				{
-					section.dataset.wxsNote = "true"; // <section data-wxs-note="true">
+					section.dataset.wxs_note = "true"; // <section data-wxs-note="true" wxs_username="NadiaFrance">
 					// console.log(`Notatkowator - dodaje notatkę: ${ username } / ${usernote}`);
 					let resource = section.__vue__.item.resource;
-
+	
 					if (resource == "entry" || resource == "entry_comment" || resource == "link_comment")
 					{
 						switch (settings.notatkowatorStyle)
@@ -1792,65 +2061,14 @@
 					{
 						elementToInsertNoteAfter = section.querySelector("section > article > div.content > section.info > span > div.tooltip-slot");
 					}
-
-					if (elementToInsertNoteAfter)
-					{
-
-						let usernoteParsedToDisplay = removePlusWords(usernote);
-
-						if (settings.notatkowatorVerticalBar)
-						{
-							let sepIndex = usernote.indexOf("|");
-							if (sepIndex != -1)
-							{
-								usernoteParsedToDisplay = `${usernoteParsedToDisplay.substring(0, sepIndex).trim()}...`;
-								//let remainingPart = usernote.substring(sepIndex + 1).trim();
-							}
-						}
-
-						let div = document.createElement('div');
-						// <div class="wykopxs wxs_user_info wxs_user_info_usernote wxs_notatkowator_normal">
-						// <div class="wykopxs wxs_user_info wxs_user_info_usernote wxs_notatkowator_r">
-						div.classList = `wykopxs wxs_user_info wxs_user_info_usernote`;
-
-						const plusWordsArray = getPlusWords(usernote);
-						// console.log(plusWordsArray);
-
-						plusWordsArray.forEach(plusWord =>
-						{
-							div.classList.add(`wxs_notatkowator_${plusWord}`);
-						});
-
-						if (resource != "link")
-						{
-							if (plusWordsArray.includes("k") || plusWordsArray.includes("f")) // różowy pasek // +k lub +f
-							{
-								let figureElement = section.querySelector("article > header > div.left > a.avatar > figure");
-								figureElement.classList.add("female");
-								figureElement.classList.remove("male");
-							}
-							else if (plusWordsArray.includes("m")) // niebieski pasek // +m
-							{
-								let figureElement = section.querySelector("article > header > div.left > a.avatar > figure");
-								figureElement.classList.remove("female");
-								figureElement.classList.add("male");
-							}
-						}
+	
+	*/
 
 
 
-						div.innerHTML = `<var>${usernoteParsedToDisplay}</var>`;
-						div.title = `𝗪𝘆𝗸𝗼𝗽 𝗫 𝗡𝗼𝘁𝗮𝘁𝗸𝗼𝘄𝗮𝘁𝗼𝗿 
-ᅟᅟᅟᅟᅟᅟ
-${usernote}
-ᅟᅟᅟᅟᅟᅟ`;
-						elementToInsertNoteAfter.parentNode.insertBefore(div, elementToInsertNoteAfter.nextSibling);
-					}
-				}
 
-			});
-		}
-	}
+
+
 
 
 
@@ -1859,6 +2077,7 @@ ${usernote}
 
 
 	/*     MIRKOUKRYWA   */
+
 	// mirkoukrywaczBlockNewElement(sectionObjectElement, null, "minimized")
 	// mirkoukrywaczBlockNewElement(null, "comment-123456", "hidden")
 	function mirkoukrywaczBlockNewElement(sectionObjectElement = null, object_id = null, blockingType = "hidden")
@@ -1909,7 +2128,7 @@ ${usernote}
 				.then(function (value)
 				{
 					consoleX(`Mirkoukrywacz dodał do listy ukrywanych @${username}: ${text}`);
-					console.log(value);
+					//console.log(value);
 				})
 				.catch(function (err)
 				{
@@ -2151,7 +2370,7 @@ ${usernote}
 
 	function mirkoukrywaczRemoveBlockedElement(id)
 	{
-		console.log(`mirkoukrywaczRemoveBlockedElement(${id})`)
+		//console.log(`mirkoukrywaczRemoveBlockedElement(${id})`)
 		if (localStorageMirkoukrywacz)
 		{
 			localStorageMirkoukrywacz
@@ -3565,12 +3784,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			else
 			{
 				return null;
-				blocks.link_id = pathnameArray[2]; // id
-				blocks.entry_element = blocks.element;
-				blocks.entry_id = blocks.entry_element.id.replace('comment-', '');
-				blocks.resource = "link_comment";
-				blocks.fetchURL = `https://wykop.pl/api/v3/links/${blocks.link_id}/comments/${blocks.entry_id}`;
-				blocks.entry_element.dataset.resource = "link_comment";
 			}
 		}
 		// KOMENTARZP OD WPISEM
@@ -3981,9 +4194,9 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		data-votes-up="183" data-votes-down="5" data-votes-count="178" data-voted="0" data-comments-count="10" data-comments-hot="false" data-hot="false" data-adult="false" data-created-at="2023-11-27 21:12:49" data-published-at="2023-11-28 15:22:38" data-title="Dwie awarie..." data-slug="dwie-awarie-w-ec-bedzin-wznowienie-dostaw-ciepla-w-koncu-tygodnia-rmf-24" data-description="Dwie awarie w (...)" data-source-label="www.rmf24.pl" data-source-u-r-l="https://www.rmf24.pl/regiony/slaskie/news..." data-source-type="anchor" data-tags="slaskie,bedzin,awaria,wydarzenia">
 	*/
 
-	function linkBlockIntersected(linkBlock)
+	function linkSectionIntersected(linkBlock)
 	{
-		console.log("linkBlockIntersected(linkBlock)", linkBlock)
+		//console.log("linkSectionIntersected(linkBlock)", linkBlock)
 
 		// const linkBlock = jNodeLinkBlock[0]; // jNode => DOMElement
 		//const link_id = linkBlock.id.replace("link-", ""); // 78643212
@@ -3991,7 +4204,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 		const fetchURL = apiGetLink + link_id;
 
-		console.log(fetchURL);
+		//console.log(fetchURL);
 
 
 		let link_data;
@@ -4317,12 +4530,12 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	// Output: ["normal"]
 	function getPlusWords(str)
 	{
-		// console.log("getPlusWords(string): " + str)
+		console.log("getPlusWords(string): " + str)
 
-		let matches = str.match(/\+\w+/g);
+		let matches = str.match(/\+\p{L}+/gu); // diacritics characters, nie działa dla: str.match(/\+\w+/g); 
 		if (matches)
 		{
-			return matches.map(word => word.slice(1));
+			return matches.map(word => word.slice(1)); // 
 		}
 		else
 		{
@@ -4668,11 +4881,19 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		if (settings.notatkowatorEnable)
 		{
-			runWithDelay(2000, function ()
+			runWithDelay(12000, function ()
 			{
 				createMenuItemForNotatkowator();
 			});
 		}
+		if (settings.mirkoukrywaczEnable)
+		{
+			runWithDelay(12000, function ()
+			{
+				createMenuItemForMirkoukrywacz();
+			});
+		}
+
 
 
 
@@ -4748,22 +4969,18 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	// PAGE LOAD + PAGE CHANGES
 	function executeOnPageLoadAndPageChange()
 	{
-		runWithDelay(2000, function ()
+		runWithDelay(7000, function ()
 		{
 			countNumberOfNotificationsOnDesktop();
 		});
 
 		if (settings.mirkoukrywaczEnable) 
 		{
-			runWithDelay(2000, function ()
+			runWithDelay(3000, function ()
 			{
 				mirkoukrywaczHideAllBlockedElements(); // ukrycie elementow blokowanych przez Mirkowolacz oraz Kraweznik
 			});
 		}
-
-
-
-
 
 		if (pageType == "tag" && settings.tagHeaderEditable)
 		{
@@ -4773,6 +4990,13 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			})
 		}
 
+		if (pageType == "profil")	// info o blokadzie
+		{
+			runWithDelay(2200, function ()
+			{
+
+			})
+		}
 
 		if (settings.autoOpenMoreContentEverywhere)
 		{
@@ -4793,12 +5017,16 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		}
 
 
-		//waitForKeyElements(`html > iframe, html > body > iframe`, removeFromDOM, false);
+		// waitForKeyElements(`html > iframe, html > body > iframe`, removeFromDOM, false);
 		// waitForKeyElements(`html head script[src^="https://"]`, removeFromDOM, false);
 
+		runWithDelay(2000, function ()
+		{
+			waitForKeyElements(`html > iframe, html > body > iframe`, removeFromDOM, false);
+			waitForKeyElements(`html head script[src^="https://"]`, removeFromDOM, false);
+		})
 
-		removeIframes();
-		runWithDelay(13000, function ()
+		runWithDelay(20000, function ()
 		{
 			removeIframes()
 		})
@@ -4812,7 +5040,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	// USUWANIE NATARCZYWYCH IFRAME, REKLAM I GDPR
 	function removeIframes()
 	{
-		console.log("REMOVING iframes")
+		// console.log("REMOVING iframes")
 
 		document.querySelectorAll("html > iframe, html > body > iframe").forEach((el) =>
 		{
@@ -4857,28 +5085,27 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			{
 				if (Node[0])
 				{
-					console.log("removeFromDOM(): REMOVING jQuery Node");
-					console.log(Node[0])
+					//console.log("removeFromDOM(): REMOVING jQuery Node");
+					//console.log(Node[0])
 					Node[0].remove();
 					let nodeName = Node[0].nodeName;
 					nodeName = nodeName.toLowerCase()
-					console.log("nodeName:" + nodeName)
+					// console.log("nodeName:" + nodeName)
 					if (!consoleData.annoyances[nodeName])
 					{
 						consoleData.annoyances[nodeName] = { count: 0 };
 					}
 					consoleData.annoyances[nodeName].count++;
-					// Node.remove();
 				}
 
 			}
 			else if (Node instanceof Element)
 			{
-				console.log("removeFromDOM(): REMOVING DOM Node");
-				console.log(Node)
+				//console.log("removeFromDOM(): REMOVING DOM Node");
+				//console.log(Node)
 				let nodeName = Node.nodeName;
 				nodeName = nodeName.toLowerCase()
-				console.log("nodeName:" + nodeName)
+				//console.log("nodeName:" + nodeName)
 				if (!consoleData.annoyances[nodeName])
 				{
 					consoleData.annoyances[nodeName] = { count: 0 };
@@ -4888,9 +5115,9 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			}
 
 			consoleData.annoyances.count++;
-			console.log("removeFromDOM(): REMOVED TOTAL: ", consoleData.annoyances.count)
-			console.log("removeFromDOM(): consoleData:");
-			console.log(consoleData);
+			//console.log("removeFromDOM(): REMOVED TOTAL: ", consoleData.annoyances.count)
+			//console.log("removeFromDOM(): consoleData:");
+			//console.log(consoleData);
 
 			refreshConsole();
 		}
