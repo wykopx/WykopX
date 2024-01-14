@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop XDev
-@version        2.48.0
+@version        2.49.0
 @description    Wykop X Dev 
 @preprocessor   stylus
 @namespace      userstyles.world/user/wykopchanger
@@ -8,21 +8,124 @@
 
 
 
+@var range      HR_XS_REMOVE_ANNOYANCES             `❎ USUWANIE SZPIEGÓW ⭐`                                                                                 [0, 0, 99900, 1, 'mm']
+@var range      removeAnnoyancesEnable_ON_INFO                  `Usuwanie szpiegujących elementów jest aktywne`                 [0, 0,111100, 1, 'mm']
 
-@var range      HR_NEW_247                          `⭐ Nowe`                                                                                           [0, 0, 99900, 1, 'mm']
+@var checkbox   removeAnnoyancesEnable                          `❎ Włącz usuwanie szpiegów ⭐`                                          1
+@var checkbox   removeAnnoyancesIframes                         `❎ Usuwanie szpiegujących <iframes> ⭐`                                 1
+@var checkbox   removeAnnoyancesScripts                         `❎ Usuwanie szpiegujących <scripts> ⭐`                                 1
+@var checkbox   removeAnnoyancesAds                             `❎ Usuwanie reklam ⭐`                                                  1
+@var checkbox   removeAnnoyancesGDPR                            `❎ Usuń okno akceptowania ciasteczek i odblokuj przesuwanie strony ⭐`  1
+@var checkbox   fixScrollingAndGDPRAlertHide                    `✔ Ukryj okno GDPR/Cookies i napraw błąd zablokowanego scrollowania strony przez AdBlocka`         1
+
+
+
+@var range      HR_PLUSYIMINUSY                     `➕ PLUSY I MINUSY`                                                                                 [0, 0, 99900, 1, 'mm']
+
+@var checkbox   checkLinkVotesEnable                            `🔸❎ Aktualizuj liczbę wykopów i zakopów w czasie rzeczywistym`  1
+@var checkbox   checkLinkVotesPerHour                           `🔸❎ Liczba wykopów/godzinę`                               1
+@var checkbox   checkLinkCommentsPerHour                        `🔸❎ Liczba komentarzy/godzinę`                               1
+
+@var checkbox   checkEntryPlusesEnable                          `🔹❎ Aktualizuj liczbę plusów w czasie rzeczywistym`             1
+@var checkbox   checkEntryPlusesPerMinute                       `🔹❎ Liczba plusów/minutę`                                 1  
+@var checkbox   checkEntryCommentsPerHour                       `🔹❎ Liczba komentarzy/godzinę`                                 1
+@var checkbox   checkEntryPlusesForVotingGame                   `🔹❎ Zabawy "ostatnia cyfra po zaplusowaniu"`                    1
+
+@var checkbox   animatedPlusAndMinus                            `🔹 Animacja plusowania i minusowania`                               1
+
+@var checkbox   votingExplosionEnable                           `🔹❎  Eksplozja plusów i minusów`                                  1
+@var select     votingExplosionAnimation                        `🔹❎  Eksplozja - animacja` {
+                                                                            "Animacja 1":"animacja1",
+                                                                            "Animacja 2":"animacja2",
+                                                                            "Animacja 3":"animacja3"
+                                                                    } 
 
                                                                             
-@var checkbox   autoOpenSpoilersEverywhere                      `❎ 𝗣𝗢𝗞𝗔𝗭̇ 𝗦𝗣𝗢𝗜𝗟𝗘𝗥 - rozwijaj spoilery ⭐`                                      1
-@var checkbox   floatingNextPreviousButtons                     `Przyciski paginacji ◀ Poprzednia / Następna ▶ zawsze widoczne ⭐`             1
-@var checkbox   betterPhotosInEntries                           `Lepsze obrazki we wpisach i komentarzach ⭐`                                    1
-@var range      betterPhotosInEntries_INFO                      `Poprawienie wyświetlania obrazków. Jeśli obrazek jest ma wysoką rozdzielczość próbuje wyświetlić go w jak największych rozmiarach. Poziome obrazki zostaną rozciągnięte do pełnej szerokości strony przy limicie wysokości wybranym poniżej. Obrazki pionowe zostaną wyświetlone do maksymalnej wysokości. Obrazki niewielkie nie bedą rozciągane ani w szerokości, ani w wysokości.`             [0, 0,88800, 1, 'mm']
+REMOVED: var checkbox   addPlusBeforePlus                       `🔹 Dodaj znak + przed liczbą plusów`                               1
+@var checkbox   makePlusesGreenAgain                            `Zielone plusy w prawym sidebarze`                               1
 
-@var range      betterPhotosInEntriesMaxHeight                  `Maksymalna wysokość obrazków`             [500, 150, 1500, 50, 'px']
+@var select     plusAndMinusStyle                               `🔹 Styl plusów i minusów`  {
+                                                                            "Styl Wykop 2.0 (domyślny)": "wykop20",
+                                                                            "Styl Wykop 2.0 bez zaokrągleń": "bezzaokraglen",
+                                                                            "Styl Wykop 1.0*": "wykop10",
+                                                                            "Okrągłe": "okragle",
+                                                                    } 
+@var checkbox   hidePlusesBeforeVoting                          `🔷 Mikroblog: Ukryj liczbę ➕ przed zaplusowaniem`              0
+@var checkbox   minimizedMinusedCommentInLinks                  `🔸 Znalezisko: Zwiń ➖ zminusowane przez Ciebie komentarze`      0 
+@var checkbox   hidePlusesAndMinusesBeforeVoting                `🔸 Znalezisko: Ukryj liczbę ➕/➖ przed zagłosowaniem`          0
 
-        
-        
-        
-        
+
+
+@var range      HR_MIRKOUKRYWACZ                    `❌ KRAWĘŻNIK ⭐ Nowe`                                                                                           [0, 0, 99900, 1, 'mm']
+@var range      kraweznikEnable_ON_INFO                         `Krawężnik jest włączony`               [0, 0,111100, 1, 'mm']
+@var checkbox   kraweznikEnable                                 `❎ Włącz Krawężnik`                                           1
+
+@var checkbox   filterUserCommentsEnable                        `❎ Przycisk [ Filtruj ] do filtrowania komentarzy wybranego użytkownika`       1
+
+@var checkbox   textsaverEnable                                 `❎ Włącz TextSaver`                                            1
+@var checkbox   textsaverSaveEntries                            `❎ Przycisk [ Zapisz ] do zapisywania treści wpisów`           1
+@var checkbox   textsaverSaveComments                           `❎ Przycisk [ Zapisz ] do zapisywania treści komentarzy`       1
+
+@var checkbox   mirkoukrywaczEnable                             `❎ Włącz 𝗠𝗶𝗿𝗸𝗼𝘂𝗸𝗿𝘆𝘄𝗮𝗰𝘇`                                        1
+@var checkbox   mirkoukrywaczMinimizeEntries                    `❎ Przycisk [ __ ] do minimalizowania wpisów`                 1
+@var checkbox   mirkoukrywaczMinimizeComments                   `❎ Przycisk [ __ ] do minimalizowania komentarzy`             1
+@var checkbox   mirkoukrywaczMinimizedGrayedOut                 `❎ Zminimalizowane elementy wyszarzone`                       1
+
+@var checkbox   mirkoukrywaczHideEntries                        `❎ Przycisk [ Ukryj ✖ ] do blokowania wpisów`                 1
+@var checkbox   mirkoukrywaczHideComments                       `❎ Przycisk [ Ukryj ✖ ] do blokowania komentarzy`             1
+@var checkbox   mirkoukrywaczHideLinks                          `❎ Przycisk [ Ukryj ✖ ] do blokowania znalezisk`              1
+    
+
+
+
+@var range      HR_INFOBOX                          `🍌 INFOBOX ⭐ Nowe`                                                                                           [0, 0, 99900, 1, 'mm']
+@var range      infoboxEnable_ON_INFO                           `InfoboX jest włączony`               [0, 0,111100, 1, 'mm']
+@var checkbox   infoboxEnable                                   `📝❎ Włącz InfoboX ⭐`                                        1
+@var range      infoboxEnable_INFO                              `InfoboX pokazuje przy użytkownikach dodatkowe informacje takie jak na przykład rok założenia konta, ikonki pokazujące czy blokujesz lub obserwujesz tego użytkownika, czy użytkownik jest teraz online na wykopie, czy ma on bana, a jeśli tak tokiedy ten ban się kończy. Informacje pojawiają się bezpośrednio przy nicku użytkownika - przy jego avatarze a także na liście plusujących`             [0, 0,88800, 1, 'mm']
+
+
+@var checkbox   infoboxUserBannedEmoji                          `🍌❎ Emoji przy nickach zbanowanych użytkowników ⭐`            1
+@var checkbox   infoboxUserBannedInfo                           `🍌 ℹ ❎ Informacja o powodzie bana i czasie jego końca ⭐`        1
+@var checkbox   infoboxUserBannedInfoOnProfilePage              `🍌❎ Szczegółowe info o banie na profilu użytkownika ⭐`        1
+
+
+@var checkbox   infoboxUserMemberSince                          ` ℹ ❎ Rok założenia konta przy użytkowniku ⭐`                   1
+@var range      infoboxUserMemberSince_INFO                     `Zamiast ikonki "ℹ" pokaż rok założenia konta użytkownika lub liczbę dni/miesięcy od czasu założenia konta jeśli użytkownik założył je w tym roku.`             [0, 0,88800, 1, 'mm']
+@var checkbox   infoboxUserSummaryFollowers                     ` ℹ  Informacje o tym jakie #tagi, @kogo i kto go obserwuje ⭐`  1
+@var checkbox   infoboxUserSummaryActivity                      ` ℹ  Informacje o aktywnościach użytkownika  ⭐`  1
+@var range      infoboxUserSummaryActivity_INFO                 `Ta funkcja pomaga rozpoznać czy dany użytkownik częściej Mirkuje czy siedzi na Głównej. W dymku podpowiedzi pokazuje informacje dotyczące aktywności tego użytkownika na Mikroblogu (ile wpisów, komentarzy i plusów dodał) oraz w Znaleziskach (liczba utworzonych przez niego znalezisk, liczba wykopanych i liczba komentarzy pod znaleziskami). `             [0, 0,88800, 1, 'mm']
+
+
+@var range      HR_NOTATKOWATOR                     `📝 NOTATKOWATOR ⭐ Nowe`                                                                                           [0, 0, 99900, 1, 'mm']
+@var range      notatkowatorEnable_ON_INFO                      `Notatkowator jest włączony`               [0, 0,111100, 1, 'mm']
+@var checkbox   notatkowatorEnable                              `📝❎ Wyświetlaj notatki o użytkownikach`                                                 1
+@var range      notatkowatorEnable_INFO                         `Opis jak dziala notatkowator`             [0, 0,88800, 1, 'mm']
+
+
+@var range      notatkowatorUpdateInterval                      `📝❎ Odświeżaj notatkę użytkownika starszą niż X godz.`       [6, 0, 120, 1, '']
+@var range      notatkowatorUpdateInterval_INFO                 `Opis jak dziala odświeżanie notatek`             [0, 0,88800, 1, 'mm']
+
+@var checkbox   notatkowatorVerticalBar                         `📝❎ notatkowatorVerticalBar ⭐`    1
+@var range      notatkowatorVerticalBar_INFO                    `Opis jak dziala notatkowatorVerticalBar`             [0, 0,88800, 1, 'mm']
+
+@var select     notatkowatorStyle                               `📝❎ Styl notatek ⭐` {
+                                                                        "⭐ Obok nicka (Notatkowator2000)":"obok_nicka",
+                                                                        "Wyraźna, pod avatarem (Wykop X Style)":"pod_avatarem",
+                                                                    }
+@var select     notatkowatorIcon                                `📝❎ Ikonka/separator notatki ⭐` {
+                                                                        " 📝 Notatnik":"notatnik",
+                                                                        " 💡 Żarówka":"zarowka",
+                                                                        " 🤍 Serce":"serce",
+                                                                        " | Pionowa kreska":"pionowa_kreska",
+                                                                        " · Środkowa kropka ":"srodkowa_kropka",
+                                                                        " ℹ Znak info":"info",
+                                                                        " Własny (wpisz poniżej)":"wlasny",
+                                                                    }
+@var text       notatkowatorIconCustom                          `📝❎ Własny separator notatek:` `'/'`
+
+
+
+
 @var range      HR_NICKNAME_COLORS                  `🔴🟠🟢 KOLORY NICKÓW ⭐ Nowe`                                                                                [0, 0, 99900, 1, 'mm']
 
 @var select     nicknameColorsYours                             `💛 Zmień kolor Twojego nicka ⭐` {
@@ -111,10 +214,10 @@
                                                                     
 
                                                                             
-@var range      HR_ENTRY_VOTERS                         `LISTA PLUSUJĄCYCH ⭐ Nowe`                                                                                           [0, 0, 99900, 1, 'mm']
+@var range      HR_ENTRY_VOTERS                     `LISTA PLUSUJĄCYCH ⭐ Nowe`                                                                                           [0, 0, 99900, 1, 'mm']
 
 @var checkbox   entryVotersListUsersStartWithAt                 `Wyświetl @ przed nazwami użytkowników ⭐`                       1
-@var checkbox   entryVotersListNoUnderline                      ` Bez podkreślenia po najechaniu na profil ⭐`                       1
+@var checkbox   entryVotersListNoUnderline                      `Bez podkreślenia po najechaniu na profil ⭐`                       1
 
 @var checkbox   entryVotersListEmojiYourProfile                 `Emoji 🟠 przy Twoim nicku ⭐`                                   1
 @var checkbox   entryVotersListShowRealNicknameColorsYours      `Twój nick w kolorze ⭐`                                         1
@@ -158,7 +261,7 @@
 @var checkbox   entryVotersListRemovedHide                      `🚫 Ukryj k̵o̵n̵t̵a̵ ̵u̵s̵u̵n̵i̵ę̵t̵e̵ z listy plusujących ⭐`                                   0
 
                    
-@var checkbox   entryVotersListUsersBlackFirst                  ` Plusująca moderacja na początku listy (@a__s, @m__b, @wykop) ⭐`   1
+@var checkbox   entryVotersListUsersBlackFirst                  ` Plusy od moderacji na początku listy (@a__s, @m__b, @wykop) ⭐`   1
 @var checkbox   entryVotersListSortByColor                      ` Sortuj listę według kolorów nicków ⭐`                             1
 @var select     entryVotersListSortOrder                        ` Sortowanie listy ⭐` {
                                                                             "🟢 zielonki ➜ 🟠 pomarańczki ➜ 🔴 bordo  " : "zpb",
@@ -190,37 +293,24 @@
                                                                     }
 @var text       entryVotersListUsersSeparatorCustom             `📝❎ Własny separator notatek: ⭐` `' / '`
 
-@var checkbox   entryVotersListRawHide                          `🚫 Wyświetl tylko nicki pierwszych 300 plusujących ⭐`          0 
+@var checkbox   entryVotersLimit                                `🚫 Ogranicz liczbę wyświetlonych plusujących ⭐`    0 
+@var range      entryVotersLimitMaximum                         `🚫 Wyświetl nicki tylko pierwszych X plusujących ⭐`       [300, 0, 300, 1, '']
+
+
 @var checkbox   entryVotersListHide                             `🚫 Ukryj listy plusujących`                                     0 
 
 
 
-@var range      HR_NOTATKOWATOR                         `📝 NOTATKOWATOR ⭐ Nowe`                                                                                           [0, 0, 99900, 1, 'mm']
-@var range      notatkowatorEnable_ON_INFO                      `Notatkowator jest włączony`               [0, 0,111100, 1, 'mm']
-@var checkbox   notatkowatorEnable                              `📝❎ Wyświetlaj notatki o użytkownikach`                                                 1
-@var range      notatkowatorEnable_INFO                         `Opis jak dziala notatkowator`             [0, 0,88800, 1, 'mm']
 
 
-@var range      notatkowatorUpdateInterval                      `📝❎ Odświeżaj notatkę użytkownika starszą niż X godz.`       [6, 0, 120, 1, '']
-@var range      notatkowatorUpdateInterval_INFO                 `Opis jak dziala odświeżanie notatek`             [0, 0,88800, 1, 'mm']
+@var range      HR_NEW_247                          `⭐ Nowe`                                                                                           [0, 0, 99900, 1, 'mm']
+@var checkbox   autoOpenSpoilersEverywhere                      `❎ 𝗣𝗢𝗞𝗔𝗭̇ 𝗦𝗣𝗢𝗜𝗟𝗘𝗥 - rozwijaj spoilery ⭐`                                      1
+@var checkbox   floatingNextPreviousButtons                     `Przyciski paginacji ◀ Poprzednia / Następna ▶ zawsze widoczne ⭐`             1
+@var checkbox   betterPhotosInEntries                           `Lepsze obrazki we wpisach i komentarzach ⭐`                                    1
+@var range      betterPhotosInEntries_INFO                      `Poprawienie wyświetlania obrazków. Jeśli obrazek jest ma wysoką rozdzielczość próbuje wyświetlić go w jak największych rozmiarach. Poziome obrazki zostaną rozciągnięte do pełnej szerokości strony przy limicie wysokości wybranym poniżej. Obrazki pionowe zostaną wyświetlone do maksymalnej wysokości. Obrazki niewielkie nie bedą rozciągane ani w szerokości, ani w wysokości.`             [0, 0,88800, 1, 'mm']
+@var range      betterPhotosInEntriesMaxHeight                  `Maksymalna wysokość obrazków`             [500, 150, 1500, 50, 'px']
 
-@var checkbox   notatkowatorVerticalBar                         `📝❎ notatkowatorVerticalBar ⭐`    1
-@var range      notatkowatorUpdateInterval_INFO                 `Opis jak dziala notatkowatorVerticalBar`             [0, 0,88800, 1, 'mm']
 
-@var select     notatkowatorStyle                               `📝❎ Styl notatek ⭐` {
-                                                                        "⭐ Obok nicka (Notatkowator2000)":"obok_nicka",
-                                                                        "Wyraźna, pod avatarem (Wykop X Style)":"pod_avatarem",
-                                                                    }
-@var select     notatkowatorIcon                                `📝❎ Ikonka/separator notatki ⭐` {
-                                                                        " 📝 Notatnik":"notatnik",
-                                                                        " 💡 Żarówka":"zarowka",
-                                                                        " 🤍 Serce":"serce",
-                                                                        " | Pionowa kreska":"pionowa_kreska",
-                                                                        " · Środkowa kropka ":"srodkowa_kropka",
-                                                                        " ℹ Znak info":"info",
-                                                                        " Własny (wpisz poniżej)":"wlasny",
-                                                                    }
-@var text       notatkowatorIconCustom                          `📝❎ Własny separator notatek:` `'/'`
 
 
 
@@ -355,16 +445,6 @@
           
           
           
-          
-@var range      HR_RIGHT_SIDEBAR_245                `SIDEBAR PO PRAWEJ ⭐ Nowe`                                                                                                                                                                                                  [0, 0, 99900, 1, 'mm']
-
-@var checkbox   rightSidebarMediaQueryHide                      `💻 Chowaj Sidebar jeśli okno jest zbyt wąskie ⭐`            1
-@var range      rightSidebarMediaQueryWidth                     `💻 Chowaj Sidebar przy szerokości mniejszej niż ⭐`   [1040, 1040, 3840, 20, 'px']
-
-@var checkbox   rightSidebarHide                                `🚫💻 Całkowicie ukryj Sidebar`                          0
-
-
-
 
 
 @var range      HR_NOTIFICATIONS_SIDEBAR            `✴️ PANEL BOCZNY POWIADOMIEŃ ⭐ Nowe`                                                                     [0, 0, 99900, 1, 'mm']
@@ -399,14 +479,14 @@
 
 
 @var range      HR_GLOWNA                           `🔶 GŁÓWNA + WYKOPALISKO ⭐ Nowe`                                                                    [0, 0, 99900, 1, 'mm']
-@var checkbox   linksColumnsEnable                              `⭐ linksColumnsEnable `                                        1
-@var range      linksColumns                                    `⭐ Liczba kolumn ze znaleziskami`                                        [1, 1, 4, 1, '']
+@var checkbox   linksColumnsEnable                              `💻⭐ Znaleziska w kilku kolumnach `                                        1
+@var range      linksColumns                                    `💻⭐ Liczba kolumn ze znaleziskami`                                        [1, 1, 4, 1, '']
 @var range      linksSpacing                                    `⭐ Odstępy pomiędzy znaleziskami na głównej`       [10, 0, 69, 1, 'px']
 
 @var checkbox   linkVideoPlayerBlackBackground                  `⭐ Czarne tło podczas odtwarzanego wideo`                   1
 
 @var checkbox   visitedLinksGrayedOut                           `⭐ Zaznaczaj znaleziska jako ✔ 𝗣𝗥𝗭𝗘𝗖𝗭𝗬𝗧𝗔𝗡𝗘`                 1
-@var checkbox   hideHits                                        `🚫 Ukryj "Hity wykopu"  na stronie głównej `              1
+@var checkbox   hideHits                                        `🚫 Ukryj "Hity wykopu"  na stronie głównej `                1
 @var select     linkThumbnail                                   `Miniaturki obrazków znalezisk` {
                                                                         "Po prawej (domyślnie)":"poprawej",
                                                                         "Po lewej (Wykop 1.0)*":"polewej",
@@ -489,7 +569,8 @@
 @var select     topNavWallpaper                                 `🎨 𝗕𝗘𝗟𝗞𝗔: TAPETA W TLE - Tapeta górnej belki nawigacyjnej 🦊⭐` {
                                                                             "Brak tapety w tle (domyślnie)":            "domyslne",
                                                                             "🟦 Blue ⭐*":"'https://wykopx.pl/img/background-blue.jpg'",
-                                                                            "🦊 Firefox ⭐":                             "'https://wykopx.pl/img/background-firefox-blue.jpg'",
+                                                                            "🟦 Belka starego Wykopu ⭐":               "'https://wykopx.pl/img/background-wykop-old.png'",
+                                                                            "🦊 Firefox ⭐":                            "'https://wykopx.pl/img/background-firefox-blue.jpg'",
                                                                             "❄ Snow 1":                                 "'https://wykopx.pl/img/background-snow-1.jpg'",
                                                                             "❄ Snow 2":                                 "'https://wykopx.pl/img/background-snow-2.jpg'",
                                                                             "🏔 Snowy Mountain 1":                       "'https://wykopx.pl/img/background-snowy-mountain-1.jpg'",
@@ -763,7 +844,7 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
 @var checkbox   prettySurveys                                   `Ładniejsze ankiety ⭐`                                 1
 @var checkbox   prettyEntries                                   `Ładniejsze wpisy ⭐`                                   1
 
-@var select     tagPageHomeFilter                              `Na stronie głównej #tagu wyświetlaj ⭐` {
+@var select     tagPageHomeFilter                              `Na stronach #tagów wyświetlaj ⭐` {
                                                                     "🔸🔹Znaleziska i wpisy (domyślnie)":"znaleziska_i_wpisy",
                                                                     "🔸Tylko znaleziska":"tylko_znaleziska",
                                                                     "🔹Tylko wpisy":"tylko_wpisy"
@@ -819,6 +900,12 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
                                                                             "Po lewej":"polewej"
                                                                             } 
 
+@var checkbox   rightSidebarMediaQueryHide                      `💻 Chowaj Sidebar jeśli okno jest zbyt wąskie ⭐`            1
+@var range      rightSidebarMediaQueryWidth                     `💻 Chowaj Sidebar przy szerokości mniejszej niż ⭐`   [1040, 1040, 3840, 20, 'px']
+@var checkbox   rightSidebarHide                                `🚫💻 Całkowicie ukryj Sidebar`                          0
+
+
+
 
 @var checkbox   observedTagsInRightSidebarEnable                `❎💻 Pokazuj  # 𝗧𝘄𝗼𝗷𝗲 𝗼𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 𝘁𝗮𝗴𝗶`                                                                      1
 @var checkbox   observedTagsInRightSidebarSortAlphabetically    `❎💻 # 𝗧𝘄𝗼𝗷𝗲 𝗼𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 𝘁𝗮𝗴𝗶 - sortuj alfabetycznie`                                                                                  0
@@ -833,7 +920,7 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
                                                                             "🔸 Znaleziska (wykopalisko/najnowsze/aktywne/popularne w kategorii)": `znaleziska`,
                                                                             "# Popularne tagi/Powiązane tagi": `tagi`,
                                                                             "# Twoje obserwowane tagi ❎*": `wykopx_your_observed_tags`
-                                                                            } 
+                                                                    } 
 @var select     rightSidebarOrderSecond                         `💻⭐ Wyświetlaj jako drugie` {
                                                                             "Domyślnie": `domyslnie`,
                                                                             "🔸 Hity": `hity`,
@@ -841,7 +928,7 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
                                                                             "🔸 Znaleziska (wykopalisko/najnowsze/aktywne/popularne w kategorii)": `znaleziska`,
                                                                             "# Popularne tagi/Powiązane tagi": `tagi`,
                                                                             "# Twoje obserwowane tagi ❎": `wykopx_your_observed_tags`
-                                                                            } 
+                                                                    } 
 @var select     rightSidebarOrderThird                          `💻⭐ Wyświetlaj jako trzecie` {
                                                                             "Domyślnie": `domyslnie`,
                                                                             "🔸 Hity": `hity`,
@@ -849,7 +936,7 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
                                                                             "🔸 Znaleziska (wykopalisko/najnowsze/aktywne/popularne w kategorii)": `znaleziska`,
                                                                             "# Popularne tagi/Powiązane tagi": `tagi`,
                                                                             "# Twoje obserwowane tagi ❎": `wykopx_your_observed_tags`
-                                                                            } 
+                                                                    } 
 @var select     rightSidebarOrderFourth                         `💻⭐ Wyświetlaj jako czwarte` {
                                                                             "Domyślnie": `domyslnie`,
                                                                             "🔸 Hity": `hity`,
@@ -857,7 +944,7 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
                                                                             "🔸 Znaleziska (wykopalisko/najnowsze/aktywne/popularne w kategorii)": `znaleziska`,
                                                                             "# Popularne tagi/Powiązane tagi": `tagi`,
                                                                             "# Twoje obserwowane tagi ❎": `wykopx_your_observed_tags`
-                                                                            } 
+                                                                    } 
 @var select     rightSidebarOrderFifth                          `💻⭐ Wyświetlaj jako piąte` {
                                                                             "Domyślnie": `domyslnie`,
                                                                             "🔸 Hity": `hity`,
@@ -865,20 +952,15 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
                                                                             "🔸 Znaleziska (wykopalisko/najnowsze/aktywne/popularne w kategorii)": `znaleziska`,
                                                                             "# Popularne tagi/Powiązane tagi": `tagi`,
                                                                             "# Twoje obserwowane tagi ❎": `wykopx_your_observed_tags`
-                                                                            } 
-
+                                                                    }
 @var checkbox   rightSidebarHideHits                            `🚫💻⭐ Ukryj 🔸 𝗛𝗶𝘁𝘆 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ/ᶻⁿᵃˡᵉᶻᶦˢᵏᵒ)`                  0
-@var checkbox   rightSidebarHideUpcomingActive                  `🚫💻⭐ Ukryj 🔸 𝗪𝘆𝗸𝗼𝗽𝗮𝗹𝗶𝘀𝗸𝗼: 𝗮𝗸𝘁𝘆𝘄𝗻𝗲 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ)`            0
-@var checkbox   rightSidebarHideLinksNewest                     `🚫💻⭐ Ukryj 🔸 𝗡𝗮𝗷𝗻𝗼𝘄𝘀𝘇𝗲 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 (ᵐᶦᵏʳᵒᵇˡᵒᵍ)`                      0
-@var checkbox   rightSidebarHideLinksActive                     `🚫💻⭐ Ukryj 🔸 𝗔𝗸𝘁𝘆𝘄𝗻𝗲 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 (ʷᵖᶦˢ)`                             0
-@var checkbox   rightSidebarHideLinksPopular                    `🚫💻⭐ Ukryj 🔸 𝗣𝗼𝗽𝘂𝗹𝗮𝗿𝗻𝗲 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 𝘄 𝗸𝗮𝘁𝗲𝗴𝗼𝗿𝗶𝗶 (ᵏᵃᵗᵉᵍᵒʳᶦᵉ)`            0
-
-@var checkbox   rightSidebarHidePopularTags                     `🚫💻⭐ Ukryj # 𝗣𝗼𝗽𝘂𝗹𝗮𝗿𝗻𝗲 𝘁𝗮𝗴𝗶 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ/ᵐᶦᵏʳᵒᵇˡᵒᵍ/ʷᵖᶦˢ)`     1
+@var checkbox   rightSidebarHideUpcomingActive                  `🚫💻⭐ Ukryj 🔸 𝗪𝘆𝗸𝗼𝗽𝗮𝗹𝗶𝘀𝗸𝗼: 𝗮𝗸𝘁𝘆𝘄𝗻𝗲 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ)`         0
+@var checkbox   rightSidebarHideLinksNewest                     `🚫💻⭐ Ukryj 🔸 𝗡𝗮𝗷𝗻𝗼𝘄𝘀𝘇𝗲 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 (ᵐᶦᵏʳᵒᵇˡᵒᵍ)`                0
+@var checkbox   rightSidebarHideLinksActive                     `🚫💻⭐ Ukryj 🔸 𝗔𝗸𝘁𝘆𝘄𝗻𝗲 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 (ʷᵖᶦˢ)`                     0
+@var checkbox   rightSidebarHideLinksPopular                    `🚫💻⭐ Ukryj 🔸 𝗣𝗼𝗽𝘂𝗹𝗮𝗿𝗻𝗲 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 𝘄 𝗸𝗮𝘁𝗲𝗴𝗼𝗿𝗶𝗶 (ᵏᵃᵗᵉᵍᵒʳᶦᵉ)`       0
+@var checkbox   rightSidebarHidePopularTags                     `🚫💻⭐ Ukryj # 𝗣𝗼𝗽𝘂𝗹𝗮𝗿𝗻𝗲 𝘁𝗮𝗴𝗶 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ/ᵐᶦᵏʳᵒᵇˡᵒᵍ/ʷᵖᶦˢ)`        1
 @var checkbox   rightSidebarHideRelatedTags                     `🚫💻⭐ Ukryj # 𝗣𝗼𝘄𝗶𝗮̨𝘇𝗮𝗻𝗲 𝘁𝗮𝗴𝗶 (ᵗᵃᵍ/ᵏᵃᵗᵉᵍᵒʳᶦᵉ/ᶻⁿᵃˡᵉᶻᶦˢᵏᵒ) `             1
-
-
-
-@var checkbox   rightSidebarFooter                              `🚫💻 Ukryj stopkę 𝗪𝗬𝗞𝗢𝗣 © 𝟮𝟬𝟬𝟱`                                        1
+@var checkbox   rightSidebarFooterHide                          `🚫💻 Ukryj stopkę 𝗪𝗬𝗞𝗢𝗣 © 𝟮𝟬𝟬𝟱`                           1
 
 
 @var range      HR_RIGHT_SIDEBAR_ENTRIES            `SIDEBAR PO PRAWEJ: GORĄCE/AKTYWNE WPISY ⭐ Nowe v.2.36`                                   [0, 0, 99900, 1, 'mm']
@@ -1059,22 +1141,22 @@ var checkbox  topNavSnowGirl                                   `❄ Snow Girl`  
                                                                             "Styl powiadomień*": "stylpowiadomien",
                                                                             "Nie pokazuj liczby": "niepokazujliczby"
                                                                             } 
-@var checkbox   addNewLinkInTopNavJS                            `💻❎ Pokaż przycisk + (Dodaj Znalezisko)`                                                                  1
-@var checkbox   hideMicroblogButton                             `💻 Ukryj przycisk "Mikroblog"`                                                                             0
-@var checkbox   addNewEntryInTopNavJS                           `💻❎ Pokaż przycisk + (Dodaj wpis na Mirko)`                                                               1
-@var checkbox   refreshOrRedirectOnMicroblogButtonClick         `💻❎🐁 Kliknięcie w Mikroblog odświeża stronę`                                                             0
-@var checkbox   favoritesInTopNavJS                             `💻❎ Pokaż przycisk 𝗨𝗹𝘂𝗯𝗶𝗼𝗻𝗲`                                                                              1
+@var checkbox   addNewLinkInTopNavJS                            `💻❎ Pokaż przycisk + (Dodaj Znalezisko)`                                                                 1
+@var checkbox   hideMicroblogButton                             `💻 Ukryj przycisk "Mikroblog"`                                                                            0
+@var checkbox   addNewEntryInTopNavJS                           `💻❎ Pokaż przycisk + (Dodaj wpis na Mirko)`                                                              1
+@var checkbox   refreshOrRedirectOnMicroblogButtonClick         `💻❎🐁 Kliknięcie w Mikroblog odświeża stronę`                                                            0
+@var checkbox   favoritesInTopNavJS                             `💻❎ Pokaż przycisk 𝗨𝗹𝘂𝗯𝗶𝗼𝗻𝗲`                                                                             1
 @var checkbox   hitsInTopNavJS                                  `💻❎ Pokaż przycisk 𝗛𝗶𝘁𝘆 `                                                                                 1
-@var checkbox   myWykopInTopNavJS                               `💻❎ Pokaż przycisk 𝗠𝗼𝗷 𝘄𝘆𝗸𝗼𝗽`                                                                             1
-@var checkbox   myWykopInTopNavJSObserwowane                    `💻❎ Zmień nazwę 𝗠𝗼𝗷 𝘄𝘆𝗸𝗼𝗽 na 𝗢𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲`                                                                0
+@var checkbox   myWykopInTopNavJS                               `💻❎ Pokaż przycisk 𝗠𝗼𝗷 𝘄𝘆𝗸𝗼𝗽`                                                                           1
+@var checkbox   myWykopInTopNavJSObserwowane                    `💻❎ Zmień nazwę 𝗠𝗼𝗷 𝘄𝘆𝗸𝗼𝗽 na 𝗢𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲`                                                              0
 
 
 
 
 @var range      HR_TOPNAV_RIGHT_BUTTONS             `𝗕𝗘𝗟𝗞𝗔: PRZYCISKI PO PRAWEJ I WYSZUKIWARKA`                                                                                                  [0, 0, 99900, 1, 'mm']
-@var checkbox   myWykopMobileInTopNav                           `❎ Pokaż przycisk "𝗠𝗪" (Mój Wykop)`                                  1
-@var checkbox   microblogMobileInTopNav                         `❎ Pokaż przycisk "𝗠" (Mikroblog) `                                   1
-@var checkbox   showNightModeSwitchOnTopNav                     `❎ Pokaż przycisk "🌙" (Tryb nocny/dzienny)`                          1
+@var checkbox   myWykopMobileInTopNav                           `❎ Pokaż przycisk "𝗠𝗪" (Mój Wykop)`                                  0
+@var checkbox   microblogMobileInTopNav                         `❎ Pokaż przycisk "𝗠" (Mikroblog) `                                   0
+@var checkbox   showNightModeSwitchOnTopNav                     `❎ Pokaż przycisk "🌙" (Tryb nocny/dzienny)`                          0
 @var select     hideSearchbox                                   `🔎 Wyszukiwarka ` {
                                                                             "Pole wyszukiwania (domyślnie na PC)":"pokazwyszukiwarke",
                                                                             "🔎 Ikonka lupy (domyślnie na smartfonie)":"pokazikonke",
@@ -1227,7 +1309,7 @@ var checkbox  topNavSnowGirl                                   `❄ Snow Girl`  
 
 
 
-@var range      HR_KEYWORDS_IN_LINKS                    `🔶 SŁOWA KLUCZOWE W ZNALEZISKACH`                                                    [0, 0, 99900, 1, 'mm']
+@var range      HR_KEYWORDS_IN_LINKS                `🔶 SŁOWA KLUCZOWE W ZNALEZISKACH`                                                    [0, 0, 99900, 1, 'mm']
 
 @var text       keywordForLinksTitle                            `🔸 Słowo kluczowe w tytule znaleziska`                                   `PILNE`
 @var checkbox   keywordForLinksTitleAttention                   `🔸 Dodaj w rogu ikonkę wyróżnika`                                         1
@@ -1242,7 +1324,7 @@ var checkbox  topNavSnowGirl                                   `❄ Snow Girl`  
 
 
 
-@var range      HR_MIRKO_NA_GLOWNEJ                     `📌 WPISY Z MIRKO PRZYPIĘTE PRZEZ MODERACJĘ NA GŁÓWNEJ 🔶`                            [0, 0, 99900, 1, 'mm']
+@var range      HR_MIRKO_NA_GLOWNEJ                 `📌 WPISY Z MIRKO PRZYPIĘTE PRZEZ MODERACJĘ NA GŁÓWNEJ 🔶`                            [0, 0, 99900, 1, 'mm']
 @var checkbox   homepagePinnedEntriesHighlight                  `🔹 Wyróżnij wpisy przypięte przez moderację`                                         1
 
 @var select     homepagePinnedEntriesOrder                      `🔹 Położenie przypiętych wpisów na głównej` {
@@ -1434,29 +1516,6 @@ var checkbox  topNavSnowGirl                                   `❄ Snow Girl`  
 
 
 
-@var range      HR_PLUSYIMINUSY                     `➕ PLUSY I MINUSY`                                                                                 [0, 0, 99900, 1, 'mm']
-@var checkbox   animatedPlusAndMinus                            `Animacja plusowania i minusowania`                                                                1
-@var checkbox   votingExplosion                                 `❎  Eksplozja plusów i minusów`                                                                        1
-@var select     votingExplosionAnimation                        `❎  Eksplozja - animacja` {
-                                                                            "Animacja 1":"animacja1",
-                                                                            "Animacja 2":"animacja2",
-                                                                            "Animacja 3":"animacja3"
-                                                                            } 
-
-                                                                            
-REMOVED: var checkbox   addPlusBeforePlus                       `Dodaj znak + przed liczbą plusów`                                                               1
-@var checkbox   makePlusesGreenAgain                            `Zielone plusy w prawym sidebarze`                                                                1
-
-@var select     plusAndMinusStyle                               `Styl plusów i minusów`  {
-                                                                            "Styl Wykop 2.0 (domyślny)": "wykop20",
-                                                                            "Styl Wykop 2.0 bez zaokrągleń": "bezzaokraglen",
-                                                                            "Styl Wykop 1.0*": "wykop10",
-                                                                            "Okrągłe": "okragle",
-                                                                        } 
-@var checkbox   hidePlusesBeforeVoting                          `🔷 Mikroblog: Ukryj liczbę ➕ przed zaplusowaniem`                                               0
-@var checkbox   minimizedMinusedCommentInLinks                  `🔸 Znalezisko: Zwiń ➖ zminusowane przez Ciebie komentarze`                                      0 
-@var checkbox   hidePlusesAndMinusesBeforeVoting                `🔸 Znalezisko: Ukryj liczbę ➕/➖ przed zagłosowaniem`                                           0
-
 
 
 
@@ -1500,6 +1559,7 @@ var select     editorNewComments                                `Edytor dodawani
 
 
 @var range      HR_LENNYFACE                    `( ͡° ͜ʖ ͡°) Okienko wyboru LennyFace`                                                                          [0, 0, 99900, 1, 'mm']
+@var range      lennyFaceDropdownUpgrade_ON_INFO                `Modyfikacje okienka LennyFace są włączone`                 [0, 0,111100, 1, 'mm']
 @var checkbox   lennyFaceDropdownUpgrade                        `( ͡° ͜ʖ ͡°) Aktywuj modyfikacje okienka LennyFace wybrane poniżej`                             0
 @var checkbox   lennyFaceDropdownAbove                          `Okienko wyboru LennyFace nad edytorem`                                                      1
 @var range      lennyFaceDropdownFontSize                       `Rozmiar LennyFace`                                                                         [10, 4, 25, 1, 'rem']
@@ -1515,6 +1575,7 @@ var select     editorNewComments                                `Edytor dodawani
 
 
 @var range      HR_READING_PROGRESS                 `🚧   PROGRESS BAR`                                                   [0, 0, 99900, 1, 'mm']
+@var range      readingProgressBar_ON_INFO                      `Pasek postępu czytania strony jest włączony`                 [0, 0,111100, 1, 'mm']
 @var checkbox   readingProgressBar                              `Włącz pasek postępu czytania`                                             1
 @var select     readingProgressBarAlignment                     `Położenie paska` {
                                                                             "Na górze":"nadbelka",
@@ -1563,7 +1624,7 @@ var select     editorNewComments                                `Edytor dodawani
 
 
 @var range      HR_MOBILENAV                        `📱 BELKA MOBILNA NA DOLE`                                                          [0, 0, 99900, 1, 'mm']
-@var checkbox   hideMobileNavbar                                `📱 Ukryj Belkę mobilną`                                                 0
+@var checkbox   hideMobileNavbar                                `Ukryj Belkę mobilną`                                                   0
 @var checkbox   myWykopMobileInMobileNavbar                     `📱❎ Pokaż przycisk 𝗠𝗪 (Mój Wykop)`                                   1
 @var checkbox   messagesMobileInMobileNavbar                    `📱❎ Pokaż przycisk ✉ (Wiadomości) `                                   1
 @var checkbox   profileInMobileNavbar                           `📱❎ Pokaż przycisk profilu 👤`                                         1
@@ -1801,8 +1862,6 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 
 
 @var range      HR_FIXWYKOPBUGS                    `✔ NAPRAW BŁĘDY WYKOPU`                                                                                   [0, 0, 99900, 1, 'mm']
-@var checkbox   fixScrollingAndGDPRAlertHide       `✔ Ukryj okno GDPR/Cookies i napraw błąd zablokowanego scrollowania strony przez AdBlocka`         1
-@var checkbox   fixScrollingAndGDPRAlertRemoveJS   `✔❎ Usuń okno GDPR/Cookies i napraw błąd zablokowanego scrollowania strony ⭐`                    1
 
 
 @var checkbox   hideMultipleErrorAlerts                         `✔ Ukrywaj zwielokrotnione alerty (np. 𝗪𝘆𝘀𝘁𝗮̨𝗽𝗶𝗹 𝗯𝗹𝗮̨𝗱)`                                        1
@@ -1891,9 +1950,8 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 
 
 @var range      HR_WYKOPXS                          `❎ WYKOP XS`                                                                                                                [0, 0, 99900, 1, 'mm']
-@var checkbox   mirkoukrywaczEnable                             `❎ 𝗠𝗶𝗿𝗸𝗼𝘂𝗸𝗿𝘆𝘄𝗮𝗰𝘇  - przycisk do ukrywania wpisów i komentarzy`                                           0
-@var checkbox   infiniteScrollEnabled                           `❎ 𝗜𝗻𝗳𝗶𝗻𝗶𝘁𝗲 𝗦𝗰𝗿𝗼𝗹𝗹 - wszystkie komentarze pod wpisem na jednej stronie`                                     0
-@var checkbox   disableNewLinkEditorPastedTextLimit             `❎ Pokaż limity znaków + wklejanie tekstu o dowolnej długości`               1
+@var checkbox   infiniteScrollEnabled                           `❎ 𝗜𝗻𝗳𝗶𝗻𝗶𝘁𝗲 𝗦𝗰𝗿𝗼𝗹𝗹 - wszystkie komentarze pod wpisem na jednej stronie`          1
+@var checkbox   disableNewLinkEditorPastedTextLimit             `❎ Pokaż limity znaków + wklejanie tekstu o dowolnej długości ⭐`               1
 
 
 
@@ -1922,6 +1980,8 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 
 
 
+
+
 @-moz-document url-prefix("https://wykop.pl"), url-prefix("http://wykopx.pl")
 {    
     i = !important;
@@ -1933,7 +1993,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         tabTitleRemoveWykopPL = 1;
         tabFaviconEnabled = 1;
         tabFaviconSelect = "youtube";
-        rightSidebarFooter = 1;
+        rightSidebarFooterHide = 1;
         hideHomepagePromoToRegister = 1;
         hideNewCategoryButton = "ukrywaj_zawsze";
         hideVoteUpButtonOnLinks = 1;
@@ -2007,11 +2067,10 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     } 
     
     
-    
+    wykopMobileBreakpointWidth = 1042px;
     :root
     {
-        --wykopMobileBreakpointWidth: 1042px
-        wykopMobileBreakpointWidth = 1042px
+        --wykopMobileBreakpointWidth: wykopMobileBreakpointWidth
     }
     
     @keyframes rotatingAnimation
@@ -3173,23 +3232,98 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     section.link-page > section.link > section.related section.stream div.content > section.related-link > article
     { background-color: var(--entryBackgroundColor); } 
     
-    // wciecia w komentarzach
-    section.entry.reply[data-v-2aacfeb5]
+    
+    
+    
+    
+    
+    :root
     {
-        padding-right: 0px!important;
+        --leftIndentForSubcomments: 34px;
+        --entriesAndCommentsHorizontalPadding: 16px;
+        --entriesAndCommentsTopPadding: 10px;
+    }
+    // NAPRAWIENIE WYKOPOWYCH PADDINGÓW - PADDINGI
+    // wpisy xxx
+    section.entry[data-v-2aacfeb5]
+    {
+        padding: var(--entriesAndCommentsHorizontalPadding)!important; // default: padding: 16px;
+        //border: 1px solid rgba(255, 220, 0, 0.7)!important;
+        
     }
     section.entry[data-v-2aacfeb5]:has(> div.comments)
     {
         padding-bottom: 0px!important;
     }
     
+    // wcięcie sekcji komentarzy z prawej strony
+    section.entry > .comments[data-v-2aacfeb5]
+    {
+        margin: 22px 0 0 var(--leftIndentForSubcomments)!important;
+        //border: 1px solid green;
+    }
+    // wciecia w komentarzach
+    section.entry.reply[data-v-2aacfeb5]
+    {
+        padding: 0px!important; // default: padding-right: 8px;
+        margin: 0px!important;
+        width: 100%!important; // default: width: calc(100% + 8px);
+        
+    }
+    section.entry > article > div.edit-wrapper
+    {
+        padding-top: var(--entriesAndCommentsTopPadding)!important;
+    }
+      
+    // ostatni podkomentarz lub przycisk "Pokaz komentarze"
+    section.entry > div.comments > section.stream > div.content > :last-child
+    {
+        margin-bottom: var(--entriesAndCommentsHorizontalPadding)!important;
+    }
+
+    section.entry.reply>article[data-v-2aacfeb5]
+    {
+        width: 100%; // default: width: calc(100% + 24px);
+    }
+    
+
+    // linia oddzielająca kolejne podkomentarze:
+    section.entry.reply[data-v-2aacfeb5]:before
+    {
+        content: '';
+        height: 1px;
+        position: absolute;
+        background: var(--porcelain);
+        display: block;
+        left: 61px;     // default: left: 16px;
+        right: 0px;     // default: right: 16px;
+        top: 0px;
+    }
+    
+
+    section.entry > article[data-v-2aacfeb5]
+    {
+        padding: 0px!important; // default: padding: 16px;
+        margin: 0px!important; // default: margin: -16px;
+        
+        padding-top: var(--entriesAndCommentsTopPadding)!important;
+        padding-bottom: var(--entriesAndCommentsTopPadding)!important;
+        margin-bottom: var(--entriesAndCommentsTopPadding)!important;
+    }
+    [data-night-mode] section.entry.reply[data-v-2aacfeb5]:before
+    {
+        background: #303032;
+    }
 
 
 
 
 
 
-
+    
+    
+    
+    
     
     
     /* strona ustawień */
@@ -3309,10 +3443,23 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         --editorTextFontSize: editorTextFontSize;
     }
     
-    body * 
-    { font-size: 14px; }
+    body * {
+        font-size: 14rem;
+    }
     
-    
+    section.editor>header>ul>li>i /* napisy przy ikonkach edytora */
+    aside.profile-top>section>header>ul li, // ikonki "Zgłoś", "Zablokuj"
+    aside.profile-top>section>header>ul li a // ikonka "Napisz do użytkownika"
+    {
+        font-size: 0;
+    }
+
+    body small {
+        font-size: 0.8em;
+        line-height: 0.9em;
+    }
+
+
     aside.profile-top>section>header>div h1[data-v-fbd45de4] > a.username > span/* nazwa nicku na profilu */
     { font-size: 22rem!important; }
 
@@ -3481,30 +3628,6 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 
     
     
-        /* ACTION BOX, krawężnik */
-        section .wxs_entry_menu
-        {
-            --buttonsBorderRadius: 5px;
-            width: fit-content;
-            position: absolute;
-            height: 30px;
-            border-style: solid;
-            border-color: var(--blackOpacity01);
-            color: var(--blackOpacity02);
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            transition: opacity 0.5s linear, top 0.2s ease-out!important;
-            opacity: 1!important;
-            font-size: 11rem;
-            right: 113px;
-            
-            z-index: 1;
-        }
-        
-
-        
-        
     
     
 
@@ -3653,145 +3776,160 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     /* MOBILE */
     @media (max-width: 640px)
     {
-      section.stream section.link-block > section > article,
-      section.stream section.link-block > section > article > div.content,
-      section.stream section.link-block > section > article > section.actions,
-      section.stream section.link-block > section > article > section.actions > ul,
-      section.stream section.link-block > section > article > section.info
-      {
-        width: unset!important;
-        padding: unset!important;
-        display: contents!important; /* bypass child (2nd level), grandchild (3rd level) elelments will be affected from the parent (1st level) grid. */
-      } 
-      /* GRID */
-      section.stream section.link-block > section > article
-      {
-        padding: 12rem!important;
-        box-sizing: border-box!important;
-        display: grid!important;
-
-        justify-items: stretch;
-        align-items: stretch;
-        column-gap: 12rem!important;
-        row-gap: 7rem!important;
-      } 
-      section.stream section.link-block > section > article > header
-      { 
-        grid-column-start: 1;
-        grid-column-end: 4;
-        grid-row-start: 1;
-        grid-row-end: 2;
-      } 
-      section.stream section.link-block > section > article > section.info > span /* username + data */
-      { 
-        grid-column-start: 1;
-        grid-column-end: 4;
-        grid-row-start: 3;
-        grid-row-end: 4;
-      } 
-      section.stream section.link-block > section > article > section.info > ul /* tagi */
-      {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        overflow: hidden;
-
-        grid-column-start: 1;
-        grid-column-end: 4;
-        grid-row-start: 4;
-        grid-row-end: 5;
-      } 
-      section.stream section.link-block > section > article > section.actions > ul > li.vote-box /* głosowanie */
-      {
-        place-self: center start ;
-        grid-column-start: 1;
-        grid-column-end: 3;
-        grid-row-start: 5;
-        grid-row-end: 6;
-      } 
-      section.stream section.link-block > section > article > section.actions > ul > li.comments /* liczba komentarzy */
-      {
-        place-self: center;
-        grid-column-start: 3;
-        grid-column-end: 4;
-        grid-row-start: 5;
-        grid-row-end: 6;
-      } 
-      if(linkThumbnail == "polewej")
-      {
+        section.stream section.link-block > section > article,
+        section.stream section.link-block > section > article > div.content,
+        section.stream section.link-block > section > article > section.actions,
+        section.stream section.link-block > section > article > section.actions > ul,
+        section.stream section.link-block > section > article > section.info
+        {
+            width: unset!important;
+            padding: unset!important;
+            display: contents!important; /* bypass child (2nd level), grandchild (3rd level) elelments will be affected from the parent (1st level) grid. */
+        } 
+        /* GRID */
         section.stream section.link-block > section > article
         {
-  
-          grid-template-columns: 90rem auto 150rem; /* [thumbnail/votebox]  [empty] [comments] ;  */
-          grid-template-rows: max-content max-content 20rem 13rem 50px;    /* [header] [content] [user + date] [tags] [votebox, empty, comments]  */
-        } 
-        /* kolejnosc top to bottom */
-        section.stream section.link-block > section > article > div.content > section.info
-        {
-          width: 93%;
-          grid-column-start: 2;   /* <!- thumbs on left */ 
-          grid-column-end: 4;     /* <!- thumbs on left */ 
-          grid-row-start: 2;
-          grid-row-end: 3;
-        } 
-        section.stream section.link-block > section > article > div.content > figure
-        {
-          margin-left: unset!important;
-          grid-column-start: 1;   /* <!- thumbs on left */ 
-          grid-column-end: 2;     /* <!- thumbs on left */ 
-          grid-row-start: 2;
-          grid-row-end: 3;
-          place-self: center start;
-        } 
-      } 
+            padding: 12rem!important;
+            box-sizing: border-box!important;
+            display: grid!important;
 
-      else if(linkThumbnail == "poprawej")
-      {
-        section.stream section.link-block > section > article
-        {
-  
-          grid-template-columns: 150rem auto 90rem ; /*   [comments] [empty] [thumbnail/votebox] */
-          grid-template-rows: max-content max-content 20rem 13rem 50px;    /* [header] [content] [user + date] [tags] [votebox, empty, comments]  */
+            justify-items: stretch;
+            align-items: stretch;
+            column-gap: 12rem!important;
+            row-gap: 7rem!important;
         } 
-        section.stream section.link-block > section > article > div.content > section.info
-        {
-          width: 93%;
-          grid-column-start: 1;   /* <!- thumbs on left */ 
-          grid-column-end: 3;     /* <!- thumbs on left */ 
-          grid-row-start: 2;
-          grid-row-end: 3;
+        section.stream section.link-block > section > article > header
+        { 
+            grid-column-start: 1;
+            grid-column-end: 4;
+            grid-row-start: 1;
+            grid-row-end: 2;
         } 
-        section.stream section.link-block > section > article > div.content > figure
-        {
-          margin-left: unset!important;
-          grid-column-start: 3;   /* <!- thumbs on left */ 
-          grid-column-end: 4;     /* <!- thumbs on left */ 
-          grid-row-start: 2;
-          grid-row-end: 3;
-          place-self: center end;
+        section.stream section.link-block > section > article > section.info > span /* username + data */
+        { 
+            grid-column-start: 1;
+            grid-column-end: 4;
+            grid-row-start: 3;
+            grid-row-end: 4;
         } 
+        section.stream section.link-block > section > article > section.info > ul /* tagi */
+        {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            overflow: hidden;
 
-        if(linkThumbnail == "niepokazuj")
-        {
-          section.stream section.link-block > section > article
-          {
-            grid-template-columns: 150rem auto 90rem ; /*   [comments] [empty] [thumbnail/votebox] */
-            grid-template-rows: max-content max-content 20rem 13rem 50px;    /* [header] [content] [user + date] [tags] [votebox, empty, comments]  */
-          } 
-          section.stream section.link-block > section > article > div.content > section.info
-          {
-            width: 93%;
-            grid-column-start: 1;   /* <!- thumbs on left */ 
-            grid-column-end: 3;     /* <!- thumbs on left */ 
-            grid-row-start: 2;
-            grid-row-end: 3;
-          } 
-          section.stream section.link-block > section > article > div.content
-          {
-            display: none!important;
-          } 
+            grid-column-start: 1;
+            grid-column-end: 4;
+            grid-row-start: 4;
+            grid-row-end: 5;
         } 
-      } 
+        section.stream section.link-block > section > article > section.actions > ul > li.vote-box /* głosowanie */
+        {
+            place-self: center start ;
+            grid-column-start: 1;
+            grid-column-end: 3;
+            grid-row-start: 5;
+            grid-row-end: 6;
+        } 
+        section.stream section.link-block > section > article > section.actions > ul > li.comments /* liczba komentarzy */
+        {
+            place-self: center;
+            grid-column-start: 3;
+            grid-column-end: 4;
+            grid-row-start: 5;
+            grid-row-end: 6;
+        }
+      
+      
+      /* MOBILE 640px */
+        if(linkThumbnail == "polewej")
+        {            
+            section.stream section.link-block > section > article
+            {
+                border: 10px solid red!important;
+                grid-template-columns: 90rem auto 150rem; /* [thumbnail/votebox]  [empty] [comments] ;  */
+                grid-template-rows: max-content max-content 20rem 13rem 50px;    /* [header] [content] [user + date] [tags] [votebox, empty, comments]  */
+            } 
+            /* kolejnosc top to bottom */
+            section.stream section.link-block > section > article > div.content > section.info
+            {
+                border: 10px solid red!important;
+                width: 93%;
+                grid-column-start: 2;   /* <!- thumbs on left */ 
+                grid-column-end: 4;     /* <!- thumbs on left */ 
+                grid-row-start: 2;
+                grid-row-end: 3;
+            } 
+            section.stream section.link-block > section > article > div.content > figure
+            {
+                margin-left: unset!important;
+                grid-column-start: 1;   /* <!- thumbs on left */ 
+                grid-column-end: 2;     /* <!- thumbs on left */ 
+                grid-row-start: 2;
+                grid-row-end: 3;
+                place-self: center start;
+            }
+
+            // WXS ACTION MENU BUTTONS XXX
+            section.link-block .wxs_entry_menu
+            {
+                right: unset!important;
+                left: 18px!important;
+            }
+            
+            section.link-block .wxs_entry_menu .wxs_filter_on_user      { order: 2!important; }
+            section.link-block .wxs_entry_menu .wxs_filter_off          { order: 3!important; }
+            section.link-block .wxs_entry_menu .wxs_hide                { order: 1!important; }
+        }
+      
+        /* MOBILE 640px */
+        else if(linkThumbnail == "poprawej")
+        {
+            section.stream section.link-block > section > article
+            {
+                grid-template-columns: 150rem auto 90rem ; /*   [comments] [empty] [thumbnail/votebox] */
+                grid-template-rows: max-content max-content 20rem 13rem 50px;    /* [header] [content] [user + date] [tags] [votebox, empty, comments]  */
+            } 
+            section.stream section.link-block > section > article > div.content > section.info
+            {
+                width: 93%;
+                grid-column-start: 1;   /* <!- thumbs on left */ 
+                grid-column-end: 3;     /* <!- thumbs on left */ 
+                grid-row-start: 2;
+                grid-row-end: 3;
+            } 
+            section.stream section.link-block > section > article > div.content > figure
+            {
+                margin-left: unset!important;
+                grid-column-start: 3;   /* <!- thumbs on left */ 
+                grid-column-end: 4;     /* <!- thumbs on left */ 
+                grid-row-start: 2;
+                grid-row-end: 3;
+                place-self: center end;
+            }
+
+            if(linkThumbnail == "niepokazuj")
+            {
+                section.stream section.link-block > section > article
+                {
+                    grid-template-columns: 150rem auto 90rem ; /*   [comments] [empty] [thumbnail/votebox] */
+                    grid-template-rows: max-content max-content 20rem 13rem 50px;    /* [header] [content] [user + date] [tags] [votebox, empty, comments]  */
+                } 
+                section.stream section.link-block > section > article > div.content > section.info
+                {
+                    width: 93%;
+                    grid-column-start: 1;   /* <!- thumbs on left */ 
+                    grid-column-end: 3;     /* <!- thumbs on left */ 
+                    grid-row-start: 2;
+                    grid-row-end: 3;
+                } 
+                section.stream section.link-block > section > article > div.content
+                {
+                    display: none!important;
+                } 
+            } 
+        } 
     } 
     
     
@@ -3870,8 +4008,6 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 
 
 
-
-
       if(linkThumbnail == "polewej")
       {
         section.stream section.link-block > section
@@ -3907,7 +4043,18 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
           grid-column-end: 4;
           grid-row-start: 3;
           grid-row-end: 4;
-        } 
+        }
+        
+        // WXS ACTION MENU BUTTONS XXX
+        section.link-block .wxs_entry_menu
+        {
+            right: unset!important;
+            left: 18px!important;
+        }
+        section.link-block .wxs_entry_menu .wxs_filter_on_user      { order: 2!important; }
+        section.link-block .wxs_entry_menu .wxs_filter_off          { order: 3!important; }
+        section.link-block .wxs_entry_menu .wxs_hide                { order: 1!important; }
+            
       } 
 
 
@@ -4002,6 +4149,9 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         margin-top: 1px!important;
     }
 
+    
+    
+    
     if(linksColumnsEnable == 1 && linksColumns > 1 && device != "smartfon")
     {
         
@@ -4017,7 +4167,8 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         {
             grid-auto-rows: fit-content(300px)!important; // maksymalna wysokosc wiersza, wiersz dostosowuje sie do najwyzszego elementu w wierszu
         }
-            
+
+
         @container znaleziska (min-width: 1260px)
         {
             
@@ -4660,7 +4811,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     } 
     
     
-    if(hideHits)
+    if(hideHits == 1)
     {
         aside.hits-slider { display: none!important; } 
     } 
@@ -7382,17 +7533,17 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             padding: 0px!important;
             
         }
-        section.editor > header > ul[data-v-75e1d3e2]
+        section.editor > header > ul
         {
             margin: 0px 0px 0px 0px!important;
         }
-        section.editor > header > ul[data-v-75e1d3e2] > li
+        section.editor > header > ul > li
         {
             border: 1px solid transparent!important;
             padding: 0px 5px!important;
             height: 100%!important;
         }
-        section.editor > header > ul[data-v-75e1d3e2] > li:hover
+        section.editor > header > ul > li:hover
         {
             background-color: var(--whiteOpacity1)!important;
         }
@@ -7706,7 +7857,6 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         
         body > section > div.main-content > main.main > section > div.content > section section.stream > footer
         {
-            border: 1px solid red;
             position: fixed;
             bottom: 0px;
             right: 100px;
@@ -9541,13 +9691,17 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 
     if(entryVotersListHide == 1)
     { 
-      .entry .entry-voters { display: none!important; } 
+      section.entry section.entry-voters { display: none!important; } 
     }
     else
     {
-        if(entryVotersListRawHide == 1)
+        if(entryVotersLimit == 1)
         {
-            section.entry-voters ul li.raw[data-v-6e6ed6ee]
+            section.entry section.entry-voters > ul > li.raw[data-v-6e6ed6ee]
+            {
+                display: none!important;
+            }
+            section.entry section.entry-voters > ul > li:nth-child(n+{ entryVotersLimitMaximum }) 
             {
                 display: none!important;
             }
@@ -9724,13 +9878,12 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             {
                 display: none!important;
             }
+            
+                
         }
         
 
-        section.entry-voters ul li[data-v-6e6ed6ee]:after
-        {
-            order: 999;
-        }
+        
         if(entryVotersListUsersSeparator == "wlasny")
         {
             section.entry-voters ul li[data-v-6e6ed6ee]:after
@@ -9738,21 +9891,21 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
                 content: "" + entryVotersListUsersSeparatorCustom!important;
             }
         }
-        else if(entryVotersListUsersSeparator != "przecinek")
+        else if(entryVotersListUsersSeparator != przecinek)
         {
-            if(entryVotersListUsersSeparator      == "spacja")                      { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " " !important;      margin-right: 4rem; }}
-            else if(entryVotersListUsersSeparator == "punktor")                     { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " • "!important;     margin-right: 4rem; margin-left: 4rem; }}
-            else if(entryVotersListUsersSeparator == "bialy_punktor")               { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " ◦ "!important;      margin-right: 4rem; margin-left: 4rem; }}
-            else if(entryVotersListUsersSeparator == "punktor_trojkatny")           { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " ‣ "!important;      margin-right: 4rem; margin-left: 4rem; }}
-            else if(entryVotersListUsersSeparator == "kropka_srodkowa")             { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " ∙ "!important;      margin-right: 4rem; margin-left: 4rem; }}
-            else if(entryVotersListUsersSeparator == "srednik")                     { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: "; "!important;      margin-right: 4rem; }}
-            else if(entryVotersListUsersSeparator == "kropka")                      { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " . "!important;     margin-right: 4rem; margin-left: 4rem; }}
-            else if(entryVotersListUsersSeparator == "ukosnik")                     { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " / "!important;     margin-right: 4rem; margin-left: 4rem; }}
-            else if(entryVotersListUsersSeparator == "pionowa_kreska")              { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " | "!important;     margin-right: 4rem; margin-left: 4rem; }}
-            else if(entryVotersListUsersSeparator == "pionowa_przerwana_kreska")    { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " ¦ "!important;     margin-right: 4rem; margin-left: 4rem; }}
-            else if(entryVotersListUsersSeparator == "emoji_1")                     { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " ◼️ "!important;     margin-right: 4rem; margin-left: 4rem; }}
-            else if(entryVotersListUsersSeparator == "emoji_2")                     { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " ◻️ "!important;     margin-right: 4rem; margin-left: 4rem;  }}
-            else if(entryVotersListUsersSeparator == "emoji_3")                     { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " ✖️ "!important;    margin-right: 4rem; margin-left: 4rem; }}
+            if(entryVotersListUsersSeparator      == "spacja")                      { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " " !important; } }
+            else if(entryVotersListUsersSeparator == "punktor")                     { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " • "!important; } }
+            else if(entryVotersListUsersSeparator == "bialy_punktor")               { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " ◦ "!important; } }
+            else if(entryVotersListUsersSeparator == "punktor_trojkatny")           { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " ‣ "!important; } }
+            else if(entryVotersListUsersSeparator == "kropka_srodkowa")             { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " ∙ "!important; } }
+            else if(entryVotersListUsersSeparator == "srednik")                     { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: "; "!important; } }
+            else if(entryVotersListUsersSeparator == "kropka")                      { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " . "!important; } }
+            else if(entryVotersListUsersSeparator == "ukosnik")                     { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " / "!important; } }
+            else if(entryVotersListUsersSeparator == "pionowa_kreska")              { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " | "!important; } }
+            else if(entryVotersListUsersSeparator == "pionowa_przerwana_kreska")    { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " ¦ "!important; } }
+            else if(entryVotersListUsersSeparator == "emoji_1")                     { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " ◼️ "!important; } }
+            else if(entryVotersListUsersSeparator == "emoji_2")                     { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " ◻️ "!important; } }
+            else if(entryVotersListUsersSeparator == "emoji_3")                     { section.entry-voters ul li[data-v-6e6ed6ee]:after { content: " ✖️ "!important; } }
         }
     }
 
@@ -9786,6 +9939,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     /* SIDEBAR PO PRAWEJ STRONIE - RIGHT SIDEBAR - PRAWY SIDEBAR */   
  
     /* UKRYWANIE CAŁEGO SIDEBARA */
+
     if(rightSidebarHide == 1)
     {
         body > section > div.main-content > main.main > section > section.sidebar
@@ -9800,7 +9954,8 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         {
             rightSidebarMediaQueryWidth = wykopMobileBreakpointWidth;
         }
-    
+
+
         @media (max-width: rightSidebarMediaQueryWidth)
         {
             body > section > div.main-content > main.main > section > section.sidebar
@@ -9816,22 +9971,35 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
                 flex-direction: column;
                 width: unset!important;
             }
-            section.sidebar footer.footer
-            { 
-                width: rightSidebarWidth !important;
-            } 
-
+            
+            if(rightSidebarFooterHide == 1)
+            {
+                section.sidebar footer.footer,
+                footer.footer.mobile
+                {
+                    display: none!important;
+                }
+                section.entry-page
+                {
+                    padding-bottom: 100px!important;
+                }
+            }
+            else
+            {
+                section.sidebar footer.footer
+                {
+                    width: rightSidebarWidth !important;
+                }
+            }
+            
+            
             body > section > div.main-content > main.main > section > section.sidebar > section,
             body > section > div.main-content > main.main > section > section.sidebar > aside.ban-alert // panel z info o banie
             {
                 width: rightSidebarWidth !important;
             } 
 
-            if(rightSidebarFooter == 1)
-            {
-                section.sidebar footer.footer, footer.footer.mobile  { display: none!important; } 
-                section.entry-page { padding-bottom: 100px!important; } 
-            } 
+            
 
             /* SIDEBAR PO PRAWEJ */
             if(rightSidebarWidthAlignment == "polewej")
@@ -9921,9 +10089,6 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             } 
 
 
-
-
-
             /* Nie wyświetlaj wpisów z obrazkami */
             if(rightSidebarHideEntriesWithImages == 1)
             {
@@ -9941,13 +10106,6 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
                     display: none!important;
                 } 
             } 
-
-
-
-
-
-
-
 
 
 
@@ -10399,7 +10557,6 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             /* TWOJE OBSERWOWANE TAGI */
             section.wykopx_your_observed_tags
             {
-                border: 10px solid red;
                 display: flex!important;
                 flex-direction: column;
                 gap: 16px;
@@ -10408,7 +10565,6 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             {
               section.wykopx_your_observed_tags
               {
-                border: 10px solid red;
                 display: flex!important;
                 flex-direction: column;
                 gap: 16px;
@@ -10417,7 +10573,6 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
               section.wykopx_your_observed_tags div.wykopx_quick_search_container
               {
                 display: flex!important;
-                border: 1px solid red!important;
                 width: 100%;
                 position: relative;
               } 
@@ -12778,6 +12933,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         {
             section.entry > article > header > div.left
             {
+                transform: translate(0px, calc(var(--sexBarBorderWidth) + var(--sexBarPadding)));
                 width: calc(var(--avatarSize) + 2 * var(--sexBarBorderWidth) + 2 * var(--sexBarPadding))!important;
             } 
         } 
@@ -12861,7 +13017,15 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         a.avatar > figure > img[data-v-fb64f4be]
         {
             border-radius: 50%!important;
-        } 
+        }
+        
+        body > section > header > div.right > nav > ul > li.account > a > a[data-v-c965bb88] figure img
+        {
+            height: 95%;
+            width: auto;
+            aspect-ratio: 1;
+            border-width: 1px;
+        }
     } 
     
     else if(avatarLook == "kwadratowe")
@@ -15150,7 +15314,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
     
     /* 🔸🔥 Gorące Znaleziska wyświetlaj jako pierwsze */
-    if(hotLinksShowFirst)
+    if(hotLinksShowFirst == 1)
     {
         body > section > div.main-content > main > section > div.content > section > section > section > div.content > section.link-block.hot
         {
@@ -15532,14 +15696,14 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         section.stream.link-comments section.entry.deleted:not(.own),
         section.stream.entry-subcomments section.entry.deleted:not(.own)
         {
-          border: 1px solid red i;   
+          border: 1px solid #f00 i;   
           background-color: rgba(255, 0, 0, 0.1) i;
         } 
 
         section.entry.deleted:not(.own) > article,
         section.entry.deleted:not(.own) > aside
         {
-          border: 1px solid red i;   
+          border: 1px solid #f00 i;   
           background-color: rgba(255, 0, 0, 0.1) i;
         } 
 
@@ -15569,9 +15733,9 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     {
         section.entry:has(> aside.black-content) > article
         {
-            border: 1px solid red!important;
-    
+            border: 1px solid #b30000!important;
             opacity: 0.69!important;
+            
             if(blackListTesting == 0)
             {
                 display: none!important;   
@@ -15585,7 +15749,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
       {
           section.entry:has(> aside.black-content) > article
           {
-              border: 1px solid red i;
+              border: 1px solid #bf0000 i;
               background-color: rgba(255, 0, 0, 0.05) i;     
           } 
           section.entry:has(aside.black-content) > aside
@@ -15703,7 +15867,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         section.entry.deleted.own > article,
         section.entry.deleted.own > aside.black-content
         {
-            border: 1px solid red i;
+            border: 1px solid #f00 i;
             background-color: rgba(255, 0, 0, 0.1) i;
         } 
       } 
@@ -15746,7 +15910,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     {
         section.entry:not(.own):has(> aside.black-content):not(.deleted):not(:has(div.wrapper button)):not(:has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href^={"\/tag\/"}])) > aside.black-content + article
         {
-            border: 1px solid red i;
+            border: 1px solid #f00 i;
             border-top: 0px solid transparent i;
             background-color: rgba(255, 0, 0, 0.05) i;
 
@@ -15754,7 +15918,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         section.entry:not(.own):has(> aside.black-content):not(.deleted):not(:has(div.wrapper button)):not(:has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href^={"\/tag\/"}])) > aside.black-content
         {
             background-color: rgba(255, 0, 0, 0.1) i;
-            border: 1px solid red i;
+            border: 1px solid #f00 i;
         } 
     } 
     
@@ -17935,7 +18099,7 @@ https://wykop.pl/moje/
         #message-box-contents div.config-body label.config-select div.config-value > select > option
         {
             font-size: 1.2rem;
-            border: 1px solid red!important;
+            border: 1px solid #f00!important;
         }
         
         #message-box-contents div.config-body label.config-select div.config-value::after
@@ -18010,6 +18174,15 @@ https://wykop.pl/moje/
     }
 } 
     
+
+
+
+
+
+
+
+
+
 @-moz-document url-prefix("https://userstyles.world/")
 {   
     nmzc1 = 8162 
@@ -18029,7 +18202,7 @@ https://wykop.pl/moje/
     div.card:has(a[href*={"\/style\/" + nmzc2}]), 
     div.card:has(a[href*={"\/style\/" + nmzc3}])
     {
-        border: 1px solid red!important;
+        border: 1px solid #f00!important;
     } 
     div.card:has(a[href*={"\/style\/" + nmzc1}]) img,
     div.card:has(a[href*={"\/style\/" + nmzc2}]) img,
@@ -18048,54 +18221,89 @@ https://wykop.pl/moje/
     // -------------- WYKOP XS ----------------
     
     // action box w komentarzach pod wpisem
-    section.entry .wxs_entry_menu
+    /* ACTION BOX, krawężnik kraweznik */
+    section .wxs_entry_menu
     {
-        top: -16px;
-        border-radius: 0px 0px var(--buttonsBorderRadius) var(--buttonsBorderRadius);
-        border-width: 0px 1px 1px 1px;
+        --buttonsBorderRadius: 5px;
+        width: fit-content;
+        position: absolute;
+        height: 30px;
+        border-style: solid;
+        border-color: var(--blackOpacity01);
+        color: var(--blackOpacity02);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-size: 11rem;
+        z-index: 1;
+        opacity: 1!important;
+        transition: opacity 0.5s linear!important;
     }
-    section.link-page section.entry .wxs_entry_menu
+    section .wxs_entry_menu:hover
     {
-        top: 0px;
+        background-color: var(--contentBackgroundColor);
     }
-
-
-    section.entry.wxs_minimized .wxs_entry_menu
-    {
-        top: -3px; // padding-top wxs_minimized
-    }
-
-    section.link-block .wxs_entry_menu
-    {
-        bottom: 0px;
-        top: unset;
-        border-color: var(--blackOpacity005);
-        border-radius: var(--buttonsBorderRadius) var(--buttonsBorderRadius) 0px 0px;
-        border-width: 1px 1px 0px 1px;
-    }            
     @starting-style
     {
         section .wxs_entry_menu
         {
             opacity: 0!important;
-            top: 20px;
         }
     }
+    
+    section.entry .wxs_entry_menu
+    {
+        border-radius: 0px 0px var(--buttonsBorderRadius) var(--buttonsBorderRadius);
+        border-width: 0px 1px 1px 1px;
+        right: calc(30px + var(--ratingBoxWidth, 165px));
+    }
+    section.entry:not(.reply) .wxs_entry_menu
+    {
+        top: calc(-2 * var(--entriesAndCommentsTopPadding) + 3px);      
+    }
+    
+    section.entry.wxs_minimized .wxs_entry_menu
+    {
+        top: -3px;   
+    }
+    
+    section.entry section.entry.reply[data-v-2aacfeb5] .wxs_entry_menu
+    {
+        top: 0px;  
+    }
+    
+    
+
+
+    section.link-block .wxs_entry_menu
+    {
+        border-color: var(--blackOpacity005);
+        border-radius: var(--buttonsBorderRadius) var(--buttonsBorderRadius) 0px 0px;
+        border-width: 1px 1px 0px 1px;
+        //bottom: 0px;
+        //top: unset;   
+        
+        // zmienione gdy linkThumbnail == "polewej" xxx
+        right: 18px;
+        left: unset;
+    }
+    
+    // kolejność przycisków zmienione gdy linkThumbnail == "polewej" xxx
+    section.link-block .wxs_entry_menu .wxs_filter_off          { order: 1; }
+    section.link-block .wxs_entry_menu .wxs_filter_on_user      { order: 2; }
+    section.link-block .wxs_entry_menu .wxs_hide                { order: 3; }
+        
+
+
     // wpisy w sidebarze
     main.main > section > section.sidebar > section.custom-sidebar > div.content > section.entries > section.entry .wxs_entry_menu
     {
         display: none!important;
     }
 
-    section .wxs_entry_menu:hover
-    {
-        background-color: var(--contentBackgroundColor);
-    }
-    section .wxs_entry_menu button:hover
-    {
-        background-color: var(--blackOpacity005);
-        color: var(--blackOpacity1);
-    }
+
+    
+
 
     section.entry .wxs_entry_menu:hover
     {
@@ -18119,8 +18327,6 @@ https://wykop.pl/moje/
         height: 100%;
         color: inherit;
     }
-
-
     section .wxs_entry_menu button:first-child
     {
         border-radius: 0px 0px 0px var(--buttonsBorderRadius)!important;
@@ -18130,19 +18336,32 @@ https://wykop.pl/moje/
         border-radius: 0px 0px var(--buttonsBorderRadius) 0px!important;
     }
 
+    
 
-
+    
+    /* ukrycie niepotrzebnych przycisków */
     section.wxs_minimized > article > div.wxs_entry_menu > button.wxs_minimize,
     section:not(.wxs_minimized) > article > div.wxs_entry_menu > button.wxs_maximize,
-    section.own > article > div.wxs_entry_menu > button.wxs_hide,
-    section.link-block .wxs_entry_menu > button.wxs_minimize,
-    section.link-block .wxs_entry_menu > button.wxs_save,
+    section.own > article > .wxs_entry_menu > .wxs_hide
     {
         display: none;
     }
+    
+    // ukrycie filtrowania pod wpisem bez komentarzy
+    section.entry-page > section.entry > section.stream > div.content > section.entry.detailed:not(:has(div.comments)) .wxs_entry_menu > button:is(.wxs_filter_on_user, .wxs_filter_off, .wxs_filter_on_replies)
+    {
+        display: none!important;
+    } 
 
-
-    main.main > section > div.content > section:is(.dummyClass, .entry-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry,
+    section.link-block .wxs_entry_menu > button.wxs_minimize,
+    section.link-block .wxs_entry_menu > button.wxs_save,
+    section.link-block .wxs_entry_menu > button.wxs_filter_on_replies
+    {
+        display: none;
+    }
+  
+        
+    main.main > section > div.content > section:is(.dummyClass, .entry-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry
     {
         width: 100%!important;
         padding-right: 0px!important;            
@@ -18168,53 +18387,130 @@ https://wykop.pl/moje/
         background: unset!important;
     }
 
+    
+    
+    /*  --- filtrowanie komentarzy użytkownika --- */
+    section .wxs_entry_menu button:hover,
+    body[data-wxs_filter="userComments"] .wxs_entry_menu button.wxs_filter_on_user:hover
+    body[data-wxs_filter="userReplies"] .wxs_entry_menu button.wxs_filter_on_replies:hover
+    {
+        background-color: var(--blackOpacity005);
+        color: var(--blackOpacity1);
+    }
+    body[data-wxs_filter="userComments"] .wxs_entry_menu button.wxs_filter_on_user,
+    body[data-wxs_filter="userReplies"] .wxs_entry_menu button.wxs_filter_on_replies
+    {
+        color: var(--blackOpacity05);
+        background-color: var(--blackOpacity002);
+        border-bottom: 1px solid var(--blackOpacity05);
+    }
+    
 
+    // przyciski filtrowania komentarzy użytkownika
+    // wpisy na stronie glownej
+    main.main > section > div.content > section.home-page       > section.home                      > section.stream > div.content > section.entry .wxs_entry_menu > [class="wxs_filter_on_replies"],
+    // wpisy z 1 lub 2 komentarzami
+    section.entry[wxs_first_load_comments_count="1"] .wxs_entry_menu > [class^="wxs_filter"],
+    section.entry[wxs_first_load_comments_count="2"] .wxs_entry_menu > [class^="wxs_filter"],
+    // wpisy bez komentarzy    
+    // main.main > section > div.content > section:not(.link-page) > section section.stream > div.content > section.entry:not(.reply):not(:has(div.comments)) .wxs_entry_menu > .wxs_filter_on,
+    // main.main > section > div.content > section:not(.link-page) > section section.stream > div.content >  section.entry:not(.reply):not(:has(div.comments)) .wxs_entry_menu > .wxs_filter_off  
+    {
+        display: none;
+    }
+
+    .wxs_entry_menu > .wxs_filter_off
+    {
+        display: none;
+    }
+    
+    
+    
 
     // ----- ZMINIMALIZOWANE WPISY I KOMENTARZE
+    
+    // wpisy
     main.main > section > div.content > section:is(.entry-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized
     {
         padding: 3rem 0rem 3rem 20rem !important;
         //margin: 2px 0px 2px 0px!important;
         //margin: var(--microblogEntriesSpacing) 0px var(--microblogEntriesSpacing) 0px!important;
     }
-    main.main > section > div.content > section:is(.entry-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized > article
+    main.main > section > div.content > section:is(.link-page, .entry-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized > article
     {
-        filter: grayscale(100%);
-        padding: 0rem 0rem 0rem 0rem !important;
+        if(mirkoukrywaczMinimizedGrayedOut == 1)
+        {
+            filter: grayscale(100%);
+        }
+        padding: 0rem 0rem 0rem 0rem!important;
+    }
+    
+    // strona znaleziska
+    main.main > section > div.content > section.link-page > section section.stream > div.content > section.entry.wxs_minimized
+    {
+        height: 40px;
+        padding: 0px!important;
+    }
+    
+    section.stream > div.content > section.entry.reply.wxs_minimized
+    {
+        height: 40px;
+    }
+    main.main > section > div.content > section.link-page > section section.stream > div.content > section.entry.wxs_minimized > article
+    {
+        padding: 0px!important;
+        height: 40px;
+        padding-right: var(--entriesAndCommentsHorizontalPadding)!important;
+        margin: 0px!important;
     }
 
-    // zminimalizowane komentarze pod wpisem
-    main.main > section > div.content > section:is(.entry-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section div.comments > section.stream > div.content > section.entry.wxs_minimized
-    {
-    }
 
-    main.main > section > div.content > section:is(.entry-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized > article > header > div.right > div > span
+    main.main > section > div.content > section.link-page > section section.stream > div.content > section.entry.wxs_minimized > div.comments
     {
         display: none!important;
     }
+    main.main > section > div.content > section.link-page > section section.stream > div.content > section.entry.wxs_minimized > article > header,
+    main.main > section > div.content > section.link-page > section section.stream > div.content > section.entry.wxs_minimized > article > header > div
+    {
+        height: 100%!important;
+    } 
+    
+    
+    // czas dodania komentarza xxx
+    main.main > section > div.content > section:is(.link-page, .entry-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized > article > header > div.right > div > span
+    {
+        display: none!important;
+    }
+
+
+    // avatar
     main.main > section > div.content > section:is(.entry-page, .bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized > article > header > div.left
     {
         width: 35px!important;
+        transform: translateY(4px); 
+        --avatarSize: 20px;
     } 
-    main.main > section > div.content > section:is(.entry-page, .bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized > article > header > div.left a.avatar
+    main.main > section > div.content > section.link-page > section section.stream > div.content > section.entry.wxs_minimized > article > header > div.left
     {
-        width: 20px!important;
-        height: 20px!important;
-    } 
-    main.main > section > div.content > section:is(.entry-page, .bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized > article > header > div.right
+        width: 35px!important;
+        transform: translate(10px, 10px);
+        --avatarSize: 20px;
+    }
+ 
+    // div.right
+    main.main > section > div.content > section:is(.link-page, .entry-page, .bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized > article > header > div.right
     {
         width: calc(100% - 30px)!important;
         align-items: center i;
     }
-    main.main > section > div.content > section:is(.entry-page, .bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized > article > header > div.right a.username:after
-    {
-        margin-left: 10rem;
-        /* content: "(Wykop X Krawężnik)" i; */
-    }
-    main.main > section > div.content > section:is(.entry-page, .bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized > article > div.edit-wrapper
+
+    
+    // treść komentarza
+    main.main > section > div.content > section:is(.link-page, .entry-page, .bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized > article > div.edit-wrapper
     {
         display: none!important;
     }
+    
     /* ukrycie 2 najlepszych komentarzy pod wpisem w streamie */
     main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_minimized > div.comments
     {
@@ -18230,13 +18526,7 @@ https://wykop.pl/moje/
             display: none!important;
         } 
     }
-    else if(mirkoukrywaczEnable == 1 && dev == 1)
-    {
-        main.main > section > div.content > section:is(.search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry.wxs_hidden
-        {
-            border: 13px solid green!important;
-        } 
-    }
+
         
         
         
@@ -18256,7 +18546,7 @@ https://wykop.pl/moje/
             flex-direction: row!important;
             justify-content: start!important;
         }
-        section.sidebar > section section.entry header > div.right > div:has(a.username) > span.plus // right sidebar
+        section.sidebar > section section.entry header > div.right > div:has(a.username) > span.plus // sidebar
         {
             margin-left: auto!important;
         }
@@ -18273,9 +18563,7 @@ https://wykop.pl/moje/
             margin-left: auto!important;
         }
 
-        
-        
-        .wxs_user_info
+        div.wxs_user_info
         {
             display: flex!important;
             align-items: center!important;
@@ -18287,33 +18575,63 @@ https://wykop.pl/moje/
         }
 
         // wpisy  {}
-        section.entry > article .wxs_user_info
+        section.entry > article div.wxs_user_info
         {
             margin-left: 6px;
         }
         // znaleziska {}
-        section.link-block article .wxs_user_info
+        section.link-block article div.wxs_user_info
         {
             margin-right: 5px;
         }
-
-        section .wxs_user_info var
+        
+        // ikonka separatora {}
+        section header div.wxs_user_info > var:before
+        {
+            color: var(--blackOpacity06)!important;
+        }
+        
+        // ROK / ikonka info
+        section header div.wxs_user_info > var
         {
             opacity: 0.7;
             font-style: normal;
         }
-
-        // ikonka separatora {}
-        section .wxs_user_info var:before
+        section:hover header div.wxs_user_info > var
         {
-            color: var(--blackOpacity06)!important;
-            display: inline-block;
-            text-decoration: none!important;
+            opacity: 1;
+        }
+        section header div.wxs_user_info:hover > var
+        {
+            color: var(--colorTextBolder);
         }
 
-        section .wxs_user_info_usernote var:before
+        
+        // NOTATKA DO UŻYTKOWNIKA
+        .wxs_user_info_usernote
         {
-            if(notatkowatorIcon == "notatnik")                  { content: " 📝 "; }
+            --notatkowator_color_red:       rgb(255, 0, 0);
+            --notatkowator_color_green:     rgb(14, 137, 39);
+            --notatkowator_color_blue:      rgb(66, 141, 255)f;
+            --notatkowator_color_orange:    rgb(179, 89, 30);
+            --notatkowator_color_pink:      rgb(219, 14, 191);
+            --notatkowator_color_yellow:    rgb(253, 246, 50);
+        }
+        section header .wxs_user_info_usernote                            > var 
+        {
+            font-size: 12rem;
+            font-style: normal;
+        }
+        section header .wxs_user_info_usernote.wxs_notatkowator_c         > var { color: var(--notatkowator_color_red); }
+        section header .wxs_user_info_usernote.wxs_notatkowator_z         > var { color: var(--notatkowator_color_green); }
+        section header .wxs_user_info_usernote.wxs_notatkowator_n         > var { color: var(--notatkowator_color_blue); }
+        section header .wxs_user_info_usernote.wxs_notatkowator_p         > var { color: var(--notatkowator_color_orange); }
+        section header .wxs_user_info_usernote.wxs_notatkowator_r         > var { color: var(--notatkowator_color_pink); }
+        section header .wxs_user_info_usernote.wxs_notatkowator_ż         > var { color: var(--notatkowator_color_yellow); }
+
+        section header .wxs_user_info_usernote > var:before
+        {
+            if(notatkowatorIcon == "notatnik")                  { content: " 📝 ";  }
             if(notatkowatorIcon == "zarowka")                   { content: " 💡 ";  }
             if(notatkowatorIcon == "serce")                     { content: " 🤍 ";  }
             if(notatkowatorIcon == "pionowa_kreska")            { content: " | ";   }
@@ -18321,20 +18639,11 @@ https://wykop.pl/moje/
             if(notatkowatorIcon == "info")                      { content: " ℹ "; }
             if(notatkowatorIcon == "wlasny")                    { content: " " + notatkowatorIconCustom + " "!important; }
         }
-        
-        
-        section:hover .wxs_user_info var
+        section header div.wxs_user_info_year > var:before
         {
-            opacity: 1;
+        /* content: " · " */
         }
-        section .wxs_user_info:hover var
-        {
-            color: var(--colorTextBolder);
-        }
-        
-        
 
-        
         // notatka pod avatarem
         section.entry > article > header + .wxs_user_info_usernote
         {
@@ -18347,19 +18656,16 @@ https://wykop.pl/moje/
             margin-bottom: 4px;
             font-size: 13rem;
             color: var(--blackOpacity09);
+
         } 
 
         section.entry > article > header + .wxs_user_info_usernote var
         {
             color: var(--blackOpacity07);
-        } 
+        }
         
         
         // STATUS ONLINE UŻYTKOWNIKÓW
-        section.entry > article > header > div.left
-        {
-            // border: 1px solid red; xxx 
-        }
         section.entry[data-wxs_user_online="true"] header > div.left > a.avatar:before
         {
             content: "🟢";
@@ -18372,130 +18678,26 @@ https://wykop.pl/moje/
             padding: var(--sexBarPadding);
             z-index: 1;
         }
-        section .wxs_user_info var.wxs_user_online
+
+        section header div.wxs_user_info > var.wxs_user_online
         {
             font-size: 5rem;
         }
-        
-        
-        
-        
-        /* Notatka do użytkownika */
-        .wxs_user_info_usernote
-        {
-            --notatkowator_color_red:       rgb(255, 0, 0);
-            --notatkowator_color_green:     rgb(14, 137, 39);
-            --notatkowator_color_blue:      rgb(66, 141, 255);
-            --notatkowator_color_orange:    rgb(179, 89, 30);
-            --notatkowator_color_pink:      rgb(219, 14, 191);
-            --notatkowator_color_yellow:    rgb(253, 246, 50);
-        }
-        .wxs_user_info_usernote var
-        {
-            font-style: unset;
-        }
-        
-        /* mężczyzna */
-        .wxs_user_info_usernote.wxs_notatkowator_m               var,
-        .wxs_user_info_usernote.wxs_notatkowator_mężczyzna       var,
-        .wxs_user_info_usernote.wxs_notatkowator_meżczyzna       var,
-        .wxs_user_info_usernote.wxs_notatkowator_męzczyzna       var,
-        .wxs_user_info_usernote.wxs_notatkowator_mezczyzna       var,
-        .wxs_user_info_usernote.wxs_notatkowator_niebieski       var,
-        .wxs_user_info_usernote.wxs_notatkowator_facet           var,
-        .wxs_user_info_usernote.wxs_notatkowator_boy             var,
-        .wxs_user_info_usernote.wxs_notatkowator_chlopak         var,
-        .wxs_user_info_usernote.wxs_notatkowator_chłopak         var,
-        .wxs_user_info_usernote.wxs_notatkowator_chłopiec        var,
-        .wxs_user_info_usernote.wxs_notatkowator_chlopiec        var,
-        .wxs_user_info_usernote.wxs_notatkowator_chłop           var,
-        .wxs_user_info_usernote.wxs_notatkowator_chlop           var,
-        .wxs_user_info_usernote.wxs_notatkowator_male            var { }
 
-        /* kobieta */
-        .wxs_user_info_usernote.wxs_notatkowator_f               var,
-        .wxs_user_info_usernote.wxs_notatkowator_female          var,
-        .wxs_user_info_usernote.wxs_notatkowator_kobieta         var,
-        .wxs_user_info_usernote.wxs_notatkowator_rozowa          var,
-        .wxs_user_info_usernote.wxs_notatkowator_różowa          var,
-        .wxs_user_info_usernote.wxs_notatkowator_rózowa          var,
-        .wxs_user_info_usernote.wxs_notatkowator_rożowa          var,
-        .wxs_user_info_usernote.wxs_notatkowator_baba            var,
-        .wxs_user_info_usernote.wxs_notatkowator_dziewczyna      var,
-        .wxs_user_info_usernote.wxs_notatkowator_dziewczynka     var,
-        .wxs_user_info_usernote.wxs_notatkowator_girl            var,
-        .wxs_user_info_usernote.wxs_notatkowator_k               var { color: var(--notatkowator_color_red); }
-            
-            
-        /* kolory: czerwony, zielony, niebieski, pomarańczowy, różowy, żółty */
-        .wxs_user_info_usernote.wxs_notatkowator_c               var,
-        .wxs_user_info_usernote.wxs_notatkowator_czerwony        var,
-        .wxs_user_info_usernote.wxs_notatkowator_red             var { color: var(--notatkowator_color_red); }
-
-        .wxs_user_info_usernote.wxs_notatkowator_z               var,
-        .wxs_user_info_usernote.wxs_notatkowator_zielony         var,
-        .wxs_user_info_usernote.wxs_notatkowator_green           var { color: var(--notatkowator_color_green); }
-        
-        .wxs_user_info_usernote.wxs_notatkowator_n               var,
-        .wxs_user_info_usernote.wxs_notatkowator_niebieski       var,
-        .wxs_user_info_usernote.wxs_notatkowator_blue            var { color: var(--notatkowator_color_blue); }
-        
-        .wxs_user_info_usernote.wxs_notatkowator_p               var,
-        .wxs_user_info_usernote.wxs_notatkowator_pomarańczowy    var,
-        .wxs_user_info_usernote.wxs_notatkowator_pomaranczowy    var,
-        .wxs_user_info_usernote.wxs_notatkowator_orange          var { color: var(--notatkowator_color_orange); }
-        
-        .wxs_user_info_usernote.wxs_notatkowator_r               var,
-        .wxs_user_info_usernote.wxs_notatkowator_różowy          var,
-        .wxs_user_info_usernote.wxs_notatkowator_rozowy          var,
-        .wxs_user_info_usernote.wxs_notatkowator_róż             var,
-        .wxs_user_info_usernote.wxs_notatkowator_roz             var,
-        .wxs_user_info_usernote.wxs_notatkowator_pink            var { color: var(--notatkowator_color_pink); }
-
-        .wxs_user_info_usernote.wxs_notatkowator_ż               var,
-        .wxs_user_info_usernote.wxs_notatkowator_żółty           var,
-        .wxs_user_info_usernote.wxs_notatkowator_zolty           var,
-        .wxs_user_info_usernote.wxs_notatkowator_yellow          var { color: var(--notatkowator_color_yellow); }
-        
-        /* underline */
-        .wxs_user_info_usernote.wxs_notatkowator_u               var,
-        .wxs_user_info_usernote.wxs_notatkowator_underline       var,
-        .wxs_user_info_usernote.wxs_notatkowator_podkreślenie    var, 
-        .wxs_user_info_usernote.wxs_notatkowator_podkreslenie    var { text-decoration: underline; }
-            
-        /* italics */
-        .wxs_user_info_usernote.wxs_notatkowator_i               var,
-        .wxs_user_info_usernote.wxs_notatkowator_kursywa         var,
-        .wxs_user_info_usernote.wxs_notatkowator_italics         var { font-style: italic; }
-            
-        /* bold */
-        .wxs_user_info_usernote.wxs_notatkowator_b               var,
-        .wxs_user_info_usernote.wxs_notatkowator_bold            var,
-        .wxs_user_info_usernote.wxs_notatkowator_bolder          var,
-        .wxs_user_info_usernote.wxs_notatkowator_strong          var,
-        .wxs_user_info_usernote.wxs_notatkowator_pogrubienie     var { font-weight: bolder; }
     }
-    
-    // INFOBOX LISTA PLUSUJĄCYCH por.: entryVotersListUsersSeparator
+
     section.entry section.entry-voters > ul > li
     {
         display: flex!important;
     }
-    section.entry section.entry-voters > ul > li .wxs_user_info
+    section.entry section.entry-voters > ul > li > div.wxs_user_info
     {
         order: 0;
-        margin-left: 0px!important;
-        margin-right: 4rem;
     }
     section.entry section.entry-voters > ul > li > a.username
     {
         order: 1;
-    }
-    section.entry section.entry-voters > ul > li .wxs_user_info_usernote,
-    section.entry section.entry-voters > ul > li .wxs_user_member_since        
-    {
-        display: none;
-    }
+    }   
       
       
       
@@ -18959,7 +19161,16 @@ https://wykop.pl/moje/
         100%    { translate: 0px 10px; }
     } 
     
-
+    article > header > div.right > div > section.rating-box:after
+    {
+        font-size: 10rem;
+        animation-duration: 4s;
+        position: absolute;
+        top: -15px;
+        right: 32px;
+        animation-fill-mode: forwards;
+        
+    }
     .addedPluses > article > header > div.right > div > section.rating-box:after
     {
         animation-name: fadeOutAnimation, slideUpAnimation;
@@ -18982,10 +19193,64 @@ https://wykop.pl/moje/
         color: #fff;
         content: var(--removedMinuses);
     }
+    
+    // VOTES PER MINUTE
+    section.entry
+    {
+        --ratingBoxWidth: 100px;
+    }
+    section.rating-box
+    {
+        flex-wrap: wrap;
+        justify-content: end;
+        width: max-content;
+        border-bottom: 1px solid rgba(43, 113, 51, 0.3);
+        width: var(--ratingBoxWidth);
+        min-width: var(--ratingBoxWidth);
+        row-gap: 4rem;
+    }
+    
+    // plusowanie i minusowanie pod znaleziskami
+    section.entry:has(button.minus)
+    {
+        --ratingBoxWidth: 165px;
+    }
+    
+    
+    
+    section.rating-box .wxs_votes_per_minute
+    {
+        display: none;
+    }
+    section.rating-box .wxs_votes_per_minute[data-wxs_votes_per_minute]
+    {
+        display: block;
+        font-size: 10rem;
+        font-weight: bolder;
+        color: green;
+        text-align: right;
+        background-color: rgba(0, 0, 0, 0.2);
+        padding: 3px 5px;
+        width: 100%;
+    }
+    
+    section.wxs_minimized .wxs_votes_per_minute
+    {
+        display: none!important;
+    }
+    
+    section.rating-box .wxs_votes_per_minute[data-wxs_votes_per_minute="+0"],
+    section.rating-box .wxs_votes_per_minute[data-wxs_votes_per_minute="0"]
+    {
+        display: none;
+    }
+    section.rating-box .wxs_votes_per_minute[data-wxs_votes_per_minute]::before
+    {
+        content: attr(data-wxs_votes_per_minute) "/minutę";
+    }
 
-        
-        
-        
+
+
     // VOTINGEXPLOSION : animacja plusowania Wykop XS
     section.entry article > header 
     {
@@ -18996,95 +19261,107 @@ https://wykop.pl/moje/
     {
         position: relative;
         z-index: 1; // rating box zindex
-        --explosionDelay: 0s;
-        --explosionDuration: 900ms;
-        --explosionTiming: linear;
     }
-    
     section.rating-box > div.buttons > button.minus
     {
         margin-left: 14px;
     }
     
-    .wykopxs_vote_animation
+    if(votingExplosionEnable == 1)
     {
+        section.rating-box
+        {
+            --explosionDelay: 0s;
+            --explosionDuration: 900ms;
+            --explosionTiming: linear;
+        }
         
-        opacity: 0;
-        cursor: crosshair;
-        font-size: 12rem;
-        font-weight: bolder;
-        position: absolute;
-        top: -10px;
-        animation-name: explodePluses;
-        animation-delay: var(--explosionDelay);
-        animation-duration: var(--explosionDuration);
-        animation-timing-function: var(--explosionTiming);
-    } 
-    
-    if(votingExplosionAnimation == "animacja2")
-    {
-        .wykopxs_vote_animation 
+        .wykopxs_vote_animation
         {
-            animation-name: explodePluses, explodePlusesAnimacja2;
-        } 
-    } 
-    else if(votingExplosionAnimation == "animacja3")
-    {
-        .wykopxs_vote_animation 
+            opacity: 0;
+            cursor: pointer;
+            font-size: 12rem;
+            font-weight: bolder;
+            position: absolute;
+            top: -10px;
+            animation-name: explodePluses;
+            animation-delay: var(--explosionDelay);
+            animation-duration: var(--explosionDuration);
+            animation-timing-function: var(--explosionTiming);
+        }
+        
+        
+        /* plusy */
+        .wykopxs_vote_animation.wykopxs_green
         {
-            animation-name: explodePluses, explodePlusesAnimacja3;
-        } 
-    } 
-    
-    /* plusy */
-    .wykopxs_vote_animation.wykopxs_green
-    {
-        color: var(--green)!important;
-    /*  text-shadow: 0px 0px 2px var(--green); */
-    } 
-  
-    .wykopxs_vote_animation.wykopxs_golden
-    {
-        font-size: 35rem;
-        color: var(--golden)!important;
-        text-shadow: 0px 0px 5px var(--golden);
-    } 
+            color: var(--green)!important;
+        /*  text-shadow: 0px 0px 2px var(--green); */
+        }
 
-    /* minusy */
-    .wykopxs_vote_animation.wykopxs_red
-    {
-        color: var(--red)!important;
-    } 
+        .wykopxs_vote_animation.wykopxs_golden
+        {
+            font-size: 35rem;
+            color: var(--golden)!important;
+            text-shadow: 0px 0px 5px var(--golden);
+        } 
+
+        /* minusy */
+        .wykopxs_vote_animation.wykopxs_red
+        {
+            color: var(--red)!important;
+        }
+    
+
+        
+        @keyframes explodePluses
+        {
+            0%      { transform: translate3d(0, 0, 0); opacity: 0; } 
+            12%     { opacity: 0.2; } 
+            13%     { opacity: 1; } 
+            70%     { opacity: 1; } 
+            90%     { opacity: 0.4; } 
+            100%    { transform: translate3d(var(--position_x), var(--position_y), var(--position_z)); opacity: 0; } 
+        } 
+        
+        if(votingExplosionAnimation == "animacja2")
+        {
+            .wykopxs_vote_animation 
+            {
+                animation-name: explodePluses, explodePlusesAnimacja2;
+            }
+            
+            @eyframes explodePlusesAnimacja2
+            {
+                0%      { scale: 60%;   } 
+                12%     { scale: 60%;   } 
+                13%     { scale: 60%;   } 
+                70%     { scale: 60%;   } 
+                90%     { scale: 120%;  } 
+                100%    { scale: 400%;  } 
+            }
+        } 
+        else if(votingExplosionAnimation == "animacja3")
+        {
+            .wykopxs_vote_animation 
+            {
+                animation-name: explodePluses, explodePlusesAnimacja3;
+            }
+            @keyframes explodePlusesAnimacja3
+            {
+                0%      { scale: 60%;   } 
+                12%     { scale: 60%;   } 
+                13%     { scale: 60%;   } 
+                70%     { scale: 60%;   } 
+                90%     { scale: 120%;  } 
+                100%    { scale: 400%;  } 
+            }
+        }
+    }
+    
+
     
     
-    @keyframes explodePluses
-    {
-        0%      { transform: translate3d(0, 0, 0); opacity: 0; } 
-        12%     { opacity: 0.2; } 
-        13%     { opacity: 1; } 
-        70%     { opacity: 1; } 
-        90%     { opacity: 0.4; } 
-        100%    { transform: translate3d(var(--position_x), var(--position_y), var(--position_z)); opacity: 0; } 
-    } 
-    @eyframes explodePlusesAnimacja2
-    {
-        0%      { scale: 60%;   } 
-        12%     { scale: 60%;   } 
-        13%     { scale: 60%;   } 
-        70%     { scale: 60%;   } 
-        90%     { scale: 120%;  } 
-        100%    { scale: 400%;  } 
-    } 
     
-    @keyframes explodePlusesAnimacja3
-    {
-        0%      { scale: 60%;   } 
-        12%     { scale: 60%;   } 
-        13%     { scale: 60%;   } 
-        70%     { scale: 60%;   } 
-        90%     { scale: 120%;  } 
-        100%    { scale: 400%;  } 
-    } 
     
 
         
@@ -19479,16 +19756,23 @@ https://wykop.pl/moje/
     }
 }
     
+
+
 @-moz-document url-prefix("https://wykop.pl"), url-prefix("http://wykopx.pl")
 {    
+    
+         
     // VARIABLES
+    :root
+    {
+        versor = "style"; // "style", "blank", "block"
+        version = "2.49";   
+        // xblocker = "2.49"
+    }
     
-    versor = "style"; // "style", "blank", "block"
-    version = "2.48";   
-    // xblocker = 2.49
     
-    /* Wykop XS Settings  */
-    body 
+    /* Wykop XS Settings  settings. */
+    head 
     { 
         --versor:       versor;
         --version:      version;
@@ -19518,53 +19802,110 @@ https://wykop.pl/moje/
         --observedTagsInRightSidebarUpdateInterval: observedTagsInRightSidebarUpdateInterval; 
         --observedTagsInRightSidebarSortAlphabetically: observedTagsInRightSidebarSortAlphabetically;
 
-        --fixScrollingAndGDPRAlertRemoveJS: fixScrollingAndGDPRAlertRemoveJS;
-    } 
 
-   
+
+
+        --removeAnnoyancesEnable:                   removeAnnoyancesEnable;
+        if(removeAnnoyancesEnable)
+        {
+            --removeAnnoyancesIframes:              removeAnnoyancesIframes;
+            --removeAnnoyancesScripts:              removeAnnoyancesScripts;
+            --removeAnnoyancesAds:                  removeAnnoyancesAds;
+            --removeAnnoyancesGDPR:                 removeAnnoyancesGDPR;
+        }
+
+
+        --kraweznikEnable:                          kraweznikEnable;
+        if(kraweznikEnable)
+        {
+            --filterUserCommentsEnable:             filterUserCommentsEnable;
+
+            --mirkoukrywaczEnable:                  mirkoukrywaczEnable;
+            if(mirkoukrywaczEnable == 1)
+            {
+                --mirkoukrywaczMinimizeEntries:     mirkoukrywaczMinimizeEntries;
+                --mirkoukrywaczMinimizeComments:    mirkoukrywaczMinimizeComments;
+                --mirkoukrywaczHideEntries:         mirkoukrywaczHideEntries;
+                --mirkoukrywaczHideComments:        mirkoukrywaczHideComments;
+                --mirkoukrywaczHideLinks:           mirkoukrywaczHideLinks;
+                --mirkoukrywaczSaveEntries:         mirkoukrywaczSaveEntries;
+                --mirkoukrywaczSaveComments:        mirkoukrywaczSaveComments;
+            }
+            
+            --textsaverEnable:                      textsaverEnable;
+            if(textsaverEnable == 1)
+            {
+                --textsaverSaveEntries:             textsaverSaveEntries;
+                --textsaverSaveComments:            textsaverSaveComments;
+            }
+
+            --notatkowatorEnable:                   notatkowatorEnable;
+            if(notatkowatorEnable == 1)
+            {
+                --notatkowatorUpdateInterval:       notatkowatorUpdateInterval;      // 0 ... 120
+                --notatkowatorVerticalBar:          notatkowatorVerticalBar;         // 1 || 0
+                --notatkowatorStyle:                notatkowatorStyle;               // string "pod_avatarem" "obok_nicka"
+            }
+        }
+        
+
+        --infoboxEnable:                            infoboxEnable;
+        if(infoboxEnable == 1)
+        {
+            --infoboxUserBannedEmoji:               infoboxUserBannedEmoji;
+            --infoboxUserBannedInfo:                infoboxUserBannedInfo;
+            --infoboxUserBannedInfoOnProfilePage:   infoboxUserBannedInfoOnProfilePage;
+            --infoboxUserMemberSince:               infoboxUserMemberSince;
+            --infoboxUserSummaryFollowers:          infoboxUserSummaryFollowers;
+            --infoboxUserSummaryActivity:           infoboxUserSummaryActivity; 
+        }
+        
+        
+        --checkLinkVotesEnable:                     checkLinkVotesEnable;
+        if(checkLinkVotesEnable)
+        {
+            --checkLinkVotesPerHour:                checkLinkVotesPerHour             
+            --checkLinkCommentsPerHour:             checkLinkCommentsPerHour             
+        }
+        
+        --checkEntryPlusesEnable:                   checkEntryPlusesEnable;
+        if(checkEntryPlusesEnable)
+        {
+            --checkEntryPlusesPerMinute:            checkEntryPlusesPerMinute;      
+            --checkEntryCommentsPerHour:            checkEntryCommentsPerHour;      
+            --checkEntryPlusesForVotingGame:        checkEntryPlusesForVotingGame;
+        }
+
+        --votingExplosionEnable                     votingExplosionEnable
+
+    }                                                    
                                                                     
                                                                     
-                                                                    
-    if(topNavHamburgerHoverMinimize == 1)                   { body {  --topNavHamburgerHoverMinimize: "true"; }}
-
-    if(notatkowatorEnable == 1)                             { body {  --notatkowatorUpdateInterval: notatkowatorUpdateInterval; }} 
-    if(mirkoukrywaczEnable == 1)                            { body {  --mirkoukrywaczEnable: "true"; }}
-
-    if(tabTitleEnabled == 1)                                { body {  --tabTitleEnabled: "true"; }}
-    if(tabTitleRemoveWykopPL == 1)                          { body {  --tabTitleRemoveWykopPL: "true"; }}
-    if(tabFaviconEnabled == 1)                              { body {  --tabFaviconEnabled: "true"; }}
-    if(tabChangeOnlyOnHiddenState == 1)                     { body {  --tabChangeOnlyOnHiddenState: "true"; }}
-    if(votingExplosion == 1)                                { body {  --votingExplosion: "true"; }}
-    if(tagHeaderEditable == 1)                              { body {  --tagHeaderEditable: "true"; }} 
-    if(linksAnalyzerEnable == 1)                            { body {  --linksAnalyzerEnable: "true"; }}
     
-    
-    if(tabTitleShowNotificationsEnabled == 1)               { body {  --tabTitleShowNotificationsEnabled: "true"; }}
-    if(tabTitleShowNotificationsCountSeparated == 1)        { body {  --tabTitleShowNotificationsCountSeparated: "true"; }}
-
-    if(allowToDownloadImage == 1)                           { body {  --allowToDownloadImage: "true"; }} 
-    if(fixCaseSensitiveTagsRedirection == 1)                { body {  --fixCaseSensitiveTagsRedirection: "true"; }} 
-    if(refreshOrRedirectOnHomeButtonClick == 1)             { body {  --refreshOrRedirectOnHomeButtonClick: "true"; }} 
-    if(tabTitleShowNotificationsCountTagsNewLink == 1)      { body {  --tabTitleShowNotificationsCountTagsNewLink: "true"; }} 
-    if(tabTitleShowNotificationsCountTagsNewEntry == 1)     { body {  --tabTitleShowNotificationsCountTagsNewEntry: "true"; }} 
-    if(tabTitleShowNotificationsCountPM == 1)               { body {  --tabTitleShowNotificationsCountPM: "true"; }} 
-    if(tabTitleShowNotificationsCountEntries == 1)          { body {  --tabTitleShowNotificationsCountEntries: "true"; }} 
-    if(middleClickOpensNotificationsInNewTab == 1)          { body {  --middleClickOpensNotificationsInNewTab: "true"; }} 
-    if(refreshOrRedirectOnMicroblogButtonClick == 1)        { body {  --refreshOrRedirectOnMicroblogButtonClick: "true"; }} 
-    
-    if(categoryRedirectToMicroblogButtonEnable == 1)        { body {  --categoryRedirectToMicroblogButtonEnable: "true"; 
+    if(topNavHamburgerHoverMinimize == 1)                   { head {  --topNavHamburgerHoverMinimize:               "true"; }}
+    if(tabTitleEnabled == 1)                                { head {  --tabTitleEnabled:                            "true"; }}
+    if(tabTitleRemoveWykopPL == 1)                          { head {  --tabTitleRemoveWykopPL:                      "true"; }}
+    if(tabFaviconEnabled == 1)                              { head {  --tabFaviconEnabled:                          "true"; }}
+    if(tabChangeOnlyOnHiddenState == 1)                     { head {  --tabChangeOnlyOnHiddenState:                 "true"; }}
+    if(tagHeaderEditable == 1)                              { head {  --tagHeaderEditable:                          "true"; }} 
+    if(linksAnalyzerEnable == 1)                            { head {  --linksAnalyzerEnable:                        "true"; }}
+    if(tabTitleShowNotificationsEnabled == 1)               { head {  --tabTitleShowNotificationsEnabled:           "true"; }}
+    if(tabTitleShowNotificationsCountSeparated == 1)        { head {  --tabTitleShowNotificationsCountSeparated:    "true"; }}
+    if(allowToDownloadImage == 1)                           { head {  --allowToDownloadImage:                       "true"; }} 
+    if(fixCaseSensitiveTagsRedirection == 1)                { head {  --fixCaseSensitiveTagsRedirection:            "true"; }} 
+    if(refreshOrRedirectOnHomeButtonClick == 1)             { head {  --refreshOrRedirectOnHomeButtonClick:         "true"; }} 
+    if(tabTitleShowNotificationsCountTagsNewLink == 1)      { head {  --tabTitleShowNotificationsCountTagsNewLink:  "true"; }} 
+    if(tabTitleShowNotificationsCountTagsNewEntry == 1)     { head {  --tabTitleShowNotificationsCountTagsNewEntry: "true"; }} 
+    if(tabTitleShowNotificationsCountPM == 1)               { head {  --tabTitleShowNotificationsCountPM:           "true"; }} 
+    if(tabTitleShowNotificationsCountEntries == 1)          { head {  --tabTitleShowNotificationsCountEntries:      "true"; }} 
+    if(middleClickOpensNotificationsInNewTab == 1)          { head {  --middleClickOpensNotificationsInNewTab:      "true"; }} 
+    if(refreshOrRedirectOnMicroblogButtonClick == 1)        { head {  --refreshOrRedirectOnMicroblogButtonClick:    "true"; }} 
+    if(categoryRedirectToMicroblogButtonEnable == 1)        { head {  --categoryRedirectToMicroblogButtonEnable:    "true"; 
                                                                       --categoryRedirectToMicroblogButtonFilter: categoryRedirectToMicroblogButtonFilter;
                                                                    }
                                                             } 
 
-    if(notatkowatorEnable == 1)                             { body {  --notatkowatorEnable: notatkowatorEnable;             // 1/0
-                                                                      --notatkowatorVerticalBar: notatkowatorVerticalBar;  // 1 / 0
-                                                                      --notatkowatorStyle: notatkowatorStyle;               // string
-                                                                    } 
-                                                            }
-                                        
-     
-    
+
                                                             
     /* Wykop X Style version IN FOOTER */                                               
     body > section::after
