@@ -46,7 +46,7 @@
 	dayjs.extend(window.dayjs_plugin_relativeTime);
 	let loadTime = dayjs();
 
-	// user.username - nazwa zalogowanego uzytkownika
+	// user.username -> nazwa zalogowanego uzytkownika
 
 	let user = {
 		data: null,
@@ -75,7 +75,7 @@
 	let wykopxSettings = getComputedStyle(document.querySelector("head"));
 	let settings = {};
 
-	// boolean - domyslnie WŁĄCZONE bez Wykop X Style
+	// boolean — domyslnie WŁĄCZONE bez Wykop X Style
 
 	settings.WykopXSEnabled = wykopxSettings.getPropertyValue("--WykopXSEnabled") ? wykopxSettings.getPropertyValue("--WykopXSEnabled") === '1' : true;
 	if (settings.WykopXSEnabled == false) return true;
@@ -267,7 +267,7 @@
 	settings.homepagePinnedEntriesHideBelowLimit = parseFloat(wykopxSettings.getPropertyValue("--homepagePinnedEntriesHideBelowLimit")); // number
 
 
-	// boolean - domyslnie WŁĄCZONE bez Wykop X Style
+	// boolean — domyslnie WŁĄCZONE bez Wykop X Style
 	settings.hitsInTopNavJS = wykopxSettings.getPropertyValue("--hitsInTopNavJS") ? wykopxSettings.getPropertyValue("--hitsInTopNavJS") === '1' : true;
 	settings.quickLinksEnable = wykopxSettings.getPropertyValue("--quickLinksEnable") ? wykopxSettings.getPropertyValue("--quickLinksEnable") === '1' : true;
 	settings.myWykopInTopNavJS = wykopxSettings.getPropertyValue("--myWykopInTopNavJS") ? wykopxSettings.getPropertyValue("--myWykopInTopNavJS") === '1' : true;
@@ -798,7 +798,7 @@
 		let originalValue = tagHeaderEditable.textContent.toLowerCase();
 		tagHeaderEditable.contentEditable = "true";
 		tagHeaderEditable.className = "wykopx_quick_search";
-		tagHeaderEditable.setAttribute("data-wykopx-original-value", originalValue);
+		tagHeaderEditable.setAttribute("data-wykopx-original-value", originalValue); //todo dataset
 
 		let wykopx_quick_search = document.querySelector(".wykopx_quick_search");
 		if (originalValue != "") 
@@ -843,7 +843,7 @@
 
 
 
-	/* RIGHT SIDEBAR - DODAJ LISTE OBSERWOWANYCH TAGÓW */
+	/* RIGHT SIDEBAR — DODAJ LISTE OBSERWOWANYCH TAGÓW */
 	function addObservedTagsToRightSidebar()
 	{
 		let observedTagsArray = [];
@@ -855,19 +855,19 @@
 			checkLocalForageupdatedDate(localStorageObservedTags, getObservedTags, settings.observedTagsInRightSidebarUpdateInterval * 3600);
 
 			let section_html = `
-				<section class="wykopx_your_observed_tags custom-sidebar tags-sidebar" data-v-3f88526c="" data-v-89888658="" data-v-5d67dfc3="">
-					<header class="" data-v-3f88526c="" >
-						<h4 data-v-3f88526c="">Przejdź na #tag lub @profil</h4>
-					</header>
-					<div class="content wykopx_quick_search_container" data-v-3f88526c="">
-						<input type="text" class="wykopx_quick_search" placeholder="#wykopwnowymstylu" title="${promoString}" />
-					</div>
-					<header data-v-3f88526c="">
-						<h4 data-v-3f88526c="">Twoje obserwowane tagi</h4>
-					</header>
-					<div class="content" data-v-3f88526c="">
-						<section class="tags" data-v-89888658="" data-v-3f88526c="" >
-							<ul data-v-89888658="" data-v-3f88526c="">`;
+<section class="wykopx_your_observed_tags custom-sidebar tags-sidebar" data-v-3f88526c="" data-v-89888658="" data-v-5d67dfc3="">
+	<header class="" data-v-3f88526c="" >
+		<h4 data-v-3f88526c="">Przejdź na #tag lub @profil</h4>
+	</header>
+	<div class="content wykopx_quick_search_container" data-v-3f88526c="">
+		<input type="text" class="wykopx_quick_search" placeholder="#wykopwnowymstylu" title="${promoString}" />
+	</div>
+	<header data-v-3f88526c="">
+		<h4 data-v-3f88526c="">Twoje obserwowane tagi</h4>
+	</header>
+	<div class="content" data-v-3f88526c="">
+		<section class="tags" data-v-89888658="" data-v-3f88526c="" >
+			<ul data-v-89888658="" data-v-3f88526c="">`;
 
 			localStorageObservedTags.iterate(function (value, key, iterationNumber)
 			{
@@ -880,7 +880,7 @@
 			})
 				.then(function ()
 				{
-					// console.log("then - observedTagsArray:")
+					// console.log("then — observedTagsArray:")
 					// console.log(observedTagsArray);
 					if (settings.observedTagsInRightSidebarSortAlphabetically)
 					{
@@ -889,16 +889,15 @@
 					observedTagsArray.forEach(function (tag)
 					{
 						section_html += `
-						<li data-v-89888658="" data-v-3f88526c="" title="Przejdź na tag #${tag}  ${promoString}">
-							<span data-v-89888658="" data-v-3f88526c="">#</span><a data-v-89888658="" href="https://go.wykopx.pl/#${tag}" class="hybrid" data-v-3f88526c="">${tag}</a>
-						</li>`;
+				<li data-v-89888658="" data-v-3f88526c="" title="Przejdź na tag #${tag}  ${promoString}">
+					<span data-v-89888658="" data-v-3f88526c="">#</span><a data-v-89888658="" href="https://go.wykopx.pl/#${tag}" class="hybrid" data-v-3f88526c="">${tag}</a>
+				</li>`;
 					});
-
-
-					section_html += `</ul>
-							</section>
-						</div>
-					</section>`;
+					section_html += `
+			</ul>
+		</section>
+	</div>
+</section>`;
 					// $(section_html).insertBefore(`section.sidebar > section:first-child`);
 
 
@@ -1085,7 +1084,7 @@
 	{
 		/*
 			this -> clicked element == event.target
-			PointerEvent - even object
+			PointerEvent — even object
 		*/
 		//document.body.dataset[cssFilterName] = this.value;	//	<body data-wxs_switch_nsfw="1"]
 		if (this.value == 0) document.body.dataset[cssFilterName] = "OFF_0";	//	<body data-wxs_switch_nsfw="OFF"]
@@ -1218,7 +1217,7 @@
 		// filterType // "userComments" / "userReplies"
 		/*
 		this -> clicked element == event.target
-		PointerEvent - even object
+		PointerEvent — even object
 		*/
 
 		// alert(filterType);
@@ -1266,62 +1265,55 @@
 
 			css = `.wxs_menu_action_box > .wxs_filter_off { display: flex!important; }
 
-		/* odfiltrowane znaleziska */
-		body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .home - page, .observed - page, .profile - page, .tag - page, .hits - page, .upcoming - page) > section section.stream > div.content > section.link - block: has(article > div.content > section.info a.username[href = "/ludzie/${filterUsername}"])
-		{
-			border: 1px solid ${filterUserGender == "f" ? "var(--rozowyPasek1, rgba(192, 72, 167, 1))" : "var(--niebieskiPasek1, rgba(67, 131, 175, 1))"} !important;
-		}
+	/* odfiltrowane znaleziska */
+	body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .hits-page, .upcoming-page) > section section.stream > div.content > section.link-block:has(article > div.content > section.info a.username[href="/ludzie/${filterUsername}"])
+	{
+		border: 1px solid ${filterUserGender == "f" ? "var(--rozowyPasek1, rgba(192, 72, 167, 1))" : "var(--niebieskiPasek1, rgba(67, 131, 175, 1))"} !important;
+	}
 
 
-		/* strona wpisu - filtrowane komentarze */
-		body > section > div.main - content > main.main > section > div.content > section.entry - page > section.entry > section.entry - comments > div.content > section.entry.detailed > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"]),
+	/* strona wpisu-filtrowane komentarze */
+	body > section > div.main-content > main.main > section > div.content > section.entry-page > section.entry > section.entry-comments > div.content > section.entry.detailed > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"]),
 
-			/* strona streamu wpisów - wpisy filtrowanego użytkownika */
-			body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .observed - page, .profile - page, .tag - page, .microblog - page) > section section.stream > div.content > section.entry: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"]),
+	/* strona streamu wpisów-wpisy filtrowanego użytkownika */
+	body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"]),
 
-				/* strona streamu wpisów - komentarze filtrowanego użytkownika */
-				body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .observed - page, .profile - page, .tag - page, .microblog - page) > section section.stream > div.content > section.entry > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"]),
+	/* strona streamu wpisów-komentarze filtrowanego użytkownika */
+	body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"]),
 
-					/* strona znaleziska - komentarze i subkomentarze filtrowanego użytkownika */
-					body > section > div.main - content > main.main > section > div.content > section.link - page > section.link > section.comments > section.stream.link - comments > div.content section.entry: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"])
-		{
-			border: 1px solid ${filterUserGender == "f" ? "var(--rozowyPasek1, rgba(192, 72, 167, 1))" : "var(--niebieskiPasek1, rgba(67, 131, 175, 1))"} !important;
-		}
-
-
+	/* strona znaleziska-komentarze i subkomentarze filtrowanego użytkownika */
+	body > section > div.main-content > main.main > section > div.content > section.link-page > section.link > section.comments > section.stream.link-comments > div.content section.entry:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"])
+	{
+		border: 1px solid ${filterUserGender == "f" ? "var(--rozowyPasek1, rgba(192, 72, 167, 1))" : "var(--niebieskiPasek1, rgba(67, 131, 175, 1))"} !important;
+	}
 
 
+	/* strony ze znaleziskami oprócz głównej-znaleziska autora, odfiltrowwanie znalezisk innych użytkowników */
+	body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .hits-page, .upcoming-page) > section section.stream > div.content > section.link-block:not(:has(article > div.content > section.info a.username[href="/ludzie/${filterUsername}"])),
 
-		/* strony ze znaleziskami oprócz głównej - znaleziska autora, odfiltrowwanie znalezisk innych użytkowników */
-		body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .home - page, .observed - page, .profile - page, .tag - page, .hits - page, .upcoming - page) > section section.stream > div.content > section.link - block: not(: has(article > div.content > section.info a.username[href = "/ludzie/${filterUsername}"])),
+	/* strona główna-znaleziska autora, odfiltrowwanie znalezisk innych użytkowników a takze wpisow przypietych przez moderacje */
+	body > section > div.main-content > main.main > section > div.content > section.home-page > section section.stream > div.content > section:is(.link-block:not(:has(article > div.content > section.info a.username[href="/ludzie/${filterUsername}"])), .entry:not(:has(> article > header > div.right > div > div.tooltip-slot > span > a.username[href="/ludzie/${filterUsername}"]))),
 
-			/* strona główna - znaleziska autora, odfiltrowwanie znalezisk innych użytkowników a takze wpisow przypietych przez moderacje */
-			body > section > div.main - content > main.main > section > div.content > section.home - page > section section.stream > div.content > section: is(.link - block: not(: has(article > div.content > section.info a.username[href = "/ludzie/${filterUsername}"])), .entry: not(: has(> article > header > div.right > div > div.tooltip - slot > span > a.username[href = "/ludzie/${filterUsername}"]))),
+	/* strona wpisu-ukrycie komentarzy nie-filtrowanych użytkowników */
+	body > section > div.main-content > main.main > section > div.content > section.entry-page > section.entry > section.entry-comments > div.content > section.entry.detailed > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:not(:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"])),
 
-				/* strona wpisu - ukrycie komentarzy nie-filtrowanych użytkowników */
-				body > section > div.main - content > main.main > section > div.content > section.entry - page > section.entry > section.entry - comments > div.content > section.entry.detailed > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: not(: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"])),
+	/* strona streamu wpisów-ukrycie wpisów w ktorych nie ma wypowiedzi filtrowanego uzytkownika-ani wpis, ani komentarz*/
+	body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:not(:has(article > header > div.right a.username[href="/ludzie/${filterUsername}"])),
 
-					/* strona streamu wpisów - ukrycie wpisów w ktorych nie ma wypowiedzi filtrowanego uzytkownika - ani wpis, ani komentarz*/
-					body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .observed - page, .profile - page, .tag - page, .microblog - page) > section section.stream > div.content > section.entry: not(: has(article > header > div.right a.username[href = "/ludzie/${filterUsername}"])),
+	/* strona streamu wpisów-komentarze pod wpisami na streamach które zawierają komentarz filtrowanego użytkownika */
+	body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:has(article > header > div.right a.username[href="/ludzie/${filterUsername}"]) > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:not(:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"])),
 
-						/* strona streamu wpisów - komentarze pod wpisami na streamach które zawierają komentarz filtrowanego użytkownika */
-						body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .observed - page, .profile - page, .tag - page, .microblog - page) > section section.stream > div.content > section.entry: has(article > header > div.right a.username[href = "/ludzie/${filterUsername}"]) > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: not(: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"])),
+	/* strona streamu wpisów-komentarze pod wpisami na streamach które zawierają komentarz filtrowanego użytkownika */
+	body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:has(article > header > div.right a.username[href="/ludzie/${filterUsername}"]) > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:not(:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"])),
 
-							/* strona streamu wpisów - komentarze pod wpisami na streamach które zawierają komentarz filtrowanego użytkownika */
-							body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .observed - page, .profile - page, .tag - page, .microblog - page) > section section.stream > div.content > section.entry: has(article > header > div.right a.username[href = "/ludzie/${filterUsername}"]) > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: not(: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"])),
+	/* strona znaleziska-komentarze bez subkomentarzy filtrowanego użytkownika */
+	body > section > div.main-content > main.main > section > div.content > section.link-page > section.link > section.comments > section.stream.link-comments > div.content > section.entry:not(:has(div.right > div a.username[href="/ludzie/${filterUsername}"])),
 
-								/* strona znaleziska - komentarze bez subkomentarzy filtrowanego użytkownika */
-								body > section > div.main - content > main.main > section > div.content > section.link - page > section.link > section.comments > section.stream.link - comments > div.content > section.entry: not(: has(div.right > div a.username[href = "/ludzie/${filterUsername}"])),
-
-									/* strona znaleziska - subkomentarze nie-filtrowanego użytkownika */
-									body > section > div.main - content > main.main > section > div.content > section.link - page > section.link > section.comments > section.stream.link - comments > div.content > section.entry > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: not(: has(> article > header > div.right > div a.username[href = "/ludzie/${filterUsername}"]))
-		{
-					${filterStyles[filterStyleIndex]}
-		}
-
-
-
-		`;
+	/* strona znaleziska-subkomentarze nie-filtrowanego użytkownika */
+	body > section > div.main-content > main.main > section > div.content > section.link-page > section.link > section.comments > section.stream.link-comments > div.content > section.entry > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:not(:has(> article > header > div.right > div a.username[href="/ludzie/${filterUsername}"]))
+	{
+				${filterStyles[filterStyleIndex]}
+	}`;
 		}
 		else if (filterType == "userReplies")
 		{
@@ -1330,70 +1322,64 @@
 			css = `.wxs_menu_action_box > .wxs_filter_off { display: flex!important; }
 
 		/* WYRÓŻNIENIE KOMENTARZY FILTROWANEGO UŻYTKOWNIKA */
-		/* strona wpisu - filtrowane komentarze */
-		body > section > div.main - content > main.main > section > div.content > section.entry - page > section.entry > section.entry - comments > div.content > section.entry.detailed > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"]),
+		/* strona wpisu-filtrowane komentarze */
+		body > section > div.main-content > main.main > section > div.content > section.entry-page > section.entry > section.entry-comments > div.content > section.entry.detailed > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"]),
 
-			/* strona streamu wpisów - wpisy filtrowanego użytkownika */
-			body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .observed - page, .profile - page, .tag - page, .microblog - page) > section section.stream > div.content > section.entry: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"]),
+		/* strona streamu wpisów-wpisy filtrowanego użytkownika */
+		body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"]),
 
-				/* strona streamu wpisów - komentarze filtrowanego użytkownika */
-				body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .observed - page, .profile - page, .tag - page, .microblog - page) > section section.stream > div.content > section.entry > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"]),
+		/* strona streamu wpisów-komentarze filtrowanego użytkownika */
+		body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"]),
 
-					/* strona znaleziska - komentarze i subkomentarze filtrowanego użytkownika */
-					body > section > div.main - content > main.main > section > div.content > section.link - page > section.link > section.comments > section.stream.link - comments > div.content section.entry: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"])
-
+		/* strona znaleziska-komentarze i subkomentarze filtrowanego użytkownika */
+		body > section > div.main-content > main.main > section > div.content > section.link-page > section.link > section.comments > section.stream.link-comments > div.content section.entry:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"])
 		{
 			border: 2px solid ${filterUserGender == "f" ? "var(--rozowyPasek1, rgba(192, 72, 167, 1))" : "var(--niebieskiPasek1, rgba(67, 131, 175, 1))"} !important;
 		}
 
 
 		/* WYRÓŻNIENIE ODPOWIEDZI Z OZNACZONYM FILTROWANYM UŻYTKOWNIKIEM  */
-		/* strona wpisu - filtrowane komentarze */
-		body > section > div.main - content > main.main > section > div.content > section.entry - page > section.entry > section.entry - comments > div.content > section.entry.detailed > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: has(> article > div.edit - wrapper > div.content > section.entry - content > div.wrapper > a[href = "/ludzie/${filterUsername}"]),
+		/* strona wpisu-filtrowane komentarze */
+		body > section > div.main-content > main.main > section > div.content > section.entry-page > section.entry > section.entry-comments > div.content > section.entry.detailed > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href="/ludzie/${filterUsername}"]),
 
 
-			/* strona streamu wpisów - komentarze z oznaczonym wołaniem filtrowanego użytkownika */
-			body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .observed - page, .profile - page, .tag - page, .microblog - page) > section section.stream > div.content > section.entry > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: has(> article > div.edit - wrapper > div.content > section.entry - content > div.wrapper a[href = "/ludzie/${filterUsername}"]),
+		/* strona streamu wpisów-komentarze z oznaczonym wołaniem filtrowanego użytkownika */
+		body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper a[href="/ludzie/${filterUsername}"]),
 
-				/* strona znaleziska - komentarze i subkomentarze filtrowanego użytkownika */
-				body > section > div.main - content > main.main > section > div.content > section.link - page > section.link > section.comments > section.stream.link - comments > div.content section.entry: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"])
-
+		/* strona znaleziska-komentarze i subkomentarze filtrowanego użytkownika */
+		body > section > div.main-content > main.main > section > div.content > section.link-page > section.link > section.comments > section.stream.link-comments > div.content section.entry:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"])
 		{
 			border: 2px solid var(--nicknameOrange1, rgba(255, 89, 23, 1))!important;
 		}
 
 
 		/* wyróżnienie tagowanego w odpowiedzi */
-		section.entry.reply > article > div.edit - wrapper > div.content > section.entry - content > div.wrapper > a[href = "/ludzie/${filterUsername}"]
+		section.entry.reply > article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href="/ludzie/${filterUsername}"]
 		{
-			background - color: var(--whiteOpacity1);
+			background-color: var(--whiteOpacity1);
 			padding: 0px 5px 0px 5px;
-			margin - right: 5px;
-			border - bottom: 1px solid;
-			font - weight: bolder!important;
+			margin-right: 5px;
+			border-bottom: 1px solid;
+			font-weight: bolder!important;
 		}
 
 
 		/* UKRYCIE KOMENTARZY, KTÓRE NIE SĄ FILTROWANEGO UŻYTKOWNIKA ANI NIE WOŁAJĄ FILTROWANEGO UŻYTKOWNIKA */
 
-		/* strona wpisu - ukrycie komentarzy nie-filtrowanych użytkowników */
-		body > section > div.main - content > main.main > section > div.content > section.entry - page > section.entry > section.entry - comments > div.content > section.entry.detailed > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: not(: has(> article > header a.username[href = "/ludzie/${filterUsername}"], > article > div.edit - wrapper > div.content > section.entry - content > div.wrapper a[href = "/ludzie/${filterUsername}"])),
+		/* strona wpisu-ukrycie komentarzy nie-filtrowanych użytkowników */
+		body > section > div.main-content > main.main > section > div.content > section.entry-page > section.entry > section.entry-comments > div.content > section.entry.detailed > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:not(:has(> article > header a.username[href="/ludzie/${filterUsername}"], > article > div.edit-wrapper > div.content > section.entry-content > div.wrapper a[href="/ludzie/${filterUsername}"])),
 
-			/* strona streamu wpisów - ukrycie wpisów i komentarzy które nie są wypowiedziami filtrowanego uzytkownika ani nie zawierają w treści otagowanego filtrowanego użytkownika */
-			body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .observed - page, .profile - page, .tag - page, .microblog - page) > section section.stream > div.content > section.entry: not(: has(div > a[href = "/ludzie/${filterUsername}"])),
+		/* strona streamu wpisów-ukrycie wpisów i komentarzy które nie są wypowiedziami filtrowanego uzytkownika ani nie zawierają w treści otagowanego filtrowanego użytkownika */
+		body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:not(:has(div > a[href="/ludzie/${filterUsername}"])),
 
-				/* strona znaleziska - komentarze bez subkomentarzy filtrowanego użytkownika */
-				body > section > div.main - content > main.main > section > div.content > section.link - page > section.link > section.comments > section.stream.link - comments > div.content > section.entry: not(: has(a.username[href = "/ludzie/${filterUsername}"])),
+		/* strona znaleziska-komentarze bez subkomentarzy filtrowanego użytkownika */
+		body > section > div.main-content > main.main > section > div.content > section.link-page > section.link > section.comments > section.stream.link-comments > div.content > section.entry:not(:has(a.username[href="/ludzie/${filterUsername}"])),
 
-					/* strona znaleziska - subkomentarze nie-filtrowanego użytkownika */
-					body > section > div.main - content > main.main > section > div.content > section.link - page > section.link > section.comments > section.stream.link - comments > div.content > section.entry > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: not(: has(a.username[href = "/ludzie/${filterUsername}"]))
+		/* strona znaleziska-subkomentarze nie-filtrowanego użytkownika */
+		body > section > div.main-content > main.main > section > div.content > section.link-page > section.link > section.comments > section.stream.link-comments > div.content > section.entry > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:not(:has(a.username[href="/ludzie/${filterUsername}"]))
 		{
 					${filterStyles[filterStyleIndex]}
-		}
-
-
-
-		`;
+		}`;
 		}
 
 		console.log("css");
@@ -1438,7 +1424,7 @@
 		}
 	}
 
-	// UKRYWANIE WPISU I KOMENTARZY - DODAWANIE DO MIRKOUKRYWACZA
+	// UKRYWANIE WPISU I KOMENTARZY-DODAWANIE DO MIRKOUKRYWACZA
 	function hideThisEntry(PointerEvent)
 	{
 		console.log("--- hide this, this:")
@@ -1517,7 +1503,7 @@
 			}
 
 			const data = await response.json();
-			// console.log("getWykopAPIData - data from API: ")
+			// console.log("getWykopAPIData-data from API: ")
 			// console.log(data)
 			return data;
 
@@ -1568,7 +1554,7 @@
 	waitForKeyElements("section.entry:has(> article), section.link-block:not(.premium-pub, .market-pub):has(> section > article)", sectionObjectDetected, false);
 	function sectionObjectDetected(jNodeSectionElement)
 	{
-		// console.log(`waitForKeyElements("section is(.entry > article, .link - block: has(> section > article)): not(.deleted)"`)
+		// console.log(`waitForKeyElements("section:is(.entry > article, .link-block:has(> section > article)):not(.deleted)"`)
 		const sectionObjectElement = jNodeSectionElement[0];
 		sectionObjectIntersectionObserver.observe(sectionObjectElement);
 	}
@@ -1610,7 +1596,7 @@
 			if (!sectionObjectElement.dataset.wxs_first_load_time) 
 			{
 				// data-wxs_first_load_time="2024-12-12..."
-				sectionObjectElement.dataset.wxs_first_load_time = dayjs().valueOf(); // data unix kiedy przybyly ostatnio odswiezone plusy - tutaj czas załadowania strony
+				sectionObjectElement.dataset.wxs_first_load_time = dayjs().valueOf(); // data unix kiedy przybyly ostatnio odswiezone plusy-tutaj czas załadowania strony
 				resource = sectionObjectElement.__vue__.item.resource;
 
 
@@ -1672,7 +1658,7 @@
 					}
 					if (settings.checkLinkCommentsPerHour && !sectionObjectElement.dataset.wxs_first_load_comments_count)
 					{
-						if (!sectionObjectElement.dataset.wxs_first_load_time) sectionObjectElement.dataset.wxs_first_load_time = dayjs().valueOf(); // data unix kiedy przybyly ostatnio odswiezone plusy - tutaj czas załadowania strony
+						if (!sectionObjectElement.dataset.wxs_first_load_time) sectionObjectElement.dataset.wxs_first_load_time = dayjs().valueOf(); // data unix kiedy przybyly ostatnio odswiezone plusy-tutaj czas załadowania strony
 						sectionObjectElement.dataset.wxs_first_load_comments_count = sectionObjectElement.__vue__.item.comments.count;
 					}
 				}
@@ -1815,15 +1801,15 @@
 
 						if (settings.filterUserComments || settings.filterUserReplies)
 						{
-							wxs_menu_action_box_css += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_filter_off" title=" Wykop X - wyłącz filtrowanie \n \n Pokaż normalnie wszystkie odfiltrowane komentarze / znaleziska \n \n ">❌ Wyłącz filtr</button>`;
+							wxs_menu_action_box_css += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_filter_off" title=" Wykop X — wyłącz filtrowanie \n \n Pokaż normalnie wszystkie odfiltrowane komentarze / znaleziska \n \n ">❌ Wyłącz filtr</button>`;
 
 							if (settings.filterUserComments)
 							{
-								wxs_menu_action_box_css += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_filter_on_user" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 - 𝗳𝗶𝗹𝘁𝗿𝗼𝘄𝗮𝗻𝗶𝗲 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝘆/𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸	\n \n Na stronach zawierających 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 (pod wpisami i pod znaleziskami) \n odfiltrowuje 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 innych użytkowników. \n Pozostawia widoczne wyłącznie 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 tego użytkownika. \n \n Na stronach zawierających 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 (np. główna, wykopalisko) \n odfiltrowuje 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 innych użytkowników. \n Pozostawia widoczne wyłącznie 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 tego użytkownika. \n \n \n Klikając przełączasz tryb filtrowania: \n - Filtr 1: całkowicie ukrywa odfiltrowane komentarze \n - Filtr 2: odfiltrowane komentarze półprzezroczyste \n - Filtr 3: odfiltrowane komentarze czarno białe \n \n ">Filtruj</button>`;
+								wxs_menu_action_box_css += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_filter_on_user" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 — 𝗳𝗶𝗹𝘁𝗿𝗼𝘄𝗮𝗻𝗶𝗲 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝘆/𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸	\n \n Na stronach zawierających 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 (pod wpisami i pod znaleziskami) \n odfiltrowuje 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 innych użytkowników. \n Pozostawia widoczne wyłącznie 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 tego użytkownika. \n \n Na stronach zawierających 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 (np. główna, wykopalisko) \n odfiltrowuje 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 innych użytkowników. \n Pozostawia widoczne wyłącznie 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 tego użytkownika. \n \n \n Klikając przełączasz tryb filtrowania: \n — Filtr 1: całkowicie ukrywa odfiltrowane komentarze \n — Filtr 2: odfiltrowane komentarze półprzezroczyste \n — Filtr 3: odfiltrowane komentarze czarno białe \n \n ">Filtruj</button>`;
 							}
 							if (settings.filterUserReplies)
 							{
-								wxs_menu_action_box_css += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_filter_on_replies" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 - 𝗳𝗶𝗹𝘁𝗿𝗼𝘄𝗮𝗻𝗶𝗲 𝗱𝘆𝘀𝗸𝘂𝘀𝗷𝗶 𝗶 𝗼𝗱𝗽𝗼𝘄𝗶𝗲𝗱𝘇𝗶 \n \n Odfiltrowuje 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲, które nie dotyczą tego użytkownika.  \n \n  Nie ukrywa: \n - komentarzy tego użytkownika \n - odpowiedzi, które zawierają @wołanie tego użytkownika \n \n Klikając przełączasz tryb filtrowania: \n - Filtr 1: całkowicie ukrywa odfiltrowane komentarze \n - Filtr 2: odfiltrowane komentarze półprzezroczyste \n - Filtr 3: odfiltrowane komentarze czarno białe \n \n ">Filtruj @</button>`;
+								wxs_menu_action_box_css += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_filter_on_replies" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 — 𝗳𝗶𝗹𝘁𝗿𝗼𝘄𝗮𝗻𝗶𝗲 𝗱𝘆𝘀𝗸𝘂𝘀𝗷𝗶 𝗶 𝗼𝗱𝗽𝗼𝘄𝗶𝗲𝗱𝘇𝗶 \n \n Odfiltrowuje 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲, które nie dotyczą tego użytkownika.  \n \n  Nie ukrywa: \n — komentarzy tego użytkownika \n — odpowiedzi, które zawierają @wołanie tego użytkownika \n \n Klikając przełączasz tryb filtrowania: \n — Filtr 1: całkowicie ukrywa odfiltrowane komentarze \n — Filtr 2: odfiltrowane komentarze półprzezroczyste \n — Filtr 3: odfiltrowane komentarze czarno białe \n \n ">Filtruj @</button>`;
 							}
 
 
@@ -1832,18 +1818,18 @@
 						{
 							if (settings.textsaverSaveEntries || settings.textsaverSaveComments)
 							{
-								wxs_menu_action_box_css += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_save" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 - 𝘇𝗮𝗽𝗮𝗺𝗶𝗲̨𝘁𝗮𝗷 𝘁𝗿𝗲𝘀́𝗰́ \n \n Treść wybranego wpisu/komentarza zostanie zapisana lokalnie w Twojej przeglądarce. W przypadku późniejszej edycji treści lub usunięcia komentarza, zobaczysz odtworzoną zapisaną przez Wykop X wersję. \n \n ">Zapisz</button>`;
+								wxs_menu_action_box_css += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_save" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 — 𝘇𝗮𝗽𝗮𝗺𝗶𝗲̨𝘁𝗮𝗷 𝘁𝗿𝗲𝘀́𝗰́ \n \n Treść wybranego wpisu/komentarza zostanie zapisana lokalnie w Twojej przeglądarce. W przypadku późniejszej edycji treści lub usunięcia komentarza, zobaczysz odtworzoną zapisaną przez Wykop X wersję. \n \n ">Zapisz</button>`;
 							}
 						}
 						if (settings.mirkoukrywaczEnable)
 						{
 							if (settings.mirkoukrywaczHideComments || settings.mirkoukrywaczHideEntries || settings.mirkoukrywaczHideLinks)
 							{
-								wxs_menu_action_box_css += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_minimize" title="Wykop X Krawężnik - zwiń">[ — ]</button>
+								wxs_menu_action_box_css += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_minimize" title="Wykop X Krawężnik — zwiń">[ — ]</button>
 
-								<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_maximize" title="Wykop X Krawężnik - pokaż cały">[ + ]</button>
+								<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_maximize" title="Wykop X Krawężnik — pokaż cały">[ + ]</button>
 
-								<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_hide" title="Wykop X Mirkoukrywacz - ukryj"> Ukryj 🗙</button> `;
+								<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_hide" title="Wykop X Mirkoukrywacz — ukryj"> Ukryj 🗙</button> `;
 							}
 						}
 
@@ -1907,7 +1893,7 @@
 					// liczba komentarzy autora wpisu
 					if (resource == "entry" && sectionObjectElement.classList.contains("detailed")) 						// jestesmy na stronie wpisu i ta sekcja to glowny wpis
 					{
-						const wxs_comments_count = sectionObjectElement.__vue__.item.comments.items.length;					// .__vue__.item.comments.count -> bug wykopu - nie dziala, zawsze 0
+						const wxs_comments_count = sectionObjectElement.__vue__.item.comments.items.length;					// .__vue__.item.comments.count -> bug wykopu — nie dziala, zawsze 0
 						sectionObjectElement.dataset.wxs_comments_count = wxs_comments_count;								// <section class="entry detailed" data-wxs_comments-count="99" data-wxs_comments_author_count="12" data-comments-author-percent="10%">
 
 						if (wxs_comments_count > 0)
@@ -1922,7 +1908,7 @@
 			}
 			else
 			{
-				// TODO usunąć sprawdzanie plusów/wykopów na żywo - chyba nie trzeba
+				// TODO usunąć sprawdzanie plusów/wykopów na żywo — chyba nie trzeba
 
 				// consoleX(`section.entry NOT intersecting: ${id}`, 1)
 				sectionObjectElement.classList.remove("isIntersecting");
@@ -2157,8 +2143,8 @@
 					{
 						userInfoElementTitle += userDataObject.summary.followers > 0 ? ` Jest obserwowany przez ${userDataObject.summary.followers} osób \n ` : "Nikt go nie obserwuje";
 						userInfoElementTitle += `\n On sam obserwuje`;
-						userInfoElementTitle += `\n - ${userDataObject.summary.following_users} osób `;
-						userInfoElementTitle += userDataObject.summary.following_tags > 0 ? `\n - ${userDataObject.summary.following_tags} #tagów  \n ` : `i nie obserwuje żadnych #tagów \n `;
+						userInfoElementTitle += `\n — ${userDataObject.summary.following_users} osób `;
+						userInfoElementTitle += userDataObject.summary.following_tags > 0 ? `\n — ${userDataObject.summary.following_tags} #tagów  \n ` : `i nie obserwuje żadnych #tagów \n `;
 					}
 				}
 
@@ -2301,19 +2287,19 @@
 			// elementToInsertUserInfo.parentNode.insertBefore(div, elementToInsertUserInfo.nextSibling);
 
 			// -- strona wpisu
-			// - wpis:
+			// — wpis:
 			// section.entry.detailed 	> article 																													> header > div.right > div > div.tooltip-slot > span > a.username > span
 			// section.entry.detailed 	> article 																													> header > div.right > div > span > a.current.active > time
-			// - komentarze:
+			// — komentarze:
 			// section.entry.detailed 	> div.comments > section.stream > div.content > section.entry.reply > article 												> header > div.right > div > div.tooltip-slot > span > a.username > span
 			// section.entry.detailed 	> div.comments > section.stream > div.content > section.entry.reply > article 												> header > div.right > div > span > a > time
 
 
 			// -- mikroblog wpisy i komentarze:											
-			// - wpis: 											
+			// — wpis: 											
 			// section.entry 			> article 																													> header > div.right > div > div.tooltip.slot > span > a.username > span
 			// section.entry 			> article 																													> header > div.right > div > span > a > time
-			// - komentarze:											
+			// — komentarze:											
 			// section.entry 			> div.comments > section.stream > div.content > section.entry.reply > article 												> header > div.right > div > div.tooltip-slot > span > a.username > span
 			// section.entry 			> div.comments > section.stream > div.content > section.entry.reply > article 												> header > div.right > div > span > a > time
 
@@ -2336,7 +2322,7 @@
 			//main.main > section > section.sidebar > section > div.content > section.entries > section.entry 														> header > div.right > div > span.plus // +16 liczba plusów
 			//main.main > section > section.sidebar > section > div.content > section.entries > section.entry 														> header > div.right > a > time
 
-			// strona PROFILU - naglowek profilu uzytkownika (brak .tooltip-slot)
+			// strona PROFILU — naglowek profilu uzytkownika (brak .tooltip-slot)
 			// main.main > aside.profile-top > section 																												> header > div > h1 > a.username > span
 			// main.main > aside.profile-top > section 																												> header > div > time
 		});
@@ -2402,7 +2388,7 @@
 					return userNoteObject;
 				}
 
-				else // Notatka z API - brak notatki o tym użytkowniku w localforage lub była zbyt stara lub forceAPICheck = true 
+				else // Notatka z API — brak notatki o tym użytkowniku w localforage lub była zbyt stara lub forceAPICheck = true 
 				{
 					try
 					{
@@ -2488,10 +2474,10 @@
 			//console.log(`user: ${username}: `)
 			//console.log(userDataObject)
 
-			// jesli jest zbanowany lub chcemy wszystkie dane (np. followersi - wysylamy zapytanie do API)
+			// jesli jest zbanowany lub chcemy wszystkie dane (np. followersi — wysylamy zapytanie do API)
 			if (userDataObject.status == "banned" || forceAPICheck == true)
 			{
-				console.log("---- getUserDetailsForUsername - sprawdzanie użytkownika w API: " + username)
+				console.log("---- getUserDetailsForUsername — sprawdzanie użytkownika w API: " + username)
 				try
 				{
 					// profile/users/{username}
@@ -2539,7 +2525,7 @@
 			// jeśli wystarczą nam podstawowe informacje z __vue__ 
 			else
 			{
-				//console.log("---- getUserDetailsForUsername - zwracam danej użytkownika z vue: " + username)
+				//console.log("---- getUserDetailsForUsername — zwracam danej użytkownika z vue: " + username)
 				return userDataObject;
 			}
 		}
@@ -2564,7 +2550,7 @@
 				if (!section.dataset.wxs_note || section.dataset.wxs_username != username)
 				{
 					section.dataset.wxs_note = "true"; // <section data-wxs-note="true" wxs_username="NadiaFrance">
-					// console.log(`Notatkowator - dodaje notatkę: ${ username } / ${usernote}`);
+					// console.log(`Notatkowator — dodaje notatkę: ${ username } / ${usernote}`);
 					let resource = section.__vue__.item.resource;
 		
 					if (resource == "entry" || resource == "entry_comment" || resource == "link_comment")
@@ -2846,8 +2832,8 @@
 			{
 				createNewProfileDropdownMenuItem(
 					{
-						text: `Wykop X - Mirkoukrywacz`,
-						title: "Wykop X - lista elementów ukrytych przez Mirkoukrywacz",
+						text: `Wykop X — Mirkoukrywacz`,
+						title: "Wykop X — lista elementów ukrytych przez Mirkoukrywacz",
 						className: `mirkoukrywacz`,
 						id: "wxs_open_modal_mirkoukrywacz_button",
 						url: null,
@@ -2874,8 +2860,8 @@
 		{
 			createNewProfileDropdownMenuItem(
 				{
-					text: `Wykop X - Notatkowator`,
-					title: "Wykop X - Notatkowator - Twoje notatki do innych użytkowników",
+					text: `Wykop X — Notatkowator`,
+					title: "Wykop X — Notatkowator — Twoje notatki do innych użytkowników",
 					className: `notatkowator`,
 					id: "wxs_open_modal_notatkowator_button",
 					url: null,
@@ -2978,7 +2964,7 @@
 				if (value.blockingType == options.blockingType || options.blockingType == "all") // "hidden", "minimized"
 				{
 					const itemDate = dayjs(value.date);
-					const diffInDays = now.diff(itemDate, 'day', true); // true - floating point
+					const diffInDays = now.diff(itemDate, 'day', true); // true — floating point
 
 					if (diffInDays >= options.days)
 					{
@@ -4163,7 +4149,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// document.removeEventListener('click', this.documentClick)
 	function unrollDropdowns(dropdown)
 	{
-		// YYY - async document.removeEventListener("click", this.documentClick);  // TypeError: Cannot read properties of undefined (reading 'documentClick')
+		// YYY — async document.removeEventListener("click", this.documentClick);  // TypeError: Cannot read properties of undefined (reading 'documentClick')
 	}
 
 
@@ -4199,10 +4185,10 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		["wykopx", "Wykop X"],
 		["digg", "News and Trending Stories Around the Internet | Digg"],
 		["google", "Google"],
-		["interia", "Interia - Polska i świat: informacje, sport, gwiazdy."],
+		["interia", "Interia — Polska i świat: informacje, sport, gwiazdy."],
 		["onet", "Onet – Jesteś na bieżąco"],
-		["reddit", "Reddit - Dive into anything"],
-		["wp", "Wirtualna Polska - Wszystko co ważne"],
+		["reddit", "Reddit — Dive into anything"],
+		["wp", "Wirtualna Polska — Wszystko co ważne"],
 		["x", "Home / X"],
 		["youtube", "YouTube"],
 	])
@@ -4298,7 +4284,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 						tabTitleNotifications = notificationsTotalCount; 	// 19
 					}
 
-					if (new_document_title == "pusty_tytul") // jesli pusty tytul - ikonki powiadomien bez nawiasow
+					if (new_document_title == "pusty_tytul") // jesli pusty tytul — ikonki powiadomien bez nawiasow
 					{
 						tabTitleNotifications = `${specialCharacter}${tabTitleNotifications} `						// 📧 2 🔔 3 # 14 albo 19
 					}
@@ -4690,7 +4676,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 						// console.log(sectionObjectElement)
 
 						sectionObjectElement.dataset.wxs_votes_up = entry_fetched_data.votes.up;											// 10
-						sectionObjectElement.dataset.wxs_votes_down = entry_fetched_data.votes.down;										// 20  - dodatnia nie dotyczy entry, entry_comment
+						sectionObjectElement.dataset.wxs_votes_down = entry_fetched_data.votes.down;										// 20  — dodatnia nie dotyczy entry, entry_comment
 						sectionObjectElement.dataset.wxs_votes_count = entry_fetched_data.votes.votesCount;									// -10 (suma plusów i minusów nie dotyczy entry, entry_comment)
 						sectionObjectElement.dataset.wxs_votes_all = entry_fetched_data.votes.votesAll; 									// 30  (łączna liczba głosów nie dotyczy entry, entry_comment)
 						sectionObjectElement.dataset.wxs_voted = entry_fetched_data.voted;
@@ -4773,7 +4759,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 								// PRZYBYŁY PLUSY
 								if (plusesDelta != 0)
 								{
-									// console.log("Zmienila sie liczba plusow - plusesDelta:" + plusesDelta);
+									// console.log("Zmienila sie liczba plusow — plusesDelta:" + plusesDelta);
 									// console.log("sectionObjectElement.dataset.wxs_votes_up:" + sectionObjectElement.dataset.wxs_votes_up);
 									// if() zamiana li.zero na li.plus
 
@@ -5483,7 +5469,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 								length: 1
 							}
 			*/
-			// items - text  files - pliki png
+			// items ->text  files -> pliki png
 
 			const uploadModal = document.querySelector('#modals-container div[data-modal="entryPhoto"] section.modal.entryPhoto');
 			let fileInput, urlInput;
@@ -5678,7 +5664,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	/* ------------- EVENTS ------------ */
 	function handleWindowEvent(event)
 	{
-		console.log(`handleWindowEvent(event) - event.type: ${event.type} was fired`);
+		console.log(`handleWindowEvent(event) — event.type: ${event.type} was fired`);
 		// console.log(event);
 	}
 	window.addEventListener('load', handleWindowEvent); 		// 1.
@@ -5792,7 +5778,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			checkVersionForUpdates();
 			createNewProfileDropdownMenuItem(
 				{
-					text: `Wykop X - Pomoc`,
+					text: `Wykop X — Pomoc`,
 					title: "Otwórz stronę Wiki z informacjami o dodatku Wykop X",
 					className: `wykopx_wiki`,
 					id: undefined,
@@ -5810,7 +5796,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	// ----- NAVIGATION PAGE CHANGES
 	async function executeOnPageChange(event)
 	{
-		console.log("executeOnPageChange() -- navigation - navigate event - " + event.type);
+		console.log("executeOnPageChange() -- navigation — navigate event — " + event.type);
 		console.log(event);
 
 		originalTabTitle = document.title;
