@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Blank
-@version        2.44.4
+@version        2.45
 @description    Ponad 500 funkcji usprawniających i naprawiających Wykop.pl
 @description    Blank - ta wersja ma WYŁĄCZONE wszystkie opcje i funkcje
 
@@ -25,13 +25,10 @@
 
 
 
-*":
-":
-    1
-    0
-@var range      HR_DOODLE                           `🎅 ZIMOWA BELKA`                                                                         [0, 0, 99900, 1, 'mm']
-@var checkbox  hideTopNavDoodle                                 `🎄 Ukryj Świąteczny obrazek z belki Wykopu`                    0
-@var checkbox  topNavSanta                                      `🎅 Wolnorynkowy Mikołaj zamiast świątecznego obrazka`            0
+
+@var range      HR_DOODLE                           `BELKA`                                                                         [0, 0, 99900, 1, 'mm']
+@var checkbox  hideTopNavDoodle                                 `❤ Ukryj Logo WOŚP`     0
+@var checkbox  topNavSanta                                      `🎅 Wolnorynkowy Mikołaj`    0
 @var checkbox  topNavSnowMan                                    `⛄ Bałwan`                  0
 @var checkbox  topNavSnowMan2                                   `⛄ Bałwan 2`                0
 @var checkbox  topNavSnowGirl                                   `❄ Snow Girl`                0
@@ -42,7 +39,7 @@
                                                                             "🏔 Snowy Mountain":                    `"https://i.imgur.com/mv95FKt.jpg"`,
                                                                             "🏔 Snowy Mountain":                    `"https://i.imgur.com/HRmsPu6.jpg"`,
                                                                             "🎄 Christmas Trees":                  `"https://i.imgur.com/sNp7lFd.png"`,
-                                                                            "🎄 Christmas Trees 2":                `"https://i.imgur.com/yNp2Lll.png"`,
+                                                                            "🎄 Christmas Trees 2":                 `"https://i.imgur.com/yNp2Lll.png"`,
                                                                             "🎄 Christmas Trees 3":                 `"https://i.imgur.com/l5tOmd1.png"`,
                                                                             "🔮 Cave":                             `"https://wykopx.pl/img/background-cave-1.jpg"`,
                                                                             "🏙 City":                              `"https://wykopx.pl/img/background-city-1.jpg"`,
@@ -277,7 +274,7 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
 @var range      HR_LOGO_2411                        `𝕎 𝗕𝗘𝗟𝗞𝗔: LOGO WYKOPU ⭐ NOWE v.2.41.1`                                                     [0, 0, 99900, 1, 'mm']
 @var select     topNavLogotype                                  `Logotyp 𝘄𝘆𝗸𝗼𝗽.𝗽𝗹 ⭐` {
                                                                             "𝘄𝘆𝗸𝗼𝗽.𝗽𝗹 (domyślny)": "wykop",
-                                                                            "wykopx.pl": "wykopx",
+                                                                            "wykopx.pl":"wykopx",
                                                                             "⭐ YouTube": "youtube",
                                                                             "🚫 Nie pokazuj logotypu": "niepokazuj"
                                                                             }
@@ -1009,34 +1006,29 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
 
 @var range      HR_IMAGES                           `🌆 OBRAZKI WE WPISACH I KOMENTARZACH`                                                                     [0, 0, 99900, 1, 'mm']
 @var checkbox   hideImageCaptions                               `Ukryj biały pasek z nazwą autora pod obrazkiem`                                                0
-@var checkbox   displayImageInFullHeight                        `Wyświetl obrazek w pełnej wysokości i oryginalnych rozmiarach`                                 0
-@var checkbox   openImageInNewTabButton                         `Przycisk 𝗢𝘁𝘄𝗼́𝗿𝘇 𝗼𝗯𝗿𝗮𝘇𝗲𝗸 𝘄 𝗻𝗼𝘄𝗲𝗷 𝗸𝗮𝗿𝗰𝗶𝗲`                                                         0
+TODO var checkbox   displayImageInFullHeight                        `Wyświetl obrazek w pełnej wysokości i oryginalnych rozmiarach`                                 0
+TODO var checkbox   openImageInNewTabButton                         `Przycisk 𝗢𝘁𝘄𝗼́𝗿𝘇 𝗼𝗯𝗿𝗮𝘇𝗲𝗸 𝘄 𝗻𝗼𝘄𝗲𝗷 𝗸𝗮𝗿𝗰𝗶𝗲`                                                         0
 
-@var select     mouseClickOpensImageInNewTab                    `💻❎🐁 Otwórz obrazek w nowej karcie kliknięciem` {
+TODO select     mouseClickOpensImageInNewTab                    `💻❎🐁 Otwórz obrazek w nowej karcie kliknięciem` {
                                                                     "Nie otwieraj w nowej karcie (domyślnie)":"nie_otwieraj",
                                                                     "𝗟𝗣𝗣 - Lewym prz. myszy":"lewy_przycisk_myszy",
                                                                     "ŚPM - Środkowym prz. myszy":"srodkowy_przycisk_myszy",
                                                                     "𝗣𝗣𝗠 - Prawym prz. myszy":"prawy_przycisk_myszy"
-                                                                } 
-
-
-@var checkbox   fixWrongImageRatio                              `✔ Napraw błąd skurczonej wysokości wysokich obrazków we wpisach i komentarzach`                 0
-@var range      fixWrongImageRatioMinWidth                      `✔ Napraw błąd skurczonej wysokości - minimalna szerokość obrazka`                               [30, 10, 100, 5, '%']
-
-
-
-
+                                                                }
+TODO var checkbox   fixWrongImageRatio                              `✔ Napraw błąd skurczonej wysokości wysokich obrazków we wpisach i komentarzach`                 0
+TODO var range      fixWrongImageRatioMinWidth                      `✔ Napraw błąd skurczonej wysokości - minimalna szerokość obrazka`                               [30, 10, 100, 5, '%']
 
 // 🡇
 @var range      HR_IMAGES_IN_COMMENTS               `🌆 PRZYCISK "POBIERZ OBRAZ"`                                                                      [0, 0, 99900, 1, 'mm']
+@var checkbox   defaultButtonToDownloadImageHide                `Ukryj przycisk do pobierania obrazków`                0
 
-@var select     defaultButtonToDownloadImageLabel               `Ikona i tekst "Pobierz"`   {
+TODO select     defaultButtonToDownloadImageLabel               `Ikona i tekst "Pobierz"`   {
                                                                             "Domyślnie":"domyslnie",
                                                                             "Ikona i tekst 'Pobierz'":"ikonaitekst",
                                                                             "Tylko ikona":"ikona",
                                                                             "Tekst 'Pobierz' bez ikony":"tekst",
                                                                             } 
-@var select     defaultButtonToDownloadImageOpacity             `Przezroczystość przycisku`   {
+TODO select     defaultButtonToDownloadImageOpacity             `Przezroczystość przycisku`   {
                                                                             "Zawsze widoczny (domyślnie na smartfonie)":"opacity100",
                                                                             "Półprzeźroczysty 80%":"opacity80",
                                                                             "Półprzeźroczysty 50%":"opacity50",
@@ -1044,7 +1036,8 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
                                                                             "Półprzeźroczysty 5%":"opacity5",
                                                                             "Ukrywanie przycisku (domyślnie na PC)":"opacity0",
                                                                             }   
-@var select     defaultButtonToDownloadImageOnHover             `Wyświetlanie ukrytego przycisku`   {
+
+TODO select     defaultButtonToDownloadImageOnHover             `Wyświetlanie ukrytego przycisku`   {
                                                                             "Pokazuj po najechaniu na obrazek (domyślnie na PC)":"image_onhover",
                                                                             "Pokazuj po najechaniu na przycisk":"button_onhover",
                                                                             "Pokazuj po najechaniu na wpis":"entry_onhover",
@@ -1052,7 +1045,7 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
                                                                             } 
 
 //⌝ [ ⦐ ⌟ [ ⦎ ⟓ ⇲ ⌜ ⦍ ] ⟔ ⇱ ⌞ ⦏ ]
-@var select     defaultButtonToDownloadImageAlignment           `Położenie przycisku`   {
+TODO select     defaultButtonToDownloadImageAlignment           `Położenie przycisku`   {
                                                                             " ⌝ Na obrazku, prawy-górny róg (domyślnie)":"na_pgr",
                                                                             " ⟓ Na obrazku, prawy-dolny róg":"na_pdr",
                                                                             " ⌞ Na obrazku, lewy-dolny róg":"na_ldr",
@@ -1064,7 +1057,7 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
                                                                             " ⊡ Na środku obrazka":"na_srodku",
                                                                             } 
 
-@var checkbox   allowToDownloadImage                            `❎ Dodatkowy przycisk "Pobierz obrazek"`                                                      0
+TODO checkbox   allowToDownloadImage                            `❎ Dodatkowy przycisk "Pobierz obrazek"`                                                      0
 
 
 
@@ -1627,7 +1620,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 
 @var select     myNicknameColor                                 `⚫ Twój kolor na wykopie` {
                                                                             "🔴 Bordo":"bordo",
-                                                                            "🟠 Pomarańczowy":"pomaranczowy",
+                                                                            "🟠 Pomarańczowy*":"pomaranczowy",
                                                                             "🟢 Zielonka":"zielony",
                                                                             } 
 @var select     device                                          `💻 📱 Urządzenie` {
@@ -13030,10 +13023,18 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
     
     
+    /* WYKOPOWY PRZYCISK "POBIERZ"
+      przycisk zostal zmieniony i przesuniety pod obrazek z dniem 16 stycznia 2024 */
+    if(defaultButtonToDownloadImageHide == 1)
+    {
+        div.content > section.entry section.entry-photo figure figcaption
+        {
+            display: none!important;   
+        } 
+    }
       /* WYKOPOWY PRZYCISK "POBIERZ" 
       dodany 12 kwietnia 2023
       - mój wpis: https://wykop.pl/wpis/71010035/  */
-    
       section.entry section.entry-photo figure
       {
         overflow: inherit i;
@@ -13449,13 +13450,13 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
             } 
         } 
     } 
-    else
+    /*else
     {
         div.content > section.entry section.entry-photo figure figcaption
         {
             display: none!important;   
         } 
-    } 
+    } */
     
     
     
@@ -16909,7 +16910,7 @@ https://wykop.pl/moje/
 {    
     
     versor = "style"; // "style", "blank", "block"
-    version = "2.44";   
+    version = "2.45";   
     // xblocker = 2.49
     
     /* Wykop XS Settings  */
