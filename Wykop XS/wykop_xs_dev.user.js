@@ -2,7 +2,7 @@
 // @name        Wykop XS DEV
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
-// @version     2.49.0
+// @version     2.50.0
 
 
 // @author      Wykop X <wykopx@gmail.com>
@@ -56,11 +56,33 @@
 	let wxs_modal = null;
 
 
+
+
+
+	let votesFetchingLimitMinimumVotes = 5;
+	let votesFetchingLimitMaximumHoursOld = 48;
+	let votesFetchingFirstDelayInSeconds = 1;		// seconds
+	let votesFetchingOngoingDelayInSeconds = 60; 	// seconds
+
+	let votesFetchingHigherFrequencyLimitMinimumVotes = 30;
+	let votesFetchingHigherFrequencyLimitMaximumHoursOld = 24;
+	let votesFetchingHigherFrequencyDelayInSeconds = 30; // seconds
+
+
+
+
 	// getComputedStyle(document.documentElement) -- nie działa, nie wczytuje właściwości z :root
 	let wykopxSettings = getComputedStyle(document.querySelector("head"));
 	let settings = {};
 
 	// boolean - domyslnie WŁĄCZONE bez Wykop X Style
+
+	settings.WykopXSEnabled = wykopxSettings.getPropertyValue("--WykopXSEnabled") ? wykopxSettings.getPropertyValue("--WykopXSEnabled") === '1' : true;
+	if (settings.WykopXSEnabled == false) return true;
+
+	settings.WykopXStyleEnabled = wykopxSettings.getPropertyValue("--WykopXStyleEnabled") ? wykopxSettings.getPropertyValue("--WykopXStyleEnabled") === '1' : true;
+
+
 	settings.hitsInTopNavJS = wykopxSettings.getPropertyValue("--hitsInTopNavJS") ? wykopxSettings.getPropertyValue("--hitsInTopNavJS") === '1' : true;
 	settings.quickLinksEnable = wykopxSettings.getPropertyValue("--quickLinksEnable") ? wykopxSettings.getPropertyValue("--quickLinksEnable") === '1' : true;
 	settings.myWykopInTopNavJS = wykopxSettings.getPropertyValue("--myWykopInTopNavJS") ? wykopxSettings.getPropertyValue("--myWykopInTopNavJS") === '1' : true;
@@ -73,8 +95,23 @@
 	settings.observedTagsInRightSidebarEnable = wykopxSettings.getPropertyValue("--observedTagsInRightSidebarEnable") ? wykopxSettings.getPropertyValue("--observedTagsInRightSidebarEnable") === '1' : true;
 
 
-	settings.removeAnnoyancesEnable = wykopxSettings.getPropertyValue("--removeAnnoyancesEnable") ? wykopxSettings.getPropertyValue("--removeAnnoyancesEnable") === '1' : true;
 
+
+	settings.wxsSwitchesEnable = wykopxSettings.getPropertyValue("--wxsSwitchesEnable") ? wykopxSettings.getPropertyValue("--wxsSwitchesEnable") === '1' : true;
+	if (settings.wxsSwitchesEnable) 
+	{
+		settings.wxsSwitchPhotoViewer = wykopxSettings.getPropertyValue("--wxsSwitchPhotoViewer") ? wykopxSettings.getPropertyValue("--wxsSwitchPhotoViewer") === '1' : true;
+		settings.wxsSwitchAdult = wykopxSettings.getPropertyValue("--wxsSwitchAdult") ? wykopxSettings.getPropertyValue("--wxsSwitchAdult") === '1' : true;
+		settings.wxsSwitchNSFW = wykopxSettings.getPropertyValue("--wxsSwitchNSFW") ? wykopxSettings.getPropertyValue("--wxsSwitchNSFW") === '1' : true;
+		settings.wxsSwitchTags = wykopxSettings.getPropertyValue("--wxsSwitchTags") ? wykopxSettings.getPropertyValue("--wxsSwitchTags") === '1' : true;
+		settings.wxsSwitchByUserColor = wykopxSettings.getPropertyValue("--wxsSwitchByUserColor") ? wykopxSettings.getPropertyValue("--wxsSwitchByUserColor") === '1' : true;
+		settings.wxsSwitchByUserGender = wykopxSettings.getPropertyValue("--wxsSwitchByUserGender") ? wykopxSettings.getPropertyValue("--wxsSwitchByUserGender") === '1' : true;
+		settings.wxsSwitchTags = wykopxSettings.getPropertyValue("--wxsSwitchTags") ? wykopxSettings.getPropertyValue("--wxsSwitchTags") === '1' : true;
+	}
+
+
+
+	settings.removeAnnoyancesEnable = wykopxSettings.getPropertyValue("--removeAnnoyancesEnable") ? wykopxSettings.getPropertyValue("--removeAnnoyancesEnable") === '1' : true;
 	if (settings.removeAnnoyancesEnable) 
 	{
 		settings.removeAnnoyancesIframes = wykopxSettings.getPropertyValue("--removeAnnoyancesIframes") ? wykopxSettings.getPropertyValue("--removeAnnoyancesIframes") === '1' : true;
@@ -94,10 +131,13 @@
 		settings.checkLinkCommentsPerHour = wykopxSettings.getPropertyValue("--checkLinkCommentsPerHour") ? wykopxSettings.getPropertyValue("--checkLinkCommentsPerHour") === '1' : true;
 	}
 
+
+	settings.checkEntryPlusesWhenVoting = wykopxSettings.getPropertyValue("--checkEntryPlusesWhenVoting") ? wykopxSettings.getPropertyValue("--checkEntryPlusesWhenVoting") === '1' : true;
+
 	settings.checkEntryPlusesEnable = wykopxSettings.getPropertyValue("--checkEntryPlusesEnable") ? wykopxSettings.getPropertyValue("--checkEntryPlusesEnable") === '1' : true;
 	if (settings.checkEntryPlusesEnable) 
 	{
-		settings.checkEntryPlusesPerMinute = wykopxSettings.getPropertyValue("--checkEntryPlusesPerMinute") ? wykopxSettings.getPropertyValue("--checkEntryPlusesPerMinute") === '1' : true;
+		settings.checkEntryPlusesPerHour = wykopxSettings.getPropertyValue("--checkEntryPlusesPerHour") ? wykopxSettings.getPropertyValue("--checkEntryPlusesPerHour") === '1' : true;
 		settings.checkEntryCommentsPerHour = wykopxSettings.getPropertyValue("--checkEntryCommentsPerHour") ? wykopxSettings.getPropertyValue("--checkEntryCommentsPerHour") === '1' : true;
 		settings.checkEntryPlusesForVotingGame = wykopxSettings.getPropertyValue("--checkEntryPlusesForVotingGame") ? wykopxSettings.getPropertyValue("--checkEntryPlusesForVotingGame") === '1' : true;
 	}
@@ -109,11 +149,12 @@
 	let localStorageTextsaver = null;
 	let localStorageNotatkowator = null;
 
-	settings.kraweznikEnable = wykopxSettings.getPropertyValue("--kraweznikEnable") ? wykopxSettings.getPropertyValue("--kraweznikEnable") === '1' : true;
-	if (settings.kraweznikEnable)
+	settings.actionBoxEnable = wykopxSettings.getPropertyValue("--actionBoxEnable") ? wykopxSettings.getPropertyValue("--actionBoxEnable") === '1' : true;
+	if (settings.actionBoxEnable)
 	{
 
-		settings.filterUserCommentsEnable = wykopxSettings.getPropertyValue("--filterUserCommentsEnable") ? wykopxSettings.getPropertyValue("--filterUserCommentsEnable") === '1' : true;
+		settings.filterUserComments = wykopxSettings.getPropertyValue("--filterUserComments") ? wykopxSettings.getPropertyValue("--filterUserComments") === '1' : true;
+		settings.filterUserReplies = wykopxSettings.getPropertyValue("--filterUserReplies") ? wykopxSettings.getPropertyValue("--filterUserReplies") === '1' : true;
 		settings.mirkoukrywaczEnable = wykopxSettings.getPropertyValue("--mirkoukrywaczEnable") ? wykopxSettings.getPropertyValue("--mirkoukrywaczEnable") === '1' : true;
 		settings.textsaverEnable = wykopxSettings.getPropertyValue("--textsaverEnable") ? wykopxSettings.getPropertyValue("--textsaverEnable") === '1' : true;
 	}
@@ -312,6 +353,7 @@
 	let pageType = "";
 	let pageSubtype = "";
 	let pageObjects = []; // ["znaleziska", "wpisy", "komentarze"]
+	let pageTotalVotesUpCount = 0;
 
 	function newPageURL()
 	{
@@ -321,6 +363,7 @@
 		consoleX(`newPageURL(): document.URL: ${document.URL} hash: ${hash}, pathname: ${pathname}, pathnameArray: `, 1)
 		console.log(pathnameArray)
 
+		pageTotalVotesUpCount = 0;
 
 		if (pathnameArray[1] == "" || pathnameArray[1] == "aktywne" || pathnameArray[1] == "najnowsze" || pathnameArray[1] == "strona")
 		{
@@ -505,8 +548,8 @@
 
 		mirkoukrywacz_minimized: {
 			count: 0,
-			text: "Zminimalizowanych",
-			title: "Mirkoukrywacz zminimalizowan",
+			text: "Zwiniętych",
+			title: "Mirkoukrywacz zwinął",
 		},
 
 		annoyances: {
@@ -798,239 +841,6 @@
 
 
 
-	function addQuickLinksToNavBar()
-	{
-		if (settings.quickLinksEnable == true)
-		{
-			let wxs_quick_links = document.getElementById("wxs_quick_links");
-			if (wxs_quick_links == null)
-			{
-				wxs_quick_links = document.createElement('div');
-				wxs_quick_links.id = "wxs_quick_links";
-				// wxs_quick_links.classList.add("wykopxs"); // nie dodajemy bo domyslnie wlaczone
-
-				wxs_quick_links.innerHTML = `
-
-		<nav class="home">
-			<section>
-				<span>
-					<a href="/" target="_self" title="Wykop X: Przejdź na stronę główną Wykopu">Główna</a>
-				</span>
-				<div>
-					<a href="/najnowsze" target="_self" title="Wykop X: Najnowsze znaleziska, które dostały się na główną">Najnowsze</a>
-					<a href="/aktywne" target="_self" title="Wykop X: Najpopularniejsze znaleziska na stronie głównej z ostatnich 24 godzin">Aktywne</a>
-				</div>
-			</section>
-
-			<section>
-				<span>
-					<a href="/hity" target="_self">Hity</a>
-				</span>
-				<div>
-					<a href="/hity/dnia" target="_self">Dnia</a>
-					<a href="/hity/tygodnia" target="_self">Tygodnia</a>
-					<a href="/hity/miesiaca" target="_self">Miesiąca</a>
-					<a href="/hity/roku" target="_self">Roku</a>
-				</div>
-			</section>
-
-			<section>
-				<span>Ulubione</span>
-				<div>
-					<a href="/ulubione/znaleziska" target="_self" title="Wykop X: Znaleziska dodane przez Ciebie do Ulubionych">Znaleziska</a>
-					<a href="/ulubione/komentarze-znaleziska" target="_self" title="Wykop X: Komentarze pod znaleziskami dodane przez Ciebie do Ulubionych">Komentarze do znalezisk</a>
-				</div>
-			</section>
-		</nav>
-		
-		<nav class="upcoming">
-			<section>
-				<span>Dodaj</span>
-				<div>
-					<a href="/dodaj-link" target="_self" title="Wykop X: Dodaj nowe znalezisko (link do strony internetowej)">Nowe znalezisko</a>
-				</div>
-			</section>
-			<section>
-				<span>Wykopalisko</span>
-				<div>
-					<a href="/wykopalisko/najnowsze" target="_self">Najnowsze</a>
-					<a href="/wykopalisko/aktywne" target="_self">Aktywne</a>
-					<a href="/wykopalisko/wykopywane" target="_self">Wykopywane</a>
-					<a href="/wykopalisko/komentowane" target="_self">Komentowane</a>
-				</div>
-				<span>Moja aktywność</span>
-				<div>
-					<a href="/ludzie/${user.username}/znaleziska/dodane" target="_self">Moje znaleziska</a>
-					<a href="/ludzie/${user.username}/znaleziska/komentowane" target="_self">Komentowane</a>
-					<a href="/ludzie/${user.username}/znaleziska/wykopane" target="_self">Wykopane</a>
-					<a href="/ludzie/${user.username}/znaleziska/zakopane" target="_self">Zakopane</a>
-				</div>
-			</section>
-
-			<section>
-				<span>Ulubione</span>
-				<div>
-				<a href="/ulubione/znaleziska" target="_self" title="Wykop X: Znaleziska dodane przez Ciebie do Ulubionych">Znaleziska</a>
-				<a href="/ulubione/komentarze-znaleziska" target="_self" title="Wykop X: Komentarze pod znaleziskami dodane przez Ciebie do Ulubionych">Komentarze do znalezisk</a>
-				</div>
-			</section>
-		</nav>
-
-		<nav class="hits">
-			<section>
-				<span>Hity</span>
-				<div>
-					<a href="/hity/dnia" target="_self">Dnia</a>
-					<a href="/hity/tygodnia" target="_self">Tygodnia</a>
-					<a href="/hity/miesiaca" target="_self">Miesiąca</a>
-					<a href="/hity/roku" target="_self">Roku</a>
-				</div>
-			</section>
-		</nav>
-
-
-		<nav class="microblog">
-			<section>
-				<span>Dodaj</span>
-				<div>
-				<a href="/mikroblog/#dodaj" target="_self" title="Wykop X: Dodaj nowy wpis na Mikroblogu">Nowy wpis na Mirko</a>
-				</div>
-			</section>
-
-			<section>
-				<span>Mikroblog</span>
-				<div>
-					<a href="/mikroblog/najnowsze" target="_self" title="Wykop X: Najnowsze wpisy na Mikroblogu">Najnowsze</a>
-					<a href="/mikroblog/aktywne" target="_self" title="Wykop X: Nowe, angażujące wpisy na Mikroblogu">Aktywne</a>
-				</div>
-			</section>
-
-			<section>
-				<span>
-					<a href="/mikroblog/gorace" target="_self" title="Wykop X: Przejdź na ostatnio wybrane gorące">Gorące</a>
-				</span>
-				<div>
-					<a href="/mikroblog/gorace/2" class="wxs_quicklink_short" target="_self" title="Wykop X: Najbardziej gorące wpisy z ostatnich 2 godzin">2h</a>
-					<a href="/mikroblog/gorace/6" class="wxs_quicklink_short" target="_self" title="Wykop X: Najbardziej gorące wpisy z ostatnich 6 godzin">6h</a>
-					<a href="/mikroblog/gorace/12" class="wxs_quicklink_short" target="_self" title="Wykop X: Najbardziej gorące wpisy z ostatnich 12 godzin">12h</a>
-					<a href="/mikroblog/gorace/24" class="wxs_quicklink_short" target="_self" title="Wykop X: Najbardziej gorące wpisy z ostatnich 24 godzin">24h</a>
-				</div>
-			</section>
-
-			<section>
-				<span>
-					Moja aktywność
-				</span>
-				<div>
-					<a href="/ludzie/${user.username}/wpisy/dodane" target="_self">Moje wpisy</a>
-					<a href="/ludzie/${user.username}/wpisy/komentowane" target="_self">Komentowane</a>
-					<a href="/ludzie/${user.username}/wpisy/plusowane" target="_self">Zaplusowane</a>
-				</div>
-			</section>
-
-			<section>
-				<span>Ulubione</span>
-				<div>
-					<a href="/ulubione/wpisy" target="_self">Wpisy</a>
-					<a href="/ulubione/komentarze-wpisy" target="_self">Komentarze do wpisów</a>
-				</div>
-			</section>
-		</nav>
-
-		<nav class="mywykop">
-			<section>
-				<span>Mój Wykop</span>
-				<div>
-					<a href="/obserwowane/" target="_self">Wszystko</a>
-					<a href="/obserwowane/tagi" target="_self">#Tagi</a>
-					<a href="/obserwowane/profile" target="_self">@Profile</a>
-				</div>
-			</section>
-
-			<section>
-				<span>Moja aktywność</span>
-				<span>Mikroblog</span>
-				<div>
-					<a href="/ludzie/${user.username}/wpisy/dodane" target="_self">Moje wpisy</a>
-					<a href="/ludzie/${user.username}/wpisy/komentowane" target="_self">Moje komentarze</a>
-					<a href="/ludzie/${user.username}/wpisy/plusowane" target="_self">Moje plusy</a>
-				</div>
-			</section>
-			<section>
-				<span>Znaleziska</span>
-				<div>
-					<a href="/ludzie/${user.username}/znaleziska/dodane" target="_self">Moje znaleziska</a>
-					<a href="/ludzie/${user.username}/znaleziska/komentowane" target="_self">Moje komentarze</a>
-					<a href="/ludzie/${user.username}/znaleziska/wykopane" target="_self">Wykopane</a>
-					<a href="/ludzie/${user.username}/znaleziska/zakopane" target="_self">Zakopane</a>
-				</div>
-			</section>
-		</nav>
-
-		<nav class="favorites">
-			<section>
-				<span>Ulubione</span>
-				<div>
-					<a href="/ulubione" target="_self">Wszystko</a>
-					<a href="/ulubione/znaleziska" target="_self">Znaleziska</a>
-					<a href="/ulubione/komentarze-znaleziska" target="_self">Komentarze do znalezisk</a>
-					<a href="/ulubione/wpisy" target="_self">Wpisy</a>
-					<a href="/ulubione/komentarze-wpisy" target="_self">Komentarze do wpisów</a>
-				</div>
-			</section>
-		</nav>
-
-		<nav class="profile_links">
-			<section>
-				<span>Mój profil</span>
-				<div>
-					<a href="/ludzie/${user.username}" target="_self">Profil</a>
-					<a href="/ludzie/${user.username}/znaleziska/dodane" target="_self">Dodane znaleziska</a>
-					<a href="/ludzie/${user.username}/znaleziska/komentowane" target="_self">Komentowane znaleziska</a>
-					<a href="/ludzie/${user.username}/znaleziska/wykopane" target="_self">Wykopane</a>
-					<a href="/ludzie/${user.username}/znaleziska/zakopane" target="_self">Zakopane</a>
-				</div>
-			</section>
-		</nav>
-
-		<nav class="profile_entries">
-			<section>
-				<span>Mój profil</span>
-				<div>
-					<a href="/ludzie/${user.username}/wpisy/dodane" target="_self">Dodane wpisy</a>
-					<a href="/ludzie/${user.username}/wpisy/komentowane" target="_self">Komentowane wpisy</a>
-					<a href="/ludzie/${user.username}/wpisy/plusowane" target="_self">Zaplusowane</a>
-				</div>
-			</section>
-		</nav>
-
-		<nav class="profile_observed">
-			<section>
-				<span>Mój profil</span>
-				<div>
-					<a href="/ludzie/${user.username}/obserwowane/profile" target="_self">Obserwowani @użytkownicy</a>
-					<a href="/ludzie/${user.username}/obserwowane/tagi" target="_self">Obserwowane #tagi</a>
-				</div>
-			</section>
-		</nav>
-
-		<nav class="add_new">
-			<section>
-				<span>Dodaj</span>
-				<div>
-					<a href="/dodaj-link" target="_self" title="Wykop X: Dodaj nowe znalezisko (link do strony internetowej)">Nowe znalezisko</a>
-					<a href="/mikroblog/#dodaj" target="_self" title="Wykop X: Dodaj nowy wpis na Mikroblogu">Nowy wpis na Mirko</a>
-				</div>
-			</section>
-		</nav>
-
-		`;
-				document.querySelector('body > section > header.header > div.left').appendChild(wxs_quick_links);
-			}
-		}
-
-	}
-
 
 
 	/* RIGHT SIDEBAR - DODAJ LISTE OBSERWOWANYCH TAGÓW */
@@ -1171,24 +981,155 @@
 
 
 
+	function addSwitchButtons()
+	{
+		let buttonsWrapper = document.createElement("section");
+		buttonsWrapper.classList.add("wxs_switches_container");
+
+		buttonsWrapper.innerHTML = `<datalist id="markers">
+										<option value="-1" label="OFF"></option>
+										<option value="0" label=""></option>
+										<option value="1" label="ON">ON</option>
+									</datalist>`;
+
+		if (settings.wxsSwitchByUserColor)
+		{
+			buttonsWrapper.innerHTML += `<div class="wxs_switch switchByUserColor">
+											<div>
+												<label class="label_OFF_0">Kolory</label>
+												<label class="label_ON_PLUS_1">Bez zielonek</label>
+												<label class="label_ON_PLUS_2">Tylko bordo</label>
+											</div>
+											<div>
+												<input type="range" id="switchByUserColor" list="markers" name="switchByUserColor" min="0" max="2" step="1" value="0" />
+											</div>
+										</div>`;
+		}
+		if (settings.wxsSwitchByUserGender)
+		{
+			buttonsWrapper.innerHTML += `<div class="wxs_switch switchByUserGender">
+											<div>
+												<label class="label_ON_MINUS_1" title="">Bez różowych</label>
+												<label class="label_OFF_0">Różowe</label>
+												<label class="label_ON_PLUS_1" title="">Tylko różowe</label>
+											</div>
+											<div>
+												<input type="range" id="switchByUserGender" list="markers" name="switchByUserGender" min="-1" max="1" step="1" value="0" />
+											</div>
+										</div>`;
+		}
+		if (settings.wxsSwitchNSFW)
+		{
+			buttonsWrapper.innerHTML += `<div class="wxs_switch switchEntriesNSFW showOnLinksStream showOnEntriesStream showOnEntryPage">
+											<div>
+												<label class="label_ON_MINUS_1" title=" Wpisy z tagiem #nsfw są ukryte">Bez #nsfw</label>\
+												<label class="label_OFF_0">#nsfw</label>
+												<label class="label_ON_PLUS_1" title=" Wyświetlane są tylko wpisy z tagiem #nsfw">Tylko #nsfw</label>
+											</div>
+											<div>
+												<input type="range" id="switchEntriesNSFW"  list="markers" name="switchEntriesNSFW" min="-1" max="1" step="1" value="0" />
+											</div>
+										</div>`;
+		}
+		if (settings.wxsSwitchAdult)
+		{
+			buttonsWrapper.innerHTML += `<div class="wxs_switch switchEntriesAdult showOnLinksStream showOnEntriesStream showOnEntryPage">
+											<div>
+												<label class="label_ON_MINUS_1" title=" Treści oznaczne jako materiały 18+ są ukryte">Bez 18+</label>\
+												<label class="label_OFF_0">18+</label>
+												<label class="label_ON_PLUS_1" title=" Wyświetlane są tylko treści oznaczone jako 18+ ">Tylko 18+</label>
+											</div>
+											<div>
+												<input type="range" id="switchEntriesAdult" list="markers" name="switchEntriesAdult" min="-1" max="1" step="1" value="0" />
+											</div>
+										</div>`;
+		}
+		if (settings.wxsSwitchPhotoViewer)
+		{
+			buttonsWrapper.innerHTML += `<div class="wxs_switch switchEntriesPhotoViewer showOnEntriesStream">
+											<div>
+												<label class="label_ON_MINUS_4" title=" Pokazuje tylko wpisy, które mają sam tekst. Ukrywa wszystkie wpisy z obrazkami, GIF-ami i dołączonymi filmikami wideo z YouTube lub Streamable">Bez mediów</label>
+												<label class="label_ON_MINUS_3" title=" Pokazuje tylko wpisy, które nie mają obrazków. Ukrywa wszystkie wpisy z obrazkami lub GIF-ami">Bez obrazków</label>
+												<label class="label_ON_MINUS_2" title=" Ukrycie obrazków">Ukryj obrazki</label>
+												<label class="label_ON_MINUS_1">Tylko z obrazkami</label>
+												<label class="label_OFF_0">Obrazki</label>
+												<label class="label_ON_PLUS_1">PhotoViewer</label>
+												<label class="label_ON_PLUS_2">PhotoViewer Ultra</label>
+											</div>
+											<div>
+												<input type="range" id="switchEntriesPhotoViewer" list="markers" name="switchEntriesPhotoViewer" min="-4" max="2" step="1" value="0" />
+											</div>
+										</div>`;
+		}
+		if (settings.wxsSwitchTags)
+		{
+			buttonsWrapper.innerHTML += `<div class="wxs_switch switchEntriesTags showOnEntriesStream">
+											<div>
+												<label class="label_ON_MINUS_1" title=" Wyświetlane są tylko wpisy nie zawierające w treści żadnych #tagów.\n Wpisy zawierające jakiekolwiek #tagi są ukryte">Tylko nocna</label>\
+												<label class="label_OFF_0">#tagi</label>
+												<label class="label_ON_PLUS_1" title=" Wyświetlane są tylko wpisy zawierające minimum jeden #tag.\n Wpisy bez żadnego #tagu są ukryte.">Tylko #tagi</label>
+											</div>
+											<div>
+												<input type="range" id="switchEntriesTags" list="markers" name="switchEntriesTags" min="-1" max="1" step="1" value="0" />
+											</div>
+										</div>`;
+		}
 
 
+		const nav = document.querySelector("body header div.right nav");
+		nav.parentNode.insertBefore(buttonsWrapper, nav);
+	}
+
+
+	function switchChanged(PointerEvent, cssFilterName)
+	{
+		/*
+			this -> clicked element == event.target
+			PointerEvent - even object
+		*/
+		//document.body.dataset[cssFilterName] = this.value;	//	<body data-wxs_switch_nsfw="1"]
+		if (this.value == 0) document.body.dataset[cssFilterName] = "OFF_0";	//	<body data-wxs_switch_nsfw="OFF"]
+		else if (this.value > 0) document.body.dataset[cssFilterName] = `ON_PLUS_${this.value}`;	//	<body data-wxs_switch_nsfw="ON_PLUS_1"]  // "ON_PLUS_1", "ON_PLUS_2", "ON_PLUS_3"
+		else document.body.dataset[cssFilterName] = `ON_MINUS_${Math.abs(this.value)}`;	//		<body data-wxs_switch_nsfw="ON_MINUS_1"]			<body data-wxs_switch_nsfw="-1"]
+	}
+
+
+
+	if (settings.wxsSwitchesEnable)
+	{
+		document.addEventListener("click", (event) =>
+		{
+			if (settings.wxsSwitchNSFW && event.target.closest("input#switchEntriesNSFW")) switchChanged.call(event.target, event, "wxs_switch_entries_nsfw");
+			else if (settings.wxsSwitchAdult && event.target.closest("input#switchEntriesAdult")) switchChanged.call(event.target, event, "wxs_switch_entries_adult");
+			else if (settings.wxsSwitchPhotoViewer && event.target.closest("input#switchEntriesPhotoViewer")) switchChanged.call(event.target, event, "wxs_switch_entries_photo_viewer");
+			else if (settings.wxsSwitchTags && event.target.closest("input#switchEntriesTags")) switchChanged.call(event.target, event, "wxs_switch_entries_tags");
+			else if (settings.wxsSwitchByUserColor && event.target.closest("input#switchByUserColor")) switchChanged.call(event.target, event, "wxs_switch_by_user_color");
+			else if (settings.wxsSwitchByUserGender && event.target.closest("input#switchByUserGender")) switchChanged.call(event.target, event, "wxs_switch_by_user_gender");
+		});
+	}
 
 	// ACTION BOX BUTTONS
 	document.addEventListener("click", (event) =>
 	{
-		if (settings.kraweznikEnable)
+		if (settings.actionBoxEnable)
 		{
 			if (settings.textsaverEnable)
 			{
-				if (event.target.closest("button.wxs_save")) saveThisEntryContent.call(event.target, event);
+				if (event.target.closest("button.wxs_save")) saveThisEntryContent.call(event.target, event); // TODO
 			}
 
-			if (settings.filterUserCommentsEnable)
+			if (settings.filterUserComments || settings.filterUserReplies)
 			{
-				if (event.target.closest("button.wxs_filter_on_user")) filterUserComments.call(event.target, event, "userComments");
-				if (event.target.closest("button.wxs_filter_on_replies")) filterUserComments.call(event.target, event, "userReplies");
 				if (event.target.closest("button.wxs_filter_off")) filterUserOff.call(event.target, event);
+
+				if (settings.filterUserComments)
+				{
+					if (event.target.closest("button.wxs_filter_on_user")) filterUserComments.call(event.target, event, "userComments");
+				}
+				if (settings.filterUserReplies)
+				{
+					if (event.target.closest("button.wxs_filter_on_replies")) filterUserComments.call(event.target, event, "userReplies");
+				}
 			}
 
 			if (settings.mirkoukrywaczEnable)
@@ -1198,7 +1139,7 @@
 				if (event.target.closest("button.wxs_hide")) hideThisEntry.call(event.target, event);
 
 
-				if (event.target.closest(".wykopx_mirkoukrywacz_unhide")) maximizeThisEntry.call(event.target, event, event.target.dataset.object_id);
+				if (event.target.closest(".wykopx_mirkoukrywacz_unhide")) maximizeThisEntry.call(event.target, event, event.target.dataset.wxs_object_id);
 
 			}
 		}
@@ -1273,7 +1214,7 @@
 	}
 	function filterUserComments(PointerEvent, filterType)
 	{
-		// filterUserCommentsEnable
+		// filterUserComments
 		// filterType // "userComments" / "userReplies"
 		/*
 		this -> clicked element == event.target
@@ -1282,16 +1223,15 @@
 
 		// alert(filterType);
 
-		console.clear();
 		const css_id = "wxs_css_filter_user_comments";
 
-		const filterUsername = this.dataset.authorUsername;
-		const filterUserGender = this.dataset.authorGender;
+		const filterUsername = this.dataset.wxs_author_username;
+		const filterUserGender = this.dataset.wxs_author_gender;
 
 		let filterStyles = [
-			`display: none!important;`,
-			`border: 3px solid gray!important; opacity: 0.3!important;`,
-			`filter: grayscale(1);`,
+			`display: none!important; `,
+			`border: 3px solid gray!important; opacity: 0.3!important; `,
+			`filter: grayscale(1); `,
 		]
 		let filterStyleIndex = 0;
 		let wxs_css_style_filter_user_comments = document.getElementById(css_id);
@@ -1324,134 +1264,134 @@
 		{
 			document.body.dataset.wxs_filter = "userComments"; // <body data-wxs_filter="userComments">
 
-			css = `.wxs_entry_menu > .wxs_filter_off { display: flex!important; }
+			css = `.wxs_menu_action_box > .wxs_filter_off { display: flex!important; }
 
-				/* odfiltrowane znaleziska */
-				body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .hits-page, .upcoming-page) > section section.stream > div.content > section.link-block:has(article > div.content > section.info a.username[href="/ludzie/${filterUsername}"])
-				{ 
-					border: 1px solid ${filterUserGender == "f" ? "var(--rozowyPasek1, rgba(192, 72, 167, 1))" : "var(--niebieskiPasek1, rgba(67, 131, 175, 1))"}!important;
-				}
+		/* odfiltrowane znaleziska */
+		body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .home - page, .observed - page, .profile - page, .tag - page, .hits - page, .upcoming - page) > section section.stream > div.content > section.link - block: has(article > div.content > section.info a.username[href = "/ludzie/${filterUsername}"])
+		{
+			border: 1px solid ${filterUserGender == "f" ? "var(--rozowyPasek1, rgba(192, 72, 167, 1))" : "var(--niebieskiPasek1, rgba(67, 131, 175, 1))"} !important;
+		}
 
 
-				/* strona wpisu - filtrowane komentarze */
-				body > section > div.main-content > main.main > section > div.content > section.entry-page > section.entry > section.entry-comments > div.content > section.entry.detailed > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"]),
-				
-				/* strona streamu wpisów - wpisy filtrowanego użytkownika */
-				body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"]),
+		/* strona wpisu - filtrowane komentarze */
+		body > section > div.main - content > main.main > section > div.content > section.entry - page > section.entry > section.entry - comments > div.content > section.entry.detailed > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"]),
+
+			/* strona streamu wpisów - wpisy filtrowanego użytkownika */
+			body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .observed - page, .profile - page, .tag - page, .microblog - page) > section section.stream > div.content > section.entry: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"]),
 
 				/* strona streamu wpisów - komentarze filtrowanego użytkownika */
-				body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"]),
+				body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .observed - page, .profile - page, .tag - page, .microblog - page) > section section.stream > div.content > section.entry > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"]),
 
-				/* strona znaleziska - komentarze i subkomentarze filtrowanego użytkownika */
-				body > section > div.main-content > main.main > section > div.content > section.link-page > section.link > section.comments > section.stream.link-comments > div.content section.entry:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"])
-				{ 
-					border: 1px solid ${filterUserGender == "f" ? "var(--rozowyPasek1, rgba(192, 72, 167, 1))" : "var(--niebieskiPasek1, rgba(67, 131, 175, 1))"}!important;
-				}
-
-
+					/* strona znaleziska - komentarze i subkomentarze filtrowanego użytkownika */
+					body > section > div.main - content > main.main > section > div.content > section.link - page > section.link > section.comments > section.stream.link - comments > div.content section.entry: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"])
+		{
+			border: 1px solid ${filterUserGender == "f" ? "var(--rozowyPasek1, rgba(192, 72, 167, 1))" : "var(--niebieskiPasek1, rgba(67, 131, 175, 1))"} !important;
+		}
 
 
 
-				/* strony ze znaleziskami oprócz głównej - znaleziska autora, odfiltrowwanie znalezisk innych użytkowników */
-				body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .hits-page, .upcoming-page) > section section.stream > div.content > section.link-block:not(:has(article > div.content > section.info a.username[href="/ludzie/${filterUsername}"])),
-				
-				/* strona główna - znaleziska autora, odfiltrowwanie znalezisk innych użytkowników a takze wpisow przypietych przez moderacje */
-				body > section > div.main-content > main.main > section > div.content > section.home-page > section section.stream > div.content > section:is(.link-block:not(:has(article > div.content > section.info a.username[href="/ludzie/${filterUsername}"])), .entry:not(:has(> article > header > div.right > div > div.tooltip-slot > span > a.username[href="/ludzie/${filterUsername}"]))),
+
+
+		/* strony ze znaleziskami oprócz głównej - znaleziska autora, odfiltrowwanie znalezisk innych użytkowników */
+		body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .home - page, .observed - page, .profile - page, .tag - page, .hits - page, .upcoming - page) > section section.stream > div.content > section.link - block: not(: has(article > div.content > section.info a.username[href = "/ludzie/${filterUsername}"])),
+
+			/* strona główna - znaleziska autora, odfiltrowwanie znalezisk innych użytkowników a takze wpisow przypietych przez moderacje */
+			body > section > div.main - content > main.main > section > div.content > section.home - page > section section.stream > div.content > section: is(.link - block: not(: has(article > div.content > section.info a.username[href = "/ludzie/${filterUsername}"])), .entry: not(: has(> article > header > div.right > div > div.tooltip - slot > span > a.username[href = "/ludzie/${filterUsername}"]))),
 
 				/* strona wpisu - ukrycie komentarzy nie-filtrowanych użytkowników */
-				body > section > div.main-content > main.main > section > div.content > section.entry-page > section.entry > section.entry-comments > div.content > section.entry.detailed > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:not(:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"])),
+				body > section > div.main - content > main.main > section > div.content > section.entry - page > section.entry > section.entry - comments > div.content > section.entry.detailed > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: not(: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"])),
 
-				/* strona streamu wpisów - ukrycie wpisów w ktorych nie ma wypowiedzi filtrowanego uzytkownika - ani wpis, ani komentarz*/
-				body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:not(:has(article > header > div.right a.username[href="/ludzie/${filterUsername}"])),
+					/* strona streamu wpisów - ukrycie wpisów w ktorych nie ma wypowiedzi filtrowanego uzytkownika - ani wpis, ani komentarz*/
+					body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .observed - page, .profile - page, .tag - page, .microblog - page) > section section.stream > div.content > section.entry: not(: has(article > header > div.right a.username[href = "/ludzie/${filterUsername}"])),
 
-				/* strona streamu wpisów - komentarze pod wpisami na streamach które zawierają komentarz filtrowanego użytkownika */
-				body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:has(article > header > div.right a.username[href="/ludzie/${filterUsername}"]) > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:not(:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"])),
+						/* strona streamu wpisów - komentarze pod wpisami na streamach które zawierają komentarz filtrowanego użytkownika */
+						body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .observed - page, .profile - page, .tag - page, .microblog - page) > section section.stream > div.content > section.entry: has(article > header > div.right a.username[href = "/ludzie/${filterUsername}"]) > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: not(: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"])),
 
-				/* strona streamu wpisów - komentarze pod wpisami na streamach które zawierają komentarz filtrowanego użytkownika */
-				body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:has(article > header > div.right a.username[href="/ludzie/${filterUsername}"]) > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:not(:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"])),
+							/* strona streamu wpisów - komentarze pod wpisami na streamach które zawierają komentarz filtrowanego użytkownika */
+							body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .observed - page, .profile - page, .tag - page, .microblog - page) > section section.stream > div.content > section.entry: has(article > header > div.right a.username[href = "/ludzie/${filterUsername}"]) > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: not(: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"])),
 
-				/* strona znaleziska - komentarze bez subkomentarzy filtrowanego użytkownika */
-				body > section > div.main-content > main.main > section > div.content > section.link-page > section.link > section.comments > section.stream.link-comments > div.content > section.entry:not(:has(div.right > div a.username[href="/ludzie/${filterUsername}"])),
-				
-				/* strona znaleziska - subkomentarze nie-filtrowanego użytkownika */
-				body > section > div.main-content > main.main > section > div.content > section.link-page > section.link > section.comments > section.stream.link-comments > div.content > section.entry > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:not(:has(> article > header > div.right > div a.username[href="/ludzie/${filterUsername}"]))
-				{
-					${filterStyles[filterStyleIndex]} 
-				}
+								/* strona znaleziska - komentarze bez subkomentarzy filtrowanego użytkownika */
+								body > section > div.main - content > main.main > section > div.content > section.link - page > section.link > section.comments > section.stream.link - comments > div.content > section.entry: not(: has(div.right > div a.username[href = "/ludzie/${filterUsername}"])),
 
-				
-				
+									/* strona znaleziska - subkomentarze nie-filtrowanego użytkownika */
+									body > section > div.main - content > main.main > section > div.content > section.link - page > section.link > section.comments > section.stream.link - comments > div.content > section.entry > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: not(: has(> article > header > div.right > div a.username[href = "/ludzie/${filterUsername}"]))
+		{
+					${filterStyles[filterStyleIndex]}
+		}
+
+
+
 		`;
 		}
 		else if (filterType == "userReplies")
 		{
 			document.body.dataset.wxs_filter = "userReplies"; // <body data-wxs_filter="userReplies">
 
-			css = `.wxs_entry_menu > .wxs_filter_off { display: flex!important; }
+			css = `.wxs_menu_action_box > .wxs_filter_off { display: flex!important; }
 
-				/* WYRÓŻNIENIE KOMENTARZY FILTROWANEGO UŻYTKOWNIKA */
-				/* strona wpisu - filtrowane komentarze */
-				body > section > div.main-content > main.main > section > div.content > section.entry-page > section.entry > section.entry-comments > div.content > section.entry.detailed > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"]),
+		/* WYRÓŻNIENIE KOMENTARZY FILTROWANEGO UŻYTKOWNIKA */
+		/* strona wpisu - filtrowane komentarze */
+		body > section > div.main - content > main.main > section > div.content > section.entry - page > section.entry > section.entry - comments > div.content > section.entry.detailed > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"]),
 
-				/* strona streamu wpisów - wpisy filtrowanego użytkownika */
-				body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"]),
+			/* strona streamu wpisów - wpisy filtrowanego użytkownika */
+			body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .observed - page, .profile - page, .tag - page, .microblog - page) > section section.stream > div.content > section.entry: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"]),
 
 				/* strona streamu wpisów - komentarze filtrowanego użytkownika */
-				body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"]),
+				body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .observed - page, .profile - page, .tag - page, .microblog - page) > section section.stream > div.content > section.entry > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"]),
+
+					/* strona znaleziska - komentarze i subkomentarze filtrowanego użytkownika */
+					body > section > div.main - content > main.main > section > div.content > section.link - page > section.link > section.comments > section.stream.link - comments > div.content section.entry: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"])
+
+		{
+			border: 2px solid ${filterUserGender == "f" ? "var(--rozowyPasek1, rgba(192, 72, 167, 1))" : "var(--niebieskiPasek1, rgba(67, 131, 175, 1))"} !important;
+		}
+
+
+		/* WYRÓŻNIENIE ODPOWIEDZI Z OZNACZONYM FILTROWANYM UŻYTKOWNIKIEM  */
+		/* strona wpisu - filtrowane komentarze */
+		body > section > div.main - content > main.main > section > div.content > section.entry - page > section.entry > section.entry - comments > div.content > section.entry.detailed > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: has(> article > div.edit - wrapper > div.content > section.entry - content > div.wrapper > a[href = "/ludzie/${filterUsername}"]),
+
+
+			/* strona streamu wpisów - komentarze z oznaczonym wołaniem filtrowanego użytkownika */
+			body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .observed - page, .profile - page, .tag - page, .microblog - page) > section section.stream > div.content > section.entry > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: has(> article > div.edit - wrapper > div.content > section.entry - content > div.wrapper a[href = "/ludzie/${filterUsername}"]),
 
 				/* strona znaleziska - komentarze i subkomentarze filtrowanego użytkownika */
-				body > section > div.main-content > main.main > section > div.content > section.link-page > section.link > section.comments > section.stream.link-comments > div.content section.entry:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"])
+				body > section > div.main - content > main.main > section > div.content > section.link - page > section.link > section.comments > section.stream.link - comments > div.content section.entry: has(> article > header > div.right a.username[href = "/ludzie/${filterUsername}"])
 
-				{ 
-					border: 2px solid ${filterUserGender == "f" ? "var(--rozowyPasek1, rgba(192, 72, 167, 1))" : "var(--niebieskiPasek1, rgba(67, 131, 175, 1))"}!important;
-				}
-
-
-				/* WYRÓŻNIENIE ODPOWIEDZI Z OZNACZONYM FILTROWANYM UŻYTKOWNIKIEM  */ 
-				/* strona wpisu - filtrowane komentarze */
-				body > section > div.main-content > main.main > section > div.content > section.entry-page > section.entry > section.entry-comments > div.content > section.entry.detailed > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href="/ludzie/${filterUsername}"]),
+		{
+			border: 2px solid var(--nicknameOrange1, rgba(255, 89, 23, 1))!important;
+		}
 
 
-				/* strona streamu wpisów - komentarze z oznaczonym wołaniem filtrowanego użytkownika */
-				body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper a[href="/ludzie/${filterUsername}"]),
-
-				/* strona znaleziska - komentarze i subkomentarze filtrowanego użytkownika */
-				body > section > div.main-content > main.main > section > div.content > section.link-page > section.link > section.comments > section.stream.link-comments > div.content section.entry:has(> article > header > div.right a.username[href="/ludzie/${filterUsername}"])
-
-				{ 
-					border: 2px solid var(--nicknameOrange1, rgba(255, 89, 23, 1))!important;
-				}
-
-	
-				/* wyróżnienie tagowanego w odpowiedzi */
-				section.entry.reply > article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href="/ludzie/${filterUsername}"]
-				{
-					background-color: var(--whiteOpacity1);
-					padding: 0px 5px 0px 5px;
-					margin-right: 5px;
-					border-bottom: 1px solid;
-					font-weight: bolder!important;
-				}
+		/* wyróżnienie tagowanego w odpowiedzi */
+		section.entry.reply > article > div.edit - wrapper > div.content > section.entry - content > div.wrapper > a[href = "/ludzie/${filterUsername}"]
+		{
+			background - color: var(--whiteOpacity1);
+			padding: 0px 5px 0px 5px;
+			margin - right: 5px;
+			border - bottom: 1px solid;
+			font - weight: bolder!important;
+		}
 
 
-				/* UKRYCIE KOMENTARZY, KTÓRE NIE SĄ FILTROWANEGO UŻYTKOWNIKA ANI NIE WOŁAJĄ FILTROWANEGO UŻYTKOWNIKA */
+		/* UKRYCIE KOMENTARZY, KTÓRE NIE SĄ FILTROWANEGO UŻYTKOWNIKA ANI NIE WOŁAJĄ FILTROWANEGO UŻYTKOWNIKA */
 
-				/* strona wpisu - ukrycie komentarzy nie-filtrowanych użytkowników */
-				body > section > div.main-content > main.main > section > div.content > section.entry-page > section.entry > section.entry-comments > div.content > section.entry.detailed > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:not(:has(> article > header a.username[href="/ludzie/${filterUsername}"], > article > div.edit-wrapper > div.content > section.entry-content > div.wrapper a[href="/ludzie/${filterUsername}"])),
+		/* strona wpisu - ukrycie komentarzy nie-filtrowanych użytkowników */
+		body > section > div.main - content > main.main > section > div.content > section.entry - page > section.entry > section.entry - comments > div.content > section.entry.detailed > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: not(: has(> article > header a.username[href = "/ludzie/${filterUsername}"], > article > div.edit - wrapper > div.content > section.entry - content > div.wrapper a[href = "/ludzie/${filterUsername}"])),
 
-				/* strona streamu wpisów - ukrycie wpisów i komentarzy które nie są wypowiedziami filtrowanego uzytkownika ani nie zawierają w treści otagowanego filtrowanego użytkownika */
-				body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:not(:has(div > a[href="/ludzie/${filterUsername}"])),
+			/* strona streamu wpisów - ukrycie wpisów i komentarzy które nie są wypowiedziami filtrowanego uzytkownika ani nie zawierają w treści otagowanego filtrowanego użytkownika */
+			body > section > div.main - content > main.main > section > div.content > section: is(.bucket - page, .search - page, .category - page, .favourites - page, .observed - page, .profile - page, .tag - page, .microblog - page) > section section.stream > div.content > section.entry: not(: has(div > a[href = "/ludzie/${filterUsername}"])),
 
 				/* strona znaleziska - komentarze bez subkomentarzy filtrowanego użytkownika */
-				body > section > div.main-content > main.main > section > div.content > section.link-page > section.link > section.comments > section.stream.link-comments > div.content > section.entry:not(:has(a.username[href="/ludzie/${filterUsername}"])),
-				
-				/* strona znaleziska - subkomentarze nie-filtrowanego użytkownika */
-				body > section > div.main-content > main.main > section > div.content > section.link-page > section.link > section.comments > section.stream.link-comments > div.content > section.entry > div.comments > section.stream.entry-subcomments > div.content > section.entry.reply:not(:has(a.username[href="/ludzie/${filterUsername}"]))
-				{
-					${filterStyles[filterStyleIndex]} 
-				}
+				body > section > div.main - content > main.main > section > div.content > section.link - page > section.link > section.comments > section.stream.link - comments > div.content > section.entry: not(: has(a.username[href = "/ludzie/${filterUsername}"])),
 
-			
+					/* strona znaleziska - subkomentarze nie-filtrowanego użytkownika */
+					body > section > div.main - content > main.main > section > div.content > section.link - page > section.link > section.comments > section.stream.link - comments > div.content > section.entry > div.comments > section.stream.entry - subcomments > div.content > section.entry.reply: not(: has(a.username[href = "/ludzie/${filterUsername}"]))
+		{
+					${filterStyles[filterStyleIndex]}
+		}
+
+
 
 		`;
 		}
@@ -1503,7 +1443,7 @@
 	{
 		console.log("--- hide this, this:")
 
-		let resource = this.dataset.resource;
+		let resource = this.dataset.wxs_resource;
 
 		let entry_stream = this?.closest(".stream");
 		if (entry_stream)
@@ -1545,7 +1485,7 @@
 	// 				button.style.border = "2px solid red!important";
 	// 				button.click()
 	// 			});
-	// 			consoleX(`Automatycznie rozwinięto ${showAllCommentsButtons.length} spoilerów`);
+	// 			consoleX(`Automatycznie rozwinięto ${ showAllCommentsButtons.length } spoilerów`);
 	// 		}
 	// 	}
 	// }
@@ -1624,8 +1564,8 @@
 	// strona wpisu, caly wpis: section:is(.entry:has(> article), .link-block:has(> section > article)):not(.deleted)
 
 	// tylko czesc wpisu bez komentarzy "section.entry:not(.deleted):has(> article), section.link-block:not(.deleted) > section > article)
-
-	waitForKeyElements("section.entry:not(.deleted):has(> article), section.link-block:not(.deleted, .premium-pub, .market-pub):has(> section > article)", sectionObjectDetected, false);
+	/// :not(.deleted)
+	waitForKeyElements("section.entry:has(> article), section.link-block:not(.premium-pub, .market-pub):has(> section > article)", sectionObjectDetected, false);
 	function sectionObjectDetected(jNodeSectionElement)
 	{
 		// console.log(`waitForKeyElements("section is(.entry > article, .link - block: has(> section > article)): not(.deleted)"`)
@@ -1634,74 +1574,125 @@
 	}
 
 
+
+	function replaceDigitsWithDot(num)
+	{
+		if (num < 100)
+		{
+			return num.toString().slice(0, -1) + " ·";
+		} else
+		{
+			return num.toString().slice(0, -2) + " · ·";
+		}
+	}
+
+
 	// INTERSECTION OBSERVED
+
 	const sectionObjectsAreIntersecting = async (intersectingObject, observer) =>
 	{
 		intersectingObject.forEach(async (IntersectionObserverEntry) =>															// InterIntersectionObserverEntry
 		{
-			let sectionObjectElement = IntersectionObserverEntry.target;														// element <section class="entry"> <section class="link-block">
-			console.log("XXX: sectionObjectElement")
-			console.log(sectionObjectElement);
-			const resource = sectionObjectElement.__vue__.item.resource;		// resource = "link", "entry", "entry_comment"
-			const author_username = sectionObjectElement.__vue__.item.author.username;
-			const author_gender = sectionObjectElement.__vue__.item.author.gender;
+
+
+			// ----- ALL INTERSECTIONS CHANGED 
+
+			let sectionObjectElement = IntersectionObserverEntry.target;														// element <section class="entry"> 
+			let resource = null;		// resource = "link", "entry", "entry_comment"
+			// console.log("XXX: sectionObjectElement")
+			// console.log(sectionObjectElement);
 
 
 
 
-			if (resource != "link") // wpisy i komentarze
+			// ----- INTERSECTION CHANGED FOR THE FIRST TIME:
+
+			if (!sectionObjectElement.dataset.wxs_first_load_time) 
 			{
-				if (settings.checkEntryPlusesEnable && settings.checkEntryPlusesPerMinute && !sectionObjectElement.dataset.wxs_first_load_votes_count)
-				{
-					if (!sectionObjectElement.dataset.wxs_first_load_time) sectionObjectElement.dataset.wxs_first_load_time = dayjs().valueOf(); // data unix kiedy przybyly ostatnio odswiezone plusy - tutaj czas załadowania strony
-					sectionObjectElement.dataset.wxs_first_load_votes_count = sectionObjectElement.__vue__.item.votes.up - sectionObjectElement.__vue__.item.votes.down;
-				}
+				// data-wxs_first_load_time="2024-12-12..."
+				sectionObjectElement.dataset.wxs_first_load_time = dayjs().valueOf(); // data unix kiedy przybyly ostatnio odswiezone plusy - tutaj czas załadowania strony
+				resource = sectionObjectElement.__vue__.item.resource;
 
-				if (resource == "entry") // tu moglyby byc jeszcze komentarze w znaleziskach
+
+				// wpisy i komentarze
+				if (resource != "link") 
 				{
-					if (settings.checkEntryCommentsPerHour && !sectionObjectElement.dataset.wxs_first_load_comments_count)
+					if (settings.checkEntryPlusesEnable && settings.checkEntryPlusesPerHour && !sectionObjectElement.dataset.wxs_first_load_votes_count)
+					{
+						sectionObjectElement.dataset.wxs_first_load_votes_count = sectionObjectElement.__vue__.item.votes.up - sectionObjectElement.__vue__.item.votes.down;
+					}
+
+					sectionObjectElement.style.setProperty('--votesUp', `"+${sectionObjectElement.__vue__.item.votes.up}"`);
+					sectionObjectElement.style.setProperty('--votesDown', `"+${sectionObjectElement.__vue__.item.votes.down}"`);
+					sectionObjectElement.dataset.wxs_votes_up = sectionObjectElement.__vue__.item.votes.up;
+					sectionObjectElement.dataset.wxs_votes_down = sectionObjectElement.__vue__.item.votes.down;
+					sectionObjectElement.dataset.wxs_voted = sectionObjectElement.__vue__.item.voted;
+					sectionObjectElement.dataset.wxs_first_load_votes_count = sectionObjectElement.__vue__.item.votes.up - sectionObjectElement.__vue__.item.votes.down;
+					sectionObjectElement.dataset.wxs_votes_count = sectionObjectElement.__vue__.item.votes.up - sectionObjectElement.__vue__.item.votes.down;
+					sectionObjectElement.dataset.wxs_votes_all = sectionObjectElement.__vue__.item.votes.up + sectionObjectElement.__vue__.item.votes.down;
+
+
+					if (resource == "entry") // tu moglyby byc jeszcze komentarze w znaleziskach
+					{
+						// sprawdzenie czy wpis zawiera grę w plusowanie
+						if (settings.checkEntryPlusesForVotingGame)
+						{
+							var substrings = ["tnia cyfra", "cyfra powie", "niej cyfry", "iczba po zaplus", "yfra po zaplus"];
+							var containsSubstring = substrings.some(substring => sectionObjectElement.__vue__.item.content.includes(substring));
+
+							if (containsSubstring)
+							{
+								sectionObjectElement.dataset.wxs_voting_game = "true";
+								//sectionObjectElement.style.setProperty('--votesUpHidden', `"+${replaceDigitsWithDot(sectionObjectElement.__vue__.item.votes.up)}"`);
+								sectionObjectElement.style.setProperty('--votesUpHidden', `"` + replaceDigitsWithDot(sectionObjectElement.__vue__.item.votes.up) + `"`);
+								let votingGameLastDigit = sectionObjectElement.__vue__.item.votes.up + 1; // ostatnia cyfra po zaplusowaniu
+								votingGameLastDigit = votingGameLastDigit.toString().slice(-1);
+								sectionObjectElement.style.setProperty('--votingGameLastDigit', `"` + votingGameLastDigit + `"`);
+							}
+						}
+
+						if (settings.checkEntryCommentsPerHour && !sectionObjectElement.dataset.wxs_first_load_comments_count)
+						{
+							sectionObjectElement.dataset.wxs_first_load_comments_count = sectionObjectElement.__vue__.item.comments.count;
+						}
+					}
+				}
+				else if (resource == "link")
+				{
+					if (settings.checkLinkVotesEnable && settings.checkLinkVotesPerHour && !sectionObjectElement.dataset.wxs_first_load_votes_count)
+					{
+						sectionObjectElement.style.setProperty('--votesUp', `"+${sectionObjectElement.__vue__.item.votes.up}"`);
+						sectionObjectElement.style.setProperty('--votesDown', `"+${sectionObjectElement.__vue__.item.votes.down}"`);
+						sectionObjectElement.dataset.wxs_votes_up = sectionObjectElement.__vue__.item.votes.up;
+						sectionObjectElement.dataset.wxs_votes_down = sectionObjectElement.__vue__.item.votes.down;
+						sectionObjectElement.dataset.wxs_voted = sectionObjectElement.__vue__.item.voted;
+						sectionObjectElement.dataset.wxs_first_load_votes_count = sectionObjectElement.__vue__.item.votes.up - sectionObjectElement.__vue__.item.votes.down;
+						sectionObjectElement.dataset.wxs_votes_count = sectionObjectElement.__vue__.item.votes.up - sectionObjectElement.__vue__.item.votes.down;
+						sectionObjectElement.dataset.wxs_votes_all = sectionObjectElement.__vue__.item.votes.up + sectionObjectElement.__vue__.item.votes.down;
+					}
+					if (settings.checkLinkCommentsPerHour && !sectionObjectElement.dataset.wxs_first_load_comments_count)
 					{
 						if (!sectionObjectElement.dataset.wxs_first_load_time) sectionObjectElement.dataset.wxs_first_load_time = dayjs().valueOf(); // data unix kiedy przybyly ostatnio odswiezone plusy - tutaj czas załadowania strony
 						sectionObjectElement.dataset.wxs_first_load_comments_count = sectionObjectElement.__vue__.item.comments.count;
 					}
 				}
 
-			}
-			else if (resource == "link")
-			{
-				if (settings.checkLinkVotesEnable && settings.checkLinkVotesPerHour && !sectionObjectElement.dataset.wxs_first_load_votes_count)
-				{
-					if (!sectionObjectElement.dataset.wxs_first_load_time) sectionObjectElement.dataset.wxs_first_load_time = dayjs().valueOf(); // data unix kiedy przybyly ostatnio odswiezone plusy - tutaj czas załadowania strony
-					sectionObjectElement.dataset.wxs_first_load_votes_count = sectionObjectElement.__vue__.item.votes.up - sectionObjectElement.__vue__.item.votes.down;
-				}
-				if (settings.checkLinkCommentsPerHour && !sectionObjectElement.dataset.wxs_first_load_comments_count)
-				{
-					if (!sectionObjectElement.dataset.wxs_first_load_time) sectionObjectElement.dataset.wxs_first_load_time = dayjs().valueOf(); // data unix kiedy przybyly ostatnio odswiezone plusy - tutaj czas załadowania strony
-					sectionObjectElement.dataset.wxs_first_load_comments_count = sectionObjectElement.__vue__.item.comments.count;
-				}
+				pageTotalVotesUpCount += sectionObjectElement.__vue__.item.votes.up;
 			}
 
 
 
-
-
-			console.log("sectionObjectElement.dataset.wxs_first_load_time")
-			console.log(sectionObjectElement.dataset.wxs_first_load_time)
-			console.log("sectionObjectElement.dataset.wxs_first_load_votes_count")
-			console.log(sectionObjectElement.dataset.wxs_first_load_votes_count)
-			console.log("sectionObjectElement.dataset.wxs_first_load_comments_count")
-			console.log(sectionObjectElement.dataset.wxs_first_load_comments_count)
+			// ----- INTERSECTING OBJECT IS VISIBLE
 
 
 			// IS INTERSECTING!
 			if (IntersectionObserverEntry.isIntersecting)
 			{
+				if (!resource) resource = sectionObjectElement.__vue__.item.resource;
+
 				let object_id = sectionObjectElement.id;  						// object_id > id="comment-1234567"
 				let id = sectionObjectElement.__vue__.item.id;					// id > 1234567
 				let parent_resource, parent_id;
-
-				//	console.log(sectionObjectElement);			
-
 
 				//	ZA KAŻDYM RAZEM GDY POJAWIA SIE NA EKRANIE:
 				sectionObjectElement.classList.add("isIntersecting");
@@ -1709,7 +1700,7 @@
 
 
 				// ZNALEZISKO WIĘC WŁĄCZAMY ANALIZĘ ZNALEZISKA
-				if (resource == "link")
+				if (resource == "link") 
 				{
 					if (settings.checkLinkVotesEnable)
 					{
@@ -1719,38 +1710,55 @@
 				// WPISY I KOMENTARZE
 				else
 				{
-
 					if (settings.checkEntryPlusesEnable)
 					{
-						let timeoutId = null
-						let firstFetchDelay = 10;
-						let ongoingFetchDelay = 20;
-
-						let i = 1;
-						let timeoudId = setTimeout(function checkPlusesAgain()
+						// tylko wpisy i komentarze, które mają minimum X plusów i nie są starsze niż Y dni
+						if ((sectionObjectElement.__vue__.item.votes.up > votesFetchingLimitMinimumVotes || sectionObjectElement.__vue__.item.votes.down > votesFetchingLimitMinimumVotes) && loadTime.diff(dayjs(sectionObjectElement.__vue__.item.created_at), 'hour') < votesFetchingLimitMaximumHoursOld)
 						{
-							//console.clear();
-							console.log(`Timeout ID: ${timeoudId} - fetch pluses every ${ongoingFetchDelay}s nr: ${i++}`);
-							console.log(sectionObjectElement);
-							checkPluses(sectionObjectElement);
-
-							if (sectionObjectElement.classList.contains("isIntersecting")) setTimeout(checkPlusesAgain, ongoingFetchDelay * 1000)
-						}, firstFetchDelay * 1000);
+							let timeoutId = null
 
 
-						// ZABAWA W PLUSY
-						if (resource == "entry" && settings.checkEntryPlusesForVotingGame)
-						{
+							let i = 1;
+							let timeoudId = setTimeout(function checkPlusesAgain()
+							{
+								checkPluses(sectionObjectElement, undefined, true);
 
+								if (sectionObjectElement.classList.contains("isIntersecting"))
+								{
+
+									if ((sectionObjectElement.dataset.wxs_votes_fetch_high_frequency)
+										|| ((loadTime.diff(dayjs(sectionObjectElement.__vue__.item.created_at), 'hour') < votesFetchingHigherFrequencyLimitMaximumHoursOld)
+											&& sectionObjectElement.__vue__.item.votes.up > votesFetchingHigherFrequencyLimitMinimumVotes))
+									{
+										if (!sectionObjectElement.dataset.wxs_votes_fetch_high_frequency) sectionObjectElement.dataset.wxs_votes_fetch_high_frequency = "true";
+										setTimeout(checkPlusesAgain, votesFetchingHigherFrequencyDelayInSeconds * 1000)
+									}
+									else
+									{
+										setTimeout(checkPlusesAgain, votesFetchingOngoingDelayInSeconds * 1000)
+									}
+								}
+							}, votesFetchingFirstDelayInSeconds * 1000);
+
+							// ZABAWA W PLUSY
+							if (resource == "entry" && settings.checkEntryPlusesForVotingGame)
+							{
+
+							}
 						}
+
 					}
 				}
 
 
+				// ----- IS VISIBLE FOR THE FIRST TIME
 
-				// TYLKO PIERWSZY RAZ WIDZIMY WPIS/KOMENTARZ/ZNALEZISKO
+
+
+				// GDY PIERWSZY RAZ WIDZIMY WPIS/KOMENTARZ/ZNALEZISKO
 				if (!sectionObjectElement.classList.contains("wasIntersecting"))
 				{
+
 
 					sectionObjectElement.classList.add("wasIntersecting");
 
@@ -1763,71 +1771,90 @@
 							linkSectionIntersected(sectionObjectElement)  // waitForKeyElements(`section.link-block[id^="link-"]`, , false);  // GM_wrench.waitForKeyElements(`section.link-block[id^="link-"]`, linkSectionIntersected, false);
 						}
 					}
-					// WPISY I KOMENTARZE
+					// WPISY, KOMENTARZE POD WPISAMI, KOMENTARZE POD ZNALEZISKAMI, 
 					else
 					{
+
 						const ratingBoxSection = sectionObjectElement.querySelector(".rating-box")
-						if (settings.votingExplosionEnable) votingExplosionEventListener(ratingBoxSection);
+						if (settings.votingExplosionEnable || settings.checkEntryPlusesWhenVoting) votingEventListener(sectionObjectElement, ratingBoxSection);
 
 
-						if (ratingBoxSection && settings.checkEntryPlusesEnable && settings.checkEntryPlusesPerMinute)
+
+						if (ratingBoxSection && settings.checkEntryPlusesEnable && settings.checkEntryPlusesPerHour)
 						{
-							let wxs_votes_per_minuteDivElement = document.createElement("div");
-							wxs_votes_per_minuteDivElement.classList = "wxs_votes_per_minute";
-							ratingBoxSection.appendChild(wxs_votes_per_minuteDivElement);
+							if ((sectionObjectElement.__vue__.item.votes.up > votesFetchingLimitMinimumVotes || sectionObjectElement.__vue__.item.votes.down > votesFetchingLimitMinimumVotes) && loadTime.diff(dayjs(sectionObjectElement.__vue__.item.created_at), 'day') < votesFetchingLimitMaximumHoursOld)
+							{
+								let wxs_votes_per_hourDivElement = document.createElement("div");
+								wxs_votes_per_hourDivElement.classList = "wxs_votes_per_hour";
+								ratingBoxSection.appendChild(wxs_votes_per_hourDivElement);
+							}
+
 						}
 					}
 
 
 					if (sectionObjectElement.__vue__.item.parent)
 					{
-						parent_resource = sectionObjectElement.__vue__.item.parent.resource;		// data-parent-resource="entry"
-						parent_id = sectionObjectElement.__vue__.item.parent.id;					// data-parent-id="1234567"
+						parent_resource = sectionObjectElement.__vue__.item.parent.resource;		// data-wxs_parent_resource="entry"
+						parent_id = sectionObjectElement.__vue__.item.parent.id;					// data-wxs_parent_id="1234567"
 					}
 
 
-					// TWORZYMY KRAWĘŻNIK
-					if (settings.kraweznikEnable)
+					// TWORZYMY ACTION BOX
+					if (settings.actionBoxEnable)
 					{
-						let wxs_entry_menu = document.createElement("div");
-						wxs_entry_menu.classList.add("wxs_entry_menu"); // 📰📑 🔖 ⎀⎊👁 🖾 🗙 ⌧ ⮽ 🗳 ☒ 🗵 🗷- ‐ ‑ – ‒ — ― _ ﹏🗖 ⎀ ⎊
-
-						let wxs_entry_menu_css = ``;
+						const wxs_author_username = sectionObjectElement.__vue__.item.author.username;
+						const wxs_author_gender = sectionObjectElement.__vue__.item.author.gender;
 
 
-						if (settings.filterUserCommentsEnable)
+						let wxs_menu_action_box = document.createElement("div");
+						wxs_menu_action_box.classList.add("wxs_menu_action_box"); // 📰📑 🔖 ⎀⎊👁 🖾 🗙 ⌧ ⮽ 🗳 ☒ 🗵 🗷- ‐ ‑ – ‒ — ― _ ﹏🗖 ⎀ ⎊
+
+						let wxs_menu_action_box_css = ``;
+
+
+						if (settings.filterUserComments || settings.filterUserReplies)
 						{
-							wxs_entry_menu_css += `<button data-object-id="${object_id}" data-id="${id}" data-resource="${resource}" data-parent-id="${parent_id}" data-parent-resource="${parent_resource}" data-author-username="${author_username}" data-author-gender="${author_gender}" class="wxs_filter_off" title=" Wykop X - wyłącz filtrowanie \n \n Pokaż normalnie wszystkie odfiltrowane komentarze / znaleziska \n \n ">❌ Wyłącz filtr</button>
+							wxs_menu_action_box_css += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_filter_off" title=" Wykop X - wyłącz filtrowanie \n \n Pokaż normalnie wszystkie odfiltrowane komentarze / znaleziska \n \n ">❌ Wyłącz filtr</button>`;
 
-							<button data-object-id="${object_id}" data-id="${id}" data-resource="${resource}" data-parent-id="${parent_id}" data-parent-resource="${parent_resource}" data-author-username="${author_username}" data-author-gender="${author_gender}" class="wxs_filter_on_user" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 - 𝗳𝗶𝗹𝘁𝗿𝗼𝘄𝗮𝗻𝗶𝗲 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝘆/𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸	\n \n Na stronach zawierających 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 (pod wpisami i pod znaleziskami) \n odfiltrowuje 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 innych użytkowników. \n Pozostawia widoczne wyłącznie 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 tego użytkownika. \n \n Na stronach zawierających 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 (np. główna, wykopalisko) \n odfiltrowuje 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 innych użytkowników. \n Pozostawia widoczne wyłącznie 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 tego użytkownika. \n \n \n Klikając przełączasz tryb filtrowania: \n - Filtr 1: całkowicie ukrywa odfiltrowane komentarze \n - Filtr 2: odfiltrowane komentarze półprzezroczyste \n - Filtr 3: odfiltrowane komentarze czarno białe \n \n ">Filtruj</button>
+							if (settings.filterUserComments)
+							{
+								wxs_menu_action_box_css += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_filter_on_user" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 - 𝗳𝗶𝗹𝘁𝗿𝗼𝘄𝗮𝗻𝗶𝗲 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝘆/𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸	\n \n Na stronach zawierających 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 (pod wpisami i pod znaleziskami) \n odfiltrowuje 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 innych użytkowników. \n Pozostawia widoczne wyłącznie 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 tego użytkownika. \n \n Na stronach zawierających 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 (np. główna, wykopalisko) \n odfiltrowuje 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 innych użytkowników. \n Pozostawia widoczne wyłącznie 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 tego użytkownika. \n \n \n Klikając przełączasz tryb filtrowania: \n - Filtr 1: całkowicie ukrywa odfiltrowane komentarze \n - Filtr 2: odfiltrowane komentarze półprzezroczyste \n - Filtr 3: odfiltrowane komentarze czarno białe \n \n ">Filtruj</button>`;
+							}
+							if (settings.filterUserReplies)
+							{
+								wxs_menu_action_box_css += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_filter_on_replies" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 - 𝗳𝗶𝗹𝘁𝗿𝗼𝘄𝗮𝗻𝗶𝗲 𝗱𝘆𝘀𝗸𝘂𝘀𝗷𝗶 𝗶 𝗼𝗱𝗽𝗼𝘄𝗶𝗲𝗱𝘇𝗶 \n \n Odfiltrowuje 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲, które nie dotyczą tego użytkownika.  \n \n  Nie ukrywa: \n - komentarzy tego użytkownika \n - odpowiedzi, które zawierają @wołanie tego użytkownika \n \n Klikając przełączasz tryb filtrowania: \n - Filtr 1: całkowicie ukrywa odfiltrowane komentarze \n - Filtr 2: odfiltrowane komentarze półprzezroczyste \n - Filtr 3: odfiltrowane komentarze czarno białe \n \n ">Filtruj @</button>`;
+							}
 
 
-							<button data-object-id="${object_id}" data-id="${id}" data-resource="${resource}" data-parent-id="${parent_id}" data-parent-resource="${parent_resource}" data-author-username="${author_username}" data-author-gender="${author_gender}" class="wxs_filter_on_replies" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 - 𝗳𝗶𝗹𝘁𝗿𝗼𝘄𝗮𝗻𝗶𝗲 𝗱𝘆𝘀𝗸𝘂𝘀𝗷𝗶 𝗶 𝗼𝗱𝗽𝗼𝘄𝗶𝗲𝗱𝘇𝗶 \n \n Odfiltrowuje 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲, które nie dotyczą tego użytkownika.  \n \n  Nie ukrywa: \n - komentarzy tego użytkownika \n - odpowiedzi, które zawierają @wołanie tego użytkownika \n \n Klikając przełączasz tryb filtrowania: \n - Filtr 1: całkowicie ukrywa odfiltrowane komentarze \n - Filtr 2: odfiltrowane komentarze półprzezroczyste \n - Filtr 3: odfiltrowane komentarze czarno białe \n \n ">Filtruj @</button>`;
 						}
 						if (settings.textsaverEnable)
 						{
 							if (settings.textsaverSaveEntries || settings.textsaverSaveComments)
 							{
-								wxs_entry_menu_css += `<button data-object-id="${object_id}" data-id="${id}" data-resource="${resource}" data-parent-id="${parent_id}" data-parent-resource="${parent_resource}" data-author-username="${author_username}" data-author-gender="${author_gender}" class="wxs_save" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 - 𝘇𝗮𝗽𝗮𝗺𝗶𝗲̨𝘁𝗮𝗷 𝘁𝗿𝗲𝘀́𝗰́ \n \n Treść wybranego wpisu/komentarza zostanie zapisana lokalnie w Twojej przeglądarce. W przypadku późniejszej edycji treści lub usunięcia komentarza, zobaczysz odtworzoną zapisaną przez Wykop X wersję. \n \n ">Zapisz</button>`;
+								wxs_menu_action_box_css += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_save" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 - 𝘇𝗮𝗽𝗮𝗺𝗶𝗲̨𝘁𝗮𝗷 𝘁𝗿𝗲𝘀́𝗰́ \n \n Treść wybranego wpisu/komentarza zostanie zapisana lokalnie w Twojej przeglądarce. W przypadku późniejszej edycji treści lub usunięcia komentarza, zobaczysz odtworzoną zapisaną przez Wykop X wersję. \n \n ">Zapisz</button>`;
 							}
 						}
 						if (settings.mirkoukrywaczEnable)
 						{
 							if (settings.mirkoukrywaczHideComments || settings.mirkoukrywaczHideEntries || settings.mirkoukrywaczHideLinks)
 							{
-								wxs_entry_menu_css += `<button data-object-id="${object_id}" data-id="${id}" data-resource="${resource}" data-parent-id="${parent_id}" data-parent-resource="${parent_resource}" data-author-username="${author_username}" data-author-gender="${author_gender}" class="wxs_minimize" title="Wykop X Krawężnik - zminimalizuj">[ — ]</button>
+								wxs_menu_action_box_css += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_minimize" title="Wykop X Krawężnik - zwiń">[ — ]</button>
 
-								<button data-object-id="${object_id}" data-id="${id}" data-resource="${resource}" data-parent-id="${parent_id}" data-parent-resource="${parent_resource}" data-author-username="${author_username}" data-author-gender="${author_gender}" class="wxs_maximize" title="Wykop X Krawężnik - pokaż cały">[ + ]</button>
+								<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_maximize" title="Wykop X Krawężnik - pokaż cały">[ + ]</button>
 
-								<button data-object-id="${object_id}" data-id="${id}" data-resource="${resource}" data-parent-id="${parent_id}" data-parent-resource="${parent_resource}" data-author-username="${author_username}" data-author-gender="${author_gender}" class="wxs_hide" title="Wykop X Mirkoukrywacz - ukryj"> Ukryj 🗙</button> `;
+								<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_hide" title="Wykop X Mirkoukrywacz - ukryj"> Ukryj 🗙</button> `;
 							}
 						}
 
 						// DODAJEMY KRAWĘŻNIK
-						wxs_entry_menu.innerHTML = wxs_entry_menu_css;
+						wxs_menu_action_box.innerHTML = wxs_menu_action_box_css;
 						const sectionEntryHeaderElement = sectionObjectElement.querySelector("article > header");
-						sectionEntryHeaderElement.parentNode.insertBefore(wxs_entry_menu, sectionEntryHeaderElement);
+						sectionEntryHeaderElement.parentNode.insertBefore(wxs_menu_action_box, sectionEntryHeaderElement);
 					}
+
+
+
 
 					if (settings.infoboxEnable || settings.notatkowatorEnable)
 					{
@@ -1881,7 +1908,7 @@
 					if (resource == "entry" && sectionObjectElement.classList.contains("detailed")) 						// jestesmy na stronie wpisu i ta sekcja to glowny wpis
 					{
 						const wxs_comments_count = sectionObjectElement.__vue__.item.comments.items.length;					// .__vue__.item.comments.count -> bug wykopu - nie dziala, zawsze 0
-						sectionObjectElement.dataset.wxs_comments_count = wxs_comments_count;								// <section class="entry detailed" data-wxs_comments-count="99" data-comments-author-count="12" data-comments-author-percent="10%">
+						sectionObjectElement.dataset.wxs_comments_count = wxs_comments_count;								// <section class="entry detailed" data-wxs_comments-count="99" data-wxs_comments_author_count="12" data-comments-author-percent="10%">
 
 						if (wxs_comments_count > 0)
 						{
@@ -1895,7 +1922,7 @@
 			}
 			else
 			{
-				// TODO usunąć sprawdzanie plusów/wykopów na żywo
+				// TODO usunąć sprawdzanie plusów/wykopów na żywo - chyba nie trzeba
 
 				// consoleX(`section.entry NOT intersecting: ${id}`, 1)
 				sectionObjectElement.classList.remove("isIntersecting");
@@ -1937,7 +1964,7 @@
 					,tags: Array
 					.voted: 0
 					.votes [.down: 1 / .up: 2 / .users: Array[]]
-	
+		
 		__vue__.item. author.
 							.avatar (url jpg)
 							.blacklist: false
@@ -1958,8 +1985,11 @@
 	{
 
 		console.log(`createInfoboxDivsForUserEverywhere(${username})`);
-		let userInfoElementTitle = `𝗪𝘆𝗸𝗼𝗽 𝗫 \n Informacje o użytkowniku @${userDataObject.username} \n  \n `;
-		const a_usernameAll = document.querySelectorAll(`a.username[href="/ludzie/${username}"]`);
+
+		let userInfoElementTitle = "";
+
+		const a_usernameAll = document.querySelectorAll(`a.username[href="/ludzie/${username}"]:not(:has([data-wxs_username]))`);
+
 		let changeSexTo = false;
 
 
@@ -1971,136 +2001,30 @@
 		// console.log(a_usernameAll);
 
 		// informacja o użytkowniku pobrana z __vue__ lub fetch z API
-		// DIV Z INFOBOXEM
+		// DIV Z INFOBOXEM i NOTATKAMI
 		let div = document.createElement('div');
 		{
 			div.classList = `wykopxs wxs_user_info wxs_user_info_year`;  					// <div class="wykopxs wxs_user_info wxs_user_info_year"
 
 
-			// basic data without fetch
-			if (userDataObject.blacklist == true) 											// basic
-			{
-				div.innerHTML += `<var class="wxs_user_blacklist" title="@${userDataObject.username} jest na Twojej czarnej liście">🚯</var>`
-			}
-			if (userDataObject.follow == true) 												// basic
-			{
-				div.innerHTML += `<var class="wxs_user_follow" title="Obserwujesz użytkownika @${userDataObject.username}">🔔</var>`
-			}
+			let noteSpanElement = null;
+			let infoboxInnerHTML = "";
 
-			if (userDataObject.status == "banned") 											// basic
-			{
-				if (userDataObject.banned?.wxs_info_text_1) 													// DETAILS from API
-				{
-					div.innerHTML += `<var class="wxs_user_banned" title=" 🍌 ${userDataObject.banned.wxs_info_text_1}. \n \n ${userDataObject.banned.wxs_info_text_2} \n \n ${userDataObject.banned.wxs_info_text_3} \n \n">🍌</var>`
-
-					userInfoElementTitle += `  🍌 ${userDataObject.banned.wxs_info_text_1}. \n \n ${userDataObject.banned.wxs_info_text_2} \n \n ${userDataObject.banned.wxs_info_text_3} \n \n`;
-				}
-			}
-
-
-			let memberSinceDate = null
-			let membersSinceInYears = null
-			let membersSinceInMonths = null
-			let membersSinceInDays = null
-
-			if (userDataObject.member_since) // DETAILS from API
-			{
-
-				memberSinceDate = dayjs(userDataObject.member_since);
-				membersSinceInYears = loadTime.diff(memberSinceDate, 'year');
-				membersSinceInMonths = loadTime.diff(memberSinceDate, 'month');
-				membersSinceInDays = loadTime.diff(memberSinceDate, 'day');
-
-				// wyświetlony obok nazwy użytkownika rok założenia konta
-				div.innerHTML += ` · <var class="wxs_user_member_since">${memberSinceDate.year()}</var>`; // · 2011
-			}
-			else
-			{
-				div.innerHTML += `<var class="wxs_user_member_since"> ℹ </var>`; // · { i }
-			}
-
-
-			userInfoElementTitle += userDataObject.online ? ` \n @${userDataObject.username} jest teraz online 🟢 \n ` : "";
-
-			if (userDataObject.name) userInfoElementTitle += userDataObject.name != "" ? `Nazwa: ${userDataObject.name} \n ` : "";
-			if (userDataObject.city) userInfoElementTitle += userDataObject.city != "" ? `Miasto: ${userDataObject.city} \n ` : "";
-			if (userDataObject.public_email) userInfoElementTitle += userDataObject.public_email != "" ? `\n E-mail: ${userDataObject.public_email} \n ` : "";
-			userInfoElementTitle += `\n`;
-
-			if (userDataObject.gender == "f")
-			{
-				userInfoElementTitle += userDataObject.follow ? `🔔 Obserwujesz tę Mirabelkę. \n ` : "";
-				userInfoElementTitle += userDataObject.blacklist ? `🚯 Ta Mirabelka jest na Twojej czarnej liście. \n ` : "";
-
-				if (userDataObject.summary) // DETAILS from API
-				{
-					userInfoElementTitle += userDataObject.summary.followers > 0 ? ` Jest obserwowana przez ${userDataObject.summary.followers} osób` : "Nikt jej nie obserwuje";
-					userInfoElementTitle += userDataObject.summary.following_users > 0 ? `, a ona sama obserwuje ${userDataObject.summary.following_users} innych osób oraz ` : `. Nie obserwuje żadnych użytkowników i `;
-					userInfoElementTitle += userDataObject.summary.following_tags > 0 ? `${userDataObject.summary.following_tags} #tagów  \n ` : `nie obserwuje żadnych #tagów \n `;
-				}
-
-			}
-			else
-			{
-				userInfoElementTitle += userDataObject.follow ? `🔔 Obserwujesz tego Mireczka \n ` : "";
-				userInfoElementTitle += userDataObject.blacklist ? `🚯 Ten Mireczek jest na Twojej czarnej liście \n ` : "";
-
-				if (userDataObject.summary) // DETAILS from API
-				{
-					userInfoElementTitle += userDataObject.summary.followers > 0 ? ` Jest obserwowany przez ${userDataObject.summary.followers} osób \n ` : "Nikt go nie obserwuje";
-					userInfoElementTitle += `\n On sam obserwuje`;
-					userInfoElementTitle += `\n - ${userDataObject.summary.following_users} osób `;
-					userInfoElementTitle += userDataObject.summary.following_tags > 0 ? `\n - ${userDataObject.summary.following_tags} #tagów  \n ` : `i nie obserwuje żadnych #tagów \n `;
-				}
-			}
-
-			if (userDataObject.member_since)
-			{
-				userInfoElementTitle += `\n Na Wykopie od: ${userDataObject.member_since} \n  \n `;
-				userInfoElementTitle += `Przez ${membersSinceInYears > 1 ? membersSinceInYears + " lat(a)" : membersSinceInMonths > 1 ? membersSinceInMonths + " miesiące(ęcy)" : membersSinceInDays + " dni"} na Wykopie ${userDataObject.gender == "f" ? "dodała" : "dodał"}: \n `; // Rzeczownik
-			}
-
-			if (userDataObject.summary)
-			{
-				userInfoElementTitle += `\n Na Mikroblogu: \n `;
-				userInfoElementTitle += `- ${userDataObject.summary.entries_details.added} wpisów\n `;
-				userInfoElementTitle += `- ${userDataObject.summary.entries_details.commented} komentarzy pod wpisami \n `;
-				userInfoElementTitle += `- ${userDataObject.summary.entries_details.voted} zaplusowanych wpisów \n `;
-
-				userInfoElementTitle += `\n Na Głównej: \n `;
-				userInfoElementTitle += `- ${userDataObject.summary.links_details.up} wykopanych znalezisk \n `;
-
-				userInfoElementTitle += `- ${userDataObject.summary.links_details.published} znalezisk na głównej \n `;
-				userInfoElementTitle += `- ${userDataObject.summary.links_details.added} znalezisk \n `;
-				userInfoElementTitle += `- ${userDataObject.summary.links_details.commented} komentarzy pod znaleziskami \n `;
-				userInfoElementTitle += `- ${userDataObject.summary.links_details.related} powiązanych do znalezisk \n `;
-			}
-
-			if (userDataObject.about) userInfoElementTitle += userDataObject.about != "" ? ` \n  \n O sobie: \n${userDataObject.about} \n \n \n ` : "";
-
-
-
-
-
-
-			// NOTATKA
-
-
+			// NOTATKI
 			if (settings.notatkowatorEnable && userDataObject.note == true && userNoteObject)
 			{
 
-				console.log("NOTATKI 222: ")
-				console.log("userDataObject.note")
-				console.log(userDataObject.note);
-
-				console.log("userNoteObject");
-				console.log(userNoteObject);
+				// console.log("NOTATKI 222: ")
+				// console.log("userDataObject.note")
+				// console.log(userDataObject.note);
+				// console.log("userNoteObject");
+				// console.log(userNoteObject);
 
 				/* 
 					Notes from API:
 						user.data = { username: 'NadiaFrance', content: 'Treść notatki' } 
 						user.data = { username: 'NadiaFrance', content: '' } 
-	
+		
 					Notes from LocalStorage:
 					userNoteObject ->	wykopx/notatkowator/tomek123456789 = 
 					{
@@ -2112,8 +2036,8 @@
 
 
 				let usernoteParsedToDisplay = removePlusWords(userNoteObject.usernote);
-				console.log("usernoteParsedToDisplay");
-				console.log(usernoteParsedToDisplay);
+				// console.log("usernoteParsedToDisplay");
+				// console.log(usernoteParsedToDisplay);
 
 				if (settings.notatkowatorVerticalBar)
 				{
@@ -2126,7 +2050,7 @@
 				}
 
 
-				let noteSpanElement = document.createElement('span');
+				noteSpanElement = document.createElement('span');
 				// <span class="wxs_user_info_usernote wxs_notatkowator_normal">
 				// <span class="wxs_user_info_usernote wxs_notatkowator_r">
 				noteSpanElement.classList = `wxs_user_info_usernote`;
@@ -2154,11 +2078,119 @@
 				}
 
 				noteSpanElement.innerHTML = `<var>${usernoteParsedToDisplay}</var>`;
-				div.appendChild(noteSpanElement);
-
-				userInfoElementTitle += `\n \n 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗡𝗼𝘁𝗮𝘁𝗸𝗼𝘄𝗮𝘁𝗼𝗿 \n \n ${userNoteObject.usernote} \n \n`;
+				userInfoElementTitle += ` \n 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗡𝗼𝘁𝗮𝘁𝗸𝗼𝘄𝗮𝘁𝗼𝗿 \n \n ${userNoteObject.usernote} \n \n`;
 			}
-			div.title = userInfoElementTitle;
+
+
+			// INFOBOX
+			if (settings.infoboxEnable)
+			{
+				userInfoElementTitle += ` \n 𝗪𝘆𝗸𝗼𝗽 𝗫 InfoBox \n Informacje o użytkowniku @${userDataObject.username} \n  \n `
+
+				// basic data without fetch
+				if (userDataObject.blacklist == true) 											// basic
+				{
+					infoboxInnerHTML += `<var class="wxs_user_blacklist" title="@${userDataObject.username} jest na Twojej czarnej liście">🚯</var>`
+				}
+				if (userDataObject.follow == true) 												// basic
+				{
+					infoboxInnerHTML += `<var class="wxs_user_follow" title="Obserwujesz użytkownika @${userDataObject.username}">🔔</var>`
+				}
+
+				if (userDataObject.status == "banned") 											// basic
+				{
+					if (userDataObject.banned?.wxs_info_text_1) 													// DETAILS from API
+					{
+						infoboxInnerHTML += `<var class="wxs_user_banned" title=" 🍌 ${userDataObject.banned.wxs_info_text_1}. \n \n ${userDataObject.banned.wxs_info_text_2} \n \n ${userDataObject.banned.wxs_info_text_3} \n \n">🍌</var>`
+						userInfoElementTitle += `  🍌 ${userDataObject.banned.wxs_info_text_1}. \n \n ${userDataObject.banned.wxs_info_text_2} \n \n ${userDataObject.banned.wxs_info_text_3} \n \n`;
+					}
+				}
+
+				let memberSinceDate = null
+				let membersSinceInYears = null
+				let membersSinceInMonths = null
+				let membersSinceInDays = null
+
+				if (userDataObject.member_since) // DETAILS from API
+				{
+
+					memberSinceDate = dayjs(userDataObject.member_since);
+					membersSinceInYears = loadTime.diff(memberSinceDate, 'year');
+					membersSinceInMonths = loadTime.diff(memberSinceDate, 'month');
+					membersSinceInDays = loadTime.diff(memberSinceDate, 'day');
+
+					// wyświetlony obok nazwy użytkownika rok założenia konta
+					infoboxInnerHTML += ` · <var class="wxs_user_member_since">${memberSinceDate.year()}</var>`; // · 2011
+				}
+				else
+				{
+					infoboxInnerHTML += `<var class="wxs_user_member_since"> ℹ </var>`; // · { i }
+				}
+
+
+				userInfoElementTitle += userDataObject.online ? ` \n @${userDataObject.username} jest teraz online 🟢 \n ` : "";
+
+				if (userDataObject.name) userInfoElementTitle += userDataObject.name != "" ? `Nazwa: ${userDataObject.name} \n ` : "";
+				if (userDataObject.city) userInfoElementTitle += userDataObject.city != "" ? `Miasto: ${userDataObject.city} \n ` : "";
+				if (userDataObject.public_email) userInfoElementTitle += userDataObject.public_email != "" ? `\n E-mail: ${userDataObject.public_email} \n ` : "";
+				userInfoElementTitle += `\n`;
+
+				if (userDataObject.gender == "f")
+				{
+					userInfoElementTitle += userDataObject.follow ? `🔔 Obserwujesz tę Mirabelkę. \n ` : "";
+					userInfoElementTitle += userDataObject.blacklist ? `🚯 Ta Mirabelka jest na Twojej czarnej liście. \n ` : "";
+
+					if (userDataObject.summary) // DETAILS from API
+					{
+						userInfoElementTitle += userDataObject.summary.followers > 0 ? ` Jest obserwowana przez ${userDataObject.summary.followers} osób` : "Nikt jej nie obserwuje";
+						userInfoElementTitle += userDataObject.summary.following_users > 0 ? `, a ona sama obserwuje ${userDataObject.summary.following_users} innych osób oraz ` : `. Nie obserwuje żadnych użytkowników i `;
+						userInfoElementTitle += userDataObject.summary.following_tags > 0 ? `${userDataObject.summary.following_tags} #tagów  \n ` : `nie obserwuje żadnych #tagów \n `;
+					}
+
+				}
+				else
+				{
+					userInfoElementTitle += userDataObject.follow ? `🔔 Obserwujesz tego Mireczka \n ` : "";
+					userInfoElementTitle += userDataObject.blacklist ? `🚯 Ten Mireczek jest na Twojej czarnej liście \n ` : "";
+
+					if (userDataObject.summary) // DETAILS from API
+					{
+						userInfoElementTitle += userDataObject.summary.followers > 0 ? ` Jest obserwowany przez ${userDataObject.summary.followers} osób \n ` : "Nikt go nie obserwuje";
+						userInfoElementTitle += `\n On sam obserwuje`;
+						userInfoElementTitle += `\n - ${userDataObject.summary.following_users} osób `;
+						userInfoElementTitle += userDataObject.summary.following_tags > 0 ? `\n - ${userDataObject.summary.following_tags} #tagów  \n ` : `i nie obserwuje żadnych #tagów \n `;
+					}
+				}
+
+				if (userDataObject.member_since)
+				{
+					userInfoElementTitle += `\n Na Wykopie od: ${userDataObject.member_since} \n  \n `;
+					userInfoElementTitle += `Przez ${membersSinceInYears > 1 ? membersSinceInYears + " lat(a)" : membersSinceInMonths > 1 ? membersSinceInMonths + " miesiące(ęcy)" : membersSinceInDays + " dni"} na Wykopie ${userDataObject.gender == "f" ? "dodała" : "dodał"}: \n `; // Rzeczownik
+				}
+
+				if (userDataObject.summary)
+				{
+					userInfoElementTitle += `\n Na mikroblogu: \n `;
+					userInfoElementTitle += `- ${userDataObject.summary.entries_details.added} wpisów\n `;
+					userInfoElementTitle += `- ${userDataObject.summary.entries_details.commented} komentarzy pod wpisami \n `;
+					userInfoElementTitle += `- ${userDataObject.summary.entries_details.voted} zaplusowanych wpisów \n `;
+
+					userInfoElementTitle += `\n Na głównej: \n `;
+					userInfoElementTitle += `- ${userDataObject.summary.links_details.up} wykopanych znalezisk \n `;
+
+					userInfoElementTitle += `- ${userDataObject.summary.links_details.published} znalezisk na głównej \n `;
+					userInfoElementTitle += `- ${userDataObject.summary.links_details.added} znalezisk \n `;
+					userInfoElementTitle += `- ${userDataObject.summary.links_details.commented} komentarzy pod znaleziskami \n `;
+					userInfoElementTitle += `- ${userDataObject.summary.links_details.related} powiązanych do znalezisk \n `;
+				}
+
+				if (userDataObject.about) userInfoElementTitle += userDataObject.about != "" ? ` \n  \n O sobie: \n ${userDataObject.about} \n \n ` : "";
+			}
+
+			if (infoboxInnerHTML !== "") div.innerHTML = infoboxInnerHTML;
+			if (noteSpanElement !== null) div.appendChild(noteSpanElement);
+
+			div.title = `${userInfoElementTitle} \n.`;
 		}
 
 		// console.log("gotowy user infobox div:")
@@ -2170,92 +2202,100 @@
 			// console.log(`Dodaję infobox przy każdym linku a.username:`);
 			// console.log(a_username);
 			// console.log(a_username.parentNode.nodeName);
-
-			let a_username_type;
-			if (a_username.parentNode.nodeName == "SPAN") a_username_type = "section_entry_header";
-			if (a_username.parentNode.nodeName == "LI") a_username_type = "section_entry_voters_li";
-
-
-			// tylko dla section.entry, nie dla listy plusujących
-			if (a_username_type == "section_entry_header")
+			if (a_username.dataset.wxs_username == undefined)
 			{
-				if (changeSexTo != false)
+				a_username.dataset.wxs_username = userDataObject.username;
+
+				let a_username_type;
+				if (a_username.parentNode.nodeName == "SPAN") a_username_type = "section_entry_header";
+				if (a_username.parentNode.nodeName == "LI") a_username_type = "section_entry_voters_li";
+
+
+				// tylko dla section.entry, nie dla listy plusujących
+				if (a_username_type == "section_entry_header")
 				{
-					const figureElement = a_username.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector("div.left > a.avatar > figure"); // header
-					if (changeSexTo == "male")
+					if (changeSexTo != false)
 					{
-						figureElement.classList.remove("female");
-						figureElement.classList.add("male");
+						const figureElement = a_username.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector("div.left > a.avatar > figure"); // header
+						if (changeSexTo == "male")
+						{
+							figureElement.classList.remove("female");
+							figureElement.classList.add("male");
+						}
+						else if (changeSexTo == "female")
+						{
+							figureElement.classList.add("female");
+							figureElement.classList.remove("male");
+						}
 					}
-					else if (changeSexTo == "female")
+					let sectionObjectElement = a_username.closest('section.entry, section.link-block, aside.profile-top'); 	 // section.entry, section.link-block a w profilu <aside class="profile-top wide-top">
+
+					if (sectionObjectElement && (!sectionObjectElement.dataset.wxs_username || sectionObjectElement.dataset.wxs_username != userDataObject.username))
 					{
-						figureElement.classList.add("female");
-						figureElement.classList.remove("male");
+
+						// USER DATRA BASIC
+						sectionObjectElement.dataset.wxs_username = userDataObject.username; 			// <section data-wxs-username="NadiaFrance">
+						sectionObjectElement.dataset.wxs_user_note = userDataObject.note;				// data-wxs_user_note="true"
+						sectionObjectElement.dataset.wxs_user_company = userDataObject.company;			// data-wxs_user_status="banned"
+						sectionObjectElement.dataset.wxs_user_status = userDataObject.status;			// data-wxs_user_status="banned"
+						sectionObjectElement.dataset.wxs_user_color = userDataObject.color;				// data-wxs_user_status="banned"
+						sectionObjectElement.dataset.wxs_user_verified = userDataObject.verified;		// data-wxs_user_status="banned"
+						sectionObjectElement.dataset.wxs_user_blacklist = userDataObject.blacklist;		// data-wxs_user_blacklist="true"
+						sectionObjectElement.dataset.wxs_user_follow = userDataObject.follow;			// data-wxs_user_follow="true"
+						sectionObjectElement.dataset.wxs_user_gender = userDataObject.gender;			// data-wxs_user_gender="m"
+						sectionObjectElement.dataset.wxs_user_online = userDataObject.online;			// data-wxs_user_online="true"
+						sectionObjectElement.dataset.wxs_user_rank_position = userDataObject.rank?.position;	// data-wxs_user_rank_position=34 // "null"
+						sectionObjectElement.dataset.wxs_user_rank_trend = userDataObject.rank?.trend;	// data-wxs_user_rank_trend=0
+
+						if (userDataObject.summary)
+						{
+							sectionObjectElement.dataset.wxs_user_entries_added = userDataObject.summary.entries_details.added; 			// <section data-wxs-user-entries-added="12">
+							sectionObjectElement.dataset.wxs_user_entries_commented = userDataObject.summary.entries_details.commented; 	// <section data-wxs-user-entries-commented="12">
+							sectionObjectElement.dataset.wxs_user_entries_voted = userDataObject.summary.entries_details.voted; 			// <section data-wxs-user-entries-voted="12">
+							sectionObjectElement.dataset.wxs_user_links_up = userDataObject.summary.links_details.up; 						// <section data-wxs-user-links-up="12">
+							sectionObjectElement.dataset.wxs_user_links_published = userDataObject.summary.links_details.published; 		// <section data-wxs-user-links-published="12">
+							sectionObjectElement.dataset.wxs_user_links_added = userDataObject.summary.links_details.added; 				// <section data-wxs-user-links-added="12">
+							sectionObjectElement.dataset.wxs_user_links_commented = userDataObject.summary.links_details.commented; 		// <section data-wxs-user-links-commented="12">
+							sectionObjectElement.dataset.wxs_user_links_related = userDataObject.summary.links_details.related; 			// <section data-wxs-user-links-related="12">
+						}
+
+
+
+						// WykopObject
+						// to juz jest dodawane wczesniej
+
+						//sectionObjectElement.dataset.wxs_id = sectionObjectElement.__vue__.item.id;									// <section data-wxs_id="1234567">
+						//sectionObjectElement.dataset.wxs_resource = sectionObjectElement.__vue__.item.resource;						// <section data-wxs_resource="entry_comment">
+						// if (sectionObjectElement.__vue__.item.parent)
+						// {
+						// 	sectionObjectElement.dataset.wxs_parent_resource = sectionObjectElement.__vue__.item.parent.resource;	// data-wxs_parent_resource="entry"
+						// 	sectionObjectElement.dataset.wxs_parent_id = sectionObjectElement.__vue__.item.parent.id;					// data-wxs_parent_id="1234567"
+						// }
+						// if (sectionObjectElement.__vue__.item.created_at) sectionObjectElement.dataset.wxs_created_at = sectionObjectElement.__vue__.item.created_at;			// data-wxs_created_at="2023-12-31 2359"
+						// if (sectionObjectElement.__vue__.item.favourite) sectionObjectElement.dataset.wxs_favourite = sectionObjectElement.__vue__.item.author.favourite;		// data-wxs_favourite="true"
+						// if (sectionObjectElement.__vue__.item.voted)
+						// {
+						// 	sectionObjectElement.dataset.wxs_voted = sectionObjectElement.__vue__.item.voted;							// data-wxs_voted="0" / "1"
+						// 	sectionObjectElement.dataset.wxs_votes_up = sectionObjectElement.__vue__.item.votes.up;						// data-wxs_votes-up="23"
+						// 	sectionObjectElement.dataset.wxs_votes_down = sectionObjectElement.__vue__.item.votes.down;					// data-wxs_votes-up="23"
+						// }
 					}
 				}
-				let sectionObjectElement = a_username.closest('section.entry, section.link-block, aside.profile-top'); 	 // section.entry, section.link-block a w profilu <aside class="profile-top wide-top">
 
-				if (sectionObjectElement && (!sectionObjectElement.dataset.wxs_username || sectionObjectElement.dataset.wxs_username != userDataObject.username))
+				let div_tooltipSlot = a_username.closest("div.tooltip-slot");
+				let userInfoboxDiv = div.cloneNode(true);
+
+				if (div_tooltipSlot)
 				{
-
-					// USER DATRA BASIC
-					sectionObjectElement.dataset.wxs_username = userDataObject.username; 			// <section data-wxs-username="NadiaFrance">
-					sectionObjectElement.dataset.wxs_user_note = userDataObject.note;				// data-wxs_user_note="true"
-					sectionObjectElement.dataset.wxs_user_company = userDataObject.company;			// data-wxs_user_status="banned"
-					sectionObjectElement.dataset.wxs_user_status = userDataObject.status;			// data-wxs_user_status="banned"
-					sectionObjectElement.dataset.wxs_user_color = userDataObject.color;				// data-wxs_user_status="banned"
-					sectionObjectElement.dataset.wxs_user_verified = userDataObject.verified;		// data-wxs_user_status="banned"
-					sectionObjectElement.dataset.wxs_user_blacklist = userDataObject.blacklist;		// data-wxs_user_blacklist="true"
-					sectionObjectElement.dataset.wxs_user_follow = userDataObject.follow;			// data-wxs_user_follow="true"
-					sectionObjectElement.dataset.wxs_user_gender = userDataObject.gender;			// data-wxs_user_gender="m"
-					sectionObjectElement.dataset.wxs_user_online = userDataObject.online;			// data-wxs_user_online="true"
-					sectionObjectElement.dataset.wxs_user_rank_position = userDataObject.rank?.position;	// data-wxs_user_rank_position=34 // "null"
-					sectionObjectElement.dataset.wxs_user_rank_trend = userDataObject.rank?.trend;	// data-wxs_user_rank_trend=0
-
-					if (userDataObject.summary)
-					{
-						sectionObjectElement.dataset.wxs_user_entries_added = userDataObject.summary.entries_details.added; 			// <section data-wxs-user-entries-added="12">
-						sectionObjectElement.dataset.wxs_user_entries_commented = userDataObject.summary.entries_details.commented; 	// <section data-wxs-user-entries-commented="12">
-						sectionObjectElement.dataset.wxs_user_entries_voted = userDataObject.summary.entries_details.voted; 			// <section data-wxs-user-entries-voted="12">
-						sectionObjectElement.dataset.wxs_user_links_up = userDataObject.summary.links_details.up; 						// <section data-wxs-user-links-up="12">
-						sectionObjectElement.dataset.wxs_user_links_published = userDataObject.summary.links_details.published; 		// <section data-wxs-user-links-published="12">
-						sectionObjectElement.dataset.wxs_user_links_added = userDataObject.summary.links_details.added; 				// <section data-wxs-user-links-added="12">
-						sectionObjectElement.dataset.wxs_user_links_commented = userDataObject.summary.links_details.commented; 		// <section data-wxs-user-links-commented="12">
-						sectionObjectElement.dataset.wxs_user_links_related = userDataObject.summary.links_details.related; 			// <section data-wxs-user-links-related="12">
-					}
-
-					// WykopObject
-					sectionObjectElement.dataset.id = sectionObjectElement.__vue__.item.id;									// <section data-id="1234567">
-					sectionObjectElement.dataset.resource = sectionObjectElement.__vue__.item.resource;						// <section data-resource="entry_comment">
-
-					if (sectionObjectElement.__vue__.item.parent)
-					{
-						sectionObjectElement.dataset.parentResource = sectionObjectElement.__vue__.item.parent.resource;;	// data-parent-resource="entry"
-						sectionObjectElement.dataset.parentId = sectionObjectElement.__vue__.item.parent.id;					// data-parent-id="1234567"
-					}
-					if (sectionObjectElement.__vue__.item.created_at) sectionObjectElement.dataset.wxs_created_at = sectionObjectElement.__vue__.item.created_at;			// data-wxs_created_at="2023-12-31 2359"
-					if (sectionObjectElement.__vue__.item.favourite) sectionObjectElement.dataset.wxs_favourite = sectionObjectElement.__vue__.item.author.favourite;		// data-wxs_favourite="true"
-					if (sectionObjectElement.__vue__.item.voted)
-					{
-						sectionObjectElement.dataset.wxs_voted = sectionObjectElement.__vue__.item.voted;							// data-wxs_voted="0" / "1"
-						sectionObjectElement.dataset.wxs_votes_up = sectionObjectElement.__vue__.item.votes.up;						// data-wxs_votes-up="23"
-						sectionObjectElement.dataset.wxs_votes_down = sectionObjectElement.__vue__.item.votes.down;					// data-wxs_votes-up="23"
-					}
+					div_tooltipSlot.insertAdjacentElement('afterend', userInfoboxDiv);
+				}
+				else
+				{
+					a_username.title = userInfoElementTitle;
+					a_username.insertAdjacentElement('afterend', userInfoboxDiv);
 				}
 			}
 
-			let div_tooltipSlot = a_username.closest("div.tooltip-slot");
-			let userInfoboxDiv = div.cloneNode(true);
-
-			if (div_tooltipSlot)
-			{
-				div_tooltipSlot.insertAdjacentElement('afterend', userInfoboxDiv);
-			}
-			else
-			{
-				a_username.title = userInfoElementTitle;
-				a_username.insertAdjacentElement('afterend', userInfoboxDiv);
-			}
 
 			// elementToInsertUserInfo.appendChild(div);
 			// elementToInsertUserInfo.parentNode.insertBefore(div, elementToInsertUserInfo.nextSibling);
@@ -2383,7 +2423,7 @@
 							Notes from API:
 								user.data = { username: 'NadiaFrance', content: 'Treść notatki' } 
 								user.data = { username: 'NadiaFrance', content: '' } 
-	
+		
 							Notes from LocalStorage:
 							userNoteObject ->	wykopx/notatkowator/tomek123456789 = 
 							{
@@ -2883,7 +2923,7 @@
 	
 						<select id="wxs_mirkoukrywacz_delete_block_type">
 							<option value="all" selected>wszystkie</option>
-							<option value="minimized">zminimalizowane (Krawężnik)</option>
+							<option value="minimized">zwinięte (Krawężnik)</option>
 							<option value="hidden">ukryte (Mirkoukrywacz)</option>
 						</select>
 	
@@ -3513,9 +3553,17 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	}
 
 
+
+
+
+
+
+
+
+
 	function addWykopXButtonsToNavBar()
 	{
-		if (settings.myWykopInTopNavJS == true)
+		if (settings.myWykopInTopNavJS)
 		{
 			createNewNavBarButton({
 				position: "left",
@@ -3530,7 +3578,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				data: "data-v-5182b5f6",
 			})
 		}
-		if (settings.hitsInTopNavJS == true)
+		if (settings.hitsInTopNavJS)
 		{
 			createNewNavBarButton({
 				position: "left",
@@ -3545,7 +3593,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				data: "data-v-5182b5f6",
 			})
 		}
-		if (settings.favoritesInTopNavJS == true)
+		if (settings.favoritesInTopNavJS)
 		{
 			createNewNavBarButton({
 				position: "left",
@@ -3560,7 +3608,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				data: "data-v-5182b5f6",
 			})
 		}
-		if (settings.addNewLinkInTopNavJS == true)
+		if (settings.addNewLinkInTopNavJS)
 		{
 			createNewNavBarButton({
 				position: "left",
@@ -3577,7 +3625,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			})
 		}
 
-		if (settings.addNewEntryInTopNavJS == true)
+		if (settings.addNewEntryInTopNavJS)
 		{
 			createNewNavBarButton({
 				position: "left",
@@ -3613,6 +3661,239 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	}
 
 
+	// QUICK LINKS
+	function addQuickLinksToNavBar()
+	{
+		if (settings.quickLinksEnable == true)
+		{
+			let wxs_quick_links = document.getElementById("wxs_quick_links");
+			if (wxs_quick_links == null)
+			{
+				wxs_quick_links = document.createElement('div');
+				wxs_quick_links.id = "wxs_quick_links";
+				// wxs_quick_links.classList.add("wykopxs"); // nie dodajemy bo domyslnie wlaczone
+
+				wxs_quick_links.innerHTML = `
+
+		<nav class="home">
+			<section>
+				<span>
+					<a href="/" target="_self" title="Wykop X: Przejdź na stronę główną Wykopu">Główna</a>
+				</span>
+				<div>
+					<a href="/najnowsze" target="_self" title="Wykop X: Najnowsze znaleziska, które dostały się na główną">Najnowsze</a>
+					<a href="/aktywne" target="_self" title="Wykop X: Najpopularniejsze znaleziska na stronie głównej z ostatnich 24 godzin">Aktywne</a>
+				</div>
+			</section>
+
+			<section>
+				<span>
+					<a href="/hity" target="_self">Hity</a>
+				</span>
+				<div>
+					<a href="/hity/dnia" target="_self">Dnia</a>
+					<a href="/hity/tygodnia" target="_self">Tygodnia</a>
+					<a href="/hity/miesiaca" target="_self">Miesiąca</a>
+					<a href="/hity/roku" target="_self">Roku</a>
+				</div>
+			</section>
+
+			<section>
+				<span>Ulubione</span>
+				<div>
+					<a href="/ulubione/znaleziska" target="_self" title="Wykop X: Znaleziska dodane przez Ciebie do Ulubionych">Znaleziska</a>
+					<a href="/ulubione/komentarze-znaleziska" target="_self" title="Wykop X: Komentarze pod znaleziskami dodane przez Ciebie do Ulubionych">Komentarze do znalezisk</a>
+				</div>
+			</section>
+		</nav>
+		
+		<nav class="upcoming">
+			<section>
+				<span>Dodaj</span>
+				<div>
+					<a href="/dodaj-link" target="_self" title="Wykop X: Dodaj nowe znalezisko (link do strony internetowej)">Nowe znalezisko</a>
+				</div>
+			</section>
+			<section>
+				<span>Wykopalisko</span>
+				<div>
+					<a href="/wykopalisko/najnowsze" target="_self">Najnowsze</a>
+					<a href="/wykopalisko/aktywne" target="_self">Aktywne</a>
+					<a href="/wykopalisko/wykopywane" target="_self">Wykopywane</a>
+					<a href="/wykopalisko/komentowane" target="_self">Komentowane</a>
+				</div>
+				<span>Moja aktywność</span>
+				<div>
+					<a href="/ludzie/${user.username}/znaleziska/dodane" target="_self">Moje znaleziska</a>
+					<a href="/ludzie/${user.username}/znaleziska/komentowane" target="_self">Komentowane</a>
+					<a href="/ludzie/${user.username}/znaleziska/wykopane" target="_self">Wykopane</a>
+					<a href="/ludzie/${user.username}/znaleziska/zakopane" target="_self">Zakopane</a>
+				</div>
+			</section>
+
+			<section>
+				<span>Ulubione</span>
+				<div>
+				<a href="/ulubione/znaleziska" target="_self" title="Wykop X: Znaleziska dodane przez Ciebie do Ulubionych">Znaleziska</a>
+				<a href="/ulubione/komentarze-znaleziska" target="_self" title="Wykop X: Komentarze pod znaleziskami dodane przez Ciebie do Ulubionych">Komentarze do znalezisk</a>
+				</div>
+			</section>
+		</nav>
+
+		<nav class="hits">
+			<section>
+				<span>Hity</span>
+				<div>
+					<a href="/hity/dnia" target="_self">Dnia</a>
+					<a href="/hity/tygodnia" target="_self">Tygodnia</a>
+					<a href="/hity/miesiaca" target="_self">Miesiąca</a>
+					<a href="/hity/roku" target="_self">Roku</a>
+				</div>
+			</section>
+		</nav>
+
+
+		<nav class="microblog">
+			<section>
+				<span>Dodaj</span>
+				<div>
+				<a href="/mikroblog/#dodaj" target="_self" title="Wykop X: Dodaj nowy wpis na Mikroblogu">Nowy wpis na Mirko</a>
+				</div>
+			</section>
+
+			<section>
+				<span>Mikroblog</span>
+				<div>
+					<a href="/mikroblog/najnowsze" target="_self" title="Wykop X: Najnowsze wpisy na Mikroblogu">Najnowsze</a>
+					<a href="/mikroblog/aktywne" target="_self" title="Wykop X: Nowe, angażujące wpisy na Mikroblogu">Aktywne</a>
+				</div>
+			</section>
+
+			<section>
+				<span>
+					<a href="/mikroblog/gorace" target="_self" title="Wykop X: Przejdź na ostatnio wybrane gorące">Gorące</a>
+				</span>
+				<div>
+					<a href="/mikroblog/gorace/2" class="wxs_quicklink_short" target="_self" title="Wykop X: Najbardziej gorące wpisy z ostatnich 2 godzin">2h</a>
+					<a href="/mikroblog/gorace/6" class="wxs_quicklink_short" target="_self" title="Wykop X: Najbardziej gorące wpisy z ostatnich 6 godzin">6h</a>
+					<a href="/mikroblog/gorace/12" class="wxs_quicklink_short" target="_self" title="Wykop X: Najbardziej gorące wpisy z ostatnich 12 godzin">12h</a>
+					<a href="/mikroblog/gorace/24" class="wxs_quicklink_short" target="_self" title="Wykop X: Najbardziej gorące wpisy z ostatnich 24 godzin">24h</a>
+				</div>
+			</section>
+
+			<section>
+				<span>
+					Moja aktywność
+				</span>
+				<div>
+					<a href="/ludzie/${user.username}/wpisy/dodane" target="_self">Moje wpisy</a>
+					<a href="/ludzie/${user.username}/wpisy/komentowane" target="_self">Komentowane</a>
+					<a href="/ludzie/${user.username}/wpisy/plusowane" target="_self">Zaplusowane</a>
+				</div>
+			</section>
+
+			<section>
+				<span>Ulubione</span>
+				<div>
+					<a href="/ulubione/wpisy" target="_self">Wpisy</a>
+					<a href="/ulubione/komentarze-wpisy" target="_self">Komentarze do wpisów</a>
+				</div>
+			</section>
+		</nav>
+
+		<nav class="mywykop">
+			<section>
+				<span>Mój Wykop</span>
+				<div>
+					<a href="/obserwowane/" target="_self">Wszystko</a>
+					<a href="/obserwowane/tagi" target="_self">#Tagi</a>
+					<a href="/obserwowane/profile" target="_self">@Profile</a>
+				</div>
+			</section>
+
+			<section>
+				<span>Moja aktywność</span>
+				<span>Mikroblog</span>
+				<div>
+					<a href="/ludzie/${user.username}/wpisy/dodane" target="_self">Moje wpisy</a>
+					<a href="/ludzie/${user.username}/wpisy/komentowane" target="_self">Moje komentarze</a>
+					<a href="/ludzie/${user.username}/wpisy/plusowane" target="_self">Moje plusy</a>
+				</div>
+			</section>
+			<section>
+				<span>Znaleziska</span>
+				<div>
+					<a href="/ludzie/${user.username}/znaleziska/dodane" target="_self">Moje znaleziska</a>
+					<a href="/ludzie/${user.username}/znaleziska/komentowane" target="_self">Moje komentarze</a>
+					<a href="/ludzie/${user.username}/znaleziska/wykopane" target="_self">Wykopane</a>
+					<a href="/ludzie/${user.username}/znaleziska/zakopane" target="_self">Zakopane</a>
+				</div>
+			</section>
+		</nav>
+
+		<nav class="favorites">
+			<section>
+				<span>Ulubione</span>
+				<div>
+					<a href="/ulubione" target="_self">Wszystko</a>
+					<a href="/ulubione/znaleziska" target="_self">Znaleziska</a>
+					<a href="/ulubione/komentarze-znaleziska" target="_self">Komentarze do znalezisk</a>
+					<a href="/ulubione/wpisy" target="_self">Wpisy</a>
+					<a href="/ulubione/komentarze-wpisy" target="_self">Komentarze do wpisów</a>
+				</div>
+			</section>
+		</nav>
+
+		<nav class="profile_links">
+			<section>
+				<span>Mój profil</span>
+				<div>
+					<a href="/ludzie/${user.username}" target="_self">Profil</a>
+					<a href="/ludzie/${user.username}/znaleziska/dodane" target="_self">Dodane znaleziska</a>
+					<a href="/ludzie/${user.username}/znaleziska/komentowane" target="_self">Komentowane znaleziska</a>
+					<a href="/ludzie/${user.username}/znaleziska/wykopane" target="_self">Wykopane</a>
+					<a href="/ludzie/${user.username}/znaleziska/zakopane" target="_self">Zakopane</a>
+				</div>
+			</section>
+		</nav>
+
+		<nav class="profile_entries">
+			<section>
+				<span>Mój profil</span>
+				<div>
+					<a href="/ludzie/${user.username}/wpisy/dodane" target="_self">Dodane wpisy</a>
+					<a href="/ludzie/${user.username}/wpisy/komentowane" target="_self">Komentowane wpisy</a>
+					<a href="/ludzie/${user.username}/wpisy/plusowane" target="_self">Zaplusowane</a>
+				</div>
+			</section>
+		</nav>
+
+		<nav class="profile_observed">
+			<section>
+				<span>Mój profil</span>
+				<div>
+					<a href="/ludzie/${user.username}/obserwowane/profile" target="_self">Obserwowani @użytkownicy</a>
+					<a href="/ludzie/${user.username}/obserwowane/tagi" target="_self">Obserwowane #tagi</a>
+				</div>
+			</section>
+		</nav>
+
+		<nav class="add_new">
+			<section>
+				<span>Dodaj</span>
+				<div>
+					<a href="/dodaj-link" target="_self" title="Wykop X: Dodaj nowe znalezisko (link do strony internetowej)">Nowe znalezisko</a>
+					<a href="/mikroblog/#dodaj" target="_self" title="Wykop X: Dodaj nowy wpis na Mikroblogu">Nowy wpis na Mirko</a>
+				</div>
+			</section>
+		</nav>
+
+		`;
+				document.querySelector('body > section > header.header > div.left').appendChild(wxs_quick_links);
+			}
+		}
+
+	}
 
 
 
@@ -3752,8 +4033,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	}
 
 
-
-
 	function addNotificationSummaryButtonToNavBar()
 	{
 		let mojeLubTagi = $("header .right ul li.account.dropdown ul.dropdown-body li.notifications.new a").attr("href");
@@ -3816,9 +4095,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	}
 
 
-
-
-
 	// TRYB NOCNY W BELCE NAWIGACYJNEJ
 	function addNightModeButtonToNavBar()
 	{
@@ -3842,8 +4118,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			// window.location.reload();
 		})
 	}
-
-
 
 
 	function addExtraButtons()
@@ -3874,10 +4148,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 
 
-
-
-
-
 	// DODAJ NOWY WPIS NA MIRKO
 	function focusOnAddingNewMicroblogEntry()
 	{
@@ -3890,25 +4160,11 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 
 
-
 	// document.removeEventListener('click', this.documentClick)
 	function unrollDropdowns(dropdown)
 	{
 		// YYY - async document.removeEventListener("click", this.documentClick);  // TypeError: Cannot read properties of undefined (reading 'documentClick')
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -4188,83 +4444,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 
 
-	// ----------------- RATING BOX - <section class="rating-box"> -> PLUSOWANIE I MINUSOWANIE
-
-	// plusy we wpisach (.rating-box), plusy wpisow w sidebarze (bez rating-box), plusy w znaleziskach
-	// rating box - mozliwosc plusowania / minusowania
-	// runWithDelay(1000, function ()
-	// { waitForKeyElements("section.entry:not(.reply) > article > header > div.right > div > section.rating-box", ratingBoxDetected, false); })
-	// waitForKeyElements("section.entry:not(.deleted) > article > header > div.right > div > section.rating-box", ratingBoxDetected, false);
-	// waitForKeyElements("section.entry:not(.reply) > article > header > div.right > div > section.rating-box", ratingBoxDetected, false);
-
-
-	// function ratingBoxDetected(jNodeRatingBoxSection)
-	// {
-	// 	const ratingBoxSection = jNodeRatingBoxSection[0]; //  =jNode > DOMElement
-	// 	visiblePlusesObserver.observe(ratingBoxSection); // IntersectionObserver 
-	// }
-
-	// const intersectingPlusesCallback = (intersectingPluses, observer) => // function intersectingPlusesCallback(entries, observer)
-	// {
-	// 	let timeoutId = null;
-	// 	let fetchSeconds = 12;
-
-	// 	intersectingPluses.forEach((plus) =>
-	// 	{
-	// 		let plus_target = plus.target; // element <select class="rating-box">
-	// 		// console.log("intersectingPlusesCallback: possible intersection element detected 'plus_target'");
-	// 		// console.log(plus_target);
-
-	// 		if (settings.votingExplosionEnable) votingExplosionEventListener(plus_target);
-
-	// 		if (plus.isIntersecting)
-	// 		{
-	// 			// console.log("intersectingPlusesCallback: new ratingBox is intersecting")
-	// 			plus_target.classList.add("isIntersecting");
-	// 			plus_target.classList.remove("notIntersecting");
-	// 			parseRatingBoxCurrentContentAndCreateDataValues(plus_target);
-
-	// 			// timeoutId = setInterval(() => checkPluses(plus_target), fetchSeconds * 1000);
-	// 		}
-	// 		else
-	// 		{
-	// 			// clearInterval(timeoutId);
-	// 			plus_target.classList.remove("isIntersecting");
-	// 			plus_target.classList.add("notIntersecting");
-	// 		}
-	// 	});
-
-	// intersectingPluses.forEach((plus) =>
-	// {
-	// 	let plus_target = plus.target; // element <select class="rating-box">
-	// 	console.log("possible intersectionElement detected plus_target");
-
-	// 	let plusTimeoutId = null;
-	// 	if (plus.isIntersecting)
-	// 	{
-	// 		console.log("new intersecting plus")
-	// 		if (settings.votingExplosionEnable) votingExplosionEventListener(plus_target);
-	// 		plus_target.classList.add("isIntersecting");
-	// 		plus_target.classList.remove("notIntersecting");
-	// 		parseRatingBoxCurrentContentAndCreateDataValues(plus_target);
-
-	// 		plusTimeoutId = setTimeout(() =>
-	// 		{
-	// 			clearTimeout(plusTimeoutId);
-	// 			plusTimeoutId = setInterval(() => checkPluses(plus_target), fetchSeconds * 1000);
-	// 		});
-	// 	}
-	// 	else
-	// 	{
-	// 		clearTimeout(plusTimeoutId);
-	// 		plus_target.classList.remove("isIntersecting");
-	// 		plus_target.classList.add("notIntersecting");
-	// 	}
-	// });
-	//};
-	// let visiblePlusesIntersectionObserverOptions = { root: null, rootMargin: "-70px 0px -120px 0px", threshold: 1.0, /* [0.25, 0.5, 0.75, 1.0] */ };
-	// const visiblePlusesObserver = new IntersectionObserver(intersectingPlusesCallback, visiblePlusesIntersectionObserverOptions)
-
 
 
 
@@ -4279,202 +4458,205 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 
 	// PLUSES OBSERVER
-
-	function getEntryBlocks(sectionObjectElement)
+	function getVotesObject(sectionObjectElement, ratingBoxSection)
 	{
 		/* returns:
 		{
 			resource: "entry"
-			element: DOMElement,
+			sectionObjectElement: <DOMElement>,
+			ratingBox: <DOMElement>,
+			entry: <DOMElement>,
 			id: 123456,
-			entry: DOMElement,
 			entry_id: 123456,
 		}
 		or
 		{
 			resource: "entry_comment"
-			element: DOMElement
-			id: 12345678,
-			entry: DOMElement,
-			entry_id: 123456,
+			sectionObjectElement: <DOMElement>
+			ratingBox: <DOMElement>,
+			entry: <DOMElement>, // parent
 			comment: DOMElement,
+			id: 12345678,
+			entry_id: 123456,	// parent
 			comment_id: 12345678,
 		}
 		or
 		{
-			resource: "link_comment"
-			element: DOMElement
+			resource: "link_subcomment"
+			sectionObjectElement: DOMElement
+			ratingBox: <DOMElement>,
+			entry: <DOMElement>,
 			id: 12345678,
-			entry: DOMElement,
 			entry_id: 123456,
 			link_id: 12345678,
+			comment_id: 12345678123
+	
+			parent_id: 1234567 // znalezisko
+			parent_comment_id: 123456 // komentarz pod znaleziskiem
+			parent_element: <DOMElement>, // komentarz
+			fetchURL: 'https://wykop.pl/api/v3...'
 		}
+	
+	
+		ratingBoxSection.__vue__
+		{
+			voted: 		0  			// czy zaglosowane
+			down:		0
+			up:			278
+			value:		278
+			formattedValue: "278",
+			separated:	false	
+			id:			23456789
+			idParent:	1234567
+			linkId:		1234567
+			users: 		[{}, {}...],
+			type: "entryComment" / "???"
+			deleted: 	null
+			author:		"NadiaFrance"
+			showBtn:	true / false
+		}
+	
+	
 		*/
 
 		let blocks =
 		{
+			separated: false,
+
 			votesUp: 0,
 			votesDown: 0,
 			votesCount: 0,
 			votesAll: 0,
-
-			separated: false,
+			votesCount: 0,
+			votesAll: 0,
+			votesDownPercent: 0,
+			votesUpPercent: 100,
+			voted: 0
 		};
 
-		// console.log("--- getEntryBlocks(sectionObjectElement)");
-		// console.log("sectionObjectElement")
-		// console.log(sectionObjectElement)
-		// console.log(sectionObjectElement.__vue__)
-		// console.log(sectionObjectElement.__vue__.item)
 
-
-		//blocks.sectionObjectElement = sectionObjectElement.closest('section.entry'); 	// returns the section element above .rating-box
 		blocks.sectionObjectElement = sectionObjectElement; 								// returns the section element above .rating-box
-		blocks.id = blocks.sectionObjectElement.__vue__.item.id;
+		blocks.ratingBoxSection = ratingBoxSection; 										// returns .rating-box section
 
-		//console.log("blocks.id " + blocks.id);
+		//blocks.id = blocks.sectionObjectElement.__vue__.item.id;
+		blocks.id = ratingBoxSection.__vue__.id;
+		blocks.separated = ratingBoxSection.__vue__.separated;
+		blocks.votesUp = ratingBoxSection.__vue__.up;
+		blocks.votesDown = ratingBoxSection.__vue__.down;
 
-		/*
-			['', 'wpis', '74111643', 'dobranoc-panstwu']
-			['', 'wykopalisko']
-			['', 'link', '7303053', 'braun-gasi-chanuke-gasnica-mem']
-		*/
+		blocks.votesCount = blocks.votesUp - blocks.votesDown;				// -10 (suma plusów i minusów nie dotyczy entry, entry_comment)
+		blocks.votesAll = blocks.votesUp + blocks.votesDown;				// 30  (łączna liczba głosów nie dotyczy entry, entry_comment)
+		blocks.votesDownPercent = Math.ceil(blocks.votesDown * 100 / blocks.votesAll);											// nie dotyczy entry, entry_comment
+		blocks.votesUpPercent = Math.ceil(blocks.votesUp * 100 / blocks.votesAll);											// nie dotyczy entry, entry_comment zawsze 100%
+
+		blocks.voted = ratingBoxSection.__vue__.voted;
+
+
+
+
 		if (blocks.sectionObjectElement.__vue__.item.resource == "link") // znalezisko
 		{
-			// PODKOMENTARZ W ZNALEZISKU
-			if (blocks.sectionObjectElement.classList.contains("reply"))
-			{
-				return null;
-			}
-			// KOMENTARZ POD ZNALEZISKIEM
-			else
-			{
-				return null;
-			}
-		}
-		else if (blocks.sectionObjectElement.__vue__.item.resource == "link_comment")
-		{
-
-			blocks.comment_element = blocks.sectionObjectElement;
-
-			if (blocks.comment_element.__vue__.item.parent.resource == "link_comment") // subkomentarz
-			{
-				blocks.comment_id = blocks.comment_element.__vue__.item.id;
-				blocks.parent_id = blocks.comment_element.__vue__.item.parent.link.id; 	// id znaleziska
-				blocks.parent_comment_id = blocks.comment_element.__vue__.item.parent.id; // id nadkomentarza
-				blocks.parent_element = document.getElementById(`comment-${blocks.parent_comment_id}`) // nadkomentarz
-				blocks.fetchURL = `https://wykop.pl/api/v3/links/${blocks.parent_id}/comments/${blocks.comment_id}/comments`; // TODO
-				blocks.resource = "link_subcomment";
-				blocks.comment_element.dataset.resource = "link_subcomment";
-			}
-			else
-			{
-				blocks.comment_id = blocks.comment_element.__vue__.item.id;
-				blocks.parent_id = blocks.comment_element.__vue__.item.parent.id;
-				blocks.parent_element = document.getElementById(`link-${blocks.parent_id}`) // section.link-block
-				blocks.fetchURL = `https://wykop.pl/api/v3/links/${blocks.parent_id}/comments/${blocks.comment_id}`;
-				blocks.resource = "link_comment";
-				blocks.comment_element.dataset.resource = "link_comment";
-			}
-
-			console.log(`blocks.comment_element`)
-			console.log(blocks.comment_element)
-
-			console.log(`blocks.comment_element.parentNode`)
-			console.log(blocks.comment_element.parentNode)
-
-			console.log(`blocks.comment_element.parentNode.closest('section.link-block')`)
-			console.log(blocks.comment_element.parentNode.closest('section.link-block'))
-
-
-
 
 		}
-		// KOMENTARZ POD WPISEM
-		else if (blocks.sectionObjectElement.__vue__.item.resource == "entry_comment")
+		else
 		{
-			blocks.comment_element = blocks.sectionObjectElement;
-			if (blocks.comment_element.parentNode)
+			if (blocks.sectionObjectElement.__vue__.item.resource == "link_comment")
 			{
-				blocks.parent_element = blocks.comment_element.parentNode.closest('section.entry');
+				blocks.comment_element = blocks.sectionObjectElement;
+
+				if (blocks.comment_element.__vue__.item.parent.resource == "link_comment") // subkomentarz
+				{
+					blocks.resource = "link_subcomment";
+					blocks.comment_element.dataset.wxs_resource = "link_subcomment";
+
+					blocks.comment_id = blocks.comment_element.__vue__.item.id;
+					blocks.parent_id = blocks.comment_element.__vue__.item.parent.link.id; 	// id znaleziska
+					blocks.parent_comment_id = blocks.comment_element.__vue__.item.parent.id; // id nadkomentarza
+					blocks.parent_element = document.getElementById(`comment-${blocks.parent_comment_id}`) // nadkomentarz
+					blocks.fetchURL = `https://wykop.pl/api/v3/links/${blocks.parent_id}/comments/${blocks.comment_id}/comments`; // TODO
+				}
+				else
+				{
+					blocks.resource = "link_comment";
+					blocks.comment_element.dataset.wxs_resource = "link_comment";
+					blocks.comment_id = blocks.comment_element.__vue__.item.id;
+					blocks.parent_id = blocks.comment_element.__vue__.item.parent.id;
+					blocks.parent_element = document.getElementById(`link-${blocks.parent_id}`) // section.link-block
+					blocks.fetchURL = `https://wykop.pl/api/v3/links/${blocks.parent_id}/comments/${blocks.comment_id}`;
+
+				}
+			}
+			// KOMENTARZ POD WPISEM
+			else if (blocks.sectionObjectElement.__vue__.item.resource == "entry_comment")
+			{
+				blocks.comment_element = blocks.sectionObjectElement;
+
+				if (blocks.comment_element.parentNode)
+				{
+					blocks.resource = "entry_comment"; 								// komentarz pod wpisem
+					blocks.comment_element.dataset.wxs_resource = "entry_comment";
+					blocks.parent_element = blocks.comment_element.parentNode.closest('section.entry');
+					blocks.parent_id = blocks.parent_element.__vue__.item.id;
+					blocks.comment_id = blocks.comment_element.__vue__.item.id;
+					blocks.fetchURL = `https://wykop.pl/api/v3/entries/${blocks.parent_id}/comments/${blocks.comment_id}`;
+				}
+				else
+				{
+					return null;
+				}
+			}
+			// WPIS NA MIKROBLOGU
+			else if (blocks.sectionObjectElement.__vue__.item.resource == "entry")
+			{
+				blocks.parent_element = blocks.sectionObjectElement; 	// parent = this
 				blocks.parent_id = blocks.parent_element.__vue__.item.id;
-				blocks.resource = "entry_comment"; 								// komentarz pod wpisem
-				blocks.comment_id = blocks.comment_element.__vue__.item.id;
-				blocks.fetchURL = `https://wykop.pl/api/v3/entries/${blocks.parent_id}/comments/${blocks.comment_id}`;
-				blocks.comment_element.dataset.resource = "entry_comment";
-			}
-			else
-			{
-				return null;
+				blocks.resource = "entry";
+				blocks.fetchURL = `https://wykop.pl/api/v3/entries/${blocks.parent_id}`;
+				blocks.parent_element.dataset.wxs_resource = "entry";
 			}
 		}
-		// WPIS NA MIKROBLOGU
-		else if (blocks.sectionObjectElement.__vue__.item.resource == "entry")
-		{
-			blocks.parent_element = blocks.sectionObjectElement;
-			blocks.parent_id = blocks.parent_element.__vue__.item.id;
-			blocks.resource = "entry";
-			blocks.fetchURL = `https://wykop.pl/api/v3/entries/${blocks.parent_id}`;
-
-			blocks.parent_element.dataset.resource = "entry";
-		}
-
-		// console.log("blocks.sectionObjectElement");
-		// console.log(blocks.sectionObjectElement);
 
 
-		let plus_element = blocks.sectionObjectElement.querySelector("section.rating-box > ul > li.plus"); // 12 <li class="plus separated">
-		if (plus_element)
-		{
-			blocks.separated = plus_element.classList.contains('separated');
-			blocks.votesUp = parseInt(plus_element.textContent);
-		}
+		//blocks.sectionObjectElement.dataset.wxs_votes_up = blocks.votesUp;			// <section data-wxs_votes_up="1" data_wxs_votes_down="8">
+		//blocks.sectionObjectElement.dataset.wxs_votes_down = blocks.votesDown;
 
-		// let zero_element = blocks.sectionObjectElement.querySelector(".rating-box li.zero"); // 0 <li class="zero separated">
-		// if (zero_element)
-		// {
-		// 	blocks.separated = zero_element.classList.contains('separated');
-		// 	blocks.votesUp = 0;
-		// }
-
-		let minus_element = blocks.sectionObjectElement.querySelector(".rating-box li.minus"); // -8
-		if (minus_element)
-		{
-			blocks.votesDown = Math.abs(parseInt(minus_element.textContent));	// 3 (dodatnia)
-		}
-		blocks.parent_element.dataset.wxs_votes_up = blocks.votesUp;
-		blocks.parent_element.dataset.wxs_votes_down = blocks.votesDown;
-
-		// console.log("blocks");
-		// console.log(blocks);
+		console.log("blocks");
+		console.log(blocks);
 
 		return blocks;
 	}
-	function checkPluses(sectionObjectElement)
+
+
+
+
+	function checkPluses(sectionObjectElement, ratingBoxSection, showUpdatedValues = true)
 	{
-		console.log("checkPluses: sectionObjectElement")
-		console.log(sectionObjectElement);
-
-		if (sectionObjectElement)
+		if (sectionObjectElement == null && ratingBoxSection)
 		{
-			const entryBlocksData = getEntryBlocks(sectionObjectElement);
+			sectionObjectElement = ratingBoxSection.closest("section.entry")
+		}
 
-			if (entryBlocksData) // nie dla subkomentarzy
+		if (sectionObjectElement && sectionObjectElement.__vue__.item.deleted == null)
+		{
+			ratingBoxSection = sectionObjectElement.querySelector("section.rating-box");
+			const votesObject = getVotesObject(sectionObjectElement, ratingBoxSection);
+
+			if (votesObject) // nie dla subkomentarzy
 			{
-				// let sectionObjectElement = entryBlocksData.sectionObjectElement;
-				sectionObjectElement.classList.remove("plusesAdded");
-				sectionObjectElement.classList.remove("plusesRemoved");
-				sectionObjectElement.classList.remove("minusesAdded");
-				sectionObjectElement.classList.remove("minusesRemoved");
+				console.log("votesObject");
+				console.log(votesObject);
+
+				// let sectionObjectElement = votesObject.sectionObjectElement;
+				sectionObjectElement.classList.remove("plusesAdded", "plusesRemoved", "minusesAdded", "minusesRemoved");
 
 				sectionObjectElement.style.removeProperty('--plusesAdded');
 				sectionObjectElement.style.removeProperty('--plusesRemoved');
 				sectionObjectElement.style.removeProperty('--minusesAdded');
 				sectionObjectElement.style.removeProperty('--minusesRemoved');
 
-				console.log("API fetch: " + entryBlocksData.fetchURL);
+				console.log("API fetch: " + votesObject.fetchURL);
 
-				fetch(entryBlocksData.fetchURL,
+				fetch(votesObject.fetchURL,
 					{
 						method: "GET", // or 'PUT'
 						headers: {
@@ -4486,167 +4668,185 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 					.then(data =>
 					{
 						const entry_fetched_data = data.data;
-						console.log(entry_fetched_data);
+						// console.log("entry_fetched_data");
+						// console.log(entry_fetched_data);
 
+						entry_fetched_data.votes.votesUp = entry_fetched_data.votes.up;
+						entry_fetched_data.votes.votesDown = entry_fetched_data.votes.down;
 						entry_fetched_data.votes.votesCount = entry_fetched_data.votes.up - entry_fetched_data.votes.down; 		// -10 (suma plusów i minusów nie dotyczy entry, entry_comment)
 						entry_fetched_data.votes.votesAll = entry_fetched_data.votes.up + entry_fetched_data.votes.down; 		// 30  (łączna liczba głosów nie dotyczy entry, entry_comment)
 						entry_fetched_data.votes.votesUpPercent = 0;															// nie dotyczy entry, entry_comment zawsze 100%
 						entry_fetched_data.votes.votesDownPercent = 0;															// nie dotyczy entry, entry_comment
 
-						// ile plusów przybyło/ubyło
+
+						// ile plusów przybyło/ubyło od ostatniego sprawdzenia
 						let plusesDelta = entry_fetched_data.votes.up - sectionObjectElement.dataset.wxs_votes_up;
 						let minusesDelta = entry_fetched_data.votes.down - sectionObjectElement.dataset.wxs_votes_down;
-						let isVotesCountChanged = (plusesDelta != 0 || minusesDelta != 0);
+						const votesCountChanged = (plusesDelta != 0 || minusesDelta != 0);
 
-						if (isVotesCountChanged)
+						// console.log("dataset.votesup: " + sectionObjectElement.dataset.wxs_votes_up + " / plusesDelta: " + plusesDelta)
+						// console.log("sectionObjectElement.dataset")
+						// console.log(sectionObjectElement.dataset)
+						// console.log(sectionObjectElement)
+
+						sectionObjectElement.dataset.wxs_votes_up = entry_fetched_data.votes.up;											// 10
+						sectionObjectElement.dataset.wxs_votes_down = entry_fetched_data.votes.down;										// 20  - dodatnia nie dotyczy entry, entry_comment
+						sectionObjectElement.dataset.wxs_votes_count = entry_fetched_data.votes.votesCount;									// -10 (suma plusów i minusów nie dotyczy entry, entry_comment)
+						sectionObjectElement.dataset.wxs_votes_all = entry_fetched_data.votes.votesAll; 									// 30  (łączna liczba głosów nie dotyczy entry, entry_comment)
+						sectionObjectElement.dataset.wxs_voted = entry_fetched_data.voted;
+
+
+						if (votesCountChanged)
 						{
-							console.log("VOTES COUNT CHANGED")
-							console.log("sectionObjectElement.dataset.wxs_votes_up: " + sectionObjectElement.dataset.wxs_votes_up)
-							console.log("sectionObjectElement.dataset.wxs_votes_down: " + sectionObjectElement.dataset.wxs_votes_down)
-							console.log("entry_fetched_data.votes.up: " + entry_fetched_data.votes.up)
-							console.log("entry_fetched_data.votes.down: " + entry_fetched_data.votes.down)
-							console.log("plusesDelta " + plusesDelta)
-							console.log("minusesDelta:  " + minusesDelta)
 							console.log("--------------------");
+							console.log("VOTES COUNT CHANGED")
+							console.log(sectionObjectElement)
 
-							const ratingBox = sectionObjectElement.querySelector("section.rating-box");
-							const ratingBoxVotesPerMinute = ratingBox.querySelector(".wxs_votes_per_minute");
+							// console.log("OLD sectionObjectElement.dataset.wxs_votes_up: " + sectionObjectElement.dataset.wxs_votes_up)
+							//console.log("OLD sectionObjectElement.dataset.wxs_votes_down: " + sectionObjectElement.dataset.wxs_votes_down)
+							// console.log("NEW entry_fetched_data.votes.up: " + entry_fetched_data.votes.up)
+							//console.log("NEW entry_fetched_data.votes.down: " + entry_fetched_data.votes.down)
+							// console.log("plusesDelta " + plusesDelta)
+							//console.log("minusesDelta:  " + minusesDelta)
+							// console.log("--------------------");
+							// sectionObjectElement.dataset.wxs_votes_separated = votesObject.separated;
+
+							if (!ratingBoxSection)
+							{
+								ratingBoxSection = sectionObjectElement.querySelector("section.rating-box");
+							}
+
 
 							const timeSinceFirtsLoad = (dayjs().valueOf() - sectionObjectElement.dataset.wxs_first_load_time) / 1000; // liczba sekund od zaladowania
 
-							if (timeSinceFirtsLoad > 15)
+							if (timeSinceFirtsLoad > votesFetchingFirstDelayInSeconds + 5)
 							{
-								const votesPerMinute = (entry_fetched_data.votes.votesCount - sectionObjectElement.dataset.wxs_first_load_votes_count) * 60 / timeSinceFirtsLoad;
-								let votesPerMinuteString;
 
-								if (votesPerMinute > 0 && votesPerMinute < 0.9)
+								let votesPerHour = (entry_fetched_data.votes.votesCount - sectionObjectElement.dataset.wxs_first_load_votes_count) * 3600 / timeSinceFirtsLoad;
+								let votesPerHourString;
+
+								// PLUSÓW NA GODZINE
+								if (votesPerHour == 0)
 								{
-									votesPerMinuteString = "< 1";
+									votesPerHourString = "0";
+								}
+								else if (votesPerHour > 0 && votesPerHour < 0.9)
+								{
+									votesPerHourString = "< 1";
 								}
 								else
 								{
-									let wholePart = Math.floor(votesPerMinute);	// 3.4 -> 3    -5.5  -> 5
-									let fractionalPart = Math.abs(votesPerMinute - wholePart);
-
-									if (fractionalPart < 0.2)
-									{
-										votesPerMinuteString = wholePart; // 3.154 -> 3
-									}
-									else if (fractionalPart >= 0.2 && fractionalPart < 0.8)
-									{
-										votesPerMinuteString = (Math.round(votesPerMinute * 10) / 10).toFixed(1); // 3.2 - 3.8
-									}
-									else if (fractionalPart >= 0.8)
-									{
-										if (votesPerMinute > 0) votesPerMinuteString = wholePart + 1; // 3.892 -> 4
-										else votesPerMinuteString = wholePart - 1;
-									}
+									votesPerHour = votesPerHour.toFixed(1);
+									//votesPerHour = Math.round(votesPerHour)
+									votesPerHourString = `+ ${votesPerHour} plusa / h`;
 								}
 
-								ratingBoxVotesPerMinute.dataset.wxs_votes_per_minute = (votesPerMinute > 0 ? "+" : "") + votesPerMinuteString;
+								const ratingBoxVotesPerHour = ratingBoxSection.querySelector(".wxs_votes_per_hour");
+								ratingBoxVotesPerHour.dataset.wxs_votes_per_hour = votesPerHourString;				// data-wxs_votes_per_hour
 							}
 
-							sectionObjectElement.dataset.wxs_votes_up = entry_fetched_data.votes.up;											// 10
-							sectionObjectElement.dataset.wxs_votes_down = entry_fetched_data.votes.down;										// 20  - dodatnia nie dotyczy entry, entry_comment
-							sectionObjectElement.dataset.wxs_votes_count = entry_fetched_data.votes.votesCount;									// -10 (suma plusów i minusów nie dotyczy entry, entry_comment)
-							sectionObjectElement.dataset.wxs_votes_all = entry_fetched_data.votes.votesAll; 									// 30  (łączna liczba głosów nie dotyczy entry, entry_comment)
 
 							if (entry_fetched_data.votes.votesAll > 0)
 							{
 								entry_fetched_data.votes.votesDownPercent = Math.ceil(entry_fetched_data.votes.down * 100 / entry_fetched_data.votes.votesAll);
 								entry_fetched_data.votes.votesUpPercent = Math.ceil(entry_fetched_data.votes.up * 100 / entry_fetched_data.votes.votesAll);
+								sectionObjectElement.dataset.wxs_votes_up_percent = entry_fetched_data.votes.votesUpPercent;
+								sectionObjectElement.dataset.wxs_votes_down_percent = entry_fetched_data.votes.votesDownPercent;
+
 							}
-							sectionObjectElement.dataset.voted = entry_fetched_data.voted;
-							if (entryBlocksData.resource == "entry" || entryBlocksData.resource == "link_comment")
+							if (votesObject.resource == "entry" || votesObject.resource == "link_comment")
 							{
-								sectionObjectElement.dataset.commentsCount = entry_fetched_data.comments.count;
+								sectionObjectElement.dataset.wxs_comment_count = entry_fetched_data.comments.count;
 							}
 
 
 
-							// console.log("entryBlocksData:");
-							// console.log(entryBlocksData);
+							// console.log("votesObject:");
+							// console.log(votesObject);
 							// console.log("sectionObjectElement.dataset:");
 							// console.log(sectionObjectElement.dataset);
 
-							// PRZYBYŁY PLUSY
-							if (plusesDelta != 0)
+							if (showUpdatedValues)
 							{
-								// console.log("Zmienila sie liczba plusow - plusesDelta:" + plusesDelta);
-								// console.log("sectionObjectElement.dataset.wxs_votes_up:" + sectionObjectElement.dataset.wxs_votes_up);
-								// if() zamiana li.zero na li.plus
-								let plusLi = sectionObjectElement.querySelector("section.rating-box > ul > li.plus");
-								if (!plusLi) plusLi = sectionObjectElement.querySelector("section.rating-box > ul > li.zero");
-								plusLi.textContent = sectionObjectElement.dataset.wxs_votes_up;
+								updateVisibleVotesCount(sectionObjectElement)
 
-								if (plusesDelta > 0)
+								// PRZYBYŁY PLUSY
+								if (plusesDelta != 0)
 								{
-									sectionObjectElement.style.setProperty('--plusesAdded', JSON.stringify(plusesDelta.toString()));
-									sectionObjectElement.classList.add("plusesAdded");
+									// console.log("Zmienila sie liczba plusow - plusesDelta:" + plusesDelta);
+									// console.log("sectionObjectElement.dataset.wxs_votes_up:" + sectionObjectElement.dataset.wxs_votes_up);
+									// if() zamiana li.zero na li.plus
+
+									if (plusesDelta > 0)
+									{
+										sectionObjectElement.style.setProperty('--plusesAdded', `"+${plusesDelta}"`);
+										sectionObjectElement.classList.add("plusesAdded");
+									}
+									else
+									{
+										sectionObjectElement.style.setProperty('--plusesRemoved', `"${plusesDelta}"`); // jest z minusem
+										sectionObjectElement.classList.add("plusesRemoved");
+									}
 								}
-								else
+
+								// PRZYBYŁY MINUSY
+								if (minusesDelta != 0)
 								{
-									sectionObjectElement.style.setProperty('--plusesRemoved', JSON.stringify(plusesDelta.toString()));
-									sectionObjectElement.classList.add("plusesRemoved");
+									if (minusesDelta > 0)
+									{
+										sectionObjectElement.style.setProperty('--minusesAdded', `"-${minusesDelta}"`);
+										sectionObjectElement.classList.add("minusesAdded");
+									}
+									else
+									{
+										sectionObjectElement.style.setProperty('--minusesRemoved', `"+${minusesDelta}"`);
+										sectionObjectElement.classList.add("minusesRemoved");
+									}
 								}
 							}
-
-							// PRZYBYŁY MINUSY
-							if (minusesDelta != 0)
-							{
-								let minusLi = sectionObjectElement.querySelector("section.rating-box > ul > li.minus");
-								if (minusLi) minusLi.textContent = sectionObjectElement.dataset.wxs_votes_down;
-
-
-								if (minusesDelta > 0)
-								{
-									sectionObjectElement.style.setProperty('--minusesAdded', JSON.stringify(minusesDelta.toString()));
-									sectionObjectElement.classList.add("minusesAdded");
-								}
-								else
-								{
-									sectionObjectElement.style.setProperty('--minusesRemoved', JSON.stringify(minusesDelta.toString()));
-									sectionObjectElement.classList.add("minusesRemoved");
-								}
-							}
-
 						}
-
-
-
-
-						// console.log("entryBlocksData:")
-						// console.log(entryBlocksData)
-						// console.log("sectionObjectElement.dataset:")
-						// console.log(sectionObjectElement.dataset)
-						// console.log("entry_fetched_data (fetched):")
-						// console.log(entry_fetched_data)
-
-						// sectionObjectElement.dataset.tags = entry_fetched_data.tags;
-						// sectionObjectElement.dataset.device = entry_fetched_data.device;
-						// sectionObjectElement.dataset.voted = entry_fetched_data.voted;
-						// sectionObjectElement.dataset.adult = entry_fetched_data.adult;
-						// sectionObjectElement.dataset.tags = entry_fetched_data.tags;
-						// sectionObjectElement.dataset.favourite = entry_fetched_data.favourite;
-						// sectionObjectElement.dataset.deletable = entry_fetched_data.deletable;
-						// sectionObjectElement.dataset.editable = entry_fetched_data.editable;
-						// sectionObjectElement.dataset.slug = entry_fetched_data.slug;
-						// sectionObjectElement.dataset.parent_id = entry_fetched_data.parent_id;
-						// sectionObjectElement.dataset.resource = entry_fetched_data.resource; // "entry"
-						// sectionObjectElement.dataset.deleted = entry_fetched_data.deleted;
 					});
 			}
 		}
+	}
+
+	function updateVisibleVotesCount(sectionObjectElement, onlyPluses = false)
+	{
+
+
+		const separated = sectionObjectElement.dataset.wxs_votes_separated;
+		let votesNumber = (separated == "true" ? sectionObjectElement.dataset.wxs_votes_count : sectionObjectElement.dataset.wxs_votes_up);
+
+		sectionObjectElement.style.setProperty('--votesUp', `"+` + votesNumber + `"`);
+
+		// zbytek
+		let plusLi = sectionObjectElement.querySelector("section.rating-box > ul > li.plus");
+		if (!plusLi) plusLi = sectionObjectElement.querySelector("section.rating-box > ul > li.zero");
+		plusLi.textContent = votesNumber;
+
+
+		if (onlyPluses == false)
+		{
+			const votesDown = sectionObjectElement.dataset.wxs_votes_down;
+			sectionObjectElement.style.setProperty('--votesDown', `"` + votesDown + `"`);
+			// zbytek
+			let minusLi = sectionObjectElement.querySelector("section.rating-box > ul > li.minus");
+			if (minusLi) minusLi.textContent = votesDown;
+		}
+
+
 	}
 
 
 
 
 
-	// <section class="rating-box" data-pluses="269" data-minuses="0" data-pluses-minuses-total="269" data-pluses-below-limit="true">
+
+
+	// <section class="rating-box" data-wxs_pluses="269" data-wxs_minuses="0" data-wxs_pluses_minuses_total="269" data-wxs_pluses_below_limit="true">
 	function parseRatingBoxCurrentContentAndCreateDataValues(ratingBoxSection)
 	{
-		// dodanie data-pluses na podstawie aktualnych wartosci plusow w HTML
+		// dodanie data-wxs_pluses na podstawie aktualnych wartosci plusow w HTML
 		// console.log("parseRatingBoxCurrentContentAndCreateDataValues(ratingBoxSection)")
 
 		const minusLi = ratingBoxSection.querySelector('li.minus');
@@ -4669,173 +4869,177 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		{
 			// czy wpis jest poniżej limitu ukrywania wpisow przypietych na glownej
 			let plusesBelowLimit = (votesCount < homepagePinnedEntriesPlusesLimit ? true : false);
-			ratingBoxSection.dataset.plusesBelowLimit = plusesBelowLimit;
+			ratingBoxSection.dataset.wxs_pluses_below_limit = plusesBelowLimit;
 		}
 	}
 
 
 
-	// VOTING EXPLOSION
-	function votingExplosionEventListener(ratingBoxSection)
+	// VOTING REAL UPDATE, VOTING EXPLOSION
+	function votingEventListener(sectionObjectElement, ratingBoxSection)
 	{
-		ratingBoxSection.addEventListener('click', function (event)
+
+		if (sectionObjectElement && ratingBoxSection)
 		{
-			var clickedButton = event.target;
-			let count = 0;
-			let vote = "voted"; // "voted", "unvoted"
-			let action = "plused"; // "plused", "minused"
-			let sign = "+";
-
-			let plusLi = ratingBoxSection.querySelector('li.plus');
-			if (!plusLi) plusLi = ratingBoxSection.querySelector('li.zero');
-			let minusLi = ratingBoxSection.querySelector('button.plus');
-
-			let votesUp = plusLi ? plusLi.textContent : 0;
-			let votesDown = minusLi ? -1 * minusLi.textContent : 0;
-
-			if (clickedButton.matches('button.plus.voted'))			// dodano plusa
+			if (settings.checkEntryPlusesWhenVoting)
 			{
-				action = "plused";
-				vote = "voted";
-				count = votesUp;
-			}
-			else if (clickedButton.matches('button.plus:not(.voted)'))	// usunieto plusa
-			{
-				action = "plused";
-				vote = "unvoted";
-				count = votesUp;
-			}
-			else if (clickedButton.matches('button.minus.voted')) 		//  dodano minusa
-			{
-				action = "minused";
-				vote = "voted";
-				sign = "-";
-				count = votesDown;
-			}
-			else if (clickedButton.matches('button.minus:not(.voted)')) // usunięto minusa
-			{
-				action = "minused";
-				vote = "unvoted";
-				sign = "-";
-				count = votesDown;
-			}
-
-			if (vote == "voted")
-			{
-				let min_x = -60;
-				let max_x = 60;
-				let min_y = -60;
-				let max_y = -20;
-
-				if (count > 30) max_y = 60;
-				if (count > 300) { min_x = -90; max_x = 90; }
-
-				// let particlesCount = (count > 110 ? Math.ceil(count / 10) : count);
-				let particlesCount = count;
-				if (particlesCount > 2000) particlesCount = 200;
-				else if (particlesCount > 690) particlesCount = particlesCount / 10;
-				else if (particlesCount > 345) particlesCount = particlesCount / 5;
-				else if (particlesCount > 39) particlesCount = 39;
-
-
-				var newDivs = [];
-
-				for (var i = 0; i < particlesCount; i++)
+				ratingBoxSection.addEventListener('mouseenter', function (event)
 				{
-					var newDiv = document.createElement('div');
-					newDiv.textContent = sign;
+					var clickedButton = event.target;
+					console.log("mouseenter rating box")
+					checkPluses(sectionObjectElement, ratingBoxSection, false);
+				});
+			}
 
-					newDiv.classList.add(`wykopxs_vote_animation`, `wykopxs_${vote}`, `wykopxs_${action}`); // class="wykopxs_vote_animation wykopxs_voted wykopxs_plused"
 
-					let color = (sign === "+" ? "green" : "red");
-					if (sign === "+")
-					{
-						if (count >= 666 && getRandomInt(1, 10) == 1) color = "golden";
-						if (count > 100 && count < 666 && getRandomInt(1, 80) == 1) newDiv.textContent = "💚";;
-					}
-					if (count > 100 && getRandomInt(1, 30) == 1) 
-					{
-						min_x += getRandomInt(-30, 30); max_x += getRandomInt(-30, 30)
-						min_y -= getRandomInt(-30, 30); max_y -= getRandomInt(-30, 30);
-					}
+			/* 
+			
+			ratingBoxSection.__vue__
+			{
+				voted: 		0  			// czy zaglosowane
+				down:		0
+				up:			278
+				value:		278
+				formattedValue: "278",
+				separated:	false	
+				id:			23456789
+				idParent:	1234567
+				linkId:		1234567
+				users: 		[{}, {}...],
+				type: "entryComment" / "???"
+				deleted: 	null
+				author:		"NadiaFrance"
+				showBtn:	true / false
+			}
+			*/
+			ratingBoxSection.addEventListener('click', function (event)
+			{
+				var clickedButton = event.target;
+				let count = 0;
+				let vote = "voted"; // "voted", "unvoted"
+				let action = "plused"; // "plused", "minused"
+				let sign = "+";
+				// let votesUp = ratingBoxSection.__vue__.up;
+				// let votesDown = ratingBoxSection.__vue__.down;
 
-					newDiv.classList.add(`wykopxs_${color}`);
+				//let votesUp = sectionObjectElement.dataset.wxs_votes_up;
+				//let votesDown = sectionObjectElement.dataset.wxs_votes_down;
 
-					newDiv.style.setProperty('--position_x', getRandomInt(min_x, max_x, "px"));
-					newDiv.style.setProperty('--position_y', getRandomInt(min_y, max_y, "px"));
-					newDiv.style.setProperty('--position_z', 0);
-					if (count > 30)
-					{
-						newDiv.style.setProperty('--explosionTiming',
-							getRandomString("linear", "ease", "ease-in-out", "ease-in", "ease-out")); // "cubic-bezier(0.1, 0.7, 1, 0.1)"
-						newDiv.style.setProperty('--explosionDelay', getRandomInt(0, getRandomInt(0, Math.max(800, count)), "ms"));
-						newDiv.style.setProperty('--explosionDuration', getRandomInt(900, 1300), "ms");
-					}
 
-					clickedButton.after(newDiv);
-					newDivs.push(newDiv);
+				if (clickedButton.matches('button.plus.voted'))			// dodano plusa
+				{
+					action = "plused";
+					vote = "voted";
+					// count = votesUp;
+					count = Number(sectionObjectElement.dataset.wxs_votes_up) + 1
+					sectionObjectElement.dataset.wxs_votes_up = count;
+				}
+				else if (clickedButton.matches('button.plus:not(.voted)'))	// usunieto plusa
+				{
+					action = "plused";
+					vote = "unvoted";
+					//count = votesUp;
+					count = Number(sectionObjectElement.dataset.wxs_votes_up) - 1
+					sectionObjectElement.dataset.wxs_votes_up = count;
+				}
+				else if (clickedButton.matches('button.minus.voted')) 		//  dodano minusa
+				{
+					action = "minused";
+					vote = "voted";
+					sign = "-";
+					count = votesDown;
+					count = Number(sectionObjectElement.dataset.wxs_votes_down) + 1;
+					sectionObjectElement.dataset.wxs_votes_down = count;
+				}
+				else if (clickedButton.matches('button.minus:not(.voted)')) // usunięto minusa
+				{
+					action = "minused";
+					vote = "unvoted";
+					sign = "-";
+					//count = votesDown;
+					count = Number(sectionObjectElement.dataset.wxs_votes_down) - 1
+					sectionObjectElement.dataset.wxs_votes_down = count;
 				}
 
-				parseRatingBoxCurrentContentAndCreateDataValues(ratingBoxSection);
+				updateVisibleVotesCount(sectionObjectElement);
 
-				setTimeout(function ()
+				// voting explosion
+				if (settings.votingExplosionEnable && vote == "voted")
 				{
-					for (var i = 0; i < newDivs.length; i++)
+					let min_x = -60;
+					let max_x = 60;
+					let min_y = -60;
+					let max_y = -20;
+
+					if (count > 30) max_y = 60;
+					if (count > 300) { min_x = -90; max_x = 90; }
+
+					// let particlesCount = (count > 110 ? Math.ceil(count / 10) : count);
+					let particlesCount = count;
+					if (particlesCount > 2000) particlesCount = 200;
+					else if (particlesCount > 690) particlesCount = particlesCount / 10;
+					else if (particlesCount > 345) particlesCount = particlesCount / 5;
+					else if (particlesCount > 39) particlesCount = 39;
+
+
+					var newDivs = [];
+
+					for (var i = 0; i < particlesCount; i++)
 					{
-						newDivs[i].parentNode.removeChild(newDivs[i]);
+						var newDiv = document.createElement('div');
+						newDiv.textContent = sign;
+
+						newDiv.classList.add(`wykopxs_vote_animation`, `wykopxs_${vote}`, `wykopxs_${action}`); // class="wykopxs_vote_animation wykopxs_voted wykopxs_plused"
+
+						let color = (sign === "+" ? "green" : "red");
+						if (sign === "+")
+						{
+							if (count >= 666 && getRandomInt(1, 10) == 1) color = "golden";
+							if (count > 100 && count < 666 && getRandomInt(1, 80) == 1) newDiv.textContent = "💚";;
+						}
+						if (count > 100 && getRandomInt(1, 30) == 1) 
+						{
+							min_x += getRandomInt(-30, 30); max_x += getRandomInt(-30, 30)
+							min_y -= getRandomInt(-30, 30); max_y -= getRandomInt(-30, 30);
+						}
+
+						newDiv.classList.add(`wykopxs_${color}`);
+
+						newDiv.style.setProperty('--position_x', getRandomInt(min_x, max_x, "px"));
+						newDiv.style.setProperty('--position_y', getRandomInt(min_y, max_y, "px"));
+						newDiv.style.setProperty('--position_z', 0);
+						if (count > 30)
+						{
+							newDiv.style.setProperty('--explosionTiming',
+								getRandomString("linear", "ease", "ease-in-out", "ease-in", "ease-out")); // "cubic-bezier(0.1, 0.7, 1, 0.1)"
+							newDiv.style.setProperty('--explosionDelay', getRandomInt(0, getRandomInt(0, Math.max(800, count)), "ms"));
+							newDiv.style.setProperty('--explosionDuration', getRandomInt(900, 1300), "ms");
+						}
+
+						clickedButton.after(newDiv);
+						newDivs.push(newDiv);
 					}
 
-				}, 72500);
-			}
-		});
+					parseRatingBoxCurrentContentAndCreateDataValues(ratingBoxSection); // TODO
+
+					setTimeout(function ()
+					{
+						for (var i = 0; i < newDivs.length; i++)
+						{
+							newDivs[i].parentNode.removeChild(newDivs[i]);
+						}
+
+					}, 72500);
+				}
+			});
+		}
+
 	}
 
 
 
 
 
-
-	//	waitForKeyElements(`body > section > div.main-content > main.main > section > div.content > section.entry-page > section.entry > section.stream > div.content > section.entry`, minusyTutaj, false);
-	//  body > section > div.main-content > main.main > section > div.content > section.entry-page > section.entry > section.stream > div.content > section.entry > div#entry-comments > section.stream > div.content > section.reply`
-	// function minusyTutaj(jNodeEntryBlock)
-	// {
-	// 	const entryBlock = jNodeEntryBlock[0]; // jNode => DOMElement
-
-	// 	// alert(entryBlock)
-	// 	// Select the section with class 'rating-box'
-	// 	let section = document.querySelector('.rating-box');
-
-	// 	// Clear the existing content
-	// 	section.innerHTML = '';
-
-	// 	// Create new elements
-	// 	let ul = document.createElement('ul');
-	// 	let liZero = document.createElement('li');
-	// 	let liMinus = document.createElement('li');
-	// 	let div = document.createElement('div');
-	// 	let buttonPlus = document.createElement('button');
-	// 	let buttonMinus = document.createElement('button');
-
-	// 	// Set classes and text content for new elements
-	// 	ul.className = '';
-	// 	liZero.className = 'zero separated';
-	// 	liZero.textContent = '0';
-	// 	liMinus.className = 'minus';
-	// 	liMinus.textContent = '-8';
-	// 	div.className = 'buttons';
-	// 	buttonPlus.className = 'plus';
-	// 	buttonPlus.textContent = '+';
-	// 	buttonMinus.className = 'minus';
-	// 	buttonMinus.textContent = '-';
-
-	// 	// Append new elements to the DOM
-	// 	ul.appendChild(liZero);
-	// 	ul.appendChild(liMinus);
-	// 	div.appendChild(buttonPlus);
-	// 	div.appendChild(buttonMinus);
-	// 	section.appendChild(ul);
-	// 	section.appendChild(div);
-	// }
 
 
 
@@ -4845,7 +5049,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	const apiGetLink = "https://wykop.pl/api/v3/links/";
 	/*
 	<section id="link-7288349" class="link-block" 
-		data-votes-up="183" data-votes-down="5" data-votes-count="178" data-voted="0" data-comments-count="10" data-comments-hot="false" data-hot="false" data-adult="false" data-created-at="2023-11-27 21:12:49" data-published-at="2023-11-28 15:22:38" data-title="Dwie awarie..." data-slug="dwie-awarie-w-ec-bedzin-wznowienie-dostaw-ciepla-w-koncu-tygodnia-rmf-24" data-description="Dwie awarie w (...)" data-source-label="www.rmf24.pl" data-source-u-r-l="https://www.rmf24.pl/regiony/slaskie/news..." data-source-type="anchor" data-tags="slaskie,bedzin,awaria,wydarzenia">
+		data-wxs_votes_up="183" data-wxs_votes_down="5" data-wxs_votes_count="178" data-voted="0" data-comments-count="10" data-comments-hot="false" data-hot="false" data-adult="false" data-wxs_created_at="2023-11-27 21:12:49" data-published-at="2023-11-28 15:22:38" data-title="Dwie awarie..." data-slug="dwie-awarie-w-ec-bedzin-wznowienie-dostaw-ciepla-w-koncu-tygodnia-rmf-24" data-wxs_description="Dwie awarie w (...)" data-wxs_source_label="www.rmf24.pl" data-source-u-r-l="https://www.rmf24.pl/regiony/slaskie/news..." data-wxs_source_type="anchor" data-tags="slaskie,bedzin,awaria,wydarzenia">
 	*/
 
 	function linkSectionIntersected(linkBlock)
@@ -4858,7 +5062,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 		const fetchURL = apiGetLink + link_id;
 
-		//console.log(fetchURL);
+		console.log(fetchURL);
 
 
 		let link_data;
@@ -4878,7 +5082,8 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				.then(data =>
 				{
 					link_data = data.data;
-					// console.log(link_data);
+					console.log("link_data");
+					console.log(link_data);
 
 					linkBlock.dataset.wxs_votes_up = link_data.votes.up;								// liczba wykopów/plusów 10
 					linkBlock.dataset.wxs_votes_down = link_data.votes.down;							// liczba zakopów/minusów 20
@@ -4894,22 +5099,22 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 						link_data.votes.votesUpPercent = Math.ceil(link_data.votes.up * 100 / linkBlock.dataset.wxs_votes_all);
 					}
 
-					linkBlock.dataset.hot = link_data.hot;
-					linkBlock.dataset.slug = link_data.slug;
-					linkBlock.dataset.adult = link_data.adult;
-					linkBlock.dataset.tags = link_data.tags;
-					linkBlock.dataset.title = link_data.title;
-					linkBlock.dataset.voted = link_data.voted;
-					linkBlock.dataset.sourceURL = link_data.source.url;
-					linkBlock.dataset.sourceType = link_data.source.type;
-					linkBlock.dataset.commentsHot = link_data.comments.hot;
-					linkBlock.dataset.description = link_data.description;
-					linkBlock.dataset.sourceLabel = link_data.source.label;
-					linkBlock.dataset.commentsCount = link_data.comments.count;
+					linkBlock.dataset.wxs_hot = link_data.hot;
+					linkBlock.dataset.wxs_slug = link_data.slug;
+					linkBlock.dataset.wxs_adult = link_data.adult;
+					linkBlock.dataset.wxs_tags = link_data.tags;
+					linkBlock.dataset.wxs_title = link_data.title;
+					linkBlock.dataset.wxs_voted = link_data.voted;
+					linkBlock.dataset.wxs_source_url = link_data.source.url;
+					linkBlock.dataset.wxs_source_type = link_data.source.type;
+					linkBlock.dataset.wxs_comments_hot = link_data.comments.hot;
+					linkBlock.dataset.wxs_description = link_data.description;
+					linkBlock.dataset.wxs_source_label = link_data.source.label;
+					linkBlock.dataset.wxs_comment_count = link_data.comments.count;
 					const linkBlockInfoSpan = linkBlock.querySelector("section > article > div.content > section.info > span");
 					if (link_data.created_at)
 					{
-						linkBlock.dataset.createdAt = link_data.created_at;
+						linkBlock.dataset.wxs_created_at = link_data.created_at;
 						const timeCreatedAt = document.createElement("time");
 						timeCreatedAt.setAttribute("data-v-441f7cc5", null);
 						timeCreatedAt.innerHTML = `Dodane: ${link_data.created_at}`;
@@ -4918,7 +5123,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 					if (link_data.published_at)
 					{
-						linkBlock.dataset.publishedAt = link_data.published_at;
+						linkBlock.dataset.wxs_published_at = link_data.published_at;
 						const timePublishedAt = document.createElement("time");
 						timePublishedAt.setAttribute("data-v-441f7cc5", null);
 						timePublishedAt.innerHTML = `Na głównej od: ${link_data.published_at}`;
@@ -5531,18 +5736,24 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		focusOnAddingNewMicroblogEntry();
 
 		addWykopXButtonsToNavBar();
-
+		if (settings.wxsSwitchesEnable)
+		{
+			runWithDelay(8000, function ()
+			{
+				addSwitchButtons();
+			});
+		}
 
 		if (settings.notatkowatorEnable)
 		{
-			runWithDelay(12000, function ()
+			runWithDelay(17000, function ()
 			{
 				createMenuItemForNotatkowator();
 			});
 		}
 		if (settings.mirkoukrywaczEnable)
 		{
-			runWithDelay(12000, function ()
+			runWithDelay(17000, function ()
 			{
 				createMenuItemForMirkoukrywacz();
 			});
@@ -5607,6 +5818,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		//visiblePlusesObserver.disconnect();
 		sectionObjectIntersectionObserver.disconnect();
 		filterUserOff(); // usuniecie filtra komentarzy
+		remveAllWXSAdded();
+
 
 		runWithDelay(500, function ()
 		{
@@ -5618,7 +5831,28 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	}
 
 
+	function remveAllWXSAdded()
+	{
+		document.querySelectorAll(`section[data-wxs_username]`).forEach((el) =>
+		{
+			removeWXSAttributes(el)
+		});
+	}
 
+	function removeWXSAttributes(sectionObjectElement)
+	{
+		console.log("removeWXSAttributes() from: " + sectionObjectElement.__vue__.item.id);
+
+		sectionObjectElement.removeAttribute('style'); // custom css properties removed 
+
+		Object.keys(sectionObjectElement.dataset).forEach(dataKey =>
+		{
+			if (dataKey.startsWith('wxs_'))
+			{
+				delete sectionObjectElement.dataset[dataKey];
+			}
+		});
+	}
 
 
 	// PAGE LOAD + PAGE CHANGES
@@ -5633,7 +5867,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		{
 			runWithDelay(3000, function ()
 			{
-				mirkoukrywaczHideAllBlockedElements(); // ukrycie elementow blokowanych przez Mirkowolacz oraz Kraweznik
+				mirkoukrywaczHideAllBlockedElements(); // ukrycie elementow blokowanych przez Mirkowolacz oraz actionBox
 			});
 		}
 
