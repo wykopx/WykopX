@@ -31,8 +31,9 @@ Chcesz wesprzeć i wysłać kilka złotych za dobrą robotę?
    
 Szybkie linki:   
 
-Skrypt JavaScript
-- **Wykop XS** https://greasyfork.org/en/scripts/458860-wykop-xs   
+Skrypty JavaScript
+- **Wykop XS** https://greasyfork.org/en/scripts/458860-wykop-xs
+- **Wykop XS - XHR Blocker** https://greasyfork.org/en/scripts/486722-wykop-xs-xhr-blocker
    
 Style CSS:
 - **Wykop X Style**: https://userstyles.world/style/8174/wykop-x-style   
@@ -40,6 +41,8 @@ Style CSS:
 - **Wykop X Blank** https://userstyles.world/style/8419/wykop-x-blank   
 - **Wykop XS** https://userstyles.world/style/8179/wykop-xs
     
+Zerknij też na listę wykopowych aplikacji:
+https://github.com/wykopx/Aplikacje-wykopowe/wiki/Aplikacje
 
 
 
