@@ -21,15 +21,20 @@ Wszystkie informacje takie jak:
 - instrukcja dotycząca instalacji i działania stylu **Wykop X Style** oraz skryptu **Wykop XS**
 - lista wszystkich funkcji i opis działania najciekawszych z nich
 - changelog
-
-dostępne są w Wiki projektu https://github.com/wykopx/WykopX/wiki
-
+   
+dostępne są w Wiki projektu:    
+- https://github.com/wykopx/WykopX/wiki   
+   
+Lista wykopowych aplikacji, skryptów i botów:   
+- https://github.com/wykopx/Aplikacje-wykopowe/wiki/Aplikacje
+   
+   
 ***   
 Chcesz wesprzeć i wysłać kilka złotych za dobrą robotę?     
 💲 Możesz postawić mi kawkę ☕ na [https://buycoffee.to/wykopx](https://buycoffee.to/wykopx) 💲   
 ***   
-      
-      
+         
+        
 Skrypty JavaScript   
 - **Wykop XS** https://greasyfork.org/en/scripts/458860-wykop-xs
 - **Wykop XS - XHR Blocker** https://greasyfork.org/en/scripts/486722-wykop-xs-xhr-blocker
@@ -41,9 +46,7 @@ Style CSS:
 - **Wykop XS** https://userstyles.world/style/8179/wykop-xs
 
       
-Lista wykopowych aplikacji, skryptów i botów:   
-- https://github.com/wykopx/Aplikacje-wykopowe/wiki/Aplikacje
-
+   
 
 
 Propozycje nowych funkcji można zgłaszać tutaj:
