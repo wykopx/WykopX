@@ -37,7 +37,7 @@
 	'use strict';
 
 	const currentVersion = "2.60.1";
-	let dev = true;
+	let dev = false;
 	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
 
 	//dayjs.extend(relativeTime); // https://day.js.org/docs/en/plugin/relative-time // https://www.jsdelivr.com/package/npm/dayjs?tab=files&path=plugin
@@ -56,11 +56,11 @@
 	let votesFetchingLimitMinimumVotes = 5;
 	let votesFetchingLimitMaximumHoursOld = 48;
 	let votesFetchingFirstDelayInSeconds = 1;		// seconds
-	let votesFetchingOngoingDelayInSeconds = 2; 	// seconds
+	let votesFetchingOngoingDelayInSeconds = 5; 	// seconds
 
 	let votesFetchingHigherFrequencyLimitMinimumVotes = 30;
 	let votesFetchingHigherFrequencyLimitMaximumHoursOld = 24;
-	let votesFetchingHigherFrequencyDelayInSeconds = 2; // seconds
+	let votesFetchingHigherFrequencyDelayInSeconds = 3; // seconds
 
 
 
@@ -71,7 +71,7 @@
 	// boolean — domyslnie WŁĄCZONE bez Wykop X Style
 
 	settings.WykopXSEnabled = wykopxSettings.getPropertyValue("--WykopXSEnabled") ? wykopxSettings.getPropertyValue("--WykopXSEnabled") === '1' : true;
-	if (settings.WykopXSEnabled == false) return true;
+	if (settings.WykopXSEnabled == false) return
 
 	if (!dev) dev = wykopxSettings.getPropertyValue("--wxsDev") ? wykopxSettings.getPropertyValue("--wxsDev") === '1' : false;
 
@@ -79,6 +79,13 @@
 
 	settings.wxsBlockXHRExternal = wykopxSettings.getPropertyValue("--wxsBlockXHRExternal") ? wykopxSettings.getPropertyValue("--wxsBlockXHRExternal") === '1' : true;
 	settings.wxsBlockXHRInternalAds = wykopxSettings.getPropertyValue("--wxsBlockXHRInternalAds") ? wykopxSettings.getPropertyValue("--wxsBlockXHRInternalAds") === '1' : true;
+
+	if (settings.wxsBlockXHRExternal || settings.wxsBlockXHRInternalAds)
+	{
+		settings.wxsBlockXHRConsoleLogAllowed = wykopxSettings.getPropertyValue("--wxsBlockXHRConsoleLogAllowed") ? wykopxSettings.getPropertyValue("--wxsBlockXHRConsoleLogAllowed") === '1' : false;
+		settings.wxsBlockXHRConsoleLogBlocked = wykopxSettings.getPropertyValue("--wxsBlockXHRConsoleLogBlocked") ? wykopxSettings.getPropertyValue("--wxsBlockXHRConsoleLogBlocked") === '1' : false;
+	}
+
 
 	settings.hitsInTopNavJS = wykopxSettings.getPropertyValue("--hitsInTopNavJS") ? wykopxSettings.getPropertyValue("--hitsInTopNavJS") === '1' : true;
 	settings.quickLinksEnable = wykopxSettings.getPropertyValue("--quickLinksEnable") ? wykopxSettings.getPropertyValue("--quickLinksEnable") === '1' : true;
@@ -156,6 +163,8 @@
 	let localStorageMirkoukrywacz = null;
 	let localStorageTextsaver = null;
 	let localStorageNotatkowator = null;
+
+	settings.intersectionObserverRootMargin = wykopxSettings.getPropertyValue("--intersectionObserverRootMargin") ? wykopxSettings.getPropertyValue("--intersectionObserverRootMargin") === '1' : true;
 
 	settings.actionBoxEnable = wykopxSettings.getPropertyValue("--actionBoxEnable") ? wykopxSettings.getPropertyValue("--actionBoxEnable") === '1' : true;
 	if (settings.actionBoxEnable)
@@ -1268,6 +1277,8 @@
 
 		delete document.body.dataset.wxs_filter // <body data-wxs_filter>
 		delete document.body.dataset.wxs_filter_style
+		delete document.body.dataset.wxs_filter_style
+		delete document.body.dataset.wxs_filter_username
 
 		const styleElement = document.getElementById('wxs_css_filter_user_comments');
 		if (styleElement) styleElement.parentNode.removeChild(styleElement);
@@ -1288,19 +1299,20 @@
 		const css_id = "wxs_css_filter_user_comments";
 
 		const filterUsername = this.dataset.wxs_author_username;
-		const filterUserGender = this.dataset.wxs_author_gender;
+		const filterUserGender = this.dataset.wxs_author_gender ? this.dataset.wxs_author_gender : "m";
 
-		let filterStyles = [
-			`display: none!important; `,
-			`border: 3px solid gray!important; opacity: 0.3!important; `,
-			`filter: grayscale(1); `,
-		]
+		let filterStyles =
+			[
+				`display: none!important; `,
+				`border: 3px solid gray!important; opacity: 0.3!important; `,
+				`filter: grayscale(1); `,
+			]
 		let filterStyleIndex = 0;
 		let wxs_css_style_filter_user_comments = document.getElementById(css_id);
 
-		if (wxs_css_style_filter_user_comments)
+		if (wxs_css_style_filter_user_comments) // jest już nałożony jakiś filtr
 		{
-			if (document.body.dataset.wxs_filter == filterType) // ten sam typ filtra, zmiana stylu
+			if (document.body.dataset.wxs_filter == filterType && document.body.dataset.wxs_filter_username != "filterUsername") // ten sam typ filtra i uzytkownik - zmiana stylu
 			{
 				let currentFilterStyleIndex = parseInt(document.body.dataset.wxs_filter_style);
 
@@ -1312,13 +1324,14 @@
 					return false;
 				}
 			}
-			else // zamiana typu filtra, zachowujemy ten sam styl
+			else // zachowujemy ten sam styl bo zmienil sie typ filtra lub filtrowany uzytkownik
 			{
 				filterStyleIndex = parseInt(document.body.dataset.wxs_filter_style);
 			}
 		}
-		document.body.dataset.wxs_filter_style = filterStyleIndex.toString()
 
+		document.body.dataset.wxs_filter_style = filterStyleIndex.toString()
+		document.body.dataset.wxs_filter_username = filterUsername;
 
 		let css = "";
 
@@ -1740,6 +1753,26 @@
 					sectionObjectElement.dataset.wxs_votes_all = sectionObjectElement.__vue__.item.votes.up + sectionObjectElement.__vue__.item.votes.down;
 
 
+
+					sectionObjectElement.querySelectorAll(`article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href^="/ludzie/"]:not([data-wxs_mention_username])`).forEach((a_mention) =>
+					{
+						const a_mentions_filter_button = document.createElement("button");
+						a_mentions_filter_button.classList = "wxs_filter_on_replies";
+						a_mentions_filter_button.innerHTML = `🔰<span>FILTRUJ</span>`
+						a_mentions_filter_button.type = "button";
+
+						const wxs_mention_username = a_mention.href.replace("https://wykop.pl/ludzie/", "")
+						a_mention.dataset.wxs_mention_username = wxs_mention_username; // każdy @mention uzytkownika zmieniamy na <a href="/ludzie/NadiaFrance" data-wxs_author_username="NadiaFrance">
+
+						a_mentions_filter_button.dataset.wxs_author_username = wxs_mention_username;
+						a_mentions_filter_button.title = `𝗪𝘆𝗸𝗼𝗽 𝗫 — 𝗳𝗶𝗹𝘁𝗿𝗼𝘄𝗮𝗻𝗶𝗲 𝗱𝘆𝘀𝗸𝘂𝘀𝗷𝗶 𝗶 𝗼𝗱𝗽𝗼𝘄𝗶𝗲𝗱𝘇𝗶 \n \n Pokaż całą dyskusję z użytkownikiem '${wxs_mention_username}'.\n \n  Pokazuje: \n — wszystkie komentarze '${wxs_mention_username}' \n — odpowiedzi, które wołają '@${wxs_mention_username}' \n \n Klikając przełączasz tryb filtrowania: \n — Filtr 1: całkowicie ukrywa odfiltrowane komentarze \n — Filtr 2: odfiltrowane komentarze półprzezroczyste \n — Filtr 3: odfiltrowane komentarze czarno białe \n \n "`
+
+						a_mention.insertAdjacentElement("afterend", a_mentions_filter_button);
+
+						console.log("=== BUTTON ADDED: a_mentions_filter_button")
+						console.log(a_mentions_filter_button)
+					})
+
 					if (resource == "entry") // tu moglyby byc jeszcze komentarze w znaleziskach
 					{
 						// sprawdzenie czy wpis zawiera grę w plusowanie
@@ -1765,6 +1798,7 @@
 						}
 					}
 				}
+				// znaleziskoa
 				else if (resource == "link")
 				{
 					if (settings.checkLinkVotesEnable && settings.checkLinkVotesPerHour && !sectionObjectElement.dataset.wxs_first_load_votes_count)
@@ -1866,8 +1900,6 @@
 				// GDY PIERWSZY RAZ WIDZIMY WPIS/KOMENTARZ/ZNALEZISKO
 				if (!sectionObjectElement.classList.contains("wasIntersecting"))
 				{
-
-
 					sectionObjectElement.classList.add("wasIntersecting");
 
 
@@ -1885,7 +1917,6 @@
 
 						const ratingBoxSection = sectionObjectElement.querySelector(".rating-box")
 						if (settings.votingExplosionEnable || settings.checkEntryPlusesWhenVoting) votingEventListener(sectionObjectElement, ratingBoxSection);
-
 
 
 						if (ratingBoxSection && settings.checkEntryPlusesEnable && settings.checkEntryPlusesPerHour)
@@ -1918,20 +1949,21 @@
 						let wxs_menu_action_box = document.createElement("div");
 						wxs_menu_action_box.classList.add("wxs_menu_action_box"); // 📰📑 🔖 ⎀⎊👁 🖾 🗙 ⌧ ⮽ 🗳 ☒ 🗵 🗷- ‐ ‑ – ‒ — ― _ ﹏🗖 ⎀ ⎊
 
-						let wxs_menu_action_box_css = ``;
+						let wxs_menu_action_box_html = ``;
+
 
 
 						if (settings.filterUserComments || settings.filterUserReplies)
 						{
-							wxs_menu_action_box_css += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_filter_off" title=" Wykop X — wyłącz filtrowanie \n \n Pokaż normalnie wszystkie odfiltrowane komentarze / znaleziska \n \n ">❌ Wyłącz filtr</button>`;
+							wxs_menu_action_box_html += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_filter_off" title=" Wykop X — wyłącz filtrowanie \n \n Pokaż normalnie wszystkie odfiltrowane komentarze / znaleziska \n \n ">❌ Wyłącz filtr</button>`;
 
 							if (settings.filterUserComments)
 							{
-								wxs_menu_action_box_css += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_filter_on_user" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 — 𝗳𝗶𝗹𝘁𝗿𝗼𝘄𝗮𝗻𝗶𝗲 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝘆/𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸	\n \n Na stronach zawierających 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 (pod wpisami i pod znaleziskami) \n odfiltrowuje 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 innych użytkowników. \n Pozostawia widoczne wyłącznie 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 tego użytkownika. \n \n Na stronach zawierających 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 (np. główna, wykopalisko) \n odfiltrowuje 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 innych użytkowników. \n Pozostawia widoczne wyłącznie 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 tego użytkownika. \n \n \n Klikając przełączasz tryb filtrowania: \n — Filtr 1: całkowicie ukrywa odfiltrowane komentarze \n — Filtr 2: odfiltrowane komentarze półprzezroczyste \n — Filtr 3: odfiltrowane komentarze czarno białe \n \n ">Filtruj</button>`;
+								wxs_menu_action_box_html += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_filter_on_user" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 — 𝗳𝗶𝗹𝘁𝗿𝗼𝘄𝗮𝗻𝗶𝗲 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝘆/𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸	\n \n Na stronach zawierających 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 (pod wpisami i pod znaleziskami) \n odfiltrowuje 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 innych użytkowników. \n Pozostawia widoczne wyłącznie 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 tego użytkownika. \n \n Na stronach zawierających 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 (np. główna, wykopalisko) \n odfiltrowuje 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 innych użytkowników. \n Pozostawia widoczne wyłącznie 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 tego użytkownika. \n \n \n Klikając przełączasz tryb filtrowania: \n — Filtr 1: całkowicie ukrywa odfiltrowane komentarze \n — Filtr 2: odfiltrowane komentarze półprzezroczyste \n — Filtr 3: odfiltrowane komentarze czarno białe \n \n ">⚜ Filtruj </button>`;
 							}
 							if (settings.filterUserReplies)
 							{
-								wxs_menu_action_box_css += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_filter_on_replies" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 — 𝗳𝗶𝗹𝘁𝗿𝗼𝘄𝗮𝗻𝗶𝗲 𝗱𝘆𝘀𝗸𝘂𝘀𝗷𝗶 𝗶 𝗼𝗱𝗽𝗼𝘄𝗶𝗲𝗱𝘇𝗶 \n \n Odfiltrowuje 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲, które nie dotyczą tego użytkownika.  \n \n  Nie ukrywa: \n — komentarzy tego użytkownika \n — odpowiedzi, które zawierają @wołanie tego użytkownika \n \n Klikając przełączasz tryb filtrowania: \n — Filtr 1: całkowicie ukrywa odfiltrowane komentarze \n — Filtr 2: odfiltrowane komentarze półprzezroczyste \n — Filtr 3: odfiltrowane komentarze czarno białe \n \n ">Filtruj @</button>`;
+								wxs_menu_action_box_html += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_filter_on_replies" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 — 𝗳𝗶𝗹𝘁𝗿𝗼𝘄𝗮𝗻𝗶𝗲 𝗱𝘆𝘀𝗸𝘂𝘀𝗷𝗶 𝗶 𝗼𝗱𝗽𝗼𝘄𝗶𝗲𝗱𝘇𝗶 \n \n Odfiltrowuje 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲, które nie dotyczą tego użytkownika.  \n \n  Nie ukrywa: \n — komentarzy tego użytkownika \n — odpowiedzi, które zawierają @wołanie tego użytkownika \n \n Klikając przełączasz tryb filtrowania: \n — Filtr 1: całkowicie ukrywa odfiltrowane komentarze \n — Filtr 2: odfiltrowane komentarze półprzezroczyste \n — Filtr 3: odfiltrowane komentarze czarno białe \n \n ">🔰 Filtruj </button>`;
 							}
 
 
@@ -1940,14 +1972,14 @@
 						{
 							if (settings.textsaverSaveEntries || settings.textsaverSaveComments)
 							{
-								wxs_menu_action_box_css += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_save" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 — 𝘇𝗮𝗽𝗮𝗺𝗶𝗲̨𝘁𝗮𝗷 𝘁𝗿𝗲𝘀́𝗰́ \n \n Treść wybranego wpisu/komentarza zostanie zapisana lokalnie w Twojej przeglądarce. W przypadku późniejszej edycji treści lub usunięcia komentarza, zobaczysz odtworzoną zapisaną przez Wykop X wersję. \n \n ">Zapisz</button>`;
+								wxs_menu_action_box_html += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_save" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 — 𝘇𝗮𝗽𝗮𝗺𝗶𝗲̨𝘁𝗮𝗷 𝘁𝗿𝗲𝘀́𝗰́ \n \n Treść wybranego wpisu/komentarza zostanie zapisana lokalnie w Twojej przeglądarce. W przypadku późniejszej edycji treści lub usunięcia komentarza, zobaczysz odtworzoną zapisaną przez Wykop X wersję. \n \n ">Zapisz</button>`;
 							}
 						}
 						if (settings.mirkoukrywaczEnable)
 						{
 							if (settings.mirkoukrywaczHideComments || settings.mirkoukrywaczHideEntries || settings.mirkoukrywaczHideLinks)
 							{
-								wxs_menu_action_box_css += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_minimize" title="Wykop X Krawężnik — zwiń">[ — ]</button>
+								wxs_menu_action_box_html += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_minimize" title="Wykop X Krawężnik — zwiń">[ — ]</button>
 
 								<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_maximize" title="Wykop X Krawężnik — pokaż cały">[ + ]</button>
 
@@ -1956,7 +1988,7 @@
 						}
 
 						// DODAJEMY KRAWĘŻNIK
-						wxs_menu_action_box.innerHTML = wxs_menu_action_box_css;
+						wxs_menu_action_box.innerHTML = wxs_menu_action_box_html;
 						const sectionEntryHeaderElement = sectionObjectElement.querySelector("article > header");
 						sectionEntryHeaderElement.parentNode.insertBefore(wxs_menu_action_box, sectionEntryHeaderElement);
 					}
@@ -2043,9 +2075,12 @@
 	const sectionObjectIntersectionObserverOptions =
 	{
 		root: null,
-		rootMargin: "0px 0px -200px 0px",
+		rootMargin: "50px 0px 400px 0px",
 		threshold: 0,
 	};
+
+	if (settings.intersectionObserverRootMargin == false) sectionObjectIntersectionObserverOptions.rootMargin = "0px 0px -200px 0px";
+
 	const sectionObjectIntersectionObserver = new IntersectionObserver(sectionObjectsAreIntersecting, sectionObjectIntersectionObserverOptions)
 
 
@@ -4881,6 +4916,9 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			sectionObjectElement = ratingBoxSection.closest("section.entry")
 		}
 
+		console.log("sectionObjectElement.__vue__.item")
+		console.log(sectionObjectElement.__vue__.item)
+
 		if (sectionObjectElement && sectionObjectElement.__vue__.item.deleted == null)
 		{
 			ratingBoxSection = sectionObjectElement.querySelector("section.rating-box");
@@ -6228,7 +6266,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		if (settings.removeAnnoyancesEnable)
 		{
-			runWithDelay(2000, function ()
+			runWithDelay(18000, function ()
 			{
 				if (settings.removeAnnoyancesIframes) waitForKeyElements(`html > iframe, html > body > iframe`, removeFromDOM, false);
 				if (settings.removeAnnoyancesScripts) waitForKeyElements(`html > head > script[src^="https://"]`, removeFromDOM, false);
@@ -6291,40 +6329,39 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		// prohibited.push("https://wykop.pl/api/v3/notifications/entries?page=1");
 		// prohibited.push("https://wykop.pl/api/v3/pm/conversations");
 
-		if (dev)
-		{
-			console.log("allowed:")
-			console.log(allowed)
-			console.log("prohibited:")
-			console.log(prohibited)
-		}
 		xhook.before((request, callback) =>
 		{
 
 			if (allowed.some(str => request.url.includes(str)) && !prohibited.some(str => request.url.includes(str)))
 			{
-				if (dev) console.log("Wykop X - XHR Blocker | XHR: 🌍 " + request.url);
+				if (settings.wxsBlockXHRConsoleLogAllowed) console.log("Wykop XS - XHR Blocker | XHR: 🌍 " + request.url);
 				callback();
 			}
 			else
 			{
-				if (dev) console.log("Wykop X - XHR Blocker | XHR: ⛔ " + request.url + " (BLOCKED)");
+				if (settings.wxsBlockXHRConsoleLogBlocked) console.log("Wykop XS - XHR Blocker | XHR: ⛔ " + request.url + " (BLOCKED)");
 			}
 		});
 	}
+
+
+
+
+
 
 	if (xhook != null && (settings.infiniteScrollEntriesEnabled || settings.infiniteScrollLinksEnabled))
 	{
 		xhook.after((request, response) =>
 		{
 			console.log("✔ xhook.after - request: " + request.url);
-			//console.log(request);
-			//console.log("xhook.after - response");
-			//console.log(response);
+			console.log(request);
+			console.log("✔ xhook.after - response");
+			console.log(response);
 
 
-			if (response.status == 200)
+			if (response.status == 200 && request.url.endsWith("page=1"))
 			{
+				console.log("request.url.endsWith(page = 1)")
 				if ((settings.infiniteScrollEntriesEnabled && pageType == "wpis") || (settings.infiniteScrollLinksEnabled && pageType == "znalezisko"))
 				{
 					let url = null;
@@ -6342,17 +6379,22 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 					console.log(request.url);
 					console.log(url);
 
-					if (url.host == "wykop.pl")
+					//if (url.host == "wykop.pl")
+					if (1)
 					{
 						let searchParams = new URLSearchParams(url.searchParams)
-						console.log("xhook.after - url.href");
+						console.log("✔ xhook.after - url.href");
 						console.log(url.href);
-						console.log("xhook.after - searchParams");
+						console.log("✔ xhook.after - searchParams");
 						console.log(searchParams);
 
+						console.log(`✔ xhook.after - ${url.href} searchParams.has('page'): ` + searchParams.has('page'))
+						console.log(`✔ xhook.after - ${url.href} searchParams.get('page'): ` + searchParams.get('page'))
 
 						if (searchParams.has('page') && searchParams.get('page') == 1)
 						{
+							console.log("✔ xhook.after - INFINITE SCROLL");
+
 							let regex = /\/api\/v3\/entries\/\d+\/comments/;
 							if (pageType == "znalezisko") regex = /\/api\/v3\/links\/\d+\/comments/;
 
