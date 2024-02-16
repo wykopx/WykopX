@@ -111,12 +111,12 @@
 	{
 		settings.wxsSwitchPhotoViewer = wykopxSettings.getPropertyValue("--wxsSwitchPhotoViewer") ? wykopxSettings.getPropertyValue("--wxsSwitchPhotoViewer") === '1' : true;
 		settings.wxsSwitchImages = wykopxSettings.getPropertyValue("--wxsSwitchImages") ? wykopxSettings.getPropertyValue("--wxsSwitchImages") === '1' : true;
+		settings.wxsSwitchYouTube = wykopxSettings.getPropertyValue("--wxsSwitchYouTube") ? wykopxSettings.getPropertyValue("--wxsSwitchYouTube") === '1' : true;
 		settings.wxsSwitchAdult = wykopxSettings.getPropertyValue("--wxsSwitchAdult") ? wykopxSettings.getPropertyValue("--wxsSwitchAdult") === '1' : true;
 		settings.wxsSwitchNSFW = wykopxSettings.getPropertyValue("--wxsSwitchNSFW") ? wykopxSettings.getPropertyValue("--wxsSwitchNSFW") === '1' : true;
 		settings.wxsSwitchTags = wykopxSettings.getPropertyValue("--wxsSwitchTags") ? wykopxSettings.getPropertyValue("--wxsSwitchTags") === '1' : true;
 		settings.wxsSwitchByUserColor = wykopxSettings.getPropertyValue("--wxsSwitchByUserColor") ? wykopxSettings.getPropertyValue("--wxsSwitchByUserColor") === '1' : true;
 		settings.wxsSwitchByUserGender = wykopxSettings.getPropertyValue("--wxsSwitchByUserGender") ? wykopxSettings.getPropertyValue("--wxsSwitchByUserGender") === '1' : true;
-		settings.wxsSwitchTags = wykopxSettings.getPropertyValue("--wxsSwitchTags") ? wykopxSettings.getPropertyValue("--wxsSwitchTags") === '1' : true;
 	}
 
 
@@ -1051,6 +1051,7 @@
 			else if (settings.wxsSwitchAdult && event.target.closest("input#switchAdult")) switchChanged.call(event.target, event, "wxs_switch_entries_adult");
 			else if (settings.wxsSwitchPhotoViewer && event.target.closest("input#switchPhotoViewer")) switchChanged.call(event.target, event, "wxs_switch_entries_photo_viewer");
 			else if (settings.wxsSwitchImages && event.target.closest("input#switchImages")) switchChanged.call(event.target, event, "wxs_switch_entries_images");
+			else if (settings.wxsSwitchYouTube && event.target.closest("input#switchYouTube")) switchChanged.call(event.target, event, "wxs_switch_entries_youtube");
 			else if (settings.wxsSwitchTags && event.target.closest("input#switchTags")) switchChanged.call(event.target, event, "wxs_switch_entries_tags");
 			else if (settings.wxsSwitchByUserColor && event.target.closest("input#switchByUserColor")) switchChanged.call(event.target, event, "wxs_switch_by_user_color");
 			else if (settings.wxsSwitchByUserGender && event.target.closest("input#switchByUserGender")) switchChanged.call(event.target, event, "wxs_switch_by_user_gender");
@@ -1071,32 +1072,6 @@
 										<option value="1" label="ON">ON</option>
 									</datalist>`;
 
-		if (settings.wxsSwitchByUserColor)
-		{
-			buttonsWrapper.innerHTML += `<div class="wxs_switch switchByUserColor">
-											<div>
-												<label class="label_OFF_0">Kolory</label>
-												<label class="label_ON_PLUS_1">Bez zielonek</label>
-												<label class="label_ON_PLUS_2">Tylko bordo</label>
-											</div>
-											<div>
-												<input type="range" id="switchByUserColor" list="markers" name="switchByUserColor" min="0" max="2" step="1" value="0" />
-											</div>
-										</div>`;
-		}
-		if (settings.wxsSwitchByUserGender)
-		{
-			buttonsWrapper.innerHTML += `<div class="wxs_switch switchByUserGender">
-											<div>
-												<label class="label_ON_MINUS_1" title="">Bez różowych ❌</label>
-												<label class="label_OFF_0">Różowe</label>
-												<label class="label_ON_PLUS_1" title="">Tylko różowe </label>
-											</div>
-											<div>
-												<input type="range" id="switchByUserGender" list="markers" name="switchByUserGender" min="-1" max="1" step="1" value="0" />
-											</div>
-										</div>`;
-		}
 		if (settings.wxsSwitchNSFW)
 		{
 			buttonsWrapper.innerHTML += `<div class="wxs_switch switchNSFW showOnLinksStream showOnEntriesStream showOnEntryPage">
@@ -1123,30 +1098,44 @@
 											</div>
 										</div>`;
 		}
-		if (settings.wxsSwitchImages)
+
+		if (settings.wxsSwitchByUserColor)
 		{
-			buttonsWrapper.innerHTML += `<div class="wxs_switch switchImages showOnLinkPage showOnEntriesStream showOnEntryPage">
+			buttonsWrapper.innerHTML += `<div class="wxs_switch switchByUserColor showOnLinksStream showOnEntriesStream showOnLinkPage showOnEntriesStream showOnEntryPage">
 											<div>
-												<label class="label_ON_MINUS_2" title=" Pokazuje tylko wpisy, które nie mają obrazków. Ukrywa wszystkie wpisy z obrazkami lub GIF-ami">Bez obr. 🚫</label>
-												<label class="label_ON_MINUS_1" title=" Ukrywa obrazki we wpisach i komentarzach pozostawiając tekst">Ukryj obr. ❌</label>
-												<label class="label_OFF_0">Obrazki</label>
-												<label class="label_ON_PLUS_1" title=" Pokazuje tylko wpisy, które zawierają obrazki">Tylko obr. ✅</label>
+												<label class="label_OFF_0">Kolory</label>
+												<label class="label_ON_PLUS_1">Bez zielonek</label>
+												<label class="label_ON_PLUS_2">Tylko bordo</label>
 											</div>
 											<div>
-												<input type="range" id="switchImages" list="markers" name="switchImages" min="-2" max="1" step="1" value="0" />
+												<input type="range" id="switchByUserColor" list="markers" name="switchByUserColor" min="0" max="2" step="1" value="0" />
 											</div>
 										</div>`;
 		}
-		if (settings.wxsSwitchPhotoViewer)
+		if (settings.wxsSwitchByUserGender)
 		{
-			buttonsWrapper.innerHTML += `<div class="wxs_switch switchPhotoViewer showOnEntriesStream">
+			buttonsWrapper.innerHTML += `<div class="wxs_switch switchByUserGender showOnLinkPage showOnEntriesStream showOnEntryPage">
 											<div>
-												<label class="label_OFF_0">PhotoViewer</label>
-												<label class="label_ON_PLUS_1">PhotoViewer ✔</label>
-												<label class="label_ON_PLUS_2">PhotoViewer ✅</label>
+												<label class="label_ON_MINUS_1" title="">Bez różowych ❌</label>
+												<label class="label_OFF_0">Różowe</label>
+												<label class="label_ON_PLUS_1" title="">Tylko różowe </label>
 											</div>
 											<div>
-												<input type="range" id="switchPhotoViewer" list="markers" name="switchPhotoViewer" min="0" max="2" step="1" value="0" />
+												<input type="range" id="switchByUserGender" list="markers" name="switchByUserGender" min="-1" max="1" step="1" value="0" />
+											</div>
+										</div>`;
+		}
+
+		if (settings.wxsSwitchYouTube)
+		{
+			buttonsWrapper.innerHTML += `<div class="wxs_switch switchYouTube showOnLinksStream showOnEntriesStream showOnEntriesStream showOnEntryPage">
+											<div>
+												<label class="label_ON_MINUS_1" title=" Treści bez filmików YouTube">Bez YT ❌</label>
+												<label class="label_OFF_0">YouTube</label>
+												<label class="label_ON_PLUS_1" title=" Tylko YouTube ">Tylko YT ✅</label>
+											</div>
+											<div>
+												<input type="range" id="switchYouTube" list="markers" name="switchYouTube" min="-1" max="1" step="1" value="0" />
 											</div>
 										</div>`;
 		}
@@ -1163,6 +1152,36 @@
 											</div>
 										</div>`;
 		}
+
+		if (settings.wxsSwitchImages)
+		{
+			buttonsWrapper.innerHTML += `<div class="wxs_switch switchImages showOnLinkPage showOnEntriesStream showOnEntryPage">
+											<div>
+												<label class="label_ON_MINUS_2" title=" Pokazuje tylko wpisy, które nie mają obrazków. Ukrywa wszystkie wpisy z obrazkami lub GIF-ami">Bez obr. 🚫</label>
+												<label class="label_ON_MINUS_1" title=" Ukrywa obrazki we wpisach i komentarzach pozostawiając tekst">Ukryj obr. ❌</label>
+												<label class="label_OFF_0">Obrazki</label>
+												<label class="label_ON_PLUS_1" title=" Pokazuje tylko wpisy, które zawierają obrazki">Tylko obr. ✅</label>
+											</div>
+											<div>
+												<input type="range" id="switchImages" list="markers" name="switchImages" min="-2" max="1" step="1" value="0" />
+											</div>
+										</div>`;
+		}
+
+		if (settings.wxsSwitchPhotoViewer)
+		{
+			buttonsWrapper.innerHTML += `<div class="wxs_switch switchPhotoViewer showOnEntriesStream">
+											<div>
+												<label class="label_OFF_0">PhotoViewer</label>
+												<label class="label_ON_PLUS_1">PhotoViewer ✔</label>
+												<label class="label_ON_PLUS_2">PhotoViewer ✅</label>
+											</div>
+											<div>
+												<input type="range" id="switchPhotoViewer" list="markers" name="switchPhotoViewer" min="0" max="2" step="1" value="0" />
+											</div>
+										</div>`;
+		}
+
 
 
 		const nav = document.querySelector("body header div.right nav");
@@ -2062,8 +2081,6 @@
 			}
 			else
 			{
-				// TODO usunąć sprawdzanie plusów/wykopów na żywo — chyba nie trzeba
-
 				// consoleX(`section.entry NOT intersecting: ${id}`, 1)
 				sectionObjectElement.classList.remove("isIntersecting");
 				sectionObjectElement.classList.add("notIntersecting");
@@ -2214,10 +2231,12 @@
 				if (isFemale.length >= 1) 		// różowy pasek // +k lub +f
 				{
 					changeSexTo = "female";
+					userDataObject.gender = "f";
 				}
 				else if (isMale.length >= 1) 				// niebieski pasek // +m
 				{
 					changeSexTo = "male";
+					userDataObject.gender = "m";
 				}
 
 				noteSpanElement.innerHTML = `<var>${usernoteParsedToDisplay}</var>`;
