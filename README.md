@@ -18,29 +18,35 @@ Here are some ideas to get you started:
 Dodatek Wykop X oraz skrypt Wykop XS to kilkaset usprawnień dla strony wykop.pl
 
 Wszystkie informacje takie jak:
-- instrukcja dotycząca instalacji i działania stylu Wykop X oraz skryptu Wykop XS
-- lista wszystkich funkcji
+- instrukcja dotycząca instalacji i działania stylu **Wykop X Style** oraz skryptu **Wykop XS**
+- lista wszystkich funkcji i opis działania najciekawszych z nich
 - changelog
-dostępne są w Wiki projektu https://github.com/wykopx/WykopX/wiki
-
+   
+dostępne są w Wiki projektu:    
+- https://github.com/wykopx/WykopX/wiki   
+   
+Lista wykopowych aplikacji, skryptów i botów:   
+- https://github.com/wykopx/Aplikacje-wykopowe/wiki/Aplikacje
+   
+   
 ***   
 Chcesz wesprzeć i wysłać kilka złotych za dobrą robotę?     
 💲 Możesz postawić mi kawkę ☕ na [https://buycoffee.to/wykopx](https://buycoffee.to/wykopx) 💲   
 ***   
-   
-   
-Szybkie linki:   
-
-Skrypt JavaScript
-- **Wykop XS** https://greasyfork.org/en/scripts/458860-wykop-xs   
-   
-Style CSS:
+         
+        
+Skrypty JavaScript   
+- **Wykop XS** https://greasyfork.org/en/scripts/458860-wykop-xs
+- **Wykop XS - XHR Blocker** https://greasyfork.org/en/scripts/486722-wykop-xs-xhr-blocker
+     
+Style CSS:   
 - **Wykop X Style**: https://userstyles.world/style/8174/wykop-x-style   
-
+   
 - **Wykop X Blank** https://userstyles.world/style/8419/wykop-x-blank   
 - **Wykop XS** https://userstyles.world/style/8179/wykop-xs
-    
 
+      
+   
 
 
 Propozycje nowych funkcji można zgłaszać tutaj:
