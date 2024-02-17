@@ -226,6 +226,7 @@
 
 		settings.notatkowatorUpdateInterval = parseFloat(wykopxSettings.getPropertyValue("--notatkowatorUpdateInterval")); // number 0 ... 120
 		settings.notatkowatorVerticalBar = wykopxSettings.getPropertyValue("--notatkowatorVerticalBar") ? wykopxSettings.getPropertyValue("--notatkowatorVerticalBar") === '1' : true; // 1 || 0
+		settings.notatkowatorWebsiteURL = wykopxSettings.getPropertyValue("--notatkowatorWebsiteURL") ? wykopxSettings.getPropertyValue("--notatkowatorWebsiteURL") === '1' : true; // 1 || 0
 		settings.notatkowatorStyle = wykopxSettings.getPropertyValue("--notatkowatorStyle").trim();	// string "pod_avatarem" "obok_nicka"
 	}
 
@@ -256,13 +257,17 @@
 		if (settings.wxsUserLabelsTrolls)
 		{
 			const trollsMap = new Map();
-			trollsMap.set("autotldr", "Bot AI");
-			trollsMap.set("wykop-gpt", "Bot AI");
-			trollsMap.set("Przypomnienie", "Bot");
-			trollsMap.set("DwieLinieBOTv3", "Bot");
-			trollsMap.set("ISSTrackerPL", "Bot");
-			trollsMap.set("januszowybot", "Bot");
-			trollsMap.set("mirko_anonim", "Anonimowy");
+			trollsMap.set("WykopX", { "url": "https://github.com/wykopx/WykopX/wiki/X-Notatkowator" });
+			trollsMap.set("bakehaus", { "label": "Wypiek", "url": "https://nimble.li/vdr4ajlm" });
+			trollsMap.set("m__b", { "label": "Michał B.", "url": "https://pl.linkedin.com/in/michalbialek" });
+			trollsMap.set("paliwoda", { "url": "https://sjp.pwn.pl/sjp/chomato;2448428.html" });
+			trollsMap.set("autotldr", { "label": "Bot AI", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Boty-na-Wykopie#auto-tldr" });
+			trollsMap.set("wykop-gpt", { "label": "Bot AI", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Boty-na-Wykopie#wykop-gpt" });
+			trollsMap.set("Przypomnienie", { "label": "Bot AI", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Boty-na-Wykopie#przypomnienie" });
+			trollsMap.set("DwieLinieBOTv3", { "label": "Bot AI", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Boty-na-Wykopie#dwie-linie-bot" });
+			trollsMap.set("ISSTrackerPL", { "label": "Bot", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Boty-na-Wykopie#iss-tracker" });
+			trollsMap.set("januszowybot", { "label": "Bot", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Boty-na-Wykopie#januszowy-bot" });
+			trollsMap.set("mirko_anonim", { "label": "Anonim", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Aplikacje#mirkoanonim" });
 			let trollsObject = Object.fromEntries(trollsMap);
 			localStorageUserLabels.setItem('mapaTrolli', trollsObject).then(() => { });
 
@@ -2026,10 +2031,12 @@
 
 								if (settings.wxsUserLabelsTrolls && mapaTrolli)
 								{
-									let wxsUserLabel = null;
-									if ((wxsUserLabel = mapaTrolli.get(userDataObject.username)))
+									let wxsUserLabelObject = null;
+									console.log(mapaTrolli.get(userDataObject.username));
+									if ((wxsUserLabelObject = mapaTrolli.get(userDataObject.username)))
 									{
-										userDataObject.wxsUserLabel = wxsUserLabel;
+										userDataObject.wxsUserLabel = wxsUserLabelObject.label;
+										userDataObject.wxsUserURL = wxsUserLabelObject.url;
 									}
 								}
 
@@ -2230,14 +2237,23 @@
 			div.classList = `wykopxs wxs_user_info wxs_user_info_year`;  					// <div class="wykopxs wxs_user_info wxs_user_info_year"
 
 
-			let noteSpanElement = null;
+			let noteVarElement = null;
+			let noteURLsElement = null;
 			let infoboxInnerHTML = "";
 
 			// XLABEL 
-			if (settings.wxsUserLabelsEnable && userDataObject.wxsUserLabel)
+			if (settings.wxsUserLabelsEnable)
 			{
-				infoboxInnerHTML += `<var class="wxs_user_label">${userDataObject.wxsUserLabel}</var>`;
+				if (userDataObject.wxsUserLabel)
+				{
+					infoboxInnerHTML += `<span class="wxs_user_label wxs_user_label_name"><span>${userDataObject.wxsUserLabel}</span></span>`;
+				}
+				if (userDataObject.wxsUserURL)
+				{
+					infoboxInnerHTML += `<span class="wxs_user_label wxs_user_label_url"><a href="${userDataObject.wxsUserURL}" target="_blank">www</a></span> `;
+				}
 			}
+
 
 			// NOTATKI
 			if (settings.notatkowatorEnable && userDataObject.note == true && userNoteObject)
@@ -2273,23 +2289,42 @@
 					}
 				}
 
-				noteSpanElement = document.createElement('span');
+				noteVarElement = document.createElement('var');
 				// <span class="wxs_user_info_usernote wxs_notatkowator_normal">
 				// <span class="wxs_user_info_usernote wxs_notatkowator_r">
-				noteSpanElement.classList = `wxs_user_info_usernote`;
+				noteVarElement.classList = `wxs_user_info_usernote`;
 
 				if (userNoteObject.changeSexTo) changeSexTo = userNoteObject.changeSexTo;
 
 				const plusWordsArray = getPlusWords(userNoteObject.usernote);
 				plusWordsArray.forEach(plusWord =>
 				{
-					noteSpanElement.classList.add(`wxs_notatkowator_${plusWord}`); // class="wxs_notatkowator_r"
+					noteVarElement.classList.add(`wxs_notatkowator_${plusWord}`); // class="wxs_notatkowator_r"
 				});
 
-				console.log(plusWordsArray)
 
-				noteSpanElement.innerHTML = `<var>${usernoteParsedToDisplay}</var>`;
+				if (settings.notatkowatorWebsiteURL)
+				{
+					const noteURLsArray = getURLsFromString(usernoteParsedToDisplay, false, false);
+					if (noteURLsArray)
+					{
+						noteURLsElement = document.createElement('span');
+						noteURLsElement.classList = `wxs_user_label wxs_user_info_usernote_url`;
+
+						noteURLsArray.forEach((url) =>
+						{
+							noteURLsElement.innerHTML += `<a href="${url.startsWith('www.') ? 'https://' + url : url}" target="_blank">www</a>`;
+							usernoteParsedToDisplay = usernoteParsedToDisplay.replace(url, "");
+						})
+					}
+				}
+
+				noteVarElement.innerHTML = `${usernoteParsedToDisplay}`;
 				userInfoElementTitle += ` \n 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗡𝗼𝘁𝗮𝘁𝗸𝗼𝘄𝗮𝘁𝗼𝗿 \n \n ${userNoteObject.usernote} \n \n`;
+
+
+
+
 			}
 
 
@@ -2338,7 +2373,7 @@
 					membersSinceInDays = loadTime.diff(memberSinceDate, 'day');
 
 					// wyświetlony obok nazwy użytkownika rok założenia konta
-					infoboxInnerHTML += ` · <var class="wxs_user_member_since">${memberSinceDate.year()}</var>`; // · 2011
+					infoboxInnerHTML += `<var class="wxs_user_member_since">${memberSinceDate.year()}</var>`; // 2011
 				}
 				else
 				{
@@ -2409,7 +2444,8 @@
 
 
 			if (infoboxInnerHTML !== "") div.innerHTML = infoboxInnerHTML;
-			if (noteSpanElement !== null) div.appendChild(noteSpanElement);
+			if (noteVarElement !== null) div.appendChild(noteVarElement);
+			if (noteURLsElement !== null) div.appendChild(noteURLsElement);
 
 			div.title = `${userInfoElementTitle} \n.`;
 		}
@@ -5816,15 +5852,16 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 	// returns array of valid URL's from a given string
 	// returns ["http://onet.pl", "https://www.wp.pl"]
+	// returns null
 	// getURLsFromString("string")
 	// getURLsFromString("string with img urls", true)
-	function getURLsFromString(string, onlyImagesURLs = false)
+	function getURLsFromString(string, onlyImagesURLs = false, appendHttpsForBeforeWww = true)
 	{
 		let urlRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)/g;
-		; let urlImagesRegex = /(https?:\/\/[^\s]+(\.png|\.jpg|\.jpeg|\.webp))|(www\.[^\s]+(\.png|\.jpg|\.jpeg|\.webp))/g;
+		let urlImagesRegex = /(https?:\/\/[^\s]+(\.png|\.jpg|\.jpeg|\.webp))|(www\.[^\s]+(\.png|\.jpg|\.jpeg|\.webp))/g;
 
 		let urls = string.match(onlyImagesURLs ? urlImagesRegex : urlRegex);
-		if (urls)
+		if (urls && appendHttpsForBeforeWww)
 		{
 			urls = urls.map(url => url.startsWith('www.') ? 'https://' + url : url);
 		}

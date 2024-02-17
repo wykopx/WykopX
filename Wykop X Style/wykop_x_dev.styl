@@ -180,14 +180,16 @@ TODO checkbox   checkEntryCommentsPerHour                       `❎➕ Liczba n
 @var range      HR_NOTATKOWATOR                     `📝 NOTATKOWATOR ⭐ Nowe`                                                                                           [0, 0, 99900, 1, 'mm']
 @var range      notatkowatorEnable_ON_INFO                      `Notatkowator jest włączony`               [0, 0,111100, 1, 'mm']
 @var checkbox   notatkowatorEnable                              `📝❎ Wyświetlaj notatki o użytkownikach`                                                 1
-@var range      notatkowatorEnable_INFO                         `Opis jak dziala notatkowator`             [0, 0,88800, 1, 'mm']
+@var range      notatkowatorEnable_INFO                         `Notatkowator dodaje do nicków notatki, które przypisałeś do poszczególnych użytkowników`             [0, 0,88800, 1, 'mm']
 
 
 @var range      notatkowatorUpdateInterval                      `📝❎ Odświeżaj notatkę użytkownika starszą niż X godz.`       [6, 0, 120, 1, '']
 @var range      notatkowatorUpdateInterval_INFO                 `Opis jak dziala odświeżanie notatek`             [0, 0,88800, 1, 'mm']
 
-@var checkbox   notatkowatorVerticalBar                         `📝❎ notatkowatorVerticalBar ⭐`    1
-@var range      notatkowatorVerticalBar_INFO                    `Opis jak dziala notatkowatorVerticalBar`             [0, 0,88800, 1, 'mm']
+@var checkbox   notatkowatorVerticalBar                         `📝❎ Ukryj część notatki za |  ⭐`    1
+@var range      notatkowatorVerticalBar_INFO                    `Możesz podzielić notatkę znakiem |  Fragment notatki za tym znakiem zostanie ukryty. Całą notatkę zobaczysz w dymku podpowiedzi. Jeśli notatka będzie zawierała znak | wyświetlona zostanie tylko pierwsza część wraz z wielokropkiem ... `             [0, 0,88800, 1, 'mm']
+
+@var checkbox   notatkowatorWebsiteURL                          `📝❎ Parsuj adresy URL w notatce jako przyciski  ⭐`    1
 
 @var select     notatkowatorStyle                               `📝❎ Styl notatek ⭐` {
                                                                         "⭐ Obok nicka (Notatkowator2000)":"obok_nicka",
@@ -19959,7 +19961,7 @@ https://wykop.pl/moje/
         {
             display: flex!important;
             flex-wrap: wrap!important;
-            align-items: center!important;
+            align-items: baseline !important;
             flex-direction: row!important;
             justify-content: start!important;
         }
@@ -19980,32 +19982,20 @@ https://wykop.pl/moje/
             margin-left: auto!important;
         }
 
+        
+        // infobox wrapper
         .wxs_user_info
         {
             display: flex!important;
             align-items: baseline!important;
-            gap: 3rem!important;
+            gap: 6rem!important;
             font-size: 11rem!important;
             cursor: help!important;
             color: var(--colorText)!important;
             margin-left: 4rem;
         }
 
-        .wxs_user_info var
-        {
-            font-style: normal;
-        }
 
-        
-        // ukrycie dodanego roku oraz notatki do nazwy uzytkownika na liście plusujących
-        section.entry-voters > ul > li > div.wxs_user_info > .wxs_user_info_usernote, 
-        section.entry-voters > ul > li > div.wxs_user_info > .wxs_user_member_since
-        {
-            display: none!important;
-        }
-        
-        
-        
 
         // wpisy  {}
         section.entry > article .wxs_user_info
@@ -20018,51 +20008,128 @@ https://wykop.pl/moje/
             margin-right: 5px;
         }
         
+        /* kropka online w naglowku profilu uzytkownika */
+        aside.profile-top > section > header > div > h1 > a.online > span > i 
+        {
+            display: block;
+    	    top: 0px;
+           	left: -18px;
+        }
+        
+        aside.profile-top > section > header > div > h1
+        {
+            align-items: baseline!important;
+        }
+
+        aside.profile-top > section > header > div > h1 > div.wxs_user_info  
+        {
+            margin-left: 8rem;
+            position: relative;
+            bottom: 2rem;
+        }
 
 
-        
-        section .wxs_user_info_usernote > var, 
-        section  var.wxs_user_member_since
+        .wxs_user_info var
         {
-            font-size: 12rem;
-        }
-        // ikonka separatora {}
-        section header div.wxs_user_info > var:before
-        {
-            color: var(--blackOpacity06)!important;
-        }
-        
-        
-        
-        
-        // ROK / ikonka info
-        section header div.wxs_user_info > var
-        {
-            opacity: 0.7;
-        }
-        section:hover header div.wxs_user_info > var
-        {
+            font-style: normal;
+            font-size: 11rem;
             opacity: 1;
         }
-        section header div.wxs_user_info:hover > var
-        {
-            color: var(--colorTextBolder);
-        }
 
-        var.wxs_user_label
+     
+        // 🟢 zielona ikonka statusu online
+        section header div.wxs_user_info .wxs_user_online
         {
-            background-color: var(--alto);
-            border: 0px solid var(--persianRed);
-            color: var(--persianRed);
-            padding: 1rem 9rem;
-            font-size: 11rem;
+            order: 1;
+            font-size: 5rem;
+        }
+        
+        
+        .wxs_user_label
+        {            
             border-radius: 4px;
+        }
+        .wxs_user_label:hover
+        {
+            filter: brightness(1.2);
+        }
+        .wxs_user_label > *
+        {
+            border-radius: 4px;
+            padding: 1rem 9rem;
+            font-size: 12rem;
             font-weight: bolder;
         }
         
+        // XLabel troll/bot
+        .wxs_user_label_name
+        {
+            order: 2;
+            background-color: var(--alto);
+            color: var(--persianRed);
+        }
+        
+      
+        // LINKI - adresy URL w notatce
+        .wxs_user_label_url
+        .wxs_user_info_usernote_url
+        {
+            order: 3;
+        }
+        .wxs_user_label_url > a
+        {           
+            background-color: var(--alto);
+            color: var(--colorLinkExternal, rgb(52, 125, 219));
+        }
+
+        .wxs_user_info_usernote_url > a
+        {           
+            background-color: var(--alto);
+            color: var(--colorLinkInternal, rgb(23, 71, 140));
+        }
+        
+        .wxs_user_info_usernote_url
+        {
+            order: 4;
+            display: flex;
+            gap: 4rem;
+        }
+        
+        // banan
+        var.wxs_user_banned
+        {
+            order: 9;
+        }
+        // 🔔 obserwujesz użytkownika
+        var.wxs_user_follow,
+        var.wxs_user_blacklist
+        {
+            order: 10;
+        }
+        
+        var.wxs_user_member_since
+        {
+            order: 20;
+        }
+        
+        var.wxs_user_info_usernote
+        {
+            order: 40;
+        }
+        
+
+
+       
+       
+        // ukrycie dodanego roku oraz notatki do nazwy uzytkownika na liście plusujących
+        section.entry-voters > ul > li > div.wxs_user_info > .wxs_user_info_usernote, 
+        section.entry-voters > ul > li > div.wxs_user_info > .wxs_user_member_since
+        {
+            display: none!important;
+        }
         
         // NOTATKA DO UŻYTKOWNIKA
-        .wxs_user_info_usernote
+        .wxs_user_info
         {
             --notatkowator_color_red:       rgb(255, 0, 0);
             --notatkowator_color_green:     rgb(14, 137, 39);
@@ -20074,15 +20141,16 @@ https://wykop.pl/moje/
         
 
         
-        section .wxs_user_info_usernote.wxs_notatkowator_c         > var { color: var(--notatkowator_color_red); }
-        section .wxs_user_info_usernote.wxs_notatkowator_z         > var { color: var(--notatkowator_color_green); }
-        section .wxs_user_info_usernote.wxs_notatkowator_n         > var { color: var(--notatkowator_color_blue); }
-        section .wxs_user_info_usernote.wxs_notatkowator_p         > var { color: var(--notatkowator_color_orange); }
-        section .wxs_user_info_usernote.wxs_notatkowator_r         > var { color: var(--notatkowator_color_pink); }
-        section .wxs_user_info_usernote.wxs_notatkowator_ż         > var { color: var(--notatkowator_color_yellow); }
+        section .wxs_user_info_usernote.wxs_notatkowator_c  { color: var(--notatkowator_color_red);     }
+        section .wxs_user_info_usernote.wxs_notatkowator_z  { color: var(--notatkowator_color_green);   }
+        section .wxs_user_info_usernote.wxs_notatkowator_n  { color: var(--notatkowator_color_blue);    }
+        section .wxs_user_info_usernote.wxs_notatkowator_p  { color: var(--notatkowator_color_orange);  }
+        section .wxs_user_info_usernote.wxs_notatkowator_r  { color: var(--notatkowator_color_pink);    }
+        section .wxs_user_info_usernote.wxs_notatkowator_ż  { color: var(--notatkowator_color_yellow);  }
 
-        section .wxs_user_info_usernote > var:before
+        section .wxs_user_info_usernote:before
         {
+            margin: 0px 3px;
             if(notatkowatorIcon == "notatnik")                  { content: " 📝 ";  }
             if(notatkowatorIcon == "zarowka")                   { content: " 💡 ";  }
             if(notatkowatorIcon == "serce")                     { content: " 🤍 ";  }
@@ -20091,15 +20159,13 @@ https://wykop.pl/moje/
             if(notatkowatorIcon == "info")                      { content: " ℹ "; }
             if(notatkowatorIcon == "wlasny")                    { content: " " + notatkowatorIconCustom + " "!important; }
         }
-        section header div.wxs_user_info_year > var:before
-        {
-        /* content: " · " */
-        }
 
+
+  
         // notatka pod avatarem
         section.entry > article > header + .wxs_user_info_usernote
         {
-            display: block!important;
+            display: flex!important;
             border-bottom: 1px solid rgba(128,128,128,0.1);
             background-color: var(--whiteOpacity06);
             border-radius: 4px;
@@ -20111,12 +20177,14 @@ https://wykop.pl/moje/
 
         } 
 
-        section.entry > article > header + .wxs_user_info_usernote var
+        section.entry > article > header + .wxs_user_info_usernote
         {
             color: var(--blackOpacity07);
         }
         
-        
+
+
+
         // STATUS ONLINE UŻYTKOWNIKÓW
         section.entry[data-wxs_user_online="true"] header > div.left > a.avatar:before
         {
@@ -20130,12 +20198,7 @@ https://wykop.pl/moje/
             padding: var(--sexBarPadding);
             z-index: 1;
         }
-
-        section header div.wxs_user_info > var.wxs_user_online
-        {
-            font-size: 5rem;
-        }
-
+    
     }
 
     section.entry section.entry-voters > ul > li
@@ -21436,6 +21499,7 @@ https://wykop.pl/moje/
                 {
                     --notatkowatorUpdateInterval:       notatkowatorUpdateInterval;      // 0 ... 120
                     --notatkowatorVerticalBar:          notatkowatorVerticalBar;         // 1 || 0
+                    --notatkowatorWebsiteURL:           notatkowatorWebsiteURL;
                     --notatkowatorStyle:                notatkowatorStyle;               // string "pod_avatarem" "obok_nicka"
                 }
             }
