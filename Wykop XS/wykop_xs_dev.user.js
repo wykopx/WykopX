@@ -163,6 +163,7 @@
 	let localStorageMirkoukrywacz = null;
 	let localStorageTextsaver = null;
 	let localStorageNotatkowator = null;
+	let localStorageUserLabels = null;
 
 	settings.intersectionObserverRootMargin = wykopxSettings.getPropertyValue("--intersectionObserverRootMargin") ? wykopxSettings.getPropertyValue("--intersectionObserverRootMargin") === '1' : true;
 
@@ -228,6 +229,49 @@
 		settings.notatkowatorStyle = wykopxSettings.getPropertyValue("--notatkowatorStyle").trim();	// string "pod_avatarem" "obok_nicka"
 	}
 
+
+
+	settings.wxsUserLabelsEnable = wykopxSettings.getPropertyValue("--wxsUserLabelsEnable") ? wykopxSettings.getPropertyValue("--wxsUserLabelsEnable") === '1' : true;
+	let falszyweRozoweArray = null;
+	let mapaTrolli = null;
+	if (settings.wxsUserLabelsEnable)
+	{
+		localStorageUserLabels = localforage.createInstance({
+			driver: localforage.LOCALSTORAGE,
+			name: "wykopx",
+			storeName: "userlabels",
+		});
+
+		settings.wxsUserLabelsFakeFemales = wykopxSettings.getPropertyValue("--wxsUserLabelsFakeFemales") ? wykopxSettings.getPropertyValue("--wxsUserLabelsFakeFemales") === '1' : true;
+		settings.wxsUserLabelsTrolls = wykopxSettings.getPropertyValue("--wxsUserLabelsTrolls") ? wykopxSettings.getPropertyValue("--wxsUserLabelsTrolls") === '1' : true;
+
+		if (settings.wxsUserLabelsFakeFemales)
+		{
+			const listafalszywychrozowych = ['ElCidX', 'conamirko', 'IlllIlIIIIIIIIIlllllIlIlIlIlIlIlIII', 'deiceberg', 'Chodtok', 'ToJestNiepojete', 'chwilowypaczelok', 'sinls', 'KRZYSZTOF_DZONG_UN', 'miszczu90', `powodzenia`];
+			localStorageUserLabels.setItem('falszyweRozowe', listafalszywychrozowych).then(() => { });
+
+			// get from localstorage
+			falszyweRozoweArray = await localStorageUserLabels.getItem("falszyweRozowe");
+		}
+		if (settings.wxsUserLabelsTrolls)
+		{
+			const trollsMap = new Map();
+			trollsMap.set("autotldr", "Bot AI");
+			trollsMap.set("wykop-gpt", "Bot AI");
+			trollsMap.set("Przypomnienie", "Bot");
+			trollsMap.set("DwieLinieBOTv3", "Bot");
+			trollsMap.set("ISSTrackerPL", "Bot");
+			trollsMap.set("januszowybot", "Bot");
+			trollsMap.set("mirko_anonim", "Anonimowy");
+			let trollsObject = Object.fromEntries(trollsMap);
+			localStorageUserLabels.setItem('mapaTrolli', trollsObject).then(() => { });
+
+			// get from localstorage
+			localStorageUserLabels.getItem('mapaTrolli').then(val => { mapaTrolli = new Map(Object.entries(val)); })
+		}
+	}
+
+
 	settings.infoboxEnable = wykopxSettings.getPropertyValue("--infoboxEnable") ? wykopxSettings.getPropertyValue("--infoboxEnable") === '1' : true;
 	if (settings.infoboxEnable)
 	{
@@ -239,9 +283,6 @@
 		settings.infoboxUserSummaryActivity = wykopxSettings.getPropertyValue("--infoboxUserSummaryActivity") ? wykopxSettings.getPropertyValue("--infoboxUserSummaryActivity") === '1' : true; // 1 || 0
 		settings.infoboxUserBannedEmoji = wykopxSettings.getPropertyValue("--infoboxUserBannedEmoji") ? wykopxSettings.getPropertyValue("--infoboxUserBannedEmoji") === '1' : true; // 1 || 0
 	}
-
-
-
 
 
 
@@ -655,8 +696,9 @@
 
 	function buildConsole(jNodeHeaderStreamTop = null)
 	{
+		if (!dev) return;
 		let headerStreamTopElement;
-		consoleX("buildConsole()", 1)
+		//consoleX("buildConsole()", 1)
 
 		if (!jNodeHeaderStreamTop)
 		{
@@ -837,7 +879,7 @@
 
 	function wykopx_quick_search(jNodeWykopxQuickSearch)
 	{
-		consoleX(`wykopx_quick_search()`, 1);
+		// consoleX(`wykopx_quick_search()`, 1);
 
 		const wykopxQuickSearch = jNodeWykopxQuickSearch[0];
 		wykopxQuickSearch.addEventListener("blur", eventInsertedTagOrUser);
@@ -870,13 +912,13 @@
 	/* RIGHT SIDEBAR — DODAJ LISTE OBSERWOWANYCH TAGÓW */
 	function addObservedTagsToRightSidebar()
 	{
-		consoleX("addObservedTagsToRightSidebar()", 1)
+		// consoleX("addObservedTagsToRightSidebar()", 1)
 
 		let observedTagsArray = [];
 
 		if (settings.observedTagsInRightSidebarEnable)
 		{
-			consoleX("addObservedTagsToRightSidebar()", 1)
+			// consoleX("addObservedTagsToRightSidebar()", 1)
 
 			checkLocalForageupdatedDate(localStorageObservedTags, getObservedTags, settings.observedTagsInRightSidebarUpdateInterval * 3600);
 
@@ -1046,7 +1088,6 @@
 	{
 		document.addEventListener("input", (event) =>
 		{
-			//			alert();
 			if (settings.wxsSwitchNSFW && event.target.closest("input#switchNSFW")) switchChanged.call(event.target, event, "wxs_switch_entries_nsfw");
 			else if (settings.wxsSwitchAdult && event.target.closest("input#switchAdult")) switchChanged.call(event.target, event, "wxs_switch_entries_adult");
 			else if (settings.wxsSwitchPhotoViewer && event.target.closest("input#switchPhotoViewer")) switchChanged.call(event.target, event, "wxs_switch_entries_photo_viewer");
@@ -1061,7 +1102,7 @@
 
 	function addSwitchButtons()
 	{
-		consoleX("addSwitchButtons()", 1)
+		//consoleX("addSwitchButtons()", 1)
 
 		let buttonsWrapper = document.createElement("section");
 		buttonsWrapper.classList.add("wxs_switches_container");
@@ -1313,7 +1354,6 @@
 		PointerEvent — even object
 		*/
 
-		// alert(filterType);
 
 		const css_id = "wxs_css_filter_user_comments";
 
@@ -1788,8 +1828,8 @@
 
 						a_mention.insertAdjacentElement("afterend", a_mentions_filter_button);
 
-						console.log("=== BUTTON ADDED: a_mentions_filter_button")
-						console.log(a_mentions_filter_button)
+						// console.log("=== BUTTON ADDED: a_mentions_filter_button")
+						// console.log(a_mentions_filter_button)
 					})
 
 					if (resource == "entry") // tu moglyby byc jeszcze komentarze w znaleziskach
@@ -1951,6 +1991,7 @@
 					}
 
 
+					// podkomentarz
 					if (sectionObjectElement.__vue__.item.parent)
 					{
 						parent_resource = sectionObjectElement.__vue__.item.parent.resource;		// data-wxs_parent_resource="entry"
@@ -1958,12 +1999,84 @@
 					}
 
 
+
+
+					let userDataObject = sectionObjectElement.__vue__?.item?.author;
+
+					if (settings.infoboxEnable || settings.notatkowatorEnable || settings.wxsUserLabelsEnable)
+					{
+						// TWORZYMY USERINFOBOX do wszystkich nicków autora tego wpisu/komentarza/linka
+						// pierwszy raz widzimy ten wpis / komentarz użytkownika i nie były do niego dodawane userdata więc dodajemy data-wxs_username="NadiaFrance"
+						if (!sectionObjectElement.dataset.wxs_username && userDataObject.username)
+						{
+							// POBIERAMY INFORMACJE O UŻYTKOWNIKU Z FETCH API
+							if (settings.infoboxEnable)
+							{
+								userDataObject = await getUserDetailsForUsername(userDataObject, undefined, true); // userDataObject, username, forceAPICheck
+							}
+
+							if (settings.wxsUserLabelsEnable)
+							{
+								if (settings.wxsUserLabelsFakeFemales && falszyweRozoweArray && falszyweRozoweArray.includes(userDataObject.username))
+								{
+									userDataObject.gender = "m";
+									sectionObjectElement.__vue__.item.author.gender = "m";
+									userDataObject.changeSexTo = "male";
+								}
+
+								if (settings.wxsUserLabelsTrolls && mapaTrolli)
+								{
+									let wxsUserLabel = null;
+									if ((wxsUserLabel = mapaTrolli.get(userDataObject.username)))
+									{
+										userDataObject.wxsUserLabel = wxsUserLabel;
+									}
+								}
+
+							}
+
+							// SPRAWDZENIE I DODANIE NOTATKI ORAZ DANYCH UZYTKOWNIKA
+							let userNoteObject = null;
+							if (settings.notatkowatorEnable) 
+							{
+								// jeszcze nie dodawaliśmy notatki
+								if (userDataObject.note == true && sectionObjectElement.dataset.wxs_note_loaded != true)
+								{
+									// potencjalna zmiana plci przez +m lub +f
+									userNoteObject = await getUserNoteObjectByUsername(sectionObjectElement, undefined, true); //  username, forceAPICheck
+									sectionObjectElement.dataset.wxs_note_loaded = "true"; // todo nazwa uzytkownika zamiast true zeby potem sprawdzac <section data-wxs_note_loaded="true" data-wxs_username="NadiaFrance" data-wxs_user_note="true">
+
+									if (userNoteObject.changeSexTo)
+									{
+										userDataObject.changeSexTo = userNoteObject.changeSexTo;
+										userDataObject.gender = userNoteObject.gender;
+										sectionObjectElement.__vue__.item.author.gender = userNoteObject.gender;
+									}
+								}
+							}
+
+							// DODAJEMY INFO NA STRONIE PROFILOWEJ O SZCZEGÓŁACH BANA
+							if (settings.infoboxUserBannedInfoOnProfilePage)
+							{
+								if (userDataObject.status == "banned" && pageType == "profil")
+								{
+									userDataObject = addUserDataObjectWXSBanInfo(userDataObject);
+									const bannedRedBox = document.querySelector("aside.profile-top aside.info-box.red p");
+									bannedRedBox.innerHTML = `To konto jest obecnie zbanowane. <br/><br/><strong>Wykop X</strong>: <br/>${userDataObject.banned?.wxs_info_text_1} <br/> <small title=" Czas końca bana dotyczy czasu letniego. \n Wykop posiada błąd i nie rozpoznaje czasu zimowego, \n dlatego zimą i jesienią ban "trwa o godzinę dłużej" niż podany">${userDataObject.banned?.wxs_info_text_2}<br/> ${userDataObject.banned?.wxs_info_text_3} <span style="cursor: help; padding: 0px 5px">ℹ</span></small>`
+								}
+							}
+
+							createInfoboxDivsForUserEverywhere(userDataObject, userNoteObject, undefined);
+						}
+					}
+
+
+
 					// TWORZYMY ACTION BOX
 					if (settings.actionBoxEnable)
 					{
 						const wxs_author_username = sectionObjectElement.__vue__.item.author.username;
 						const wxs_author_gender = sectionObjectElement.__vue__.item.author.gender;
-
 
 						let wxs_menu_action_box = document.createElement("div");
 						wxs_menu_action_box.classList.add("wxs_menu_action_box"); // 📰📑 🔖 ⎀⎊👁 🖾 🗙 ⌧ ⮽ 🗳 ☒ 🗵 🗷- ‐ ‑ – ‒ — ― _ ﹏🗖 ⎀ ⎊
@@ -2013,54 +2126,6 @@
 					}
 
 
-
-
-					if (settings.infoboxEnable || settings.notatkowatorEnable)
-					{
-						// TWORZYMY USERINFOBOX do wszystkich nicków autora tego wpisu/komentarza/linka
-						// pierwszy raz widzimy ten wpis / komentarz użytkownika i nie były do niego dodawane userdata więc dodajemy data-wxs_username="NadiaFrance"
-						if (!sectionObjectElement.dataset.wxs_username && sectionObjectElement.__vue__?.item?.author?.username)
-						{
-							let userDataObject = sectionObjectElement.__vue__?.item?.author;
-
-							// POBIERAMY INFORMACJE O UŻYTKOWNIKU Z FETCH API
-							if (settings.infoboxEnable)
-							{
-								userDataObject = await getUserDetailsForUsername(userDataObject, undefined, true); // userDataObject, username, forceAPICheck
-							}
-
-							// DODAJEMY INFO NA STRONIE PROFILOWEJ O SZCZEGÓŁACH BANA
-							if (settings.infoboxUserBannedInfoOnProfilePage)
-							{
-								console.log("userDataObject")
-								console.log(userDataObject)
-								if (userDataObject.status == "banned" && pageType == "profil" && userDataObject.banned?.wxs_info_text_1)
-								{
-									const bannedRedBox = document.querySelector("aside.profile-top aside.info-box.red p");
-									bannedRedBox.innerHTML = `To konto jest obecnie zbanowane. <br/><br/>
-								<strong>Wykop X</strong>: <br/>
-								${userDataObject.banned?.wxs_info_text_1} <br/>
-								<small title=" Czas końca bana dotyczy czasu letniego. \n Wykop posiada błąd i nie rozpoznaje czasu zimowego, \n dlatego zimą i jesienią ban "trwa o godzinę dłużej" niż podany">${userDataObject.banned?.wxs_info_text_2}<br/>
-								${userDataObject.banned?.wxs_info_text_3} <span style="cursor: help; padding: 0px 5px">ℹ</span></small>`
-								}
-							}
-
-
-							// SPRAWDZENIE I DODANIE NOTATKI ORAZ DANYCH UZYTKOWNIKA
-							let userNoteObject = null;
-							if (settings.notatkowatorEnable) 
-							{
-								// jeszcze nie dodawaliśmy notatki
-								if (userDataObject.note == true)
-								{
-									userNoteObject = await getUserNoteObjectByUsername(sectionObjectElement, undefined, true); //  username, forceAPICheck
-									sectionObjectElement.dataset.wxs_note_loaded = "true"; // todo nazwa uzytkownika zamiast true zeby potem sprawdzac <section data-wxs_note_loaded="true" data-wxs_username="NadiaFrance" data-wxs_user_note="true">
-								}
-							}
-
-							createInfoboxDivsForUserEverywhere(userDataObject, userNoteObject, undefined);
-						}
-					}
 
 					// TODO
 					// liczba komentarzy autora wpisu
@@ -2147,11 +2212,9 @@
 		console.log(`createInfoboxDivsForUserEverywhere(${username})`, 1);
 
 		let userInfoElementTitle = "";
-
 		const a_usernameAll = document.querySelectorAll(`a.username[href="/ludzie/${username}"]:not(:has([data-wxs_username]))`);
-
 		let changeSexTo = false;
-
+		if (userDataObject.changeSexTo) changeSexTo = userDataObject.changeSexTo;
 
 		// const a_usernameAll = document.querySelectorAll(`section:is(.entry, .link-block):has(> article > header > div.right > div > div a.username[href="/ludzie/${username}"])`);
 		// const a_usernameAll = document.querySelectorAll(`section[data-wxs_username="${username}"]`);
@@ -2170,21 +2233,24 @@
 			let noteSpanElement = null;
 			let infoboxInnerHTML = "";
 
+			// XLABEL 
+			if (settings.wxsUserLabelsEnable && userDataObject.wxsUserLabel)
+			{
+				infoboxInnerHTML += `<var class="wxs_user_label">${userDataObject.wxsUserLabel}</var>`;
+			}
+
 			// NOTATKI
 			if (settings.notatkowatorEnable && userDataObject.note == true && userNoteObject)
 			{
-
 				// console.log("NOTATKI 222: ")
 				// console.log("userDataObject.note")
 				// console.log(userDataObject.note);
 				// console.log("userNoteObject");
 				// console.log(userNoteObject);
-
 				/* 
 					Notes from API:
 						user.data = { username: 'NadiaFrance', content: 'Treść notatki' } 
 						user.data = { username: 'NadiaFrance', content: '' } 
-		
 					Notes from LocalStorage:
 					userNoteObject ->	wykopx/notatkowator/tomek123456789 = 
 					{
@@ -2193,8 +2259,6 @@
 						lastUpdate: "2024-01-07T15:55:37.210Z"
 					}
 				*/
-
-
 				let usernoteParsedToDisplay = removePlusWords(userNoteObject.usernote);
 				// console.log("usernoteParsedToDisplay");
 				// console.log(usernoteParsedToDisplay);
@@ -2209,11 +2273,12 @@
 					}
 				}
 
-
 				noteSpanElement = document.createElement('span');
 				// <span class="wxs_user_info_usernote wxs_notatkowator_normal">
 				// <span class="wxs_user_info_usernote wxs_notatkowator_r">
 				noteSpanElement.classList = `wxs_user_info_usernote`;
+
+				if (userNoteObject.changeSexTo) changeSexTo = userNoteObject.changeSexTo;
 
 				const plusWordsArray = getPlusWords(userNoteObject.usernote);
 				plusWordsArray.forEach(plusWord =>
@@ -2223,31 +2288,22 @@
 
 				console.log(plusWordsArray)
 
-				let femaleChecklistArray = ["k", "f", "female", "kobieta", "dziewczyna", "dziewczynka", "girl", "baba", "różowa", "rozowa", "rózowa", "rożowa"];
-				let maleChecklistArray = ["m", "mezczyzna", "mężczyzna", "męzczyzna", "meżczyzna", "male", "facet", "boy", "chlopak", "chłopak", "chłopiec", "chłop", "chlop", "niebieski"];
-				let isFemale = plusWordsArray.filter(item => femaleChecklistArray.includes(item));
-				let isMale = plusWordsArray.filter(item => maleChecklistArray.includes(item));
-
-				if (isFemale.length >= 1) 		// różowy pasek // +k lub +f
-				{
-					changeSexTo = "female";
-					userDataObject.gender = "f";
-				}
-				else if (isMale.length >= 1) 				// niebieski pasek // +m
-				{
-					changeSexTo = "male";
-					userDataObject.gender = "m";
-				}
-
 				noteSpanElement.innerHTML = `<var>${usernoteParsedToDisplay}</var>`;
 				userInfoElementTitle += ` \n 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗡𝗼𝘁𝗮𝘁𝗸𝗼𝘄𝗮𝘁𝗼𝗿 \n \n ${userNoteObject.usernote} \n \n`;
 			}
+
 
 
 			// INFOBOX
 			if (settings.infoboxEnable)
 			{
 				userInfoElementTitle += ` \n 𝗪𝘆𝗸𝗼𝗽 𝗫 InfoBox \n Informacje o użytkowniku @${userDataObject.username} \n  \n `
+
+				if (changeSexTo == "male") userInfoElementTitle += ` FAŁSZYWY RÓŻOWY PASEK \n  \n `;
+				else if (changeSexTo == "female") userInfoElementTitle += ` FAŁSZYWY NIEBIESKI PASEK \n  \n `;
+
+
+				if (userDataObject.wxsUserLabel) userInfoElementTitle += ` XLabel: ${userDataObject.wxsUserLabel} \n  \n `;
 
 				// basic data without fetch
 				if (userDataObject.blacklist == true) 											// basic
@@ -2349,6 +2405,9 @@
 				if (userDataObject.about) userInfoElementTitle += userDataObject.about != "" ? ` \n  \n O sobie: \n ${userDataObject.about} \n \n ` : "";
 			}
 
+
+
+
 			if (infoboxInnerHTML !== "") div.innerHTML = infoboxInnerHTML;
 			if (noteSpanElement !== null) div.appendChild(noteSpanElement);
 
@@ -2395,7 +2454,7 @@
 					if (sectionObjectElement && (!sectionObjectElement.dataset.wxs_username || sectionObjectElement.dataset.wxs_username != userDataObject.username))
 					{
 
-						// USER DATRA BASIC
+						// USER DATA BASIC
 						sectionObjectElement.dataset.wxs_username = userDataObject.username; 			// <section data-wxs-username="NadiaFrance">
 						sectionObjectElement.dataset.wxs_user_note = userDataObject.note;				// data-wxs_user_note="true"
 						sectionObjectElement.dataset.wxs_user_company = userDataObject.company;			// data-wxs_user_status="banned"
@@ -2408,6 +2467,11 @@
 						sectionObjectElement.dataset.wxs_user_online = userDataObject.online;			// data-wxs_user_online="true"
 						sectionObjectElement.dataset.wxs_user_rank_position = userDataObject.rank?.position;	// data-wxs_user_rank_position=34 // "null"
 						sectionObjectElement.dataset.wxs_user_rank_trend = userDataObject.rank?.trend;	// data-wxs_user_rank_trend=0
+
+						if (settings.wxsUserLabelsEnable && userDataObject.wxsUserLabel)
+						{
+							sectionObjectElement.dataset.wxs_user_label = userDataObject.wxsUserLabel; // XLabel
+						}
 
 						if (userDataObject.summary)
 						{
@@ -2518,15 +2582,15 @@
 	{
 		if (settings.notatkowatorEnable && (forceAPICheck || (sectionObjectElement && sectionObjectElement.__vue__.item.author.note)))
 		{
-			consoleX(`getUserNoteObjectByUsername()`, 1);
+			// consoleX(`getUserNoteObjectByUsername()`, 1);
 
 			if (username)
 			{
 				let usernote = "";
 				let userNoteObject = await localStorageNotatkowator.getItem(username);
 
-				//consoleX(`getUserNoteObjectByUsername()`, 1);
-				//console.log(username);
+				// consoleX(`getUserNoteObjectByUsername()`, 1);
+				// console.log(username);
 
 				if (forceAPICheck == false)
 				{
@@ -2534,8 +2598,8 @@
 
 					if (userNoteObject == null || userNoteObject == "")
 					{
-						console.log("typeof userNoteObject", typeof userNoteObject)
-						console.log(userNoteObject);
+						// console.log("typeof userNoteObject", typeof userNoteObject)
+						// console.log(userNoteObject);
 
 						const now = dayjs();
 						const date2 = dayjs(userNoteObject.lastUpdate);
@@ -2548,11 +2612,11 @@
 						else
 						{
 							// mamy aktualną notatkę z localforage
-							consoleX(`Notatkowator wczytał notatkę z LocalStorage. Użytkownik: @${username}`);
-							console.log("userNoteObject")
-							console.log(userNoteObject)
-							console.log("userNoteObject.usernote")
-							console.log(userNoteObject.usernote)
+							// consoleX(`Notatkowator wczytał notatkę z LocalStorage. Użytkownik: @${username}`);
+							// console.log("userNoteObject")
+							// console.log(userNoteObject)
+							// console.log("userNoteObject.usernote")
+							// console.log(userNoteObject.usernote)
 							usernote = userNoteObject.usernote;
 
 							return userNoteObject;
@@ -2572,16 +2636,6 @@
 						let jsonResponse = await getWykopAPIData("notes", username);
 						usernote = jsonResponse?.data?.content;
 
-						userNoteObject =
-						{
-							username: jsonResponse?.data?.username,
-							usernote: jsonResponse?.data?.content,
-							lastUpdate: dayjs()
-						}
-						// console.log(jsonResponse);
-						// console.log("userNoteObject");
-						// console.log(userNoteObject);
-
 						/* 
 							Notes from API:
 								user.data = { username: 'NadiaFrance', content: 'Treść notatki' } 
@@ -2593,8 +2647,51 @@
 								username: "Zenek",
 								usernote: "Notatka | +r",
 								lastUpdate: "2024-01-07T15:55:37.210Z"
+								gender: "f" / "m" / null
+								changeSexTo: "female" / "male"
 							}
 						*/
+
+						userNoteObject =
+						{
+							username: jsonResponse?.data?.username,
+							usernote: jsonResponse?.data?.content,
+							gender: sectionObjectElement.__vue__.item.author,
+							lastUpdate: dayjs()
+						}
+
+						const plusWordsArray = getPlusWords(userNoteObject.usernote);
+						// console.log("plusWordsArray")
+						// console.log(plusWordsArray)
+
+						// dodane jakies +przełączniki
+						if (plusWordsArray[0] != "normal")
+						{
+							const femaleChecklistArray = ["k", "f", "female", "kobieta", "dziewczyna", "dziewczynka", "girl", "baba", "różowa", "rozowa", "rózowa", "rożowa"];
+							const maleChecklistArray = ["m", "mezczyzna", "mężczyzna", "męzczyzna", "meżczyzna", "male", "facet", "boy", "chlopak", "chłopak", "chłopiec", "chłop", "chlop", "niebieski"];
+							const isFemale = plusWordsArray.filter(item => femaleChecklistArray.includes(item));
+							const isMale = plusWordsArray.filter(item => maleChecklistArray.includes(item));
+
+							if (isFemale.length >= 1) 					// różowy pasek 	// +k lub +f
+							{
+								userNoteObject.changeSexTo = "female";
+								userNoteObject.gender = "f";
+								//userDataObject.gender = "f";
+							}
+							else if (isMale.length >= 1) 				// niebieski pasek // +m
+							{
+								userNoteObject.changeSexTo = "male";
+								userNoteObject.gender = "m";
+								//userDataObject.gender = "m";
+							}
+						}
+
+
+						// console.log(jsonResponse);
+						// console.log("userNoteObject");
+						// console.log(userNoteObject);
+
+
 
 
 						if (usernote != "" && userNoteObject.usernote != null && userNoteObject.usernote != "")
@@ -2607,7 +2704,7 @@
 
 							if (localStorageNotatkowator)
 							{
-								localStorageNotatkowator.setItem(username, { username: userNoteObject.username, usernote: userNoteObject.usernote, lastUpdate: userNoteObject.lastUpdate })
+								localStorageNotatkowator.setItem(username, userNoteObject)
 									.then(function (value)
 									{
 										consoleX(`Notatkowator zapisał notatkę o użytkowniku @${userNoteObject.username}: "${userNoteObject.usernote}"`);
@@ -2648,15 +2745,14 @@
 
 		if (settings.infoboxEnable && username)
 		{
-			consoleX(`getUserDetailsForUsername()`, 1);
+			// consoleX(`getUserDetailsForUsername() ${username}`, 1);
 
 			//console.log(`user: ${username}: `)
-			//console.log(userDataObject)
 
 			// jesli jest zbanowany lub chcemy wszystkie dane (np. followersi — wysylamy zapytanie do API)
 			if (userDataObject.status == "banned" || forceAPICheck == true)
 			{
-				console.log("---- getUserDetailsForUsername — sprawdzanie użytkownika w API: " + username)
+				// console.log("---- getUserDetailsForUsername — sprawdzanie użytkownika w API: " + username)
 				try
 				{
 					// profile/users/{username}
@@ -2666,29 +2762,6 @@
 					if (jsonResponse.data)
 					{
 						let userDataObject = jsonResponse.data;
-
-						if (userDataObject.banned)
-						{
-							userDataObject.banned.wxs_ban_end_date_string = userDataObject.banned.expired; 			// "2024-01-04 17:22:31"
-							userDataObject.banned.wxs_ban_end_date_object = dayjs(userDataObject.banned.wxs_ban_end_date_string);
-							userDataObject.banned.wxs_ban_end_in_years = userDataObject.banned.wxs_ban_end_date_object.diff(loadTime, 'year');		// 5 > koniec bana za "5" lat
-							userDataObject.banned.wxs_ban_end_in_months = userDataObject.banned.wxs_ban_end_date_object.diff(loadTime, 'month');	// 3 > koniec bana za: "3" miesiące
-							userDataObject.banned.wxs_ban_end_in_days = userDataObject.banned.wxs_ban_end_date_object.diff(loadTime, 'day');		// 31 > koniec bana za 31 dni
-							userDataObject.banned.wxs_ban_end_in_days = userDataObject.banned.wxs_ban_end_date_object.diff(loadTime, 'day');		// 31 > koniec bana za 31 dni
-
-							userDataObject.banned.wxs_reason_lowercase = userDataObject.banned.reason.toLowerCase();
-							// banEndDateDuration = banEndDateObject.toNow()
-
-							// "Użytkowniczka @NadiaFrance dsotała bana za naruszenie regulaminu"
-							userDataObject.banned.wxs_info_text_1 = `${userDataObject.gender == "f" ? "Użytkowniczka @" + userDataObject.username + " dostała" : "Użytkownik @" + userDataObject.username + " dostał"} bana za ${userDataObject.banned.wxs_reason_lowercase}`;
-
-							// "Koniec bana za 14 dni"
-							userDataObject.banned.wxs_info_text_2 = `Koniec bana ${userDataObject.banned.wxs_ban_end_in_years > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_years + " lat(a)" : userDataObject.banned.wxs_ban_end_in_months > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_months + " miesiące(ęcy)" : userDataObject.banned.wxs_ban_end_in_days > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_days + " dni" : userDataObject.banned.wxs_ban_end_date_object.isSame(dayjs(), 'day') == true ? " już dzisiaj!  " : " jutro"}`;
-
-
-							// "Ban trwa do 2024-12-12 23:59:59"
-							userDataObject.banned.wxs_info_text_3 = `Ban trwa do ${userDataObject.banned.wxs_ban_end_date_string}`
-						}
 
 						//console.log("userData fetched from API");
 						//console.log(userDataObject);
@@ -2707,6 +2780,34 @@
 				//console.log("---- getUserDetailsForUsername — zwracam danej użytkownika z vue: " + username)
 				return userDataObject;
 			}
+		}
+	}
+
+	function addUserDataObjectWXSBanInfo(userDataObject)
+	{
+		if (userDataObject.banned)
+		{
+			userDataObject.banned.wxs_ban_end_date_string = userDataObject.banned.expired; 			// "2024-01-04 17:22:31"
+			userDataObject.banned.wxs_ban_end_date_object = dayjs(userDataObject.banned.wxs_ban_end_date_string);
+			userDataObject.banned.wxs_ban_end_in_years = userDataObject.banned.wxs_ban_end_date_object.diff(loadTime, 'year');		// 5 > koniec bana za "5" lat
+			userDataObject.banned.wxs_ban_end_in_months = userDataObject.banned.wxs_ban_end_date_object.diff(loadTime, 'month');	// 3 > koniec bana za: "3" miesiące
+			userDataObject.banned.wxs_ban_end_in_days = userDataObject.banned.wxs_ban_end_date_object.diff(loadTime, 'day');		// 31 > koniec bana za 31 dni
+			userDataObject.banned.wxs_ban_end_in_days = userDataObject.banned.wxs_ban_end_date_object.diff(loadTime, 'day');		// 31 > koniec bana za 31 dni
+
+			userDataObject.banned.wxs_reason_lowercase = userDataObject.banned.reason.toLowerCase();
+			// banEndDateDuration = banEndDateObject.toNow()
+
+			// "Użytkowniczka @NadiaFrance dsotała bana za naruszenie regulaminu"
+			userDataObject.banned.wxs_info_text_1 = `${userDataObject.gender == "f" ? "Użytkowniczka @" + userDataObject.username + " dostała" : "Użytkownik @" + userDataObject.username + " dostał"} bana za ${userDataObject.banned.wxs_reason_lowercase}`;
+
+			// "Koniec bana za 14 dni"
+			userDataObject.banned.wxs_info_text_2 = `Koniec bana ${userDataObject.banned.wxs_ban_end_in_years > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_years + " lat(a)" : userDataObject.banned.wxs_ban_end_in_months > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_months + " miesiące(ęcy)" : userDataObject.banned.wxs_ban_end_in_days > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_days + " dni" : userDataObject.banned.wxs_ban_end_date_object.isSame(dayjs(), 'day') == true ? " już dzisiaj!  " : " jutro"}`;
+
+
+			// "Ban trwa do 2024-12-12 23:59:59"
+			userDataObject.banned.wxs_info_text_3 = `Ban trwa do ${userDataObject.banned.wxs_ban_end_date_string}`;
+
+			return userDataObject;
 		}
 	}
 
@@ -2844,8 +2945,8 @@
 			const text = getTitleTextFromSectionObjectElement(sectionObjectElement);
 			if (!object_id) object_id = getObjectIdFromSectionObjectElement(sectionObjectElement);
 
-			console.log("sectionObjectElement")
-			console.log(sectionObjectElement);
+			// console.log("sectionObjectElement")
+			// console.log(sectionObjectElement);
 
 			localStorageMirkoukrywacz
 				.setItem(object_id,
@@ -2873,7 +2974,6 @@
 	function mirkoukrywaczUnblockElement(sectionObjectElement = null, object_id = getObjectIdFromSectionObjectElement(sectionObjectElement))
 	{
 		console.clear();
-
 		console.log(`mirkoukrywaczUnblockElement(${object_id})`)
 
 		if (localStorageMirkoukrywacz)
@@ -2913,7 +3013,7 @@
 	{
 		if (localStorageMirkoukrywacz)
 		{
-			consoleX(`mirkoukrywaczHideAllBlockedElements()`, 1);
+			//consoleX(`mirkoukrywaczHideAllBlockedElements()`, 1);
 
 			let hiddenElements = 0;
 			let minimizedElements = 0;
@@ -3014,7 +3114,7 @@
 	{
 		if (settings.mirkoukrywaczEnable)
 		{
-			consoleX(`createMenuItemForMirkoukrywacz()`, 1)
+			// consoleX(`createMenuItemForMirkoukrywacz()`, 1)
 
 			if (document.getElementById("wxs_open_modal_mirkoukrywacz_button") == null)
 			{
@@ -3046,7 +3146,7 @@
 	{
 		if (settings.notatkowatorEnable)
 		{
-			consoleX(`createMenuItemForNotatkowator()`, 1)
+			// consoleX(`createMenuItemForNotatkowator()`, 1)
 
 			createProfileDropdownMenuItem(
 				{
@@ -3551,7 +3651,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 	function hideWykopXSPromo()
 	{
-		consoleX("hideWykopXSPromo()", 1)
+		// consoleX("hideWykopXSPromo()", 1)
 
 		let style = document.createElement('style');
 		style.innerHTML = `body div.main-content section > section.sidebar:after { display: none !important; }`;
@@ -3560,7 +3660,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 	function addWykopXPromoBanner()
 	{
-		consoleX("addWykopXPromoBanner()", 1)
+		// consoleX("addWykopXPromoBanner()", 1)
 
 		let targetElement = document.querySelector('section.sidebar > footer');
 		if (targetElement)
@@ -3677,7 +3777,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// ZLICZA NOWE POWIADOMIENIA Z MENU OD 1 DO 5+
 	function countNumberOfNotificationsOnDesktop()
 	{
-		consoleX(`countNumberOfNotificationsOnDesktop()`, 1)
+		//consoleX(`countNumberOfNotificationsOnDesktop()`, 1)
 
 		unreadNotifications.tags = unreadNotifications.tags_new_entry_with_observed_tag = unreadNotifications.tags_new_link_with_observed_tag = unreadNotifications.entries = unreadNotifications.pm = unreadNotifications.total = 0;
 
@@ -3809,7 +3909,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 	function addWykopXButtonsToNavBar()
 	{
-		consoleX("addWykopXButtonsToNavBar()", 1)
+		// consoleX("addWykopXButtonsToNavBar()", 1)
 
 		if (settings.myWykopInTopNavJS)
 		{
@@ -4155,7 +4255,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// number - nieuzwane
 	function createNewNavBarButton(options)
 	{
-		consoleX(`createNewNavBarButton()`, 1)
+		// consoleX(`createNewNavBarButton()`, 1)
 
 		let nav_ul;
 
@@ -4220,7 +4320,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// returnWykopXSClassesString(["klasa1", "klasa2"]) class="wykopx_klasa1 wykopx_klasa2"
 	function addWykopXSClassesToElement(element, inputClassOrArray, suffix = null)
 	{
-		consoleX("addWykopXSClassesToElement()", 1)
+		// consoleX("addWykopXSClassesToElement()", 1)
 
 		if (inputClassOrArray)
 		{
@@ -4242,7 +4342,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// options: { text: null, title: null, className: ``, id: null, url: null, target: "_blank", icon: null, number: null
 	function createProfileDropdownMenuItem(options)
 	{
-		consoleX(`createProfileDropdownMenuItem()`, 1)
+		//consoleX(`createProfileDropdownMenuItem()`, 1)
 
 		let dropdownBody = document.querySelector("body header div.right nav ul li.account.dropdown ul.dropdown-body");
 
@@ -4293,7 +4393,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// wyswietla sie tylko 25 powiadomien, wiec powinno byc 25+
 	function addNotificationSummaryButtonToNavBar()
 	{
-		consoleX("addNotificationSummaryButtonToNavBar()", 1)
+		// consoleX("addNotificationSummaryButtonToNavBar()", 1)
 
 		let mojeLubTagi = document.querySelector('header .right ul li.account.dropdown ul.dropdown-body li.notifications.new a')?.getAttribute('href');
 
@@ -4361,7 +4461,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	{
 		if (settings.topNavNightSwitchIconButton)
 		{
-			consoleX("addNightModeButtonToNavBar()", 1)
+			//consoleX("addNightModeButtonToNavBar()", 1)
 
 			const wykopx_night_mode = `<li class="wykopxs wykopx_night_mode notifications dropdown" title="Przełącz pomiędzy trybem nocnym/dziennym ${promoString}"><a href="#"><figure></figure></a></li>`;
 			document.querySelector('header.header > .right > nav > ul').insertAdjacentHTML('afterbegin', wykopx_night_mode);
@@ -4387,7 +4487,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 	function addExtraButtons()
 	{
-		consoleX("addExtraButtons()", 1)
+		//consoleX("addExtraButtons()", 1)
 
 		const topNavHeaderRightElement = document.querySelector('header.header > .right > nav > ul');
 		const wykopx_wykopwnowymstylu_li = `<li class="wykopxs wykopx_wykopwnowymstylu_li dropdown"><a href="/tag/wykopwnowymstylu" class="wykopx_wykopwnowymstylu_button" title="Przejdź na #wykopwnowymstylu"><span>#</span></a></li>`;
@@ -4436,11 +4536,10 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// DODAJ NOWY WPIS NA MIRKO
 	function focusOnAddingNewMicroblogEntry()
 	{
-		consoleX(`focusOnAddingNewMicroblogEntry()`, 1);
-
 		let wykop_url = new URL(document.URL);
 		if (wykop_url.hash == "#dodaj")
 		{
+			// consoleX(`focusOnAddingNewMicroblogEntry()`, 1);
 			document.querySelector(`section.microblog-page section.microblog section.editor div.content textarea`).focus();
 		}
 	}
@@ -4450,7 +4549,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// document.removeEventListener('click', this.documentClick)
 	function unrollDropdowns(dropdown)
 	{
-		consoleX(`unrollDropdowns() -- empty function -- TODO`, 1);
+		//consoleX(`unrollDropdowns() -- empty function -- TODO`, 1);
 
 		// YYY — async document.removeEventListener("click", this.documentClick);  // TypeError: Cannot read properties of undefined (reading 'documentClick')
 	}
@@ -4655,7 +4754,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 	function executeTabAndFaviconChanges()
 	{
-		consoleX(`executeTabAndFaviconChanges`, 1);
+		// consoleX(`executeTabAndFaviconChanges`, 1);
 
 		if (document.hidden || !settings.tabChangeOnlyOnHiddenState)
 		{
@@ -4755,7 +4854,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// PLUSES OBSERVER
 	function getVotesObject(sectionObjectElement, ratingBoxSection)
 	{
-		consoleX(`getVotesObject()`, 1);
+		//consoleX(`getVotesObject()`, 1);
 
 		/* returns:
 		{
@@ -4917,8 +5016,8 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		//blocks.sectionObjectElement.dataset.wxs_votes_up = blocks.votesUp;			// <section data-wxs_votes_up="1" data_wxs_votes_down="8">
 		//blocks.sectionObjectElement.dataset.wxs_votes_down = blocks.votesDown;
 
-		console.log("blocks");
-		console.log(blocks);
+		// console.log("blocks");
+		// console.log(blocks);
 
 		return blocks;
 	}
@@ -5187,7 +5286,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// VOTING REAL UPDATE, VOTING EXPLOSION
 	function votingEventListener(sectionObjectElement, ratingBoxSection)
 	{
-		consoleX(`votingEventListener()`, 1);
+		// consoleX(`votingEventListener()`, 1);
 
 		if (sectionObjectElement && ratingBoxSection)
 		{
@@ -5573,7 +5672,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 	function disableNewLinkEditorPastedTextLimit(jNodeInput)
 	{
-		consoleX(`disableNewLinkEditorPastedTextLimit()`, 1)
+		// consoleX(`disableNewLinkEditorPastedTextLimit()`, 1)
 
 		const input = jNodeInput[0];
 		const maxLength = input.getAttribute('maxlength');
@@ -5805,7 +5904,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 	function testClipboard(jNodeTextareaWrapper)
 	{
-		consoleX(`testClipboard()`, 1);
+		// consoleX(`testClipboard()`, 1);
 
 		const textareaWrapper = jNodeTextareaWrapper[0]; // jNode => DOMElement
 		const textarea = textareaWrapper.querySelector("textarea");
@@ -6084,7 +6183,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	// ---- PAGE OPENED
 	async function executeOnPageLoad()
 	{
-		consoleX(`executeOnPageLoad`, 1);
+		// consoleX(`executeOnPageLoad`, 1);
 
 		if (isURLChanged()) newPageURL()
 
@@ -6230,7 +6329,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	// PAGE LOAD + PAGE CHANGES
 	function executeOnPageLoadAndPageChange()
 	{
-		consoleX(`executeOnPageLoadAndPageChange`, 1);
+		//consoleX(`executeOnPageLoadAndPageChange`, 1);
 
 		runWithDelay(7000, function ()
 		{
@@ -6372,15 +6471,15 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	{
 		xhook.after((request, response) =>
 		{
-			console.log("✔ xhook.after - request: " + request.url);
-			console.log(request);
-			console.log("✔ xhook.after - response");
-			console.log(response);
+			// console.log("✔ xhook.after - request: " + request.url);
+			// console.log(request);
+			// console.log("✔ xhook.after - response");
+			// console.log(response);
 
 
 			if (response.status == 200 && request.url.endsWith("page=1"))
 			{
-				console.log("request.url.endsWith(page = 1)")
+				//console.log("request.url.endsWith(page = 1)")
 				if ((settings.infiniteScrollEntriesEnabled && pageType == "wpis") || (settings.infiniteScrollLinksEnabled && pageType == "znalezisko"))
 				{
 					let url = null;
@@ -6394,25 +6493,25 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 						return
 					}
 
-					console.log("xhook.after - request.url");
-					console.log(request.url);
-					console.log(url);
+					// console.log("xhook.after - request.url");
+					// console.log(request.url);
+					// console.log(url);
 
 					//if (url.host == "wykop.pl")
 					if (1)
 					{
 						let searchParams = new URLSearchParams(url.searchParams)
-						console.log("✔ xhook.after - url.href");
-						console.log(url.href);
-						console.log("✔ xhook.after - searchParams");
-						console.log(searchParams);
 
-						console.log(`✔ xhook.after - ${url.href} searchParams.has('page'): ` + searchParams.has('page'))
-						console.log(`✔ xhook.after - ${url.href} searchParams.get('page'): ` + searchParams.get('page'))
+						// console.log("✔ xhook.after - url.href");
+						// console.log(url.href);
+						// console.log("✔ xhook.after - searchParams");
+						// console.log(searchParams);
+						// console.log(`✔ xhook.after - ${url.href} searchParams.has('page'): ` + searchParams.has('page'))
+						// console.log(`✔ xhook.after - ${url.href} searchParams.get('page'): ` + searchParams.get('page'))
 
 						if (searchParams.has('page') && searchParams.get('page') == 1)
 						{
-							console.log("✔ xhook.after - INFINITE SCROLL");
+							// console.log("✔ xhook.after - INFINITE SCROLL");
 
 							let regex = /\/api\/v3\/entries\/\d+\/comments/;
 							if (pageType == "znalezisko") regex = /\/api\/v3\/links\/\d+\/comments/;
@@ -6420,8 +6519,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 							if (regex.test(url.pathname))
 							{
 								let json = JSON.parse(response.text)
-								console.log("json")
-								console.log(json)
+								// console.log("json")
+								// console.log(json)
 
 								for (let page = 2; page <= Math.ceil(json['pagination']['total'] / json['pagination']['per_page']); ++page)
 								{
@@ -6482,7 +6581,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	// USUWANIE NATARCZYWYCH IFRAME, REKLAM I GDPR
 	function removeAnnoyances()
 	{
-		consoleX("removeAnnoyances()", 1)
+		// consoleX("removeAnnoyances()", 1)
 
 		if (settings.removeAnnoyancesIframes)
 		{
@@ -6532,7 +6631,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	{
 		if (Node)
 		{
-			consoleX(`removeFromDOM()`, 1);
+			//consoleX(`removeFromDOM()`, 1);
 
 			if (Node instanceof jQuery)
 			{
