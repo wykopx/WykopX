@@ -37,7 +37,7 @@
 	'use strict';
 
 	const currentVersion = "2.60.1";
-	let dev = false;
+	let dev = true;
 	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
 
 	//dayjs.extend(relativeTime); // https://day.js.org/docs/en/plugin/relative-time // https://www.jsdelivr.com/package/npm/dayjs?tab=files&path=plugin
@@ -45,6 +45,10 @@
 	let loadTime = dayjs();
 
 	// user.username -> nazwa zalogowanego uzytkownika
+
+	const root = document.documentElement;
+	const head = document.head;
+	const body = document.body;
 
 	let user = {
 		data: null,
@@ -65,8 +69,11 @@
 
 
 
+
+
+
 	// getComputedStyle(document.documentElement) -- nie działa, nie wczytuje właściwości z :root
-	let wykopxSettings = getComputedStyle(document.querySelector("head"));
+	let wykopxSettings = getComputedStyle(head);
 	let settings = {};
 	// boolean — domyslnie WŁĄCZONE bez Wykop X Style
 
@@ -85,6 +92,7 @@
 		settings.wxsBlockXHRConsoleLogAllowed = wykopxSettings.getPropertyValue("--wxsBlockXHRConsoleLogAllowed") ? wykopxSettings.getPropertyValue("--wxsBlockXHRConsoleLogAllowed") === '1' : false;
 		settings.wxsBlockXHRConsoleLogBlocked = wykopxSettings.getPropertyValue("--wxsBlockXHRConsoleLogBlocked") ? wykopxSettings.getPropertyValue("--wxsBlockXHRConsoleLogBlocked") === '1' : false;
 	}
+
 
 
 	settings.hitsInTopNavJS = wykopxSettings.getPropertyValue("--hitsInTopNavJS") ? wykopxSettings.getPropertyValue("--hitsInTopNavJS") === '1' : true;
@@ -152,6 +160,42 @@
 		settings.checkEntryPlusesPerHour = wykopxSettings.getPropertyValue("--checkEntryPlusesPerHour") ? wykopxSettings.getPropertyValue("--checkEntryPlusesPerHour") === '1' : true;
 		settings.checkEntryCommentsPerHour = wykopxSettings.getPropertyValue("--checkEntryCommentsPerHour") ? wykopxSettings.getPropertyValue("--checkEntryCommentsPerHour") === '1' : true;
 		settings.checkEntryPlusesForVotingGame = wykopxSettings.getPropertyValue("--checkEntryPlusesForVotingGame") ? wykopxSettings.getPropertyValue("--checkEntryPlusesForVotingGame") === '1' : true;
+
+		settings.prefixBeforePlusesCount = wykopxSettings.getPropertyValue("--prefixBeforePlusesCount") ? wykopxSettings.getPropertyValue("--prefixBeforePlusesCount") : "plus";  // domyslnie puste, dodajemy plus przed liczbą plusów
+
+		const prefixBeforePlusesCountMap = new Map([
+			['brak', ''],
+			['plus', '+'],	// domyslnie 
+			['emoji_serce', '💚'],
+			['emoji_index_pointing_up', '☝'],
+			['emoji_thumbs_up', '👍'],
+			['emoji_backhand_index_pointing_up', '👆'],
+			['emoji_upwards_button', '🔼'],
+			['emoji_up_arrow', '⬆'],
+			['emoji_up_right_arrow', '↗'],
+			['emoji_up_left_arrow', '↖'],
+			['emoji_right_arrow_curving_up', '⤴'],
+			['emoji_heavy_tick', '✔'],
+			['emoji_plus_sign', '➕'],
+			['emoji_red_triangle_pointed_up', '🔺']
+		]);
+		settings.prefixBeforePlusesCount = prefixBeforePlusesCountMap.get(settings.prefixBeforePlusesCount);
+		settings.prefixBeforeMinusesCount = wykopxSettings.getPropertyValue("--prefixBeforeMinusesCount") ? wykopxSettings.getPropertyValue("--prefixBeforeMinusesCount") : "minus"; // domyślnie minus i tak zostawiamy
+		const prefixBeforeMinusesCountMap = new Map([
+			['brak', ''],
+			['minus', '-'],	// domyslnie
+			['emoji_cross_mark', '❌'],
+			['emoji_backhand_index_pointing_down', '👇'],
+			['emoji_thumbs_down', '👎'],
+			['emoji_downwards_button', '🔽'],
+			['emoji_down_arrow', '⬇'],
+			['emoji_down_right_arrow', '↘'],
+			['emoji_down_left_arrow', '↙'],
+			['emoji_right_arrow_curving_down', '⤵'],
+			['emoji_minus_sign', '➖'],
+			['emoji_red_triangle_pointed_down', '🔻']
+		]);
+		settings.prefixBeforeMinusesCount = prefixBeforeMinusesCountMap.get(settings.prefixBeforeMinusesCount);
 	}
 
 
@@ -248,7 +292,7 @@
 
 		if (settings.wxsUserLabelsFakeFemales)
 		{
-			const listafalszywychrozowych = ['ElCidX', 'conamirko', 'IlllIlIIIIIIIIIlllllIlIlIlIlIlIlIII', 'deiceberg', 'Chodtok', 'ToJestNiepojete', 'chwilowypaczelok', 'sinls', 'KRZYSZTOF_DZONG_UN', 'miszczu90', `powodzenia`];
+			const listafalszywychrozowych = ['ElCidX', 'washington', 'conamirko', 'ChwilowaPomaranczka', 'RobieZdrowaZupke', 'IlllIlIIIIIIIIIlllllIlIlIlIlIlIlIII', 'deiceberg', 'Chodtok', 'ToJestNiepojete', 'chwilowypaczelok', 'sinls', 'KRZYSZTOF_DZONG_UN', 'miszczu90', `powodzenia`];
 			localStorageUserLabels.setItem('falszyweRozowe', listafalszywychrozowych).then(() => { });
 
 			// get from localstorage
@@ -258,6 +302,8 @@
 		{
 			const trollsMap = new Map();
 			trollsMap.set("WykopX", { "url": "https://github.com/wykopx/WykopX/wiki/X-Notatkowator" });
+			trollsMap.set("wykop", { "label": "Oficjalne konto", });
+
 			trollsMap.set("bakehaus", { "label": "Wypiek", "url": "https://nimble.li/vdr4ajlm" });
 			trollsMap.set("m__b", { "label": "Michał B.", "url": "https://pl.linkedin.com/in/michalbialek" });
 			trollsMap.set("paliwoda", { "url": "https://sjp.pwn.pl/sjp/chomato;2448428.html" });
@@ -268,6 +314,11 @@
 			trollsMap.set("ISSTrackerPL", { "label": "Bot", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Boty-na-Wykopie#iss-tracker" });
 			trollsMap.set("januszowybot", { "label": "Bot", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Boty-na-Wykopie#januszowy-bot" });
 			trollsMap.set("mirko_anonim", { "label": "Anonim", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Aplikacje#mirkoanonim" });
+
+			trollsMap.set("BayzedMan", { "label": "Wykopowy Troll" });
+			trollsMap.set("ChwilowaPomaranczka", { "label": "Wykopowy Troll" });
+
+
 			let trollsObject = Object.fromEntries(trollsMap);
 			localStorageUserLabels.setItem('mapaTrolli', trollsObject).then(() => { });
 
@@ -386,7 +437,7 @@
 
 
 	// { root: --var }
-	const rootStyles = getComputedStyle(document.documentElement);
+	const rootStyles = getComputedStyle(root);
 	settings.version = (rootStyles.getPropertyValue("--version").trim().slice(1, -1)); 	// "2.48";
 	settings.versor = (rootStyles.getPropertyValue("--versor").trim().slice(1, -1)); 	// "style", "blank", "block"
 	settings.xblocker = (rootStyles.getPropertyValue("--xblocker").trim().slice(1, -1)); // "2.48";
@@ -826,19 +877,19 @@
 		consoleX(`topNavHamburgerHoverMinimize()`, 1);
 
 		let hamburgerButton = jQueryHamburgerButton[0];
-		document.body.dataset.wxs_category_menu_minimized = 'true';
+		body.dataset.wxs_category_menu_minimized = 'true';
 
 		hamburgerButton.addEventListener("mouseover", () => 
 		{
 
-			if (document.body.dataset.wxs_category_menu_minimized === 'true')
+			if (body.dataset.wxs_category_menu_minimized === 'true')
 			{
-				//delete document.body.dataset.wxs_category_menu_minimized;
-				document.body.dataset.wxs_category_menu_minimized = 'false';
+				//delete body.dataset.wxs_category_menu_minimized;
+				body.dataset.wxs_category_menu_minimized = 'false';
 			}
 			else
 			{
-				document.body.dataset.wxs_category_menu_minimized = 'true';
+				body.dataset.wxs_category_menu_minimized = 'true';
 			}
 		});
 	}
@@ -1059,10 +1110,10 @@
 			this -> clicked element == event.target
 			PointerEvent — even object
 		*/
-		//document.body.dataset[cssFilterName] = this.value;	//	<body data-wxs_switch_nsfw="1"]
-		if (this.value == 0) document.body.dataset[cssFilterName] = "OFF_0";	//	<body data-wxs_switch_nsfw="OFF"]
-		else if (this.value > 0) document.body.dataset[cssFilterName] = `ON_PLUS_${this.value}`;	//	<body data-wxs_switch_nsfw="ON_PLUS_1"]  // "ON_PLUS_1", "ON_PLUS_2", "ON_PLUS_3"
-		else document.body.dataset[cssFilterName] = `ON_MINUS_${Math.abs(this.value)}`;	//		<body data-wxs_switch_nsfw="ON_MINUS_1"]			<body data-wxs_switch_nsfw="-1"]
+		//body.dataset[cssFilterName] = this.value;	//	<body data-wxs_switch_nsfw="1"]
+		if (this.value == 0) body.dataset[cssFilterName] = "OFF_0";	//	<body data-wxs_switch_nsfw="OFF"]
+		else if (this.value > 0) body.dataset[cssFilterName] = `ON_PLUS_${this.value}`;	//	<body data-wxs_switch_nsfw="ON_PLUS_1"]  // "ON_PLUS_1", "ON_PLUS_2", "ON_PLUS_3"
+		else body.dataset[cssFilterName] = `ON_MINUS_${Math.abs(this.value)}`;	//		<body data-wxs_switch_nsfw="ON_MINUS_1"]			<body data-wxs_switch_nsfw="-1"]
 
 		if (cssFilterName == "wxs_switch_entries_photo_viewer")
 		{
@@ -1340,10 +1391,10 @@
 	{
 		consoleX(`filterUserOff`, 1);
 
-		delete document.body.dataset.wxs_filter // <body data-wxs_filter>
-		delete document.body.dataset.wxs_filter_style
-		delete document.body.dataset.wxs_filter_style
-		delete document.body.dataset.wxs_filter_username
+		delete body.dataset.wxs_filter // <body data-wxs_filter>
+		delete body.dataset.wxs_filter_style
+		delete body.dataset.wxs_filter_style
+		delete body.dataset.wxs_filter_username
 
 		const styleElement = document.getElementById('wxs_css_filter_user_comments');
 		if (styleElement) styleElement.parentNode.removeChild(styleElement);
@@ -1376,9 +1427,9 @@
 
 		if (wxs_css_style_filter_user_comments) // jest już nałożony jakiś filtr
 		{
-			if (document.body.dataset.wxs_filter == filterType && document.body.dataset.wxs_filter_username != "filterUsername") // ten sam typ filtra i uzytkownik - zmiana stylu
+			if (body.dataset.wxs_filter == filterType && body.dataset.wxs_filter_username != "filterUsername") // ten sam typ filtra i uzytkownik - zmiana stylu
 			{
-				let currentFilterStyleIndex = parseInt(document.body.dataset.wxs_filter_style);
+				let currentFilterStyleIndex = parseInt(body.dataset.wxs_filter_style);
 
 				// filterStyleIndex = (currentFilterStyleIndex + 1) % filterStyles.length; // loop 0-2
 				filterStyleIndex = currentFilterStyleIndex + 1;
@@ -1390,18 +1441,18 @@
 			}
 			else // zachowujemy ten sam styl bo zmienil sie typ filtra lub filtrowany uzytkownik
 			{
-				filterStyleIndex = parseInt(document.body.dataset.wxs_filter_style);
+				filterStyleIndex = parseInt(body.dataset.wxs_filter_style);
 			}
 		}
 
-		document.body.dataset.wxs_filter_style = filterStyleIndex.toString()
-		document.body.dataset.wxs_filter_username = filterUsername;
+		body.dataset.wxs_filter_style = filterStyleIndex.toString()
+		body.dataset.wxs_filter_username = filterUsername;
 
 		let css = "";
 
 		if (filterType == "userComments")
 		{
-			document.body.dataset.wxs_filter = "userComments"; // <body data-wxs_filter="userComments">
+			body.dataset.wxs_filter = "userComments"; // <body data-wxs_filter="userComments">
 
 			css = `.wxs_menu_action_box > .wxs_filter_off { display: flex!important; }
 
@@ -1457,7 +1508,7 @@
 		}
 		else if (filterType == "userReplies")
 		{
-			document.body.dataset.wxs_filter = "userReplies"; // <body data-wxs_filter="userReplies">
+			body.dataset.wxs_filter = "userReplies"; // <body data-wxs_filter="userReplies">
 
 			css = `.wxs_menu_action_box > .wxs_filter_off { display: flex!important; }
 
@@ -1536,7 +1587,7 @@
 			wxs_css_style_filter_user_comments.dataset.wxs_filter_type = filterStyleIndex;
 
 			wxs_css_style_filter_user_comments.appendChild(document.createTextNode(css));
-			document.head.appendChild(wxs_css_style_filter_user_comments);
+			head.appendChild(wxs_css_style_filter_user_comments);
 		}
 
 	}
@@ -1788,16 +1839,19 @@
 			// console.log(sectionObjectElement);
 
 
-
-
 			// ----- INTERSECTION CHANGED FOR THE FIRST TIME:
 
-			if (!sectionObjectElement.dataset.wxs_first_load_time) 
+			if (sectionObjectElement && !sectionObjectElement.dataset.wxs_first_load_time && sectionObjectElement.__vue__ && sectionObjectElement.__vue__.item) 
 			{
+				console.log("intersectingObject - sectionObjectElement.__vue__.item")
+				console.log(sectionObjectElement)
+				console.log("intersectingObject - sectionObjectElement.__vue__.item")
+				console.log(sectionObjectElement.__vue__)
+				console.log("intersectingObject - sectionObjectElement.__vue__.item")
+				console.log(sectionObjectElement.__vue__.item)
 				// data-wxs_first_load_time="2024-12-12..."
 				sectionObjectElement.dataset.wxs_first_load_time = dayjs().valueOf(); // data unix kiedy przybyly ostatnio odswiezone plusy-tutaj czas załadowania strony
 				resource = sectionObjectElement.__vue__.item.resource;
-
 
 				// wpisy i komentarze
 				if (resource != "link") 
@@ -1807,8 +1861,8 @@
 						sectionObjectElement.dataset.wxs_first_load_votes_count = sectionObjectElement.__vue__.item.votes.up - sectionObjectElement.__vue__.item.votes.down;
 					}
 
-					sectionObjectElement.style.setProperty('--votesUp', `"+${sectionObjectElement.__vue__.item.votes.up}"`);
-					sectionObjectElement.style.setProperty('--votesDown', `"+${sectionObjectElement.__vue__.item.votes.down}"`);
+					//sectionObjectElement.style.setProperty('--votesUp', `"${settings.prefixBeforePlusesCount}${sectionObjectElement.__vue__.item.votes.up}"`);
+					//sectionObjectElement.style.setProperty('--votesDown', `"${settings.prefixBeforeMinusesCount}${sectionObjectElement.__vue__.item.votes.down}"`);
 					sectionObjectElement.dataset.wxs_votes_up = sectionObjectElement.__vue__.item.votes.up;
 					sectionObjectElement.dataset.wxs_votes_down = sectionObjectElement.__vue__.item.votes.down;
 					sectionObjectElement.dataset.wxs_voted = sectionObjectElement.__vue__.item.voted;
@@ -1849,7 +1903,7 @@
 							{
 								sectionObjectElement.dataset.wxs_voting_game = "true";
 								//sectionObjectElement.style.setProperty('--votesUpHidden', `"+${replaceDigitsWithDot(sectionObjectElement.__vue__.item.votes.up)}"`);
-								sectionObjectElement.style.setProperty('--votesUpHidden', `"` + replaceDigitsWithDot(sectionObjectElement.__vue__.item.votes.up) + `"`);
+								sectionObjectElement.style.setProperty('--votesUpHidden', `"${settings.prefixBeforePlusesCount}` + replaceDigitsWithDot(sectionObjectElement.__vue__.item.votes.up) + `"`);
 								let votingGameLastDigit = sectionObjectElement.__vue__.item.votes.up + 1; // ostatnia cyfra po zaplusowaniu
 								votingGameLastDigit = votingGameLastDigit.toString().slice(-1);
 								sectionObjectElement.style.setProperty('--votingGameLastDigit', `"` + votingGameLastDigit + `"`);
@@ -1867,8 +1921,8 @@
 				{
 					if (settings.checkLinkVotesEnable && settings.checkLinkVotesPerHour && !sectionObjectElement.dataset.wxs_first_load_votes_count)
 					{
-						sectionObjectElement.style.setProperty('--votesUp', `"+${sectionObjectElement.__vue__.item.votes.up}"`);
-						sectionObjectElement.style.setProperty('--votesDown', `"+${sectionObjectElement.__vue__.item.votes.down}"`);
+						sectionObjectElement.style.setProperty('--votesUp', `"${sectionObjectElement.__vue__.item.votes.up}"`);
+						sectionObjectElement.style.setProperty('--votesDown', `"${sectionObjectElement.__vue__.item.votes.down}"`);
 						sectionObjectElement.dataset.wxs_votes_up = sectionObjectElement.__vue__.item.votes.up;
 						sectionObjectElement.dataset.wxs_votes_down = sectionObjectElement.__vue__.item.votes.down;
 						sectionObjectElement.dataset.wxs_voted = sectionObjectElement.__vue__.item.voted;
@@ -1910,7 +1964,34 @@
 				{
 					if (settings.checkLinkVotesEnable)
 					{
-						// TODO sprawdzanie wykopow na zywo
+						if ((sectionObjectElement.__vue__.item.votes.up > votesFetchingLimitMinimumVotes || sectionObjectElement.__vue__.item.votes.down > votesFetchingLimitMinimumVotes) && loadTime.diff(dayjs(sectionObjectElement.__vue__.item.created_at), 'hour') < votesFetchingLimitMaximumHoursOld)
+						{
+							let timeoutId = null
+							let i = 1;
+							let timeoudId = setTimeout(function checkPlusesAgain()
+							{
+								if (sectionObjectElement?.__vue__?.item)
+								{
+									checkPluses(sectionObjectElement, undefined, true);
+
+									if (sectionObjectElement.classList.contains("isIntersecting"))
+									{
+
+										if ((sectionObjectElement.dataset.wxs_votes_fetch_high_frequency)
+											|| ((loadTime.diff(dayjs(sectionObjectElement.__vue__.item.created_at), 'hour') < votesFetchingHigherFrequencyLimitMaximumHoursOld)
+												&& sectionObjectElement.__vue__.item.votes.up > votesFetchingHigherFrequencyLimitMinimumVotes))
+										{
+											if (!sectionObjectElement.dataset.wxs_votes_fetch_high_frequency) sectionObjectElement.dataset.wxs_votes_fetch_high_frequency = "true";
+											setTimeout(checkPlusesAgain, votesFetchingHigherFrequencyDelayInSeconds * 1000)
+										}
+										else
+										{
+											setTimeout(checkPlusesAgain, votesFetchingOngoingDelayInSeconds * 1000)
+										}
+									}
+								}
+							}, votesFetchingFirstDelayInSeconds * 1000);
+						}
 					}
 				}
 				// WPISY I KOMENTARZE
@@ -1922,26 +2003,27 @@
 						if ((sectionObjectElement.__vue__.item.votes.up > votesFetchingLimitMinimumVotes || sectionObjectElement.__vue__.item.votes.down > votesFetchingLimitMinimumVotes) && loadTime.diff(dayjs(sectionObjectElement.__vue__.item.created_at), 'hour') < votesFetchingLimitMaximumHoursOld)
 						{
 							let timeoutId = null
-
-
 							let i = 1;
 							let timeoudId = setTimeout(function checkPlusesAgain()
 							{
-								checkPluses(sectionObjectElement, undefined, true);
-
-								if (sectionObjectElement.classList.contains("isIntersecting"))
+								if (sectionObjectElement?.__vue__?.item)
 								{
+									checkPluses(sectionObjectElement, undefined, true);
 
-									if ((sectionObjectElement.dataset.wxs_votes_fetch_high_frequency)
-										|| ((loadTime.diff(dayjs(sectionObjectElement.__vue__.item.created_at), 'hour') < votesFetchingHigherFrequencyLimitMaximumHoursOld)
-											&& sectionObjectElement.__vue__.item.votes.up > votesFetchingHigherFrequencyLimitMinimumVotes))
+									if (sectionObjectElement.classList.contains("isIntersecting"))
 									{
-										if (!sectionObjectElement.dataset.wxs_votes_fetch_high_frequency) sectionObjectElement.dataset.wxs_votes_fetch_high_frequency = "true";
-										setTimeout(checkPlusesAgain, votesFetchingHigherFrequencyDelayInSeconds * 1000)
-									}
-									else
-									{
-										setTimeout(checkPlusesAgain, votesFetchingOngoingDelayInSeconds * 1000)
+
+										if ((sectionObjectElement.dataset.wxs_votes_fetch_high_frequency)
+											|| ((loadTime.diff(dayjs(sectionObjectElement.__vue__.item.created_at), 'hour') < votesFetchingHigherFrequencyLimitMaximumHoursOld)
+												&& sectionObjectElement.__vue__.item.votes.up > votesFetchingHigherFrequencyLimitMinimumVotes))
+										{
+											if (!sectionObjectElement.dataset.wxs_votes_fetch_high_frequency) sectionObjectElement.dataset.wxs_votes_fetch_high_frequency = "true";
+											setTimeout(checkPlusesAgain, votesFetchingHigherFrequencyDelayInSeconds * 1000)
+										}
+										else
+										{
+											setTimeout(checkPlusesAgain, votesFetchingOngoingDelayInSeconds * 1000)
+										}
 									}
 								}
 							}, votesFetchingFirstDelayInSeconds * 1000);
@@ -1974,20 +2056,36 @@
 						{
 							linkSectionIntersected(sectionObjectElement)  // waitForKeyElements(`section.link-block[id^="link-"]`, , false);  // GM_wrench.waitForKeyElements(`section.link-block[id^="link-"]`, linkSectionIntersected, false);
 						}
+
+						if (settings.checkLinkVotesEnable && settings.checkLinkVotesPerHour)
+						{
+							const ratingBoxSection = sectionObjectElement.querySelector(".vote-box")
+
+							if ((sectionObjectElement.__vue__.item.votes.up > votesFetchingLimitMinimumVotes || sectionObjectElement.__vue__.item.votes.down > votesFetchingLimitMinimumVotes) && loadTime.diff(dayjs(sectionObjectElement.__vue__.item.created_at), 'day') < votesFetchingLimitMaximumHoursOld)
+							{
+								let wxs_votes_per_hourDivElement = document.createElement("div");
+								wxs_votes_per_hourDivElement.title = "Wykop X: Liczba wykopów na godzinę";
+								wxs_votes_per_hourDivElement.classList = "wxs_votes_per_hour";
+								ratingBoxSection.appendChild(wxs_votes_per_hourDivElement);
+							}
+						}
 					}
 					// WPISY, KOMENTARZE POD WPISAMI, KOMENTARZE POD ZNALEZISKAMI, 
 					else
 					{
 
 						const ratingBoxSection = sectionObjectElement.querySelector(".rating-box")
-						if (settings.votingExplosionEnable || settings.checkEntryPlusesWhenVoting) votingEventListener(sectionObjectElement, ratingBoxSection);
-
+						if (settings.votingExplosionEnable || settings.checkEntryPlusesWhenVoting) 
+						{
+							votingEventListener(sectionObjectElement, ratingBoxSection);
+						}
 
 						if (ratingBoxSection && settings.checkEntryPlusesEnable && settings.checkEntryPlusesPerHour)
 						{
 							if ((sectionObjectElement.__vue__.item.votes.up > votesFetchingLimitMinimumVotes || sectionObjectElement.__vue__.item.votes.down > votesFetchingLimitMinimumVotes) && loadTime.diff(dayjs(sectionObjectElement.__vue__.item.created_at), 'day') < votesFetchingLimitMaximumHoursOld)
 							{
 								let wxs_votes_per_hourDivElement = document.createElement("div");
+								wxs_votes_per_hourDivElement.title = "Wykop X: Liczba plusów na godzinę";
 								wxs_votes_per_hourDivElement.classList = "wxs_votes_per_hour";
 								ratingBoxSection.appendChild(wxs_votes_per_hourDivElement);
 							}
@@ -3156,7 +3254,7 @@
 			{
 				createProfileDropdownMenuItem(
 					{
-						text: `Wykop X — Mirkoukrywacz`,
+						text: `Mirkoukrywacz - Wykop X`,
 						title: "Wykop X — lista elementów ukrytych przez Mirkoukrywacz",
 						className: `mirkoukrywacz`,
 						id: "wxs_open_modal_mirkoukrywacz_button",
@@ -3186,7 +3284,7 @@
 
 			createProfileDropdownMenuItem(
 				{
-					text: `Wykop X — Notatkowator`,
+					text: `Notatki - Wykop X`,
 					title: "Wykop X — Notatkowator — Twoje notatki do innych użytkowników",
 					className: `notatkowator`,
 					id: "wxs_open_modal_notatkowator_button",
@@ -3266,7 +3364,7 @@
 				</div>
 			</div>`;
 
-			document.body.insertAdjacentHTML('afterbegin', html);
+			body.insertAdjacentHTML('afterbegin', html);
 			wxs_modal = document.getElementById("wxs_modal");
 
 			window.onclick = function (event)
@@ -3515,7 +3613,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	/* if (wykopxSettings.getPropertyValue("--middleClickOpensNotificationsInNewTab"))
 	{
 		// środkowy przycisk na powiadomieniu otwiera je w nowej karcie 
-		document.body.addEventListener('mousedown', function(e1) {
+		body.addEventListener('mousedown', function(e1) {
 			if (e1.target.closest('section.notifications-stream section.notify') && e1.which === 2) {
 				let target = e1.target;
 				target.addEventListener('mouseup', function(e2) {
@@ -3561,7 +3659,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			detected_event_click = 3;
 			event_trigger_type = "wykopx_rightclick";
 		}
-		document.body.addEventListener('mousedown', function (e1)
+		body.addEventListener('mousedown', function (e1)
 		{
 			if (e1.which === detected_event_click && e1.target?.tagName === 'IMG' && e1.target?.src?.startsWith('https://wykop.pl/cdn/'))
 			{
@@ -3691,7 +3789,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 		let style = document.createElement('style');
 		style.innerHTML = `body div.main-content section > section.sidebar:after { display: none !important; }`;
-		document.head.appendChild(style);
+		head.appendChild(style);
 	}
 
 	function addWykopXPromoBanner()
@@ -4136,6 +4234,16 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 					<a href="/hity/roku" target="_self">Roku</a>
 				</div>
 			</section>
+
+			<section>
+				<span>Archiwum</span>
+				<div>
+					<a href="/hity/2020" target="_self">2020</a>
+					<a href="/hity/2021" target="_self">2021</a>
+					<a href="/hity/2022" target="_self">2022</a>
+					<a href="/hity/2023" target="_self">2023</a>
+				</div>
+			</section>
 		</nav>
 
 
@@ -4169,7 +4277,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 			<section>
 				<span>
-					Moja aktywność
+					Moje Mirko
 				</span>
 				<div>
 					<a href="/ludzie/${user.username}/wpisy/dodane" target="_self">Moje wpisy</a>
@@ -4507,12 +4615,12 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				const currentMode = localStorage.getItem('nightMode');
 				if (currentMode === null || currentMode === '0')
 				{
-					document.body.setAttribute('data-night-mode', 'true');
+					body.setAttribute('data-night-mode', 'true');
 					localStorage.setItem('nightMode', 1);
 				}
 				else
 				{
-					document.body.removeAttribute('data-night-mode');
+					body.removeAttribute('data-night-mode');
 					localStorage.setItem('nightMode', 0);
 				}
 			});
@@ -4772,8 +4880,8 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		// <link rel="alternate icon" type="image/png" href="/static/img/favicons/favicon.png">
 		let oldFaviconElement = document.querySelector('link[rel="icon"]');
 		let alternateFaviconElement = document.querySelector('link[rel="alternate icon"]');
-		if (oldFaviconElement) document.head.removeChild(oldFaviconElement);
-		if (alternateFaviconElement) document.head.removeChild(alternateFaviconElement);
+		if (oldFaviconElement) head.removeChild(oldFaviconElement);
+		if (alternateFaviconElement) head.removeChild(alternateFaviconElement);
 
 		let selectedFaviconURL = new_favicon;
 		if (tabFavicons.has(new_favicon)) selectedFaviconURL = tabFavicons.get(new_favicon);
@@ -4783,7 +4891,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		faviconLinkElement.type = 'image/x-icon'; // "image/svg+xml" "image/png"
 		faviconLinkElement.href = selectedFaviconURL + '?=' + Math.random();
 
-		document.head.appendChild(faviconLinkElement);
+		head.appendChild(faviconLinkElement);
 	}
 
 
@@ -4890,9 +4998,37 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// PLUSES OBSERVER
 	function getVotesObject(sectionObjectElement, ratingBoxSection)
 	{
-		//consoleX(`getVotesObject()`, 1);
+		consoleX(`getVotesObject()`, 1);
 
 		/* returns:
+
+		{
+			separated: false,
+
+			votesUp: 50,
+			votesUpPercent: 100,
+			votesDown: 5,
+			votesDownPercent: 0,
+			
+			votesCount: 45,
+			votesAll: 55,
+			voted: 0
+
+			votesUpPrevious: 49
+			votesDownPrevious: 4,
+			plusesDelta: 1
+			minusesDelta: 1
+		}
+
+		{
+			resource: "link"
+			sectionObjectElement: <DOMElement>,
+			ratingBox: <DOMElement>,
+			link: <DOMElement>,
+			id: 123456,
+			link_id: 123456,
+		}
+
 		{
 			resource: "entry"
 			sectionObjectElement: <DOMElement>,
@@ -4964,6 +5100,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			votesDownPercent: 0,
 			votesUpPercent: 100,
 			voted: 0
+
 		};
 
 
@@ -4974,21 +5111,29 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		blocks.id = ratingBoxSection.__vue__.id;
 		blocks.separated = ratingBoxSection.__vue__.separated;
 		blocks.votesUp = ratingBoxSection.__vue__.up;
+
+		console.log(blocks.votesUp)
 		blocks.votesDown = ratingBoxSection.__vue__.down;
 
 		blocks.votesCount = blocks.votesUp - blocks.votesDown;				// -10 (suma plusów i minusów nie dotyczy entry, entry_comment)
 		blocks.votesAll = blocks.votesUp + blocks.votesDown;				// 30  (łączna liczba głosów nie dotyczy entry, entry_comment)
+
 		blocks.votesDownPercent = Math.ceil(blocks.votesDown * 100 / blocks.votesAll);											// nie dotyczy entry, entry_comment
 		blocks.votesUpPercent = Math.ceil(blocks.votesUp * 100 / blocks.votesAll);											// nie dotyczy entry, entry_comment zawsze 100%
 
 		blocks.voted = ratingBoxSection.__vue__.voted;
 
 
-
-
 		if (blocks.sectionObjectElement.__vue__.item.resource == "link") // znalezisko
 		{
+			blocks.resource = "link";
+			blocks.fetchURL = `https://wykop.pl/api/v3/links/${blocks.id}`; // TODO
 
+			blocks.link_id = blocks.id;
+			blocks.link = blocks.sectionObjectElement; 		// parent = this
+			blocks.parent_element = blocks.sectionObjectElement; 		// parent = this
+			blocks.parent_id = blocks.id;
+			blocks.sectionObjectElement.dataset.wxs_resource = "link";
 		}
 		else
 		{
@@ -5005,7 +5150,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 					blocks.parent_id = blocks.comment_element.__vue__.item.parent.link.id; 	// id znaleziska
 					blocks.parent_comment_id = blocks.comment_element.__vue__.item.parent.id; // id nadkomentarza
 					blocks.parent_element = document.getElementById(`comment-${blocks.parent_comment_id}`) // nadkomentarz
-					blocks.fetchURL = `https://wykop.pl/api/v3/links/${blocks.parent_id}/comments/${blocks.comment_id}/comments`; // TODO
+					blocks.fetchURL = `https://wykop.pl/api/v3/links/${blocks.parent_id}/comments/${blocks.parent_comment_id}/comments`; // TODO
 				}
 				else
 				{
@@ -5041,9 +5186,9 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			else if (blocks.sectionObjectElement.__vue__.item.resource == "entry")
 			{
 				blocks.parent_element = blocks.sectionObjectElement; 	// parent = this
-				blocks.parent_id = blocks.parent_element.__vue__.item.id;
+				blocks.parent_id = blocks.id;
 				blocks.resource = "entry";
-				blocks.fetchURL = `https://wykop.pl/api/v3/entries/${blocks.parent_id}`;
+				blocks.fetchURL = `https://wykop.pl/api/v3/entries/${blocks.id}`;
 				blocks.parent_element.dataset.wxs_resource = "entry";
 			}
 		}
@@ -5065,17 +5210,36 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	{
 		consoleX(`checkPluses()`, 1)
 
+
 		if (sectionObjectElement == null && ratingBoxSection)
 		{
-			sectionObjectElement = ratingBoxSection.closest("section.entry")
+			if (sectionObjectElement.__vue__.item.resource == "link")
+			{
+				sectionObjectElement = ratingBoxSection.closest("section.link-block")
+			}
+			else
+			{
+				sectionObjectElement = ratingBoxSection.closest("section.entry")
+			}
 		}
 
-		console.log("sectionObjectElement.__vue__.item")
-		console.log(sectionObjectElement.__vue__.item)
+		console.log("checkPluses() - sectionObjectElement")
+		console.log(sectionObjectElement)
 
-		if (sectionObjectElement && sectionObjectElement.__vue__.item.deleted == null)
+		if (sectionObjectElement && sectionObjectElement.__vue__ && sectionObjectElement.__vue__.item.deleted == null)
 		{
-			ratingBoxSection = sectionObjectElement.querySelector("section.rating-box");
+			if (!ratingBoxSection)
+			{
+				if (sectionObjectElement.__vue__.item.resource == "link")
+				{
+					ratingBoxSection = sectionObjectElement.querySelector("section.vote-box");
+				}
+				else
+				{
+					ratingBoxSection = sectionObjectElement.querySelector("section.rating-box");
+				}
+			}
+
 			const votesObject = getVotesObject(sectionObjectElement, ratingBoxSection);
 
 			if (votesObject) // nie dla subkomentarzy
@@ -5086,10 +5250,10 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				// let sectionObjectElement = votesObject.sectionObjectElement;
 				sectionObjectElement.classList.remove("plusesAdded", "plusesRemoved", "minusesAdded", "minusesRemoved");
 
-				sectionObjectElement.style.removeProperty('--plusesAdded');
-				sectionObjectElement.style.removeProperty('--plusesRemoved');
-				sectionObjectElement.style.removeProperty('--minusesAdded');
-				sectionObjectElement.style.removeProperty('--minusesRemoved');
+				// sectionObjectElement.style.removeProperty('--plusesAdded');
+				// sectionObjectElement.style.removeProperty('--plusesRemoved');
+				// sectionObjectElement.style.removeProperty('--minusesAdded');
+				// sectionObjectElement.style.removeProperty('--minusesRemoved');
 
 				console.log("API fetch: " + votesObject.fetchURL);
 
@@ -5104,177 +5268,262 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 					.then(x => x.json())
 					.then(data =>
 					{
-						const entry_fetched_data = data.data;
-						// console.log("entry_fetched_data");
-						// console.log(entry_fetched_data);
+						console.log("data for URL: " + votesObject.fetchURL)
+						console.log(data)
 
-						entry_fetched_data.votes.votesUp = entry_fetched_data.votes.up;
-						entry_fetched_data.votes.votesDown = entry_fetched_data.votes.down;
-						entry_fetched_data.votes.votesCount = entry_fetched_data.votes.up - entry_fetched_data.votes.down; 		// -10 (suma plusów i minusów nie dotyczy entry, entry_comment)
-						entry_fetched_data.votes.votesAll = entry_fetched_data.votes.up + entry_fetched_data.votes.down; 		// 30  (łączna liczba głosów nie dotyczy entry, entry_comment)
-						entry_fetched_data.votes.votesUpPercent = 0;															// nie dotyczy entry, entry_comment zawsze 100%
-						entry_fetched_data.votes.votesDownPercent = 0;															// nie dotyczy entry, entry_comment
+						if (!data.data) return false;
 
+						let data_fetched;
+						if (Array.isArray(data.data) && data.data.length > 0) data_fetched = data.data.find(item => item.id === votesObject.id); // array from subcomments /api/v3/links/a/comments/b/comments => [array of subcomment objects]
+						else if (data.data && data.data.id === votesObject.id) data_fetched = data.data;
+						else { return false; }
+
+						console.log("data_fetched - data.data for URL: " + votesObject.fetchURL);
+						console.log(data_fetched);
+
+						votesObject.votesUpPrevious = votesObject.votesUp; 			// sectionObjectElement.dataset.wxs_votes_up;
+						votesObject.votesDownPrevious = votesObject.votesDown; 		// sectionObjectElement.dataset.wxs_votes_down;
+
+						votesObject.votesUp = data_fetched.votes.up;
+						votesObject.votesDown = data_fetched.votes.down;
+						votesObject.votesCount = data_fetched.votes.up - data_fetched.votes.down; 					// -10 (suma plusów i minusów nie dotyczy entry, entry_comment)
+						votesObject.votesAll = data_fetched.votes.up + data_fetched.votes.down; 					// 30  (liczba głosów nie dotyczy entry, entry_comment)
+						votesObject.votesUpPercent = 0;																// nie dotyczy entry, entry_comment zawsze 100%
+						votesObject.votesDownPercent = 0;															// nie dotyczy entry, entry_comment
+
+						//votesObject.commentsCount = data_fetched.comments.count;
 
 						// ile plusów przybyło/ubyło od ostatniego sprawdzenia
-						let plusesDelta = entry_fetched_data.votes.up - sectionObjectElement.dataset.wxs_votes_up;
-						let minusesDelta = entry_fetched_data.votes.down - sectionObjectElement.dataset.wxs_votes_down;
-						const votesCountChanged = (plusesDelta != 0 || minusesDelta != 0);
+						votesObject.plusesDelta = votesObject.votesUp - votesObject.votesUpPrevious;
+						votesObject.minusesDelta = votesObject.votesDown - votesObject.votesDownPrevious;
+						votesObject.votesCountChanged = (votesObject.plusesDelta != 0 || votesObject.minusesDelta != 0);
 
-						// console.log("dataset.votesup: " + sectionObjectElement.dataset.wxs_votes_up + " / plusesDelta: " + plusesDelta)
+
+						// console.log("dataset.votesup: " + sectionObjectElement.dataset.wxs_votes_up + " / votesObject.plusesDelta: " + votesObject.plusesDelta)
 						// console.log("sectionObjectElement.dataset")
 						// console.log(sectionObjectElement.dataset)
 						// console.log(sectionObjectElement)
 
-						sectionObjectElement.dataset.wxs_votes_up = entry_fetched_data.votes.up;											// 10
-						sectionObjectElement.dataset.wxs_votes_down = entry_fetched_data.votes.down;										// 20  — dodatnia nie dotyczy entry, entry_comment
-						sectionObjectElement.dataset.wxs_votes_count = entry_fetched_data.votes.votesCount;									// -10 (suma plusów i minusów nie dotyczy entry, entry_comment)
-						sectionObjectElement.dataset.wxs_votes_all = entry_fetched_data.votes.votesAll; 									// 30  (łączna liczba głosów nie dotyczy entry, entry_comment)
-						sectionObjectElement.dataset.wxs_voted = entry_fetched_data.voted;
-
-
-						if (votesCountChanged)
+						// ZMIENIŁA SIĘ LICZBA PLUSÓW / WYKOPÓW
+						if (votesObject.votesCountChanged)
 						{
 							console.log("--------------------");
 							console.log("VOTES COUNT CHANGED")
 							console.log(sectionObjectElement)
 
-							// console.log("OLD sectionObjectElement.dataset.wxs_votes_up: " + sectionObjectElement.dataset.wxs_votes_up)
-							//console.log("OLD sectionObjectElement.dataset.wxs_votes_down: " + sectionObjectElement.dataset.wxs_votes_down)
-							// console.log("NEW entry_fetched_data.votes.up: " + entry_fetched_data.votes.up)
-							//console.log("NEW entry_fetched_data.votes.down: " + entry_fetched_data.votes.down)
-							// console.log("plusesDelta " + plusesDelta)
-							//console.log("minusesDelta:  " + minusesDelta)
-							// console.log("--------------------");
-							// sectionObjectElement.dataset.wxs_votes_separated = votesObject.separated;
 
-							if (!ratingBoxSection)
-							{
-								ratingBoxSection = sectionObjectElement.querySelector("section.rating-box");
-							}
+							sectionObjectElement.dataset.wxs_votes_up = votesObject.votesUp;				//  10
+							sectionObjectElement.dataset.wxs_votes_down = votesObject.votesDown;			//  20  — dodatnia nie dotyczy entry, entry_comment
+							sectionObjectElement.dataset.wxs_votes_count = votesObject.votesCount;			// -10 (suma plusów i minusów nie dotyczy entry, entry_comment)
+							sectionObjectElement.dataset.wxs_votes_all = votesObject.votesAll; 				//  30  (łączna liczba głosów nie dotyczy entry, entry_comment)
+							sectionObjectElement.dataset.wxs_voted = votesObject.voted;						// czy zaglosowano
+							sectionObjectElement.dataset.wxs_votes_separated = votesObject.separated || true;
 
-							if (settings.checkEntryPlusesEnable && settings.checkEntryPlusesPerHour)
-							{
-								const timeSinceFirtsLoad = (dayjs().valueOf() - sectionObjectElement.dataset.wxs_first_load_time) / 1000; // liczba sekund od zaladowania
+							updateFetchedVotesData(sectionObjectElement, votesObject, showUpdatedValues);
 
-								if (timeSinceFirtsLoad > votesFetchingFirstDelayInSeconds + 5)
-								{
-
-									let votesPerHour = (entry_fetched_data.votes.votesCount - sectionObjectElement.dataset.wxs_first_load_votes_count) * 3600 / timeSinceFirtsLoad;
-									let votesPerHourString;
-
-									// PLUSÓW NA GODZINE
-									if (votesPerHour == 0)
-									{
-										votesPerHourString = "0";
-									}
-									else if (votesPerHour > 0 && votesPerHour < 0.9)
-									{
-										votesPerHourString = "< 1";
-									}
-									else
-									{
-										votesPerHour = votesPerHour.toFixed(1);
-										//votesPerHour = Math.round(votesPerHour)
-										votesPerHourString = `+ ${votesPerHour} plusa / h`;
-									}
-
-									const ratingBoxVotesPerHour = ratingBoxSection.querySelector(".wxs_votes_per_hour");
-									if (ratingBoxVotesPerHour) ratingBoxVotesPerHour.dataset.wxs_votes_per_hour = votesPerHourString; // data-wxs_votes_per_hour
-								}
-							}
-
-
-
-
-							if (entry_fetched_data.votes.votesAll > 0)
-							{
-								entry_fetched_data.votes.votesDownPercent = Math.ceil(entry_fetched_data.votes.down * 100 / entry_fetched_data.votes.votesAll);
-								entry_fetched_data.votes.votesUpPercent = Math.ceil(entry_fetched_data.votes.up * 100 / entry_fetched_data.votes.votesAll);
-								sectionObjectElement.dataset.wxs_votes_up_percent = entry_fetched_data.votes.votesUpPercent;
-								sectionObjectElement.dataset.wxs_votes_down_percent = entry_fetched_data.votes.votesDownPercent;
-
-							}
-							if (votesObject.resource == "entry" || votesObject.resource == "link_comment")
-							{
-								sectionObjectElement.dataset.wxs_comment_count = entry_fetched_data.comments.count;
-							}
-
-
-
-							// console.log("votesObject:");
-							// console.log(votesObject);
-							// console.log("sectionObjectElement.dataset:");
-							// console.log(sectionObjectElement.dataset);
-
-							if (showUpdatedValues)
-							{
-								updateVisibleVotesCount(sectionObjectElement)
-
-								// PRZYBYŁY PLUSY
-								if (plusesDelta != 0)
-								{
-									// console.log("Zmienila sie liczba plusow — plusesDelta:" + plusesDelta);
-									// console.log("sectionObjectElement.dataset.wxs_votes_up:" + sectionObjectElement.dataset.wxs_votes_up);
-									// if() zamiana li.zero na li.plus
-
-									if (plusesDelta > 0)
-									{
-										sectionObjectElement.style.setProperty('--plusesAdded', `"+${plusesDelta}"`);
-										sectionObjectElement.classList.add("plusesAdded");
-									}
-									else
-									{
-										sectionObjectElement.style.setProperty('--plusesRemoved', `"${plusesDelta}"`); // jest z minusem
-										sectionObjectElement.classList.add("plusesRemoved");
-									}
-								}
-
-								// PRZYBYŁY MINUSY
-								if (minusesDelta != 0)
-								{
-									if (minusesDelta > 0)
-									{
-										sectionObjectElement.style.setProperty('--minusesAdded', `"-${minusesDelta}"`);
-										sectionObjectElement.classList.add("minusesAdded");
-									}
-									else
-									{
-										sectionObjectElement.style.setProperty('--minusesRemoved', `"+${minusesDelta}"`);
-										sectionObjectElement.classList.add("minusesRemoved");
-									}
-								}
-							}
 						}
 					});
 			}
 		}
 	}
 
-	function updateVisibleVotesCount(sectionObjectElement, onlyPluses = false)
+
+
+
+	function updateFetchedVotesData(sectionObjectElement, votesObject, showUpdatedValues = true, onlyPluses = false)
 	{
 
-		consoleX(`updateVisibleVotesCount()`, 1);
 
-		const separated = sectionObjectElement.dataset.wxs_votes_separated;
-		let votesNumber = (separated == "true" ? sectionObjectElement.dataset.wxs_votes_count : sectionObjectElement.dataset.wxs_votes_up);
+		consoleX(`updateVisibleLinkVotesCount()`, 1);
 
-		sectionObjectElement.style.setProperty('--votesUp', `"+` + votesNumber + `"`);
+		let ratingBoxSection;
+		let ratingBoxVotesUpCountElement;
+		let ratingBoxVotesDownCountElement;
+		let ratingBoxVotesDownPercentElement;
+		let ratingBoxVotesPerHourElement;
 
-		// zbytek
-		let plusLi = sectionObjectElement.querySelector("section.rating-box > ul > li.plus");
-		if (!plusLi) plusLi = sectionObjectElement.querySelector("section.rating-box > ul > li.zero");
-		plusLi.textContent = votesNumber;
+		if (sectionObjectElement.__vue__.item.resource == "link")
+		{
+			ratingBoxSection = sectionObjectElement.querySelector("section.vote-box");
+			ratingBoxVotesUpCountElement = ratingBoxSection.querySelector("div.dig > p > span");
+			ratingBoxVotesDownCountElement = ratingBoxSection.querySelector(".wykopx_votesDownCount");
+			ratingBoxVotesDownPercentElement = ratingBoxSection.querySelector(".wykopx_votesDownPercent");
+			ratingBoxVotesPerHourElement = ratingBoxSection.querySelector(".wxs_votes_per_hour");
+		}
+		else
+		{
+			ratingBoxSection = sectionObjectElement.querySelector("section.rating-box");
+			ratingBoxVotesUpCountElement = ratingBoxSection.querySelector("li.plus");
+			ratingBoxVotesDownCountElement = ratingBoxSection.querySelector("li.minus");
+			ratingBoxVotesPerHourElement = ratingBoxSection.querySelector(".wxs_votes_per_hour");
+		}
+
+		if (!votesObject)
+		{
+			votesObject = getVotesObject(sectionObjectElement, ratingBoxSection);
+		}
+
+
+
+		// VOTES PER HOUR CALCULATION
+		if ((votesObject.resource == "link" && settings.checkLinkVotesEnable && settings.checkLinkVotesPerHour)
+			|| (votesObject.resource != "link" && settings.checkEntryPlusesEnable && settings.checkEntryPlusesPerHour))
+		{
+			const timeSinceFirtsLoad = (dayjs().valueOf() - sectionObjectElement.dataset.wxs_first_load_time) / 1000; // liczba sekund od zaladowania strony
+
+			if (timeSinceFirtsLoad > votesFetchingFirstDelayInSeconds + 5)
+			{
+				let votesPerHour = (votesObject.votesCount - sectionObjectElement.dataset.wxs_first_load_votes_count) * 3600 / timeSinceFirtsLoad;
+				let votesPerHourString;
+
+				// PLUSÓW NA GODZINE
+				if (votesPerHour == 0)
+				{
+					votesPerHourString = "0";
+				}
+				else if (votesPerHour > 0 && votesPerHour < 0.9)
+				{
+					votesPerHourString = "< 1";
+				}
+				else
+				{
+					let suffix_text;
+
+					if (votesObject.resource == "link")
+					{
+						suffix_text = "/h";
+						votesPerHour = votesPerHour.toFixed(0);
+					}
+					else
+					{
+						suffix_text = " plusa / h";
+						votesPerHour = votesPerHour.toFixed(1);
+					}
+
+					//votesPerHour = Math.round(votesPerHour)
+					votesPerHourString = `${votesPerHour}${suffix_text}`;
+				}
+
+				if (ratingBoxVotesPerHourElement) ratingBoxVotesPerHourElement.dataset.wxs_votes_per_hour = votesPerHourString; // data-wxs_votes_per_hour
+			}
+		}
+
+		// VOTES DOWN PERCENT
+		if (votesObject.votesAll > 0)
+		{
+			votesObject.votesDownPercent = Math.ceil(votesObject.votesDown * 100 / votesObject.votesAll);
+			// votesObject.votesUpPercent = Math.ceil(votesObject.votesUp * 100 / votesObject.votesAll);
+			sectionObjectElement.dataset.wxs_votes_down_percent = votesObject.votesDownPercent;
+			if (ratingBoxVotesDownPercentElement) 
+			{
+				ratingBoxVotesDownPercentElement.dataset.wxs_votes_down_percent = votesObject.votesDownPercent;
+				ratingBoxVotesDownPercentElement.textContent = `(${votesObject.votesDownPercent}%)`;
+			}
+		}
+
+		// COMMENTS COUNT
+		// if (votesObject.resource == "link" || votesObject.resource == "entry" || votesObject.resource == "link_comment")
+		// {
+		// 	sectionObjectElement.dataset.wxs_comment_count = votesObject.commentsCount;
+		// }
+
+		// console.log("votesObject:");
+		// console.log(votesObject);
+		// console.log("sectionObjectElement.dataset:");
+		// console.log(sectionObjectElement.dataset);
+
+
 
 
 		if (onlyPluses == false)
 		{
 			const votesDown = sectionObjectElement.dataset.wxs_votes_down;
-			sectionObjectElement.style.setProperty('--votesDown', `"` + votesDown + `"`);
+			sectionObjectElement.style.setProperty('--votesDown', `"${settings.prefixBeforeMinusesCount}` + votesDown + `"`);
 			// zbytek
 			let minusLi = sectionObjectElement.querySelector("section.rating-box > ul > li.minus");
 			if (minusLi) minusLi.textContent = votesDown;
 		}
+
+
+
+		// PRZYBYŁY PLUSY
+		if (votesObject.plusesDelta != 0)
+		{
+			ratingBoxVotesUpCountElement.dataset.wxs_votes_up = votesObject.votesUp;
+
+			if (votesObject.resource == "link")
+			{
+				ratingBoxVotesUpCountElement.textContent = votesObject.votesUp;
+			}
+			else 
+			{
+				const separated = sectionObjectElement.dataset.wxs_votes_separated || true;
+
+
+				let votesCountDisplayValue = ((separated === "true" || separated === true) ? votesObject.votesCount : votesObject.votesUp);
+				if (votesCountDisplayValue > 0) votesCountDisplayValue = `${settings.prefixBeforePlusesCount}${votesCountDisplayValue}`
+				else if (votesCountDisplayValue < 0) votesCountDisplayValue = `${settings.prefixBeforeMinusesCount}${votesCountDisplayValue}`;
+
+				ratingBoxVotesUpCountElement.textContent = votesCountDisplayValue;
+			}
+
+			if (votesObject.plusesDelta > 0)
+			{
+				sectionObjectElement.classList.add("plusesAdded");
+				ratingBoxSection.dataset.wxs_pluses_delta = `+${votesObject.plusesDelta}`;
+				//sectionObjectElement.style.setProperty('--plusesAdded', `"+${votesObject.plusesDelta}"`);
+			}
+			else
+			{
+				sectionObjectElement.classList.add("plusesRemoved");
+				ratingBoxSection.dataset.wxs_pluses_delta = `${votesObject.plusesDelta}`;
+				//sectionObjectElement.style.setProperty('--plusesRemoved', `"${votesObject.plusesDelta}"`); // jest z minusem
+			}
+		}
+
+		// PRZYBYŁY MINUSY
+		if (votesObject.minusesDelta != 0)
+		{
+			ratingBoxVotesDownCountElement.dataset.wxs_votes_down = votesObject.votesDown;
+
+			if (votesObject.resource == "link")
+			{
+				ratingBoxVotesDownCountElement.textContent = votesObject.votesDown;
+			}
+			else 
+			{
+				const separated = sectionObjectElement.dataset.wxs_votes_separated || true;
+				if (separated) // minusy i plusy są osobno, więc zmieniamy minusy
+				{
+					let votesCountDisplayValue = votesObject.votesDown;
+					if (votesCountDisplayValue < 0) votesCountDisplayValue = `${settings.prefixBeforeMinusesCount}${votesCountDisplayValue}`;
+					ratingBoxVotesDownCountElement.textContent = votesCountDisplayValue;
+				}
+				else // minusy i plusy są razem, więc zmieniamy plusy
+				{
+					let votesCountDisplayValue = votesObject.votesCount;
+					if (votesCountDisplayValue > 0) votesCountDisplayValue = `${settings.prefixBeforePlusesCount}${votesCountDisplayValue}`
+					else if (votesCountDisplayValue < 0) votesCountDisplayValue = `${settings.prefixBeforeMinusesCount}${votesCountDisplayValue}`;
+					ratingBoxVotesUpCountElement.textContent = votesCountDisplayValue;
+				}
+
+			}
+
+
+			if (votesObject.minusesDelta > 0)
+			{
+				sectionObjectElement.classList.add("minusesAdded");
+				ratingBoxSection.dataset.wxs_minuses_delta = `-${votesObject.minusesDelta}`;
+				//sectionObjectElement.style.setProperty('--minusesAdded', `"-${votesObject.minusesDelta}"`);
+			}
+			else
+			{
+				sectionObjectElement.classList.add("minusesRemoved");
+				ratingBoxSection.dataset.wxs_minuses_delta = `+${votesObject.minusesDelta}`;
+				//sectionObjectElement.style.setProperty('--minusesRemoved', `"+${votesObject.minusesDelta}"`);
+			}
+		}
+
 
 
 	}
@@ -5406,11 +5655,13 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 					sectionObjectElement.dataset.wxs_votes_down = count;
 				}
 
-				updateVisibleVotesCount(sectionObjectElement);
+				updateFetchedVotesData(sectionObjectElement);
 
 				// voting explosion
 				if (settings.votingExplosionEnable && vote == "voted")
 				{
+					let maximumExpliosionTime = 1300; // default CSS 0 delay, 1300 duration
+
 					let min_x = -60;
 					let max_x = 60;
 					let min_y = -60;
@@ -5433,7 +5684,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 					{
 						var newDiv = document.createElement('div');
 						newDiv.textContent = sign;
-
 						newDiv.classList.add(`wykopxs_vote_animation`, `wykopxs_${vote}`, `wykopxs_${action}`); // class="wykopxs_vote_animation wykopxs_voted wykopxs_plused"
 
 						let color = (sign === "+" ? "green" : "red");
@@ -5453,12 +5703,15 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 						newDiv.style.setProperty('--position_x', getRandomInt(min_x, max_x, "px"));
 						newDiv.style.setProperty('--position_y', getRandomInt(min_y, max_y, "px"));
 						newDiv.style.setProperty('--position_z', 0);
+
+
 						if (count > 30)
 						{
-							newDiv.style.setProperty('--explosionTiming',
-								getRandomString("linear", "ease", "ease-in-out", "ease-in", "ease-out")); // "cubic-bezier(0.1, 0.7, 1, 0.1)"
+							newDiv.style.setProperty('--explosionTiming', getRandomString("linear", "ease", "ease-in-out", "ease-in", "ease-out")); // "cubic-bezier(0.1, 0.7, 1, 0.1)"
 							newDiv.style.setProperty('--explosionDelay', getRandomInt(0, getRandomInt(0, Math.max(800, count)), "ms"));
 							newDiv.style.setProperty('--explosionDuration', getRandomInt(900, 1300), "ms");
+
+							maximumExpliosionTime = Math.max(800, count) + 1300;
 						}
 
 						clickedButton.after(newDiv);
@@ -5474,7 +5727,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 							newDivs[i].parentNode.removeChild(newDivs[i]);
 						}
 
-					}, 72500);
+					}, maximumExpliosionTime);
 				}
 			});
 		}
@@ -6224,15 +6477,22 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		if (isURLChanged()) newPageURL()
 
-
-
 		const topHeaderProfileButton = document.querySelector("body header > div.right > nav > ul > li.account a.avatar");
-		if (topHeaderProfileButton) user.username = topHeaderProfileButton.getAttribute("href").split('/')[2];
-		// if (user.username == null) consoleX(`Cześć Anon. Nie jesteś zalogowany na Wykopie (⌐ ͡■ ͜ʖ ͡■)`);
-		// else consoleX(`Cześć ${user.username} (⌐ ͡■ ͜ʖ ͡■)`);
+		if (topHeaderProfileButton)
+		{
+			user.username = topHeaderProfileButton.getAttribute("href").split('/')[2];
+			body.style.setProperty('--myUsername', `"${user.username}"`);
+			body.style.setProperty('--myUsernameAs', `"jako ${user.username}"`);
+			body.style.setProperty('--myUsernameAS', `"JAKO ${user.username}"`);
+			body.style.setProperty('--myUsernameAddingAs', `"Dodajesz z konta ${user.username}"`);
+		}
+
+		// if (user.username == null) consoleX(`Cześć Anon.Nie jesteś zalogowany na Wykopie(⌐ ͡■ ͜ʖ ͡■)`);
+		// else consoleX(`Cześć ${ user.username }(⌐ ͡■ ͜ʖ ͡■)`);  
+
+
+
 		focusOnAddingNewMicroblogEntry();
-
-
 		addWykopXButtonsToNavBar();
 
 		if (settings.wxsSwitchesEnable)
@@ -6258,10 +6518,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			});
 		}
 
-
-
-
-
 		if (settings.observedTagsInRightSidebarEnable)
 		{
 			runWithDelay(4000, function ()
@@ -6269,7 +6525,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				addObservedTagsToRightSidebar();
 			});
 		}
-
 
 
 		// 8s
@@ -6292,7 +6547,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			checkVersionForUpdates();
 			createProfileDropdownMenuItem(
 				{
-					text: `Wykop X — Pomoc`,
+					text: `Pomoc - Wykop X`,
 					title: "Otwórz stronę Wiki z informacjami o dodatku Wykop X",
 					className: `wykopx_wiki`,
 					id: undefined,
@@ -6321,12 +6576,16 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		//visiblePlusesObserver.disconnect();
 		sectionObjectIntersectionObserver.disconnect();
 		filterUserOff(); // usuniecie filtra komentarzy
-		remveAllWXSAdded();
 
 
 		runWithDelay(500, function ()
 		{
-			if (isURLChanged()) newPageURL();
+			if (isURLChanged())
+			{
+				const previousPageSubtype = pageSubtype;
+				newPageURL();
+				if (pageSubtype == previousPageSubtype) removeAllDataWXSAttributes();
+			}
 		});
 
 		// 7s
@@ -6337,11 +6596,11 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	}
 
 
-	function remveAllWXSAdded()
+	function removeAllDataWXSAttributes()
 	{
-		consoleX(`remveAllWXSAdded()`, 1);
+		consoleX(`removeAllDataWXSAttributes()`, 1);
 
-		document.querySelectorAll(`section[data-wxs_username]`).forEach((el) =>
+		document.querySelectorAll(`section[data - wxs_username]`).forEach((el) =>
 		{
 			removeWXSAttributes(el)
 		});
@@ -6417,14 +6676,14 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 		// waitForKeyElements(`html > iframe, html > body > iframe`, removeFromDOM, false);
-		// waitForKeyElements(`html head script[src^="https://"]`, removeFromDOM, false);
+		// waitForKeyElements(`html head script[src ^= "https://"]`, removeFromDOM, false);
 
 		if (settings.removeAnnoyancesEnable)
 		{
 			runWithDelay(18000, function ()
 			{
 				if (settings.removeAnnoyancesIframes) waitForKeyElements(`html > iframe, html > body > iframe`, removeFromDOM, false);
-				if (settings.removeAnnoyancesScripts) waitForKeyElements(`html > head > script[src^="https://"]`, removeFromDOM, false);
+				if (settings.removeAnnoyancesScripts) waitForKeyElements(`html > head > script[src ^= "https://"]`, removeFromDOM, false);
 			})
 
 			runWithDelay(20000, function ()
@@ -6459,8 +6718,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	{
 		if (!dev) dev = wykopxSettings.getPropertyValue("--wxsDev") ? wykopxSettings.getPropertyValue("--wxsDev") === '1' : false;
 
-		const allowed = [];
-		if (settings.wxsBlockXHRExternal) allowed.push('https://wykop.pl/api/', 'https://raw.githubusercontent.com/wykopx/', 'wykopx.pl');
+		const allowed = ['https://wykop.pl/api/', 'https://raw.githubusercontent.com/wykopx/', 'wykopx.pl']; // allowed.push();
+		if (settings.wxsBlockXHRExternal) { }
 
 		const prohibited = [];
 		if (settings.wxsBlockXHRInternalAds) prohibited.push("https://wykop.pl/api/v3/ads");
@@ -6530,41 +6789,44 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 						return
 					}
 
-					// console.log("xhook.after - request.url");
-					// console.log(request.url);
-					// console.log(url);
+					console.log("xhook.after - request.url");
+					console.log(request.url);
+					console.log(url);
 
 					//if (url.host == "wykop.pl")
 					if (1)
 					{
 						let searchParams = new URLSearchParams(url.searchParams)
 
-						// console.log("✔ xhook.after - url.href");
-						// console.log(url.href);
-						// console.log("✔ xhook.after - searchParams");
-						// console.log(searchParams);
-						// console.log(`✔ xhook.after - ${url.href} searchParams.has('page'): ` + searchParams.has('page'))
-						// console.log(`✔ xhook.after - ${url.href} searchParams.get('page'): ` + searchParams.get('page'))
+						console.log("✔ xhook.after - url.href");
+						console.log(url.href);
+						console.log("✔ xhook.after - searchParams");
+						console.log(searchParams);
+						console.log(`✔ xhook.after - ${url.href} searchParams.has('page'): ` + searchParams.has('page'))
+						console.log(`✔ xhook.after - ${url.href} searchParams.get('page'): ` + searchParams.get('page'))
 
 						if (searchParams.has('page') && searchParams.get('page') == 1)
 						{
-							// console.log("✔ xhook.after - INFINITE SCROLL");
+							console.log("✔ xhook.after - INFINITE SCROLL");
 
-							let regex = /\/api\/v3\/entries\/\d+\/comments/;
-							if (pageType == "znalezisko") regex = /\/api\/v3\/links\/\d+\/comments/;
+							let regex = /\/api\/v3\/entries\/\d+\/comments$/;
+							if (pageType == "znalezisko") regex = /\/api\/v3\/links\/\d+\/comments$/;
+
+							console.log("url.pathname");
+							console.log(url.pathname);
 
 							if (regex.test(url.pathname))
 							{
 								let json = JSON.parse(response.text)
-								// console.log("json")
-								// console.log(json)
+								console.log("json")
+								console.log(json)
 
 								for (let page = 2; page <= Math.ceil(json['pagination']['total'] / json['pagination']['per_page']); ++page)
 								{
 									searchParams.set('page', page.toString())
 
 									let req = new XMLHttpRequest();
-									req.open('GET', `${url.pathname}?${searchParams.toString()}`, false)
+									req.open('GET', `${url.pathname} ? ${searchParams.toString()}`, false)
 
 									for (let key of Object.keys(request.headers))
 									{
@@ -6630,7 +6892,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		if (settings.removeAnnoyancesAds)
 		{
-			document.querySelectorAll(`.pub-slot-wrapper:not(:has(section.premium-pub.link-block))`).forEach((el) =>
+			document.querySelectorAll(`.pub - slot - wrapper: not(: has(section.premium - pub.link - block))`).forEach((el) =>
 			{
 				consoleData.annoyances.ads.count++;
 				removeFromDOM(el);
@@ -6639,7 +6901,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		if (settings.removeAnnoyancesGDPR)
 		{
-			document.querySelectorAll(`div[class^="app_gdpr"]`).forEach((el) =>
+			document.querySelectorAll(`div[class^= "app_gdpr"]`).forEach((el) =>
 			{
 				document.querySelector("body").style = "overflow: initial!important;";
 				consoleData.annoyances.other.count++;
@@ -6649,11 +6911,11 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		if (settings.removeAnnoyancesScripts)
 		{
-			document.querySelectorAll(`html > head > script[src^="https://"]`).forEach((el) =>
+			document.querySelectorAll(`html > head > script[src ^= "https://"]`).forEach((el) =>
 			{
 				removeFromDOM(el);
 			});
-			document.querySelectorAll(`html > head > script[src^="//"]`).forEach((el) =>
+			document.querySelectorAll(`html > head > script[src ^= "//"]`).forEach((el) =>
 			{
 				removeFromDOM(el);
 			});
@@ -6739,23 +7001,23 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	/* CSS STYLES */
 
 	// WYKOP X PROMO 
-	let CSS = `<style>`;
+	let CSS = `< style > `;
 	if (settings.quickLinksEnable)
 	{
 		CSS += `
 
-		:root
+		: root
 		{
 			--quickLinksAFontSize: var(--textFontSize13, 13px);
 			--quickLinksSpanFontSize: var(--textFontSize11, 11px);
 		}
 		header.header > div.left > #wxs_quick_links > nav
 		{
-			font-size: var(--quickLinksAFontSize, 13px);
+			font - size: var(--quickLinksAFontSize, 13px);
 		}
 		header.header > div.left > #wxs_quick_links > nav > section span
 		{
-			font-size: var(--quickLinksSpanFontSize, 11px);
+			font - size: var(--quickLinksSpanFontSize, 11px);
 		}
 		header.header > div.left > #wxs_quick_links
 		{
@@ -6765,43 +7027,43 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			left: -1px;
 			width: 100vw;
 			height: 1px;
-			z-index: -100;
+			z - index: -100;
 		}
 		@keyframes quickLinksAnimationOn
 		{
-			0% { display: none; top: -20px; opacity: 1; }
-			1% { display: flex; top: -20px; opacity: 0; }
-			99% { display: flex; top: -20px; opacity: 0; }
-			100% { display: flex; top: 0px; opacity: 1; }
+			0 % { display: none; top: -20px; opacity: 1; }
+			1 % { display: flex; top: -20px; opacity: 0; }
+			99 % { display: flex; top: -20px; opacity: 0; }
+			100 % { display: flex; top: 0px; opacity: 1; }
 		}
 		@keyframes quickLinksAnimationOff
 		{
-			0% { display: flex; top: 0px; opacity: 1; }
-			50% { display: flex; top: 0px; opacity: 0; }
-			99% { display: flex; top: -20px; opacity: 0;}
-			100% { display: none; top: -20px; opacity: 0;}
+			0 % { display: flex; top: 0px; opacity: 1; }
+			50 % { display: flex; top: 0px; opacity: 0; }
+			99 % { display: flex; top: -20px; opacity: 0; }
+			100 % { display: none; top: -20px; opacity: 0; }
 		}
 		header.header > div.left > #wxs_quick_links > nav
 		{
-			z-index: -999;
-			column-gap: 0px;
-			flex-wrap: nowrap;
+			z - index: -999;
+			column - gap: 0px;
+			flex - wrap: nowrap;
 			position: absolute;
 			left: 0px;
-			width: 100%;
-	}
+			width: 100 %;
+		}
 		@starting-style
 		{
-			header.header > div.left > #wxs_quick_links > nav:hover
+			header.header > div.left > #wxs_quick_links > nav: hover
 			{
-				
+
 			}
 		}
-		header.header > div.left > #wxs_quick_links > nav:not(:hover)
+		header.header > div.left > #wxs_quick_links > nav: not(: hover)
 		{
-			z-index: -1000!important;
+			z - index: -1000!important;
 			display: none;
-			transition: display 1s ease-out allow-discrete;
+			transition: display 1s ease - out allow - discrete;
 
 
 			/* animation-name: quickLinksAnimationOff!important;
@@ -6813,54 +7075,54 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 		}
-		header.header > div.left > #wxs_quick_links > nav:hover
+		header.header > div.left > #wxs_quick_links > nav: hover
 		{
-			z-index: 999!important;
+			z - index: 999!important;
 			display: flex!important;
-			animation-name: quickLinksAnimationOn!important;
-			animation-duration: 0s!important;
-			animation-delay: 0s!important;
-			animation-direction: normal!important;
-			animation-fill-mode: forwards!important;
+			animation - name: quickLinksAnimationOn!important;
+			animation - duration: 0s!important;
+			animation - delay: 0s!important;
+			animation - direction: normal!important;
+			animation - fill - mode: forwards!important;
 		}
 
 		header.header > div.left > #wxs_quick_links > nav > section
 		{
 			display: flex;
-			flex-wrap: nowrap;
-			align-items: center;
+			flex - wrap: nowrap;
+			align - items: center;
 		}
 		header.header > div.left > #wxs_quick_links > nav > section div
 		{
 			display: flex;
-			height: 100%;
+			height: 100 %;
 		}
 		header.header > div.left > #wxs_quick_links > nav > section a,
-		header.header > div.left > #wxs_quick_links > nav > section span
+			header.header > div.left > #wxs_quick_links > nav > section span
 		{
 			display: flex;
-			align-items: center;
-			justify-content: center;
+			align - items: center;
+			justify - content: center;
 		}
-		header.header > div.left:has( a[href="/"]:hover)                   						> #wxs_quick_links > nav.home,
+		header.header > div.left: has(a[href = "/"]: hover) > #wxs_quick_links > nav.home,
 
-		header.header > div.left:has( > nav.main > ul > li:hover a[href="/"])                   > #wxs_quick_links > nav.home,
-		header.header > div.left:has( > nav.main > ul > li a[href="/"]:hover)                   > #wxs_quick_links > nav.home,
-		header.header > div.left:has( > nav.main > ul > li:hover a[href="/wykopalisko"])        > #wxs_quick_links > nav.upcoming,
-		header.header > div.left:has( > nav.main > ul > li:hover a[href="/mikroblog"])          > #wxs_quick_links > nav.microblog,
-		header.header > div.left:has( > nav.main > ul > li:hover a[href="/obserwowane"])        > #wxs_quick_links > nav.mywykop,
-		header.header > div.left:has( > nav.main > ul > li:hover a[href="/hity"])               > #wxs_quick_links > nav.hits,
-		header.header > div.left:has( > nav.main > ul > li:hover a[href="/ulubione"])           > #wxs_quick_links > nav.favorites,
-		header.header > div.left:has( > nav.main > ul > li:hover a[href="/dodaj-link"])         > #wxs_quick_links > nav.add_new,
-		header.header > div.left:has( > nav.main > ul > li:hover a[href="/mikroblog/#dodaj"])   > #wxs_quick_links > nav.add_new
+			header.header > div.left: has( > nav.main > ul > li: hover a[href = "/"]) > #wxs_quick_links > nav.home,
+				header.header > div.left: has( > nav.main > ul > li a[href = "/"]: hover) > #wxs_quick_links > nav.home,
+					header.header > div.left: has( > nav.main > ul > li: hover a[href = "/wykopalisko"]) > #wxs_quick_links > nav.upcoming,
+						header.header > div.left: has( > nav.main > ul > li: hover a[href = "/mikroblog"]) > #wxs_quick_links > nav.microblog,
+							header.header > div.left: has( > nav.main > ul > li: hover a[href = "/obserwowane"]) > #wxs_quick_links > nav.mywykop,
+								header.header > div.left: has( > nav.main > ul > li: hover a[href = "/hity"]) > #wxs_quick_links > nav.hits,
+									header.header > div.left: has( > nav.main > ul > li: hover a[href = "/ulubione"]) > #wxs_quick_links > nav.favorites,
+										header.header > div.left: has( > nav.main > ul > li: hover a[href = "/dodaj-link"]) > #wxs_quick_links > nav.add_new,
+											header.header > div.left: has( > nav.main > ul > li: hover a[href = "/mikroblog/#dodaj"]) > #wxs_quick_links > nav.add_new
 		{
-			z-index: 999;
+			z - index: 999;
 			display: flex!important;
-			animation-name: quickLinksAnimationOn!important;
-			animation-duration: 2s;
-			animation-delay: 0s;
-			animation-direction: normal;
-			animation-fill-mode: forwards;
+			animation - name: quickLinksAnimationOn!important;
+			animation - duration: 2s;
+			animation - delay: 0s;
+			animation - direction: normal;
+			animation - fill - mode: forwards;
 		}
 
 		/* colors */
@@ -6868,28 +7130,28 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		{
 			height: 37px;
 			color: var(--blackOpacity07, rgba(255, 255, 255, 0.7));
-			border-bottom: 1px solid var(--blackOpacity03, rgba(255, 255, 255, 0.3));
-			box-shadow: 0px 4px 4px var(--whiteOpacity04, rgba(0, 0, 0, 0.4));
-			
+			border - bottom: 1px solid var(--blackOpacity03, rgba(255, 255, 255, 0.3));
+			box - shadow: 0px 4px 4px var(--whiteOpacity04, rgba(0, 0, 0, 0.4));
+
 		}
 
-		header.header > div.left > #wxs_quick_links > nav:hover
+		header.header > div.left > #wxs_quick_links > nav: hover
 		{
 
 		}
 
 		header.header > div.left > #wxs_quick_links > nav > section
 		{
-			background-color: var(--whiteOpacity1, rgba(18, 18, 20, 1));
-			column-gap: 5px;
-			padding-left: 20px;
-			padding-right: 0px;
-			border-left: 1px solid rgba(120, 120, 120, 0.2);
+			background - color: var(--whiteOpacity1, rgba(18, 18, 20, 1));
+			column - gap: 5px;
+			padding - left: 20px;
+			padding - right: 0px;
+			border - left: 1px solid rgba(120, 120, 120, 0.2);
 		}
 
-		header.header > div.left > #wxs_quick_links > nav > section:hover
+		header.header > div.left > #wxs_quick_links > nav > section: hover
 		{
-			background-color: var(--whiteOpacity1, rgba(18, 18, 20, 1));
+			background - color: var(--whiteOpacity1, rgba(18, 18, 20, 1));
 		}
 		header.header > div.left > #wxs_quick_links > nav > section:hover span
 		{
@@ -6898,170 +7160,170 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		header.header > div.left > #wxs_quick_links > nav > section span
 		{
-			padding-right: 10px;
-			text-transform: uppercase;
-			font-weight: bolder;
-			cursor: default;
-			width: max-content;
+			padding - right: 10px;
+			text - transform: uppercase;
+			font - weight: bolder;
+			cursor: default ;
+			width: max - content;
 		}
 
 
 		header.header > div.left > #wxs_quick_links > nav > section a,
-		header.header > div.left > #wxs_quick_links > nav > section span
+			header.header > div.left > #wxs_quick_links > nav > section span
 		{
-			height: 100%;
-			min-width: 70px;
-			width: max-content;
+			height: 100 %;
+			min - width: 70px;
+			width: max - content;
 		}
 
-		header.header > div.left > #wxs_quick_links > nav > section .wxs_quicklink_short
+		header.header > div.left > #wxs_quick_links > nav > section.wxs_quicklink_short
 		{
-			min-width: 20px;
+			min - width: 20px;
 		}
 
 
 		header.header > div.left > #wxs_quick_links > nav > section a
 		{
-			text-decoration: none;
+			text - decoration: none;
 			padding: 0px 14px 0px 14px;
 		}
 
-		header.header > div.left > #wxs_quick_links > nav > section a:hover
+		header.header > div.left > #wxs_quick_links > nav > section a: hover
 		{
 			color: var(--blackOpacity09, rgba(255, 255, 255, 1));
-			background-color: var(--blackOpacity01, rgba(255, 255, 255, 0.2));
+			background - color: var(--blackOpacity01, rgba(255, 255, 255, 0.2));
 		}
 
 		/* MOBILE */
-		@media (max-width: 600px)
+		@media(max - width: 600px)
 		{
-			header.header > div.left > #wxs_quick_links > nav:not(:hover)
+			header.header > div.left > #wxs_quick_links > nav: not(: hover)
 			{
 
-				animation-name: quickLinksAnimationOff!important;
-				animation-delay: 4s;
+				animation - name: quickLinksAnimationOff!important;
+				animation - delay: 4s;
 			}
 
 			header.header > div.left > #wxs_quick_links > nav,
-			header.header > div.left > #wxs_quick_links > nav > section,
-			header.header > div.left > #wxs_quick_links > nav > section > div
+				header.header > div.left > #wxs_quick_links > nav > section,
+				header.header > div.left > #wxs_quick_links > nav > section > div
 			{
-				flex-direction: column!important;
-				align-items: start!important;
+				flex - direction: column!important;
+				align - items: start!important;
 			}
 			header.header > div.left > #wxs_quick_links > nav,
-			header.header > div.left > #wxs_quick_links > nav > section,
-			header.header > div.left > #wxs_quick_links > nav > section > div,
-			header.header > div.left > #wxs_quick_links > nav > section > span,
-			header.header > div.left > #wxs_quick_links > nav > section a
+				header.header > div.left > #wxs_quick_links > nav > section,
+				header.header > div.left > #wxs_quick_links > nav > section > div,
+				header.header > div.left > #wxs_quick_links > nav > section > span,
+				header.header > div.left > #wxs_quick_links > nav > section a
 			{
-				width: 100%;
-				justify-content: start;
+				width: 100 %;
+				justify - content: start;
 			}
 			header.header > div.left > #wxs_quick_links > nav > section
 			{
-				border-top: 1px solid rgba(120, 120, 120, 0.3);
+				border - top: 1px solid rgba(120, 120, 120, 0.3);
 			}
 			header.header > div.left > #wxs_quick_links > nav > section,
-			header.header > div.left > #wxs_quick_links > nav > section > div,
-			header.header > div.left > #wxs_quick_links > nav > section > span,
-			header.header > div.left > #wxs_quick_links > nav > section a
+				header.header > div.left > #wxs_quick_links > nav > section > div,
+				header.header > div.left > #wxs_quick_links > nav > section > span,
+				header.header > div.left > #wxs_quick_links > nav > section a
 			{
 				padding: 10px;
 			}
 		}
-	}`;
+	} `;
 	}
 	CSS += `
 		/* HIDE ADS ALWAYS */
-		.pub-slot-wrapper { display: none!important;  }
-		.pub-slot-wrapper:has(section.premium-pub.link-block) {
-			display: flex!important;
-			border: 1px solid rgba(255, 0, 0, 0.3)!important;
-		}
-		.pub-slot-wrapper:has(section.premium-pub.link-block):before {
-			display: flex!important;
-			content: "Aby ukryć Wykopy Sponsorowane i Reklamowane zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗦𝘁𝘆𝗹𝗲 lub 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗕𝗹𝗼𝗰𝗸𝗲𝗿";
-			font-size: 13px;
-			color: var(--blackish);
-			margin: 9px 14px;
-			align-self: self-start;
-		}
+		.pub - slot - wrapper { display: none!important; }
+		.pub - slot - wrapper: has(section.premium - pub.link - block) {
+		display: flex!important;
+		border: 1px solid rgba(255, 0, 0, 0.3)!important;
+	}
+		.pub - slot - wrapper: has(section.premium - pub.link - block):before {
+		display: flex!important;
+		content: "Aby ukryć Wykopy Sponsorowane i Reklamowane zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗦𝘁𝘆𝗹𝗲 lub 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗕𝗹𝗼𝗰𝗸𝗲𝗿";
+		font - size: 13px;
+		color: var(--blackish);
+		margin: 9px 14px;
+		align - self: self - start;
+	}
 
 		/* ----- Wykop X Style promo banners ON */
-		.wykopx_promo_banner a { width: 100%; display: block!important; height: 300px!important; background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/promo-images/wykopx-install-sidebar-day.png'); }
-		[data-night-mode] .wykopx_promo_banner a { background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/promo-images/wykopx-install-sidebar-night.png'); }
-		.wykopx_promo_banner:hover { filter: brightness(0.98) drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.2)); }
-		[data-night-mode]  .wykopx_promo_banner:hover { filter: brightness(1.2); }
+		.wykopx_promo_banner a { width: 100 %; display: block!important; height: 300px!important; background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/promo-images/wykopx-install-sidebar-day.png'); }
+	[data - night - mode].wykopx_promo_banner a { background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/promo-images/wykopx-install-sidebar-night.png'); }
+		.wykopx_promo_banner:hover { filter: brightness(0.98) drop - shadow(0px 0px 3px rgba(0, 0, 0, 0.2)); }
+	[data - night - mode].wykopx_promo_banner:hover { filter: brightness(1.2); }
 
-		body > section > header.header > div.left > nav.main > ul > li
-		{
-			white-space: nowrap!important;
-			height: calc(100% - 12px)!important;
-			position: relative!important;
-		}
+	body > section > header.header > div.left > nav.main > ul > li
+	{
+		white - space: nowrap!important;
+		height: calc(100 % - 12px)!important;
+		position: relative!important;
+	}
 
-		body > section > header.header > div.left > nav.main > ul > li > a
-		{
-			text-decoration: none!important;
-			height: 100%!important;
-			display: flex!important;
-			flex-direction: column!important;
-			justify-content: center!important;
-			position: relative!important;
-			font-weight: 400!important;
-			padding: 0 12px!important;
-		}
-		body > section > header.header > div.left > nav.main > ul > li:hover a
-		{
-			background: rgba(255,255,255, 0.2)!important;
-		}
-		body > section > header.header > div.left > nav.main > ul > li > a > span
-		{
-			white-space: nowrap!important;
-		}
-		body > section > header.header > div.left > nav.main > ul > li.wykopx_promo_li > a > span
-		{
-			color: rgba(255, 255, 255, 1)!important;
-			font-size: 14px;
-		}
+	body > section > header.header > div.left > nav.main > ul > li > a
+	{
+		text - decoration: none!important;
+		height: 100 % !important;
+		display: flex!important;
+		flex - direction: column!important;
+		justify - content: center!important;
+		position: relative!important;
+		font - weight: 400!important;
+		padding: 0 12px!important;
+	}
+	body > section > header.header > div.left > nav.main > ul > li:hover a
+	{
+		background: rgba(255, 255, 255, 0.2)!important;
+	}
+	body > section > header.header > div.left > nav.main > ul > li > a > span
+	{
+		white - space: nowrap!important;
+	}
+	body > section > header.header > div.left > nav.main > ul > li.wykopx_promo_li > a > span
+	{
+		color: rgba(255, 255, 255, 1)!important;
+		font - size: 14px;
+	}
 
 
 		/* ----- Hide XS features if Wykop X Style is not installed */
 		.wykopxs { display: none; }
-	
+
 		/* ----- Wykop XS promo banner from Wykop X Style disabled */
-		body div.main-content section > section.sidebar:after,
-		section.editor.expand section.inline-autocomplete section.inline-autocomplete-stream div.content:after,
-		header.header div.right section.search-input section.inline-autocomplete section.inline-autocomplete-stream div.content:after
-		{ display: none!important; }
-	
+		body div.main - content section > section.sidebar: after,
+		section.editor.expand section.inline - autocomplete section.inline - autocomplete - stream div.content: after,
+			header.header div.right section.search - input section.inline - autocomplete section.inline - autocomplete - stream div.content: after
+	{ display: none!important; }
+
 
 		/* ----- WykopXS new version available */
 		.wykopxs_info_bar
-		{ display: flex;   align-items: center;border-bottom: 1px solid rgba(128, 128, 128, 0.2); color: rgba(128, 128, 128, 1); padding: 8px 20px; font-size: 14px; }
-		
-		aside.wykopxs_info_bar a
-		{ display: inline-block;background: rgb(0,85,0);color: white;display: inline-block;background-color: #005200;padding: .3em 0.7em;margin: 0 10px;}
-		
-		aside.wykopxs_info_bar a:hover
-		{ background: rgba(0,85,0, 0.7); text-decoration: none!important; }
-		
-		aside.wykopxs_info_bar footer
-		{ opacity: 0.6; margin-left: auto; }
-		
-		@media (max-width: 640px)
-		{
-			body > section > aside.wykopxs_info_bar {  flex-direction: column; padding-top: 30px; }
-			body > section > aside.wykopxs_info_bar a { margin: 11px; padding: 14px;  width: 100%; text-align: center;}
-			body > section > aside.wykopxs_info_bar span.wykopxs_new_version_second,
+	{ display: flex; align - items: center; border - bottom: 1px solid rgba(128, 128, 128, 0.2); color: rgba(128, 128, 128, 1); padding: 8px 20px; font - size: 14px; }
+
+	aside.wykopxs_info_bar a
+	{ display: inline - block; background: rgb(0, 85, 0); color: white; display: inline - block; background - color: #005200; padding: .3em 0.7em; margin: 0 10px; }
+
+	aside.wykopxs_info_bar a: hover
+	{ background: rgba(0, 85, 0, 0.7); text - decoration: none!important; }
+
+	aside.wykopxs_info_bar footer
+	{ opacity: 0.6; margin - left: auto; }
+
+	@media(max - width: 640px)
+	{
+		body > section > aside.wykopxs_info_bar { flex - direction: column; padding - top: 30px; }
+		body > section > aside.wykopxs_info_bar a { margin: 11px; padding: 14px; width: 100 %; text - align: center; }
+		body > section > aside.wykopxs_info_bar span.wykopxs_new_version_second,
 			body > section > aside.wykopxs_info_bar > footer { display: none; }
-		}
+	}
 	`;
 
 
 
-	CSS += `</style>`;
-	document.head.insertAdjacentHTML("beforeend", CSS);
+	CSS += `</style > `;
+	head.insertAdjacentHTML("beforeend", CSS);
 
 })();

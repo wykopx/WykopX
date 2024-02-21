@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop XDev
-@version        3.0
+@version        3.0.2
 @description    Wykop X Dev 
 @preprocessor   stylus
 @namespace      userstyles.world/user/wykopchanger
@@ -9,7 +9,7 @@
 
 
                                                                         
-                                                                        
+
 @var range      HR_WYKOPXS                          `❎ WYKOP XS`                                                                                                                [0, 0, 99900, 1, 'mm']
 @var range      WykopXSEnabled_ON_INFO                          `Skrypt Wykop XS jest włączony`                 [0, 0,111100, 1, 'mm']
 
@@ -18,8 +18,8 @@
 @var checkbox   disableNewLinkEditorPastedTextLimit             `❎ Pokaż limity znaków + wklejanie tekstu o dowolnej długości ⭐`           0
 @var checkbox   autoOpenSpoilersEverywhere                      `❎🔹 𝗣𝗢𝗞𝗔𝗭̇ 𝗦𝗣𝗢𝗜𝗟𝗘𝗥 - rozwijaj spoilery ⭐`                                   0
 @var checkbox   autoOpenMoreContentEverywhere                   `❎🔹 𝗣𝗢𝗞𝗔𝗭̇ 𝗖𝗔𝗟𝗢𝗦́𝗖́ - rozwijaj całą treść długich wpisów/komentarzy`           0
-@var checkbox   infiniteScrollEntriesEnabled                    `❎🔹 Wszystkie komentarze pod wpisem na jednej stronie (bez paginacji) ⭐ `          0
-@var checkbox   infiniteScrollLinksEnabled                      `❎🔶 Wszystkie komentarze pod znaleziskiem na jednej stronie (bez paginacji) ⭐`    0
+@var checkbox   infiniteScrollEntriesEnabled                    `❎🔹 Wszystkie komentarze pod wpisem na jednej stronie (bez paginacji) ⭐ `         1
+@var checkbox   infiniteScrollLinksEnabled                      `❎🔶 Wszystkie komentarze pod znaleziskiem na jednej stronie (bez paginacji) ⭐`    1
 
 
 @var checkbox   intersectionObserverRootMargin                  `❎ Wczytuj z wyprzedzeniem (Notatki, ActionBox, InfoBox, Plusy w czasie rzeczywistym) `     1
@@ -44,26 +44,10 @@
 
    
        
-@var range      HR_LINKS_PRESET                     `🚫🔶 W moim sercu tylko Mirko ⭐`                                                                        [0, 0, 99900, 1, 'mm']
-@var range      presetDisableLinks_ON_INFO           `Ukrywanie znalezisk na całym Wykopie jest włączone`               [0, 0,111100, 1, 'mm']
-@var checkbox   presetDisableLinks                   `[PRESET] Całkowicie wyłącz wyświetlanie znalezisk ⭐`                 0
-@var range      presetDisableLinks_INFO              `Ten preset włącza wszystkie funkcje związane z ukrywaniem znalezisk we wszystkich miejscach na Wykopie. Nie zobaczysz znalezisk na głównej, na stronach #tagów, w kategoriach czy podczas wyszukiwania. Ukryte zostaną także przyciski "Główna", "Wykopalisko" oraz "Hity". Ukryte zostają bloki wyświetlające znaleziska w prawym sidebarze. Nie zobaczysz też powiadomień o nowych znaleziskach z tagami, które obserwujesz, natomiast jeśli zostaniesz zawołany w komentarzu pod znaleziskiem - takie powiadomienie nadal się wyświetli.`             [0, 0,88800, 1, 'mm']
-
-
-@var checkbox   linksHideAll                         `⛔ Ukrywaj znaleziska na wszystkich stronach ⭐`                          0
-@var checkbox   linksHideHomePage                    `🚫 Nie pokazuj znalezisk na głównej ⭐`                                   0
-@var checkbox   linksHideTagPage                     `🚫 Nie pokazuj znalezisk na stronach #tagów ⭐`                           0
-@var checkbox   linksHideFavouritesPage              `🚫 Nie pokazuj znalezisk w Ulubionych ⭐`                                 0
-@var checkbox   linksHideObservedPage                `🚫 Nie pokazuj znalezisk w Obserwowanych (Mój Wykop) ⭐`                  0
-@var checkbox   linksHideProfilePage                 `🚫 Nie pokazuj znalezisk w profilach użytkowników ⭐`                     0
-@var checkbox   linksHideSearchPage                  `🚫 Nie pokazuj znalezisk przy wyszukiwaniu ⭐`                            0
-@var checkbox   linksHideBucketPage                  `🚫 Nie pokazuj znalezisk przy przeglądaniu kategorii własnych ⭐`         0
-@var checkbox   linksHideCategoryPage                `🚫 Nie pokazuj znalezisk przy przeglądaniu kategorii domyślnych ⭐`       0
-
 
 
 @var range      HR_NEW_247                          `⭐ Nowe`                                                                                           [0, 0, 99900, 1, 'mm']
-@var checkbox   floatingNextPreviousButtons                     `TODO: Przyciski paginacji ◀ Poprzednia / Następna ▶ zawsze widoczne ⭐`             1
+@var checkbox   floatingNextPreviousButtons                     `TODO: Przyciski paginacji ◀ Poprzednia / Następna ▶ zawsze widoczne ⭐`             0
 
 
 
@@ -77,62 +61,135 @@
 
 
 @var range      HR_WYKOPY_I_ZAKOPY                  `➕ WYKOPY I ZAKOPY ⭐`                                                                                 [0, 0, 99900, 1, 'mm']
-@var checkbox   checkLinkVotesEnable                            `❎🔸 TODO: Aktualizuj liczbę wykopów i zakopów w czasie rzeczywistym ⭐`  1
-@var checkbox   checkLinkVotesPerHour                           `❎🔸 Liczba wykopów/godzinę ⭐`                               1
-@var checkbox   checkLinkCommentsPerHour                        `❎🔸 Liczba komentarzy/godzinę ⭐`                               1
+@var checkbox   checkLinkVotesEnable                            `❎🔸 Aktualizuj liczbę wykopów i zakopów w czasie rzeczywistym ⭐`        1
+@var checkbox   checkLinkVotesPerHour                           `❎🔸 Liczba wykopów na godzinę ⭐`                                           1
+@var checkbox   checkLinkCommentsPerHour                        `❎🔸 Liczba komentarzy na godzinę ⭐`                                        1
 
 
 @var range      HR_PLUSY_I_MINUSY                   `➕ PLUSY I MINUSY`                                                                                 [0, 0, 99900, 1, 'mm']
 
-@var checkbox   checkEntryPlusesWhenVoting                      `❎➕ Prawdziwa liczba plusów po zaplusowaniu`                   1
+@var checkbox   plusesAndMinusesTransition                      `➕ Animacja plusowania`                                  1
 
-@var checkbox   checkEntryPlusesEnable                          `❎➕ Aktualizuj liczbę plusów w czasie rzeczywistym`             1
-@var checkbox   checkEntryPlusesPerHour                         `❎➕ Liczba nowych plusów/godzinę`                                1
-TODO checkbox   checkEntryCommentsPerHour                       `❎➕ Liczba nowych komentarzy/godzinę`                            1
-@var checkbox   checkEntryPlusesForVotingGame                   `❎🔹 Zabawy "ostatnia cyfra po zaplusowaniu"`                     1
-
-@var checkbox   votingExplosionEnable                           `❎➕🎇 Eksplozja plusów i minusów`                                1
+@var checkbox   votingExplosionEnable                           `❎➕🎇 Eksplozja plusów`                                 1
 @var select     votingExplosionAnimation                        `❎➕🎆 Eksplozja - animacja` {
                                                                             "Animacja 1":"animacja1",
                                                                             "Animacja 2":"animacja2",
                                                                             "Animacja 3":"animacja3"
                                                                     } 
 
-@var checkbox   plusesAndMinusesTransition                          `➕ Animacja plusowania i minusowania`                             1
 
 
+@var checkbox   checkEntryPlusesWhenVoting                      `❎➕ Pokaż prawdziwą liczbę plusów po zaplusowaniu ⭐`                       1
+@var checkbox   checkEntryPlusesEnable                          `❎➕ Aktualizuj liczbę plusów w czasie rzeczywistym ⭐`                      1
+@var checkbox   checkEntryPlusesPerHour                         `❎➕ Liczba nowych plusów na godzinę ⭐ `                                    1
+TODO checkbox   checkEntryCommentsPerHour                       `❎➕ Liczba nowych komentarzy na godzinę ⭐`                                 1
+@var checkbox   checkEntryPlusesForVotingGame                   `❎➕🔹 Zabawy Mirko "ostatnia cyfra po zaplusowaniu" ⭐`                     1
 
-@var checkbox   plusesAndMinusesColorsEnable                        `➕ Włącz zmianę kolorystyki i wyglądu plusów i minusów`           1
-@var select     plusesAndMinusesStyle                               `➕ Styl plusów i minusów`  {
+@var range      plusesMinusesSize                               `➕ Rozmiar plusów i minusów ⭐`         [20, 10, 40, 1, 'rem']
+@var checkbox   plusesMinusesSizeInSidebar                      `➕ Zastosuj ten rozmiar także w plusach w sidebarze ⭐`                      1
+
+
+@var checkbox   plusesAndMinusesColorsEnable                    `➕ Włącz zmianę kolorystyki i wyglądu plusów i minusów ⭐`                   1
+@var select     plusesAndMinusesStyle                           `➕ [PRESET] Styl plusów i minusów ⭐`  {
+                                                                            "Własne ustawienia i kolorystyka":"wlasne",
                                                                             "Styl Wykop 2.0 (domyślny)": "wykop20",
-                                                                            "Styl Wykop 2.0 bez zaokrągleń": "bezzaokraglen",
-                                                                            "Styl Wykop 1.0*": "wykop10",
+                                                                            "Styl Wykop 1.0": "wykop10",
                                                                             "Okrągłe": "okragle",
                                                                     } 
                                                                     
 @var select     plusesColor                                     `➕ Zmień kolor plusów ⭐`  {
                                                                             "Domyślna zieleń wybranego stylu":"domyslny",
-                                                                            "Zielony (Wykop 1.0)":"wykop10",
+                                                                            "Zielony (Wykop 1.0)*":"wykop10",
                                                                             "Zielony (Wykop 2.0)":"wykop20",
                                                                             "pomarańczowy":"pomaranczowy",
                                                                             "złoty":"zloty"
                                                                     }
 @var select     minusesColor                                    `➖ Zmień kolor minusów ⭐`  {
                                                                             "Domyślna czerwień wybranego stylu":"domyslny",
-                                                                            "Czerwony (Wykop 1.0)":"wykop10",
+                                                                            "Czerwony (Wykop 1.0)*":"wykop10",
                                                                             "Czerwony (Wykop 2.0)":"wykop20",
                                                                             "pomarańczowy":"pomaranczowy",
                                                                             "szary":"szary"
                                                                     }
                                                                     
+
+@var select     prefixBeforePlusesCount                         `➕ Znak przed liczbą plusów ⭐` {
+                                                                        "BRAK (domyślnie)":"brak",
+                                                                        "+ (styl Wykop 1.0)*":"plus",
+                                                                        "💚":"emoji_serce",
+                                                                        "☝":"emoji_index_pointing_up",
+                                                                        "👍":"emoji_thumbs_up",
+                                                                        "👆":"emoji_backhand_index_pointing_up",
+                                                                        "🔼":"emoji_upwards_button",
+                                                                        "⬆":"emoji_up_arrow",
+                                                                        "↗":"emoji_up_right_arrow",
+                                                                        "↖":"emoji_up_left_arrow",
+                                                                        "⤴":"emoji_right_arrow_curving_up",
+                                                                        "✔":"emoji_heavy_tick",
+                                                                        "➕":"emoji_plus_sign",
+                                                                        "🔺":"emoji_red_triangle_pointed_up",
+                                                                    }
+@var select     voteButtonPlusEmoji                             `➕ Przycisk plusowania ⭐` {
+                                                                        "+ plus (domyslnie)":"plus",
+                                                                        "💚":"emoji_serce",
+                                                                        "☝":"emoji_index_pointing_up",
+                                                                        "👍":"emoji_thumbs_up",
+                                                                        "👆":"emoji_backhand_index_pointing_up",
+                                                                        "🔼":"emoji_upwards_button",
+                                                                        "⬆":"emoji_up_arrow",
+                                                                        "↗":"emoji_up_right_arrow",
+                                                                        "↖":"emoji_up_left_arrow",
+                                                                        "⤴":"emoji_right_arrow_curving_up",
+                                                                        "✔":"emoji_heavy_tick",
+                                                                        "➕":"emoji_plus_sign",
+                                                                        "🔺":"emoji_red_triangle_pointed_up",
+                                                                    }
+@var checkbox   voteButtonPlusNoBorder                          `➕ Przycisk plusowania bez ramki ⭐`               0 
                                                                     
-@var checkbox   hidePlusesBeforeVoting                          `🔷 Mikroblog: Ukryj liczbę plusów przed zaplusowaniem ⭐`             0
-@var checkbox   hidePlusesAndMinusesBeforeVoting                `🔸 Znalezisko: Ukryj liczbę plusów i minusów przed zagłosowaniem`      0
-@var checkbox   minimizedMinusedCommentInLinks                  `🔸 Znalezisko: Zwiń zminusowane przez Ciebie komentarze`               0 
+@var select     prefixBeforeMinusesCount                        `➖ Znak przed liczbą minusów ⭐` {
+                                                                        "- minus (domyślnie)":"minus",
+                                                                        "BRAK":"brak",
+                                                                        "❌":"emoji_cross_mark",
+                                                                        "👇":"emoji_backhand_index_pointing_down",
+                                                                        "👎":"emoji_thumbs_down",
+                                                                        "🔽":"emoji_downwards_button",
+                                                                        "⬇":"emoji_down_arrow",
+                                                                        "↘":"emoji_down_right_arrow",
+                                                                        "↙":"emoji_down_left_arrow",
+                                                                        "⤵":"emoji_right_arrow_curving_down",
+                                                                        "✔":"emoji_heavy_tick",
+                                                                        "➖":"emoji_minus_sign",
+                                                                        "🔻":"emoji_red_triangle_pointed_down",
+                                                                    }                                                                  
+@var select     voteButtonMinusEmoji                            `➖ Przycisk minusowania ⭐` {
+                                                                        "minus (domyślnie)":"minus",
+                                                                        "❌":"emoji_cross_mark",
+                                                                        "👇":"emoji_backhand_index_pointing_down",
+                                                                        "👎":"emoji_thumbs_down",
+                                                                        "🔽":"emoji_downwards_button",
+                                                                        "⬇":"emoji_down_arrow",
+                                                                        "↘":"emoji_down_right_arrow",
+                                                                        "↙":"emoji_down_left_arrow",
+                                                                        "⤵":"emoji_right_arrow_curving_down",
+                                                                        "✔":"emoji_heavy_tick",
+                                                                        "➖":"emoji_minus_sign",
+                                                                        "🔻":"emoji_red_triangle_pointed_down",
+                                                                    }                                                                 
+@var checkbox   voteButtonMinusNoBorder                         `➖ Przycisk plusowania bez ramki ⭐`               0 
+
+@var range      voteButtonBorderRadius                          `Zaokrąglenie przycisków plusowania/minusowania ⭐`     [20, 0, 100, 10, '%']
+
+                                                                    
+@var checkbox   hidePlusesBeforeVoting                          `🔷 Mikroblog: Ukryj liczbę plusów przed zaplusowaniem ⭐`              0
+@var checkbox   hidePlusesAndMinusesBeforeVoting                `🔸 Znalezisko: Ukryj liczbę plusów i minusów przed zagłosowaniem ⭐`    0
+@var checkbox   minimizedMinusedCommentInLinks                  `🔸 Znalezisko: Zwiń zminusowane przez Ciebie komentarze`                0 
 
 
+@var checkbox   minusesHide                                    `🔸 Nie pokazuj liczby minusów ⭐`                                        0
+@var checkbox   plusesHide                                     `🔷🔸 Nie pokazuj liczby plusów ⭐`                                       0
+@var checkbox   voteButtonHide                                 `🔷🔸 Nie pokazuj przycisków do plusowania/minusowania ⭐`                0
 
-@var checkbox   addPlusBeforePlus                               `Znak + przed liczbą plusów`                                      1
+@var checkbox   plusesZeroHide                                 `🔷🔸 Nie pokazuj liczby 0 jeśli brak plusów ⭐`                          0
 
 
 
@@ -143,9 +200,9 @@ TODO checkbox   checkEntryCommentsPerHour                       `❎➕ Liczba n
 @var checkbox   filterUserComments                              `❎ Przycisk [ ⚜ Filtruj ] do filtrowania komentarzy wybranego użytkownika`       1
 @var checkbox   filterUserReplies                               `❎ Przycisk [ 🔰 Filtruj ] do filtrowania dyskusji z wybranym użytkownikiem`       1
 
-@var checkbox   textsaverEnable                                 `❎ Włącz TextSaver`                                          1
-@var checkbox   textsaverSaveEntries                            `❎ Przycisk [ Zapisz ] do zapisywania treści wpisów`         1
-@var checkbox   textsaverSaveComments                           `❎ Przycisk [ Zapisz ] do zapisywania treści komentarzy`     1
+@var checkbox   textsaverEnable                                 `❎ Włącz TextSaver`                                          0
+@var checkbox   textsaverSaveEntries                            `❎ Przycisk [ Zapisz ] do zapisywania treści wpisów`         0
+@var checkbox   textsaverSaveComments                           `❎ Przycisk [ Zapisz ] do zapisywania treści komentarzy`     0
 
 @var checkbox   mirkoukrywaczEnable                             `❎ Włącz 𝗠𝗶𝗿𝗸𝗼𝘂𝗸𝗿𝘆𝘄𝗮𝗰𝘇 i 𝗞𝗿𝗮𝘄𝗲𝘇𝗻𝗶𝗸`                            1
 @var checkbox   mirkoukrywaczMinimizeEntries                    `❎ Przycisk [ - ] do zwijania wpisów`                        1
@@ -206,7 +263,8 @@ TODO checkbox   checkEntryCommentsPerHour                       `❎➕ Liczba n
                                                                     }
 @var text       notatkowatorIconCustom                          `📝❎ Własny separator notatek:` `'/'`
 
-
+                                                            
+                                                                    
 
 @var range      HR_AVATARS                          `🧑 AVATARY UŻYTKOWNIKÓW ⭐ Nowe v.2.34`                                                       [0, 0, 99900, 1, 'mm']
 @var select     presetAvatarAndSexBarThemes                    `[PRESET] Predefiniowane ustawienia avatarów i pasków ⭐` {
@@ -441,7 +499,7 @@ TODO checkbox   checkEntryCommentsPerHour                       `❎➕ Liczba n
                                                                             "13px - mały":"13rem",
                                                                             "14px - średni":"14rem",
                                                                             "15px - średni":"15rem",
-                                                                            "16px - średni*":"16rem",
+                                                                            "16px - średni":"16rem",
                                                                             "17px - większy":"17rem",
                                                                             "18px - większy":"18rem",
                                                                             "19px - duży":"19rem",
@@ -497,8 +555,8 @@ var checkbox  topNavSnowGirl                                    `❄ Snow Girl` 
 
 @var select     topNavWallpaper                                 `🎨 𝗕𝗘𝗟𝗞𝗔: TAPETA W TLE - Tapeta górnej belki nawigacyjnej 🦊⭐` {
                                                                             "Brak tapety w tle (domyślnie)":            "domyslne",
-                                                                            "🟦 Blue ⭐*":"'https://wykopx.pl/img/background-blue.jpg'",
                                                                             "🟦 Belka starego Wykopu ⭐":               "'https://wykopx.pl/img/background-wykop-old.png'",
+                                                                            "🟦 Blue ⭐":"'https://wykopx.pl/img/background-blue.jpg'",
                                                                             "🦊 Firefox ⭐":                            "'https://wykopx.pl/img/background-firefox-blue.jpg'",
                                                                             "❄ Snow 1":                                 "'https://wykopx.pl/img/background-snow-1.jpg'",
                                                                             "❄ Snow 2":                                 "'https://wykopx.pl/img/background-snow-2.jpg'",
@@ -1036,7 +1094,7 @@ REMOVED checkbox   notificationsShowUnreadNumber                `❎💻 Pokaż 
 
 
 @var range      HR_GLOWNA                           `🔶GŁÓWNA ⭐ Nowe`                                                                    [0, 0, 99900, 1, 'mm']
-@var checkbox   linkVoteDownButton                              `🔸❎ Pokaż przycisk "ZAKOP" przy znaleziskach ⭐`         1
+@var checkbox   linkVoteDownButton                              `🔸❎ Przycisk "ZAKOP" przy znaleziskach na głównej ⭐`    1
 
 // TOCHECK checkbox   hotLinksShowFirst              `check: 🔸🔥 Gorące Znaleziska wyświetlaj jako pierwsze`              1
 @var checkbox   hitsHide                                        `🚫 Ukryj "Hity wykopu"  na stronie głównej `              0
@@ -1048,10 +1106,10 @@ REMOVED checkbox   notificationsShowUnreadNumber                `❎💻 Pokaż 
 @var range      HR_LINKS_ANALYZER                   `🔶📊 STATYSTYKI ZNALEZISK ⭐ Nowe`                                                    [0, 0, 99900, 1, 'mm']
 @var range      linksAnalyzerEnable_ON_INFO                     `Statystyki znalezisk są włączone`               [0, 0,111100, 1, 'mm']
 
-@var checkbox   linksAnalyzerEnable                             `🔸❎ Włącz analizowanie znalezisk (opcje poniżej)`               1
-@var checkbox   linksAnalyzerVotesDownCount                     `🔸❎ Wyświetl liczbę ZAKOPÓW`                                    1
-@var checkbox   linksAnalyzerVotesDownPercent                   `🔸❎ Wyświetl procent liczby zakopów`                            1
-@var checkbox   linksAnalyzerVotesMeter                         `🔸❎ Wykres słupkowy proporcji wykopów do zakopów`               1
+@var checkbox   linksAnalyzerEnable                             `🔸❎ Włącz Statystyki znalezisk`                       1
+@var checkbox   linksAnalyzerVotesDownCount                     `🔸❎ Liczba ZAKOPÓW`                                    1
+@var checkbox   linksAnalyzerVotesDownPercent                   `🔸❎ Procent liczby zakopów`                            1
+@var checkbox   linksAnalyzerVotesMeter                         `🔸❎ Wykres słupkowy proporcji wykopów do zakopów`      1
 
 @var select     linksAnalyzerSortBy                             `🔶❎ Sortowanie znalezisk według ⭐` {
                                                                                 "Zachowaj sortowanie oryginalne (domyślne)*":"domyslnie",
@@ -1091,6 +1149,15 @@ REMOVED checkbox   notificationsShowUnreadNumber                `❎💻 Pokaż 
 @var checkbox   hideLinkComments                               `🚫🗨️🔸 Nie pokazuj komentarzy w znaleziskach`                               0
 
 
+@var range      HR_NEW_2150                         `🔸 MENU NAD ZNALEZISKIEM (POPOVER)`                                                                                     [0, 0, 99900, 1, 'mm']
+@var select     popperDisplay                                   `💻 Menu po najechaniu kursorem` {
+                                                                            "Pokazuj tylko ikonki (domyślnie)":"domyslnie",
+                                                                            "Pokazuj ikony i napisy*":"kontekstowe",
+                                                                        } 
+@var checkbox   poppersHighlight                                `💻 Ładny i czytelne menu popover`                                                     1
+@var checkbox   poppersHideTag                                  `💻 Nie pokazuj menu nad tagami`                                               0
+@var checkbox   poppersHideDomain                               `💻 Nie pokazuj menu nad domenami w znalezisku`                                0
+
 
 @var range      HR_ACTION_MENU_LINKS                `🔸 MENU AKCJI ZNALEZISK ⭐ Nowe v.2.44`                                                              [0, 0, 99900, 1, 'mm']
 @var checkbox   actionMenuLinkShowTwitterXTitle                 `Napisy "Facebook" i "Twitter/𝕏" obok ikonek `              1
@@ -1102,14 +1169,6 @@ REMOVED checkbox   notificationsShowUnreadNumber                `❎💻 Pokaż 
 @var checkbox   actionMenuLinkHideReport                        `🚫 Ukryj akcję "Zgłoś"`                                     0 
 
 
-@var range      HR_NEW_2150                         `🔸 POPOVER ZNALEZISKA`                                                                                     [0, 0, 99900, 1, 'mm']
-@var select     popperDisplay                                   `💻 Popover po najechaniu kursorem` {
-                                                                            "Pokazuj tylko ikonki (domyślnie)":"domyslnie",
-                                                                            "Pokazuj ikony i napisy jako menu kontekstowe*":"kontekstowe",
-                                                                        } 
-@var checkbox   poppersHighlight                                `💻 Ładny i czytelny popover`                                                     1
-@var checkbox   poppersHideTag                                  `💻 Nie pokazuj popover nad tagami`                                               0
-@var checkbox   poppersHideDomain                               `💻 Nie pokazuj popover nad domenami w znalezisku`                                0
 
 
 
@@ -1134,6 +1193,24 @@ REMOVED checkbox   notificationsShowUnreadNumber                `❎💻 Pokaż 
 @var checkbox   homepagePinnedEntriesHideFifth                  `📌🔹 Ukryj piąty przypięty wpis`                                                    0
 
 @var checkbox   fixDeletedEntriesOnMainpage                     `📌🔹🚫✔ Ukrywaj usunięte wpisy z mikrobloga przypięte na głównej`                            1
+
+
+@var range      HR_LINKS_PRESET                     `🚫🔶 UKRYWANIE ZNALEZISK ⭐`                                                                        [0, 0, 99900, 1, 'mm']
+@var range      presetDisableLinks_ON_INFO                      `Ukrywanie znalezisk na całym Wykopie jest włączone`               [0, 0,111100, 1, 'mm']
+@var checkbox   presetDisableLinks                              `[PRESET] Całkowicie wyłącz wyświetlanie znalezisk ⭐`                     0
+@var range      presetDisableLinks_INFO                         `Ten preset włącza wszystkie funkcje związane z ukrywaniem znalezisk we wszystkich miejscach na Wykopie. Nie zobaczysz znalezisk na głównej, na stronach #tagów, w kategoriach czy podczas wyszukiwania. Ukryte zostaną także przyciski "Główna", "Wykopalisko" oraz "Hity". Ukryte zostają bloki wyświetlające znaleziska w prawym sidebarze. Nie zobaczysz też powiadomień o nowych znaleziskach z tagami, które obserwujesz, natomiast jeśli zostaniesz zawołany w komentarzu pod znaleziskiem - takie powiadomienie nadal się wyświetli.`             [0, 0,88800, 1, 'mm']
+            
+            
+@var checkbox   linksHideAll                                    `⛔ Ukrywaj znaleziska na wszystkich stronach ⭐`                          0
+@var checkbox   linksHideHomePage                               `🚫 Nie pokazuj znalezisk na głównej ⭐`                                   0
+@var checkbox   linksHideTagPage                                `🚫 Nie pokazuj znalezisk na stronach #tagów ⭐`                           0
+@var checkbox   linksHideFavouritesPage                         `🚫 Nie pokazuj znalezisk w Ulubionych ⭐`                                 0
+@var checkbox   linksHideObservedPage                           `🚫 Nie pokazuj znalezisk w Obserwowanych (Mój Wykop) ⭐`                  0
+@var checkbox   linksHideProfilePage                            `🚫 Nie pokazuj znalezisk w profilach użytkowników ⭐`                     0
+@var checkbox   linksHideSearchPage                             `🚫 Nie pokazuj znalezisk przy wyszukiwaniu ⭐`                            0
+@var checkbox   linksHideBucketPage                             `🚫 Nie pokazuj znalezisk przy przeglądaniu kategorii własnych ⭐`         0
+@var checkbox   linksHideCategoryPage                           `🚫 Nie pokazuj znalezisk przy przeglądaniu kategorii domyślnych ⭐`       0
+
 
 
 
@@ -1603,7 +1680,9 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
 
 
 
-
+@var range      HR_MULTIKONTA                   `❎ MULTIKONTA`                                                                                                                [0, 0, 99900, 1, 'mm']
+@var checkbox   editorShowMyUsername                            `❎ Pokazuj nazwę konta przy dodawaniu wpisu/komentarza  ⭐`               1
+ 
 
 @var range      HR_EDITOR                       `✍️ EDYTOR WPISU I KOMENTARZA`                                                                          [0, 0, 99900, 1, 'mm']
 @var select     editorTextFontSize                              `Rozmiar tekstu wpisywanego w edytorze ⭐` {
@@ -1651,7 +1730,7 @@ var select     editorNewComments                                `Edytor dodawani
 @var checkbox   editorStickyHeader                              `Pasek z przyciskami formatowania zawsze widoczny podczas edycji `                      1
 @var checkbox   editorShowAllFormattingButtons                  `📱 Pokaż wszystkie przyciski formatowania na telefonie`                                     1
 
-@var select     clearReplyButtonAlignment                       `Przycisk 𝗪𝗬𝗖𝗭𝗬𝗦́𝗖́` {
+@var select     editorClearReplyButtonAlignment                       `Przycisk 𝗪𝗬𝗖𝗭𝗬𝗦́𝗖́` {
                                                                         "default:Po prawej (domyślnie)": "domyslna",
                                                                         "left:Po lewej": "polewej",
                                                                         "🚫 Nie pokazuj przycisku 𝗪𝗬𝗖𝗭𝗬𝗦́𝗖́": "niepokazuj",
@@ -1659,7 +1738,7 @@ var select     editorNewComments                                `Edytor dodawani
 @var checkbox   editorSendButtonDontDeactivate                  `✔ Przycisk 𝗪𝗬𝗦́𝗟𝗜𝗝 nie mruga w czasie pisania`                                                1
 
 @var checkbox   editorFocusOnDodajURL                           `❎ Aktywuj edytor nowego wpisu na stronie .../mikroblog/#dodaj`                            1
-TODO: var checkbox   replyEditorShowTagsFollowers                    `❎ Wyświetl liczbę obserwujących tagi podczas wpisywania #tagu`                            0
+TODO: var checkbox   replyEditorShowTagsFollowers               `❎ Wyświetl liczbę obserwujących tagi podczas wpisywania #tagu`                            0
 
 
 
@@ -1680,26 +1759,26 @@ TODO: var checkbox   replyEditorShowTagsFollowers                    `❎ Wyświ
                                                                         } 
 
 
-@var range      HR_READING_PROGRESS                     `🚧   PROGRESS BAR`                                                   [0, 0, 99900, 1, 'mm']
+@var range      HR_READING_PROGRESS                     `🚧 PROGRESS BAR`                                                   [0, 0, 99900, 1, 'mm']
 @var range      readingProgressBar_ON_INFO                      `Pasek postępu czytania strony jest włączony`                 [0, 0,111100, 1, 'mm']
-@var checkbox   readingProgressBar                              `Włącz pasek postępu czytania`                                             1
+@var checkbox   readingProgressBar                              `Włącz pasek postępu czytania`                                               1
 @var select     readingProgressBarAlignment                     `Położenie paska` {
-                                                                            "Na górze":"nadbelka",
-                                                                            "Na dole*":"nadolestrony"
-                                                                            } 
+                                                                        "Na górze":"nadbelka",
+                                                                        "Na dole*":"nadolestrony"
+                                                                    } 
 @var range      readingProgressBarHeight                        `Grubość paska`          [2, 1, 15, 1, 'px']
 @var select     readingProgressBarTheme                         `Kolorystyka` {
-                                                                            "Wykop X":"progressbar_theme_wykopx",
-                                                                            "Instagram / Firefox*":"progressbar_theme_instagram",
-                                                                            "YouTube":"progressbar_theme_youtube",
-                                                                            "Wykop - Bordo":"progressbar_theme_burgundy",
-                                                                            "Wykop - Pomarańczka":"progressbar_theme_orange",
-                                                                            "Wykop - Zielonka":"progressbar_theme_green"
-                                                                            } 
-@var checkbox   readingProgressBarOnHomepage                    `🔶 Na głównej`                                                               1
-@var checkbox   readingProgressBarOnUpcoming                    `🔶 W wykopalisku`                                                            1
+                                                                        "Wykop X":"progressbar_theme_wykopx",
+                                                                        "Instagram / Firefox*":"progressbar_theme_instagram",
+                                                                        "YouTube":"progressbar_theme_youtube",
+                                                                        "Wykop - Bordo":"progressbar_theme_burgundy",
+                                                                        "Wykop - Pomarańczka":"progressbar_theme_orange",
+                                                                        "Wykop - Zielonka":"progressbar_theme_green"
+                                                                    } 
+@var checkbox   readingProgressBarOnHomepage                    `🔶 Na głównej`                                                               0
+@var checkbox   readingProgressBarOnUpcoming                    `🔶 W wykopalisku`                                                            0
 @var checkbox   readingProgressBarOnLink                        `🔸 W znaleziskach`                                                           1
-@var checkbox   readingProgressBarOnMicroblog                   `🔷 Na Mirko`                                                                 1
+@var checkbox   readingProgressBarOnMicroblog                   `🔷 Na mikroblogu`                                                            0
 @var checkbox   readingProgressBarOnEntries                     `🔹 We wpisach`                                                               1
 
 
@@ -2248,7 +2327,7 @@ TODO    checkbox hideAdultEntriesAndLinks
         myWykopInTopNavJS               = 1;
         addNewEntryInTopNavJS           = 0;
         addNewLinkInTopNavJS            = 0;
-        addPlusBeforePlus               = 1;
+        prefixBeforePlusesCount         = "plus";
         topNavHamburgerButtonHide       = 1;
         categoryMenuAutohide            = 1;
         ignoreCategoryColor             = 1;
@@ -6083,7 +6162,7 @@ TODO    checkbox hideAdultEntriesAndLinks
 
               /*
                   A. top: unquote('calc('+ customShift +')')
-                  B. top: 'calc(%s)' % customShift
+                  B. top: 'calc(%s)' % customShift VARIABLES
 
                   C. --customShift: customShift
                      top: calc(var(--customShift))
@@ -7452,7 +7531,7 @@ TODO    checkbox hideAdultEntriesAndLinks
     
     
     
-    /* Ukrywaj wpisy bez żadnego #tagu xxxxx */
+    /* Ukrywaj wpisy bez żadnego #tagu TODO */
     if(hideEntriesWithoutAnyTag == 1)
     {
         /* hideEntriesWithoutAnyTag == 1 */
@@ -7979,7 +8058,45 @@ TODO    checkbox hideAdultEntriesAndLinks
     } 
 
     
-    
+    if(editorShowMyUsername == 1)
+    {
+        
+        
+        /* HEADER MICROBLOGA PRZED EDYTOREM */
+        header.stream-top:has(+ section.editor) > h1:after
+        {
+            margin-left: 5rem;
+            content: var(--myUsernameAS);
+            text-transform: initial; 
+        }
+        /* Przycisk WYŚLIJ */
+        section.editor > footer > div.buttons > div.button.send > button.target
+        {
+            display: flex;
+            flex-wrap: nowrap;
+            flex-direction: row;
+            column-gap: 4rem;
+            text-transform: capitalize;
+        }
+        section.editor > footer > div.buttons > div.button.send > button.target::after
+        {
+            content: var(--myUsernameAs);
+            text-transform: initial;    
+        }
+        
+        section.editor > div.content::before
+        {
+            font-size: 15rem;
+            color: var(--gullGray);
+            content: var(--myUsernameAddingAs);
+            text-transform: initial;   
+            position: relative;
+            display: block;
+            margin-top: 13px;
+        }
+ 
+        
+    }
     
 
     /* MIKROBLOG & WPIS: EDYTOR NOWYCH WPISÓW I KOMENTARZY */
@@ -8196,14 +8313,14 @@ TODO    checkbox hideAdultEntriesAndLinks
         } 
     } 
   
-    if (clearReplyButtonAlignment == "niepokazuj")
+    if (editorClearReplyButtonAlignment == "niepokazuj")
     {
         section.editor footer div.buttons div.button.simple.small.blue-color /* Wyczyść */
         {
             display: none!important;
         } 
     } 
-    else if (clearReplyButtonAlignment == "polewej")
+    else if (editorClearReplyButtonAlignment == "polewej")
     {
         section.editor footer div.buttons
         {
@@ -8216,7 +8333,7 @@ TODO    checkbox hideAdultEntriesAndLinks
             margin-left: auto;
         } 
     } 
-    else if (clearReplyButtonAlignment == "domyslna")
+    else if (editorClearReplyButtonAlignment == "domyslna")
     {
     
     } 
@@ -10230,7 +10347,7 @@ TODO    checkbox hideAdultEntriesAndLinks
             {
                 body > section > div.main-content .entry-voters ul:before
                 {
-                    color: var(--greenPluses);
+                    color: var(--colorPlusesCountVoted);
                 }
             }
         }
@@ -11925,7 +12042,7 @@ TODO    checkbox hideAdultEntriesAndLinks
           {
               li.notifications.dropdown.tags > section.dropdown-body
               {
-                height: "calc(100vh - %s)" % (topNavHeight) i;  /* todo: var(--topNavHeight) !important; */
+                height: "calc(100vh - %s)" % (topNavHeight) i;  /* todo: var(--topNavHeight) !important; VARIABLES */
                 min-height: "calc(100vh - %s)" % (topNavHeight) i;
                 max-height: "calc(100vh - %s)" % (topNavHeight) i;
 
@@ -13095,7 +13212,7 @@ TODO    checkbox hideAdultEntriesAndLinks
     
     
     
-    /* PANEL POWIADOMIEŃ XXXXXXX */
+    /* PANEL POWIADOMIEŃ */
     header.header > .right > nav > ul 
     {
         display: flex;   
@@ -16748,562 +16865,9 @@ TODO    checkbox hideAdultEntriesAndLinks
     
     
     
-    /* -------- PLUSY I MINUSY xxxxxxx ---- */
-        
-    
-    /* ZNALEZISKO - UKRYWANIE PLUSÓW I MINUSÓW PRZED ZAGŁOSOWANIEM */
-    if(hidePlusesAndMinusesBeforeVoting == 1)
-    {
-        section.entry article header div.right div section.rating-box ul.clickable:has(+ div.buttons button:not(.voted))
-        {   
-            if(removeAllTransitions == 0) { transition: visibility 0s linear 4s, opacity 1s linear 1.3s; } 
-            visibility: hidden;
-            opacity: 0;
-        } 
-        section.entry article header div.right div section.rating-box ul.clickable:has(+ div.buttons button.voted)
-        {
-            if(removeAllTransitions == 0) { transition: visibility 0s linear 4s, opacity 1s linear 1.3s; } 
-            visibility: visible;
-            opacity: 1;
-        }
-    }
-
-
-    
-    /* MIKROBLOG: UKRYWANIE PLUSÓW PRZED ZAGŁOSOWANIEM */
-    if(hidePlusesBeforeVoting == 1)
-    {
-        section.entry article header div.right div section.rating-box ul:has(+ div.buttons button:not(.voted))
-        {   
-            if(removeAllTransitions == 0) { transition: visibility 0s linear 4s, opacity 1s linear 1.3s; } 
-            visibility: hidden;
-            opacity: 0;
-        } 
-        section.entry article header div.right div section.rating-box ul:has(+ div.buttons button.voted)
-        {
-            if(removeAllTransitions == 0) { transition: visibility 0s linear 4s, opacity 1s linear 1.3s; } 
-            visibility: visible;
-            opacity: 1;
-        }
-    }
-
-
-    
-    if(plusesAndMinusesTransition == 1)
-    {
-        section.rating-box > ul li,
-        section.related-rating-box > ul li
-        {
-            transition: all 0.5s ease-in-out 0.1s!important;
-        } 
-        section.rating-box div.buttons button,
-        section.related-rating-box div.buttons button
-        {
-            transition: all 0.4s ease-in-out 0.1s!important;
-        } 
-        section.rating-box .buttons button:hover,
-        section.related-rating-box .buttons button:hover
-        {
-            transition: all 0.2s ease-in-out 0s!important;
-        }
-    }
     
     
     
-    
-    /* zmiana styli i kolorów plusów i minusów */
-    if(plusesAndMinusesColorsEnable == 1)
-    {
-        :root
-        {
-            --numberZero: rgb(44, 62, 80);
-            --greenPluses:                                          var(--apple);              //--apple
-            --greenPlusesHover:                                     var(--greenPluses);        //--apple
-            --greenPlusesBackground:                                rgba(0, 0, 0, 0);
-            --greenPlusesBackgroundHover:                           rgba(0, 0, 0, 0);
-            --greenPlusesVoted:                                     rgba(255, 255, 255, 1);
-            --greenPlusesVotedHover:                                rgba(255, 255, 255, 1);
-            --greenPlusesVotedBackground:                            var(--greenPluses);       //--apple
-            --greenPlusesVotedBackgroundHover:                       var(--greenPluses);       //--apple
-
-            --redMinuses:                                           var(--valencia)            //--valencia
-            --redMinusesHover:                                      var(--redMinuses);         //--valencia
-            --redMinusesBackground:                                 rgba(0, 0, 0, 0);
-            --redMinusesBackgroundHover:                            rgba(0, 0, 0, 0);
-
-            --redMinusesVoted:                                      rgba(255, 255, 255, 1);
-            --redMinusesVotedHover:                                 rgba(255, 255, 255, 1);
-            --redMinusesVotedBackground:                            var(--redMinuses);
-            --redMinusesVotedHover:                                 var(--redMinuses);   
-        }
-        /* TRYB NOCNY */
-        :root [data-night-mode]
-        {       
-            --numberZero: rgb(202, 206, 207);
-
-            --greenPluses:                                          rgba(58, 166, 132, 1);
-            --greenPlusesHover:                                     var(--greenPluses);
-            --greenPlusesBackground:                                rgba(0, 0, 0, 0);
-            --greenPlusesBackgroundHover:                           rgba(0, 0, 0, 0);
-
-            --greenPlusesVoted:                                     rgba(255, 255, 255, 1);
-            --greenPlusesVotedHover:                                rgba(255, 255, 255, 1);
-            --greenPlusesVotedBackground:                            var(--greenPluses);
-            --greenPlusesVotedBackgroundHover:                       var(--greenPluses);
-
-            --redMinuses:                                           rgba(255, 65, 54, 1);
-            --redMinusesHover:                                      var(--redMinuses);
-            --redMinusesBackground:                                 rgba(0, 0, 0, 0);
-            --redMinusesBackgroundHover:                            rgba(0, 0, 0, 0);
-
-            --redMinusesVoted:                                      rgba(255, 255, 255, 1);
-            --redMinusesVotedHover:                                 rgba(255, 255, 255, 1);
-            --redMinusesVotedBackground:                            var(--redMinuses);
-            --redMinusesVotedHover:                                 var(--redMinuses);
-        }
-        
-        
-        
-        
-        section[class] section.rating-box > ul > li.zero[class],
-        section[class] section.related-rating-box > ul > li.zero[class]
-        {
-            color: var(--numberZero);
-        } 
-
-        section[class] section.rating-box > ul > li.plus[class],
-        section[class] section.related-rating-box > ul > li.plus[class]
-        {
-            color: var(--greenPluses);
-        }
-
-        section[class] section.rating-box > ul > li.minus[class],
-        section[class] section.related-rating-box > ul > li.minus[class]
-        {
-            color: var(--redMinuses);
-        } 
-
-        section[class] section.rating-box:has(div.buttons button.plus.voted) > ul > li.plus[class],
-        section[class] section.related-rating-box:has(div.buttons button.plus.voted) > ul > li.plus[class]
-        {
-            color: var(--greenPlusesVoted);
-            background-color: var(--greenPlusesVotedBackground);
-        }
-
-        section[class] section.rating-box:has(div.buttons button.minus.voted) > ul > li.minus[class],
-        section[class] section.related-rating-box:has(div.buttons button.minus.voted) > ul > li.minus[class]
-        {
-            color: var(--redMinusesVoted);
-            background-color: var(--redMinusesVotedBackground);
-        }
-        // plusy wpisów w sidebarze
-        section.sidebar section.entry header div.right > div > span
-        {
-            color: var(--greenPluses);
-        }
-
-
-
-        /* PRZYCISKI + i - */
-
-        section[class] section.rating-box .buttons button[class],
-        section[class] section.related-rating-box .buttons button[class]
-        {
-            border-style: solid;
-        } 
-
-        // przyciski
-        section[class] section.rating-box .buttons button.plus[class]
-        {
-            color: var(--greenPluses);
-            border-color: var(--greenPluses);
-            background-color: var(--greenPlusesBackground)
-        }
-        section[class] section.rating-box .buttons button.minus[class]
-        {
-            color: var(--redMinuses);
-            border-color: var(--redMinuses);
-            background-color: var(--redMinusesBackground)
-        }
-
-        // :hover
-        section[class] section.rating-box .buttons button.plus[class]:hover
-        {
-            color: var(--greenPlusesHover);
-            border-color: var(--greenPlusesHover);
-            background-color: var(--greenPlusesBackgroundHover);
-        }
-        section[class] section.rating-box .buttons button.minus[class]:hover
-        {
-            color: var(--redMinusesHover);
-            border-color: var(--redMinusesHover);
-            background-color: var(--redMinusesBackgroundHover);
-        }
-
-        // przycisk zaglosowany
-        section[class] section.rating-box .buttons button.plus.voted[class]
-        {
-            color: var(--greenPlusesVoted);
-            border-color: var(--greenPlusesVoted);
-            background-color: var(--greenPlusesVotedBackground);
-        }
-        section[class] section.rating-box .buttons button.minus.voted[class]
-        {
-            color: var(--redMinusesVoted);
-            border-color: var(--redMinusesVoted);
-            background-color: var(--redMinusesVotedBackground);
-        }
-        // przycisk zaglosowany :hover
-        section[class] section.rating-box .buttons button.plus.voted[class]:hover
-        {
-            color: var(--greenPlusesVotedHover);
-            border-color: var(--greenPlusesVotedHover);
-            background-color: var(--greenPlusesVotedBackgroundHover);
-        }
-        section[class] section.rating-box .buttons button.minus.voted[class]:hover
-        {
-            color: var(--redMinusesVotedHover);
-            border-color: var(--redMinusesVotedHover);
-            background-color: var(--redMinusesVotedBackgroundHover);
-        }
-
-
-        section[class] section.rating-box .buttons button.plus[class]:before,
-        section[class] section.related-rating-box .buttons button.plus[class]:before
-        {
-            //content: "+"!important;
-            //color: var(--greenPluses)!important;
-            top: -1px!important;
-        }
-        section[class] section.rating-box .buttons button.minus[class]:before,
-        section[class] section.related-rating-box .buttons button.minus[class]:before
-        {
-            //content: "–"!important;
-            //color: var(--redMinuses)!important;
-            top: -1px!important;
-        } 
-
-
- 
-        
-        if(plusesAndMinusesStyle == "okragle")
-        {
-            section.rating-box div.buttons button,
-            section.related-rating-box div.buttons button
-            {
-                cursor: pointer!important;
-            } 
-            section.entry article header div.right div section.rating-box div.buttons button
-            {
-                border-radius: 25px!important;
-            }   
-        } 
-        else if(plusesAndMinusesStyle == "wykop10")
-        {
-            addPlusBeforePlus = 1
-
-            :root
-            {
-              --greenPluses: rgb(59, 145, 95);
-              --redMinuses: rgb(192, 57, 43)
-            } 
-
-            :root [data-night-mode] 
-            {
-              --greenPluses: rgb(57, 166, 132);
-              --redMinuses: rgb(255, 65, 54);
-            }
-
-
-            section.rating-box > ul li,
-            section.related-rating-box > ul li
-            {
-                font-weight: 600;
-                line-height: 18px;
-            } 
-
-
-            /* odstęp miedzy liczbami a przyciskami */
-            section.rating-box > ul + .buttons
-            section.related-rating-box > ul + .buttons
-            {
-                margin-left: 6px!important;
-            } 
-
-
-            /* LICZBY */
-            section.rating-box > ul > li,
-            section.related-rating-box > ul > li
-            {
-                padding: 2px 4px;
-            } 
-
-
-            section[class] section.rating-box:has(div.buttons button.plus.voted) > ul > li.plus[class],
-            section[class] section.related-rating-box:has(div.buttons button.plus.voted) > ul > li.plus[class],
-            {
-                border-radius: 2px;
-            }
-
-            section[class] section.rating-box:has(div.buttons button.minus.voted) > ul > li.minus[class],
-            section[class] section.related-rating-box:has(div.buttons button.minus.voted) > ul > li.minus[class]
-            {
-                border-radius: 2px;
-            } 
-
-
-
-            /* PRZYCISKI + i - */
-            section.rating-box div.buttons button,
-            section.related-rating-box div.buttons button
-            {
-                border-radius: 3px!important;
-                border-width: 1px!important;
-                width: 22px!important;
-                height: 21px!important;
-                box-sizing: border-box!important;
-                text-align: center!important;
-                font-weight: bolder;
-                font-size: 16px!important; 
-                display: flex!important;
-                justify-content: center!important;
-                align-items: center!important;
-                //color: transparent!important;
-                //background-color: rgb(245, 246, 248)!important;
-                //border-color: rgb(226, 227, 229)!important;
-            } 
-            [data-night-mode] section.rating-box div.buttons button,
-            [data-night-mode] section.related-rating-box div.buttons button
-            {
-                /* background-color: rgb(60, 60, 60)!important; */
-                //background-color: rgba(255, 255, 255, 0.05)!important;
-                /* border-color: rgb(68, 68, 68)!important; */
-                //border-color: rgba(255, 255, 255, 0.1)!important;
-            }
-            section.rating-box .buttons button:hover,
-            section.related-rating-box .buttons button:hover
-            {
-                opacity: 1!important;
-            }
-
-
-
-
-            div.right section.rating-box siv.buttons div.buttons:after,
-            div.right section.related-rating-box siv.buttons div.buttons:after,
-            div.right section.rating-box siv.buttons div.buttons:before,
-            div.right section.related-rating-box siv.buttons div.buttons:before,
-            section.rating-box .buttons button[data-v-76790450]:before,
-            section.related-rating-box .buttons button[data-v-76790450]:before,
-            section.rating-box .buttons button[data-v-76790450]:after,
-            section.related-rating-box .buttons button[data-v-76790450]:after,
-            [data-night-mode] section.rating-box .buttons button.minus[data-v-76790450]:after,
-            [data-night-mode] section.related-rating-box .buttons button.minus[data-v-76790450]:after,
-            [data-night-mode] section.rating-box .buttons button.plus[data-v-76790450]:after,
-            [data-night-mode] section.related-rating-box .buttons button.plus[data-v-76790450]:after,
-            section.related-rating-box .buttons button.plus[data-v-7e1f8b22]:after,
-            section.related-rating-box .buttons button.minus[data-v-7e1f8b22]:after
-            {
-                content: none!important;
-            } 
-            section.rating-box .buttons button:before,
-            section.related-rating-box .buttons button:before
-            {
-                opacity:1!important;
-                left: unset!important;
-                font-size: 17px!important;
-            } 
-            section.rating-box .buttons button.plus:before,
-            section.related-rating-box .buttons button.plus:before
-            {
-                content: "+"!important;
-                top: -1px!important;
-            } 
-
-            section.rating-box .buttons button.minus:before,
-            section.related-rating-box .buttons button.minus:before
-            {
-                content: "–"!important;
-                top: -1px!important;
-            } 
-
-            section.rating-box .buttons button.voted,
-            section.related-rating-box .buttons button.voted
-            {
-                opacity: 0.4!important;
-            } 
-        } 
-
-
-        else if(plusesAndMinusesStyle == "wykop20" || plusesAndMinusesStyle == "bezzaokraglen")
-        {
-
-            :root
-            {
-              --greenPluses: var(--apple)
-              --redMinuses: var(--valencia);
-            } 
-
-            :root [data-night-mode] 
-            {
-              --greenPluses: #39a684;
-              --redMinuses: #ff4136;
-            }
-
-
-
-            section.rating-box > ul li
-            {
-                font-size: 14px;
-                font-weight: 600;
-                line-height: 18px;
-            } 
-
-            if(plusesAndMinusesStyle == "bezzaokraglen")
-            {
-                section.rating-box div.buttons button
-                {
-                    border-radius: 0px!important;
-                } 
-            } 
-            else
-            {
-                section.rating-box div.buttons button
-                {
-                    border-radius: 2px!important;
-                } 
-            } 
-
-
-            section.rating-box .buttons button.plus
-            {
-                border-width: 2px;
-            } 
-        } 
-    }
-
-    
-    
-    
-    
-    if(addPlusBeforePlus == 1)
-    {
-        section.rating-box > ul li.plus:before
-        {
-            content: "+";
-        } 
-    } 
-
-    
-    if(plusesColor != "domyslny")
-    {
-        if(plusesColor == "wykop10")
-        {
-            :root
-            {
-              --greenPluses: rgb(59, 145, 95);
-            }
-
-            :root [data-night-mode] 
-            {
-              --greenPluses: rgb(57, 166, 132);
-            }
-        }
-        else if(plusesColor == "wykop20")
-        {
-            :root
-            {
-              --greenPluses: var(--apple)
-            } 
-
-            :root [data-night-mode] 
-            {
-              --greenPluses: #39a684;
-            }
-        }
-        else if(plusesColor == "pomaranczowy")
-        {
-            :root
-            {
-              --greenPluses: orange;
-            } 
-
-            :root [data-night-mode] 
-            {
-              --greenPluses: orange;
-            }
-        }
-        else if(plusesColor == "zloty")
-        {
-            :root
-            {
-              --greenPluses: goldenrod;
-            } 
-
-            :root [data-night-mode] 
-            {
-              --greenPluses: goldenrod;
-            }
-        }
-    }
-    
-    
-    if(minusesColor != "domyslny")
-    {
-        if(minusesColor == "wykop10")
-        {
-            :root
-            {
-              --redMinuses: rgb(192, 57, 43)
-            }
-
-            :root [data-night-mode] 
-            {
-              --redMinuses: rgb(255, 65, 54);
-            }
-        }
-        else if(minusesColor == "wykop20")
-        {
-            :root
-            {
-              --redMinuses: var(--valencia);
-            } 
-
-            :root [data-night-mode] 
-            {
-              --redMinuses: #ff4136;
-            }
-        }
-        else if(minusesColor == "pomaranczowy")
-        {
-            :root
-            {
-              --redMinuses: orange;
-            } 
-
-            :root [data-night-mode] 
-            {
-              --redMinuses: orange;
-            }
-        }
-        else if(minusesColor == "szary")
-        {
-            :root
-            {
-              --redMinuses: gray;
-            } 
-
-            :root [data-night-mode] 
-            {
-              --redMinuses: gray;
-            }
-        }
-    }
-    
-    
-   
-    
-
 
 
 
@@ -17367,11 +16931,11 @@ TODO    checkbox hideAdultEntriesAndLinks
         https://github.com/wykopx/WykopX/issues/59 */
     section.microblog-page section.new-entry
     {
-      pointer-events: none;
+        pointer-events: none;
     } 
     section.microblog-page section.new-entry > .button
     {
-      pointer-events: auto;
+        pointer-events: auto;
     } 
 
     
@@ -17383,8 +16947,7 @@ TODO    checkbox hideAdultEntriesAndLinks
     {
         header.header div.left
         {
-            overflow: hidden;   
-
+            overflow: hidden;
         } 
     
         header.header > div.left > button ~ a.logo
@@ -19105,7 +18668,7 @@ https://wykop.pl/moje/
 @-moz-document url-prefix("https://wykop.pl"), url-prefix("http://wykopx.pl")
 {    
     
-    .showOnEntriesStream, // XXX
+    .showOnEntriesStream,
     .showOnLinksStream,
     .showOnLinkPage,
     .showOnEntryPage,
@@ -19560,7 +19123,7 @@ https://wykop.pl/moje/
 
         if(wxsSwitchByUserGender == 1)
         {
-            /* bez różowych  xxxxxxx */
+            /* bez różowych */
             /* KOMENTARZE RÓŻOWYCH PASKÓW 🟣 if(userPinkComments == "niepokazuj") */
             body[data-wxs_switch_by_user_gender="ON_MINUS_1"] section.stream.link-comments section.entry:has(article > header > div.left > a > figure.female),
             body[data-wxs_switch_by_user_gender="ON_MINUS_1"] section.stream.entry-subcomments section.entry.reply:has(article > header > div.left > a > figure.female)
@@ -19601,11 +19164,7 @@ https://wykop.pl/moje/
         if(wxsSwitchPhotoViewer == 1)
         {
             
-        }
-        
-        
-        
-        
+        } 
     }
         
     
@@ -19662,7 +19221,8 @@ https://wykop.pl/moje/
     {
         border-radius: 0px 0px var(--buttonsBorderRadius) var(--buttonsBorderRadius);
         border-width: 0px 1px 1px 1px;
-        right: calc(30px + var(--ratingBoxWidth, 165px));
+        //right: calc(30px + var(--ratingBoxWidth, 165px));
+        right: 195px;
     }
     section.entry:not(.reply) .wxs_menu_action_box
     {
@@ -19690,7 +19250,7 @@ https://wykop.pl/moje/
         bottom: 0px;
         top: unset;   
         
-        // zmienione gdy linkThumbnail == "polewej" xxx
+        // zmienione gdy linkThumbnail == "polewej"
         right: 18px;
         left: unset;
     }
@@ -20608,368 +20168,1056 @@ https://wykop.pl/moje/
     
     
     
-    // RATING BOX INTERSECTING
-    
-    // rating-box intersecting
-    .notIntersecting
-    {
-    }
-
-    .isIntersecting
-    {    
-    }
-    section.link-block > section
-    {
-        position: relative;
-    }
-    section.link-block.isIntersecting > section::after,
-    section.entry.isIntersecting::after
-    {
-        content: "🔷"; // 🍤💠🔄🔷🔶
-        rotate: var(--angle);
-        transform: scaleX(-1);
-
-        animation-name: isIntersectingAnimation, rotatingAnimation!important;
-        animation-duration: 6s, 1s!important;
-        animation-timing-function: ease-in, linear!important;
-        animation-iteration-count: infinite, infinite!important;
-        
-        font-size: 14rem;
-        
-        position: absolute;
-        right: 0px;
-        top: 0px;
-    }
-        
-    @keyframes isIntersectingAnimation
-    {
-        0%      { opacity: 0; scale: 0.3; }
-        50%     { opacity: 1; scale: 0.5; }
-        100%    { opacity: 0; scale: 0.3}
-    }
-    @keyframes fadeOutAnimation
-    {
-        0%      { scale: 1.0; opacity: 0.8; }
-        10%     { scale: 1.3; opacity: 1;   }
-        70%     { scale: 1;   opacity: 1;   }
-        90%     { scale: 0.8; opacity: 0.6; }
-        100%    { scale: 0.8; opacity: 0;   }
-    } 
-    @keyframes slideUpAnimation
-    {
-        0%      { translate: 0px 10px; }
-        20%     { translate: 0px 0px; }
-        70%     { translate: 0px 0px; }
-        100%    { translate: 0px -10px; }
-    } 
-    @keyframes slideDownAnimation
-    {
-        0%      { translate: 0px -10px; }
-        20%     { translate: 0px 0px; }
-        70%     { translate: 0px 0px; }
-        100%    { translate: 0px 10px; }
-    } 
-        
-        
-    @keyframes plusesAddedAnimation 
-    {
-        0%      { opacity: 0.3;  color: var(--greenPluses);   }
-        20%     { opacity: 1;    color: goldenrod;    }
-        70%     { opacity: 0.3;  color: goldenrod;   }
-        100%    { opacity: 0.1;  color: var(--greenPluses);    }
-    } 
-
     
     
     
-  
-    article > header > div.right > div > section.rating-box:after
+    
+    
+    
+    
+    /* -------- PLUSY I MINUSY YYYYYYY ---- */
+    if(minusesHide == 1 && plusesHide == 1 && voteButtonHide == 1)
     {
-        font-size: 10rem;
-        animation-duration: 4s;
-        position: absolute;
-        top: -15px;
-        right: 32px;
-        animation-fill-mode: forwards;
-        
-    }
+        plusesAndMinusesTransition = 0
+        votingExplosionEnable = 0
+        checkEntryPlusesWhenVoting = 0
+        checkEntryPlusesEnable = 0
+        checkEntryPlusesPerHour = 0
+        checkEntryCommentsPerHour = 0
+        checkEntryPlusesForVotingGame = 0
+        plusesAndMinusesColorsEnable = 0
 
         
-        
-        
-        
-    section[class] .plusesAdded > article > header > div.right > div > section.rating-box > ul > li.plus[class]
-    {
-        color: white;
-        animation-delay: 0s;
-        animation-direction: normal;
-        animation-duration: 2s;
-        animation-fill-mode: both;
-        animation-iteration-count: infinite;
-        animation-name: plusesAddedAnimation;
-        animation-play-state: running;
-        animation-timeline: auto;
-        animation-timing-function: ease-in-out;
-    }
-    
-    section[class] .plusesAdded > article > header > div.right > div > section.rating-box:after
-    {
-        animation-name: fadeOutAnimation, slideUpAnimation;
-        color: ; var(--greenPluses)
-        content: var(--plusesAdded);
-    }
-    section[class] .plusesRemoved > article > header > div.right > div > section.rating-box:after
-    {
-        animation-name: fadeOutAnimation, slideDownAnimation;
-        color: var(--redMinuses)
-        content: var(--plusesRemoved);
-    }
-    section[class] .minusesAdded > article > header > div.right > div > section.rating-box:after
-    {
-        color: var(--redMinuses)
-        content: var(--minusesAdded);
-    }
-    section[class] .minusesRemoved > article > header > div.right > div > section.rating-box:after
-    {
-        color: var(--numberZero)
-        content: var(--minusesRemoved);
-    }
-    
-    // VOTES PER MINUTE
-    section.entry
-    {
-        --ratingBoxWidth: 100px;
-    }
-    section.rating-box
-    {
-        flex-wrap: wrap;
-        justify-content: end;
-        width: max-content;
-        width: var(--ratingBoxWidth);
-        min-width: var(--ratingBoxWidth);
-        row-gap: 4rem;
-    }
-    
-    // plusowanie i minusowanie pod znaleziskami
-    section.entry:has(button.minus)
-    {
-        --ratingBoxWidth: 165px;
-    }
-    
-    
-    if(checkEntryPlusesEnable == 1) // xx
-    {
-        section.rating-box > ul > li.plus
+        section.rating-box,
+        section.related-rating-box
         {
-            font-size: 14rem;
-            align-items: center;
-            display: flex;
-            transition: none!important;
+            display: none!important;
         }
-        section[data-wxs_votes_up] section.rating-box > ul > li.plus
-        {
-            font-size: 0rem;
-        }
-        section.rating-box > ul > li.plus:before
-        {
-            font-size: 14rem;
-            font-weight: 600;
-        }
+    }
+    else
+    {
         
-        section.rating-box > ul > li.plus:before
+        section.stream:has(> div.content > section.entry),  //section.rating-box,
+        section.related-rating-box,
+        section.entries-sidebar
         {
-            content: var(--votesUp);
-        }
-        
-        
-        if(checkEntryPlusesForVotingGame == 1)
-        {
-            section.entry[data-wxs_voting_game]:not(.reply) > article > header > div.right > div > section.rating-box > ul > li.plus:before
-            {
-                content: var(--votesUpHidden);
-            }
-            section.rating-box:has(div.buttons > button.voted) > ul > li.plus:before
-            {
-                content: var(--votesUp);
-                //counter-reset: votesUp var(--votesUp);
-                //content: counter(votesUp);
-            }
-      
-    
-            section.entry > section.stream > div.content > section.entry:has(.plus):before
-            {
-                font-size: 20rem;
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                content: attr(data-wxs_votes_up);
-                content: var(--votingGameLastDigit);
-                z-index: 999!important;
-                transition: 3s all linear 0s;
 
-                color: var(--greenPluses);
-                scale: 1;
-                opacity: 0;
-            }
-            section.entry > section.stream > div.content > section.entry:has(.plus.voted):before
+            --plusesMinusesSize:                                         plusesMinusesSize;
+            --plusesMinusesGap:                                          calc(var(--plusesMinusesSize) / 2 + 5rem);
+
+            --colorNumberZero:                                           var(--gullGray);                  // rgb(149 169 187)
+
+            --colorPlusesCount:                                          var(--apple);                     // rgb(51 153 51)     
+            --colorPlusesCountHover:                                     var(--colorPlusesCount);        
+            --colorPlusesCountVoted:                                     var(--colorPlusesCountHover);
+            --colorPlusesCountTransition:                                var(--colorPlusesCount);
+            --colorPlusesCountVotedHover:                                var(--colorPlusesCountVoted); 
+            
+            --colorPlusesButton:                                         var(--colorPlusesCount);          // rgb(130 202 156)
+            --colorPlusesButtonHover:                                    var(--colorPlusesCountHover);     // default: var(--apple);    
+            --colorPlusesButtonVoted:                                    var(--colorPlusesButton);      
+            --colorPlusesButtonVotedHover:                               var(--colorPlusesCountVotedHover);  
+
+            --colorMinusesCount:                                         var(--valencia);                   // rgb(237 28 36)
+            --colorMinusesCountHover:                                    var(--colorMinusesCount);         
+            --colorMinusesCountVoted:                                    var(--colorMinusesCountHover);     
+            --colorMinusesCountVotedTransition:                          var(--colorMinusesCount);
+            --colorMinusesCountVotedHover:                               var(--colorMinusesCountVoted);  
+            
+            --colorMinusesButton:                                        var(--colorMinusesCount);    
+            --colorMinusesButtonHover:                                   var(--colorMinusesCountHover);           
+            --colorMinusesButtonVoted:                                   var(--colorMinusesButton);     
+            --colorMinusesButtonVotedHover:                              var(--colorMinusesCountVotedHover);     
+            
+            --colorVotedPlusSign:                                        var(--whitish);         // kolor plusa na tle zaplusowanego przycisku
+            --colorVotedMinusSign:                                       var(--colorVotedPlusSign);
+        }
+
+
+
+        /* zmiana kolorystyki plusów i przycisków do plusowania */
+        if(plusesAndMinusesColorsEnable == 1)
+        {
+            /* plusy w sidebarze */
+            section.entries-sidebar > div.content > section.entries > section.entry > header > div.right > div > span.plus
             {
-                color: var(--greenPluses);
-                scale: 32;
-                opacity: 0.4;
-            }
-            @starting-style
+                color: var(--colorPlusesCount);
+            } 
+            
+            section[class]:is(.rating-box, .related-rating-box) > ul > li[class].plus,
+            section[class]:is(.dummyClass, .rating-box, .related-rating-box) > ul > li[class].plus:before
             {
-                section.entry > section.stream > div.content > section.entry:has(.plus):before
+                color: var(--colorPlusesCount);
+            }
+            section[class]:is(.rating-box, .related-rating-box):hover > ul > li[class].plus,
+            section[class]:is(.dummyClass, .rating-box, .related-rating-box):hover > ul > li[class].plus:before
+            {
+                color: var(--colorPlusesCountHover);
+            }
+            
+            section[class]:is(.rating-box, .related-rating-box):has(> div.buttons > button.plus.voted) > ul > li[class].plus,
+            section[class]:is(.dummyClass, .rating-box, .related-rating-box):has(> div.buttons > button.plus.voted) > ul > li[class].plus:before
+            {
+                color: var(--colorPlusesCountVoted);
+            }
+            section[class]:is(.rating-box, .related-rating-box):has(> div.buttons > button.plus.voted):hover > ul > li[class].plus,
+            section[class]:is(.dummyClass, .rating-box, .related-rating-box):has(> div.buttons > button.plus.voted):hover > ul > li[class].plus:before
+            {
+                color: var(--colorPlusesCountVotedHover);
+            }
+            
+            section[class]:is(.rating-box, .related-rating-box) > ul > li[class].minus,
+            section[class]:is(.dummyClass, .rating-box, .related-rating-box) > ul > li[class].minus:before
+            {
+                color: var(--colorMinusesCount);
+            }
+            
+            section[class]:is(.rating-box, .related-rating-box):hover > ul > li[class].minus,
+            section[class]:is(.dummyClass, .rating-box, .related-rating-box):hover > ul > li[class].minus:before
+            {
+                color: var(--colorMinusesCountHover);
+            }
+            section[class]:is(.rating-box, .related-rating-box):has(> div.buttons > button.minus.voted) > ul > li[class].minus,
+            section[class]:is(.dummyClass, .rating-box, .related-rating-box):has(> div.buttons > button.minus.voted) > ul > li[class].minus:before
+            {
+                color: var(--colorMinusesCountVoted);
+            }
+            section[class]:is(.rating-box, .related-rating-box):has(> div.buttons > button.minus.voted):hover > ul > li[class].minus,
+            section[class]:is(.dummyClass, .rating-box, .related-rating-box):has(> div.buttons > button.minus.voted):hover > ul > li[class].minus:before
+            {
+                color: var(--colorMinusesCountVotedHover);
+            }
+            
+            
+
+            
+            
+
+
+            /* PRESET SKÓRKI PLUSÓW */
+            if(plusesAndMinusesStyle == "okragle")
+            {
+                voteButtonBorderRadius = 100%;
+            }
+            else if(plusesAndMinusesStyle == "wykop10")
+            {
+                if(plusesColor == "domyslny")
                 {
-                    scale: 1;
-                    opacity: 1;
+                    plusesColor = "wykop10";
+                    minusesColor = "wykop10"; 
+                }
+                
+                voteButtonBorderRadius = 0%;
+                prefixBeforePlusesCount = "plus"
+                plusesMinusesSize = 20rem;
+
+            }
+            else if(plusesAndMinusesStyle == "wykop20")
+            {
+                if(plusesColor == "domyslny")
+                {
+                    plusesColor = "wykop20";
+                    minusesColor = "wykop20";
+                }
+                voteButtonBorderRadius = 20%;
+                prefixBeforePlusesCount = "brak";
+                prefixBeforeMinusesCount = "minus";
+                plusesMinusesSize = 24rem;
+            }
+
+            
+            
+            
+            /* PRESET KOLORYSTYKI PLUSÓW */
+            if(plusesColor == "wykop20")
+            {
+                section.stream:has(> div.content > section.entry),  //section.rating-box,
+                section.related-rating-box,
+                section.entries-sidebar
+                {       
+                    --colorPlusesCount:                                          var(--apple)          
+                }
+                [data-night-mode] section.rating-box,
+                [data-night-mode] section.related-rating-box,
+                [data-night-mode] section.entries-sidebar
+                {       
+                    --colorPlusesCount:                                          #71be71;   // #39a684;         
+                    --colorVotedPlusSign:                                        #222225;
+                }
+            }
+            else if(plusesColor == "wykop10")
+            {
+                section.stream:has(> div.content > section.entry),  //section.rating-box,
+                section.related-rating-box,
+                section.entries-sidebar
+                {
+                    --colorPlusesCount:                                          rgb(59, 145, 95);
+                }
+                /* TRYB NOCNY */
+                [data-night-mode] section.stream:has(> div.content > section.entry),  //section.rating-box,
+                [data-night-mode] section.related-rating-box,
+                [data-night-mode] section.entries-sidebar
+                {       
+                    --colorPlusesCount:                                         rgb(57, 166, 132);
+                }
+            }
+            else if(plusesColor == "pomaranczowy")
+            {
+                section.stream:has(> div.content > section.entry),  //section.rating-box,
+                section.related-rating-box,
+                section.entries-sidebar
+                {
+                    --colorPlusesCount:                                         orange;
+                }
+            }
+            else if(plusesColor == "zloty")
+            {
+                section.stream:has(> div.content > section.entry),  //section.rating-box,
+                section.related-rating-box,
+                section.entries-sidebar
+                {
+                    --colorPlusesCount:                                         goldenrod;
+                }
+            }
+            
+            
+            /* KOLORYSTYKA MINUSÓW */
+            if(minusesColor == "wykop20")
+            {
+                section.stream:has(> div.content > section.entry),  //section.rating-box,
+                section.related-rating-box,
+                section.entries-sidebar
+                {       
+                    --colorMinusesCount:                                        var(--valencia);         
+                }
+                [data-night-mode] section.rating-box,
+                [data-night-mode] section.related-rating-box,
+                [data-night-mode] section.entries-sidebar
+                {       
+                    --colorMinusesCount:                                         #e86860; // #ff4136;
+                    --colorVotedPlusSign:                                        #222225;
+                }
+            }
+            else if(minusesColor == "wykop10")
+            {
+                section.stream:has(> div.content > section.entry),  //section.rating-box,
+                section.related-rating-box,
+                section.entries-sidebar
+                {
+                    --colorMinusesCount:                                         rgb(192, 57, 43);
+                }
+                /* TRYB NOCNY */
+                [data-night-mode] section.stream:has(> div.content > section.entry),  //section.rating-box,
+                [data-night-mode] section.related-rating-box,
+                [data-night-mode] section.entries-sidebar
+                {       
+                    --colorMinusesCount:                                         rgb(255, 65, 54);
+                }
+            }
+            else if(minusesColor == "pomaranczowy")
+            {
+                section.stream:has(> div.content > section.entry),  //section.rating-box,
+                section.related-rating-box,
+                section.entries-sidebar
+                {
+                    --colorMinusesCount:                                         orange;
+                }
+            }
+            else if(minusesColor == "szary")
+            {
+                section.stream:has(> div.content > section.entry),  //section.rating-box,
+                section.related-rating-box,
+                section.entries-sidebar
+                {
+                    --colorMinusesCount:                                         gray;
+                }
+            }
+            
+        }
+        
+        
+        
+        
+        section.related-rating-box
+        {
+            display: flex!important;
+            width: max-content!important;
+            flex-wrap: nowrap;
+        }
+        section.rating-box
+        {
+            display: grid!important;
+            grid-template-columns: auto;
+            grid-template-rows: auto auto;
+            grid-template-areas:    "votescount" "votesperhour"; 
+            row-gap: 3rem;
+        }
+
+        if(voteButtonHide == 0)
+        {
+            section.rating-box:has(> div.buttons)
+            {
+                grid-template-columns: auto auto;
+                grid-template-areas:    "votescount votesbuttons" "votesperhour votesperhour"; 
+            }
+        }
+        
+
+
+        // LICZBY PLUSÓW I MINUSÓW
+        if(minusesHide == 1 && plusesHide == 1)
+        {
+            section:is(.rating-box, .related-rating-box) > ul
+            {
+                display: none!important;
+            }
+        }
+        else
+        {
+            section:is(.rating-box, .related-rating-box) > ul
+            {
+                display: flex;
+                grid-area: votescount;
+                justify-content: end;
+                gap: var(--plusesMinusesGap);
+            }
+
+            section:is(.rating-box, .related-rating-box) > ul > li
+            {
+                display: flex;
+                position: relative;
+                margin: 0px!important;
+                font-size: calc(var(--plusesMinusesSize) - 5rem)!important;
+                // transition: none!important;
+            }
+            
+            // liczba plusów w sidebarze
+            if(plusesMinusesSizeInSidebar == 1)
+            {
+                section.entries-sidebar > div.content > section.entries > section.entry > header > div.right > div > span.plus
+                {
+                    font-size: "calc(%s - 7rem)" % plusesMinusesSize !important;
+                    font-size: calc(var(--plusesMinusesSize) - 5rem)!important;
+                } 
+            }
+
+
+            if(plusesAndMinusesTransition == 1)
+            {
+                section.rating-box > ul li,
+                section.related-rating-box > ul li
+                {
+                    transition: all 0.5s ease-in-out 0.1s!important;
+                } 
+                section.rating-box div.buttons button,
+                section.related-rating-box div.buttons button
+                {
+                    transition: all 0.4s ease-in-out 0.1s!important;
+                } 
+                section.rating-box .buttons button:hover,
+                section.related-rating-box .buttons button:hover
+                {
+                    transition: all 0.2s ease-in-out 0s!important;
+                }
+            }
+    
+    
+                    
+            if(plusesHide == 1)
+            {
+                section:is(.rating-box, .related-rating-box) > ul > li.plus
+                {
+                    display: none!important;
+                }
+            }
+            if(minusesHide == 1)
+            {
+                section:is(.rating-box, .related-rating-box) > ul > li.minus
+                {
+                    display: none!important;
+                }
+            }
+            
+            if(plusesZeroHide == 1)
+            {
+                section:is(.rating-box, .related-rating-box) > ul > li.zero
+                {
+                    display: none!important;
+                }
+            }
+
+            
+            
+            section:is(.rating-box, .related-rating-box) > ul > li.plus:before         // znak przed liczbą plusów a dla wlaczonego wxs takze sama liczba plusow
+            {
+                font-size: calc(var(--plusesMinusesSize) - 5rem)!important;
+            }
+            section:is(.rating-box, .related-rating-box) > ul > li.minus:before         // znak przed liczbą minusów a dla wlaczonego wxs takze liczba minusow
+            {
+                font-size: calc(var(--plusesMinusesSize) - 5rem)!important;
+                background: none!important;
+            }
+
+
+            
+            
+            if(voteButtonHide == 0 && (plusesHide == 0 || minusesHide == 0))
+            {
+                /* ZNALEZISKO - UKRYWANIE PLUSÓW I MINUSÓW PRZED ZAGŁOSOWANIEM */
+                if (hidePlusesAndMinusesBeforeVoting == 1)
+                {
+                    div.main-content > main.main > section > div.content > section.link-page > section.link > section.comments > section.stream.link-comments > div.content section.entry > article > header > div.right > div > section.rating-box > ul:has(+ div.buttons button:not(.voted))
+                    {
+                        if (removeAllTransitions == 0) { transition: visibility 0s linear 4s, opacity 1s linear 1.3s; }
+                        visibility: hidden;
+                        opacity: 0;
+                    }
+                    div.main-content > main.main > section > div.content > section.link-page > section.link > section.comments > section.stream.link-comments > div.content section.entry > article > header > div.right > div > section.rating-box > ul:has(+ div.buttons button.voted)
+                    {
+                        if (removeAllTransitions == 0) { transition: visibility 0s linear 4s, opacity 1s linear 1.3s; }
+                        visibility: visible;
+                        opacity: 1;
+                    }
+                }
+
+                /* MIKROBLOG: UKRYWANIE PLUSÓW PRZED ZAGŁOSOWANIEM */
+                if(hidePlusesBeforeVoting == 1)
+                {
+                    div.main-content > main.main > section > div.content > section:not(.link-page) section.entry > article > header > div.right > div > section.rating-box > ul:has(+ div.buttons button:not(.voted))
+                    {   
+                        if(removeAllTransitions == 0) { transition: visibility 0s linear 4s, opacity 1s linear 1.3s; } 
+                        visibility: hidden;
+                        opacity: 0;
+                    } 
+                    div.main-content > main.main > section > div.content > section:not(.link-page) section.entry > article > header > div.right > div > section.rating-box > ul:has(+ div.buttons button.voted)
+                    {
+                        if(removeAllTransitions == 0) { transition: visibility 0s linear 4s, opacity 1s linear 1.3s; } 
+                        visibility: visible;
+                        opacity: 1;
+                    }
+                }
+            }
+            
+            
+
+            /* plusy i minusy dodawane przez Wykop XS */
+            if(1 == 0 && WykopXSEnabled == 1 && checkEntryPlusesEnable == 1)
+            {
+
+                section.entry[data-wxs_votes_up] section.rating-box > ul > li:not(.zero)
+                {
+                    font-size: 0rem!important;
+                }
+                section.entry[data-wxs_votes_up] section.rating-box > ul > li:before
+                {
+                    font-size: calc(var(--plusesMinusesSize) - 5rem)!important;
+                }
+
+                section.entry[data-wxs_votes_up] section.rating-box > ul > li.plus:before
+                {
+                    content: var(--votesUp);
+                    //content: attr(data-wxs_votes_up);
+                }
+                section.entry[data-wxs_votes_up] section.rating-box > ul > li.minus:before
+                {
+                    content: var(--votesDown);
+                    //content: attr(data-wxs_votes_down);
+                }
+
+                if(checkEntryPlusesForVotingGame == 1)
+                {
+                    section.entry[data-wxs_voting_game]:not(.reply) > article > header > div.right > div > section.rating-box > ul > li.plus:before
+                    {
+                        content: var(--votesUpHidden);
+                    }
+                    section.entry[data-wxs_voting_game]:not(.reply) > article > header > div.right > div > section.rating-box:has(div.buttons > button.voted) > ul > li.plus:before
+                    {
+                        content: var(--votesUp);
+                        //counter-reset: votesUp var(--votesUp);
+                        //content: counter(votesUp);
+                    }
+                    section.entry > section.stream > div.content > section.entry:has(.plus):before
+                    {
+                        font-size: 20rem;
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        //content: attr(data-wxs_votes_up);
+                        content: var(--votingGameLastDigit);
+                        z-index: 999!important;
+                        transition: 3s all linear 0s;
+                        scale: 1;
+                        opacity: 0;
+                    }
+                    section.entry > section.stream > div.content > section.entry:has(.plus.voted):before
+                    {
+                        scale: 32;
+                        opacity: 0.4;
+                    }
+                    @starting-style
+                    {
+                        section.entry > section.stream > div.content > section.entry:has(.plus):before
+                        {
+                            scale: 1;
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+            /* Wykop XS wyłączony START */
+            else
+            {
+                if(prefixBeforePlusesCount != "brak")           
+                {
+                    if(prefixBeforePlusesCount == "plus")                                   {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "+"!important;     }}        
+                    else if(prefixBeforePlusesCount == "emoji_up_arrow")                    {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "⬆"!important;     }}        
+                    else if(prefixBeforePlusesCount == "emoji_up_right_arrow")              {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "↗"!important;     }}        
+                    else if(prefixBeforePlusesCount == "emoji_up_left_arrow")               {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "↖"!important;     }}        
+                    else if(prefixBeforePlusesCount == "emoji_right_arrow_curving_up")      {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "⤴"!important;    }}        
+                    else if(prefixBeforePlusesCount == "emoji_heavy_tick")                  {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "✔"!important;  scale: 0.8;   }} 
+                    else if(prefixBeforePlusesCount == "emoji_serce")                       {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "💚"!important; scale: 0.8;   }}        
+                    else if(prefixBeforePlusesCount == "emoji_index_pointing_up")           {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "☝"!important;  scale: 0.8;   }}        
+                    else if(prefixBeforePlusesCount == "emoji_thumbs_up")                   {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "👍"!important;    }}        
+                    else if(prefixBeforePlusesCount == "emoji_backhand_index_pointing_up")  {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "👆"!important;  scale: 0.9;  }}        
+                    else if(prefixBeforePlusesCount == "emoji_upwards_button")              {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "🔼"!important; scale: 0.8;   }}        
+                    else if(prefixBeforePlusesCount == "emoji_plus_sign")                   {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "➕"!important; scale: 0.8;  }}        
+                    else if(prefixBeforePlusesCount == "emoji_red_triangle_pointed_up")     {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "🔺"!important; scale: 0.8;  }}        
+                }
+                if(prefixBeforeMinusesCount != "minus")           
+                {
+                    section:is(.rating-box, .related-rating-box) > ul li.minus
+                    {
+                        display: block!important;
+                        opacity: 1!important;
+                    }
+                    section:is(.rating-box, .related-rating-box) > ul li.minus:first-letter
+                    { 
+                        opacity: 0!important;
+                        visibility: hidden!important;
+                    }
+                    section:is(.rating-box, .related-rating-box) > ul li.minus:after
+                    {
+                        display: flex!important;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        transform: translateX(-100%);
+                    }
+                    if(prefixBeforeMinusesCount == "emoji_cross_mark")                       {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 14rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "❌"; scale: 0.8;   }}
+                    else if(prefixBeforeMinusesCount == "emoji_backhand_index_pointing_down"){  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 14rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "👇"; scale: 0.9;    }}      
+                    else if(prefixBeforeMinusesCount == "emoji_thumbs_down")                 {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 16rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "👎";     }}
+                    else if(prefixBeforeMinusesCount == "emoji_downwards_button")            {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "🔽"; scale: 0.8;   }} 
+                    else if(prefixBeforeMinusesCount == "emoji_heavy_tick")                  {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "✔";  scale: 0.8;   }} 
+                    else if(prefixBeforeMinusesCount == "emoji_down_arrow")                  {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "⬇";     }}        
+                    else if(prefixBeforeMinusesCount == "emoji_down_right_arrow")            {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "↘";     }}        
+                    else if(prefixBeforeMinusesCount == "emoji_down_left_arrow")             {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "↙";     }}        
+                    else if(prefixBeforeMinusesCount == "emoji_right_arrow_curving_down")    {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "⤵";     }}        
+                    else if(prefixBeforeMinusesCount == "emoji_minus_sign")                  {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 18rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "➖"; scale: 0.8;   }}        
+                    else if(prefixBeforeMinusesCount == "emoji_red_triangle_pointed_down")   {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "🔻"; scale: 0.8;   }}
+                }
+            }
+            /* Wykop XS wyłączony END */
+        }
+        
+
+        if(voteButtonHide == 1)
+        {
+            section:is(.rating-box, .related-rating-box) div.buttons button
+            {
+                display: none!important;
+            }
+        }
+        else
+        {
+            // przyciski plusowania i minusowania
+            section:is(.rating-box, .related-rating-box) div.buttons button
+            {
+                display: flex!important;
+                grid-area: votesbuttons;
+                width: var(--plusesMinusesSize)!important;
+                height: var(--plusesMinusesSize)!important;
+                voteButtonBorderRadius = voteButtonBorderRadius / 2; // tylko po to, żeby w ustawieniach było od 0% do 100%, a nie do 50%
+                border-radius: voteButtonBorderRadius !important;
+            }
+            section:is(.rating-box, .related-rating-box) div.buttons button:after
+            {
+                content: none!important;
+            }
+            section:is(.rating-box, .related-rating-box) div.buttons button[class]:before
+            {
+                font-size: var(--plusesMinusesSize);
+                width: 100%;
+                height: 100%;
+                font-weight: bolder;
+                position: initial!important;
+                position: relative!important;
+                justify-content: center;
+                align-items: center;
+                top: 0;//-1rem;
+                left: 0;
+                opacity: 1;
+                display: flex;
+
+            }
+            /* plus button */
+            section[class]:is(.rating-box, .related-rating-box) div.buttons button.plus[class]
+            {
+                border-color: var(--colorPlusesButton);
+            }
+            section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before
+            {
+                content: "+";
+                color: var(--colorPlusesButton);
+            }
+            section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:hover
+            {
+                color: var(--colorPlusesButtonHover);
+                border-color: var(--colorPlusesButtonHover);
+            }
+            section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:hover:before
+            {
+                color: var(--colorPlusesButtonHover);
+            }
+            /* plus button zaplusowany */
+            section[class]:is(.rating-box, .related-rating-box) div.buttons button.plus.voted[class]
+            {
+                border-color: var(--colorPlusesButtonVoted);
+                background-color: var(--colorPlusesButtonVoted);
+            }
+            section:is(.rating-box, .related-rating-box) div.buttons button.plus.voted[class]:before
+            {
+                color: var(--colorVotedPlusSign);
+            }
+            section[class]:is(.rating-box, .related-rating-box) div.buttons button.plus.voted[class]:hover
+            {
+                border-color: var(--colorPlusesButtonVotedHover);
+                background-color: var(--colorPlusesButtonVotedHover);
+            }
+            /*section:is(.rating-box, .related-rating-box) div.buttons button.plus.voted[class]:hover:before
+            {
+                color: var(--colorVotedPlusSign);
+            }*/
+            
+            
+            /* minus button */
+            section[class]:is(.rating-box, .related-rating-box) div.buttons button.minus[class]
+            {
+                border-color: var(--colorMinusesButton);
+            }
+            section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before
+            {
+                content: "−";
+                color: var(--colorMinusesButton);
+            }
+            section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:hover
+            {
+                color: var(--colorMinusesButtonHover);
+                border-color: var(--colorMinusesButtonHover);
+            }
+            section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:hover:before
+            {
+                color: var(--colorMinusesButtonHover);
+            }
+            
+            /* minus button zminusowany */
+            section[class]:is(.rating-box, .related-rating-box) div.buttons button.minus.voted[class]
+            {
+                border-color: var(--colorMinusesButtonVoted);
+                background-color: var(--colorMinusesButtonVoted);
+            }
+            section:is(.rating-box, .related-rating-box) div.buttons button.minus.voted[class]:before
+            {
+                color: var(--colorVotedMinusSign);
+            }
+            section[class]:is(.rating-box, .related-rating-box) div.buttons button.minus.voted[class]:hover
+            {
+                border-color: var(--colorMinusesButtonVotedHover);
+                background-color: var(--colorMinusesButtonVotedHover);
+            }
+            section:is(.rating-box, .related-rating-box) div.buttons button.minus.voted[class]:hover:before
+            {
+                color: var(--colorVotedMinusSign);
+            }
+            
+            
+            
+            if(voteButtonPlusEmoji != "plus")                        
+            {
+                if(voteButtonPlusEmoji == "emoji_up_arrow")                         {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "⬆"; scale: 0.8;  }}        
+                else if(voteButtonPlusEmoji == "emoji_up_right_arrow")              {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "↗"; scale: 0.8;   }}        
+                else if(voteButtonPlusEmoji == "emoji_up_left_arrow")               {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "↖"; scale: 0.8;   }}        
+                else if(voteButtonPlusEmoji == "emoji_right_arrow_curving_up")      {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "⤴"; scale: 0.8;  }}        
+                else if(voteButtonPlusEmoji == "emoji_heavy_tick")                  {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "✔"; scale: 0.9;  }}  
+                else if(voteButtonPlusEmoji == "emoji_serce")                       {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "💚"; scale: 0.7;   }}        
+                else if(voteButtonPlusEmoji == "emoji_index_pointing_up")           {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "☝"; scale: 0.7;   }}        
+                else if(voteButtonPlusEmoji == "emoji_thumbs_up")                   {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "👍"; scale: 0.7;    }}        
+                else if(voteButtonPlusEmoji == "emoji_backhand_index_pointing_up")  {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "👆"; scale: 0.7;   }}        
+                else if(voteButtonPlusEmoji == "emoji_upwards_button")              {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "🔼"; scale: 0.9;    }}         
+                else if(voteButtonPlusEmoji == "emoji_plus_sign")                   {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "➕"; scale: 0.6;  }}        
+                else if(voteButtonPlusEmoji == "emoji_red_triangle_pointed_up")     {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "🔺"; scale: 0.7;   }}        
+            }
+            if(voteButtonPlusNoBorder == 1)
+            {
+                section:is(.rating-box, .related-rating-box) div.buttons button.plus
+                {
+                    border-width: 0px!important;
+                }
+            }
+            if(voteButtonMinusEmoji != "minus")                        
+            {
+                if(voteButtonMinusEmoji == "emoji_down_arrow")                         {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "⬇";  scale: 0.8;  }}        
+                else if(voteButtonMinusEmoji == "emoji_down_right_arrow")              {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "↘";  scale: 0.8;   }}        
+                else if(voteButtonMinusEmoji == "emoji_down_left_arrow")               {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "↙";  scale: 0.8;   }}        
+                else if(voteButtonMinusEmoji == "emoji_right_arrow_curving_down")      {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "⤵";  scale: 0.8;  }}        
+                else if(voteButtonMinusEmoji == "emoji_heavy_tick")                    {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "✔";  scale: 0.9;  }}  
+                else if(voteButtonMinusEmoji == "emoji_cross_mark")                    {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "❌"; scale: 0.6;   }}      
+                else if(voteButtonMinusEmoji == "emoji_backhand_index_pointing_down")  {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "👇"; scale: 0.7;   }}      
+                else if(voteButtonMinusEmoji == "emoji_thumbs_down")                   {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "👎"; scale: 0.7;   }}      
+                else if(voteButtonMinusEmoji == "emoji_downwards_button")              {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "🔽"; scale: 0.9;    }}         
+                else if(voteButtonMinusEmoji == "emoji_minus_sign")                    {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "➖"; scale: 0.6;  }}        
+                else if(voteButtonMinusEmoji == "emoji_red_triangle_pointed_down")     {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "🔻"; scale: 0.7;   }}        
+            }
+            if(voteButtonMinusNoBorder == 1)
+            {
+                section:is(.rating-box, .related-rating-box) div.buttons button.minus
+                {
+                    border-width: 0px!important;
                 }
             }
         }
 
-
-    
-    }
-    
-    section.rating-box .wxs_votes_per_hour
-    {
-        //display: none;
-    }
-    section.rating-box .wxs_votes_per_hour[data-wxs_votes_per_hour]
-    {
-        display: block;
-        font-size: 10rem;
-        font-weight: bolder;
-        color: green;
-        text-align: right;
-        background-color: rgba(0, 0, 0, 0.2);
-        padding: 3px 5px;
-        width: 100%;
-    }
-    
-    section.wxs_minimized .wxs_votes_per_hour
-    {
-        display: none!important;
-    }
-    
-    section.rating-box .wxs_votes_per_hour[data-wxs_votes_per_hour^="+0"],
-    section.rating-box .wxs_votes_per_hour[data-wxs_votes_per_hour^="0"]
-    {
-        display: none;
-    }
-
-    section.rating-box .wxs_votes_per_hour[data-wxs_votes_per_hour]::before
-    {
-        content: attr(data-wxs_votes_per_hour);
-    }
+        
 
 
-    // VOTINGEXPLOSION : animacja plusowania Wykop XS
-    section.entry article > header 
-    {
-        position: relative;
-        //z-index: 10;
-    }
-    section.rating-box
-    {
-        position: relative;
-        z-index: 1; // rating box zindex
-    }
-    section.rating-box > div.buttons > button.minus
-    {
-        margin-left: 14px;
-    }
-    
-    if(votingExplosionEnable == 1)
-    {
+
+
+
+
+
+        // RATING BOX INTERSECTING
+        .notIntersecting
+        {
+        }
+
+        .isIntersecting
+        {    
+        }
+        section.link-block > section
+        {
+            position: relative;
+        }
+        section.link-block.isIntersecting > section::after,
+        section.entry.isIntersecting::after
+        {
+            content: "🔷"; // 🍤💠🔄🔷🔶
+            rotate: var(--angle);
+            transform: scaleX(-1);
+
+            animation-name: isIntersectingAnimation, rotatingAnimation!important;
+            animation-duration: 6s, 1s!important;
+            animation-timing-function: ease-in, linear!important;
+            animation-iteration-count: infinite, infinite!important;
+
+            font-size: 14rem;
+
+            position: absolute;
+            right: 0px;
+            top: 0px;
+        }
+
+        @keyframes isIntersectingAnimation
+        {
+            0%      { opacity: 0; scale: 0.3; }
+            50%     { opacity: 1; scale: 0.5; }
+            100%    { opacity: 0; scale: 0.3}
+        }
+        @keyframes fadeOutAnimation
+        {
+            0%      { scale: 1.0; opacity: 0.8; }
+            10%     { scale: 1.3; opacity: 1;   }
+            70%     { scale: 1;   opacity: 1;   }
+            90%     { scale: 0.8; opacity: 0.6; }
+            100%    { scale: 0.8; opacity: 0;   }
+        } 
+        @keyframes slideUpAnimation
+        {
+            0%      { translate: 0px 10px; }
+            20%     { translate: 0px 0px; }
+            70%     { translate: 0px 0px; }
+            100%    { translate: 0px -10px; }
+        } 
+        @keyframes slideDownAnimation
+        {
+            0%      { translate: 0px -10px; }
+            20%     { translate: 0px 0px; }
+            70%     { translate: 0px 0px; }
+            100%    { translate: 0px 10px; }
+        } 
+
+        
+        
+        /* ANIMACJA WYKOPYWANYCH ZNALEZISK */
+        @keyframes linkVotesChangedBackgroundAnimation 
+        {
+            0%      { background: var(--steelBluish); }
+            25%     { background: var(--orange);      }
+            50%     { background: goldenrod;         }
+            75%     { background: var(--orange);      }            
+            100%    { background: var(--steelBluish); }
+        }
+        @keyframes linkVotesChangedColorAnimation 
+        {
+            0%      { font-size: 14rem;     color: var(--orange); }
+            25%     {                          }
+            50%     { font-size: 14.5rem;   color: goldenrod;    }
+            75%     {                           }
+            100%    { font-size: 14rem;     color: var(--orange); }
+        }
+        section[class] section.link-block.plusesAdded > section > aside > section.vote-box > div.dig > p
+        {
+            animation-delay: 0s;
+            animation-direction: normal;
+            animation-duration: 1.4s;
+            animation-fill-mode: both;
+            animation-iteration-count: 1;
+            animation-name: linkVotesChangedBackgroundAnimation;
+            animation-play-state: running;
+            animation-timeline: auto;
+            animation-timing-function: ease-in-out;
+        }
+        section[class] section.link-block.plusesAdded > section > aside > section.vote-box > div.dig > p > span
+        {
+            animation-delay: 0s;
+            animation-direction: normal;
+            animation-duration: 1.4s;
+            animation-fill-mode: both;
+            animation-iteration-count: 1;
+            animation-name: linkVotesChangedColorAnimation;
+            animation-play-state: running;
+            animation-timeline: auto;
+            animation-timing-function: ease-in-out;
+        }
+        
+        
+        
+        /* ANIMACJA PLUSOWANYCH WPISÓW I KOMENTARZY */
+        @keyframes plusesAddedAnimation 
+        {
+            0%      { opacity: 0.3;  color: var(--colorPlusesCount);                }
+            20%     { opacity: 1;    color: var(--colorPlusesCountTransition);      }
+            70%     { opacity: 0.3;  color: var(--colorPlusesCountTransition);      }
+            100%    { opacity: 0.1;  color: var(--colorPlusesCountVoted);           }
+        }
+        article > header > div.right > div > section.rating-box:after
+        {
+            font-size: 10rem;
+            animation-duration: 4s;
+            position: absolute;
+            top: -15px;
+            right: 32px;
+            animation-fill-mode: forwards;
+        }
+        
+        section[class] section.entry.plusesAdded > article > header > div.right > div > section.rating-box > ul > li.plus[class]
+        {
+            color: white;
+            animation-delay: 0s;
+            animation-direction: normal;
+            animation-duration: 2s;
+            animation-fill-mode: both;
+            animation-iteration-count: infinite;
+            animation-name: plusesAddedAnimation;
+            animation-play-state: running;
+            animation-timeline: auto;
+            animation-timing-function: ease-in-out;
+        }
+
+        section[class] section.entry.plusesAdded > article > header > div.right > div > section.rating-box:after
+        {
+            animation-name: fadeOutAnimation, slideUpAnimation;
+            color: ; var(--colorPlusesCountVoted)
+            content: var(--plusesAdded);
+        }
+        section[class] section.entry.plusesRemoved > article > header > div.right > div > section.rating-box:after
+        {
+            animation-name: fadeOutAnimation, slideDownAnimation;
+            color: var(--colorMinusesCountVoted)
+            content: var(--plusesRemoved);
+        }
+        section[class] section.entry.minusesAdded > article > header > div.right > div > section.rating-box:after
+        {
+            color: var(--colorMinusesCountVoted)
+            content: var(--minusesAdded);
+        }
+        section[class] section.entry.minusesRemoved > article > header > div.right > div > section.rating-box:after
+        {
+            color: var(--colorNumberZero)
+            content: var(--minusesRemoved);
+        }
+
+        
+        
+        
+        // VOTES PER MINUTE WE WPISACH I KOMENTARZACH
+        section:is(.vote-box, .rating-box) .wxs_votes_per_hour
+        {
+           display: none;
+        }
+        
+        
+            
+        section.rating-box .wxs_votes_per_hour[data-wxs_votes_per_hour],
+        section:is(.vote-box, .rating-box) .wxs_votes_per_hour[data-wxs_votes_per_hour]
+        {
+            display: flex;
+            grid-area: votesperhour;
+            justify-content: end;
+
+            font-size: 10rem;
+            font-weight: bolder;
+            color: var(--colorPlusesCount);
+
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 3px 5px;
+            width: 100%;
+        }
+        
+        section.vote-box .wxs_votes_per_hour
+        {
+            color: white!important;
+            justify-content: center!important;
+            font-weight: normal!important;
+            margin-top: 3px;
+        }
+
+        section.wxs_minimized .wxs_votes_per_hour
+        {
+            display: none!important;
+        }
+
+        section:is(.vote-box, .rating-box) .wxs_votes_per_hour[data-wxs_votes_per_hour^="+0"],
+        section:is(.dummyClass, .vote-box, .rating-box) .wxs_votes_per_hour[data-wxs_votes_per_hour^="0"]
+        {
+            display: none;
+        }
+
+        section:is(.vote-box, .rating-box) .wxs_votes_per_hour[data-wxs_votes_per_hour]::before
+        {
+            content: attr(data-wxs_votes_per_hour);
+        }
+
+
+        
+        // VOTINGEXPLOSION : animacja plusowania Wykop XS
+        section.entry article > header 
+        {
+            position: relative;
+        }
         section.rating-box
         {
-            --explosionDelay: 0s;
-            --explosionDuration: 900ms;
-            --explosionTiming: linear;
+            position: relative;
+            z-index: 1; // rating box zindex
         }
-        
-        .wykopxs_vote_animation
+        section.rating-box > div.buttons > button.minus
         {
-            opacity: 0;
-            cursor: pointer;
-            font-size: 12rem;
-            font-weight: bolder;
-            position: absolute;
-            top: -10px;
-            animation-name: explodePluses;
-            animation-delay: var(--explosionDelay);
-            animation-duration: var(--explosionDuration);
-            animation-timing-function: var(--explosionTiming);
-        }
-        
-        
-        /* plusy */
-        .wykopxs_vote_animation.wykopxs_green
-        {
-            color: var(--green)!important;
-        /*  text-shadow: 0px 0px 2px var(--green); */
+            margin-left: 14px;
         }
 
-        .wykopxs_vote_animation.wykopxs_golden
+        if(votingExplosionEnable == 1)
         {
-            font-size: 35rem;
-            color: var(--golden)!important;
-            text-shadow: 0px 0px 5px var(--golden);
-        } 
+            section.rating-box
+            {
+                --explosionDelay: 0s;
+                --explosionDuration: 1300ms;
+                --explosionTiming: linear;
+            }
 
-        /* minusy */
-        .wykopxs_vote_animation.wykopxs_red
-        {
-            color: var(--red)!important;
-        }
-    
+            .wykopxs_vote_animation
+            {
+                opacity: 0;
+                cursor: pointer;
+                font-size: 12rem;
+                font-weight: bolder;
+                position: absolute;
+                top: -10px;
+                animation-name: explodePluses;
+                animation-delay: var(--explosionDelay);
+                animation-duration: var(--explosionDuration);
+                animation-timing-function: var(--explosionTiming);
+            }
 
+
+            /* plusy */
+            .wykopxs_vote_animation.wykopxs_green
+            {
+                color: var(--colorPlusesCountVoted)!important;
+            /*  text-shadow: 0px 0px 2px var(--colorPlusesButtonVoted); */
+            }
+
+            .wykopxs_vote_animation.wykopxs_golden
+            {
+                font-size: 35rem;
+                color: var(--golden)!important;
+                text-shadow: 0px 0px 5px var(--golden);
+            } 
+
+            /* minusy */
+            .wykopxs_vote_animation.wykopxs_red
+            {
+                color: var(--colorMinusesCountVoted)!important;
+            }
+
+
+
+            @keyframes explodePluses
+            {
+                0%      { transform: translate3d(0, 0, 0); opacity: 0; } 
+                12%     { opacity: 0.2; } 
+                13%     { opacity: 1; } 
+                70%     { opacity: 1; } 
+                90%     { opacity: 0.4; } 
+                100%    { transform: translate3d(var(--position_x), var(--position_y), var(--position_z)); opacity: 0; } 
+            } 
+
+            if(votingExplosionAnimation == "animacja2")
+            {
+                .wykopxs_vote_animation 
+                {
+                    animation-name: explodePluses, ;
+                }
+
+                @eyframes explodePlusesAnimacja2
+                {
+                    0%      { scale: 60%;   } 
+                    12%     { scale: 60%;   } 
+                    13%     { scale: 60%;   } 
+                    70%     { scale: 60%;   } 
+                    90%     { scale: 120%;  } 
+                    100%    { scale: 400%;  } 
+                }
+            } 
+            else if(votingExplosionAnimation == "animacja3")
+            {
+                .wykopxs_vote_animation 
+                {
+                    animation-name: explodePluses, explodePlusesAnimacja3;
+                }
+                @keyframes explodePlusesAnimacja3
+                {
+                    0%      { scale: 60%;   } 
+                    12%     { scale: 60%;   } 
+                    13%     { scale: 60%;   } 
+                    70%     { scale: 60%;   } 
+                    90%     { scale: 120%;  } 
+                    100%    { scale: 400%;  } 
+                }
+            }
+        }        
         
-        @keyframes explodePluses
-        {
-            0%      { transform: translate3d(0, 0, 0); opacity: 0; } 
-            12%     { opacity: 0.2; } 
-            13%     { opacity: 1; } 
-            70%     { opacity: 1; } 
-            90%     { opacity: 0.4; } 
-            100%    { transform: translate3d(var(--position_x), var(--position_y), var(--position_z)); opacity: 0; } 
-        } 
         
-        if(votingExplosionAnimation == "animacja2")
-        {
-            .wykopxs_vote_animation 
-            {
-                animation-name: explodePluses, explodePlusesAnimacja2;
-            }
-            
-            @eyframes explodePlusesAnimacja2
-            {
-                0%      { scale: 60%;   } 
-                12%     { scale: 60%;   } 
-                13%     { scale: 60%;   } 
-                70%     { scale: 60%;   } 
-                90%     { scale: 120%;  } 
-                100%    { scale: 400%;  } 
-            }
-        } 
-        else if(votingExplosionAnimation == "animacja3")
-        {
-            .wykopxs_vote_animation 
-            {
-                animation-name: explodePluses, explodePlusesAnimacja3;
-            }
-            @keyframes explodePlusesAnimacja3
-            {
-                0%      { scale: 60%;   } 
-                12%     { scale: 60%;   } 
-                13%     { scale: 60%;   } 
-                70%     { scale: 60%;   } 
-                90%     { scale: 120%;  } 
-                100%    { scale: 400%;  } 
-            }
-        }
     }
+
+    
     
 
     
@@ -21532,11 +21780,13 @@ https://wykop.pl/moje/
                 --checkLinkCommentsPerHour:             checkLinkCommentsPerHour             
             }
 
+            
             --checkEntryPlusesWhenVoting:               checkEntryPlusesWhenVoting;
-
             --checkEntryPlusesEnable:                   checkEntryPlusesEnable;
             if(checkEntryPlusesEnable == 1)
             {
+                --prefixBeforePlusesCount:              prefixBeforePlusesCount;
+                --prefixBeforeMinusesCount:             prefixBeforeMinusesCount;
                 --checkEntryPlusesPerHour:              checkEntryPlusesPerHour;      
                 --checkEntryCommentsPerHour:            checkEntryCommentsPerHour;      
                 --checkEntryPlusesForVotingGame:        checkEntryPlusesForVotingGame;
