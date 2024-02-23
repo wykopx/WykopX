@@ -1,7 +1,7 @@
 /* ==UserStyle==
-@name           Wykop XDev
-@version        3.0.2
-@description    Wykop X Dev 
+@name           Wykop X Style 3.0
+@version        3.0.3
+@description    WERSJA ALPHA W FAZIE TESTÓW Wykop X Style 3.0
 @preprocessor   stylus
 @namespace      userstyles.world/user/wykopchanger
 @license        No License (YOU CAN USE THIS CODE ONLY IN STYLUS EXTENSIONS. You are not allowed to: copy any part of the code, share, and use it anywhere)
@@ -25,16 +25,6 @@
 @var checkbox   intersectionObserverRootMargin                  `❎ Wczytuj z wyprzedzeniem (Notatki, ActionBox, InfoBox, Plusy w czasie rzeczywistym) `     1
 
 
-
-@var range      HR_WYKOPXS_XHR_BLOCKER                          `❎ XHR BLOCKER`                                                                                                                [0, 0, 99900, 1, 'mm']
-
-@var checkbox   wxsBlockXHRExternal                             `❎ Blokuj zewnętrzne requesty XHR (śledzące trackery, skrypty reklamowe, statystyki) `             1
-@var checkbox   wxsBlockXHRInternalAds                          `❎ Blokuj requesty XHR do wykopowego API z reklamami (wykop.pl/api/v3/ads)`      1
-
-@var checkbox   wxsBlockXHRConsoleLogBlocked                    `❎ Loguj zablokowane XHR w konsoli (CTRL+SHIFT+J)`         0
-@var checkbox   wxsBlockXHRConsoleLogAllowed                    `❎ Loguj niezablokowane XHR w konsoli (CTRL+SHIFT+J)`      0
-                                     
-       
 
 @var range      HR_XLABELS                                      `XLabels ⭐`                                                                                 [0, 0, 99900, 1, 'mm']
 @var range      wxsUserLabelsEnable_ON_INFO                     `Usługa XLabels jest włączona`               [0, 0,111100, 1, 'mm']
@@ -315,6 +305,9 @@ TODO checkbox   checkEntryCommentsPerHour                       `❎➕ Liczba n
 
 
 @var range      HR_NICKNAME_COLORS                  `🔴🟠🟢 KOLORY NICKÓW ⭐ Nowe`                                                                                [0, 0, 99900, 1, 'mm']
+
+@var checkbox   fixBlackNicknames                              `✔ Napraw błąd czarnych nicków na Wykopie ⭐`     1
+
 
 @var select     nicknameColorsYours                             `💛 Zmień kolor Twojego nicka ⭐` {
                                                                             "Nie zmieniaj koloru (domyślny)":"domyslny", 
@@ -1082,10 +1075,10 @@ REMOVED checkbox   notificationsShowUnreadNumber                `❎💻 Pokaż 
 
 
 @var checkbox   showFullDescription                             `☰ Nie ucinaj długich opisów znalezisk`                       1
-@var checkbox   linkShowRealNicknameColorOrange                 `🟠 Wyświetl nazwę pomarańczki w kolorze ⭐ `          1
-@var checkbox   linkShowRealNicknameColorBordeaux               `🔴 Wyświetl nazwę bordo w kolorze ⭐`                  1
-@var checkbox   linkShowRealNicknameColorGreen                  `🟢 Wyświetl nazwę zielonki w kolorze ⭐`               1
-@var checkbox   linkShowRealNicknameColorOther                  `⚪ Wyświetl nazwę kont specjalnych w kolorze ⭐`       1
+@var checkbox   linkShowRealNicknameColorOrange                 `🟠 Nick autora pomarańczki w kolorze ⭐ `           1
+@var checkbox   linkShowRealNicknameColorBordeaux               `🔴 Nick autora bordo w kolorze ⭐`                  1
+@var checkbox   linkShowRealNicknameColorGreen                  `🟢 Nick autora zielonki w kolorze ⭐`               1
+@var checkbox   linkShowRealNicknameColorOther                  `⚪ Nick kont specjalnych w kolorze ⭐`       1
 @var checkbox   linkUserHide                                    `🚫 Ukryj nazwę użytkownika ⭐`                            0
 @var checkbox   linkDomainHide                                  `🚫 Ukryj źródło (domenę) ⭐`                              0
 @var checkbox   linkTagsHide                                    `🚫 Ukryj tagi znaleziska`                                  0
@@ -1138,7 +1131,6 @@ REMOVED checkbox   notificationsShowUnreadNumber                `❎💻 Pokaż 
 
 
 @var range      HR_ZNALEZISKA                       `🔸 ZNALEZISKO`                                                                             [0, 0, 99900, 1, 'mm']
-
 @var select     hideRelatedLinks                                `🔸 Treści powiązane ze znaleziskiem` {
                                                                     "Zawsze wyświetlaj (domyślnie)":"zawszewyswietlaj",
                                                                     "Wyświetlaj. Ukryj jeśli brak powiązanych":"niepokazujjeslipuste",
@@ -1213,6 +1205,101 @@ REMOVED checkbox   notificationsShowUnreadNumber                `❎💻 Pokaż 
 
 
 
+
+
+
+
+
+
+ 
+
+@var range      HR_EDITOR                       `✍️ EDYTOR WPISU I KOMENTARZA`                                                                          [0, 0, 99900, 1, 'mm']
+@var checkbox   editorShowMyUsername                            `❎ Pokazuj nazwę konta przy dodawaniu wpisu/komentarza   ⭐ `               1
+@var checkbox   editorShowMyUsernameOnSendButton                `❎ Pokaż nazwę konta na przycisku 𝗪𝗬𝗦́𝗟𝗜𝗝 ⭐`                                 1
+
+@var select     editorSendHotkey                                `Skrót klawiaturowy do wysyłania wpisu / komentarza ⭐` {
+                                                                            'Tylko kliknięcie przycisku "Wyślij"'     :   "domyslnie",
+                                                                            "ENTER"                                   :   "enter",
+                                                                            "CTRL + ENTER*":"ctrl_enter",
+                                                                            "CTRL + S"                                :   "ctrl_s"
+                                                                        }
+@var checkbox   editorSendHotkeyShowOnSendButton                `Pokaż skrót klawiaturowy na przycisku 𝗪𝗬𝗦́𝗟𝗜𝗝 ⭐`                             1
+@var checkbox   editorSendButtonDontDeactivate                  `✔ Zablokuj mruganie przycisku 𝗪𝗬𝗦́𝗟𝗜𝗝 w czasie pisania`                       1
+@var checkbox   editorEnterSendsSwitchHide                      `🚫 Ukryj przycisk "Wysyłaj klawiszem ENTER" ⭐`                             0
+
+@var select     editorClearReplyButtonAlignment                 `Przycisk 𝗪𝗬𝗖𝗭𝗬𝗦́𝗖́` {
+                                                                        "default:Po prawej (domyślnie)": "domyslna",
+                                                                        "left:Po lewej": "polewej",
+                                                                        "🚫 Nie pokazuj przycisku 𝗪𝗬𝗖𝗭𝗬𝗦́𝗖́": "niepokazuj",
+                                                                    }
+                                                                    
+                                                                    
+@var select     editorTextFontSize                              `Rozmiar tekstu wpisywanego w edytorze ⭐` {
+                                                                            "14px - domyślny":"14.0rem",
+                                                                            "—————————":"14.00rem",
+                                                                            "10px - najmniejszy":"10rem",
+                                                                            "11px - bardzo mały":"11rem",
+                                                                            "12px - mały":"12rem",
+                                                                            "13px - mały":"13rem",
+                                                                            "14px - normalny":"14rem",
+                                                                            "15px - średni":"15rem",
+                                                                            "16px - średni*":"16rem",
+                                                                            "17px - większy":"17rem",
+                                                                            "18px - większy":"18rem",
+                                                                            "19px - duży":"19rem",
+                                                                            "20px - duży":"20rem",
+                                                                            "21px - duży":"21rem",
+                                                                            "22px - bardzo duży":"22rem",
+                                                                            "23px - bardzo duży":"23rem",
+                                                                            "24px - ogromny":"24rem",
+                                                                            "25px - ogromny":"25rem",
+                                                                        }
+
+
+@var select     editorNewEntries                                `Edytor dodawania nowych wpisów na mikroblogu`  {
+                                                                            "Pokazuj normalnie (domyślnie)":"domyslnie", 
+                                                                            "Zwinięty":"minimized",
+                                                                            "Pokazuj edytor tylko na dole strony":"onlybottom",
+                                                                            "🚫 Nie dodaję nowych wpisów na mikroblogu - całkowicie ukryj edytor":"niepokazuj",
+                                                                            } 
+@var select     editorNewEntriesInTags                          `Edytor dodawania nowych wpisów na stronach #tagów`  {
+                                                                            "Pokazuj normalnie (domyślnie)":"domyslnie", 
+                                                                            "Zwinięty":"minimized",
+                                                                            "Pokazuj edytor tylko na dole strony":"onlybottom",                              
+                                                                            "🚫 Nie dodaję nowych wpisów na mikroblogu - całkowicie ukryj edytor":"niepokazuj",
+                                                                            } 
+
+var select     editorNewComments                                `Edytor dodawania komentarzy`  {
+                                                                            "Pokazuj normalnie (domyślnie)":"domyslnie", 
+                                                                            "Zwinięty*":"minimized",
+                                                                            "🚫 Nie dodaję komentarzy - całkowicie ukryj edytor":"niepokazuj",
+                                                                            } 
+
+@var checkbox   editorStickyHeader                              `Pasek z przyciskami formatowania zawsze widoczny podczas edycji `                      1
+@var checkbox   editorShowAllFormattingButtons                  `📱 Pokaż wszystkie przyciski formatowania na telefonie`                                     1
+
+
+
+@var checkbox   editorFocusOnDodajURL                           `❎ Aktywuj edytor nowego wpisu na stronie .../mikroblog/#dodaj`                            1
+TODO: var checkbox   replyEditorShowTagsFollowers               `❎ Wyświetl liczbę obserwujących tagi podczas wpisywania #tagu`                            0
+
+
+
+
+@var range      HR_LENNYFACE                            `( ͡° ͜ʖ ͡°) Okienko wyboru LennyFace`                                                                          [0, 0, 99900, 1, 'mm']
+@var range      lennyFaceDropdownUpgrade_ON_INFO                `Modyfikacje okienka LennyFace są włączone`                 [0, 0,111100, 1, 'mm']
+@var checkbox   lennyFaceDropdownUpgrade                        `( ͡° ͜ʖ ͡°) Aktywuj modyfikacje okienka LennyFace wybrane poniżej`                             0
+@var checkbox   lennyFaceDropdownAbove                          `Okienko wyboru LennyFace nad edytorem`                                                      1
+@var range      lennyFaceDropdownFontSize                       `Rozmiar LennyFace`                                                                         [10, 4, 25, 1, 'rem']
+@var range      lennyFaceDropdownHeight                         `Wysokość okienka wyboru LennyFace`                                                         [320, 140, 600, 10, 'px']
+@var range      lennyFaceDropdownNumberOfLenniesInRow           `Liczba LennyFace w jednym rzędzie`                                                         [6, 1, 44, 1, '']
+@var checkbox   lennyFaceDropdownDontHideEntryContent           `Nie ukrywaj treści w edytorze podczas wybierania LennyFace`                                   0
+@var checkbox   lennyFaceDropdownSameFontFamily                 `LennyFace pisany tą samą czcionką co tekst`                                                   0
+@var select     lennyFaceDropdownSkin                           `Okienko wyboru LennyFace - kolorystyka`  {
+                                                                            "Domyślny kolor":"domyslne",
+                                                                            "Białek*":"bialek",
+                                                                            "Czarnek":"czarnek"
+                                                                        } 
 
 
 @var range      HR_MIKRO                            `🔷 MIKROBLOG`                                                                                          [0, 0, 99900, 1, 'mm']
@@ -1662,8 +1749,6 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
 
 
 @var range      HR_RIGHT_SIDEBAR_LINKS            `SIDEBAR: 🔸 ZNALEZISKA`                                   [0, 0, 99900, 1, 'mm']
-
-
 @var checkbox   rightSidebarHideHits                            `🚫 Ukryj 🔸 𝗛𝗶𝘁𝘆 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ/ᶻⁿᵃˡᵉᶻᶦˢᵏᵒ) ⭐`                  0
 @var checkbox   rightSidebarHideUpcomingActive                  `🚫 Ukryj 🔸 𝗪𝘆𝗸𝗼𝗽𝗮𝗹𝗶𝘀𝗸𝗼: 𝗮𝗸𝘁𝘆𝘄𝗻𝗲 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ) ⭐`         0
 @var checkbox   rightSidebarHideLinksNewest                     `🚫 Ukryj 🔸 𝗡𝗮𝗷𝗻𝗼𝘄𝘀𝘇𝗲 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 (ᵐᶦᵏʳᵒᵇˡᵒᵍ) ⭐`                0
@@ -1678,85 +1763,6 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
 
 
 
-
-
-@var range      HR_MULTIKONTA                   `❎ MULTIKONTA`                                                                                                                [0, 0, 99900, 1, 'mm']
-@var checkbox   editorShowMyUsername                            `❎ Pokazuj nazwę konta przy dodawaniu wpisu/komentarza  ⭐`               1
- 
-
-@var range      HR_EDITOR                       `✍️ EDYTOR WPISU I KOMENTARZA`                                                                          [0, 0, 99900, 1, 'mm']
-@var select     editorTextFontSize                              `Rozmiar tekstu wpisywanego w edytorze ⭐` {
-                                                                            "14px - domyślny":"14.0rem",
-                                                                            "—————————":"14.00rem",
-                                                                            "10px - najmniejszy":"10rem",
-                                                                            "11px - bardzo mały":"11rem",
-                                                                            "12px - mały":"12rem",
-                                                                            "13px - mały":"13rem",
-                                                                            "14px - normalny":"14rem",
-                                                                            "15px - średni":"15rem",
-                                                                            "16px - średni*":"16rem",
-                                                                            "17px - większy":"17rem",
-                                                                            "18px - większy":"18rem",
-                                                                            "19px - duży":"19rem",
-                                                                            "20px - duży":"20rem",
-                                                                            "21px - duży":"21rem",
-                                                                            "22px - bardzo duży":"22rem",
-                                                                            "23px - bardzo duży":"23rem",
-                                                                            "24px - ogromny":"24rem",
-                                                                            "25px - ogromny":"25rem",
-                                                                        }
-
-
-@var select     editorNewEntries                                `Edytor dodawania nowych wpisów na mikroblogu`  {
-                                                                            "Pokazuj normalnie (domyślnie)":"domyslnie", 
-                                                                            "Zwinięty":"minimized",
-                                                                            "Pokazuj edytor tylko na dole strony":"onlybottom",
-                                                                            "🚫 Nie dodaję nowych wpisów na mikroblogu - całkowicie ukryj edytor":"niepokazuj",
-                                                                            } 
-@var select     editorNewEntriesInTags                          `Edytor dodawania nowych wpisów na stronach #tagów`  {
-                                                                            "Pokazuj normalnie (domyślnie)":"domyslnie", 
-                                                                            "Zwinięty":"minimized",
-                                                                            "Pokazuj edytor tylko na dole strony*":"onlybottom",                              
-                                                                            "🚫 Nie dodaję nowych wpisów na mikroblogu - całkowicie ukryj edytor":"niepokazuj",
-                                                                            } 
-
-
-var select     editorNewComments                                `Edytor dodawania komentarzy`  {
-                                                                            "Pokazuj normalnie (domyślnie)":"domyslnie", 
-                                                                            "Zwinięty*":"minimized",
-                                                                            "🚫 Nie dodaję komentarzy - całkowicie ukryj edytor":"niepokazuj",
-                                                                            } 
-
-@var checkbox   editorStickyHeader                              `Pasek z przyciskami formatowania zawsze widoczny podczas edycji `                      1
-@var checkbox   editorShowAllFormattingButtons                  `📱 Pokaż wszystkie przyciski formatowania na telefonie`                                     1
-
-@var select     editorClearReplyButtonAlignment                       `Przycisk 𝗪𝗬𝗖𝗭𝗬𝗦́𝗖́` {
-                                                                        "default:Po prawej (domyślnie)": "domyslna",
-                                                                        "left:Po lewej": "polewej",
-                                                                        "🚫 Nie pokazuj przycisku 𝗪𝗬𝗖𝗭𝗬𝗦́𝗖́": "niepokazuj",
-                                                                    }
-@var checkbox   editorSendButtonDontDeactivate                  `✔ Przycisk 𝗪𝗬𝗦́𝗟𝗜𝗝 nie mruga w czasie pisania`                                                1
-
-@var checkbox   editorFocusOnDodajURL                           `❎ Aktywuj edytor nowego wpisu na stronie .../mikroblog/#dodaj`                            1
-TODO: var checkbox   replyEditorShowTagsFollowers               `❎ Wyświetl liczbę obserwujących tagi podczas wpisywania #tagu`                            0
-
-
-
-
-@var range      HR_LENNYFACE                            `( ͡° ͜ʖ ͡°) Okienko wyboru LennyFace`                                                                          [0, 0, 99900, 1, 'mm']
-@var range      lennyFaceDropdownUpgrade_ON_INFO                `Modyfikacje okienka LennyFace są włączone`                 [0, 0,111100, 1, 'mm']
-@var checkbox   lennyFaceDropdownUpgrade                        `( ͡° ͜ʖ ͡°) Aktywuj modyfikacje okienka LennyFace wybrane poniżej`                             0
-@var checkbox   lennyFaceDropdownAbove                          `Okienko wyboru LennyFace nad edytorem`                                                      1
-@var range      lennyFaceDropdownFontSize                       `Rozmiar LennyFace`                                                                         [10, 4, 25, 1, 'rem']
-@var range      lennyFaceDropdownHeight                         `Wysokość okienka wyboru LennyFace`                                                         [320, 140, 600, 10, 'px']
-@var range      lennyFaceDropdownNumberOfLenniesInRow           `Liczba LennyFace w jednym rzędzie`                                                         [6, 1, 44, 1, '']
-@var checkbox   lennyFaceDropdownDontHideEntryContent           `Nie ukrywaj treści w edytorze podczas wybierania LennyFace`                                   0
-@var checkbox   lennyFaceDropdownSameFontFamily                 `LennyFace pisany tą samą czcionką co tekst`                                                   0
-@var select     lennyFaceDropdownSkin                           `Okienko wyboru LennyFace - kolorystyka`  {
-                                                                            "Domyślny kolor":"domyslne",
-                                                                            "Białek*":"bialek",
-                                                                            "Czarnek":"czarnek"
-                                                                        } 
 
 
 @var range      HR_READING_PROGRESS                     `🚧 PROGRESS BAR`                                                   [0, 0, 99900, 1, 'mm']
@@ -1785,7 +1791,6 @@ TODO: var checkbox   replyEditorShowTagsFollowers               `❎ Wyświetl l
 
 
 @var range      HR_LOOKS                             `☰ OPCJE LAYOUTU`                                                             [0, 0, 99900, 1, 'mm']
-
 @var checkbox   mainContentCenter                               `⪢ ⪡ Wycentruj stronę`                                                1
 @var select     mainContentWidth                                `⟺ Szerokość strony` {
                                                                         "Domyślna":"domyslna",
@@ -1806,10 +1811,10 @@ TODO: var checkbox   replyEditorShowTagsFollowers               `❎ Wyświetl l
 
 
 @var range      HR_MOBILENAV                        `📱 BELKA MOBILNA NA DOLE`                                                          [0, 0, 99900, 1, 'mm']
-@var checkbox   mobileNavBarHide                                `Ukryj Belkę mobilną`                                                   0
-@var checkbox   mobileNavBarMyWykopButton                       `📱❎ Pokaż przycisk 𝗠𝗪 (Mój Wykop)`                                   1
-@var checkbox   mobileNavBarMessagesButton                      `📱❎ Pokaż przycisk ✉ (Wiadomości) `                                   1
-@var checkbox   mobileNavBarProfileButton                       `📱❎ Pokaż przycisk profilu 👤`                                         1
+@var checkbox   mobileNavBarHide                                `Ukryj Belkę mobilną`                                                     0
+@var checkbox   mobileNavBarMyWykopButton                       `📱❎ Pokaż przycisk 𝗠𝗪 (Mój Wykop)`                                     1
+@var checkbox   mobileNavBarMessagesButton                      `📱❎ Pokaż przycisk ✉ (Wiadomości) `                                    1
+@var checkbox   mobileNavBarProfileButton                       `📱❎ Pokaż przycisk profilu 👤`                                          1
 @var checkbox   mobileNavBarHideWhileTypingEditor               `📱 Ukryj dolną belkę podczas pisania komentarzy`                         1
 
 
@@ -1817,7 +1822,6 @@ TODO: var checkbox   replyEditorShowTagsFollowers               `❎ Wyświetl l
 
 
 @var range      HR_NEW_NOTLOGGED                    `👤 DLA NIEZALOGOWANYCH`                                                    [0, 0, 99900, 1, 'mm']
-
 TODO    checkbox hideAdultEntriesAndLinks  
 @var checkbox   hideLogInButton                                 `🚫👤 Ukryj przycisk "Zaloguj się"`                                                            0
 @var checkbox   hideRegisterButton                              `🚫👤 Ukryj przycisk "Zarejestruj się"`                                                        0
@@ -2104,7 +2108,7 @@ TODO    checkbox hideAdultEntriesAndLinks
 
 
 
-@var range     HR_HIDEADS                   `⛔ BLOKOWANIE REKLAM`                                                                                             [0, 0, 99900, 1, 'mm']
+@var range     HR_HIDEADS                           `⛔ BLOKOWANIE REKLAM`                                                                                             [0, 0, 99900, 1, 'mm']
 @var checkbox  hideAds                                          `⛔ Usuń reklamy 🆗`                                                                           1
 @var checkbox  hideSponsoredLinks                               `⛔ Ukryj znaleziska 𝗪𝘆𝗸𝗼𝗽 𝘀𝗽𝗼𝗻𝘀𝗼𝗿𝗼𝘄𝗮𝗻𝘆 🆗`                                                   1
 @var select    hideRecommendedLinks                             `⛔ Ukryj znaleziska 𝗪𝘆𝗸𝗼𝗽 𝗣𝗼𝗹𝗲𝗰𝗮` {
@@ -2113,27 +2117,34 @@ TODO    checkbox hideAdultEntriesAndLinks
                                                                             "Wyszarzone*":"wyszarzone",
                                                                         }        
 
-@var range      HR_XS_REMOVE_ANNOYANCES             `❎🕵️‍ USUWANIE SZPIEGÓW ⭐`                                                                                 [0, 0, 99900, 1, 'mm']
+@var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ USUWANIE SZPIEGÓW ⭐`                                                                                 [0, 0, 99900, 1, 'mm']
+@var checkbox   removeGDPRAlert                                 `🚫🕵️‍ Ukryj okno "Dbamy o Twoją prywatność"`                                   1
+
 @var range      removeAnnoyancesEnable_ON_INFO                  `Usuwanie szpiegujących elementów jest aktywne`                 [0, 0,111100, 1, 'mm']
-
-@var checkbox   removeAnnoyancesEnable                          `❎🕵️‍♂️ Włącz usuwanie szpiegów ⭐`                                             1
-@var checkbox   removeAnnoyancesIframes                         `❎🚫🕵️‍ Usuwanie szpiegujących ramek <iframe> ⭐`                             1
-@var checkbox   removeAnnoyancesScripts                         `❎🚫🕵️‍ Usuwanie szpiegujących skryptów <script> ⭐`                          1
-@var checkbox   removeAnnoyancesGDPR                            `❎🚫🕵️‍ Usuń okno akceptowania ciasteczek i odblokuj przesuwanie strony ⭐`   1
-@var checkbox   removeAnnoyancesAds                             `❎🚫 Usuwanie reklam ⭐`                                                     1
-
-@var checkbox   fixScrollingAndGDPRAlertHide                    `✔🕵️‍ Ukryj okno 'Cookies' i napraw błąd zablokowanego scrollowania strony`     1
+@var checkbox   removeAnnoyancesEnable                          `❎🕵️‍♂️ Włącz usuwanie szpiegów ⭐`                                              1
+@var checkbox   removeAnnoyancesGDPR                            `❎🚫🕵️‍ Usuń okna akceptowania ciasteczek "Dbamy o Twoją prywatność"    ⭐`    0
+@var checkbox   removeAnnoyancesIframes                         `❎🚫🕵️‍ Usuń szpiegujące ramki <iframe> ⭐`                                    0
+@var checkbox   removeAnnoyancesScripts                         `❎🚫🕵️‍ Usuń szpiegujące skrypty JavaScript ⭐`                                0
+@var checkbox   removeAnnoyancesAds                             `❎🚫🕵️‍ Usuń reklamy ⭐`                                                       1
 
 
+                  
+@var range      HR_WYKOPXS_XHR_BLOCKER                          `❎ XHR BLOCKER`                                                                                                                [0, 0, 99900, 1, 'mm']
+@var range      wxsBlockXHREnable_ON_INFO                       `XHR Blocker jest włączony`                            [0, 0,111100, 1, 'mm']
+@var checkbox   wxsBlockXHREnable                               `❎ Włącz HXR Blocker `             1
 
-                                                                        
-                                                                        
+@var checkbox   wxsBlockXHRExternal                             `❎ Blokuj zewnętrzne requesty XHR (śledzące trackery, skrypty reklamowe, statystyki) `             1
+@var checkbox   wxsBlockXHRInternalAds                          `❎ Blokuj requesty XHR do wykopowego API z reklamami (wykop.pl/api/v3/ads)`                        1
+@var checkbox   wxsBlockXHRConsoleLogBlocked                    `❎ Loguj zablokowane XHR w konsoli (CTRL+SHIFT+J)`                                                 0
+@var checkbox   wxsBlockXHRConsoleLogAllowed                    `❎ Loguj niezablokowane XHR w konsoli (CTRL+SHIFT+J)`                                              0
+                                     
+       
+                                                
                                                                         
 @var range      HR_FIXWYKOPBUGS                    `✔ NAPRAW BŁĘDY WYKOPU`                                                                                   [0, 0, 99900, 1, 'mm']
-
-
-@var checkbox   hideMultipleErrorAlerts                         `✔ Ukrywaj zwielokrotnione alerty (np. '𝗪𝘆𝘀𝘁𝗮̨𝗽𝗶𝗹 𝗯𝗹𝗮̨𝗱')`                                      1
-@var checkbox   fixCaseSensitiveTagsRedirection                 `✔🔹❎ Napraw przekierowania tagów z wielkimi literami (np. #Heheszki albo #WYKOP) `      1
+@var checkbox   hideMultipleErrorAlerts                         `✔ Ukrywaj zwielokrotnione alerty (np. '𝗪𝘆𝘀𝘁𝗮̨𝗽𝗶𝗹 𝗯𝗹𝗮̨𝗱')`                                    1
+@var checkbox   fixCaseSensitiveTagsRedirection                 `✔🔹❎ Napraw przekierowania tagów z wielkimi literami (np. #Heheszki albo #WYKOP)`       1
+@var checkbox   fixScrollingErrorWithAdBlock                    `✔ Napraw błąd zablokowanego scrollowania strony przez AdBlocka`                           1
 
 
 
@@ -3474,6 +3485,21 @@ TODO    checkbox hideAdultEntriesAndLinks
     } 
 
 
+    if(linksAnalyzerEnable == 1)
+    {
+        div.wxsDownVoteWrapper
+        {
+            justify-content: center!important;
+            display: flex!important; 
+            margin-top: 5rem!important;
+        }
+        
+        div.wxsDownVoteWrapper button.wxsDownVote
+        {
+            font-size: 11rem!important;
+        }
+    }
+    
     /* Włącz analizowanie znalezisk */
     if(linksAnalyzerEnable == 1)
     {
@@ -3563,9 +3589,7 @@ TODO    checkbox hideAdultEntriesAndLinks
                     display: block;
                 } 
             } 
-        } 
-
-
+        }
     } 
 
     /* BOX ZNALEZISKA - uwzglednienie kolorow takze przy AMOLED */
@@ -3784,9 +3808,22 @@ TODO    checkbox hideAdultEntriesAndLinks
 
     
     
-    html { font-size: 62.5%; }                                              /* 62.5% -> 10px https://www.freecodecamp.org/news/override-root-font-size-for-a-better-user-experience/ */ 
+    /* html { font-size: 62.5%; }                                              /* 62.5% -> 10px https://www.freecodecamp.org/news/override-root-font-size-for-a-better-user-experience/ */  */
     body { font-size: 1.6rem; }                                             /* 10px * 1.6rem = 16 px -- https://nekocalc.com/px-to-rem-converter */
-
+    body * { font-size: 14rem; }
+    body small { font-size: 0.8em; line-height: 0.9em; }
+    
+    section.editor>header>ul>li>i,                   			/* napisy przy ikonkach edytora */
+    aside.profile-top>section>header>ul li,         			/* ikonki "Zgłoś", "Zablokuj" */
+    aside.profile-top>section>header>ul li a,       			/* ikonka "Napisz do użytkownika"*/
+    section.editor div.enter label,                 			/* przycisk wysyłania enterem */
+    aside.tag-top aside ul > li.edit > a,            			/* edycja tagu autorskiego */
+    section.popper > section.tooltip > footer > ul.icons > li, 	/* ikonki w menu kontekstowym */
+    section.popper > section.tooltip > footer > ul.icons > li > a, /* ikonki w menu kontekstowym */
+    section.link-page > section.link > section.link-block > section > article > section.actions > ul > li > ul > li > a  /* action menu znaleziska nadpisane przez a, span { font-size: 14rem; } */
+    {
+        font-size: 0;
+    }
         
     if(textFontSize == "10rem")      {    html { font-size: 3.91%; }} 
     else if(textFontSize == "11rem") {    html { font-size: 4.30%; }} 
@@ -3817,32 +3854,13 @@ TODO    checkbox hideAdultEntriesAndLinks
         --textFontSize19: 19rem;
         --textFontSize20: 20rem;
         --textFontSize21: 21rem;
-
         --textFontSize: var(--textFontSize14);
-
         --topNavTextFontSize: topNavCustomTextFontSize;
         --editorTextFontSize: editorTextFontSize;
         --entryVotersTextFontSize: entryVotersTextFontSize;
     }
     
-    body * {
-        font-size: 14rem;
-    }
-    
-    section.editor>header>ul>li>i /* napisy przy ikonkach edytora */
-    aside.profile-top>section>header>ul li, // ikonki "Zgłoś", "Zablokuj"
-    aside.profile-top>section>header>ul li a // ikonka "Napisz do użytkownika"
-    section.editor div.enter label
-    {
-        font-size: 0;
-    }
-
-    body small {
-        font-size: 0.8em;
-        line-height: 0.9em;
-    }
-
-
+  
     aside.profile-top > section > header > div h1 > a.username > span           /* nazwa nicku na profilu */
     { font-size: 22rem!important; }
 
@@ -3859,13 +3877,21 @@ TODO    checkbox hideAdultEntriesAndLinks
     { font-size: 18rem!important; } 
 
 
-    aside.left-panel > section.links > .content ul li a.hybrid                  /* kategorie */
+    aside.left-panel > section.links > .content ul li a.hybrid span em          /* kategorie */
     { font-size: 16rem!important; } 
 
     .night-mode-switch .switch label[for="switch-night-mode"] > span,           /* przycisk zmiany Tryb nocny/dzienny */
     section.sidebar a.username span,                                            /* nazwa uzytkownika z ktorym rozmawiamy - w wiadomosciach */
     { font-size: 15rem!important; } 
 
+    
+    
+    
+    
+    
+    
+    
+    
     div.content section.entry-content div.wrapper,                              /* treść wpisu / komentarza */
     header.header>.right>nav>ul> li,                                            /* panel powiadomień - przycisk z nazwa uzytkownika login */ 
     aside.left-panel>section.links>.content>header h4,                          /* zwijacze kategorii */
@@ -3940,6 +3966,8 @@ TODO    checkbox hideAdultEntriesAndLinks
 
 
 
+    
+    
     section.link-block > section[data-v-441f7cc5]
     {
         min-height: 150px!important;
@@ -4228,7 +4256,7 @@ TODO    checkbox hideAdultEntriesAndLinks
         }
       
       
-      /* MOBILE 640px */
+        /* MOBILE 640px */
         if(linkThumbnail == "polewej")
         {            
             section.stream section.link-block > section > article
@@ -4457,7 +4485,7 @@ TODO    checkbox hideAdultEntriesAndLinks
         section.link-block .wxs_menu_action_box
         {
             right: unset!important;
-            left: 18px!important;
+            left: 122px!important;
         }
         section.link-block .wxs_menu_action_box .wxs_filter_on_user      { order: 2!important; }
         section.link-block .wxs_menu_action_box .wxs_filter_off          { order: 3!important; }
@@ -5221,14 +5249,14 @@ TODO    checkbox hideAdultEntriesAndLinks
             margin-right: 10px!important;
         } 
     }
-    // 🆗
-    if(hideAds)
+    // 🆗 + XS
+    if(hideAds == 1)
     {
         .pub-slot-wrapper { display: none!important; } 
         .pub-slot-wrapper:has(section.premium-pub.link-block) { display: flex!important; } 
     } 
     // 🆗
-    if(hideSponsoredLinks)
+    if(hideSponsoredLinks == 1)
     {
         .pub-slot-wrapper:has(section.premium-pub.link-block) { display: none!important; } 
     } 
@@ -8058,45 +8086,30 @@ TODO    checkbox hideAdultEntriesAndLinks
     } 
 
     
-    if(editorShowMyUsername == 1)
+    
+    if(editorEnterSendsSwitchHide == 1)
     {
-        
-        
-        /* HEADER MICROBLOGA PRZED EDYTOREM */
-        header.stream-top:has(+ section.editor) > h1:after
+        section.editor > footer > div.buttons > div.enter
         {
-            margin-left: 5rem;
-            content: var(--myUsernameAS);
-            text-transform: initial; 
+            display: none!important;
         }
-        /* Przycisk WYŚLIJ */
-        section.editor > footer > div.buttons > div.button.send > button.target
-        {
-            display: flex;
-            flex-wrap: nowrap;
-            flex-direction: row;
-            column-gap: 4rem;
-            text-transform: capitalize;
-        }
-        section.editor > footer > div.buttons > div.button.send > button.target::after
-        {
-            content: var(--myUsernameAs);
-            text-transform: initial;    
-        }
-        
-        section.editor > div.content::before
-        {
-            font-size: 15rem;
-            color: var(--gullGray);
-            content: var(--myUsernameAddingAs);
-            text-transform: initial;   
-            position: relative;
-            display: block;
-            margin-top: 13px;
-        }
- 
-        
     }
+    
+    
+    /* skrót klawiaturowy do wysyłania xxxxx */
+    if(WykopXSEnabled == 1 && editorSendHotkey != "domyslnie")
+    {
+        if(editorSendHotkey == "enter" && editorEnterSendsSwitchHide == 0)
+        {
+            section.editor > footer > div.buttons > div.enter > label
+            {
+                background: var(--steelBluish)!important;
+                border-color: var(--steelBluish)!important;
+            }
+        }
+    }
+
+    
     
 
     /* MIKROBLOG & WPIS: EDYTOR NOWYCH WPISÓW I KOMENTARZY */
@@ -9583,11 +9596,7 @@ TODO    checkbox hideAdultEntriesAndLinks
 
 
 
-    // action menu znaleziska
-    section.link-page > section.link > section.link-block > section > article > section.actions > ul > li > ul > li > a
-    {
-        font-size: 0px; // nadpisane przez a, span { font-size: 14rem; }
-    }
+
     if(actionMenuLinkShowTwitterXTitle == 1)
     {
         section.link-page > section.link > section.link-block > section > article > section.actions > ul > li > ul > li > a::before
@@ -9896,21 +9905,26 @@ TODO    checkbox hideAdultEntriesAndLinks
         
         // domyślnie włączone także w Wykop XS
     */
-    if(fixScrollingAndGDPRAlertHide == 1)
+    if(fixScrollingErrorWithAdBlock == 1 || removeGDPRAlert == 1)
     {
-      body
-      {
-        overflow: initial!important;
-      } 
-      body > div[class^="app_gdpr"] 
-      {
-        display: none i;
-      } 
+        body
+        {
+            overflow: initial!important;
+        } 
+        body > div[class^="app_gdpr"] 
+        {
+            display: none i;
+        } 
     } 
     
     
+    
+    
+    
+    
+    
     /* 💻 Nie zmieniaj kolorystyki w kategoriach */
-    if(ignoreCategoryColor)
+    if(ignoreCategoryColor == 1)
     {
         section.links ul.categories li.active span[style*="color"]
         {
@@ -9925,11 +9939,6 @@ TODO    checkbox hideAdultEntriesAndLinks
     
     
 
-    
-    
-    
-    
-    
     
     
     /* Dwa najlepsze komentarze */
@@ -10037,18 +10046,18 @@ TODO    checkbox hideAdultEntriesAndLinks
         header:has(div.left > a.avatar > figure.female) > div.right > div a.username.burgundy-profile:not(.banned, .removed)    { color: var(--rozowyPasek1)!important;                 } 
     } 
     
-    if(nicknameColorsOrange == "bordo")               { a.orange-profile:not(.banned, .removed) { color: var(--nicknameBordeaux1)!important;       }} 
-    else if(nicknameColorsOrange == "pomaranczowy")   { a.orange-profile:not(.banned, .removed) { color: var(--nicknameOrange1)!important;         }} 
-    else if(nicknameColorsOrange == "zielony")        { a.orange-profile:not(.banned, .removed) { color: var(--nicknameGreen1)!important;          }} 
+    if(nicknameColorsOrange == "pomaranczowy")          { a.orange-profile:not(.banned, .removed) { color: var(--nicknameOrange1)!important;         }}             
+    else if(nicknameColorsOrange == "bordo")            { a.orange-profile:not(.banned, .removed) { color: var(--nicknameBordeaux1)!important;       }} 
+    else if(nicknameColorsOrange == "zielony")          { a.orange-profile:not(.banned, .removed) { color: var(--nicknameGreen1)!important;          }} 
     else if(nicknameColorsOrange == "kolor_paska")
     { 
         div.right > div a.username.orange-profile:not(.banned, .removed)                                                    { color: var(--bezplciowyPasekNegative)!important;          } 
         header:has(div.left > a.avatar > figure.male) > div.right > div a.username.orange-profile:not(.banned, .removed)    { color: var(--niebieskiPasek1)!important;                  } 
         header:has(div.left > a.avatar > figure.female) > div.right > div a.username.orange-profile:not(.banned, .removed)  { color: var(--rozowyPasek1)!important;                     } 
     } 
-    if(nicknameColorsGreen == "bordo")               { a.green-profile:not(.banned, .removed) { color: var(--nicknameBordeaux1)!important;         }} 
+    if(nicknameColorsGreen == "zielony")             { a.green-profile:not(.banned, .removed) { color: var(--nicknameGreen1)!important;            }}  
     else if(nicknameColorsGreen == "pomaranczowy")   { a.green-profile:not(.banned, .removed) { color: var(--nicknameOrange1)!important;           }} 
-    else if(nicknameColorsGreen == "zielony")        { a.green-profile:not(.banned, .removed) { color: var(--nicknameGreen1)!important;            }} 
+    else if(nicknameColorsGreen == "bordo")          { a.green-profile:not(.banned, .removed) { color: var(--nicknameBordeaux1)!important;         }} 
     else if(nicknameColorsGreen == "kolor_paska")
     { 
         div.right > div a.username.green-profile:not(.banned, .removed)                                                     { color: var(--bezplciowyPasekNegative)!important;          } 
@@ -11268,73 +11277,7 @@ TODO    checkbox hideAdultEntriesAndLinks
                 }
             }
 
-            /* TWOJE OBSERWOWANE TAGI */
-            section.wykopx_your_observed_tags
-            {
-                display: flex!important;
-                flex-direction: column;
-                gap: 16px;
-            } 
-            if(observedTagsInRightSidebarEnable == 1)
-            {
-              section.wykopx_your_observed_tags
-              {
-                display: flex!important;
-                flex-direction: column;
-                gap: 16px;
-              } 
-
-              section.wykopx_your_observed_tags div.wykopx_quick_search_container
-              {
-                display: flex!important;
-                width: 100%;
-                position: relative;
-              } 
-              section.wykopx_your_observed_tags .wykopx_quick_search_container,
-              section.wykopx_your_observed_tags > div.content
-              {
-                margin-top: 0px!important;
-              } 
-
-              section.wykopx_your_observed_tags .wykopx_quick_search_container input.wykopx_quick_search
-              {
-                box-sizing: border-box;
-
-                width: 100%;
-                height: 25rem;
-                font-size: 15rem;
-                padding: 17rem 10px 17rem 34px;
-                opacity: 0.5;
-
-                color: var(--colorLinkTag);
-                border: 1px solid var(--blackOpacity05);
-                background-color: var(--whiteOpacity01);
-               } 
-
-              section.wykopx_your_observed_tags .wykopx_quick_search_container:hover input.wykopx_quick_search,
-              section.wykopx_your_observed_tags .wykopx_quick_search_container       input.wykopx_quick_search:focus,
-              section.wykopx_your_observed_tags .wykopx_quick_search_container       input.wykopx_quick_search:not(:placeholder-shown)
-              {
-                opacity: 1;
-                background-color: var(--whiteOpacity03);
-              } 
-
-              section.wykopx_your_observed_tags .wykopx_quick_search_container:before
-              {
-                content: "🔍";
-                font-size: 16rem;
-                display: block;
-                position: absolute;
-                left: 8px;
-                top: 6rem;
-                min-width: 20px;
-                min-height: 20px;
-                max-height: 20px;
-                max-width: 20px;
-              } 
-            } 
-
-
+            
         }  
     } 
     /* RIGHT SIDEBAR -- END */
@@ -21644,17 +21587,35 @@ https://wykop.pl/moje/
 
         if(WykopXSEnabled == 1)
         {
-            --wxsDev:                                       wxsDev;
-            --wxsBlockXHRExternal:                          wxsBlockXHRExternal;
-            --wxsBlockXHRInternalAds:                       wxsBlockXHRInternalAds;
+            --wxsDev                                        : wxsDev;
             
-            if(wxsBlockXHRExternal == 1 || wxsBlockXHRInternalAds == 1)
+            
+            
+            --wxsBlockXHREnable                             : wxsBlockXHREnable;
+            if(wxsBlockXHREnable)
             {
-                --wxsBlockXHRConsoleLogBlocked:             wxsBlockXHRConsoleLogBlocked;
-                --wxsBlockXHRConsoleLogAllowed:             wxsBlockXHRConsoleLogAllowed; 
+                --wxsBlockXHRExternal                       : wxsBlockXHRExternal;
+                --wxsBlockXHRInternalAds                    : wxsBlockXHRInternalAds;
+
+                --wxsBlockXHRConsoleLogBlocked              : wxsBlockXHRConsoleLogBlocked;
+                --wxsBlockXHRConsoleLogAllowed              : wxsBlockXHRConsoleLogAllowed; 
+
+                --rightSidebarHidePopularTags               : rightSidebarHidePopularTags;
+                --rightSidebarHideRelatedTags               : rightSidebarHideRelatedTags;
+    
+                --rightSidebarHideHits                      : rightSidebarHideHits; 
+                --rightSidebarHideEntriesHot                : rightSidebarHideEntriesHot; 
+                --rightSidebarHideEntriesActive             : rightSidebarHideEntriesActive; 
+                --rightSidebarHideEntriesPopular            : rightSidebarHideEntriesPopular; 
+                --rightSidebarHideUpcomingActive            : rightSidebarHideUpcomingActive; 
+                --rightSidebarHideLinksNewest               : rightSidebarHideLinksNewest; 
+                --rightSidebarHideLinksActive               : rightSidebarHideLinksActive; 
+                --rightSidebarHideLinksPopular              : rightSidebarHideLinksPopular; 
             }
             
 
+
+    
             
             --mouseClickOpensImageInNewTab:             mouseClickOpensImageInNewTab;   
             --homepagePinnedEntriesHideBelowLimit:      homepagePinnedEntriesHideBelowLimit;
@@ -21663,6 +21624,8 @@ https://wykop.pl/moje/
             --tabTitleCustom:                           tabTitleCustom; 
 
             --linksAnalyzerSortBy:                      linksAnalyzerSortBy
+            --editorShowMyUsername:                     editorShowMyUsername
+            --editorShowMyUsernameOnSendButton:         editorShowMyUsernameOnSendButton
 
 
             /* - domyslnie WŁĄCZONE bez Wykop X Style */
@@ -21684,8 +21647,8 @@ https://wykop.pl/moje/
             --infiniteScrollEntriesEnabled:             infiniteScrollEntriesEnabled
             --infiniteScrollLinksEnabled:               infiniteScrollLinksEnabled
 
-
-
+            --editorSendHotkey:                         editorSendHotkey; // "domyslnie", "enter", "ctrl_enter", "ctrl_s"
+            --editorSendHotkeyShowOnSendButton:         editorSendHotkeyShowOnSendButton;
 
             --wxsSwitchesEnable:                        wxsSwitchesEnable;
             if(wxsSwitchesEnable == 1)
