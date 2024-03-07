@@ -15,8 +15,8 @@ Here are some ideas to get you started:
 - ⚡ Fun fact: ...
 -->
 
-Dodatek Wykop X to dwa dodatki - arkusz stylów **Wykop X Style** oraz skrypt JavaScript **Wykop XS**
-Wykop X to kilkaset usprawnień dla strony wykop.pl - nowe funkcje, naprawianie Wykopowych błędów, zmiana intefejsu czy kolorystyki.
+**Wykop X** to połączenie dwóch dodatków - arkusza stylów **Wykop X Style** oraz skryptu JavaScript **Wykop XS**     
+**Wykop X** dodaje aż kilkaset usprawnień dla strony wykop.pl - nowe funkcje, naprawianie Wykopowych błędów, zmiana intefejsu czy kolorystyki.
 Zerknij na listę wszystkich funkcji:
 https://github.com/wykopx/WykopX/wiki/Lista-funkcji
 
