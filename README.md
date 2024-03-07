@@ -43,7 +43,6 @@ Style CSS:
 - **Wykop X Style**: https://userstyles.world/style/8174/wykop-x-style   
    
 - **Wykop X Blank** https://userstyles.world/style/8419/wykop-x-blank   
-- **Wykop XS** https://userstyles.world/style/8179/wykop-xs
 
       
    
