@@ -1,6 +1,7 @@
 /* ==UserStyle==
 @name           Wykop X Blank
-@version        2.48.0
+@version        2.50.2
+
 @description    Ponad 500 funkcji usprawniających i naprawiających Wykop.pl
 @description    Blank - ta wersja ma WYŁĄCZONE wszystkie opcje i funkcje
 
@@ -10,13 +11,36 @@
 @description    https://userstyles.world/style/8174/wykop-x
 
 
+
 ---- AUTOR WYKOP X ----
 
 @author         Wykop X <wykopx@gmail.com> | wiki.wykopx.pl
-@homepageURL    http://changelog.wykopx.pl
-@supportURL     http://changelog.wykopx.pl
+@homepageURL    http://wiki.wykopx.pl
+@supportURL     http://wiki.wykopx.pl
 
 ---- AUTOR WYKOP X ----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @preprocessor   stylus
 @namespace      userstyles.world/user/wykopchanger
@@ -35,11 +59,12 @@
 
 
 @var range      HR_DOODLE                           `BELKA`                                                                         [0, 0, 99900, 1, 'mm']
-@var checkbox  hideTopNavDoodle                                 `❤ Ukryj Logo WOŚP`     0
+@var checkbox  hideTopNavDoodle                                 `❤ Ukryj Logo WOŚP`          0
 @var checkbox  topNavSanta                                      `🎅 Wolnorynkowy Mikołaj`    0
 @var checkbox  topNavSnowMan                                    `⛄ Bałwan`                  0
 @var checkbox  topNavSnowMan2                                   `⛄ Bałwan 2`                0
 @var checkbox  topNavSnowGirl                                   `❄ Snow Girl`                0
+
 
 
 @var range      HR_PHOTO_VIEWER                     `🌆 Wykop X Photo Viewer`                                                                                [0, 0, 99900, 1, 'mm']
@@ -63,14 +88,14 @@ var checkbox   hotLinksShowFirst                              `check: 🔸🔥 G
 @var checkbox   actionMenuLinkHideShareToFacebook               `🚫 Ukryj udostępnianie na Facebooku`                       0
 @var checkbox   actionMenuLinkHideShareToTwitter                `🚫 Ukryj udostępnianie na Twitter/𝕏`                       0
 @var checkbox   actionMenuLinkHideCommentsCount                 `🚫 Ukryj liczbę komentarzy`                                0 
-@var checkbox   actionMenuLinkHideAddCommentButton              `🚫 Ukryj przycisk "Dodaj komentarz" gdy brak komentarzy`   1 
+@var checkbox   actionMenuLinkHideAddCommentButton              `🚫 Ukryj przycisk "Dodaj komentarz" gdy brak komentarzy`   0 
 @var checkbox   actionMenuLinkHideFavoriteButton                `🚫 Ukryj przycisk "☆" (Dodaj do ulubionych) `              0 
 @var checkbox   actionMenuLinkHideReport                        `🚫 Ukryj akcję "Zgłoś"`                                     0 
 
 
 
 @var range      HR_NEW_TAB                              `💠 KARTA Z WYKOPEM ⭐ Nowe v.2.41`                                                              [0, 0, 99900, 1, 'mm']
-@var checkbox   tabChangeOnlyOnHiddenState                      `❎ Modyfikuj kartę Wykopu tylko gdy jest w tle ⭐`                        0
+@var checkbox   tabChangeOnlyOnHiddenState                      `❎ Modyfikuj kartę Wykopu tylko gdy jest w tle ⭐`                                    0
 
 @var range      HR_NEW_TAB_FAVICON                      `💠 KARTA Z WYKOPEM: FAVICON ⭐ Nowe v.2.41`                                                              [0, 0, 99900, 1, 'mm']
 @var checkbox   tabFaviconEnabled                              `❎ Włącz zmianę ikonki karty z Wykopem (favicon) ⭐`                                   0
@@ -388,7 +413,7 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
 @var checkbox   rightSidebarHideLinksActive                     `🚫💻⭐ Ukryj 🔸 𝗔𝗸𝘁𝘆𝘄𝗻𝗲 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 (ʷᵖᶦˢ)`                             0
 @var checkbox   rightSidebarHideLinksPopular                    `🚫💻⭐ Ukryj 🔸 𝗣𝗼𝗽𝘂𝗹𝗮𝗿𝗻𝗲 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 𝘄 𝗸𝗮𝘁𝗲𝗴𝗼𝗿𝗶𝗶 (ᵏᵃᵗᵉᵍᵒʳᶦᵉ)`            0
 
-@var checkbox   rightSidebarHidePopularTags                     `🚫💻⭐ Ukryj # 𝗣𝗼𝗽𝘂𝗹𝗮𝗿𝗻𝗲 𝘁𝗮𝗴𝗶 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ/ᵐᶦᵏʳᵒᵇˡᵒᵍ/ʷᵖᶦˢ)`     1
+@var checkbox   rightSidebarHidePopularTags                     `🚫💻⭐ Ukryj # 𝗣𝗼𝗽𝘂𝗹𝗮𝗿𝗻𝗲 𝘁𝗮𝗴𝗶 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ/ᵐᶦᵏʳᵒᵇˡᵒᵍ/ʷᵖᶦˢ)`     0
 @var checkbox   rightSidebarHideRelatedTags                     `🚫💻⭐ Ukryj # 𝗣𝗼𝘄𝗶𝗮̨𝘇𝗮𝗻𝗲 𝘁𝗮𝗴𝗶 (ᵗᵃᵍ/ᵏᵃᵗᵉᵍᵒʳᶦᵉ/ᶻⁿᵃˡᵉᶻᶦˢᵏᵒ) `             0
 
 
@@ -866,7 +891,7 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
 @var checkbox   visitedLinksGrayedOut                           `Zaznaczaj znaleziska jako ✔ 𝗣𝗥𝗭𝗘𝗖𝗭𝗬𝗧𝗔𝗡𝗘`                                         0
 
 
-@var checkbox   hitsHorizontal                                  `🔸 Przywróć poziomy układ "Hitów" zamiast nowych kafelek ⭐`    1
+@var checkbox   hitsHorizontal                                  `🔸 Przywróć poziomy układ "Hitów" zamiast nowych kafelek ⭐`    0
 @var range      hitsHorizontalSize                              `🔶 Rozmiar miniaturek "Hitów" ⭐`                              [200, 100, 400, 20, ''] 
 @var checkbox   hitsMoreHide                                    `🔸 Ukryj nagłówek "HITY WYKOPU Zobacz więcej >" ⭐`              0
 @var checkbox   hitsHide                                        `🚫 Ukryj "Hity wykopu"  na stronie głównej `                    0
@@ -1332,12 +1357,25 @@ var select     editorNewComments                                `Edytor dodawani
 
 
 
-@var range      HR_MOBILENAV                        `📱 BELKA MOBILNA NA DOLE`                                                          [0, 0, 99900, 1, 'mm']
-@var checkbox   hideMobileNavbar                                `📱 Ukryj Belkę mobilną`                                                 0
-@var checkbox   myWykopMobileInMobileNavbar                     `📱❎ Pokaż przycisk 𝗠𝗪 (Mój Wykop)`                                   0
-@var checkbox   messagesMobileInMobileNavbar                    `📱❎ Pokaż przycisk ✉ (Wiadomości) `                                   0
-@var checkbox   profileInMobileNavbar                           `📱❎ Pokaż przycisk profilu 👤`                                         0
-@var checkbox   editorHideBottomBileWhileTyping                 `📱 Ukryj dolną belkę podczas pisania komentarzy`                         0
+@var range      HR_MOBILE_VERSION                           `📱 STRONA MOBILNA `                                                          [0, 0, 99900, 1, 'mm']
+
+@var checkbox   mobileFooterHide                                `📱🚫 Ukryj stopkę 𝗪𝗬𝗞𝗢𝗣 © 𝟮𝟬𝟬𝟱 na dole strony mobilnej ⭐`               0
+
+@var range      SUB_HR_MOBILENAV                            `📱 BELKA MOBILNA NA DOLE`                          [0, 0, 99999, 1, 'mm']
+
+
+@var checkbox   mobileNavBarMyWykopButton                       `📱❎ Pokaż przycisk 𝗠𝗪 (Mój Wykop)`                                     0
+@var checkbox   mobileNavBarMessagesButton                      `📱❎ Pokaż przycisk ✉ (Wiadomości) `                                    0
+@var checkbox   mobileNavBarProfileButton                       `📱❎ Pokaż przycisk profilu 👤`                                          0
+
+@var checkbox   mobileNavBarHomeButtonHide                      `📱🚫 Ukryj przycisk 𝗪 (Główna) ⭐`                                     0
+@var checkbox   mobileNavBarUpcomingButtonHide                  `📱🚫 Ukryj przycisk Znalezisko ⭐`                                       0
+@var checkbox   mobileNavBarUpcomingCountHide                   `📱🚫 Ukryj liczbę nowych znalezisk ⭐`                                   0
+@var checkbox   mobileNavBarMicroblogButtonHide                 `📱🚫 Ukryj przycisk 𝗠 (Mikroblog) ⭐`                                    0
+
+@var checkbox   mobileNavBarHideWhileTypingEditor               `📱 Schowaj belkę podczas pisania komentarzy ✍️`                          0
+@var checkbox   mobileNavBarHide                                `📱🚫 Ukryj belkę`                                                        0
+
 
 
 
@@ -1578,10 +1616,10 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 @var checkbox   hidePrivacySettings                             `🚫 Ukryj okienko "Dbamy o Twoją prywatność"`                                                0
 @var checkbox   hidePrivacySettingsAndEnableScrollAgain         `✔ Napraw błąd zablokowanego scrollowania strony przez AdBlocka`                             0
 
-@var checkbox   hideMultipleErrorAlerts                         `✔ Ukrywaj zwielokrotnione alerty (np. 𝗪𝘆𝘀𝘁𝗮̨𝗽𝗶𝗹 𝗯𝗹𝗮̨𝗱)`                                        0
-@var checkbox   fixCaseSensitiveTagsRedirection                 `✔🔹❎ Przekierowania tagów zapisanych z wielkimi literami (np. #Heheszki albo #WYKOP) `    1
-@var checkbox   fixDeletedEntriesOnMainpage                     `✔🔹🚫 Ukrywaj usunięte wpisy nadal przypięte na głównej`                                   0
-@var checkbox   fixWrongTextOfHiddenCommentWithBlacklistedTag   `✔🚯🚭 Popraw błędny tekst '𝗞𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇 𝘂𝘇̇𝘆𝘁𝗸𝗼𝘄𝗻𝗶𝗸𝗮 𝘇 𝗰𝘇𝗮𝗿𝗻𝗲𝗷 𝗹𝗶𝘀𝘁𝘆'`                            0
+@var checkbox   hideMultipleErrorAlerts                         `✔ Ukrywaj zwielokrotnione alerty (np. 𝗪𝘆𝘀𝘁𝗮̨𝗽𝗶𝗹 𝗯𝗹𝗮̨𝗱)`                                                   0
+@var checkbox   fixCaseSensitiveTagsRedirection                 `✔🔹❎ Przekierowania tagów zapisanych z wielkimi literami (np. #Heheszki albo #WYKOP) `                0
+@var checkbox   fixDeletedEntriesOnMainpage                     `✔🔹🚫 Ukrywaj usunięte wpisy nadal przypięte na głównej`                                              0
+@var checkbox   fixWrongTextOfHiddenCommentWithBlacklistedTag   `✔🚯🚭 Popraw błędny tekst '𝗞𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇 𝘂𝘇̇𝘆𝘁𝗸𝗼𝘄𝗻𝗶𝗸𝗮 𝘇 𝗰𝘇𝗮𝗿𝗻𝗲𝗷 𝗹𝗶𝘀𝘁𝘆'`                                          0
 
 
 @var range      HR_GENERAL                           `OPCJE OGÓLNE`                                                                   [0, 0, 99900, 1, 'mm']
@@ -1600,9 +1638,9 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 @var range      HR_WYKOPXS                          `❎ WYKOP XS`                                                                                                                [0, 0, 99900, 1, 'mm']
 @var checkbox   enableNotatkowator                              `❎ 𝗡𝗼𝘁𝗮𝘁𝗸𝗼𝘄𝗮𝘁𝗼𝗿 - wyswietlaj notatki przy użytkownikach`                                                 0
 @var range      notatkowatorUpdateInterval                      `❎ 𝗡𝗼𝘁𝗮𝘁𝗸𝗼𝘄𝗮𝘁𝗼𝗿 - odśwież notatki starsze X h`       [48, 1, 120, 1, '']
-@var checkbox   mirkoukrywacz                                   `❎ 𝗠𝗶𝗿𝗸𝗼𝘂𝗸𝗿𝘆𝘄𝗮𝗰𝘇  - przycisk do ukrywania wpisów i komentarzy`                                           0
+@var checkbox   mirkoukrywaczEnable                             `❎ 𝗠𝗶𝗿𝗸𝗼𝘂𝗸𝗿𝘆𝘄𝗮𝗰𝘇  - przycisk do ukrywania wpisów i komentarzy`                                           0
 @var checkbox   infiniteScrollEnabled                           `❎ 𝗜𝗻𝗳𝗶𝗻𝗶𝘁𝗲 𝗦𝗰𝗿𝗼𝗹𝗹 - wszystkie komentarze pod wpisem na jednej stronie`                                     0
-@var checkbox   disableNewLinkEditorPastedTextLimit             `❎ Pokaż limity znaków + wklejanie tekstu o dowolnej długości`               0
+@var checkbox   disableNewLinkEditorPastedTextLimit             `❎ Pokaż limity znaków + wklejanie tekstu o dowolnej długości`                                          0
 
 
 
@@ -1629,6 +1667,12 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 {    
     i = !important;
 
+    
+    #wxs_quick_links
+    {
+        display: none!important;  
+    }
+    
     if(presetAntiEmbarrassment == 1)
     {
         tabTitleEnabled = 1;
@@ -4052,7 +4096,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
     if(hitsHide == 1)
     {
-        aside.hits-slider { display: none!important; } 
+        div.main-content > main.main > aside.hits-expander { display: none!important; } 
     }
     else
     {
@@ -12019,220 +12063,222 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
     
     
-    
-    
-    /* BELKA MOBILNA NA DOLE */
-    if(hideMobileNavbar)
+    if(mobileFooterHide == 1)
+    {
+        footer.footer.mobile
+        {
+            display: none!important;
+        }
+    }
+    /* BELKA MOBILNA NA DOLE xxxx */
+    if(mobileNavBarHide == 1)
     {
         nav.mobile-navbar { display: none!important; } 
-    } 
-    
-    if(editorHideBottomBileWhileTyping == 1)
+        mobileNavBarMyWykopButton = 0;
+        mobileNavBarMessagesButton = 0;
+        mobileNavBarProfileButton = 0;
+    }
+    else
     {
-        section.is-mobile nav.mobile-navbar[data-v-1adb6cc8]
+        if(mobileNavBarHomeButtonHide == 1)
         {
-            if(removeAllTransitions == 0)
+            section.is-mobile nav.mobile-navbar[class] > ul > li.home { display: none!important; } 
+        }
+        if(mobileNavBarUpcomingButtonHide == 1)
+        {
+            section.is-mobile nav.mobile-navbar[class] > ul > li.upcoming { display: none!important; } 
+        }
+        else if(mobileNavBarUpcomingCountHide == 1)
+        {
+            section.is-mobile nav.mobile-navbar[class] > ul > li.upcoming strong.upcoming-count { display: none!important; } 
+        }
+        if(mobileNavBarMicroblogButtonHide == 1)
+        {
+            section.is-mobile nav.mobile-navbar[class] > ul > li.microblog { display: none!important; } 
+        }
+        
+  
+        if(mobileNavBarHideWhileTypingEditor == 1)
+        {
+            section.is-mobile nav.mobile-navbar[class]
             {
-              transition: bottom 0.3s ease-in-out 0.5s!important;
+                if(removeAllTransitions == 0)
+                {
+                  transition: bottom 0.3s ease-in-out 0.5s!important;
+                } 
+
             } 
-    
+            section.is-mobile:has(div.main-content section.editor textarea:focus) nav.mobile-navbar[class]
+            { 
+                bottom: -100px!important;
+                if(removeAllTransitions == 0)
+                {
+                  transition: bottom 0.6s ease-in-out 0.2s!important;
+                } 
+
+            } 
         } 
-        section.is-mobile:has(div.main-content section.editor textarea:focus) nav.mobile-navbar[data-v-1adb6cc8]
-        { 
-            bottom: -100px!important;
-            if(removeAllTransitions == 0)
+
+
+        section > nav.mobile-navbar
+        {
+            padding: 0!important;   
+        } 
+        section > nav.mobile-navbar > ul
+        {
+            border-radius: 0!important;   
+            display: flex!important;
+        } 
+        section > nav.mobile-navbar > ul > li
+        {
+            background: var(--mobileNavbarButtonBackgroundColorInactive)!important; 
+            width: 100%!important;
+            opacity: 0.6!important; 
+            border-top: 3px solid transparent!important;
+        } 
+
+        section > nav.mobile-navbar > ul > li:hover
+        {
+            opacity: 1!important; 
+        } 
+        [data-night-mode] section > nav.mobile-navbar:hover > ul > li
+        {
+            background-color: rgb(60, 60, 60);
+        } 
+        section > nav.mobile-navbar > ul > li:hover span:before
+        {
+            background: unset!important;
+        } 
+        section > nav.mobile-navbar > ul > li.active
+        {
+            opacity: 1!important;
+            border-color: var(--mobileNavbarButtonColorActive)!important; 
+            background: var(--mobileNavbarButtonBackgroundColorActive)!important; 
+        } 
+        section > nav.mobile-navbar > ul > li > a
+        {
+            display: block!important;
+            height: 100%!important;
+            width: 100%!important;
+            color: white!important;
+        } 
+
+
+        /* dodatkowe przyciski */
+        section > nav.mobile-navbar > ul > li > a > figure,
+        section > nav.mobile-navbar > ul > li > a > span
+        {
+            display: block!important;
+            height: 100%!important;
+            width: 100%!important;
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            color: transparent!important;
+        } 
+        section > nav.mobile-navbar > ul > li > a > figure
+        {
+            display: block!important;
+            height: 100%!important;
+            width: 100%!important;
+            background-repeat: no-repeat!important;
+            background-position: 50% 50%!important;
+        } 
+
+
+        section > nav.mobile-navbar > ul > li > a > span
+        {
+            height: 100%!important;
+            width: 100%!important;
+            color: transparent!important;
+        } 
+        section > nav.mobile-navbar > ul > li > a > span:hover
+        {
+            color: transparent!important;
+        } 
+
+        section.is-mobile > nav.mobile-navbar > ul > li > a > span:before
+        {
+            width:100%!important;
+            height: 100%!important;
+            border-radius:0!important;
+        } 
+        section.is-mobile > nav.mobile-navbar > ul > li > a > span:after
+        {
+            display: none!important;
+        } 
+        section > nav.mobile-navbar > ul > li > a > span > i
+        {
+            display: none!important;
+        } 
+
+
+
+
+        /* BELKA MOBILNA - MW - MÓJ WYKOP */
+        if(mobileNavBarMyWykopButton == 1)
+        {
+            section > nav.mobile-navbar > ul > li.wykopx_mywykop_mobile_li
             {
-              transition: bottom 0.6s ease-in-out 0.2s!important;
+                display: block!important;   
+            }
+        } 
+
+        
+        /* BELKA MOBILNA - PROFIL */
+        if(mobileNavBarProfileButton == 1)
+        {
+            section > nav.mobile-navbar > ul > li.wykopx_profile_mobile_li
+            {
+                display: block!important;   
             } 
-    
+            section > nav.mobile-navbar > ul > li.wykopx_profile_mobile_li.undefined
+            {
+                display: none!important;   
+            } 
         } 
-    } 
-    
-    
-    section > nav.mobile-navbar
-    {
-        padding: 0!important;   
-    } 
-    section > nav.mobile-navbar > ul
-    {
-        border-radius: 0!important;   
-        display: flex!important;
-    } 
-    section > nav.mobile-navbar > ul > li
-    {
-        background: var(--mobileNavbarButtonBackgroundColorInactive)!important; 
-        width: 100%!important;
-        opacity: 0.6!important; 
-        border-top: 3px solid transparent!important;
-    } 
-    
-    section > nav.mobile-navbar > ul > li:hover
-    {
-        opacity: 1!important; 
-    } 
-    [data-night-mode] section > nav.mobile-navbar:hover > ul > li
-    {
-        background-color: rgb(60, 60, 60);
-    } 
-    section > nav.mobile-navbar > ul > li:hover span:before
-    {
-        background: unset!important;
-    } 
-    section > nav.mobile-navbar > ul > li.active
-    {
-        opacity: 1!important;
-        border-color: var(--mobileNavbarButtonColorActive)!important; 
-        background: var(--mobileNavbarButtonBackgroundColorActive)!important; 
-    } 
-    section > nav.mobile-navbar > ul > li > a
-    {
-        display: block!important;
-        height: 100%!important;
-        width: 100%!important;
-        color: white!important;
-    } 
 
-    
-    /* dodatkowe przyciski */
-    section > nav.mobile-navbar > ul > li > a > figure,
-    section > nav.mobile-navbar > ul > li > a > span
-    {
-        display: block!important;
-        height: 100%!important;
-        width: 100%!important;
-        background-repeat: no-repeat;
-        background-position: 50% 50%;
-        color: transparent!important;
-    } 
-    section > nav.mobile-navbar > ul > li > a > figure
-    {
-        display: block!important;
-        height: 100%!important;
-        width: 100%!important;
-        background-repeat: no-repeat!important;
-        background-position: 50% 50%!important;
-    } 
+        /* BELKA MOBILNA - WIADOMOŚCI */
+        if(mobileNavBarMessagesButton == 1)
+        {
+            section > nav.mobile-navbar > ul > li.wykopx_messages_mobile_li
+            {
+                display: block!important;   
+            } 
+
+        } 
 
 
-    section > nav.mobile-navbar > ul > li > a > span
-    {
-        height: 100%!important;
-        width: 100%!important;
-        color: transparent!important;
-    } 
-    section > nav.mobile-navbar > ul > li > a > span:hover
-    {
-        color: transparent!important;
-    } 
-    
-    section.is-mobile > nav.mobile-navbar > ul > li > a > span:before
-    {
-        width:100%!important;
-        height: 100%!important;
-        border-radius:0!important;
-    } 
-    section.is-mobile > nav.mobile-navbar > ul > li > a > span:after
-    {
-        display: none!important;
-    } 
-    section > nav.mobile-navbar > ul > li > a > span > i
-    {
-        display: none!important;
-    } 
-    
-    
-    
-    
-    /* BELKA MOBILNA - MW - MÓJ WYKOP */
-    if(myWykopMobileInMobileNavbar == 1)
-    {
-        section > nav.mobile-navbar > ul > li.wykopx_mywykop_mobile_li
+        /* BELKA MOBILNA - STRONA GŁÓWNA */
+        section > nav.mobile-navbar > ul > li.home > a > span
         {
-            display: block!important;   
+            background-image: url('https://i.imgur.com/UQamDsQ.png');
         } 
-        section > nav.mobile-navbar > ul > li.wykopx_mywykop_mobile_li > a > figure
+        [data-night-mode] section > nav.mobile-navbar > ul > li.home > a > span
         {
-            background-image: url('https://i.imgur.com/GoTmF0m.png');
-            background-image: url('https://i.imgur.com/7DArcw6.png'); 
+            background-image: url('https://i.imgur.com/4wpzWuo.png');
         } 
-        [data-night-mode] section > nav.mobile-navbar > ul > li.wykopx_mywykop_mobile_li > a > figure
+        /* BELKA MOBILNA - WYKOPALISKO */
+        section > nav.mobile-navbar > ul > li.upcoming > a > span
         {
-            background-image: url('https://i.imgur.com/Rh9Oy1G.png');
+            background-image: url('https://i.imgur.com/UQamDsQ.png');
+            background-image: url('https://i.imgur.com/tYQMm7Q.png');
         } 
-    } 
+        [data-night-mode] section > nav.mobile-navbar > ul > li.upcoming > a > span
+        {
+            background-image: url('https://i.imgur.com/IeIwCWa.png');
+        } 
+        /* BELKA MOBILNA - MIKROBLOG */
+        section > nav.mobile-navbar > ul > li.microblog > a > span
+        {
+            background-image: url('https://i.imgur.com/OcgW9zq.png');
+        } 
+        [data-night-mode] section > nav.mobile-navbar > ul > li.microblog > a > span
+        {
+            background-image: url('https://i.imgur.com/DRyLFtj.png');
+        }
+    }
     
     
-    /* BELKA MOBILNA - PROFIL */
-    if(profileInMobileNavbar == 1)
-    {
-        section > nav.mobile-navbar > ul > li.wykopx_profile_mobile_li
-        {
-            display: block!important;   
-        } 
-        section > nav.mobile-navbar > ul > li.wykopx_profile_mobile_li.undefined
-        {
-            display: none!important;   
-        } 
-        section > nav.mobile-navbar > ul > li.wykopx_profile_mobile_li > a > figure
-        {
-            background-image: url('https://i.imgur.com/XD7q4hY.png');
-        } 
-        [data-night-mode] section > nav.mobile-navbar > ul > li.wykopx_profile_mobile_li > a > figure
-        {
-            background-image: url('https://i.imgur.com/EpytPvb.png');
-        } 
-    } 
-    
-    /* BELKA MOBILNA - WIADOMOŚCI */
-    if(messagesMobileInMobileNavbar == 1)
-    {
-        section > nav.mobile-navbar > ul > li.wykopx_messages_mobile_li
-        {
-            display: block!important;   
-        } 
-        section > nav.mobile-navbar > ul > li.wykopx_messages_mobile_li > a > figure
-        {
-            background-image: url('https://i.imgur.com/Yx1ZAYt.png');
-        } 
-        [data-night-mode] section > nav.mobile-navbar > ul > li.wykopx_messages_mobile_li > a > figure
-        {
-            background-image: url('https://i.imgur.com/dE4f85B.png');
-        } 
-    } 
-
-    
-    /* BELKA MOBILNA - STRONA GŁÓWNA */
-    section > nav.mobile-navbar > ul > li.home > a > span
-    {
-        background-image: url('https://i.imgur.com/UQamDsQ.png');
-    } 
-    [data-night-mode] section > nav.mobile-navbar > ul > li.home > a > span
-    {
-        background-image: url('https://i.imgur.com/4wpzWuo.png');
-    } 
-    /* BELKA MOBILNA - WYKOPALISKO */
-    section > nav.mobile-navbar > ul > li.upcoming > a > span
-    {
-        background-image: url('https://i.imgur.com/UQamDsQ.png');
-        background-image: url('https://i.imgur.com/tYQMm7Q.png');
-    } 
-    [data-night-mode] section > nav.mobile-navbar > ul > li.upcoming > a > span
-    {
-        background-image: url('https://i.imgur.com/IeIwCWa.png');
-    } 
-    /* BELKA MOBILNA - MIKROBLOG */
-    section > nav.mobile-navbar > ul > li.microblog > a > span
-    {
-        background-image: url('https://i.imgur.com/OcgW9zq.png');
-    } 
-    [data-night-mode] section > nav.mobile-navbar > ul > li.microblog > a > span
-    {
-        background-image: url('https://i.imgur.com/DRyLFtj.png');
-    } 
-
-    
-
-
     
 
     
@@ -12745,7 +12791,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
     
     /* ULUBIONY TAG */
-    if(favoriteTagEnable = 1)
+    if(favoriteTagEnable == 1)
     {
         /* NIEPRZECZYTANE POWIADOMIENIE O WPISIE/ZNALEZISKU Z ULUBIONEGO TAGU */
         body > section > header > div.right > nav > ul > li.notifications.tags > section.dropdown-body > section.notifications > section.stream > div.content > section.notify:has(div.content > p.notification-content > a[href={"\/tag\/" + favoriteTag1}])
@@ -15583,7 +15629,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         align-items: center;
     } 
     
-    if(mirkoukrywacz == 0)
+    if(mirkoukrywaczEnable == 0)
     {
        #wykopx_modal_mirkoukrywacz .wykopx_modal-content header,
        section.wykopx_mirkoukrywacz_list_of_hidden_items
@@ -15592,7 +15638,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
        } 
     } 
     
-    if(mirkoukrywacz == 1)
+    if(mirkoukrywaczEnable == 1)
     {
         .wykopx_hide_this_if_mirkoukrywanie_is_turned_on
         { 
@@ -15648,11 +15694,11 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     } 
     
     
-    if(mirkoukrywacz == 1 && dev == 0)
+    if(mirkoukrywaczEnable == 1 && dev == 0)
     {
             section.wykopx_mirkoukrywacz_hide { display: none!important; } 
     } 
-    else if(mirkoukrywacz == 1 && dev == 1)
+    else if(mirkoukrywaczEnable == 1 && dev == 1)
     {
             section.wykopx_mirkoukrywacz_hide { border: 13px solid green!important; } 
     } 
@@ -16747,21 +16793,21 @@ https://wykop.pl/moje/
     
     
     
-    body#stylus-manage > div#installed > div.entry:has(> h2 > a[href="http://changelog.wykopx.pl"])
+    body#stylus-manage > div#installed > div.entry:has(> h2 > a[href*="wykopx.pl"])
     {
         order: -888;
     }
-    body#stylus-manage > div#installed > div.entry.enabled:has(> h2 > a[href="http://changelog.wykopx.pl"])
+    body#stylus-manage > div#installed > div.entry.enabled:has(> h2 > a[href*="wykopx.pl"])
     {
         order: -999;
         background-color: var(--accent-3)!important;
     }
-    body#stylus-manage > div#installed > div.entry:has(> h2 > a[href="http://changelog.wykopx.pl"]) > p > a.configure-usercss > i::after      
+    body#stylus-manage > div#installed > div.entry:has(> h2 > a[href*="wykopx.pl"]) > p > a.configure-usercss > i::after      
     {
         color: var(--c00);
         font-size: 22px;
     }
-    body#stylus-manage > div#installed > div.entry:has(> h2 > a[href="http://changelog.wykopx.pl"]) > p > a.configure-usercss > i:hover::after     
+    body#stylus-manage > div#installed > div.entry:has(> h2 > a[href*="wykopx.pl"]) > p > a.configure-usercss > i:hover::after     
     {
         color: var(--accent-1);
     }
@@ -17402,8 +17448,8 @@ https://wykop.pl/moje/
 @-moz-document url-prefix("https://wykop.pl"), url-prefix("http://wykopx.pl")
 {    
     
-    versor = "blank"; // "style", "blank", "block"
-    version = "2.48.0";   
+    versor = "style"; // "style", "blank", "block"
+    version = "2.50.0";   
     // xblocker = 2.49
     
     /* Wykop XS Settings  */
@@ -17421,6 +17467,8 @@ https://wykop.pl/moje/
         --tabTitleCustom:                        tabTitleCustom; 
     } 
     
+
+    if(mirkoukrywaczEnable == 1)                            { body {  --mirkoukrywaczEnable: "true"; }}
     if(tabTitleEnabled == 1)                                { body {  --tabTitleEnabled: "true"; }}
     if(tabTitleRemoveWykopPL == 1)                          { body {  --tabTitleRemoveWykopPL: "true"; }}
     if(tabFaviconEnabled == 1)                              { body {  --tabFaviconEnabled: "true"; }}

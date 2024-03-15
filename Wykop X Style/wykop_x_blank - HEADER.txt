@@ -1,6 +1,7 @@
 /* ==UserStyle==
 @name           Wykop X Blank
 @version        2.47
+
 @description    Ponad 500 funkcji usprawniających i naprawiających Wykop.pl
 @description    Blank - ta wersja ma WYŁĄCZONE wszystkie opcje i funkcje
 
