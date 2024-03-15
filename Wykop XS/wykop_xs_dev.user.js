@@ -2,42 +2,28 @@
 // @name        Wykop XS DEV
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
-// @version     2.60.1
-
-
+// @version     3.0.5
 // @author      Wykop X <wykopx@gmail.com>
 // @namespace   Violentmonkey Scripts
 // @match       https://wykop.pl/*
-
-
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
 // @contributionURL  	https://buycoffee.to/wykopx
-
-
 // @description Wykop XS służy do wspomagania działania stylu "Wykop X Style", który jest wymagany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://style.wykopx.pl
 // @description:en Wykop XS is a helper script for userstyle "Wykop X Style" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://style.wykopx.pl
-
-
 // @compatible  chrome, firefox, opera, safari, edge
 // @license     No License
-
-
-
 // @require https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
-// @require https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js 
+// @require https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
 // @require https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js
 // @require http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
 // @require https://greasyfork.org/scripts/383527-wait-for-key-elements/code/Wait_for_key_elements.js?version=701631
-
-
 // ==/UserScript==
-
 (async function ()
 {
 	'use strict';
 
-	const currentVersion = "2.60.1";
-	let dev = true;
+	const currentVersion = "3.0.5";
+	let dev = false;
 	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
 
 	//dayjs.extend(relativeTime); // https://day.js.org/docs/en/plugin/relative-time // https://www.jsdelivr.com/package/npm/dayjs?tab=files&path=plugin
@@ -50,6 +36,7 @@
 	const head = document.head;
 	const body = document.body;
 	const bodySection = body.querySelector("section");
+
 
 	let user = {
 		data: null,
@@ -76,10 +63,15 @@
 	// getComputedStyle(document.documentElement) -- nie działa, nie wczytuje właściwości z :root
 	let wykopxSettings = getComputedStyle(head);
 	let settings = {};
-	// boolean — domyslnie WŁĄCZONE bez Wykop X Style
 
 	settings.WykopXSEnabled = wykopxSettings.getPropertyValue("--WykopXSEnabled") ? wykopxSettings.getPropertyValue("--WykopXSEnabled") === '1' : true;
-	if (settings.WykopXSEnabled == false) return
+	if (settings.WykopXSEnabled == false) return;
+
+	settings.version = (getComputedStyle(bodySection).getPropertyValue("--version").trim().slice(1, -1)); 	// "2.48";
+	settings.versor = (getComputedStyle(bodySection).getPropertyValue("--versor").trim().slice(1, -1)); 	// "style", "blank", "block"
+	settings.xblocker = (getComputedStyle(bodySection).getPropertyValue("--xblocker").trim().slice(1, -1)); // "2.48";
+
+
 
 	if (!dev) dev = wykopxSettings.getPropertyValue("--wxsDev") ? wykopxSettings.getPropertyValue("--wxsDev") === '1' : false;
 
@@ -108,6 +100,9 @@
 
 	settings.editorShowMyUsername = wykopxSettings.getPropertyValue("--editorShowMyUsername") ? wykopxSettings.getPropertyValue("--editorShowMyUsername") === '1' : true;
 	settings.editorShowMyUsernameOnSendButton = wykopxSettings.getPropertyValue("--editorShowMyUsernameOnSendButton") ? wykopxSettings.getPropertyValue("--editorShowMyUsernameOnSendButton") === '1' : true;
+
+	settings.archiveXNewestEntry = wykopxSettings.getPropertyValue("--archiveXNewestEntry") ? wykopxSettings.getPropertyValue("--archiveXNewestEntry") === '1' : true;
+	if (settings.archiveXNewestEntry) settings.archiveXNewestEntryRefresh = wykopxSettings.getPropertyValue("--archiveXNewestEntryRefresh") ? parseInt(wykopxSettings.getPropertyValue("--archiveXNewestEntryRefresh")) : 15000;
 
 
 
@@ -151,7 +146,6 @@
 
 
 	settings.checkEntryPlusesWhenVoting = wykopxSettings.getPropertyValue("--checkEntryPlusesWhenVoting") ? wykopxSettings.getPropertyValue("--checkEntryPlusesWhenVoting") === '1' : true;
-
 	settings.checkEntryPlusesEnable = wykopxSettings.getPropertyValue("--checkEntryPlusesEnable") ? wykopxSettings.getPropertyValue("--checkEntryPlusesEnable") === '1' : true;
 	if (settings.checkEntryPlusesEnable) 
 	{
@@ -206,6 +200,17 @@
 	let localStorageTextsaver = null;
 	let localStorageNotatkowator = null;
 	let localStorageUserLabels = null;
+	let localStorageFirstDailyIDs = null;
+
+
+	// LOCALSTORAGE
+	localStorageFirstDailyIDs = localforage.createInstance({
+		driver: localforage.LOCALSTORAGE,
+		name: "wykopx",
+		storeName: "firstDailyIDs",
+	});
+
+
 
 	settings.intersectionObserverRootMargin = wykopxSettings.getPropertyValue("--intersectionObserverRootMargin") ? wykopxSettings.getPropertyValue("--intersectionObserverRootMargin") === '1' : true;
 
@@ -275,6 +280,7 @@
 
 
 	settings.wxsUserLabelsEnable = wykopxSettings.getPropertyValue("--wxsUserLabelsEnable") ? wykopxSettings.getPropertyValue("--wxsUserLabelsEnable") === '1' : true;
+
 	let falszyweRozoweArray = null;
 	let mapaTrolli = null;
 	if (settings.wxsUserLabelsEnable)
@@ -290,7 +296,14 @@
 
 		if (settings.wxsUserLabelsFakeFemales)
 		{
-			const listafalszywychrozowych = ['ElCidX', 'washington', 'conamirko', 'ChwilowaPomaranczka', 'RobieZdrowaZupke', 'IlllIlIIIIIIIIIlllllIlIlIlIlIlIlIII', 'deiceberg', 'Chodtok', 'ToJestNiepojete', 'chwilowypaczelok', 'sinls', 'KRZYSZTOF_DZONG_UN', 'miszczu90', `powodzenia`];
+			// LISTA FAŁSZYWYCH RÓŻOWYCH PASKÓW
+			const listafalszywychrozowych = ['ElCidX', 'cword',
+				'washington', 'Obrzydzenie', 'conamirko', 'i_took_a_pill_in_remiza', 'Riolet',
+				'ChwilowaPomaranczka', 'RobieZdrowaZupke', 'IlllIlIIIIIIIIIlllllIlIlIlIlIlIlIII',
+				'deiceberg', 'Chodtok', 'kierowcaautobusuofficial', 'ToJestNiepojete', 'model_wygenerowany_na_wykoppl',
+				'chwilowypaczelok', 'sinls', 'KRZYSZTOF_DZONG_UN', 'miszczu90', 'ToJestNiepojete', ' powodzenia'];
+
+
 			localStorageUserLabels.setItem('falszyweRozowe', listafalszywychrozowych).then(() => { });
 
 			// get from localstorage
@@ -317,8 +330,7 @@
 			trollsMap.set("ChwilowaPomaranczka", { "label": "Wykopowy Troll" });
 
 
-			let trollsObject = Object.fromEntries(trollsMap);
-			localStorageUserLabels.setItem('mapaTrolli', trollsObject).then(() => { });
+			localStorageUserLabels.setItem('mapaTrolli', Object.fromEntries(trollsMap)).then(() => { });
 
 			// get from localstorage
 			localStorageUserLabels.getItem('mapaTrolli').then(val => { mapaTrolli = new Map(Object.entries(val)); })
@@ -333,31 +345,55 @@
 		settings.infoboxUserBannedInfo = wykopxSettings.getPropertyValue("--infoboxUserBannedInfo") ? wykopxSettings.getPropertyValue("--infoboxUserBannedInfo") === '1' : true; // 1 || 0
 		settings.infoboxUserBannedInfoOnProfilePage = wykopxSettings.getPropertyValue("--infoboxUserBannedInfoOnProfilePage") ? wykopxSettings.getPropertyValue("--infoboxUserBannedInfoOnProfilePage") === '1' : true; // 1 || 0
 		settings.infoboxUserMemberSince = wykopxSettings.getPropertyValue("--infoboxUserMemberSince") ? wykopxSettings.getPropertyValue("--infoboxUserMemberSince") === '1' : true; // 1 || 0
+		settings.infoboxUserMemberSinceYear = wykopxSettings.getPropertyValue("--infoboxUserMemberSinceYear") ? wykopxSettings.getPropertyValue("--infoboxUserMemberSinceYear") === '1' : true; // 1 || 0
 		settings.infoboxUserSummaryFollowers = wykopxSettings.getPropertyValue("--infoboxUserSummaryFollowers") ? wykopxSettings.getPropertyValue("--infoboxUserSummaryFollowers") === '1' : true; // 1 || 0
 		settings.infoboxUserSummaryActivity = wykopxSettings.getPropertyValue("--infoboxUserSummaryActivity") ? wykopxSettings.getPropertyValue("--infoboxUserSummaryActivity") === '1' : true; // 1 || 0
 		settings.infoboxUserBannedEmoji = wykopxSettings.getPropertyValue("--infoboxUserBannedEmoji") ? wykopxSettings.getPropertyValue("--infoboxUserBannedEmoji") === '1' : true; // 1 || 0
 	}
 
+	settings.tabChangeEnabled = wykopxSettings.getPropertyValue("--tabChangeEnabled") ? wykopxSettings.getPropertyValue("--tabChangeEnabled") === '1' : false;
+	if (settings.tabChangeEnabled)
+	{
+		settings.tabChangeOnlyOnHiddenState = wykopxSettings.getPropertyValue("--tabChangeOnlyOnHiddenState") ? wykopxSettings.getPropertyValue("--tabChangeOnlyOnHiddenState") === '1' : false;
+		settings.tabChangeFaviconEnabled = wykopxSettings.getPropertyValue("--tabChangeFaviconEnabled") ? wykopxSettings.getPropertyValue("--tabChangeFaviconEnabled") === '1' : false;
 
+		if (settings.tabChangeFaviconEnabled)
+		{
+			settings.tabChangeFaviconSelect = wykopxSettings.getPropertyValue("--tabChangeFaviconSelect").trim();
+		}
+
+		settings.tabChangeTitleEnabled = wykopxSettings.getPropertyValue("--tabChangeTitleEnabled") ? wykopxSettings.getPropertyValue("--tabChangeTitleEnabled") === '1' : false;
+		if (settings.tabChangeTitleEnabled)
+		{
+			settings.tabChangeTitleShowNotificationsEnabled = wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsEnabled") ? wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsEnabled") === '1' : false;
+			settings.tabChangeTitleShowNotificationsCountPM = wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsCountPM") ? wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsCountPM") === '1' : false;
+			settings.tabChangeTitleShowNotificationsCountEntries = wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsCountEntries") ? wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsCountEntries") === '1' : false;
+			settings.tabChangeTitleShowNotificationsCountSeparated = wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsCountSeparated") ? wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsCountSeparated") === '1' : false;
+			settings.tabChangeTitleShowNotificationsCountTagsNewLink = wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsCountTagsNewLink") ? wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsCountTagsNewLink") === '1' : false;
+			settings.tabChangeTitleShowNotificationsCountTagsNewEntry = wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsCountTagsNewEntry") ? wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsCountTagsNewEntry") === '1' : false;
+
+			settings.tabChangeTitlePrefix = wykopxSettings.getPropertyValue("--tabChangeTitlePrefix") ? wykopxSettings.getPropertyValue("--tabChangeTitlePrefix") === '1' : false;
+			settings.tabChangeTitleSelect = wykopxSettings.getPropertyValue("--tabChangeTitleSelect").trim();
+			settings.tabChangeTitleCustom = wykopxSettings.getPropertyValue("--tabChangeTitleCustom").trim();
+			settings.tabChangeTitleSuffix = wykopxSettings.getPropertyValue("--tabChangeTitleSuffix") ? wykopxSettings.getPropertyValue("--tabChangeTitleSuffix").trim() : "domyslny";
+		}
+	}
 
 
 
 	// DOMYŚLNIE WYŁĄCZONE BEZ WYKOP X STYLE
-
 	// boolean
+	settings.votePlusMinusOnHover = wykopxSettings.getPropertyValue("--votePlusMinusOnHover") ? wykopxSettings.getPropertyValue("--votePlusMinusOnHover") === '1' : false;
+
 	settings.observedTagsInRightSidebarSortAlphabetically = wykopxSettings.getPropertyValue("--observedTagsInRightSidebarSortAlphabetically") ? wykopxSettings.getPropertyValue("--observedTagsInRightSidebarSortAlphabetically") === '1' : false;
 	settings.topNavHomeButtonClickRefreshOrRedirect = wykopxSettings.getPropertyValue("--topNavHomeButtonClickRefreshOrRedirect") ? wykopxSettings.getPropertyValue("--topNavHomeButtonClickRefreshOrRedirect") === '1' : false;
 	settings.topNavMicroblogButtonClickRefreshOrRedirect = wykopxSettings.getPropertyValue("--topNavMicroblogButtonClickRefreshOrRedirect") ? wykopxSettings.getPropertyValue("--topNavMicroblogButtonClickRefreshOrRedirect") === '1' : false;
-
 	settings.quickLinksEnable = wykopxSettings.getPropertyValue("--quickLinksEnable") ? wykopxSettings.getPropertyValue("--quickLinksEnable") === '1' : false;
-
 	settings.topNavMyWykopIconButton = wykopxSettings.getPropertyValue("--topNavMyWykopIconButton") ? wykopxSettings.getPropertyValue("--topNavMyWykopIconButton") === '1' : false;
 	settings.topNavMicroblogIconButton = wykopxSettings.getPropertyValue("--topNavMicroblogIconButton") ? wykopxSettings.getPropertyValue("--topNavMicroblogIconButton") === '1' : false;
 	settings.topNavMessagesIconButton = wykopxSettings.getPropertyValue("--topNavMessagesIconButton") ? wykopxSettings.getPropertyValue("--topNavMessagesIconButton") === '1' : false;
 	settings.topNavProfileIconButton = wykopxSettings.getPropertyValue("--topNavProfileIconButton") ? wykopxSettings.getPropertyValue("--topNavProfileIconButton") === '1' : false;
 	settings.topNavNightSwitchIconButton = wykopxSettings.getPropertyValue("--topNavNightSwitchIconButton") ? wykopxSettings.getPropertyValue("--topNavNightSwitchIconButton") === '1' : false;
-
-
 	settings.mobileNavBarHide = wykopxSettings.getPropertyValue("--mobileNavBarHide") ? wykopxSettings.getPropertyValue("--mobileNavBarHide") === '1' : false;
 	if (settings.mobileNavBarHide == false)
 	{
@@ -380,23 +416,13 @@
 
 
 	settings.topNavHamburgerHoverMinimize = (wykopxSettings.getPropertyValue("--topNavHamburgerHoverMinimize") == `"true"`); // boolean
-	settings.tabTitleEnabled = (wykopxSettings.getPropertyValue("--tabTitleEnabled") == `"true"`); // boolean
-	settings.tabFaviconEnabled = (wykopxSettings.getPropertyValue("--tabFaviconEnabled") == `"true"`); // boolean
 	settings.tagHeaderEditable = (wykopxSettings.getPropertyValue("--tagHeaderEditable") == `"true"`); // boolean
 	settings.linksAnalyzerEnable = (wykopxSettings.getPropertyValue("--linksAnalyzerEnable") == `"true"`); // boolean
 
 
 
-	settings.tabTitleRemoveWykopPL = (wykopxSettings.getPropertyValue("--tabTitleRemoveWykopPL") == `"true"`); // boolean
-	settings.tabChangeOnlyOnHiddenState = (wykopxSettings.getPropertyValue("--tabChangeOnlyOnHiddenState") == `"true"`); // boolean
 	settings.fixCaseSensitiveTagsRedirection = (wykopxSettings.getPropertyValue("--fixCaseSensitiveTagsRedirection") == `"true"`); // boolean
-	settings.tabTitleShowNotificationsEnabled = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsEnabled") == `"true"`); // boolean
-	settings.tabTitleShowNotificationsCountPM = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountPM") == `"true"`); // boolean
-	settings.tabTitleShowNotificationsCountEntries = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountEntries") == `"true"`); // boolean
 	settings.categoryRedirectToMicroblogButtonEnable = (wykopxSettings.getPropertyValue("--categoryRedirectToMicroblogButtonEnable") == `"true"`); // boolean
-	settings.tabTitleShowNotificationsCountSeparated = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountSeparated") == `"true"`); // boolean
-	settings.tabTitleShowNotificationsCountTagsNewLink = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountTagsNewLink") == `"true"`); // boolean
-	settings.tabTitleShowNotificationsCountTagsNewEntry = (wykopxSettings.getPropertyValue("--tabTitleShowNotificationsCountTagsNewEntry") == `"true"`); // boolean
 
 
 	// numbers
@@ -407,6 +433,8 @@
 	settings.hitsInTopNavJS = wykopxSettings.getPropertyValue("--hitsInTopNavJS") ? wykopxSettings.getPropertyValue("--hitsInTopNavJS") === '1' : true;
 	settings.myWykopInTopNavJS = wykopxSettings.getPropertyValue("--myWykopInTopNavJS") ? wykopxSettings.getPropertyValue("--myWykopInTopNavJS") === '1' : true;
 	settings.notatkowatorEnable = wykopxSettings.getPropertyValue("--notatkowatorEnable") ? wykopxSettings.getPropertyValue("--notatkowatorEnable") === '1' : true;
+
+
 	settings.favoritesInTopNavJS = wykopxSettings.getPropertyValue("--favoritesInTopNavJS") ? wykopxSettings.getPropertyValue("--favoritesInTopNavJS") === '1' : true;
 	settings.imageUploaderEnable = wykopxSettings.getPropertyValue("--imageUploaderEnable") ? wykopxSettings.getPropertyValue("--imageUploaderEnable") === '1' : true;
 	settings.addNewLinkInTopNavJS = wykopxSettings.getPropertyValue("--addNewLinkInTopNavJS") ? wykopxSettings.getPropertyValue("--addNewLinkInTopNavJS") === '1' : true;
@@ -417,9 +445,7 @@
 
 	// strings
 	settings.linksAnalyzerSortBy = wykopxSettings.getPropertyValue("--linksAnalyzerSortBy").trim();
-	settings.tabTitleSelect = wykopxSettings.getPropertyValue("--tabTitleSelect").trim();
-	settings.tabTitleCustom = wykopxSettings.getPropertyValue("--tabTitleCustom").trim();
-	settings.tabFaviconSelect = wykopxSettings.getPropertyValue("--tabFaviconSelect").trim();
+
 
 	settings.topNavLogoClick = wykopxSettings.getPropertyValue("--topNavLogoClick") ? wykopxSettings.getPropertyValue("--topNavLogoClick").trim() : false; // jesli zdefiniowane to wartosc np. "mikroblog", w przeciwnym false 
 
@@ -434,21 +460,20 @@
 	settings.mouseClickOpensImageInNewTab = wykopxSettings.getPropertyValue("--mouseClickOpensImageInNewTab") ? wykopxSettings.getPropertyValue("--mouseClickOpensImageInNewTab").replaceAll(" ", "") : "srodkowy_przycisk_myszy";
 
 
-	// { root: --var }
-	const rootStyles = getComputedStyle(root);
-	settings.version = (rootStyles.getPropertyValue("--version").trim().slice(1, -1)); 	// "2.48";
-	settings.versor = (rootStyles.getPropertyValue("--versor").trim().slice(1, -1)); 	// "style", "blank", "block"
-	settings.xblocker = (rootStyles.getPropertyValue("--xblocker").trim().slice(1, -1)); // "2.48";
 
 
 
-
-
-	let localStorageObservedTags = localforage.createInstance({
+	let localStorageObserved = localforage.createInstance({
 		driver: localforage.LOCALSTORAGE,
 		name: "wykopx",
-		storeName: "observedTags",
+		storeName: "observed",
 	});
+
+
+
+
+
+
 
 
 
@@ -463,56 +488,55 @@
 	// i na profile użytkownikow:                         wykop.pl/@m__b
 	// wyszukiwanie wpisów danej osoby w konkretnym tagu  wykop.pl/@m__b/#internet   albo  wykop.pl/#internet/@m__b/
 
+
+	let currentPageURL = undefined;
+
+	let pageType = "";
+	let pageSubtype = "";
+	let pageObjects = []; // ["znaleziska", "wpisy", "komentarze"]
+
+	let currentPageTotalVotesUpCount = 0;
+
 	let hash = new URL(document.URL).hash;
 	let pathname = new URL(document.URL).pathname;
-	let pathnameArray = pathname.split("/");
-	/*
-	
-		['', 'wpis', '74111643', 'dobranoc-panstwu']
-		['', 'wykopalisko']
-		['', 'link', '7303053', 'braun-gasi-chanuke-gasnica-mem']
-	
-	*/
+	let pathnameArray = pathname.split("/"); // ['', 'wpis', '74111643', 'dobranoc-panstwu'] ['', 'wykopalisko'] ['', 'link', '7303053', 'braun-gasi-chanuke-gasnica-mem']
 
-	let currentURL = undefined;
-	setInterval(() =>
-	{
-		if (isURLChanged()) newPageURL()
-	}, 2000);
+
+	isURLChanged();
+	newPageURL();
+
+	// setInterval(() =>
+	// {
+	// 	if (isURLChanged()) newPageURL()
+	// }, 5000);
 
 	function isURLChanged()
 	{
-		// consoleX(`isURLChanged()`, 1);
-
 		const newURL = window.location.href;
+		consoleX(`isURLChanged() -> ${newURL}`, 1);
 		//const newURL2 = document.URL;
 
-		if (newURL != currentURL)
+		if (newURL != currentPageURL)
 		{
-			consoleX(`URL Changed from ${currentURL} to ${newURL}`)
-			// URL changed
-			currentURL = newURL;
+			consoleX(`isURLChanged() -> URL Changed from ${currentPageURL} to ${newURL}`)
+			currentPageURL = newURL;
 			return true;
 		}
 		else return false;
 	}
 
 
-
-	let pageType = "";
-	let pageSubtype = "";
-	let pageObjects = []; // ["znaleziska", "wpisy", "komentarze"]
-	let pageTotalVotesUpCount = 0;
-
 	function newPageURL()
 	{
+		consoleX("newPageURL()", 1);
+
 		hash = new URL(document.URL).hash;
 		pathname = new URL(document.URL).pathname;
 		pathnameArray = pathname.split("/");
-		consoleX(`newPageURL(): document.URL: ${document.URL} hash: ${hash}, pathname: ${pathname}, pathnameArray: `, 1)
+		consoleX(`newPageURL() -> document.URL: ${document.URL} hash: ${hash}, pathname: ${pathname}, pathnameArray: `, 1)
 		console.log(pathnameArray)
 
-		pageTotalVotesUpCount = 0;
+		currentPageTotalVotesUpCount = 0;
 
 		if (pathnameArray[1] == "" || pathnameArray[1] == "aktywne" || pathnameArray[1] == "najnowsze" || pathnameArray[1] == "strona")
 		{
@@ -570,11 +594,139 @@
 			pageSubtype = "tag";
 			pageObjects = ["znaleziska", "wpisy", "komentarze"];
 		}
-
-
-		console.log(`Typ strony: ${pageType} ${pageType != pageSubtype ? pageSubtype : ""}`)
-		console.log(`pageObjects:`, pageObjects)
+		consoleX(`Typ strony: ${pageType} ${pageType != pageSubtype ? pageSubtype : ""}`, 1)
+		// console.log(`pageObjects:`, pageObjects)
 	}
+
+
+
+	// ----- NAVIGATION PAGE CHANGES
+	async function browserExecuteOnPageChange(event)
+	{
+		consoleX(`browserExecuteOnPageChange() -> navigation -> navigate event — ${event.type}`, 1);
+		consoleX(`browserExecuteOnPageChange() -> document.title: ${document.title}`, 1);
+		//console.log(event);
+
+		pageTabTitleOriginal = document.title;
+		pageTabTitleProcessed = pageTabTitleOriginal;
+
+		//visiblePlusesObserver.disconnect();
+		//if (sectionObjectIntersectionObserver) sectionObjectIntersectionObserver.disconnect();
+		//if (settings.actionBoxEnable && (settings.filterUserComments || settings.filterUserReplies)) filterUserOff(); // usuniecie filtra komentarzy
+
+		runWithDelay(500, function ()
+		{
+			if (isURLChanged())
+			{
+				const previousPageSubtype = pageSubtype;
+				newPageURL();
+				if (pageSubtype == previousPageSubtype) removeAllDataWXSAttributes();
+			}
+		});
+
+		// 7s
+		if (!settings.tabChangeOnlyOnHiddenState) runWithDelay(7000, () => { executeTabAndFaviconChanges() })
+	}
+
+
+	function removeAllDataWXSAttributes()
+	{
+		consoleX(`removeAllDataWXSAttributes()`, 1);
+
+		document.querySelectorAll(`section[data-wxs_username]`).forEach((el) =>
+		{
+			removeWXSAttributes(el)
+		});
+	}
+
+	function removeWXSAttributes(sectionObjectElement)
+	{
+		console.log(`removeWXSAttributes() from id: ${sectionObjectElement.__vue__.item.id}`, + sectionObjectElement);
+
+		sectionObjectElement.removeAttribute('style'); // custom css properties removed 
+
+		Object.keys(sectionObjectElement.dataset).forEach(dataKey =>
+		{
+			if (dataKey.startsWith('wxs_'))
+			{
+				delete sectionObjectElement.dataset[dataKey];
+			}
+		});
+	}
+
+
+	// PAGE LOAD + PAGE CHANGES
+	function browserExecuteOnPageLoadAndPageChange()
+	{
+		consoleX(`browserExecuteOnPageLoadAndPageChange()`, 1);
+
+		runWithDelay(100, function ()
+		{
+			countNumberOfNotificationsOnDesktop();
+		});
+
+		if (settings.mirkoukrywaczEnable) 
+		{
+			runWithDelay(3000, function ()
+			{
+				mirkoukrywaczHideAllBlockedElements(); // ukrycie elementow blokowanych przez Mirkowolacz oraz actionBox
+			});
+		}
+
+		if (pageType == "tag" && settings.tagHeaderEditable)
+		{
+			runWithDelay(2200, function ()
+			{
+				tagHeaderEditableWatcher();
+			})
+		}
+
+		if (pageType == "profil")	// info o blokadzie
+		{
+			// runWithDelay(100, function ()
+			// {
+
+			// })
+		}
+
+		if (settings.autoOpenMoreContentEverywhere)
+		{
+			runWithDelay(6000, function ()
+			{
+				autoOpenMoreContentEverywhere();
+			})
+		}
+
+
+		// 10s
+		if (settings.autoOpenSpoilersEverywhere)
+		{
+			runWithDelay(10000, function ()
+			{
+				autoOpenSpoilersEverywhere();
+			});
+		}
+
+		if (settings.removeAnnoyancesEnable)
+		{
+			runWithDelay(18000, function ()
+			{
+				if (settings.removeAnnoyancesIframes) waitForKeyElements(`html > iframe, html > body > iframe`, removeFromDOM, false);
+				if (settings.removeAnnoyancesScripts) waitForKeyElements(`html > head > script[src^="https://"]`, removeFromDOM, false);
+			})
+
+			runWithDelay(3000, function ()
+			{
+				removeAnnoyances()
+			})
+		}
+
+		// waitForKeyElements("main.main > section > div.content section.stream > header.stream-top", buildConsole, false)
+		// buildConsole();
+		// refreshConsole();
+	}
+
+
 
 
 
@@ -642,7 +794,7 @@
 
 	function smartRedirectBasedOnUserAndTag(user, tag)
 	{
-		consoleX(`Wprowadzono: tag #${tag}, user @${user}`, 1);
+		consoleX(`smartRedirectBasedOnUserAndTag(user @${user},  tag #${tag})`, 1);
 
 		if (tag && user) redirectToSearchUserEntriesInTag(user, tag)
 		else if (tag) redirectToTag(tag)
@@ -651,6 +803,8 @@
 	// returns 'tag' from /#tag in string
 	function getTagFromUrl(url, splitSeparator = "/", tagSymbol = "#")
 	{
+		consoleX(`getTagFromUrl(url: ${url},  splitSeparator: #${splitSeparator}), tagSymbol: ${tagSymbol}`, 1);
+
 		let tagArray = url.split(splitSeparator);
 		for (let element of tagArray)
 		{
@@ -671,6 +825,8 @@
 
 	function getUserFromUrl(url, splitSeparator = "/", userSymbol = "@")
 	{
+		consoleX(`getUserFromUrl(url: ${url},  splitSeparator: #${splitSeparator}), userSymbol: ${userSymbol}`, 1);
+
 		let atArray = url.split(splitSeparator);
 		for (let element of atArray)
 		{
@@ -751,9 +907,12 @@
 
 	function buildConsole(jNodeHeaderStreamTop = null)
 	{
+
 		if (!dev) return;
+
+		consoleX("buildConsole()", 1)
+
 		let headerStreamTopElement;
-		//consoleX("buildConsole()", 1)
 
 		if (!jNodeHeaderStreamTop)
 		{
@@ -787,11 +946,13 @@
 
 
 	let wxs_console;
+
 	function refreshConsole()
 	{
-		// console.log("refresh console()")
+		consoleX("refresh console()", 1)
 
-		return;
+		return;  // temp
+
 		if (!wxs_console) wxs_console = document.getElementById("wxs_console");
 
 		if (wxs_console)
@@ -935,7 +1096,7 @@
 
 	function wykopx_quick_search(jNodeWykopxQuickSearch)
 	{
-		// consoleX(`wykopx_quick_search()`, 1);
+		consoleX(`wykopx_quick_search()`, 1);
 
 		const wykopxQuickSearch = jNodeWykopxQuickSearch[0];
 		wykopxQuickSearch.addEventListener("blur", eventInsertedTagOrUser);
@@ -944,6 +1105,8 @@
 
 	function eventInsertedTagOrUser(e)
 	{
+		consoleX("eventInsertedTagOrUser(e)", 1);
+
 		if (e.type === "blur" || (e.type === "keydown" && e.keyCode == 13)) // out of focus or enter
 		{
 			consoleX("eventInsertedTagOrUser() -- event blur || eydown .wykopx_quick_search", 1);
@@ -968,15 +1131,15 @@
 	/* RIGHT SIDEBAR — DODAJ LISTE OBSERWOWANYCH TAGÓW */
 	function addObservedTagsToRightSidebar()
 	{
-		// consoleX("addObservedTagsToRightSidebar()", 1)
+		consoleX("addObservedTagsToRightSidebar()", 1)
 
-		let observedTagsArray = [];
+		let fetchedValuesArray = [];
 
 		if (settings.observedTagsInRightSidebarEnable)
 		{
 			// consoleX("addObservedTagsToRightSidebar()", 1)
 
-			checkLocalForageupdatedDate(localStorageObservedTags, getObservedTags, settings.observedTagsInRightSidebarUpdateInterval * 3600);
+			checkLocalForageupdatedDate(localStorageObserved, getObservedTags, settings.observedTagsInRightSidebarUpdateInterval * 3600);
 
 			let section_html = `
 			<section class="wykopx_your_observed_tags custom-sidebar tags-sidebar" data-v-3f88526c="" data-v-89888658="" data-v-5d67dfc3="">
@@ -994,45 +1157,32 @@
 						<ul data-v-89888658="" data-v-3f88526c="">
 				`;
 
-			localStorageObservedTags.iterate(function (value, key, iterationNumber)
+			localStorageObserved.getItem('observedTags').then(function (tagsArray)
 			{
-				// console.log("value" + value)
-				// console.log("key" + key)
-				if (key != "storageUpdatedDate")
+				fetchedValuesArray = tagsArray;
+				if (settings.observedTagsInRightSidebarSortAlphabetically)
 				{
-					observedTagsArray.push(value)
+					fetchedValuesArray.sort(); // sortowanie alfabetyczne tagów
 				}
-			})
-				.then(function ()
+				fetchedValuesArray.forEach(function (tag)
 				{
-					// console.log("then — observedTagsArray:")
-					// console.log(observedTagsArray);
-					if (settings.observedTagsInRightSidebarSortAlphabetically)
-					{
-						observedTagsArray.sort(); // sortowanie alfabetyczne tagów
-					}
-					observedTagsArray.forEach(function (tag)
-					{
-						section_html += `
-				<li data-v-89888658="" data-v-3f88526c="" title="Przejdź na tag #${tag}  ${promoString}">
-					<span data-v-89888658="" data-v-3f88526c="">#</span><a data-v-89888658="" href="https://go.wykopx.pl/#${tag}" class="hybrid" data-v-3f88526c="">${tag}</a>
-				</li>`;
-					});
 					section_html += `
-			</ul>
-		</section>
-	</div>
-</section>`;
-					document.querySelector(`section.sidebar`).insertAdjacentHTML('beforeend', section_html);
-				})
-				.catch(function (err) { });
+						<li data-v-89888658="" data-v-3f88526c="" title="Przejdź na tag #${tag}  ${promoString}">
+							<span data-v-89888658="" data-v-3f88526c="">#</span><a data-v-89888658="" href="https://go.wykopx.pl/#${tag}" class="hybrid" data-v-3f88526c="">${tag}</a>
+						</li>`;
+				});
+				section_html += `</ul></section></div></section>`;
+				document.querySelector(`section.sidebar`).insertAdjacentHTML('beforeend', section_html);
+			}).catch(function (err) { });
+
 		}
 	}
 
 
 	async function checkLocalForageupdatedDate(wykopxStorageName, updateStorageFunction, updateIntervalSeconds)
 	{
-		consoleX("checkLocalForageupdatedDate", 1)
+		consoleX("checkLocalForageupdatedDate()", 1)
+
 		try
 		{
 			let storageUpdatedDate = await wykopxStorageName.getItem("storageUpdatedDate");
@@ -1042,11 +1192,10 @@
 				updateStorageFunction();
 			} else
 			{
-				const date1 = dayjs()
 				const date2 = dayjs(storageUpdatedDate)
-				if (date1.diff(date2, "second") > parseFloat(updateIntervalSeconds))
+				if (loadTime.diff(date2, "second") > parseFloat(updateIntervalSeconds))
 				{
-					consoleX(`Update interval: ${date1.diff(date2, "second")}s > ${updateIntervalSeconds}s`, 1)
+					consoleX(`Update interval: ${loadTime.diff(date2, "second")}s > ${updateIntervalSeconds}s`, 1)
 					updateStorageFunction();
 				}
 			}
@@ -1055,6 +1204,7 @@
 			console.log(err);
 		}
 	}
+
 
 	async function getObservedTags()
 	{
@@ -1071,25 +1221,17 @@
 			},
 		})
 			.then((response) => response.json())
-			.then((observedTagsJson) =>
+			.then((responseJSON) =>
 			{
-				if (dev) console.log(observedTagsJson)
-				const observedTagsArray = observedTagsJson.data;
+				console.log("🟢🟢🟢responseJSON")
+				console.log(responseJSON)
+				const responseJSONData = responseJSON.data; // data = [{name: 'wykopwnowymstylu'}, {name: 'wykop'}, {name: 'wykopx'}]
+				const fetchedValuesArray = responseJSONData.map(function (item)
+				{ return item.name; });
 
-				localStorageObservedTags.setItem("storageUpdatedDate", dayjs())
+				localStorageObserved.setItem("storageUpdatedDate", loadTime)
+				localStorageObserved.setItem("observedTags", fetchedValuesArray)
 
-				observedTagsArray.forEach(function (tag)
-				{
-					localStorageObservedTags.setItem(tag.name, tag.name)
-						.then(function (value)
-						{
-							consoleX(`Zapisano do LocalStorage Twój obserwowany tag: #${tag.name}"`);
-						})
-						.catch(function (err)
-						{
-							consoleX(`getObservedTags = error: ` + err);
-						});
-				});
 				return true;
 			});
 	}
@@ -1102,9 +1244,171 @@
 
 
 
+
+
+
+	async function POSTDATATOWYKOPX()
+	{
+		console.log(" 🍌🍌🍌🍌 POSTDATATOWYKOPX() ")
+
+
+		await getSettingsList("blacklists", "tags");
+		await getSettingsList("blacklists", "domains");
+		await getSettingsList("blacklists", "users");
+		await getSettingsList("observed", "tags");
+
+		let settings_list_observed_tags = await localStorageObserved.getItem("settings_list_observed_tags");
+		let settings_list_blacklists_domains = await localStorageObserved.getItem("settings_list_blacklists_domains");
+		let settings_list_blacklists_users = await localStorageObserved.getItem("settings_list_blacklists_users");
+		let settings_list_blacklists_tags = await localStorageObserved.getItem("settings_list_blacklists_tags");
+
+
+		// await getSettingsList("observed", "users", "following");
+		// await getSettingsList("observed", "users", "followers");
+		// let settings_list_observed_users_followers = await localStorageObserved.getItem("settings_list_observed_users_followers");
+		// let settings_list_observed_users_following = await localStorageObserved.getItem("settings_list_observed_users_following");
+
+		let dataPOST = {};
+
+		// let settings_list_SHA256 = await localStorageObserved.getItem("settings_list_SHA256");
+		let settings_list_SHA256 = null;
+
+		if (settings_list_blacklists_tags?.length > 0)
+		{
+			dataPOST.settings_list_blacklists_tags = settings_list_blacklists_tags;
+			dataPOST.sha256 = await SHA256(user.username + settings_list_blacklists_tags[settings_list_blacklists_tags.length - 1].created_at + settings_list_blacklists_tags[settings_list_blacklists_tags.length - 1].name); // WykopX2023-01-01 23:59:59famemma
+		}
+		if (settings_list_observed_tags?.length > 0)
+		{
+			dataPOST.settings_list_observed_tags = settings_list_observed_tags;
+			if (settings_list_SHA256 == null) dataPOST.sha256 = await SHA256(user.username + settings_list_observed_tags[settings_list_observed_tags.length - 1].created_at + settings_list_observed_tags[settings_list_observed_tags.length - 1].name);
+		}
+		if (settings_list_blacklists_domains?.length > 0)
+		{
+			dataPOST.settings_list_blacklists_domains = settings_list_blacklists_domains;
+			if (settings_list_SHA256 == null) dataPOST.sha256 = await SHA256(user.username + settings_list_blacklists_domains[settings_list_blacklists_domains.length - 1].created_at + settings_list_blacklists_domains[settings_list_blacklists_domains.length - 1].domain);
+		}
+		if (settings_list_blacklists_users?.length > 0)
+		{
+			dataPOST.settings_list_blacklists_users = settings_list_blacklists_users;
+			if (settings_list_SHA256 == null) dataPOST.sha256 = await SHA256(user.username + settings_list_blacklists_users[settings_list_blacklists_users.length - 1].created_at + settings_list_blacklists_users[settings_list_blacklists_users.length - 1].username);
+		}
+
+
+
+
+		if (Object.keys(dataPOST).length >= 2)
+		{
+			if (dev) console.log(" 🍌🍌🍌🍌 Sending this data to api.wykopx.pl: ", dataPOST)
+
+			// TODO
+			// fetch('https://api.wykopx.pl/api/v3/', { 
+			// 	method: 'POST',
+			// 	headers: {
+			// 		'Content-Type': 'application/json'
+			// 	},
+			// 	body: JSON.stringify(dataPOST)
+			// })
+			// 	.then(response => response.text())
+			// 	.then(data =>
+			// 	{
+			// 		localStorageObserved.setItem(`settings_list_update`, loadTime);
+
+			// 		console.log(" 🍌🍌🍌🍌 response from api.wykopx.pl: ")
+			// 		console.log(data)
+			// 	})
+			// 	.catch(error => console.error('Error:', error));
+		}
+
+
+
+
+
+
+
+
+	}
+
+	/*
+		getSettingsList("blacklists", "tags");
+		getSettingsList("blacklists", "domains");
+		getSettingsList("blacklists", "users");
+		getSettingsList("observed", "tags");
+		getSettingsList("observed", "users", "following");
+		getSettingsList("observed", "users", "followers");
+	*/
+
+	let lastBlacklistTagCreatedAt = null;
+	let lastBlacklistTagCreatedAtSHA256 = null;
+
+
+	async function getSettingsList(blacklistsOrObserved, type, subtype)
+	{
+		consoleX(`getSettingsList(blacklistsOrObserved: ${blacklistsOrObserved}, type: ${type}, subtype: ${subtype})`, 1);
+
+		let page = 1;
+		let totalFetched = 0;
+		let totalRecords = null;
+		let fetchedValuesArray = [];
+
+
+		while (totalRecords === null || totalFetched < totalRecords)
+		{
+			let apiGetPaginatedURL = null;
+			if (blacklistsOrObserved == "blacklists") apiGetPaginatedURL = `https://wykop.pl/api/v3/settings/blacklists/${type}?page=${page}`;
+			else if (blacklistsOrObserved == "observed")
+			{
+				if (type == "tags") apiGetPaginatedURL = `https://wykop.pl/api/v3/profile/users/${user.username}/observed/${type}?page=${page}`;
+				else if (type == "users" && subtype) apiGetPaginatedURL = `https://wykop.pl/api/v3/profile/users/${user.username}/observed/${type}/${subtype}?page=${page}`
+			}
+			const response = await fetch(apiGetPaginatedURL, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + window.localStorage.token,
+				},
+			});
+
+			const responseJSON = await response.json();
+			const responseJSONData = responseJSON.data;
+
+			// if (blacklistsOrObserved == "blacklists" && type == "tags")
+			// {
+			// 	lastBlacklistTagCreatedAt = user.username + responseJSONData[responseJSONData.length - 1].created_at + responseJSONData[responseJSONData.length - 1].name; // WykopX2023-01-01 23:59:59famemma
+			// 	lastBlacklistTagCreatedAtSHA256 = await SHA256(lastBlacklistTagCreatedAt);
+			// 	localStorageObserved.setItem(`settings_list_SHA256`, lastBlacklistTagCreatedAtSHA256);
+			// }
+
+			let valueName = "name";
+			if (type == "users") valueName = "username"
+			if (type == "domains") valueName = "domain"
+			fetchedValuesArray = fetchedValuesArray.concat(responseJSONData.map(item => item[valueName])); // data = [{ name: 'wykopwnowymstylu' }, { name: 'wykop' }, { name: 'wykopx' }]
+			totalFetched += responseJSONData.length;
+			totalRecords = responseJSON.pagination.total;
+			page++;
+		}
+
+		if (dev) console.log(`🔻fetchedValuesArray ${blacklistsOrObserved}/${type} FINISHED`)
+		if (dev) console.log(fetchedValuesArray)
+
+		// localforage
+		localStorageObserved.setItem(`settings_list_${blacklistsOrObserved}_${type}${subtype ? "_" + subtype : ""}`, fetchedValuesArray); // zapisuje jako Array: ["tag1", "tag2", "tag3"]
+
+		// localstorage
+		//localStorage.setItem(`settings_list_${blacklistsOrObserved}_${type}${subtype ? "_" + subtype : ""}`, JSON.stringify(fetchedValuesArray)); // zapisuje jako Array: ["tag1", "tag2", "tag3"]
+		//localStorage.setItem("blacklisted_tags", fetchedValuesArray); // zapisuje jako string: tag1,tag2,tag3
+		return true;
+	}
+
+
+
+
+
+
+
 	function switchChanged(PointerEvent, cssFilterName)
 	{
-		consoleX(`switchChanged()`, 1);
+		consoleX(`switchChanged(cssFilterName: ${cssFilterName})`, 1);
 
 		/*
 			this -> clicked element == event.target
@@ -1158,7 +1462,7 @@
 
 	function addSwitchButtons()
 	{
-		//consoleX("addSwitchButtons()", 1)
+		consoleX("addSwitchButtons()", 1)
 
 		let buttonsWrapper = document.createElement("section");
 		buttonsWrapper.classList.add("wxs_switches_container");
@@ -1363,6 +1667,7 @@
 	/* ---------------- MIRKOUKRYWACZ  MENU  ----------------- */
 	function saveThisEntryContent(PointerEvent)
 	{
+		consoleX("saveThisEntryContent()", 1)
 		let resource = "unknown";
 		let entry_stream = this?.closest(".stream");
 		if (entry_stream)
@@ -1389,19 +1694,18 @@
 
 	function filterUserOff(PointerEvent)
 	{
-		consoleX(`filterUserOff`, 1);
+		consoleX(`filterUserOff()`, 1);
 
-		delete body.dataset.wxs_filter // <body data-wxs_filter>
-		delete body.dataset.wxs_filter_style
-		delete body.dataset.wxs_filter_style
-		delete body.dataset.wxs_filter_username
+		if (body.dataset.wxs_filter) delete body.dataset.wxs_filter // <body data-wxs_filter>
+		if (body.dataset.wxs_filter_style) delete body.dataset.wxs_filter_style
+		if (body.dataset.wxs_filter_username) delete body.dataset.wxs_filter_username
 
-		const styleElement = document.getElementById('wxs_css_filter_user_comments');
-		if (styleElement) styleElement.parentNode.removeChild(styleElement);
+		document.getElementById('wxs_css_filter_user_comments')?.parentNode?.removeChild(styleElement);
+
 	}
 	function filterUserComments(PointerEvent, filterType)
 	{
-		consoleX(`filterUserComments`, 1);
+		consoleX(`filterUserComments()`, 1);
 
 		// filterUserComments
 		// filterType // "userComments" / "userReplies"
@@ -1594,7 +1898,7 @@
 
 	function minimizeThisEntry(PointerEvent)		// PointerEvent.altKey, .ctrlKey, .shiftKey, .target (Element)
 	{
-		console.log("minimizeThisEntry", this)
+		consoleX("minimizeThisEntry()", 1)
 
 		let sectionEntry = this?.closest('.entry');
 		if (sectionEntry)
@@ -1605,7 +1909,7 @@
 
 	function maximizeThisEntry(PointerEvent, object_id)
 	{
-		console.log("maximizeThisEntry", this)
+		consoleX("maximizeThisEntry()", 1)
 
 		let sectionEntry = this?.closest('.entry');
 		if (sectionEntry)
@@ -1621,7 +1925,6 @@
 	// UKRYWANIE WPISU I KOMENTARZY-DODAWANIE DO MIRKOUKRYWACZA
 	function hideThisEntry(PointerEvent)
 	{
-
 		consoleX(`hideThisEntry()`, 1);
 
 		let resource = this.dataset.wxs_resource;
@@ -1675,12 +1978,50 @@
 
 
 
+	// getWykopXAPIData("entry", "first-by-date")		-> https://archiwum.wykopx.pl/api/entry/first-by-date
+	async function getWykopXAPIData(...pathAPIargs)
+	{
+		console.log("❎ getWykopXAPIData", pathAPIargs)
+		try
+		{
+			let apiURL = `https://archiwum.wykopx.pl/api/${pathAPIargs.join('/')}`;
+			console.log("❎ getWykopXAPIData apiURL: ", apiURL)
+
+			const response = await fetch(apiURL,
+				{
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json"
+					},
+				});
+
+			console.log("❎ getWykopXAPIData response:", response)
+			let data;
+			try
+			{
+				data = await response.json();
+				console.log("❎ getWykopXAPIData data: ", data)
+			}
+			catch (error)
+			{
+				data = response.status; // 204 
+				console.log("❎ getWykopXAPIData-response.status")
+			}
+			return data;
+		}
+		catch (error)
+		{
+			console.error(`❎ call to WykopX API failed: ${error}`);
+			throw error;
+		}
+	}
 
 	// calls Wykop API url: getWykopAPIData("profile") -> https://wykop.pl/api/v3/profile
 	// getWykopAPIData("profile", "users", username } -> https://wykop.pl/api/v3/profile/users/NadiaFrance
 	async function getWykopAPIData(...pathAPIargs)
 	{
-		console.log("getWykopAPIData(), pathAPIargs: ", pathAPIargs)
+		if (dev) console.log("getWykopAPIData(), pathAPIargs: ", pathAPIargs)
+
 		try
 		{
 			let data = await callWykopAPI("GET", ...pathAPIargs);
@@ -1695,7 +2036,8 @@
 	}
 	async function postWykopAPIData(...pathAPIargs)
 	{
-		console.log("postWykopAPIData(), pathAPIargs: ", pathAPIargs)
+		if (dev) console.log("postWykopAPIData(), pathAPIargs: ", pathAPIargs);
+
 		try
 		{
 			let data = await callWykopAPI("POST", ...pathAPIargs);
@@ -1710,7 +2052,7 @@
 
 	async function deleteWykopAPIData(...pathAPIargs)
 	{
-		console.log("deleteWykopAPIData(), pathAPIargs: ", pathAPIargs)
+		if (dev) console.log("deleteWykopAPIData(), pathAPIargs: ", pathAPIargs)
 		try
 		{
 			let data = await callWykopAPI("DELETE", ...pathAPIargs);
@@ -1723,9 +2065,10 @@
 		}
 	}
 
+
 	async function callWykopAPI(method, ...pathAPIargs)
 	{
-		console.log(`callWykopAPI(): method: ${method},  pathAPIargs: `, pathAPIargs)
+		if (dev) console.log(`callWykopAPI(): method: ${method},  pathAPIargs: `, pathAPIargs)
 		try
 		{
 			const response = await fetch(`https://wykop.pl/api/v3/${pathAPIargs.join('/')}`, {
@@ -1748,15 +2091,13 @@
 			try
 			{
 				data = await response.json();
-				console.log("callWykopAPI-data")
-				console.log(data)
+				console.log("callWykopAPI-data", data)
 			}
 			catch (error)
 			{
 				//console.log('No body or not a JSON body:', error);
 				data = response.status; // 204 
-				console.log("callWykopAPI-response.status")
-
+				console.log("callWykopAPI-response.status", response.status)
 			}
 			return data;
 		}
@@ -1805,23 +2146,15 @@
 
 	function sectionObjectDetected(jNodeSectionElement)
 	{
-		// console.log(`waitForKeyElements("section:is(.entry > article, .link-block:has(> section > article)):not(.deleted)"`)
+		// consoleX(`sectionObjectDetected()`, 1)
+		// consoleX(`waitForKeyElements("section:is(.entry > article, .link-block:has(> section > article)):not(.deleted)"`, 1)
 		const sectionObjectElement = jNodeSectionElement[0];
 		sectionObjectIntersectionObserver.observe(sectionObjectElement);
 	}
 
 
 
-	function replaceDigitsWithDot(num)
-	{
-		if (num < 100)
-		{
-			return num.toString().slice(0, -1) + " ·";
-		} else
-		{
-			return num.toString().slice(0, -2) + " · ·";
-		}
-	}
+
 
 
 	// INTERSECTION OBSERVED
@@ -1830,24 +2163,23 @@
 	{
 		intersectingObject.forEach(async (IntersectionObserverEntry) =>															// InterIntersectionObserverEntry
 		{
-
-
 			// ----- ALL INTERSECTIONS CHANGED 
 			let sectionObjectElement = IntersectionObserverEntry.target;														// element <section class="entry"> 
 			let resource = null;		// resource = "link", "entry", "entry_comment"
-			// console.log("sectionObjectElement")
-			// console.log(sectionObjectElement);
+			//console.log(`intersectingObject: `, sectionObjectElement)
 
+
+			if (!sectionObjectElement.__vue__ || !sectionObjectElement.__vue__.item) return false;
 
 			// ----- ONLY ONCE: INTERSECTION CHANGED FOR THE FIRST TIME:
-			if (sectionObjectElement && !sectionObjectElement.dataset.wxs_first_load_time && sectionObjectElement.__vue__ && sectionObjectElement.__vue__.item) 
+			if (sectionObjectElement && !sectionObjectElement.dataset.wxs_first_load_time) 
 			{
-				console.log("intersectingObject-sectionObjectElement.__vue__.item")
-				console.log(sectionObjectElement)
-				console.log("intersectingObject-sectionObjectElement.__vue__.item")
-				console.log(sectionObjectElement.__vue__)
-				console.log("intersectingObject-sectionObjectElement.__vue__.item")
-				console.log(sectionObjectElement.__vue__.item)
+				// console.log("intersectingObject-sectionObjectElement.__vue__.item")
+				// console.log(sectionObjectElement)
+				// console.log("intersectingObject-sectionObjectElement.__vue__.item")
+				// console.log(sectionObjectElement.__vue__)
+				// console.log("intersectingObject-sectionObjectElement.__vue__.item")
+				// console.log(sectionObjectElement.__vue__.item)
 				// data-wxs_first_load_time="2024-12-12..."
 				sectionObjectElement.dataset.wxs_first_load_time = dayjs().valueOf(); // data unix kiedy przybyly ostatnio odswiezone plusy-tutaj czas załadowania strony
 
@@ -1937,7 +2269,7 @@
 					}
 				}
 
-				pageTotalVotesUpCount += sectionObjectElement.__vue__.item.votes.up;
+				currentPageTotalVotesUpCount += sectionObjectElement.__vue__.item.votes.up;
 			}
 
 
@@ -2100,6 +2432,7 @@
 
 					if (settings.infoboxEnable || settings.notatkowatorEnable || settings.wxsUserLabelsEnable)
 					{
+
 						// TWORZYMY USERINFOBOX do wszystkich nicków autora tego wpisu/komentarza/linka
 						// pierwszy raz widzimy ten wpis / komentarz użytkownika i nie były do niego dodawane userdata więc dodajemy data-wxs_username="NadiaFrance"
 						if (!sectionObjectElement.dataset.wxs_username && userDataObject.username)
@@ -2122,7 +2455,7 @@
 								if (settings.wxsUserLabelsTrolls && mapaTrolli)
 								{
 									let wxsUserLabelObject = null;
-									console.log(mapaTrolli.get(userDataObject.username));
+									//console.log(mapaTrolli.get(userDataObject.username));
 									if ((wxsUserLabelObject = mapaTrolli.get(userDataObject.username)))
 									{
 										userDataObject.wxsUserLabel = wxsUserLabelObject.label;
@@ -2137,13 +2470,13 @@
 							if (settings.notatkowatorEnable) 
 							{
 								// jeszcze nie dodawaliśmy notatki
-								if (userDataObject.note == true && sectionObjectElement.dataset.wxs_note_loaded != true)
+								if (userDataObject?.note == true && sectionObjectElement?.dataset?.wxs_note_loaded != true)
 								{
 									// potencjalna zmiana plci przez +m lub +f
 									userNoteObject = await getUserNoteObjectByUsername(sectionObjectElement, undefined, true); //  username, forceAPICheck
 									sectionObjectElement.dataset.wxs_note_loaded = "true"; // todo nazwa uzytkownika zamiast true zeby potem sprawdzac <section data-wxs_note_loaded="true" data-wxs_username="NadiaFrance" data-wxs_user_note="true">
 
-									if (userNoteObject.changeSexTo)
+									if (userNoteObject?.changeSexTo)
 									{
 										userDataObject.changeSexTo = userNoteObject.changeSexTo;
 										userDataObject.gender = userNoteObject.gender;
@@ -2310,8 +2643,7 @@
 
 	async function createInfoboxDivsForUserEverywhere(userDataObject, userNoteObject, username = userDataObject.username)
 	{
-
-		console.log(`createInfoboxDivsForUserEverywhere(${username})`, 1);
+		consoleX(`createInfoboxDivsForUserEverywhere(username: ${username})`, 1);
 
 		let userInfoElementTitle = "";
 		const a_usernameAll = document.querySelectorAll(`a.username[href="/ludzie/${username}"]:not(:has([data-wxs_username]))`);
@@ -2416,10 +2748,6 @@
 
 				noteVarElement.innerHTML = `${usernoteParsedToDisplay}`;
 				userInfoElementTitle += ` \n 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗡𝗼𝘁𝗮𝘁𝗸𝗼𝘄𝗮𝘁𝗼𝗿 \n \n ${userNoteObject.usernote} \n \n`;
-
-
-
-
 			}
 
 
@@ -2454,21 +2782,65 @@
 					}
 				}
 
-				let memberSinceDate = null
-				let membersSinceInYears = null
-				let membersSinceInMonths = null
-				let membersSinceInDays = null
+				let memberSinceDate = null;
+				let membersSinceInYears = null;
+				let membersSinceInMonths = null;
+				let membersSinceInDays = null;
+				memberSinceDate = dayjs(userDataObject.member_since);
+				membersSinceInYears = loadTime.diff(memberSinceDate, 'year');
+				membersSinceInMonths = loadTime.diff(memberSinceDate, 'month');
+				membersSinceInDays = loadTime.diff(memberSinceDate, 'day');
 
-				if (userDataObject.member_since) // DETAILS from API
+				if (settings.infoboxUserMemberSince)
 				{
+					if (userDataObject.member_since) // DETAILS from API
+					{
 
-					memberSinceDate = dayjs(userDataObject.member_since);
-					membersSinceInYears = loadTime.diff(memberSinceDate, 'year');
-					membersSinceInMonths = loadTime.diff(memberSinceDate, 'month');
-					membersSinceInDays = loadTime.diff(memberSinceDate, 'day');
+						// wyświetlony obok nazwy użytkownika rok założenia konta
+						if (membersSinceInDays < 32)
+						{
+							// konto zalozone dzisiaj
+							if (membersSinceInDays == 0)
+							{
+								let membersSinceInHours = loadTime.diff(memberSinceDate, 'hour');
+								let membersSinceInMinutes = loadTime.diff(memberSinceDate, 'minute');
+								if (membersSinceInHours == 0)
+								{
+									infoboxInnerHTML += `<var class="wxs_user_member_since">Konto od ${membersSinceInMinutes} minut </var>`;
+								}
+								else
+								{
+									infoboxInnerHTML += `<var class="wxs_user_member_since">Konto od ${membersSinceInHours} h </var>`;
+								}
+							}
+							// wczoraj
+							else if (membersSinceInDays == 1)
+							{
+								infoboxInnerHTML += `<var class="wxs_user_member_since">Konto od wczoraj</var>`;
+							}
+							else
+							{
+								infoboxInnerHTML += `<var class="wxs_user_member_since">${membersSinceInDays} dni </var>`;
+							}
+						}
+						// mniej niz 8 miesiecy
+						else if (membersSinceInMonths < 9)
+						{
+							infoboxInnerHTML += `<var class="wxs_user_member_since">${membersSinceInMonths} mies. </var>`;
+						}
+						// ponad 8 miesiecy
+						else
+						{
+							if (settings.infoboxUserMemberSinceYear) infoboxInnerHTML += `<var class="wxs_user_member_since">${memberSinceDate.year()}</var>`; // 2011
+							else
+							{
+								if (membersSinceInYears >= 5) infoboxInnerHTML += `<var class="wxs_user_member_since">${membersSinceInYears} lat</var>`; // 5 lat
+								else if (membersSinceInYears >= 2) infoboxInnerHTML += `<var class="wxs_user_member_since">${membersSinceInYears} lata</var>`; // 2 lata
+								else if (membersSinceInYears == 1) infoboxInnerHTML += `<var class="wxs_user_member_since">1 rok</var>`; // 1 rok
+							}
 
-					// wyświetlony obok nazwy użytkownika rok założenia konta
-					infoboxInnerHTML += `<var class="wxs_user_member_since">${memberSinceDate.year()}</var>`; // 2011
+						}
+					}
 				}
 				else
 				{
@@ -2711,6 +3083,8 @@
 	/* ------------- NOTATKOWATOR ------------ */
 	async function getUserNoteObjectByUsername(sectionObjectElement, username = sectionObjectElement.__vue__.item.author.username, forceAPICheck = false)
 	{
+		consoleX(`getUserNoteObjectByUsername(username: ${username}, forceAPICheck: ${forceAPICheck})`, 1)
+
 		if (settings.notatkowatorEnable && (forceAPICheck || (sectionObjectElement && sectionObjectElement.__vue__.item.author.note)))
 		{
 			// consoleX(`getUserNoteObjectByUsername()`, 1);
@@ -2732,10 +3106,9 @@
 						// console.log("typeof userNoteObject", typeof userNoteObject)
 						// console.log(userNoteObject);
 
-						const now = dayjs();
 						const date2 = dayjs(userNoteObject.lastUpdate);
 
-						if (now.diff(date2, "second") > parseFloat(settings.notatkowatorUpdateInterval * 3600))
+						if (loadTime.diff(date2, "second") > parseFloat(settings.notatkowatorUpdateInterval * 3600))
 						{
 							// notatka jest zbyt stara
 							userNoteObject = null;
@@ -2874,6 +3247,7 @@
 	async function getUserDetailsForUsername(userDataObject = null, username = userDataObject.username, forceAPICheck = false)
 	{
 
+		consoleX(`getUserDetailsForUsername(username: ${username}, forceAPICheck: ${forceAPICheck})`)
 		if (settings.infoboxEnable && username)
 		{
 			// consoleX(`getUserDetailsForUsername() ${username}`, 1);
@@ -2916,6 +3290,7 @@
 
 	function addUserDataObjectWXSBanInfo(userDataObject)
 	{
+		consoleX(`addUserDataObjectWXSBanInfo()`, 1)
 		if (userDataObject.banned)
 		{
 			userDataObject.banned.wxs_ban_end_date_string = userDataObject.banned.expired; 			// "2024-01-04 17:22:31"
@@ -2932,7 +3307,7 @@
 			userDataObject.banned.wxs_info_text_1 = `${userDataObject.gender == "f" ? "Użytkowniczka @" + userDataObject.username + " dostała" : "Użytkownik @" + userDataObject.username + " dostał"} bana za ${userDataObject.banned.wxs_reason_lowercase}`;
 
 			// "Koniec bana za 14 dni"
-			userDataObject.banned.wxs_info_text_2 = `Koniec bana ${userDataObject.banned.wxs_ban_end_in_years > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_years + " lat(a)" : userDataObject.banned.wxs_ban_end_in_months > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_months + " miesiące(ęcy)" : userDataObject.banned.wxs_ban_end_in_days > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_days + " dni" : userDataObject.banned.wxs_ban_end_date_object.isSame(dayjs(), 'day') == true ? " już dzisiaj!  " : " jutro"}`;
+			userDataObject.banned.wxs_info_text_2 = `Koniec bana ${userDataObject.banned.wxs_ban_end_in_years > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_years + " lat(a)" : userDataObject.banned.wxs_ban_end_in_months > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_months + " miesiące(ęcy)" : userDataObject.banned.wxs_ban_end_in_days > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_days + " dni" : userDataObject.banned.wxs_ban_end_date_object.isSame(loadTime, 'day') == true ? " już dzisiaj!  " : " jutro"}`;
 
 
 			// "Ban trwa do 2024-12-12 23:59:59"
@@ -3019,7 +3394,7 @@
 	// zwraca tytul znaleziska lub fragment poczatku wpisu/komentarza. Maks tytul znaleziska to 80 znakow
 	function getTitleTextFromSectionObjectElement(sectionObjectElement, charLimit = 80)
 	{
-		consoleX(`getTitleTextFromSectionObjectElement()`, 1);
+		consoleX(`getTitleTextFromSectionObjectElement(charLimit: ${charLimit})`, 1);
 
 		if (sectionObjectElement && sectionObjectElement.__vue__?.item?.resource)
 		{
@@ -3049,7 +3424,7 @@
 	function mirkoukrywaczBlockNewElement(sectionObjectElement = null, object_id = getObjectIdFromSectionObjectElement(sectionObjectElement), blockingType = "hidden")
 	{
 		console.clear();
-		consoleX(`mirkoukrywaczBlockNewElement()`, 1);
+		consoleX(`mirkoukrywaczBlockNewElement(blockingType: ${blockingType})`, 1);
 
 
 		if (localStorageMirkoukrywacz && (sectionObjectElement || object_id))
@@ -3142,6 +3517,7 @@
 
 	function mirkoukrywaczHideAllBlockedElements()
 	{
+		consoleX(`mirkoukrywaczHideAllBlockedElements()`, 1)
 		if (localStorageMirkoukrywacz)
 		{
 			//consoleX(`mirkoukrywaczHideAllBlockedElements()`, 1);
@@ -3208,6 +3584,8 @@
 
 	function mirkoukrywaczAppendOneElementToHideList(value, key, iterationNumber = "⭐")
 	{
+		consoleX(`mirkoukrywaczAppendOneElementToHideList(value: ${value}, key: ${key})`);
+
 		if (!document.querySelector(`#wxs_modal .wykopx_mirkoukrywacz_list_of_hidden_items #wykopx_mirkoukrywacz_element_${key}`))
 		{
 			let hidden_element_html = `
@@ -3245,7 +3623,7 @@
 	{
 		if (settings.mirkoukrywaczEnable)
 		{
-			// consoleX(`createMenuItemForMirkoukrywacz()`, 1)
+			consoleX(`createMenuItemForMirkoukrywacz()`, 1)
 
 			if (document.getElementById("wxs_open_modal_mirkoukrywacz_button") == null)
 			{
@@ -3277,7 +3655,7 @@
 	{
 		if (settings.notatkowatorEnable)
 		{
-			// consoleX(`createMenuItemForNotatkowator()`, 1)
+			consoleX(`createMenuItemForNotatkowator()`, 1)
 
 			createProfileDropdownMenuItem(
 				{
@@ -3381,7 +3759,6 @@
 		{
 			consoleX(`mirkoukrywaczRemoveTooOld()`, 1);
 
-			const now = dayjs();
 			let numberOfRemovedItems = 0;
 
 			localStorageMirkoukrywacz.iterate(function (value, id, iterationNumber)
@@ -3389,7 +3766,7 @@
 				if (value.blockingType == options.blockingType || options.blockingType == "all") // "hidden", "minimized"
 				{
 					const itemDate = dayjs(value.date);
-					const diffInDays = now.diff(itemDate, 'day', true); // true — floating point
+					const diffInDays = loadTime.diff(itemDate, 'day', true); // true — floating point
 
 					if (diffInDays >= options.days)
 					{
@@ -3457,6 +3834,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		if (settings.autoOpenSpoilersEverywhere) 
 		{
 			consoleX("autoOpenMoreContentEverywhere()", 1)
+
 			let showSpoilerButtons = document.querySelectorAll("div.wrapper section.content-spoiler button");
 			if (showSpoilerButtons?.length > 0)
 			{
@@ -3506,6 +3884,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 	function refreshOrRedirectOnButtonClick(selector, pathToRefresh = "/")
 	{
+		consoleX(`refreshOrRedirectOnButtonClick(selector: ${selector}, pathToRefresh: ${pathToRefresh})`, 1)
 		document.querySelectorAll(selector).forEach(function (element)
 		{
 			element.addEventListener('click', function (event)
@@ -3713,85 +4092,65 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	/* checking for new versions */
 	async function checkVersionForUpdates()
 	{
-		if (!dev) console.clear();
+		// if (!dev) console.clear();
 		consoleX("Sprawdzanie aktualizacji Wykop X Style i Wykop XS...");
 
 		try
 		{
-			let response = await fetch(`https://raw.githubusercontent.com/wykopx/wykopx-png/main/old-versions/wykopxs.${currentVersion}.gif`);
-			if (response.ok)
+			const response = await fetch(`https://update.wykopx.pl/xs/wykopxs?${currentVersion}`); // wykopxs?3.0.0
+			const newestWykopXSVersion = await response.text();
+
+			if (currentVersion == newestWykopXSVersion)
 			{
-				addWykopXSNewVersionAvailableToast(); // new version available
-				consoleX("Hej, jest nowa wersja skryptu Wykop XS. Wejdź na http://script.wykopx.pl i zaktualizuj go");
+				consoleX(`✅ Masz najnowszą wersję skryptu Wykop XS v.${currentVersion}`);
 			}
 			else
 			{
-				// consoleX(`Masz najnowszą wersję skryptu Wykop XS v.${currentVersion}`);
+				addWykopXSNewVersionAvailableToast();
+				consoleX(`🆕 Dostępna jest nowa wersja Wykop XS v. ${newestWykopXSVersion} Możesz wejść na http://script.wykopx.pl i zaktualizować skrypt. Wersja, którą masz u siebie to Wykop XS v.${currentVersion}`);
 			}
 		}
 		catch (error)
 		{
-			consoleX(`Masz najnowszą wersję skryptu Wykop XS v.${currentVersion}`);
 		}
 
 		if (settings.versor == "style" || settings.versor == "blank")
 		{
 			try
 			{
-				let response = await fetch(`https://raw.githubusercontent.com/wykopx/wykopx-png/main/old-versions/wykopx${settings.versor}.${settings.version}.gif`);
-				if (response.ok)
+				const response = await fetch(`https://update.wykopx.pl/xs/wykopx${settings.versor}?${settings.version}`); // wykopxstyle?3.0.0   | wykopxblank?3.0.0
+				const newestWykopXStyleVersion = await response.text();
+
+				if (settings.version == newestWykopXStyleVersion)
 				{
-					addWykopXStyleNewVersionAvailableToast(); // new version available
-					consoleX(`Hej, jest dostępna nowa wersja styli wykop x ${settings.versor}. Wejdź na http://${settings.versor}.wykopx.pl i zaktualizuj je`);
+					consoleX(`✅ Masz najnowszą wersję styli Wykop X ${capitalizeFirstLetter(settings.versor)} v.${settings.version}`);
 				}
 				else
 				{
-					consoleX(`Masz najnowszą wersję styli wykop x ${settings.versor} v.${settings.version}`);
+					addWykopXStyleNewVersionAvailableToast();
+					consoleX(`🆕 Dostępna jest nowa wersja styli Wykop X ${capitalizeFirstLetter(settings.versor)} v.${newestWykopXStyleVersion} Możesz wejść na http://${settings.versor}.wykopx.pl i zaktualizować je.  Wersja, którą masz u siebie to Wykop X ${capitalizeFirstLetter(settings.versor)} v.${settings.version}`);
 				}
 			}
 			catch (error)
 			{
-				// consoleX(`Masz najnowszą wersję styli wykop x ${settings.versor} v.${settings.version}`);
 			}
 		}
-
-		if (settings.xblocker != "")
-		{
-			try
-			{
-				let response = await fetch(`https://raw.githubusercontent.com/wykopx/wykopx-png/main/old-versions/wykopxblocker.${settings.xblocker}.gif`);
-				if (response.ok)
-				{
-					addWykopXBlockerNewVersionAvailableToast();
-					consoleX(`Hej, jest dostępna nowa wersja Wykop X Blocker. Wejdź na http://blocker.wykopx.pl i zaktualizuj je`);
-				}
-				else
-				{
-					consoleX(`Masz najnowszą wersję Wykop X Blocker v.${settings.version}`);
-				}
-			}
-			catch (error)
-			{
-				// consoleX(`Masz najnowszą wersję styli Wykop X Blocker v.${settings.xblocker}`);
-			}
-		}
-
 	}
 
 
 
 	function hideWykopXSPromo()
 	{
-		// consoleX("hideWykopXSPromo()", 1)
+		consoleX("hideWykopXSPromo()", 1)
 
 		let style = document.createElement('style');
-		style.innerHTML = `body div.main-content section > section.sidebar:after { display: none !important; }`;
+		style.innerHTML = `body div.main-content section > section.sidebar::after { display: none !important; }`;
 		head.appendChild(style);
 	}
 
 	function addWykopXPromoBanner()
 	{
-		// consoleX("addWykopXPromoBanner()", 1)
+		consoleX("addWykopXPromoBanner()", 1)
 
 		let targetElement = document.querySelector('section.sidebar > footer');
 		if (targetElement)
@@ -3908,7 +4267,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// ZLICZA NOWE POWIADOMIENIA Z MENU OD 1 DO 5+
 	function countNumberOfNotificationsOnDesktop()
 	{
-		//consoleX(`countNumberOfNotificationsOnDesktop()`, 1)
+		consoleX(`countNumberOfNotificationsOnDesktop()`, 1)
 
 		unreadNotifications.tags = unreadNotifications.tags_new_entry_with_observed_tag = unreadNotifications.tags_new_link_with_observed_tag = unreadNotifications.entries = unreadNotifications.pm = unreadNotifications.total = 0;
 
@@ -3918,44 +4277,47 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			element.classList.remove('unread_5', 'unread_4', 'unread_3', 'unread_2', 'unread_1');
 		});
 
-		$("header .right ul li.dropdown:has(a.new)").each(function (index, value)
+
+
+		let li_dropdown = document.querySelectorAll("header .right ul li.dropdown:has(a.new)");
+		li_dropdown.forEach(function (dropdown)
 		{
-			const lastWord = $(this).attr("class").split(" ").pop();
+
+			const lastWord = dropdown.className.split(" ").pop();
 			let numberOfNotifications = 0;
-			// liczba powiadomień o tagach / wołaniach
-			$(this)
-				.find(".notify:not(.read)")
-				.each(function (index, value)
+			let notifies = dropdown.querySelectorAll(".notify:not(.read)");
+			notifies.forEach(function (notify)
+			{
+				++numberOfNotifications;
+				notify.classList.add(`unread_${numberOfNotifications}`);
+				if (lastWord == "tags")
 				{
-					++numberOfNotifications;
-
-					$(this).addClass(`unread_${numberOfNotifications}`);
-
-					if (lastWord == "tags")
+					++unreadNotifications["total"];
+					if (notify.querySelector(`div.content p.new-entry-with-observed-tag`))
 					{
+						++unreadNotifications["tags_new_entry_with_observed_tag"];
+						++unreadNotifications["tags"];
 						++unreadNotifications["total"];
-
-						if ($(this).find(`div.content p.new-entry-with-observed-tag`).length > 0)
-						{
-							++unreadNotifications["tags_new_entry_with_observed_tag"];
-							++unreadNotifications["tags"];
-							++unreadNotifications["total"];
-						}
-						else if ($(this).find(`div.content p.new-link-with-observed-tag`).length > 0)
-						{
-							++unreadNotifications["tags_new_link_with_observed_tag"];
-							++unreadNotifications["tags"];
-							++unreadNotifications["total"];
-						}
-					} else if (lastWord == "entries")
+					} else if (notify.querySelector(`div.content p.new-link-with-observed-tag`))
 					{
-						++unreadNotifications["entries"];
+						++unreadNotifications["tags_new_link_with_observed_tag"];
+						++unreadNotifications["tags"];
 						++unreadNotifications["total"];
 					}
-				})
-				.parents(`.notifications.dropdown`)
-				.addClass(`unread_${numberOfNotifications}`);
+				} else if (lastWord == "entries")
+				{
+					++unreadNotifications["entries"];
+					++unreadNotifications["total"];
+				}
+			});
+			let parentNotification = dropdown.closest(`.notifications.dropdown`);
+			if (parentNotification)
+			{
+				parentNotification.classList.add(`unread_${numberOfNotifications}`);
+			}
 		});
+
+
 		if (unreadNotifications["tags"] > 0)
 		{
 			consoleX(`Liczba nowych powiadomień z obserwowanych tagów: ${unreadNotifications["tags"]} (w tym ${unreadNotifications["tags_new_entry_with_observed_tag"]} z wpisów i ${unreadNotifications["tags_new_link_with_observed_tag"]} ze znalezisk)`);
@@ -3965,23 +4327,31 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			consoleX(`Liczba nowych zawołań: ${unreadNotifications["entries"]}`);
 		}
 
-		$("header .right ul li.pm.dropdown:has(a.new)").each(function (index, value)
-		{
-			let numberOfNotifications = 0; // liczba powiadomień o wiadomościach PM
 
-			$(this)
-				.find(".item.unread")
-				.each(function (index, value)
+
+		let li_pm_dropdown = document.querySelectorAll("header .right ul li.pm.dropdown");
+		li_pm_dropdown.forEach(function (dropdown)
+		{
+			if (dropdown.querySelector('a.new'))
+			{
+				let numberOfNotifications = 0; // liczba powiadomień o wiadomościach PM
+				let unreadItems = dropdown.querySelectorAll(".item.unread");
+				unreadItems.forEach(function (item, index)
 				{
 					++numberOfNotifications;
 					++unreadNotifications["total"];
-					$(this).addClass(`unread_${numberOfNotifications}`);
-				})
-				.parents(`.pm.dropdown`)
-				.addClass(`unread_${numberOfNotifications}`);
-			unreadNotifications["pm"] = numberOfNotifications;
-			consoleX(`Liczba nowych wiadomości: ${unreadNotifications["pm"]}`);
+					item.classList.add(`unread_${numberOfNotifications}`);
+				});
+				let parentDropdown = dropdown.closest(`.pm.dropdown`);
+				if (parentDropdown)
+				{
+					parentDropdown.classList.add(`unread_${numberOfNotifications}`);
+				}
+				unreadNotifications["pm"] = numberOfNotifications;
+				console.log(`Liczba nowych wiadomości: ${unreadNotifications["pm"]}`);
+			}
 		});
+
 
 		if (unreadNotifications.tags > 0)
 		{
@@ -4026,21 +4396,85 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				})
 		}
 
-		executeTabAndFaviconChanges();
+		if (settings.tabChangeEnabled) executeTabAndFaviconChanges();
 	}
 
 
 
 
 
+	let wykopDomain = "https://wykop.pl";
+	let wxDomain = "https://wykopx.pl";
+	let mikroczatDomain = "https://mikroczat.pl"; 		// 	https://mikroczat.pl
+	let mikroczatPath = "/czat"; 		// 	https://mikroczat.pl/czat
+
+	// MIKROCZAT
+	let mikroczatWindow = null;
+	document.addEventListener("mousedown", (event) =>
+	{
+		if (!event.target.closest(".wykopx_open_mikroczat")) return;
+		event.preventDefault();
+		let windowOptions = "";
+
+		if (event.shiftKey || event.ctrlKey || event.altKey || event.button === 2)
+		{
+			windowOptions = "popup";
+		}
+		mikroczatWindow = window.open(`${mikroczatDomain}${mikroczatPath}`, 'mikroczat', windowOptions);
+
+	});
+	document.addEventListener("click", (event) =>
+	{
+		if (!event.target.closest(".wykopx_open_mikroczat")) return;
+		event.preventDefault();
+	});
 
 
+	// WIADOMOŚCI OD MIKROCZAT
+	window.addEventListener('message', function (event)
+	{
+		if (event.origin !== mikroczatDomain) return;
+		console.log('Widomość od Mikroczat', event.data);
+		if (event.data == "MikroCzatOpened") mikroczatWindow.postMessage(window.localStorage.token, mikroczatDomain);
+		if (event.data == "MikroCzatLoggedIn") bodySection.dataset.mikroczatLogged = true;
+		if (event.data == "MikroCzatClosed") bodySection.dataset.mikroczatLogged = false;
+	}, false);
 
+	CSS += `body > section[data-mikroczat-logged="true"] li.wykopx_open_mikroczat_li:after
+	{
+		content: "🗯";
+		color: white;
+		position: absolute;
+		top: -2px;
+		right: -2px;
+	}
+	body > section[data-mikroczat-logged="false"] li.wykopx_open_mikroczat_li:after
+	{
+		content: "⊗";
+		color: rgb(255, 255, 255, 0.3);
+		position: absolute;
+		top: -2px;
+		right: -2px;
+	}`;
 
 
 	function addWykopXButtonsToNavBar()
 	{
-		// consoleX("addWykopXButtonsToNavBar()", 1)
+		consoleX("addWykopXButtonsToNavBar()", 1)
+
+		createNewNavBarButton({
+			position: "left",
+			text: "MikroCzat ",
+			title: `Wejdź na MikroCzat ${promoString}`,
+			class: "open_mikroczat", // wykopx_open_mikroczat_li
+			hideWithoutXStyle: false,
+			url: "https://wykopx.pl/_test",
+			target: "mikroczat",
+			icon: "https://i.imgur.com/9PvHlaA.png",
+			number: null,
+			data: "",
+		})
+
 
 		if (settings.myWykopInTopNavJS)
 		{
@@ -4396,7 +4830,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// number-nieuzwane
 	function createNewNavBarButton(options)
 	{
-		// consoleX(`createNewNavBarButton()`, 1)
+		consoleX(`createNewNavBarButton()`, 1)
 
 		let nav_ul;
 
@@ -4451,7 +4885,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				}
 			}
 		}
-
 	}
 
 
@@ -4461,7 +4894,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// returnWykopXSClassesString(["klasa1", "klasa2"]) class="wykopx_klasa1 wykopx_klasa2"
 	function addWykopXSClassesToElement(element, inputClassOrArray, suffix = null)
 	{
-		// consoleX("addWykopXSClassesToElement()", 1)
+		consoleX("addWykopXSClassesToElement()", 1)
 
 		if (inputClassOrArray)
 		{
@@ -4483,7 +4916,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// options: { text: null, title: null, className: ``, id: null, url: null, target: "_blank", icon: null, number: null
 	function createProfileDropdownMenuItem(options)
 	{
-		//consoleX(`createProfileDropdownMenuItem()`, 1)
+		consoleX(`createProfileDropdownMenuItem()`, 1)
 
 		let dropdownBody = document.querySelector("body header div.right nav ul li.account.dropdown ul.dropdown-body");
 
@@ -4534,7 +4967,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// wyswietla sie tylko 25 powiadomien, wiec powinno byc 25+
 	function addNotificationSummaryButtonToNavBar()
 	{
-		// consoleX("addNotificationSummaryButtonToNavBar()", 1)
+		consoleX("addNotificationSummaryButtonToNavBar()", 1)
 
 		let mojeLubTagi = document.querySelector('header .right ul li.account.dropdown ul.dropdown-body li.notifications.new a')?.getAttribute('href');
 
@@ -4602,7 +5035,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	{
 		if (settings.topNavNightSwitchIconButton)
 		{
-			//consoleX("addNightModeButtonToNavBar()", 1)
+			consoleX("addNightModeButtonToNavBar()", 1)
 
 			const wykopx_night_mode = `<li class="wykopxs wykopx_night_mode notifications dropdown" title="Przełącz pomiędzy trybem nocnym/dziennym ${promoString}"><a href="#"><figure></figure></a></li>`;
 			document.querySelector('header.header > .right > nav > ul').insertAdjacentHTML('afterbegin', wykopx_night_mode);
@@ -4628,7 +5061,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 	function addExtraButtons()
 	{
-		//consoleX("addExtraButtons()", 1)
+		consoleX("addExtraButtons()", 1)
 
 		const topNavHeaderRightElement = document.querySelector('header.header > .right > nav > ul');
 		const wykopx_wykopwnowymstylu_li = `<li class="wykopxs wykopx_wykopwnowymstylu_li dropdown"><a href="/tag/wykopwnowymstylu" class="wykopx_wykopwnowymstylu_button" title="Przejdź na #wykopwnowymstylu"><span>#</span></a></li>`;
@@ -4677,6 +5110,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// DODAJ NOWY WPIS NA MIRKO
 	function focusOnAddingNewMicroblogEntry()
 	{
+		consoleX(`focusOnAddingNewMicroblogEntry()`, 1)
 		let wykop_url = new URL(document.URL);
 		if (wykop_url.hash == "#dodaj")
 		{
@@ -4707,15 +5141,13 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 
 	/* ------ TAB TITLE AND WEBSITE FAVICON CHANGES --------- */
-
-	let originalTabTitle = document.title;
-	const defaultWykopFacoviconURL = "https://wykop.pl/static/img/favicons/favicon.png";
-
+	let pageTabTitleOriginal = document.title;
+	let pageTabTitleProcessed = pageTabTitleOriginal;
 	let tabTitles = new Map([
 		["domyslny", "           "],
 		["adres_url", "           "],
 		["pusty_tytul", "ᅟᅟ"],
-		["wlasny", settings.tabTitleCustom],
+		["wlasny", settings.tabChangeTitleCustom],
 		["wykop", "Wykop"],
 		["wykopx", "Wykop X"],
 		["digg", "News and Trending Stories Around the Internet | Digg"],
@@ -4728,8 +5160,9 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		["youtube", "YouTube"],
 	])
 
-	let tabFavicons = new Map([
-		["wykop", defaultWykopFacoviconURL],
+	const defaultWykopFaviconURL = "https://wykop.pl/static/img/favicons/favicon.png";
+	let tabFaviconsMap = new Map([
+		["wykop", defaultWykopFaviconURL],
 		["wykop_white", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/W_white.png"],
 		["wykop_gray", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/W_black.png"],
 
@@ -4742,7 +5175,13 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		["x", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/x.png"],
 		["youtube", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/youtube.ico"],
 	])
-
+	let tabSuffixesMap = new Map([
+		["domyslny", ":: Wykop.pl"],
+		["dashwykoppl", "- Wykop.pl"],
+		["dashwykop", "- Wykop"],
+		["dashwykopx", "- Wykop X"],
+		["", ""],
+	])
 
 
 	/*  TAB TITLE
@@ -4751,7 +5190,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		changeDocumentTitle("Example new title")
 	*/
 
-	let specialCharacter = "."; // ឴= "឴";
 
 	function changeDocumentTitle(new_document_title)
 	{
@@ -4759,17 +5197,22 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 		// console.log(`changeDocumentTitle() > start:  document.title:`);
 		// console.log(document.title);
-		// console.log(`changeDocumentTitle() > start:  originalTabTitle`);
-		// console.log(originalTabTitle);
+		// console.log(`changeDocumentTitle() > start:  pageTabTitleOriginal`);
+		// console.log(pageTabTitleOriginal);
 
-		if (settings.tabTitleRemoveWykopPL)
-		{
-			originalTabTitle = originalTabTitle.replace(":: Wykop.pl", "");
-		}
+		pageTabTitleProcessed = pageTabTitleOriginal;
+
+		// sufix :: Wykop.pl
+		if (settings.tabChangeTitleSuffix) pageTabTitleProcessed = pageTabTitleProcessed.replace(":: Wykop.pl", tabSuffixesMap.get(settings.tabChangeTitleSuffix));
+		// prefix 
+		if (settings.tabChangeTitlePrefix) pageTabTitleProcessed = `Wykop X - ${pageTabTitleProcessed}`;
+
+
+
 
 		let tabTitleNotifications = "";
 
-		if (settings.tabTitleShowNotificationsEnabled == true)
+		if (settings.tabChangeTitleShowNotificationsEnabled == true)
 		{
 			let notificationsTotalCount = 0;
 
@@ -4777,42 +5220,42 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 			if (unreadNotifications["total"] > 0)
 			{
-				if (settings.tabTitleShowNotificationsCountPM && unreadNotifications["pm"] > 0
-					|| settings.tabTitleShowNotificationsCountTagsNewLink && unreadNotifications["tags_new_link_with_observed_tag"] > 0
-					|| settings.tabTitleShowNotificationsCountTagsNewEntry && unreadNotifications["tags_new_entry_with_observed_tag"] > 0
-					|| settings.tabTitleShowNotificationsCountEntries && unreadNotifications["entries"] > 0)
+				if (settings.tabChangeTitleShowNotificationsCountPM && unreadNotifications["pm"] > 0
+					|| settings.tabChangeTitleShowNotificationsCountTagsNewLink && unreadNotifications["tags_new_link_with_observed_tag"] > 0
+					|| settings.tabChangeTitleShowNotificationsCountTagsNewEntry && unreadNotifications["tags_new_entry_with_observed_tag"] > 0
+					|| settings.tabChangeTitleShowNotificationsCountEntries && unreadNotifications["entries"] > 0)
 				{
 					let notificationsEmoji = "";
 
-					if (settings.tabTitleShowNotificationsCountPM && unreadNotifications["pm"] > 0)
+					if (settings.tabChangeTitleShowNotificationsCountPM && unreadNotifications["pm"] > 0)
 					{
 						notificationsTotalCount += unreadNotifications["pm"];
 						notificationsEmoji = "✉"; // 🔗✉📧📩✉ 🖂 🖃 🖄 🖅 🖆
 						tabNotificationsSeparated += `${notificationsEmoji}${unreadNotifications["pm"]} `;
 					}
 
-					if (settings.tabTitleShowNotificationsCountEntries && unreadNotifications["entries"] > 0)
+					if (settings.tabChangeTitleShowNotificationsCountEntries && unreadNotifications["entries"] > 0)
 					{
 						notificationsTotalCount += unreadNotifications["entries"];
 						notificationsEmoji = "🕭"; // 🕭🔔
 						tabNotificationsSeparated += `${notificationsEmoji}${unreadNotifications["entries"]} `;
 					}
 
-					if (unreadNotifications["tags"] && settings.tabTitleShowNotificationsCountTagsNewLink || settings.tabTitleShowNotificationsCountTagsNewEntry)
+					if (unreadNotifications["tags"] && settings.tabChangeTitleShowNotificationsCountTagsNewLink || settings.tabChangeTitleShowNotificationsCountTagsNewEntry)
 					{
 						notificationsEmoji = "#"; // #🏷
-						if (settings.tabTitleShowNotificationsCountTagsNewLink && unreadNotifications["tags_new_link_with_observed_tag"] > 0)
+						if (settings.tabChangeTitleShowNotificationsCountTagsNewLink && unreadNotifications["tags_new_link_with_observed_tag"] > 0)
 						{
 							notificationsTotalCount += unreadNotifications["tags_new_link_with_observed_tag"];
 						}
-						if (settings.tabTitleShowNotificationsCountTagsNewEntry && unreadNotifications["tags_new_entry_with_observed_tag"] > 0)
+						if (settings.tabChangeTitleShowNotificationsCountTagsNewEntry && unreadNotifications["tags_new_entry_with_observed_tag"] > 0)
 						{
 							notificationsTotalCount += unreadNotifications["tags_new_entry_with_observed_tag"];
 						}
 						tabNotificationsSeparated += `${notificationsEmoji}${unreadNotifications["tags"]} `;
 					}
 
-					if (settings.tabTitleShowNotificationsCountSeparated)
+					if (settings.tabChangeTitleShowNotificationsCountSeparated)
 					{
 						tabTitleNotifications = tabNotificationsSeparated; // 📧 2 🔔 3 # 14
 					}
@@ -4823,11 +5266,11 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 					if (new_document_title == "pusty_tytul") // jesli pusty tytul — ikonki powiadomien bez nawiasow
 					{
-						tabTitleNotifications = `${specialCharacter}${tabTitleNotifications} `						// 📧 2 🔔 3 # 14 albo 19
+						tabTitleNotifications = `${tabTitleNotifications} `						// 📧 2 🔔 3 # 14 albo 19
 					}
 					else
 					{
-						tabTitleNotifications = `(${specialCharacter}${tabTitleNotifications}) `					// (📧 2 🔔 3 # 14) albo (19)
+						tabTitleNotifications = `${tabTitleNotifications} | `					// 📧 2 🔔 3 # 14 |   albo  19 |
 					}
 				}
 			}
@@ -4836,7 +5279,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 		let documentTitle = tabTitleNotifications;
 
-		if (settings.tabTitleEnabled && new_document_title != "domyslny")
+		if (new_document_title != "domyslny")
 		{
 			if (tabTitles.has(new_document_title)) // selected title from Map
 			{
@@ -4849,50 +5292,51 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		}
 		else
 		{
-			documentTitle += originalTabTitle;
+			documentTitle += pageTabTitleProcessed;
 		}
-
-		// console.log("changeDocumentTitle() > zmieniam document.title na: " + documentTitle);
 		document.title = documentTitle;
+		// console.log("changeDocumentTitle() > zmieniam document.title na: " + documentTitle);
 	}
 
 
 	// FAVICON ICO
-	function changeDocumentFavicon(new_favicon = defaultWykopFacoviconURL)
+	function changeDocumentFavicon(new_favicon = defaultWykopFaviconURL)
 	{
-		consoleX("changeDocumentFavicon()", 1)
+		consoleX(`changeDocumentFavicon(new_favicon: "${new_favicon}")`, 1)
+		let selectedFaviconURL = new_favicon;
+		if (tabFaviconsMap.has(new_favicon)) selectedFaviconURL = tabFaviconsMap.get(new_favicon);
 
-		// changeDocumentFavicon()
-		// changeDocumentFavicon("reddit")
-		// changeDocumentFavicon("https://www.interia.pl/favicon.ico")
 		// <link rel="icon" type="image/svg+xml" href="/static/img/favicons/favicon.svg">
 		// <link rel="alternate icon" type="image/png" href="/static/img/favicons/favicon.png">
-		let oldFaviconElement = document.querySelector('link[rel="icon"]');
-		let alternateFaviconElement = document.querySelector('link[rel="alternate icon"]');
-		if (oldFaviconElement) head.removeChild(oldFaviconElement);
-		if (alternateFaviconElement) head.removeChild(alternateFaviconElement);
+		const oldFaviconElement = head.querySelector('link[rel="icon"]');
 
-		let selectedFaviconURL = new_favicon;
-		if (tabFavicons.has(new_favicon)) selectedFaviconURL = tabFavicons.get(new_favicon);
+		if (oldFaviconElement && !oldFaviconElement.href.startsWith(selectedFaviconURL))
+		{
+			head.removeChild(oldFaviconElement);
+			const faviconLinkElement = document.createElement('link');
+			faviconLinkElement.rel = 'icon';
+			faviconLinkElement.type = 'image/x-icon'; // "image/svg+xml" "image/png"
+			faviconLinkElement.href = selectedFaviconURL + '?=' + Math.random();
+			head.appendChild(faviconLinkElement);
+		}
 
-		const faviconLinkElement = document.createElement('link');
-		faviconLinkElement.rel = 'icon';
-		faviconLinkElement.type = 'image/x-icon'; // "image/svg+xml" "image/png"
-		faviconLinkElement.href = selectedFaviconURL + '?=' + Math.random();
-
-		head.appendChild(faviconLinkElement);
+		const alternateFaviconElement = head.querySelector('link[rel="alternate icon"]');
+		if (alternateFaviconElement)
+		{
+			head.removeChild(alternateFaviconElement);
+		}
 	}
 
 
 
 	function executeTabAndFaviconChanges()
 	{
-		// consoleX(`executeTabAndFaviconChanges`, 1);
+		consoleX(`executeTabAndFaviconChanges()`, 1);
 
 		if (document.hidden || !settings.tabChangeOnlyOnHiddenState)
 		{
-			if (settings.tabFaviconEnabled) changeDocumentFavicon(settings.tabFaviconSelect);
-			if (settings.tabTitleEnabled || settings.tabTitleShowNotificationsEnabled) changeDocumentTitle(settings.tabTitleSelect);
+			if (settings.tabChangeFaviconEnabled) changeDocumentFavicon(settings.tabChangeFaviconSelect);
+			if (settings.tabChangeTitleEnabled) changeDocumentTitle(settings.tabChangeTitleSelect);
 		}
 	}
 
@@ -4901,31 +5345,38 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// EVENT: KARTA JEST W TLE document.hidden == true
 	// https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
 	// https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilitychange_event
-	function tabVisibilityChanged()
+	function browserTabVisibilityChanged()
 	{
-		consoleX(`tabVisibilityChanged()`, 1);
+		consoleX(`browserTabVisibilityChanged() -> ${document.visibilityState}`, 1);
 
-		// console.log("tabVisibilityChanged(): " + document.visibilityState)
-
+		// console.log("browserTabVisibilityChanged(): " + document.visibilityState)
 		// document.visibilityState > "visible"/"hidden"
 		// document.hidden > true/false
-
-		if (document.hidden)
+		if (document.hidden == false)
 		{
-			executeTabAndFaviconChanges();
-			// console.log(`document.hidden -> true > document.visibilityState: ${document.visibilityState}`);
+			if (settings.archiveXNewestEntry) runWithDelay(3000, getNewestEntryFromAPI);
 		}
-		else
+
+		if (settings.tabChangeEnabled)
 		{
-			if (settings.tabChangeOnlyOnHiddenState)
+			if (document.hidden)
 			{
-				if (settings.tabTitleEnabled || settings.tabTitleShowNotificationsEnabled) changeDocumentTitle(originalTabTitle);
-				if (settings.tabFaviconEnabled) changeDocumentFavicon();
+				executeTabAndFaviconChanges();
+				// console.log(`document.hidden -> true > document.visibilityState: ${document.visibilityState}`);
+			}
+			else
+			{
+				if (settings.tabChangeOnlyOnHiddenState)
+				{
+					if (settings.tabChangeTitleEnabled) changeDocumentTitle(pageTabTitleOriginal);
+					if (settings.tabChangeFaviconEnabled) changeDocumentFavicon();
+				}
 			}
 		}
+
 	}
 	// EVENT LISTENER
-	document.addEventListener("visibilitychange", tabVisibilityChanged, false); // ICO PNG GIF JPEG SVG
+	document.addEventListener("visibilitychange", browserTabVisibilityChanged, false); // ICO PNG GIF JPEG SVG
 
 
 
@@ -4933,30 +5384,32 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// TITLE MUTATION
 	let titleMutationObserver = new MutationObserver(mutationsList =>
 	{
-		// console.log("titleMutationObserver")
-		// console.log(mutationsList);
+		if (dev) console.log("titleMutationObserver ->")
+		if (dev) console.log(mutationsList);
+
 		for (let mutation of mutationsList)
 		{
 			if (mutation.type === 'childList')
 			{
 				let mutatedTitle = mutation.addedNodes[0].textContent;
+				consoleX(`titleMutationObserver -> Nowy tytuł strony: ${mutatedTitle}`, 1);
 
-				// console.log(`Nowy tytuł strony: ${mutatedTitle}`);
 				// if (mutatedTitle.endsWith(":: Wykop.pl"))
 				// {
-				// 	originalTabTitle = mutatedTitle;
+				// 	pageTabTitleOriginal = mutatedTitle;
 				// 	console.log(`mutatedTitle.endsWith(":: Wykop.pl")`);
 				// }
-				if (!mutatedTitle.includes(specialCharacter)) // tytul nie zostal jeszcze zmieniony i dodane są liczby powiadomien zeby sie nie powtarzalo (1)(1)
-				{
-					originalTabTitle = mutatedTitle;
-					// console.log(`!mutatedTitle.includes("specialCharacter")`);
-				}
 
-				titleMutationObserver.disconnect();
-				executeTabAndFaviconChanges();
-				titleMutationObserver.observe(document.querySelector('title'), { childList: true, })
-				// console.log("originalTabTitle: " + originalTabTitle)
+				// if (!mutatedTitle.includes(specialCharacter)) // tytul nie zostal jeszcze zmieniony i dodane są liczby powiadomien zeby sie nie powtarzalo (1)(1)
+				// {
+				// 	pageTabTitleProcessed = mutatedTitle;
+				// 	// console.log(`!mutatedTitle.includes("specialCharacter")`);
+				// }
+
+				// titleMutationObserver.disconnect();
+				// executeTabAndFaviconChanges();
+				// titleMutationObserver.observe(document.querySelector('title'), { childList: true, })
+				// console.log("pageTabTitleProcessed: " + pageTabTitleProcessed)
 			}
 		}
 	});
@@ -4987,13 +5440,13 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// PLUSES OBSERVER
 	function getVotesObject(sectionObjectElement, ratingBoxSection)
 	{
-		//consoleX(`getVotesObject()`, 1);
+		consoleX(`getVotesObject()`, 1);
 
 		/* returns:
-
+	
 		{
 			separated: false,
-
+	
 			votesUp: 50,
 			votesUpPercent: 100,
 			votesDown: 5,
@@ -5002,13 +5455,13 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			votesCount: 45,
 			votesAll: 55,
 			voted: 0
-
+	
 			votesUpPrevious: 49
 			votesDownPrevious: 4,
 			plusesDelta: 1
 			minusesDelta: 1
 		}
-
+	
 		{
 			resource: "link"
 			sectionObjectElement: <DOMElement>,
@@ -5017,7 +5470,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			id: 123456,
 			link_id: 123456,
 		}
-
+	
 		{
 			resource: "entry"
 			sectionObjectElement: <DOMElement>,
@@ -5047,14 +5500,14 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			entry_id: 123456,
 			link_id: 12345678,
 			comment_id: 12345678123
-	
+		
 			parent_id: 1234567 // znalezisko
 			parent_comment_id: 123456 // komentarz pod znaleziskiem
 			parent_element: <DOMElement>, // komentarz
 			fetchURL: 'https://wykop.pl/api/v3...'
 		}
-	
-	
+		
+		
 		ratingBoxSection.__vue__
 		{
 			voted: 		0  			// czy zaglosowane
@@ -5072,8 +5525,8 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			author:		"NadiaFrance"
 			showBtn:	true / false
 		}
-	
-	
+		
+		
 		*/
 
 		let blocks =
@@ -5197,8 +5650,10 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 	function checkPluses(sectionObjectElement, ratingBoxSection, showUpdatedValues = true)
 	{
-		consoleX(`checkPluses()`, 1)
+		consoleX(`checkPluses(showUpdatedValues: ${showUpdatedValues})`, 1)
 
+		if (dev) console.log("checkPluses(), sectionObjectElement: ", sectionObjectElement)
+		if (dev) console.log("checkPluses(), ratingBoxSection: ", ratingBoxSection)
 
 		if (sectionObjectElement == null && ratingBoxSection)
 		{
@@ -5233,8 +5688,8 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 			if (votesObject) // nie dla subkomentarzy
 			{
-				console.log("votesObject");
-				console.log(votesObject);
+				if (dev) console.log("votesObject");
+				if (dev) console.log(votesObject);
 
 				// let sectionObjectElement = votesObject.sectionObjectElement;
 				sectionObjectElement.classList.remove("plusesAdded", "plusesRemoved", "minusesAdded", "minusesRemoved");
@@ -5321,9 +5776,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 	function updateFetchedVotesData(sectionObjectElement, votesObject, showUpdatedValues = true, onlyPluses = false)
 	{
-
-
-		consoleX(`updateVisibleLinkVotesCount()`, 1);
+		consoleX(`updateVisibleLinkVotesCount(showUpdatedValues: ${showUpdatedValues}, onlyPluses: ${onlyPluses})`, 1);
 
 		let ratingBoxSection;
 		let ratingBoxVotesUpCountElement;
@@ -5343,7 +5796,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		{
 			ratingBoxSection = sectionObjectElement.querySelector("section.rating-box");
 			ratingBoxVotesUpCountElement = ratingBoxSection.querySelector("li.plus");
-			ratingBoxVotesDownCountElement = ratingBoxSection.querySelector("li.minus");
+			ratingBoxVotesDownCountElement = ratingBoxSection.querySelector("li.minus"); // tylko przy komentarzach pod znaleziskiem
 			ratingBoxVotesPerHourElement = ratingBoxSection.querySelector(".wxs_votes_per_hour");
 		}
 
@@ -5472,8 +5925,8 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			}
 		}
 
-		// PRZYBYŁY MINUSY
-		if (votesObject.minusesDelta != 0)
+		// PRZYBYŁY MINUSY POD KOMENTARZEM W ZNALEZISKU
+		if (votesObject.minusesDelta != 0 && ratingBoxVotesDownCountElement)
 		{
 			ratingBoxVotesDownCountElement.dataset.wxs_votes_down = votesObject.votesDown;
 
@@ -5528,7 +5981,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// <section class="rating-box" data-wxs_pluses="269" data-wxs_minuses="0" data-wxs_pluses_minuses_total="269" data-wxs_pluses_below_limit="true">
 	function parseRatingBoxCurrentContentAndCreateDataValues(ratingBoxSection)
 	{
-
 		// dodanie data-wxs_pluses na podstawie aktualnych wartosci plusow w HTML
 		// console.log("parseRatingBoxCurrentContentAndCreateDataValues(ratingBoxSection)")
 		consoleX(`parseRatingBoxCurrentContentAndCreateDataValues()`, 1);
@@ -5562,7 +6014,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// VOTING REAL UPDATE, VOTING EXPLOSION
 	function votingEventListener(sectionObjectElement, ratingBoxSection)
 	{
-		// consoleX(`votingEventListener()`, 1);
+		consoleX(`votingEventListener()`, 1);
 
 		if (sectionObjectElement && ratingBoxSection)
 		{
@@ -5597,6 +6049,20 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				showBtn:	true / false
 			}
 			*/
+
+			if (settings.votePlusMinusOnHover)
+			{
+				ratingBoxSection.addEventListener('mouseover', function (event)
+				{
+
+					if (event.target.matches('button:not(.voted)'))
+					{
+						event.target.click();
+					}
+				});
+			}
+
+
 			ratingBoxSection.addEventListener('click', function (event)
 			{
 				var clickedButton = event.target;
@@ -5743,7 +6209,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 	function linkSectionIntersected(linkBlock)
 	{
-		//console.log("linkSectionIntersected(linkBlock)", linkBlock)
+		if (dev) console.log("linkSectionIntersected(linkBlock)", linkBlock)
 
 		// const linkBlock = jNodeLinkBlock[0]; // jNode => DOMElement
 		//const link_id = linkBlock.id.replace("link-", ""); // 78643212
@@ -5962,7 +6428,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 	function disableNewLinkEditorPastedTextLimit(jNodeInput)
 	{
-		// consoleX(`disableNewLinkEditorPastedTextLimit()`, 1)
+		consoleX(`disableNewLinkEditorPastedTextLimit()`, 1)
 
 		const input = jNodeInput[0];
 		const maxLength = input.getAttribute('maxlength');
@@ -6060,6 +6526,32 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	}
 
 
+
+	function replaceDigitsWithDot(num)
+	{
+		if (num < 100)
+		{
+			return num.toString().slice(0, -1) + " ·";
+		} else
+		{
+			return num.toString().slice(0, -2) + " · ·";
+		}
+	}
+
+	// SHA256("WykopX") => "f5583a1d5d6044951722fe4b08d534af2b571efc065c8b73d07689d25d8a6175"
+	async function SHA256(message)
+	{
+		const encoder = new TextEncoder();
+		const data = encoder.encode(message); // 8,87,121,107,111,112,88
+		const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+		const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
+		const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string f5583a1d5d6044951722fe4b08d534af2b571efc065c8b73d07689d25d8a6175
+		consoleX(`SHA256 hash: ${hashHex}`, 1);
+		return hashHex;
+	}
+
+
+
 	// getRandomInt(-30, 20, "px")
 	function getRandomInt(min, max, unit)
 	{
@@ -6137,7 +6629,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	// Output: ["normal"]
 	function getPlusWords(str)
 	{
-		console.log("getPlusWords(string): " + str)
+		//console.log("getPlusWords(string): " + str)
 
 		let matches = str.match(/\+\p{L}+/gu); // diacritics characters, nie działa dla: str.match(/\+\w+/g); 
 		if (matches)
@@ -6157,13 +6649,336 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		return stringWithout;
 	}
 
+	function capitalizeFirstLetter(str)
+	{
+		return str.charAt(0).toUpperCase() + str.slice(1);
+	}
+
+
+
+
+	/* ARCHIWUM X */
+	let newestEntrySection = null;
+	let newestEntryID = null;
+
+	async function archiveXNewestEntry()
+	{
+		let newestEntrySectionElem = document.createElement("div");
+		newestEntrySectionElem.id = "wxs_newest_entry";
+		newestEntrySectionElem.classList.add("hidden");	// .hidden
+
+		newestEntrySectionElem.innerHTML = `
+		<section data-v-2aacfeb5="" data-v-7693ae52="" class="entry" data-v-0a84d0a4=""><!-- id="comment-75364841"  -->
+			<article data-v-2aacfeb5="">
+				<header data-v-2aacfeb5="">
+					<div data-v-2aacfeb5="" class="left">
+						<a data-v-fb64f4be="" data-v-2aacfeb5="" class="avatar active" style="width: 40px; height: 40px;"> <!-- href="/ludzie/NICK" -->
+							<figure data-v-fb64f4be="" class="male orange-profile wxs_newest_entry_author_color wxs_newest_entry_author_gender">
+								<img class="wxs_newest_entry_author_avatar" data-v-ecb5ea3e="" data-v-fb64f4be="" loading="lazy" src="https://wykop.pl/cdn/c0834752/3f55ec16859056965fb5ef04e080527497a9abce924d2edb171680c11e34ce1c,q80.png" alt="NICK">
+							</figure>
+						</a>
+					</div>
+
+					<div data-v-2aacfeb5="" class="right">
+						<div data-v-2aacfeb5="">
+							<div data-v-0908378b="" data-v-2aacfeb5="" class="tooltip-slot">
+								<span data-v-0908378b="">
+									<a class="wxs_newest_entry_author_username_ahref wxs_newest_entry_author_color username orange-profile active" href="/ludzie/WykopX" data-v-ed9f6c56="" data-v-2aacfeb5="">
+										<span class="wxs_newest_entry_author_username" data-v-ed9f6c56="">WykopX</span>
+									</a>
+								</span>
+							</div>
+							<span data-v-0908378b="">
+									<span data-v-2aacfeb5="">
+										<a class="wxs_newest_entry_ahref" data-v-2aacfeb5="" href="">
+											<time class="date wxs_newest_entry_created_at"  data-v-0132bb98="" data-v-2aacfeb5="" title="2024-03-09 18:42:19" datetime="2024-03-09 18:42:19">przed chwilą</time>
+										</a>
+									</span>
+								</a>
+							</span>
+							</div>
+							<div data-v-2aacfeb5="">
+								<section data-v-76790450="" data-v-2aacfeb5="" class="rating-box">
+									<ul data-v-76790450="" class="">
+										<li data-v-76790450="" class="zero">0</li>
+									</ul>
+									<div data-v-76790450="" class="buttons">
+										<button data-v-76790450="" data-no-bubble="" class="plus">+</button>
+									</div>
+								</section>
+							</div>
+						</div>
+				</header>
+				<div data-v-2aacfeb5="" class="edit-wrapper">
+					<div data-v-2aacfeb5="" data-selectable="" class="content">
+						<section data-v-725caa02="" data-v-2aacfeb5="" class="entry-content">
+							<div data-v-725caa02="" class="wxs_newest_entry_content wrapper">Ładowanie...</div>
+						</section>
+					</div>
+				</div>
+			</article>
+		</section>
+		`;
+
+		bodySection.appendChild(newestEntrySectionElem);
+		newestEntrySection = bodySection.querySelector("#wxs_newest_entry");
+		getNewestEntryFromAPI(newestEntrySection);
+
+		//console.log("❎firstEntryTodayData", firstEntryTodayData)
+	}
+
+
+
+
+	let firstInDayID = {
+		entry: null,
+		link: null
+	}
+
+	// getEntryDailyNumber(wykopObjectData, "2023-01-01")		-> 678 - zwraca który wpis tego dnia
+	async function getEntryDailyNumber(objectData) // "2024-03-14 21:34:51",
+	{
+		console.log(`getEntryDailyNumber(objectData.id: ${objectData.id}, createdAtDate: ${objectData.created_at})`);
+		console.log(`getEntryDailyNumber() - firstInDayID[${objectData.resource}]: `, firstInDayID[objectData.resource]);
+
+		const dateToCheck = dayjs(objectData.created_at).format("YYYY-MM-DD");
+
+		if (firstInDayID[objectData.resource] != null)
+		{
+			console.log(`mapa firstInDayID[${objectData.resource}] = null, sprawdzamy localstorage`);
+
+			await localStorageFirstDailyIDs.getItem(`${objectData.resource}FirstInDayIDsMap`).then(val =>	// localstorage: entryFirstInDayIDsMap / linkFirstInDayIDsMap
+			{
+				if (val !== null)
+				{
+					firstInDayID[objectData.resource] = new Map(Object.entries(val));
+					console.log("znaleziono w localstorage val = ", val);
+					console.log("znaleziono w localstorage firstInDayID[objectData.resource] = ", firstInDayID[objectData.resource]);
+				}
+				else
+				{
+					console.log('Mapa nie istniała, a w localstorage nie było zapisanych danych');
+					firstInDayID[objectData.resource] = new Map();
+				}
+			}).catch(err =>
+			{
+				console.error(err);
+			});
+		}
+
+		if (firstInDayID[objectData.resource])
+		{
+			console.log('Mapa już istnieje: firstInDayID[objectData.resource]', firstInDayID[objectData.resource]);
+
+			if (firstInDayID[objectData.resource].has(dateToCheck))
+			{
+				console.log(`Mapa posiada dla daty ${dateToCheck}, wartość: ${firstInDayID[objectData.resource].get(dateToCheck)}`);
+				console.log("firstInDayID[objectData.resource]", firstInDayID[objectData.resource])
+
+				return (objectData.id - firstInDayID[objectData.resource].get(dateToCheck)) / 2;
+			}
+			else
+			{
+				console.log(`Mapa istnieje, ale dla daty ${dateToCheck} nie posiada jeszcze wartości`);
+			}
+		}
+		else
+		{
+			firstInDayID[objectData.resource] = new Map();
+		}
+
+
+		console.log('Mapa przed wyslaniem zapytania do API WykopX: firstInDayID[objectData.resource]', firstInDayID[objectData.resource]);
+
+		const firstEntryData = await getWykopXAPIData(objectData.resource, "first-by-date") // https://archiwum.wykopx.pl/api/entry/first-by-date  // https://archiwum.wykopx.pl/api/link/first-by-date
+		console.log('Pobrano z Archiwum Wykop X: firstEntryData, ', firstEntryData);
+
+		if (firstEntryData && firstEntryData.id != null)
+		{
+			firstInDayID[objectData.resource].set(dateToCheck, firstEntryData.id);
+			localStorageFirstDailyIDs.setItem(`${objectData.resource}FirstInDayIDsMap`, Object.fromEntries(firstInDayID[objectData.resource]));//.then(() => { });
+			console.log("firstInDayID[objectData.resource]", firstInDayID[objectData.resource])
+
+			return (objectData.id - firstEntryData.id) / 2;
+		}
+
+		return false;
+	}
 
 
 
 
 
+	async function getNewestEntryFromAPI(sectionElement = newestEntrySection)
+	{
+		sectionElement.classList.remove("animationRunning");
+
+		let newestEntryObject = await getWykopAPIData(`entries?sort=newest&limit=1`); // https://wykop.pl/api/v3/entries?sort=newest&limit=1
+		newestEntryObject = newestEntryObject.data[0]
+		console.log("🅰 newestEntry", newestEntryObject)
+
+		if (newestEntryObject.id != newestEntryID)
+		{
+			newestEntryID = newestEntryObject.id
+			sectionElement.classList.add("animationRunning");
+
+			let entries_today_count = await getEntryDailyNumber(newestEntryObject);
+			console.log("newestEntryID", newestEntryID)
+			console.log("entries_today_count", entries_today_count)
+
+			if (entries_today_count)
+			{
+				sectionElement.querySelectorAll(".entry").forEach((el) =>
+				{
+					el.dataset.entries_today_count = entries_today_count;
+				});
+			}
+
+			sectionElement.querySelectorAll(".wxs_newest_entry_author_username_ahref").forEach((el) =>
+			{
+				el.href = `/ludzie/${newestEntryObject.author.username}`;
+			});
+			sectionElement.querySelectorAll(".wxs_newest_entry_author_gender").forEach((el) =>
+			{
+				el.classList.remove("male", "female");
+				if (newestEntryObject.author.gender == "m") el.classList.add(`male`);
+				else if (newestEntryObject.author.gender == "f") el.classList.add(`female`);
+			});
+			sectionElement.querySelectorAll(".wxs_newest_entry_author_color").forEach((el) =>
+			{
+				el.classList.remove("orange-profile", "green-profile", "burgundy-progile");
+				el.classList.add(`${newestEntryObject.author.color}-profile`);
+			});
+			sectionElement.querySelectorAll(".wxs_newest_entry_author_username").forEach((el) =>
+			{
+				el.innerHTML = newestEntryObject.author.username;
+			});
+			sectionElement.querySelectorAll(".wxs_newest_entry_author_avatar").forEach((el) =>
+			{
+				if (newestEntryObject.author.avatar) el.src = newestEntryObject.author.avatar;
+				else el.src = "/static/img/svg/avatar-default.svg";
+
+				el.alt = newestEntryObject.author.username;
+			});
+
+			sectionElement.querySelectorAll(".wxs_newest_entry_ahref").forEach((el) =>
+			{
+				el.href = `https://wykop.pl/wpis/${newestEntryObject.id}/wykopx`;
+			});
+			sectionElement.querySelectorAll(".wxs_newest_entry_created_at").forEach((el) =>
+			{
+				el.title = newestEntryObject.created_at;
+				el.datetime = newestEntryObject.created_at;
+			});
+
+			sectionElement.querySelectorAll(".wxs_newest_entry_content").forEach((el) =>
+			{
+				el.innerHTML = newestEntryObject.content;
+			});
+
+		}
+
+		sectionElement.classList.remove("hidden");
+		console.log("🅰 sectionElement", sectionElement);
+
+		if (document.hidden == false) runWithDelay(settings.archiveXNewestEntryRefresh, getNewestEntryFromAPI);
+	}
 
 
+	if (settings.archiveXNewestEntry)
+	{
+		CSS += `
+		#wxs_newest_entry
+		{
+			right: 40px;
+			width: 400px;
+			
+			height: auto;
+			max-height: 50%;
+
+			--border-radius: 0px;
+			border-radius: var(--border-radius)!important;
+			position: fixed;
+			bottom: 15px;
+			z-index: 9999;
+			display: grid;
+			color: var(--blackish);
+			background-color: var(--alta);
+			background: linear-gradient(145deg, var(--whitish), var(--alta));
+			box-shadow:  5px 5px 10px var(--porcelain),  -5px -5px 10px var(--porcelain);
+		}
+		#wxs_newest_entry > .entry
+		{
+			border-radius: var(--border-radius)!important;
+		}
+
+		#wxs_newest_entry > .entry::after
+		{
+			bottom: 15px;
+			right: 15px;
+			content: attr(data-entries_today_count);
+			position: absolute;
+			font-size: 15px;
+			opacity: 0.2;
+		}
+
+		#wxs_newest_entry.animationRunning:after
+		{
+			filter: blur(50px);
+		}
+		#wxs_newest_entry.animationRunning:before,
+		#wxs_newest_entry.animationRunning:after
+		{
+			content: '';
+			position: absolute;
+			left: -2px;
+			top: -2px;
+			opacity: 1;
+			width: calc(100% + 4px);
+			height: calc(100% + 4px);
+			z-index: -1;
+			animation-name: steam;
+			animation-timing-function: linear;
+			animation-iteration-count: 1;
+			animation-fill-mode: forwards;
+		}
+		#wxs_newest_entry.animationRunning:before,
+		#wxs_newest_entry.animationRunning:after
+		{
+			animation-duration: 10s;
+			/*background: linear-gradient(45deg, #00ff00, #ffff00, #ff0000, #fb0094, #0000ff, #00ff00, #ffff00, #ff0000, #fb0094, #0000ff, #00ff00);
+			background-size: 400%;*/
+		}
+		#wxs_newest_entry.animationRunning:before,
+		#wxs_newest_entry.animationRunning:after
+		{
+			animation-duration: 3.5s;
+			background: linear-gradient(90deg, 
+				rgba(5, 255, 255, 0.1),
+				rgba(255, 255, 255, 0.3),
+				rgba(5, 255, 255, 0.1));
+			background-size: 300%;
+		}
+		
+
+		@keyframes steam {
+			0% {
+				background-position: 0 0;
+				opacity: 0;
+			}
+			10% {
+				opacity: 1;
+			}
+			90% {
+				opacity: 1;
+			}
+			100% {
+				background-position: 400% 0;
+				opacity: 0;
+			}
+		}
+		`;
+	}
 
 	/* ------ PRZYCISK DO POBIERANIA OBRAZKÓW --------- */
 
@@ -6193,6 +7008,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 	function sectionEditor(sectionEditorjNodeElement)
 	{
+		consoleX("sectionEditor", 1)
 		const sectionEditorElement = sectionEditorjNodeElement[0]; // jNode => DOMElement
 		const textareaEditorElement = sectionEditorElement.querySelector("textarea");
 
@@ -6203,7 +7019,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		if (settings.imageUploaderEnable)
 		{
-			testClipboard(sectionEditorElement);
+			imagePasteFromClipboardListener(sectionEditorElement);
 		}
 
 	}
@@ -6211,6 +7027,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 	function sendOnCTRL_ENTER(sectionEditorElement)
 	{
+		consoleX("sendOnCTRL_ENTER", 1)
+
 		const textareaEditorElement = sectionEditorElement.querySelector("textarea");
 		const buttonSendElement = sectionEditorElement.querySelector("div.button.send > button");
 
@@ -6252,14 +7070,19 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
-	function testClipboard(sectionEditorElement)
+	function imagePasteFromClipboardListener(sectionEditorElement)
 	{
-		// consoleX(`testClipboard()`, 1);
+		consoleX(`imagePasteFromClipboardListener()`, 1);
 		const textarea = sectionEditorElement.querySelector("textarea");
 		// console.log(textarea);
 		const imageUploadPreview = document.createElement('figure');
-		imageUploadPreview.classList.add("wykopxs", "wxs_uploaded_image_placeholder")
+		imageUploadPreview.classList.add("wxs_uploaded_image_placeholder");
 		textarea.parentNode.appendChild(imageUploadPreview);
+
+		const imageUploaderCaption = document.createElement('div');
+		imageUploaderCaption.classList.add("wxs_uploader_caption");
+		imageUploaderCaption.innerHTML = `<span class="wxs_upload_first_image">CTRL + V - wklej obrazek ze schowka</span><span class="wxs_upload_and_replace_current_image">CTRL + V - wklej kolejny obrazek, aby zastąpić aktualnie dodany</span>`;
+		textarea.parentNode.appendChild(imageUploaderCaption);
 
 
 
@@ -6397,7 +7220,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				console.log("Clipboard text/plain: " + textPlainFromClipboard);
 
 				let urlsArray = getURLsFromString(textPlainFromClipboard, true);
-				if (urlsArray.length > 0)
+				if (urlsArray && urlsArray.length > 0)
 				{
 					urlsArray.forEach((urlFromClipboard) =>
 					{
@@ -6484,16 +7307,16 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	/* ------------- EVENTS ------------ */
 	function handleWindowEvent(event)
 	{
-		console.log(`handleWindowEvent(event) — event.type: ${event.type} was fired`);
+		console.log(`handleWindowEvent() -> event.type: ${event.type} was fired`);
 		// console.log(event);
 	}
 	window.addEventListener('load', handleWindowEvent); 		// 1.
 	window.addEventListener('pageshow', handleWindowEvent); 	// 2.
-	window.addEventListener('popstate', handleWindowEvent);
-	window.addEventListener('hashchange', handleWindowEvent);
-	window.addEventListener('pagehide', handleWindowEvent);
-	window.addEventListener('beforeunload', handleWindowEvent);
-	window.addEventListener('unload', handleWindowEvent);
+	// window.addEventListener('popstate', handleWindowEvent);
+	// window.addEventListener('hashchange', handleWindowEvent);
+	// window.addEventListener('pagehide', handleWindowEvent);
+	// window.addEventListener('beforeunload', handleWindowEvent);
+	// window.addEventListener('unload', handleWindowEvent);
 
 	/*	events in Wykop podczas ladowania strony:
 		1. 	window.addEventListener('load', callback); (Event) event.srcElement.URL > "https://wykop.pl/wpis/74180083/pytanie#comment-261404235"
@@ -6521,17 +7344,19 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
-
-
-
-
-
+	// async function awariaSerwera()
+	// {
+	// 	let awaria = document.querySelector(`body > section > footer > a[onclick="window.location.href = reloadURL"`);
+	// 	if (awaria) alert("AWARIA");
+	// }
 
 
 	// ---- PAGE OPENED
-	async function executeOnPageLoad()
+	async function browserExecuteOnPageLoad()
 	{
-		// consoleX(`executeOnPageLoad`, 1);
+		// awariaSerwera();
+
+		consoleX(`browserExecuteOnPageLoad`, 1);
 
 		if (isURLChanged()) newPageURL()
 
@@ -6547,7 +7372,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				bodySection.style.setProperty('--myUsernameAS', `"JAKO ${user.username}"`);
 				bodySection.style.setProperty('--myUsernameAddingAs', `"Dodajesz z konta ${user.username}"`);
 			}
-
 		}
 
 		// if (user.username == null) consoleX(`Cześć Anon.Nie jesteś zalogowany na Wykopie(⌐ ͡■ ͜ʖ ͡■)`);
@@ -6565,22 +7389,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				addSwitchButtons();
 			});
 		}
-
-		if (settings.notatkowatorEnable)
-		{
-			runWithDelay(17000, function ()
-			{
-				createMenuItemForNotatkowator();
-			});
-		}
-		if (settings.mirkoukrywaczEnable)
-		{
-			runWithDelay(17000, function ()
-			{
-				createMenuItemForMirkoukrywacz();
-			});
-		}
-
 		if (settings.observedTagsInRightSidebarEnable)
 		{
 			runWithDelay(500, function ()
@@ -6603,8 +7411,28 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		});
 
 
+		if (settings.notatkowatorEnable)
+		{
+			runWithDelay(17000, function ()
+			{
+				createMenuItemForNotatkowator();
+			});
+		}
+		if (settings.mirkoukrywaczEnable)
+		{
+			runWithDelay(17000, function ()
+			{
+				createMenuItemForMirkoukrywacz();
+			});
+		}
+
+
+
+
+
 		// 20s
-		runWithDelay(25000, function ()
+		//runWithDelay(25000, function ()
+		runWithDelay(1000, function ()
 		{
 			checkVersionForUpdates();
 			createProfileDropdownMenuItem(
@@ -6621,144 +7449,49 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 			addWykopXPromoBanner();
 		});
-	}
 
 
 
 
-
-	// ----- NAVIGATION PAGE CHANGES
-	async function executeOnPageChange(event)
-	{
-		console.log("executeOnPageChange() -- navigation — navigate event — " + event.type);
-		console.log(event);
-
-		originalTabTitle = document.title;
-
-		//visiblePlusesObserver.disconnect();
-		sectionObjectIntersectionObserver.disconnect();
-		filterUserOff(); // usuniecie filtra komentarzy
-
-
-		runWithDelay(500, function ()
+		runWithDelay(30000, async function ()
 		{
-			if (isURLChanged())
+			if (user.username)
 			{
-				const previousPageSubtype = pageSubtype;
-				newPageURL();
-				if (pageSubtype == previousPageSubtype) removeAllDataWXSAttributes();
+				try
+				{
+					let settings_list_update = await localStorageObserved.getItem("settings_list_update");
+					if (settings_list_update == null)
+					{
+						POSTDATATOWYKOPX();
+					}
+					else
+					{
+						if (loadTime.diff(dayjs(settings_list_update), "days") > 1)
+						{
+							POSTDATATOWYKOPX();
+						}
+						else
+						{
+							return true;
+						}
+					}
+				}
+				catch (err)
+				{
+					console.log(err);
+				}
 			}
 		});
 
-		// 7s
-		if (!settings.tabChangeOnlyOnHiddenState) runWithDelay(7000, () => { executeTabAndFaviconChanges() })
 
-
-
+		if (settings.archiveXNewestEntry)
+		{
+			archiveXNewestEntry();
+		}
 	}
 
 
-	function removeAllDataWXSAttributes()
-	{
-		consoleX(`removeAllDataWXSAttributes()`, 1);
 
-		document.querySelectorAll(`section[data-wxs_username]`).forEach((el) =>
-		{
-			removeWXSAttributes(el)
-		});
-	}
-
-	function removeWXSAttributes(sectionObjectElement)
-	{
-		console.log("removeWXSAttributes() from: " + sectionObjectElement.__vue__.item.id);
-
-		sectionObjectElement.removeAttribute('style'); // custom css properties removed 
-
-		Object.keys(sectionObjectElement.dataset).forEach(dataKey =>
-		{
-			if (dataKey.startsWith('wxs_'))
-			{
-				delete sectionObjectElement.dataset[dataKey];
-			}
-		});
-	}
-
-
-	// PAGE LOAD + PAGE CHANGES
-	function executeOnPageLoadAndPageChange()
-	{
-		//consoleX(`executeOnPageLoadAndPageChange`, 1);
-
-		runWithDelay(7000, function ()
-		{
-			countNumberOfNotificationsOnDesktop();
-		});
-
-		if (settings.mirkoukrywaczEnable) 
-		{
-			runWithDelay(3000, function ()
-			{
-				mirkoukrywaczHideAllBlockedElements(); // ukrycie elementow blokowanych przez Mirkowolacz oraz actionBox
-			});
-		}
-
-		if (pageType == "tag" && settings.tagHeaderEditable)
-		{
-			runWithDelay(2200, function ()
-			{
-				tagHeaderEditableWatcher();
-			})
-		}
-
-		if (pageType == "profil")	// info o blokadzie
-		{
-			runWithDelay(2200, function ()
-			{
-
-			})
-		}
-
-		if (settings.autoOpenMoreContentEverywhere)
-		{
-			runWithDelay(6000, function ()
-			{
-				autoOpenMoreContentEverywhere();
-			})
-		}
-
-
-		// 10s
-		if (settings.autoOpenSpoilersEverywhere)
-		{
-			runWithDelay(10000, function ()
-			{
-				autoOpenSpoilersEverywhere();
-			});
-		}
-
-
-		// waitForKeyElements(`html > iframe, html > body > iframe`, removeFromDOM, false);
-		// waitForKeyElements(`html head script[src^="https://"]`, removeFromDOM, false);
-
-		if (settings.removeAnnoyancesEnable)
-		{
-			runWithDelay(18000, function ()
-			{
-				if (settings.removeAnnoyancesIframes) waitForKeyElements(`html > iframe, html > body > iframe`, removeFromDOM, false);
-				if (settings.removeAnnoyancesScripts) waitForKeyElements(`html > head > script[src^="https://"]`, removeFromDOM, false);
-			})
-
-			runWithDelay(20000, function ()
-			{
-				removeAnnoyances()
-			})
-		}
-
-		waitForKeyElements("main.main > section > div.content section.stream > header.stream-top", buildConsole, false)
-		buildConsole();
-		refreshConsole();
-
-	}
 
 
 
@@ -6880,7 +7613,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	{
 		xhook.after((request, response) =>
 		{
-			console.log("✔ xhook.after-request: " + request.url);
+			// console.log("✔ xhook.after-request: " + request.url);
 			// console.log(request);
 			// console.log("✔ xhook.after-response");
 			// console.log(response);
@@ -6902,37 +7635,37 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 						return
 					}
 
-					console.log("xhook.after-request.url");
-					console.log(request.url);
-					console.log(url);
+					// console.log("xhook.after-request.url");
+					// console.log(request.url);
+					// console.log(url);
 
 					//if (url.host == "wykop.pl")
 					if (1)
 					{
 						let searchParams = new URLSearchParams(url.searchParams)
 
-						console.log("✔ xhook.after-url.href");
-						console.log(url.href);
-						console.log("✔ xhook.after-searchParams");
-						console.log(searchParams);
-						console.log(`✔ xhook.after-${url.href} searchParams.has('page'): ` + searchParams.has('page'))
-						console.log(`✔ xhook.after-${url.href} searchParams.get('page'): ` + searchParams.get('page'))
+						// console.log("✔ xhook.after-url.href");
+						// console.log(url.href);
+						// console.log("✔ xhook.after-searchParams");
+						// console.log(searchParams);
+						// console.log(`✔ xhook.after-${url.href} searchParams.has('page'): ` + searchParams.has('page'))
+						// console.log(`✔ xhook.after-${url.href} searchParams.get('page'): ` + searchParams.get('page'))
 
 						if (searchParams.has('page') && searchParams.get('page') == 1)
 						{
-							console.log("✔ xhook.after-INFINITE SCROLL");
+							// console.log("✔ xhook.after-INFINITE SCROLL");
 
 							let regex = /\/api\/v3\/entries\/\d+\/comments$/;
 							if (pageType == "znalezisko") regex = /\/api\/v3\/links\/\d+\/comments$/;
 
-							console.log("url.pathname");
-							console.log(url.pathname);
+							// console.log("url.pathname");
+							// console.log(url.pathname);
 
 							if (regex.test(url.pathname))
 							{
 								let json = JSON.parse(response.text)
-								console.log("json")
-								console.log(json)
+								// console.log("json")
+								// console.log(json)
 
 								for (let page = 2; page <= Math.ceil(json['pagination']['total'] / json['pagination']['per_page']); ++page)
 								{
@@ -6993,7 +7726,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	// USUWANIE NATARCZYWYCH IFRAME, REKLAM I GDPR
 	function removeAnnoyances()
 	{
-		// consoleX("removeAnnoyances()", 1)
+		consoleX("removeAnnoyances()", 1)
 
 		if (settings.removeAnnoyancesIframes)
 		{
@@ -7005,8 +7738,14 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		if (settings.removeAnnoyancesAds)
 		{
-			document.querySelectorAll(`.pub-slot-wrapper:not(:has(section.premium-pub.link-block))`).forEach((el) =>
+
+			/* removing .pub-slot-wrapper without .top .sidebar-1 oraz .screening -  causes Node not found error when loading further pages */
+			/* .pub.slot-wrapper  classes: .stream-bottom`.stream-1 .stream-2 .stream-3 .stream-4 .stream-5 .stream-6 .stream-7 .stream-8 .market-1 .sidebar-2 .sidebar-3 .sponsored-1 .sponsored-2 */
+
+			/* removing .pub-slot-wrapper without .top oraz .screening -  causes Node not found error when loading further pages */
+			document.querySelectorAll(`.pub-slot-wrapper:not(.sidebar-1):not(.screening):not(.top):not(:has(section.premium-pub.link-block))`).forEach((el) =>
 			{
+				if (dev) console.log(`🧧 removeAnnoyancesAds - `, el)
 				consoleData.annoyances.ads.count++;
 				removeFromDOM(el);
 			});
@@ -7043,7 +7782,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	{
 		if (Node)
 		{
-			//consoleX(`removeFromDOM()`, 1);
+			consoleX(`removeFromDOM()`, 1);
 
 			if (Node instanceof jQuery)
 			{
@@ -7065,7 +7804,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			}
 			else if (Node instanceof Element)
 			{
-				//console.log("removeFromDOM(): REMOVING DOM Node");
+				consoleX("removeFromDOM(): REMOVING DOM Node", 1);
 				//console.log(Node)
 				let nodeName = Node.nodeName;
 				nodeName = nodeName.toLowerCase()
@@ -7093,19 +7832,21 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	// lOADED PAGE
 	window.onload = function (event)
 	{
+		consoleX("windows.onload", 1)
 		loadTime = dayjs();
 
-		executeOnPageLoad();
-		executeOnPageLoadAndPageChange();
+		browserExecuteOnPageLoad();
+		browserExecuteOnPageLoadAndPageChange();
 	};
 
 	/* NEW WYKOP PAGE REDIRECTION */
 	navigation.addEventListener("navigate", (event) =>
 	{
+		consoleX(`🎈 Event: "navigate"`)
 		loadTime = dayjs();
 
-		executeOnPageChange(event);
-		executeOnPageLoadAndPageChange();
+		browserExecuteOnPageChange(event);
+		browserExecuteOnPageLoadAndPageChange();
 	});
 
 	/* CSS STYLES */
@@ -7117,6 +7858,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	body * { font-size: 14rem;  }
 	body small { font-size: 0.8em; line-height: 0.9em; }
 	
+	.hidden { display: none!important; }
+
 	section.editor>header>ul>li>i,                   			/* napisy przy ikonkach edytora */
     aside.profile-top>section>header>ul li,         			/* ikonki "Zgłoś", "Zablokuj" */
     aside.profile-top>section>header>ul li a,       			/* ikonka "Napisz do użytkownika"*/
@@ -7166,10 +7909,140 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			}`;
 		}
 	}
+
+	if (settings.imageUploaderEnable)
+	{
+		CSS += `
+		/* IMAGE UPLOADER */
+		section.editor figure.wxs_uploaded_image_placeholder
+		{
+			display: flex;
+			position: relative;	
+		}
+		section.editor div.wxs_uploader_caption > span
+		{
+			display: none;
+			font-size: 15rem;
+			color: var(--gullGray);
+			text-transform: initial;
+			position: relative;
+			margin-top: 15rem;
+			padding-top: 15rem;
+			margin-bottom: 15rem;
+			border-top: 1px dotted rgba(120, 120, 120, 0.3);
+		}
+		section.editor:has(aside li.photo) div.wxs_uploader_caption > span.wxs_upload_and_replace_current_image,
+		section.editor:not(:has(aside li.photo)) div.wxs_uploader_caption > span.wxs_upload_first_image
+		{
+			display: flex;
+		}
+		section.editor figure.wxs_uploaded_image_placeholder:has(canvas)
+		{
+			margin: 20px 0px;
+			border-radius: 4px!important;
+			display: flex;
+			flex-direction: row-reverse;
+			flex-wrap: wrap-reverse;
+			justify-content: start;
+			align-content: start;
+			gap: 10px;
+		}
+		section.editor figure.wxs_uploaded_image_placeholder > canvas
+		{
+			display: none;
+		}
+		section.editor:has(aside li.photo) figure.wxs_uploaded_image_placeholder > canvas
+		{
+			display: flex;
+			max-width: 400px!important;
+			border: 1px solid var(--whiteOpacity07, rgba(128, 128, 128, 0.7))!important;
+			border-radius: 4px!important;
+			box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3), -3px -3px 12px rgba(0, 0, 0, 0.3), 0px 0px 22px rgba(0, 0, 0, 0.3);
+			opacity: 0.7;
+			filter: brightness(0.8) grayscale(0.6);
+		}
+		section.editor:has(aside li.photo) figure.wxs_uploaded_image_placeholder > canvas:hover
+		{
+			max-width: 400px!important;
+			opacity: 1;
+			filter: brightness(1.3) grayscale(0)!important;
+			border: 1px solid var(--whiteOpacity07, rgba(128, 128, 128, 0.7))!important;
+		}
+		/* ten plik zostanie wysłany (ostatni na liscie) */
+		section.editor:has(aside li.photo) figure.wxs_uploaded_image_placeholder > canvas:nth-last-child(1 of canvas)
+		{
+			opacity: 1;
+			filter: brightness(1.1) grayscale(0);
+			border-color: rgba(21, 138, 255, .89)!important;
+			border: 20px solid red;
+		}
+
+
+
+		/* lista wgranych plików wraz z nazwami */
+		section.editor > aside > ul > li.photo > span
+		{
+			line-height: 24rem;
+		}
+
+		section.editor > aside > ul > li.photo::before
+		{
+			top: unset!important;
+			left: unset!important;
+		}
+		section.editor > aside > ul > li.photo
+		{
+			padding: 8px 0px 8px 10px; 
+			border-radius: 4px;
+			background-color: rgba(255, 0, 0, 0.1);
+			opacity: 0.6;
+		}
+		section.editor > aside > ul > li:nth-last-child(1 of li.photo)
+		{
+			opacity: 1;
+			background-color: rgba(21, 138, 255, .01);
+		}
+
+
+		section.editor:has(aside li.photo) figure.wxs_uploaded_image_placeholder canvas.wxs_uploaded_image_preview::after
+		{
+			display: flex;
+			font-size: 14px;
+			color: rgba(254, 255, 255, 0.3);
+			background-color: rgba(0, 0, 0, 0.7);
+			border: 1px solid rgba(0, 0, 0, 1);
+			position: absolute;
+			left: 10px;
+			bottom: 10rem;
+			padding: 4px 11px;
+			border-radius: 3px;
+		}
+		section.editor:has(aside li.photo) figure.wxs_uploaded_image_placeholder canvas.wxs_uploaded_image_png::after
+		{
+			content: "PNG";
+		}
+		section.editor:has(aside li.photo) figure.wxs_uploaded_image_placeholder canvas.wxs_uploaded_image_jpeg::after,
+		section.editor:has(aside li.photo) figure.wxs_uploaded_image_placeholder canvas.wxs_uploaded_image_jpeg::after
+		{
+			content: "JPEG";
+		}
+		section.editor:has(aside li.photo) figure.wxs_uploaded_image_placeholder canvas.wxs_uploaded_image_gif::after
+		{
+			content: "GIF";
+		}
+		section.editor:has(aside li.photo) figure.wxs_uploaded_image_placeholder canvas.wxs_uploaded_image_webp::after
+		{
+			content: "WEBP"; 
+		}
+
+		/* IMAGE UPLOADER - END */
+	`;
+	}
+
 	if (settings.editorShowMyUsername)
 	{
 		CSS += `
-        header.stream-top:has(+ section.editor) > h1:after
+        header.stream-top:has(+ section.editor) > h1::after
         {
             margin-left: 5rem;
             content: var(--myUsernameAS);
@@ -7177,13 +8050,16 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
         }
         section.editor > div.content::before
         {
-            font-size: 15rem;
-            color: var(--gullGray);
             content: var(--myUsernameAddingAs);
-            text-transform: initial;   
+            display: flex;
             position: relative;
-            display: block;
-            margin-top: 13px;
+            color: var(--gullGray);
+            font-size: 15rem;
+            text-transform: initial;
+            margin-top: 15rem;
+			margin-bottom: 15rem;
+			padding-bottom: 15rem;
+			border-bottom: 1px dotted rgba(120, 120, 120, 0.3);
         }`;
 
 		if (settings.editorShowMyUsernameOnSendButton)
@@ -7255,7 +8131,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			background-color: var(--whiteOpacity03, rgba(175, 175, 175, 0.1));
 		} 
 
-		section.wykopx_your_observed_tags .wykopx_quick_search_container:before
+		section.wykopx_your_observed_tags .wykopx_quick_search_container::before
 		{
 			content: "🔍";
 			font-size: 16px; /*16rem;*/
@@ -7492,29 +8368,36 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	}
 
 
+	/* HIDE ADS ALWAYS */
 	CSS += `
-		/* HIDE ADS ALWAYS */
-		.pub-slot-wrapper
-		{
-			display: none!important;
-		}
-		.pub-slot-wrapper:has(section.premium-pub.link-block)
-		{
-			display: flex!important;
-			border: 1px solid rgba(255, 0, 0, 0.3)!important;
-		}
-		.pub-slot-wrapper:has(section.premium-pub.link-block):before
-		{
-			display: flex!important;
-			content: "Aby ukryć Wykopy Sponsorowane i Reklamowane zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗦𝘁𝘆𝗹𝗲 lub 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗕𝗹𝗼𝗰𝗸𝗲𝗿";
-			font-size: 13px;
-			color: var(--blackish);
-			margin: 9px 14px;
-			align-self: self-start;
-		}
 
-		/* ----- Wykop X Style promo banners ON */
-		.wykopx_promo_banner a { width: 100 %; display: block!important; height: 300px!important; background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/promo-images/wykopx-install-sidebar-day.png'); }
+			body:not(:has(> section.default-layout))
+			{
+				--bodyBackgroundColor: rgba(18, 18, 20, 1);
+			}
+
+
+			.pub-slot-wrapper
+			{
+				display: none!important;
+			}
+			.pub-slot-wrapper:has(section.premium-pub.link-block)
+			{
+				display: flex!important;
+				border: 1px solid rgba(255, 0, 0, 0.3)!important;
+			}
+			.pub-slot-wrapper:has(section.premium-pub.link-block)::before
+			{
+				display: flex!important;
+				content: "Aby ukryć Wykopy Sponsorowane i Reklamowane zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗦𝘁𝘆𝗹𝗲 lub 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗕𝗹𝗼𝗰𝗸𝗲𝗿";
+				font-size: 13px;
+				color: var(--blackish);
+				margin: 9px 14px;
+				align-self: self-start;
+			}`;
+
+	/* ----- Wykop X Style promo banners ON */
+	CSS += `.wykopx_promo_banner a { width: 100 %; display: block!important; height: 300px!important; background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/promo-images/wykopx-install-sidebar-day.png'); }
 		[data-night-mode].wykopx_promo_banner a { background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/promo-images/wykopx-install-sidebar-night.png'); }
 		.wykopx_promo_banner:hover { filter: brightness(0.98) drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.2)); }
 		[data-night-mode].wykopx_promo_banner:hover { filter: brightness(1.2); }
@@ -7556,9 +8439,9 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		.wykopxs { display: none; }
 
 		/* ----- Wykop XS promo banner from Wykop X Style disabled */
-		body div.main-content section > section.sidebar:after,
-		section.editor.expand section.inline-autocomplete section.inline-autocomplete-stream div.content:after,
-		header.header div.right section.search-input section.inline-autocomplete section.inline-autocomplete-stream div.content:after
+		body div.main-content section > section.sidebar::after,
+		section.editor.expand section.inline-autocomplete section.inline-autocomplete-stream div.content::after,
+		header.header div.right section.search-input section.inline-autocomplete section.inline-autocomplete-stream div.content::after
 		{ display: none!important; }
 
 
