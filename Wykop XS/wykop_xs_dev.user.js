@@ -3,20 +3,35 @@
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
 // @version     3.0.8
+
+
+// @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
+// @contributionURL  	https://buycoffee.to/wykopx
+
+
 // @author      Wykop X <wykopx@gmail.com>
 // @namespace   Violentmonkey Scripts
 // @match       https://wykop.pl/*
-// @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
-// @contributionURL  	https://buycoffee.to/wykopx
+
+
 // @description Wykop XS służy do wspomagania działania stylu "Wykop X Style", który jest wymagany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://style.wykopx.pl
 // @description:en Wykop XS is a helper script for userstyle "Wykop X Style" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://style.wykopx.pl
-// @compatible  chrome, firefox, opera, safari, edge
-// @license     No License
+
+
+
+
+
+
+
 // @require https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
 // @require https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
 // @require https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js
 // @require http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
 // @require https://greasyfork.org/scripts/383527-wait-for-key-elements/code/Wait_for_key_elements.js?version=701631
+
+// @compatible  chrome, firefox, opera, safari, edge
+// @license     No License
+
 // ==/UserScript==
 
 (async function ()
