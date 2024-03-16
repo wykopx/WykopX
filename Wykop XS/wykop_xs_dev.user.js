@@ -4416,13 +4416,12 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 
 
-
+	// MIKROCZAT
 	let wykopDomain = "https://wykop.pl";
 	let wxDomain = "https://wykopx.pl";
 	let mikroczatDomain = "https://mikroczat.pl"; 		// 	https://mikroczat.pl
 	let mikroczatPath = "/czat"; 		// 	https://mikroczat.pl/czat
 
-	// MIKROCZAT
 	let mikroczatWindow = null;
 	document.addEventListener("mousedown", (event) =>
 	{
@@ -4924,7 +4923,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				});
 			}
 		}
-
 	}
 
 	// options: { text: null, title: null, className: ``, id: null, url: null, target: "_blank", icon: null, number: null
