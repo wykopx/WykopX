@@ -104,9 +104,6 @@
 	settings.archiveXNewestEntry = wykopxSettings.getPropertyValue("--archiveXNewestEntry") ? wykopxSettings.getPropertyValue("--archiveXNewestEntry") === '1' : true;
 	if (settings.archiveXNewestEntry) settings.archiveXNewestEntryRefresh = wykopxSettings.getPropertyValue("--archiveXNewestEntryRefresh") ? parseInt(wykopxSettings.getPropertyValue("--archiveXNewestEntryRefresh")) : 15000;
 
-
-
-
 	settings.wxsSwitchesEnable = wykopxSettings.getPropertyValue("--wxsSwitchesEnable") ? wykopxSettings.getPropertyValue("--wxsSwitchesEnable") === '1' : false;
 	if (settings.wxsSwitchesEnable) 
 	{
@@ -297,7 +294,7 @@
 		if (settings.wxsUserLabelsFakeFemales)
 		{
 			// LISTA FAŁSZYWYCH RÓŻOWYCH PASKÓW
-			const listafalszywychrozowych = ['ElCidX', 'cword',
+			const listafalszywychrozowych = ['Nighthuntero', 'WyuArtykyu', 'ElCidX', 'cword',
 				'washington', 'Obrzydzenie', 'conamirko', 'i_took_a_pill_in_remiza', 'Riolet',
 				'ChwilowaPomaranczka', 'RobieZdrowaZupke', 'IlllIlIIIIIIIIIlllllIlIlIlIlIlIlIII',
 				'deiceberg', 'Chodtok', 'kierowcaautobusuofficial', 'ToJestNiepojete', 'model_wygenerowany_na_wykoppl',
@@ -472,6 +469,7 @@
 
 
 
+	const topNavHeaderRightElement = document.querySelector('header.header > .right > nav > ul');
 
 
 
@@ -2488,7 +2486,7 @@
 							// DODAJEMY INFO NA STRONIE PROFILOWEJ O SZCZEGÓŁACH BANA
 							if (settings.infoboxUserBannedInfoOnProfilePage)
 							{
-								if (userDataObject.status == "banned" && pageType == "profil")
+								if ((userDataObject.status == "banned" || userDataObject.status == "suspended") && pageType == "profil")
 								{
 									userDataObject = addUserDataObjectWXSBanInfo(userDataObject);
 									const bannedRedBox = document.querySelector("aside.profile-top aside.info-box.red p");
@@ -2635,7 +2633,7 @@
 							.note: true
 							.online: true
 							.rank [trend/position]
-							.status: ["active"/"banned"]
+							.status: ["active"/"banned"/"suspended"]
 							.username: "nick"
 							.verified: false
 	*/
@@ -2773,7 +2771,7 @@
 					infoboxInnerHTML += `<var class="wxs_user_follow" title="Obserwujesz użytkownika @${userDataObject.username}">🔔</var>`
 				}
 
-				if (userDataObject.status == "banned") 											// basic
+				if (userDataObject.status == "banned" || userDataObject.status == "suspended") 						// basic
 				{
 					if (userDataObject.banned?.wxs_info_text_1) 													// DETAILS from API
 					{
@@ -2958,18 +2956,18 @@
 					{
 
 						// USER DATA BASIC
-						sectionObjectElement.dataset.wxs_username = userDataObject.username; 			// <section data-wxs-username="NadiaFrance">
-						sectionObjectElement.dataset.wxs_user_note = userDataObject.note;				// data-wxs_user_note="true"
-						sectionObjectElement.dataset.wxs_user_company = userDataObject.company;			// data-wxs_user_status="banned"
-						sectionObjectElement.dataset.wxs_user_status = userDataObject.status;			// data-wxs_user_status="banned"
-						sectionObjectElement.dataset.wxs_user_color = userDataObject.color;				// data-wxs_user_status="banned"
-						sectionObjectElement.dataset.wxs_user_verified = userDataObject.verified;		// data-wxs_user_status="banned"
-						sectionObjectElement.dataset.wxs_user_blacklist = userDataObject.blacklist;		// data-wxs_user_blacklist="true"
-						sectionObjectElement.dataset.wxs_user_follow = userDataObject.follow;			// data-wxs_user_follow="true"
-						sectionObjectElement.dataset.wxs_user_gender = userDataObject.gender;			// data-wxs_user_gender="m"
-						sectionObjectElement.dataset.wxs_user_online = userDataObject.online;			// data-wxs_user_online="true"
+						sectionObjectElement.dataset.wxs_username = userDataObject.username; 					// <section data-wxs-username="NadiaFrance">
+						sectionObjectElement.dataset.wxs_user_note = userDataObject.note;						// data-wxs_user_note="true"
+						sectionObjectElement.dataset.wxs_user_company = userDataObject.company;					// 
+						sectionObjectElement.dataset.wxs_user_status = userDataObject.status;					// data-wxs_user_status="banned" / "suspended"
+						sectionObjectElement.dataset.wxs_user_color = userDataObject.color;						// data-wxs_user_color="orange"
+						sectionObjectElement.dataset.wxs_user_verified = userDataObject.verified;				// data-wxs_user_verified="true"
+						sectionObjectElement.dataset.wxs_user_blacklist = userDataObject.blacklist;				// data-wxs_user_blacklist="true"
+						sectionObjectElement.dataset.wxs_user_follow = userDataObject.follow;					// data-wxs_user_follow="true"
+						sectionObjectElement.dataset.wxs_user_gender = userDataObject.gender;					// data-wxs_user_gender="m"
+						sectionObjectElement.dataset.wxs_user_online = userDataObject.online;					// data-wxs_user_online="true"
 						sectionObjectElement.dataset.wxs_user_rank_position = userDataObject.rank?.position;	// data-wxs_user_rank_position=34 // "null"
-						sectionObjectElement.dataset.wxs_user_rank_trend = userDataObject.rank?.trend;	// data-wxs_user_rank_trend=0
+						sectionObjectElement.dataset.wxs_user_rank_trend = userDataObject.rank?.trend;			// data-wxs_user_rank_trend=0
 
 						if (settings.wxsUserLabelsEnable && userDataObject.wxsUserLabel)
 						{
@@ -3255,7 +3253,7 @@
 			//console.log(`user: ${username}: `)
 
 			// jesli jest zbanowany lub chcemy wszystkie dane (np. followersi — wysylamy zapytanie do API)
-			if (userDataObject.status == "banned" || forceAPICheck == true)
+			if (userDataObject.status == "banned" || userDataObject.status == "suspended" || forceAPICheck == true)
 			{
 				// console.log("---- getUserDetailsForUsername — sprawdzanie użytkownika w API: " + username)
 				try
@@ -5038,7 +5036,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			consoleX("addNightModeButtonToNavBar()", 1)
 
 			const wykopx_night_mode = `<li class="wykopxs wykopx_night_mode notifications dropdown" title="Przełącz pomiędzy trybem nocnym/dziennym ${promoString}"><a href="#"><figure></figure></a></li>`;
-			document.querySelector('header.header > .right > nav > ul').insertAdjacentHTML('afterbegin', wykopx_night_mode);
+			topNavHeaderRightElement.insertAdjacentHTML('afterbegin', wykopx_night_mode);
 
 			document.querySelector('.wykopx_night_mode').addEventListener('click', function ()
 			{
@@ -5055,7 +5053,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				}
 			});
 		}
-
 	}
 
 
@@ -5063,7 +5060,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	{
 		consoleX("addExtraButtons()", 1)
 
-		const topNavHeaderRightElement = document.querySelector('header.header > .right > nav > ul');
 		const wykopx_wykopwnowymstylu_li = `<li class="wykopxs wykopx_wykopwnowymstylu_li dropdown"><a href="/tag/wykopwnowymstylu" class="wykopx_wykopwnowymstylu_button" title="Przejdź na #wykopwnowymstylu"><span>#</span></a></li>`;
 
 		const wykopx_mywykop_mobile_li = `<li class="wykopxs wykopx_mywykop_mobile_li dropdown"><a href="/obserwowane" class="wykopx_mywykop_mobile_button" title="Mój Wykop ${promoString}"><figure></figure></a></li>`;
@@ -5354,7 +5350,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		// document.hidden > true/false
 		if (document.hidden == false)
 		{
-			if (settings.archiveXNewestEntry) runWithDelay(3000, getNewestEntryFromAPI);
+			if (settings.archiveXNewestEntry && (wxs_newest_entry == 1 || wxs_newest_entry == 3)) runWithDelay(3000, getNewestEntryFromAPI);
 		}
 
 		if (settings.tabChangeEnabled)
@@ -6657,9 +6653,17 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
+
+
+
+
+
+
+
 	/* ARCHIWUM X */
 	let newestEntrySection = null;
 	let newestEntryID = null;
+	let wxs_newest_entry = 1;
 
 	async function archiveXNewestEntry()
 	{
@@ -6722,9 +6726,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		bodySection.appendChild(newestEntrySectionElem);
 		newestEntrySection = bodySection.querySelector("#wxs_newest_entry");
-		getNewestEntryFromAPI(newestEntrySection);
 
-		//console.log("❎firstEntryTodayData", firstEntryTodayData)
+		if (wxs_newest_entry && wxs_newest_entry != 0) getNewestEntryFromAPI(newestEntrySection);
 	}
 
 
@@ -6888,6 +6891,11 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	if (settings.archiveXNewestEntry)
 	{
 		CSS += `
+		body[data-wxs_newest_entry="0"] #wxs_newest_entry { display: none!important; }
+		body[data-wxs_newest_entry="1"] .wykopx_newest_entry_switcher { background: linear-gradient(to bottom right, transparent 0%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 100%); }
+		body[data-wxs_newest_entry="2"] .wykopx_newest_entry_switcher { background: linear-gradient(to top left, transparent 0%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 100%); }
+		body[data-wxs_newest_entry="3"] .wykopx_newest_entry_switcher { background: rgba(255, 255, 255, 0.1); }
+
 		#wxs_newest_entry
 		{
 			right: 40px;
@@ -6926,8 +6934,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		{
 			filter: blur(50px);
 		}
-		#wxs_newest_entry.animationRunning:before,
-		#wxs_newest_entry.animationRunning:after
+		#wxs_newest_entry.animationRunning::before,
+		#wxs_newest_entry.animationRunning::after
 		{
 			content: '';
 			position: absolute;
@@ -6946,10 +6954,10 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		#wxs_newest_entry.animationRunning:after
 		{
 			animation-duration: 10s;
-			/*background: linear-gradient(45deg, #00ff00, #ffff00, #ff0000, #fb0094, #0000ff, #00ff00, #ffff00, #ff0000, #fb0094, #0000ff, #00ff00);
-			background-size: 400%;*/
+			background: linear-gradient(45deg, #00ff00, #ffff00, #ff0000, #fb0094, #0000ff, #00ff00, #ffff00, #ff0000, #fb0094, #0000ff, #00ff00);
+			background-size: 400%;
 		}
-		#wxs_newest_entry.animationRunning:before,
+/*		#wxs_newest_entry.animationRunning:before,
 		#wxs_newest_entry.animationRunning:after
 		{
 			animation-duration: 3.5s;
@@ -6958,7 +6966,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				rgba(255, 255, 255, 0.3),
 				rgba(5, 255, 255, 0.1));
 			background-size: 300%;
-		}
+		}*/
 		
 
 		@keyframes steam {
@@ -6979,6 +6987,74 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		}
 		`;
 	}
+
+
+	// TRYB NOCNY W BELCE NAWIGACYJNEJ
+	function addNewestEntryTopNavButton()
+	{
+		if (settings.archiveXNewestEntry)
+		{
+			wxs_newest_entry = localStorage.getItem('wxs_newest_entry');
+			if (!wxs_newest_entry) wxs_newest_entry = 1;
+			body.dataset.wxs_newest_entry = wxs_newest_entry;
+			// wykopx_newest_entry_switcher_status_0 - wylaczone
+			// wykopx_newest_entry_switcher_status_1 - wpisy
+			// wykopx_newest_entry_switcher_status_2 - linki
+			// wykopx_newest_entry_switcher_status_3 - oba
+			const wykopx_newest_entry_switcher_button = document.createElement("li");
+			wykopx_newest_entry_switcher_button.insertAdjacentHTML('afterbegin', `<a href="#"><figure>⭐</figure></a>`);
+			wykopx_newest_entry_switcher_button.classList.add("wykopx_newest_entry_switcher", "notifications", "dropdown");
+			wykopx_newest_entry_switcher_button.title = `Włącz/wyłącz powiadomienia o najnowszych wpisach na Mikroblogu ${promoString}`;
+			wykopx_newest_entry_switcher_button.addEventListener('click', function ()
+			{
+				wxs_newest_entry = localStorage.getItem('wxs_newest_entry');
+				// 0 - wylaczone
+				// 1 - wpisy
+				// 2 - linki
+				// 3 - wpisy + linki
+				if (wxs_newest_entry === null)
+				{
+					wxs_newest_entry = 1;
+				}
+				else if (wxs_newest_entry == 1)	// przy linkach zmienić na == 3
+				{
+					wxs_newest_entry = 0;
+				}
+				else
+				{
+					wxs_newest_entry++;
+				}
+
+				if (wxs_newest_entry > 0) getNewestEntryFromAPI();
+
+				localStorage.setItem('wxs_newest_entry', wxs_newest_entry);
+
+				body.dataset.wxs_newest_entry = wxs_newest_entry;
+			});
+			topNavHeaderRightElement.appendChild(wykopx_newest_entry_switcher_button);
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	/* ------ PRZYCISK DO POBIERANIA OBRAZKÓW --------- */
 
@@ -7402,6 +7478,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		runWithDelay(8000, function ()
 		{
 			if (settings.topNavNightSwitchIconButton) addNightModeButtonToNavBar();
+
+
 			addExtraButtons();
 			hideWykopXSPromo();
 			topNavLogoClick();
@@ -7483,9 +7561,9 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			}
 		});
 
-
 		if (settings.archiveXNewestEntry)
 		{
+			addNewestEntryTopNavButton();
 			archiveXNewestEntry();
 		}
 	}
