@@ -2,7 +2,7 @@
 // @name        Wykop XS DEV
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
-// @version     3.0.5
+// @version     3.0.8
 // @author      Wykop X <wykopx@gmail.com>
 // @namespace   Violentmonkey Scripts
 // @match       https://wykop.pl/*
@@ -18,11 +18,12 @@
 // @require http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
 // @require https://greasyfork.org/scripts/383527-wait-for-key-elements/code/Wait_for_key_elements.js?version=701631
 // ==/UserScript==
+
 (async function ()
 {
 	'use strict';
 
-	const currentVersion = "3.0.5";
+	const currentVersion = "3.0.8";
 	let dev = false;
 	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
 
@@ -101,8 +102,8 @@
 	settings.editorShowMyUsername = wykopxSettings.getPropertyValue("--editorShowMyUsername") ? wykopxSettings.getPropertyValue("--editorShowMyUsername") === '1' : true;
 	settings.editorShowMyUsernameOnSendButton = wykopxSettings.getPropertyValue("--editorShowMyUsernameOnSendButton") ? wykopxSettings.getPropertyValue("--editorShowMyUsernameOnSendButton") === '1' : true;
 
-	settings.archiveXNewestEntry = wykopxSettings.getPropertyValue("--archiveXNewestEntry") ? wykopxSettings.getPropertyValue("--archiveXNewestEntry") === '1' : true;
-	if (settings.archiveXNewestEntry) settings.archiveXNewestEntryRefresh = wykopxSettings.getPropertyValue("--archiveXNewestEntryRefresh") ? parseInt(wykopxSettings.getPropertyValue("--archiveXNewestEntryRefresh")) : 15000;
+	settings.wxsArchiveXNewestEntry = wykopxSettings.getPropertyValue("--wxsArchiveXNewestEntry") ? wykopxSettings.getPropertyValue("--wxsArchiveXNewestEntry") === '1' : true;
+	if (settings.wxsArchiveXNewestEntry) settings.wxsArchiveXNewestEntryRefresh = wykopxSettings.getPropertyValue("--wxsArchiveXNewestEntryRefresh") ? parseInt(wykopxSettings.getPropertyValue("--wxsArchiveXNewestEntryRefresh")) : 15000;
 
 	settings.wxsSwitchesEnable = wykopxSettings.getPropertyValue("--wxsSwitchesEnable") ? wykopxSettings.getPropertyValue("--wxsSwitchesEnable") === '1' : false;
 	if (settings.wxsSwitchesEnable) 
@@ -345,8 +346,8 @@
 		settings.infoboxUserMemberSinceYear = wykopxSettings.getPropertyValue("--infoboxUserMemberSinceYear") ? wykopxSettings.getPropertyValue("--infoboxUserMemberSinceYear") === '1' : true; // 1 || 0
 		settings.infoboxUserSummaryFollowers = wykopxSettings.getPropertyValue("--infoboxUserSummaryFollowers") ? wykopxSettings.getPropertyValue("--infoboxUserSummaryFollowers") === '1' : true; // 1 || 0
 		settings.infoboxUserSummaryActivity = wykopxSettings.getPropertyValue("--infoboxUserSummaryActivity") ? wykopxSettings.getPropertyValue("--infoboxUserSummaryActivity") === '1' : true; // 1 || 0
-		settings.infoboxUserBannedEmoji = wykopxSettings.getPropertyValue("--infoboxUserBannedEmoji") ? wykopxSettings.getPropertyValue("--infoboxUserBannedEmoji") === '1' : true; // 1 || 0
 	}
+
 
 	settings.tabChangeEnabled = wykopxSettings.getPropertyValue("--tabChangeEnabled") ? wykopxSettings.getPropertyValue("--tabChangeEnabled") === '1' : false;
 	if (settings.tabChangeEnabled)
@@ -2775,7 +2776,7 @@
 				{
 					if (userDataObject.banned?.wxs_info_text_1) 													// DETAILS from API
 					{
-						infoboxInnerHTML += `<var class="wxs_user_banned" title=" 🍌 ${userDataObject.banned.wxs_info_text_1}. \n \n ${userDataObject.banned.wxs_info_text_2} \n \n ${userDataObject.banned.wxs_info_text_3} \n \n">🍌</var>`
+						if (settings.infoboxUserBannedEmoji) infoboxInnerHTML += `<var class="wxs_user_banned" title=" 🍌 ${userDataObject.banned.wxs_info_text_1}. \n \n ${userDataObject.banned.wxs_info_text_2} \n \n ${userDataObject.banned.wxs_info_text_3} \n \n">🍌</var>`;
 						userInfoElementTitle += `  🍌 ${userDataObject.banned.wxs_info_text_1}. \n \n ${userDataObject.banned.wxs_info_text_2} \n \n ${userDataObject.banned.wxs_info_text_3} \n \n`;
 					}
 				}
@@ -5350,7 +5351,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		// document.hidden > true/false
 		if (document.hidden == false)
 		{
-			if (settings.archiveXNewestEntry && (wxs_newest_entry == 1 || wxs_newest_entry == 3)) runWithDelay(3000, getNewestEntryFromAPI);
+			if (settings.wxsArchiveXNewestEntry && (wxs_newest_entry == 1 || wxs_newest_entry == 3)) runWithDelay(3000, getNewestEntryFromAPI);
 		}
 
 		if (settings.tabChangeEnabled)
@@ -6884,11 +6885,11 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		sectionElement.classList.remove("hidden");
 		console.log("🅰 sectionElement", sectionElement);
 
-		if (document.hidden == false) runWithDelay(settings.archiveXNewestEntryRefresh, getNewestEntryFromAPI);
+		if (document.hidden == false) runWithDelay(settings.wxsArchiveXNewestEntryRefresh, getNewestEntryFromAPI);
 	}
 
 
-	if (settings.archiveXNewestEntry)
+	if (settings.wxsArchiveXNewestEntry)
 	{
 		CSS += `
 		body[data-wxs_newest_entry="0"] #wxs_newest_entry { display: none!important; }
@@ -6930,61 +6931,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			opacity: 0.2;
 		}
 
-		#wxs_newest_entry.animationRunning:after
-		{
-			filter: blur(50px);
-		}
-		#wxs_newest_entry.animationRunning::before,
-		#wxs_newest_entry.animationRunning::after
-		{
-			content: '';
-			position: absolute;
-			left: -2px;
-			top: -2px;
-			opacity: 1;
-			width: calc(100% + 4px);
-			height: calc(100% + 4px);
-			z-index: -1;
-			animation-name: steam;
-			animation-timing-function: linear;
-			animation-iteration-count: 1;
-			animation-fill-mode: forwards;
-		}
-		#wxs_newest_entry.animationRunning:before,
-		#wxs_newest_entry.animationRunning:after
-		{
-			animation-duration: 10s;
-			background: linear-gradient(45deg, #00ff00, #ffff00, #ff0000, #fb0094, #0000ff, #00ff00, #ffff00, #ff0000, #fb0094, #0000ff, #00ff00);
-			background-size: 400%;
-		}
-/*		#wxs_newest_entry.animationRunning:before,
-		#wxs_newest_entry.animationRunning:after
-		{
-			animation-duration: 3.5s;
-			background: linear-gradient(90deg, 
-				rgba(5, 255, 255, 0.1),
-				rgba(255, 255, 255, 0.3),
-				rgba(5, 255, 255, 0.1));
-			background-size: 300%;
-		}*/
-		
 
-		@keyframes steam {
-			0% {
-				background-position: 0 0;
-				opacity: 0;
-			}
-			10% {
-				opacity: 1;
-			}
-			90% {
-				opacity: 1;
-			}
-			100% {
-				background-position: 400% 0;
-				opacity: 0;
-			}
-		}
 		`;
 	}
 
@@ -6992,7 +6939,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	// TRYB NOCNY W BELCE NAWIGACYJNEJ
 	function addNewestEntryTopNavButton()
 	{
-		if (settings.archiveXNewestEntry)
+		if (settings.wxsArchiveXNewestEntry)
 		{
 			wxs_newest_entry = localStorage.getItem('wxs_newest_entry');
 			if (!wxs_newest_entry) wxs_newest_entry = 1;
@@ -7002,7 +6949,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			// wykopx_newest_entry_switcher_status_2 - linki
 			// wykopx_newest_entry_switcher_status_3 - oba
 			const wykopx_newest_entry_switcher_button = document.createElement("li");
-			wykopx_newest_entry_switcher_button.insertAdjacentHTML('afterbegin', `<a href="#"><figure>⭐</figure></a>`);
+			wykopx_newest_entry_switcher_button.insertAdjacentHTML('afterbegin', `<a href="#"><figure>🤍</figure></a>`);
 			wykopx_newest_entry_switcher_button.classList.add("wykopx_newest_entry_switcher", "notifications", "dropdown");
 			wykopx_newest_entry_switcher_button.title = `Włącz/wyłącz powiadomienia o najnowszych wpisach na Mikroblogu ${promoString}`;
 			wykopx_newest_entry_switcher_button.addEventListener('click', function ()
@@ -7561,7 +7508,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			}
 		});
 
-		if (settings.archiveXNewestEntry)
+		if (settings.wxsArchiveXNewestEntry)
 		{
 			addNewestEntryTopNavButton();
 			archiveXNewestEntry();
