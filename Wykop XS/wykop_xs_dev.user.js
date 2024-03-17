@@ -2,7 +2,7 @@
 // @name        Wykop XS DEV
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
-// @version     3.0.8
+// @version     3.0.9
 
 
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
@@ -38,7 +38,7 @@
 {
 	'use strict';
 
-	const currentVersion = "3.0.8";
+	const currentVersion = "3.0.9";
 	let dev = false;
 	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
 
@@ -310,7 +310,7 @@
 		if (settings.wxsUserLabelsFakeFemales)
 		{
 			// LISTA FAŁSZYWYCH RÓŻOWYCH PASKÓW
-			const listafalszywychrozowych = ['Nighthuntero', 'WyuArtykyu', 'ElCidX', 'cword',
+			const listafalszywychrozowych = ['Mantusabra', 'Nighthuntero', 'WyuArtykyu', 'ElCidX', 'cword',
 				'washington', 'Obrzydzenie', 'conamirko', 'i_took_a_pill_in_remiza', 'Riolet',
 				'ChwilowaPomaranczka', 'RobieZdrowaZupke', 'IlllIlIIIIIIIIIlllllIlIlIlIlIlIlIII',
 				'deiceberg', 'Chodtok', 'kierowcaautobusuofficial', 'ToJestNiepojete', 'model_wygenerowany_na_wykoppl',
@@ -3225,11 +3225,11 @@
 								localStorageNotatkowator.setItem(username, userNoteObject)
 									.then(function (value)
 									{
-										consoleX(`Notatkowator zapisał notatkę o użytkowniku @${userNoteObject.username}: "${userNoteObject.usernote}"`);
+										consoleX(`Notatkowator zapisał notatkę o użytkowniku @${userNoteObject.username}: "${userNoteObject.usernote}"`, 1);
 									})
 									.catch(function (err)
 									{
-										consoleX(`Notatkowator = error: ` + err);
+										consoleX(`Notatkowator = error: ` + err, 1);
 									});
 								// return usernote;
 								return userNoteObject
@@ -3261,7 +3261,8 @@
 	async function getUserDetailsForUsername(userDataObject = null, username = userDataObject.username, forceAPICheck = false)
 	{
 
-		consoleX(`getUserDetailsForUsername(username: ${username}, forceAPICheck: ${forceAPICheck})`)
+		consoleX(`getUserDetailsForUsername(username: ${username}, forceAPICheck: ${forceAPICheck})`, 1)
+
 		if (settings.infoboxEnable && username)
 		{
 			// consoleX(`getUserDetailsForUsername() ${username}`, 1);
@@ -4104,6 +4105,15 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 
 	/* checking for new versions */
+	// getIntegerVersionNumber("2.50.3") -> 2503
+	function getIntegerVersionNumber(versionString)
+	{
+		let arr = versionString.split(".");
+		let result = arr[0] * 1000 + arr[1] * 10 + arr[2] * 1;
+		return result;
+	}
+
+
 	async function checkVersionForUpdates()
 	{
 		// if (!dev) console.clear();
@@ -4114,7 +4124,8 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			const response = await fetch(`https://update.wykopx.pl/xs/wykopxs?${currentVersion}`); // wykopxs?3.0.0
 			const newestWykopXSVersion = await response.text();
 
-			if (currentVersion == newestWykopXSVersion)
+
+			if (getIntegerVersionNumber(currentVersion) >= getIntegerVersionNumber(newestWykopXSVersion))
 			{
 				consoleX(`✅ Masz najnowszą wersję skryptu Wykop XS v.${currentVersion}`);
 			}
@@ -4135,7 +4146,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				const response = await fetch(`https://update.wykopx.pl/xs/wykopx${settings.versor}?${settings.version}`); // wykopxstyle?3.0.0   | wykopxblank?3.0.0
 				const newestWykopXStyleVersion = await response.text();
 
-				if (settings.version == newestWykopXStyleVersion)
+				if (getIntegerVersionNumber(settings.version) >= getIntegerVersionNumber(newestWykopXStyleVersion))
 				{
 					consoleX(`✅ Masz najnowszą wersję styli Wykop X ${capitalizeFirstLetter(settings.versor)} v.${settings.version}`);
 				}
@@ -6735,6 +6746,9 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 					</div>
 				</div>
 			</article>
+			<div class="timer">
+				<div class="mask"></div>
+			</div>
 		</section>
 		`;
 
@@ -6755,26 +6769,26 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	// getEntryDailyNumber(wykopObjectData, "2023-01-01")		-> 678 - zwraca który wpis tego dnia
 	async function getEntryDailyNumber(objectData) // "2024-03-14 21:34:51",
 	{
-		console.log(`getEntryDailyNumber(objectData.id: ${objectData.id}, createdAtDate: ${objectData.created_at})`);
-		console.log(`getEntryDailyNumber() - firstInDayID[${objectData.resource}]: `, firstInDayID[objectData.resource]);
+		// console.log(`getEntryDailyNumber(objectData.id: ${objectData.id}, createdAtDate: ${objectData.created_at})`);
+		// console.log(`getEntryDailyNumber() - firstInDayID[${objectData.resource}]: `, firstInDayID[objectData.resource]);
 
 		const dateToCheck = dayjs(objectData.created_at).format("YYYY-MM-DD");
 
 		if (firstInDayID[objectData.resource] != null)
 		{
-			console.log(`mapa firstInDayID[${objectData.resource}] = null, sprawdzamy localstorage`);
+			// console.log(`mapa firstInDayID[${objectData.resource}] = null, sprawdzamy localstorage`);
 
 			await localStorageFirstDailyIDs.getItem(`${objectData.resource}FirstInDayIDsMap`).then(val =>	// localstorage: entryFirstInDayIDsMap / linkFirstInDayIDsMap
 			{
 				if (val !== null)
 				{
 					firstInDayID[objectData.resource] = new Map(Object.entries(val));
-					console.log("znaleziono w localstorage val = ", val);
-					console.log("znaleziono w localstorage firstInDayID[objectData.resource] = ", firstInDayID[objectData.resource]);
+					// console.log("znaleziono w localstorage val = ", val);
+					// console.log("znaleziono w localstorage firstInDayID[objectData.resource] = ", firstInDayID[objectData.resource]);
 				}
 				else
 				{
-					console.log('Mapa nie istniała, a w localstorage nie było zapisanych danych');
+					// console.log('Mapa nie istniała, a w localstorage nie było zapisanych danych');
 					firstInDayID[objectData.resource] = new Map();
 				}
 			}).catch(err =>
@@ -6785,18 +6799,18 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		if (firstInDayID[objectData.resource])
 		{
-			console.log('Mapa już istnieje: firstInDayID[objectData.resource]', firstInDayID[objectData.resource]);
+			// console.log('Mapa już istnieje: firstInDayID[objectData.resource]', firstInDayID[objectData.resource]);
 
 			if (firstInDayID[objectData.resource].has(dateToCheck))
 			{
-				console.log(`Mapa posiada dla daty ${dateToCheck}, wartość: ${firstInDayID[objectData.resource].get(dateToCheck)}`);
-				console.log("firstInDayID[objectData.resource]", firstInDayID[objectData.resource])
+				// console.log(`Mapa posiada dla daty ${dateToCheck}, wartość: ${firstInDayID[objectData.resource].get(dateToCheck)}`);
+				// console.log("firstInDayID[objectData.resource]", firstInDayID[objectData.resource])
 
 				return (objectData.id - firstInDayID[objectData.resource].get(dateToCheck)) / 2;
 			}
 			else
 			{
-				console.log(`Mapa istnieje, ale dla daty ${dateToCheck} nie posiada jeszcze wartości`);
+				// console.log(`Mapa istnieje, ale dla daty ${dateToCheck} nie posiada jeszcze wartości`);
 			}
 		}
 		else
@@ -6805,16 +6819,16 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		}
 
 
-		console.log('Mapa przed wyslaniem zapytania do API WykopX: firstInDayID[objectData.resource]', firstInDayID[objectData.resource]);
+		// console.log('Mapa przed wyslaniem zapytania do API WykopX: firstInDayID[objectData.resource]', firstInDayID[objectData.resource]);
 
 		const firstEntryData = await getWykopXAPIData(objectData.resource, "first-by-date") // https://archiwum.wykopx.pl/api/entry/first-by-date  // https://archiwum.wykopx.pl/api/link/first-by-date
-		console.log('Pobrano z Archiwum Wykop X: firstEntryData, ', firstEntryData);
+		// console.log('Pobrano z Archiwum Wykop X: firstEntryData, ', firstEntryData);
 
 		if (firstEntryData && firstEntryData.id != null)
 		{
 			firstInDayID[objectData.resource].set(dateToCheck, firstEntryData.id);
 			localStorageFirstDailyIDs.setItem(`${objectData.resource}FirstInDayIDsMap`, Object.fromEntries(firstInDayID[objectData.resource]));//.then(() => { });
-			console.log("firstInDayID[objectData.resource]", firstInDayID[objectData.resource])
+			// console.log("firstInDayID[objectData.resource]", firstInDayID[objectData.resource])
 
 			return (objectData.id - firstEntryData.id) / 2;
 		}
@@ -6832,7 +6846,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		let newestEntryObject = await getWykopAPIData(`entries?sort=newest&limit=1`); // https://wykop.pl/api/v3/entries?sort=newest&limit=1
 		newestEntryObject = newestEntryObject.data[0]
-		console.log("🅰 newestEntry", newestEntryObject)
 
 		if (newestEntryObject.id != newestEntryID)
 		{
@@ -6840,8 +6853,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			sectionElement.classList.add("animationRunning");
 
 			let entries_today_count = await getEntryDailyNumber(newestEntryObject);
-			console.log("newestEntryID", newestEntryID)
-			console.log("entries_today_count", entries_today_count)
 
 			if (entries_today_count)
 			{
@@ -6896,9 +6907,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		}
 
 		sectionElement.classList.remove("hidden");
-		console.log("🅰 sectionElement", sectionElement);
 
-		if (document.hidden == false) runWithDelay(settings.wxsArchiveXNewestEntryRefresh, getNewestEntryFromAPI);
+		if (document.hidden == false) runWithDelay(2000 + (settings.wxsArchiveXNewestEntryRefresh * 1000), getNewestEntryFromAPI);
 	}
 
 
@@ -6936,16 +6946,13 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		#wxs_newest_entry > .entry::after
 		{
-			bottom: 15px;
-			right: 15px;
+			bottom: 10px;
+			left: 20px;
 			content: attr(data-entries_today_count);
 			position: absolute;
 			font-size: 15px;
 			opacity: 0.2;
-		}
-
-
-		`;
+		}`;
 	}
 
 
@@ -7343,7 +7350,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	/* ------------- EVENTS ------------ */
 	function handleWindowEvent(event)
 	{
-		console.log(`handleWindowEvent() -> event.type: ${event.type} was fired`);
+		// console.log(`handleWindowEvent() -> event.type: ${event.type} was fired`);
 		// console.log(event);
 	}
 	window.addEventListener('load', handleWindowEvent); 		// 1.
