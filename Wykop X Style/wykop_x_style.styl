@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style 2.0
-@version        2.50.2
+@version        2.50.4
 
 @description    Ponad 500 funkcji usprawniających i naprawiających Wykop.pl
 
@@ -1641,6 +1641,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 @var checkbox   infiniteScrollEnabled                           `❎ 𝗜𝗻𝗳𝗶𝗻𝗶𝘁𝗲 𝗦𝗰𝗿𝗼𝗹𝗹 - wszystkie komentarze pod wpisem na jednej stronie`                                     1
 @var checkbox   disableNewLinkEditorPastedTextLimit             `❎ Pokaż limity znaków + wklejanie tekstu o dowolnej długości`                                          1
 
+@var checkbox   disableNewVersionNotification                   `❎ Nie pokazuj powiadomienia o nowej wersji Wykop XS ⭐`         0
 
 
 @var range     HR_SETTINGS_USER             `KONFIGURACJA UŻYTKOWNIKA Wykop X Style`                                                                 [0, 0, 99900, 1, 'mm']
@@ -1670,6 +1671,14 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     #wxs_quick_links
     {
         display: none!important;  
+    }
+    
+    if(disableNewVersionNotification == 1)
+    {
+        aside.wykopxs_new_version 
+        {
+            display: none!important;
+        }
     }
     
     if(presetAntiEmbarrassment == 1)
@@ -17413,7 +17422,7 @@ https://wykop.pl/moje/
 {    
     
     versor = "style"; // "style", "blank", "block"
-    version = "2.50.0";   
+    version = "2.50.4";   
     // xblocker = 2.49
     
     /* Wykop XS Settings  */

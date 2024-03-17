@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Blank
-@version        2.50.2
+@version        2.50.4
 
 @description    Ponad 500 funkcji usprawniających i naprawiających Wykop.pl
 @description    Blank - ta wersja ma WYŁĄCZONE wszystkie opcje i funkcje
@@ -1641,6 +1641,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 @var checkbox   mirkoukrywaczEnable                             `❎ 𝗠𝗶𝗿𝗸𝗼𝘂𝗸𝗿𝘆𝘄𝗮𝗰𝘇  - przycisk do ukrywania wpisów i komentarzy`                                           0
 @var checkbox   infiniteScrollEnabled                           `❎ 𝗜𝗻𝗳𝗶𝗻𝗶𝘁𝗲 𝗦𝗰𝗿𝗼𝗹𝗹 - wszystkie komentarze pod wpisem na jednej stronie`                                     0
 @var checkbox   disableNewLinkEditorPastedTextLimit             `❎ Pokaż limity znaków + wklejanie tekstu o dowolnej długości`                                          0
+@var checkbox   disableNewVersionNotification                   `❎ Nie pokazuj informacji o nowej wersji Wykop XS ⭐`       0         
 
 
 
@@ -1672,7 +1673,13 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     {
         display: none!important;  
     }
-    
+    if(disableNewVersionNotification == 1)
+    {
+        aside.wykopxs_new_version 
+        {
+            display: none!important;
+        }
+    }
     if(presetAntiEmbarrassment == 1)
     {
         tabTitleEnabled = 1;
@@ -17448,8 +17455,8 @@ https://wykop.pl/moje/
 @-moz-document url-prefix("https://wykop.pl"), url-prefix("http://wykopx.pl")
 {    
     
-    versor = "style"; // "style", "blank", "block"
-    version = "2.50.0";   
+    versor = "blank"; // "style", "blank", "block"
+    version = "2.50.4";   
     // xblocker = 2.49
     
     /* Wykop XS Settings  */
