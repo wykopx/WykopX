@@ -5088,8 +5088,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			const mobileNavbarUlElement = document.querySelector('body > section > nav.mobile-navbar > ul')
 			if (mobileNavbarUlElement)
 			{
-				if (settings.mobileNavBarMyWykopButton) mobileNavbarUlElement.insertAdjacentHTML('beforeend', wykopx_microblog_mobile_li);
-
 				if (user !== null)
 				{
 					if (settings.mobileNavBarMyWykopButton) mobileNavbarUlElement.insertAdjacentHTML('beforeend', wykopx_mywykop_mobile_li);
@@ -7416,12 +7414,15 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			});
 		}
 
+		runWithDelay(400, function ()
+		{
+			addExtraButtons();
+		});
 
 		// 8s
 		runWithDelay(8000, function ()
 		{
 			if (settings.topNavNightSwitchIconButton) addNightModeButtonToNavBar();
-			addExtraButtons();
 			hideWykopXSPromo();
 			topNavLogoClick();
 			topNavHomeButtonClickRefreshOrRedirect();
