@@ -3,37 +3,21 @@
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
 // @version     3.0.9
-
-
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
 // @contributionURL  	https://buycoffee.to/wykopx
-
-
 // @author      Wykop X <wykopx@gmail.com>
 // @namespace   Violentmonkey Scripts
 // @match       https://wykop.pl/*
-
-
 // @description Wykop XS służy do wspomagania działania stylu "Wykop X Style", który jest wymagany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://style.wykopx.pl
 // @description:en Wykop XS is a helper script for userstyle "Wykop X Style" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://style.wykopx.pl
-
-
-
-
-
-
-
 // @require https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
 // @require https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
 // @require https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js
 // @require http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
 // @require https://greasyfork.org/scripts/383527-wait-for-key-elements/code/Wait_for_key_elements.js?version=701631
-
 // @compatible  chrome, firefox, opera, safari, edge
 // @license     No License
-
 // ==/UserScript==
-
 (async function ()
 {
 	'use strict';
@@ -69,9 +53,6 @@
 	let votesFetchingHigherFrequencyLimitMinimumVotes = 30;
 	let votesFetchingHigherFrequencyLimitMaximumHoursOld = 24;
 	let votesFetchingHigherFrequencyDelayInSeconds = 3; // seconds
-
-
-
 
 
 
@@ -117,9 +98,11 @@
 	settings.editorShowMyUsername = wykopxSettings.getPropertyValue("--editorShowMyUsername") ? wykopxSettings.getPropertyValue("--editorShowMyUsername") === '1' : true;
 	settings.editorShowMyUsernameOnSendButton = wykopxSettings.getPropertyValue("--editorShowMyUsernameOnSendButton") ? wykopxSettings.getPropertyValue("--editorShowMyUsernameOnSendButton") === '1' : true;
 
+	// ARCHIWUM X
 	settings.wxsArchiveXNewestEntry = wykopxSettings.getPropertyValue("--wxsArchiveXNewestEntry") ? wykopxSettings.getPropertyValue("--wxsArchiveXNewestEntry") === '1' : true;
 	if (settings.wxsArchiveXNewestEntry) settings.wxsArchiveXNewestEntryRefresh = wykopxSettings.getPropertyValue("--wxsArchiveXNewestEntryRefresh") ? parseInt(wykopxSettings.getPropertyValue("--wxsArchiveXNewestEntryRefresh")) : 15000;
 
+	// PRZEŁĄCZNIKI
 	settings.wxsSwitchesEnable = wykopxSettings.getPropertyValue("--wxsSwitchesEnable") ? wykopxSettings.getPropertyValue("--wxsSwitchesEnable") === '1' : false;
 	if (settings.wxsSwitchesEnable) 
 	{
@@ -137,7 +120,6 @@
 
 
 	settings.removeAnnoyancesEnable = wykopxSettings.getPropertyValue("--removeAnnoyancesEnable") ? wykopxSettings.getPropertyValue("--removeAnnoyancesEnable") === '1' : true;
-
 	if (settings.removeAnnoyancesEnable) 
 	{
 		settings.removeAnnoyancesIframes = wykopxSettings.getPropertyValue("--removeAnnoyancesIframes") ? wykopxSettings.getPropertyValue("--removeAnnoyancesIframes") === '1' : true;
@@ -146,8 +128,6 @@
 		settings.removeAnnoyancesGDPR = wykopxSettings.getPropertyValue("--removeAnnoyancesGDPR") ? wykopxSettings.getPropertyValue("--removeAnnoyancesGDPR") === '1' : true;
 	}
 
-
-	settings.votingExplosionEnable = wykopxSettings.getPropertyValue("--votingExplosionEnable") ? wykopxSettings.getPropertyValue("--votingExplosionEnable") === '1' : false;
 
 
 	settings.checkLinkVotesEnable = wykopxSettings.getPropertyValue("--checkLinkVotesEnable") ? wykopxSettings.getPropertyValue("--checkLinkVotesEnable") === '1' : true;
@@ -158,6 +138,8 @@
 	}
 
 
+
+	settings.votingExplosionEnable = wykopxSettings.getPropertyValue("--votingExplosionEnable") ? wykopxSettings.getPropertyValue("--votingExplosionEnable") === '1' : false;
 	settings.checkEntryPlusesWhenVoting = wykopxSettings.getPropertyValue("--checkEntryPlusesWhenVoting") ? wykopxSettings.getPropertyValue("--checkEntryPlusesWhenVoting") === '1' : true;
 	settings.checkEntryPlusesEnable = wykopxSettings.getPropertyValue("--checkEntryPlusesEnable") ? wykopxSettings.getPropertyValue("--checkEntryPlusesEnable") === '1' : true;
 	if (settings.checkEntryPlusesEnable) 
@@ -324,7 +306,7 @@
 			trollsMap.set("januszowybot", { "label": "Bot", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Boty-na-Wykopie#januszowy-bot" });
 			trollsMap.set("mirko_anonim", { "label": "Anonim", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Aplikacje#mirkoanonim" });
 
-			trollsMap.set("BayzedMan", { "label": "Wykopowy Troll" });
+			// trollsMap.set("BayzedMan", { "label": "Wykopowy Troll" });
 			trollsMap.set("ChwilowaPomaranczka", { "label": "Wykopowy Troll" });
 
 
@@ -411,18 +393,13 @@
 
 
 	// variables from Wykop X Style
-	// boolean
-	settings.wxsDownloadImageButton = (wykopxSettings.getPropertyValue("--wxsDownloadImageButton") == `"true"`); // boolean, default off
-
-
-	settings.topNavHamburgerHoverMinimize = (wykopxSettings.getPropertyValue("--topNavHamburgerHoverMinimize") == `"true"`); // boolean
-	settings.tagHeaderEditable = (wykopxSettings.getPropertyValue("--tagHeaderEditable") == `"true"`); // boolean
-	settings.linksAnalyzerEnable = (wykopxSettings.getPropertyValue("--linksAnalyzerEnable") == `"true"`); // boolean
-
-
-
-	settings.fixCaseSensitiveTagsRedirection = (wykopxSettings.getPropertyValue("--fixCaseSensitiveTagsRedirection") == `"true"`); // boolean
-	settings.categoryRedirectToMicroblogButtonEnable = (wykopxSettings.getPropertyValue("--categoryRedirectToMicroblogButtonEnable") == `"true"`); // boolean
+	// TODO stare Wykop X Style "true"
+	settings.wxsDownloadImageButton = (wykopxSettings.getPropertyValue("--wxsDownloadImageButton").trim() == `"true"`); // boolean, default off
+	settings.topNavHamburgerHoverMinimize = (wykopxSettings.getPropertyValue("--topNavHamburgerHoverMinimize").trim() == `"true"`); // boolean
+	settings.tagHeaderEditable = (wykopxSettings.getPropertyValue("--tagHeaderEditable").trim() == `"true"`); // boolean
+	settings.linksAnalyzerEnable = (wykopxSettings.getPropertyValue("--linksAnalyzerEnable").trim() == `"true"`); // boolean
+	settings.fixCaseSensitiveTagsRedirection = (wykopxSettings.getPropertyValue("--fixCaseSensitiveTagsRedirection").trim() == `"true"`); // boolean
+	settings.categoryRedirectToMicroblogButtonEnable = (wykopxSettings.getPropertyValue("--categoryRedirectToMicroblogButtonEnable").trim() == `"true"`); // boolean
 
 
 	// numbers
@@ -433,8 +410,6 @@
 	settings.hitsInTopNavJS = wykopxSettings.getPropertyValue("--hitsInTopNavJS") ? wykopxSettings.getPropertyValue("--hitsInTopNavJS") === '1' : true;
 	settings.myWykopInTopNavJS = wykopxSettings.getPropertyValue("--myWykopInTopNavJS") ? wykopxSettings.getPropertyValue("--myWykopInTopNavJS") === '1' : true;
 	settings.notatkowatorEnable = wykopxSettings.getPropertyValue("--notatkowatorEnable") ? wykopxSettings.getPropertyValue("--notatkowatorEnable") === '1' : true;
-
-
 	settings.favoritesInTopNavJS = wykopxSettings.getPropertyValue("--favoritesInTopNavJS") ? wykopxSettings.getPropertyValue("--favoritesInTopNavJS") === '1' : true;
 	settings.imageUploaderEnable = wykopxSettings.getPropertyValue("--imageUploaderEnable") ? wykopxSettings.getPropertyValue("--imageUploaderEnable") === '1' : true;
 	settings.addNewLinkInTopNavJS = wykopxSettings.getPropertyValue("--addNewLinkInTopNavJS") ? wykopxSettings.getPropertyValue("--addNewLinkInTopNavJS") === '1' : true;
@@ -445,10 +420,7 @@
 
 	// strings
 	settings.linksAnalyzerSortBy = wykopxSettings.getPropertyValue("--linksAnalyzerSortBy").trim();
-
-
 	settings.topNavLogoClick = wykopxSettings.getPropertyValue("--topNavLogoClick") ? wykopxSettings.getPropertyValue("--topNavLogoClick").trim() : false; // jesli zdefiniowane to wartosc np. "mikroblog", w przeciwnym false 
-
 	settings.editorSendHotkey = wykopxSettings.getPropertyValue("--editorSendHotkey") ? wykopxSettings.getPropertyValue("--editorSendHotkey").trim() : "ctrl_enter"; // "domyslnie", "enter", "ctrl_enter", "ctrl_s"
 	if (settings.editorSendHotkey != "domyslnie") settings.editorSendHotkeyShowOnSendButton = wykopxSettings.getPropertyValue("--editorSendHotkeyShowOnSendButton") ? wykopxSettings.getPropertyValue("--editorSendHotkeyShowOnSendButton") === '1' : true;
 
@@ -2133,10 +2105,8 @@
 
 
 
-
 	// dla każdego wpisu i komentarza
 	// strona wpisu, caly wpis: section:is(.entry:has(> article), .link-block:has(> section > article)):not(.deleted)
-
 	// tylko czesc wpisu bez komentarzy "section.entry:not(.deleted):has(> article), section.link-block:not(.deleted) > section > article)
 	/// :not(.deleted)
 	waitForKeyElements("section.entry:has(> article), section.link-block:not(.premium-pub, .market-pub):has(> section > article)", sectionObjectDetected, false);
@@ -2144,7 +2114,6 @@
 	function sectionObjectDetected(jNodeSectionElement)
 	{
 		// consoleX(`sectionObjectDetected()`, 1)
-		// consoleX(`waitForKeyElements("section:is(.entry > article, .link-block:has(> section > article)):not(.deleted)"`, 1)
 		const sectionObjectElement = jNodeSectionElement[0];
 		sectionObjectIntersectionObserver.observe(sectionObjectElement);
 	}
@@ -2155,21 +2124,20 @@
 
 
 	// INTERSECTION OBSERVED
-
 	const sectionObjectsAreIntersecting = async (intersectingObject, observer) =>
 	{
 		intersectingObject.forEach(async (IntersectionObserverEntry) =>															// InterIntersectionObserverEntry
 		{
-			// ----- ALL INTERSECTIONS CHANGED 
+			// ----- ANY INTERSECTION CHANGED 
 			let sectionObjectElement = IntersectionObserverEntry.target;														// element <section class="entry"> 
 			let resource = null;		// resource = "link", "entry", "entry_comment"
 			//console.log(`intersectingObject: `, sectionObjectElement)
+			if (!sectionObjectElement || !sectionObjectElement.__vue__ || !sectionObjectElement.__vue__.item) return false;
 
 
-			if (!sectionObjectElement.__vue__ || !sectionObjectElement.__vue__.item) return false;
 
 			// ----- ONLY ONCE: INTERSECTION CHANGED FOR THE FIRST TIME:
-			if (sectionObjectElement && !sectionObjectElement.dataset.wxs_first_load_time) 
+			if (!sectionObjectElement.dataset.wxs_first_load_time) 
 			{
 				// console.log("intersectingObject-sectionObjectElement.__vue__.item")
 				// console.log(sectionObjectElement)
@@ -2179,48 +2147,67 @@
 				// console.log(sectionObjectElement.__vue__.item)
 				// data-wxs_first_load_time="2024-12-12..."
 				sectionObjectElement.dataset.wxs_first_load_time = dayjs().valueOf(); // data unix kiedy przybyly ostatnio odswiezone plusy-tutaj czas załadowania strony
-
 				resource = sectionObjectElement.__vue__.item.resource;
+
+				let wxs_votes_up = sectionObjectElement.__vue__.item.votes.up;								// liczba wykopów/plusów 10
+				let wxs_votes_down = sectionObjectElement.__vue__.item.votes.down;							// liczba zakopów/minusów 20
+				let wxs_votes_count = wxs_votes_up - wxs_votes_down;										// suma plusów i minusów/ suma wykopów i zakopów -10 
+				let wxs_votes_all = wxs_votes_up - wxs_votes_down; 											// łączna liczba oddanych głosów 30 
+				let wxs_votes_up_percent = 0;
+				let wxs_votes_down_percent = 0;
+				if (wxs_votes_all > 0)
+				{
+					wxs_votes_down_percent = Math.ceil(wxs_votes_down * 100 / wxs_votes_all);
+					wxs_votes_up_percent = Math.ceil(wxs_votes_up * 100 / wxs_votes_all);
+				}
 
 				// wpisy i komentarze
 				if (resource != "link") 
 				{
-					if (settings.checkEntryPlusesEnable && settings.checkEntryPlusesPerHour && !sectionObjectElement.dataset.wxs_first_load_votes_count)
+					if (settings.checkEntryPlusesEnable)
 					{
-						sectionObjectElement.dataset.wxs_first_load_votes_count = sectionObjectElement.__vue__.item.votes.up - sectionObjectElement.__vue__.item.votes.down;
+						sectionObjectElement.style.setProperty('--votesAll', `"👨${wxs_votes_all}"`);
+						sectionObjectElement.dataset.wxs_votes_all = wxs_votes_all;							// data-wxs_votes_all="-10"
+						sectionObjectElement.style.setProperty('--votesUp', `"${wxs_votes_up > 0 ? settings.prefixBeforePlusesCount : ""}${wxs_votes_up}"`);
+						sectionObjectElement.dataset.wxs_votes_up = wxs_votes_up;							// data-wxs_votes_all="10"
+						sectionObjectElement.style.setProperty('--votesDown', `"${wxs_votes_down > 0 ? settings.prefixBeforeMinusesCount : ""}${wxs_votes_down}"`);
+						sectionObjectElement.dataset.wxs_votes_down = wxs_votes_down;						// data-wxs_votes_all="20"
+						sectionObjectElement.style.setProperty('--votesCount', `"${wxs_votes_up > 0 ? settings.prefixBeforePlusesCount : wxs_votes_up < 0 ? settings.prefixBeforeMinusesCount : ""}${wxs_votes_count}"`);
+						sectionObjectElement.dataset.wxs_votes_count = wxs_votes_count;						// data-wxs_votes_all="30"
+
+						sectionObjectElement.dataset.wxs_voted = sectionObjectElement.__vue__.item.voted;	// data-wxs_voted=
+
+						if (settings.checkEntryPlusesPerHour && !sectionObjectElement.dataset.wxs_first_load_votes_count)
+						{
+							// liczba plusow podczas zaladowania strony
+							sectionObjectElement.dataset.wxs_first_load_votes_count = sectionObjectElement.__vue__.item.votes.up - sectionObjectElement.__vue__.item.votes.down;
+						}
 					}
 
-					//sectionObjectElement.style.setProperty('--votesUp', `"${settings.prefixBeforePlusesCount}${sectionObjectElement.__vue__.item.votes.up}"`);
-					//sectionObjectElement.style.setProperty('--votesDown', `"${settings.prefixBeforeMinusesCount}${sectionObjectElement.__vue__.item.votes.down}"`);
-					sectionObjectElement.dataset.wxs_votes_up = sectionObjectElement.__vue__.item.votes.up;
-					sectionObjectElement.dataset.wxs_votes_down = sectionObjectElement.__vue__.item.votes.down;
-					sectionObjectElement.dataset.wxs_voted = sectionObjectElement.__vue__.item.voted;
-					sectionObjectElement.dataset.wxs_first_load_votes_count = sectionObjectElement.__vue__.item.votes.up - sectionObjectElement.__vue__.item.votes.down;
-					sectionObjectElement.dataset.wxs_votes_count = sectionObjectElement.__vue__.item.votes.up - sectionObjectElement.__vue__.item.votes.down;
-					sectionObjectElement.dataset.wxs_votes_all = sectionObjectElement.__vue__.item.votes.up + sectionObjectElement.__vue__.item.votes.down;
-
-
-
-					sectionObjectElement.querySelectorAll(`article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href^="/ludzie/"]:not([data-wxs_mention_username])`).forEach((a_mention) =>
+					if (settings.filterUserReplies)
 					{
-						const a_mentions_filter_button = document.createElement("button");
-						a_mentions_filter_button.classList = "wxs_filter_on_replies";
-						a_mentions_filter_button.innerHTML = `🔰<span>FILTRUJ</span>`
-						a_mentions_filter_button.type = "button";
+						sectionObjectElement.querySelectorAll(`article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href^="/ludzie/"]:not([data-wxs_mention_username])`).forEach((a_mention) =>
+						{
+							const a_mentions_filter_button = document.createElement("button");
+							a_mentions_filter_button.classList = "wxs_filter_on_replies";
+							a_mentions_filter_button.innerHTML = `🔰<span>FILTRUJ</span>`
+							a_mentions_filter_button.type = "button";
 
-						const wxs_mention_username = a_mention.href.replace("https://wykop.pl/ludzie/", "")
-						a_mention.dataset.wxs_mention_username = wxs_mention_username; // każdy @mention uzytkownika zmieniamy na <a href="/ludzie/NadiaFrance" data-wxs_author_username="NadiaFrance">
+							const wxs_mention_username = a_mention.href.replace("https://wykop.pl/ludzie/", "")
+							a_mention.dataset.wxs_mention_username = wxs_mention_username; // każdy @mention uzytkownika zmieniamy na <a href="/ludzie/NadiaFrance" data-wxs_author_username="NadiaFrance">
 
-						a_mentions_filter_button.dataset.wxs_author_username = wxs_mention_username;
-						a_mentions_filter_button.title = `𝗪𝘆𝗸𝗼𝗽 𝗫 — 𝗳𝗶𝗹𝘁𝗿𝗼𝘄𝗮𝗻𝗶𝗲 𝗱𝘆𝘀𝗸𝘂𝘀𝗷𝗶 𝗶 𝗼𝗱𝗽𝗼𝘄𝗶𝗲𝗱𝘇𝗶 \n \n Pokaż całą dyskusję z użytkownikiem '${wxs_mention_username}'.\n \n  Pokazuje: \n — wszystkie komentarze '${wxs_mention_username}' \n — odpowiedzi, które wołają '@${wxs_mention_username}' \n \n Klikając przełączasz tryb filtrowania: \n — Filtr 1: całkowicie ukrywa odfiltrowane komentarze \n — Filtr 2: odfiltrowane komentarze półprzezroczyste \n — Filtr 3: odfiltrowane komentarze czarno białe \n \n "`
+							a_mentions_filter_button.dataset.wxs_author_username = wxs_mention_username;
+							a_mentions_filter_button.title = `𝗪𝘆𝗸𝗼𝗽 𝗫 — 𝗳𝗶𝗹𝘁𝗿𝗼𝘄𝗮𝗻𝗶𝗲 𝗱𝘆𝘀𝗸𝘂𝘀𝗷𝗶 𝗶 𝗼𝗱𝗽𝗼𝘄𝗶𝗲𝗱𝘇𝗶 \n \n Pokaż całą dyskusję z użytkownikiem '${wxs_mention_username}'.\n \n  Pokazuje: \n — wszystkie komentarze '${wxs_mention_username}' \n — odpowiedzi, które wołają '@${wxs_mention_username}' \n \n Klikając przełączasz tryb filtrowania: \n — Filtr 1: całkowicie ukrywa odfiltrowane komentarze \n — Filtr 2: odfiltrowane komentarze półprzezroczyste \n — Filtr 3: odfiltrowane komentarze czarno białe \n \n "`
 
-						a_mention.insertAdjacentElement("afterend", a_mentions_filter_button);
+							a_mention.insertAdjacentElement("afterend", a_mentions_filter_button);
 
-						// console.log("=== BUTTON ADDED: a_mentions_filter_button")
-						// console.log(a_mentions_filter_button)
-					})
+							// console.log("=== BUTTON ADDED: a_mentions_filter_button")
+							// console.log(a_mentions_filter_button)
+						})
+					}
 
-					if (resource == "entry") // tu moglyby byc jeszcze komentarze w znaleziskach
+
+					if (resource == "entry") // TODO komentarze w znaleziskach
 					{
 						// sprawdzenie czy wpis zawiera grę w plusowanie
 						if (settings.checkEntryPlusesForVotingGame)
@@ -2231,11 +2218,17 @@
 							if (containsSubstring)
 							{
 								sectionObjectElement.dataset.wxs_voting_game = "true";
+
+								// string pokazujący zakrytą liczbę plusow - zamiast "1234" -> "12--"
 								//sectionObjectElement.style.setProperty('--votesUpHidden', `"+${replaceDigitsWithDot(sectionObjectElement.__vue__.item.votes.up)}"`);
-								sectionObjectElement.style.setProperty('--votesUpHidden', `"${settings.prefixBeforePlusesCount}` + replaceDigitsWithDot(sectionObjectElement.__vue__.item.votes.up) + `"`);
-								let votingGameLastDigit = sectionObjectElement.__vue__.item.votes.up + 1; // ostatnia cyfra po zaplusowaniu
-								votingGameLastDigit = votingGameLastDigit.toString().slice(-1);
+								sectionObjectElement.style.setProperty('--votesUpHidden', `"${settings.prefixBeforePlusesCount}` + replaceDigitsWithDot(wxs_votes_up) + `"`);
+								sectionObjectElement.style.wxs_votes_up_hidden = replaceDigitsWithDot(wxs_votes_up);				// data-wxs_votes_up_hidden
+
+								let votingGameLastDigit = wxs_votes_up + 1; 						// liczba po zaplusowaniu
+								votingGameLastDigit = votingGameLastDigit.toString().slice(-1);		// ostatnia cyfra po zaplusowaniu
+
 								sectionObjectElement.style.setProperty('--votingGameLastDigit', `"` + votingGameLastDigit + `"`);
+								sectionObjectElement.dataset.wxs_voting_game_last_digit = votingGameLastDigit;						// data-wxs_voting_game_last_digit="9"
 							}
 						}
 
@@ -2245,7 +2238,7 @@
 						}
 					}
 				}
-				// znaleziskoa
+				// znalezisko
 				else if (resource == "link")
 				{
 					if (settings.checkLinkVotesEnable && settings.checkLinkVotesPerHour && !sectionObjectElement.dataset.wxs_first_load_votes_count)
@@ -2265,7 +2258,6 @@
 						sectionObjectElement.dataset.wxs_first_load_comments_count = sectionObjectElement.__vue__.item.comments.count;
 					}
 				}
-
 				currentPageTotalVotesUpCount += sectionObjectElement.__vue__.item.votes.up;
 			}
 
@@ -2291,9 +2283,9 @@
 					{
 						if ((sectionObjectElement.__vue__.item.votes.up > votesFetchingLimitMinimumVotes || sectionObjectElement.__vue__.item.votes.down > votesFetchingLimitMinimumVotes) && loadTime.diff(dayjs(sectionObjectElement.__vue__.item.created_at), 'hour') < votesFetchingLimitMaximumHoursOld)
 						{
-							let timeoutId = null
 							let i = 1;
-							let timeoudId = setTimeout(function checkPlusesAgain()
+							let timeoutId = null
+							timeoutId = setTimeout(function checkPlusesAgain()
 							{
 								if (sectionObjectElement?.__vue__?.item)
 								{
@@ -2301,7 +2293,6 @@
 
 									if (sectionObjectElement.classList.contains("isIntersecting"))
 									{
-
 										if ((sectionObjectElement.dataset.wxs_votes_fetch_high_frequency)
 											|| ((loadTime.diff(dayjs(sectionObjectElement.__vue__.item.created_at), 'hour') < votesFetchingHigherFrequencyLimitMaximumHoursOld)
 												&& sectionObjectElement.__vue__.item.votes.up > votesFetchingHigherFrequencyLimitMinimumVotes))
@@ -2424,12 +2415,10 @@
 
 
 
-
+					// INFOBOX, NOTATKOWATOR, USER LABELS
 					let userDataObject = sectionObjectElement.__vue__?.item?.author;
-
 					if (settings.infoboxEnable || settings.notatkowatorEnable || settings.wxsUserLabelsEnable)
 					{
-
 						// TWORZYMY USERINFOBOX do wszystkich nicków autora tego wpisu/komentarza/linka
 						// pierwszy raz widzimy ten wpis / komentarz użytkownika i nie były do niego dodawane userdata więc dodajemy data-wxs_username="NadiaFrance"
 						if (!sectionObjectElement.dataset.wxs_username && userDataObject.username)
@@ -2439,7 +2428,6 @@
 							{
 								userDataObject = await getUserDetailsForUsername(userDataObject, undefined, true); // userDataObject, username, forceAPICheck
 							}
-
 							if (settings.wxsUserLabelsEnable)
 							{
 								if (settings.wxsUserLabelsFakeFemales && falszyweRozoweArray && falszyweRozoweArray.includes(userDataObject.username))
@@ -2448,7 +2436,6 @@
 									sectionObjectElement.__vue__.item.author.gender = "m";
 									userDataObject.changeSexTo = "male";
 								}
-
 								if (settings.wxsUserLabelsTrolls && mapaTrolli)
 								{
 									let wxsUserLabelObject = null;
@@ -2459,7 +2446,6 @@
 										userDataObject.wxsUserURL = wxsUserLabelObject.url;
 									}
 								}
-
 							}
 
 							// SPRAWDZENIE I DODANIE NOTATKI ORAZ DANYCH UZYTKOWNIKA
@@ -2482,23 +2468,9 @@
 								}
 							}
 
-							// DODAJEMY INFO NA STRONIE PROFILOWEJ O SZCZEGÓŁACH BANA
-							if (settings.infoboxUserBannedInfoOnProfilePage)
-							{
-								if ((userDataObject.status == "banned" || userDataObject.status == "suspended") && pageType == "profil")
-								{
-									userDataObject = addUserDataObjectWXSBanInfo(userDataObject);
-									const bannedRedBox = document.querySelector("aside.profile-top aside.info-box.red p");
-									bannedRedBox.innerHTML = `To konto jest obecnie zbanowane. <br/><br/><strong>Wykop X</strong>: <br/>${userDataObject.banned?.wxs_info_text_1} <br/> <small title=" Czas końca bana dotyczy czasu letniego. \n Wykop posiada błąd i nie rozpoznaje czasu zimowego, \n dlatego zimą i jesienią ban "trwa o godzinę dłużej" niż podany">${userDataObject.banned?.wxs_info_text_2}<br/> ${userDataObject.banned?.wxs_info_text_3} <span style="cursor: help; padding: 0px 5px">ℹ</span></small>`
-								}
-							}
-
 							createInfoboxDivsForUserEverywhere(userDataObject, userNoteObject, undefined);
 						}
 					}
-
-
-
 
 
 
@@ -2508,18 +2480,13 @@
 					{
 						const wxs_author_username = sectionObjectElement.__vue__.item.author.username;
 						const wxs_author_gender = sectionObjectElement.__vue__.item.author.gender;
-
 						let wxs_menu_action_box = document.createElement("div");
 						wxs_menu_action_box.classList.add("wxs_menu_action_box", "wykopxs"); // 📰📑 🔖 ⎀⎊👁 🖾 🗙 ⌧ ⮽ 🗳 ☒ 🗵 🗷- ‐ ‑ – ‒ — ― _ ﹏🗖 ⎀ ⎊
-
 						let wxs_menu_action_box_html = ``;
-
-
 
 						if (settings.filterUserComments || settings.filterUserReplies)
 						{
 							wxs_menu_action_box_html += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_filter_off" title=" Wykop X — wyłącz filtrowanie \n \n Pokaż normalnie wszystkie odfiltrowane komentarze / znaleziska \n \n ">❌ Wyłącz filtr</button>`;
-
 							if (settings.filterUserComments)
 							{
 								wxs_menu_action_box_html += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_filter_on_user" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 — 𝗳𝗶𝗹𝘁𝗿𝗼𝘄𝗮𝗻𝗶𝗲 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝘆/𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸	\n \n Na stronach zawierających 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 (pod wpisami i pod znaleziskami) \n odfiltrowuje 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 innych użytkowników. \n Pozostawia widoczne wyłącznie 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲 tego użytkownika. \n \n Na stronach zawierających 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 (np. główna, wykopalisko) \n odfiltrowuje 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 innych użytkowników. \n Pozostawia widoczne wyłącznie 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 tego użytkownika. \n \n \n Klikając przełączasz tryb filtrowania: \n — Filtr 1: całkowicie ukrywa odfiltrowane komentarze \n — Filtr 2: odfiltrowane komentarze półprzezroczyste \n — Filtr 3: odfiltrowane komentarze czarno białe \n \n ">⚜ Filtruj </button>`;
@@ -2528,8 +2495,6 @@
 							{
 								wxs_menu_action_box_html += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_filter_on_replies" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 — 𝗳𝗶𝗹𝘁𝗿𝗼𝘄𝗮𝗻𝗶𝗲 𝗱𝘆𝘀𝗸𝘂𝘀𝗷𝗶 𝗶 𝗼𝗱𝗽𝗼𝘄𝗶𝗲𝗱𝘇𝗶 \n \n Odfiltrowuje 𝗸𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇𝗲, które nie dotyczą tego użytkownika.  \n \n  Nie ukrywa: \n — komentarzy tego użytkownika \n — odpowiedzi, które zawierają @wołanie tego użytkownika \n \n Klikając przełączasz tryb filtrowania: \n — Filtr 1: całkowicie ukrywa odfiltrowane komentarze \n — Filtr 2: odfiltrowane komentarze półprzezroczyste \n — Filtr 3: odfiltrowane komentarze czarno białe \n \n ">🔰 Filtruj </button>`;
 							}
-
-
 						}
 
 						if (settings.mirkoukrywaczEnable)
@@ -2537,9 +2502,7 @@
 							if (settings.mirkoukrywaczHideComments || settings.mirkoukrywaczHideEntries || settings.mirkoukrywaczHideLinks)
 							{
 								wxs_menu_action_box_html += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_minimize" title="Wykop X Krawężnik — zwiń">[ — ]</button>
-
 								<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_maximize" title="Wykop X Krawężnik — pokaż cały">[ + ]</button>
-
 								<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_hide" title="Wykop X Mirkoukrywacz — ukryj"> Ukryj 🗙</button> `;
 							}
 						}
@@ -2569,7 +2532,7 @@
 					}
 				}
 			}
-			// SEKCJA ZNIKNĘŁA Z EKRANU
+			// ----- OBJECT IS NOT VISIBLE  -- SEKCJA ZNIKNĘŁA Z EKRANU
 			else if (sectionObjectElement.classList.contains("isIntersecting"))
 			{
 				// consoleX(`section.entry NOT intersecting: ${id}`, 1)
@@ -2583,12 +2546,10 @@
 	const sectionObjectIntersectionObserverOptions =
 	{
 		root: null,
-		rootMargin: "50px 0px 400px 0px",
+		rootMargin: "0px 0px 400px 0px",
 		threshold: 0,
 	};
-
 	if (settings.intersectionObserverRootMargin == false) sectionObjectIntersectionObserverOptions.rootMargin = "0px 0px -200px 0px";
-
 	const sectionObjectIntersectionObserver = new IntersectionObserver(sectionObjectsAreIntersecting, sectionObjectIntersectionObserverOptions)
 
 
@@ -3280,12 +3241,35 @@
 		}
 	}
 
+
+
+
+	if (settings.infoboxUserBannedInfoOnProfilePage)
+	{
+		waitForKeyElements("aside.profile-top:has(aside.info-box.red)", bannedUserProfileAside, false);
+
+		// DODAJEMY INFO NA STRONIE PROFILOWEJ O SZCZEGÓŁACH BANA
+		function bannedUserProfileAside(jNode)
+		{
+			const bannedUserProfileAsidePElement = jNode[0]; // jNode => DOMElement
+
+			if (bannedUserProfileAsidePElement.__vue__.user.status == "banned" || bannedUserProfileAsidePElement.__vue__.user.status == "suspended")
+			{
+				addUserDataObjectWXSBanInfo(bannedUserProfileAsidePElement.__vue__.user);
+
+				let userDataObject = addUserDataObjectWXSBanInfo(bannedUserProfileAsidePElement.__vue__.user);
+				const bannedRedBox = bannedUserProfileAsidePElement.querySelector("aside.info-box.red p");
+				bannedRedBox.innerHTML = `To konto jest obecnie zbanowane. <br/><br/><strong>Wykop X</strong>: <br/>${userDataObject.banned?.wxs_info_text_1} <br/> <small title=" Czas końca bana dotyczy czasu letniego. \n Wykop posiada błąd i nie rozpoznaje czasu zimowego, \n dlatego zimą i jesienią ban "trwa o godzinę dłużej" niż podany">${userDataObject.banned?.wxs_info_text_2}<br/> ${userDataObject.banned?.wxs_info_text_3} <span style="cursor: help; padding: 0px 5px">ℹ</span></small>`
+			}
+		}
+	}
+	// DODAJEMY INFO NA STRONIE PROFILOWEJ O SZCZEGÓŁACH BANA
 	function addUserDataObjectWXSBanInfo(userDataObject)
 	{
 		consoleX(`addUserDataObjectWXSBanInfo()`, 1)
 		if (userDataObject.banned)
 		{
-			userDataObject.banned.wxs_ban_end_date_string = userDataObject.banned.expired; 			// "2024-01-04 17:22:31"
+			userDataObject.banned.wxs_ban_end_date_string = userDataObject.banned.expired; 											// "2024-01-04 17:22:31"
 			userDataObject.banned.wxs_ban_end_date_object = dayjs(userDataObject.banned.wxs_ban_end_date_string);
 			userDataObject.banned.wxs_ban_end_in_years = userDataObject.banned.wxs_ban_end_date_object.diff(loadTime, 'year');		// 5 > koniec bana za "5" lat
 			userDataObject.banned.wxs_ban_end_in_months = userDataObject.banned.wxs_ban_end_date_object.diff(loadTime, 'month');	// 3 > koniec bana za: "3" miesiące
@@ -3298,12 +3282,20 @@
 			// "Użytkowniczka @NadiaFrance dsotała bana za naruszenie regulaminu"
 			userDataObject.banned.wxs_info_text_1 = `${userDataObject.gender == "f" ? "Użytkowniczka @" + userDataObject.username + " dostała" : "Użytkownik @" + userDataObject.username + " dostał"} bana za ${userDataObject.banned.wxs_reason_lowercase}`;
 
-			// "Koniec bana za 14 dni"
-			userDataObject.banned.wxs_info_text_2 = `Koniec bana ${userDataObject.banned.wxs_ban_end_in_years > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_years + " lat(a)" : userDataObject.banned.wxs_ban_end_in_months > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_months + " miesiące(ęcy)" : userDataObject.banned.wxs_ban_end_in_days > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_days + " dni" : userDataObject.banned.wxs_ban_end_date_object.isSame(loadTime, 'day') == true ? " już dzisiaj!  " : " jutro"}`;
+			if (userDataObject.banned.wxs_ban_end_in_years > 100)
+			{
+				// Ban permanentny na 999 lat
+				userDataObject.banned.wxs_info_text_2 = ``;
+				userDataObject.banned.wxs_info_text_3 = `Ban permanentny`;
+			}
+			else
+			{
+				// "Koniec bana za 14 dni"
+				userDataObject.banned.wxs_info_text_2 = `Koniec bana ${userDataObject.banned.wxs_ban_end_in_years > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_years + " lat(a)" : userDataObject.banned.wxs_ban_end_in_months > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_months + " miesiące(ęcy)" : userDataObject.banned.wxs_ban_end_in_days > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_days + " dni" : userDataObject.banned.wxs_ban_end_date_object.isSame(loadTime, 'day') == true ? " już dzisiaj!  " : " jutro"}`;
 
-
-			// "Ban trwa do 2024-12-12 23:59:59"
-			userDataObject.banned.wxs_info_text_3 = `Ban trwa do ${userDataObject.banned.wxs_ban_end_date_string}`;
+				// "Ban trwa do 2024-12-12 23:59:59"
+				userDataObject.banned.wxs_info_text_3 = `Ban trwa do ${userDataObject.banned.wxs_ban_end_date_string}`;
+			}
 
 			return userDataObject;
 		}
@@ -5026,7 +5018,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		let figure = document.createElement("figure");
 		a.appendChild(figure);
 		li.appendChild(a);
-		document.querySelector("header.header > .right > nav > ul").insertAdjacentElement("afterbegin", li);
+		topNavHeaderRightElement.insertAdjacentElement("afterbegin", li);
 	}
 
 
@@ -6998,7 +6990,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 	/* ------ PRZYCISK DO POBIERANIA OBRAZKÓW --------- */
-
 	if (settings.wxsDownloadImageButton)
 	{
 		waitForKeyElements("section.entry section.entry-photo figure", wxsDownloadImageButton, false);
@@ -7284,33 +7275,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		});
 	}
 	// IMAGE UPLOADER END
-
-
-
-	// CHANGING ALL ENTRIES ID TO comment-1234567
-	/* let elements = document.querySelectorAll('.entry');
-		
-	// Loop through each element
-	elements.forEach((element) =>
-	{
-		// Get the id of the element
-		let id = element.id;
-		
-		// Check if the id starts with "comment-"
-		if (id.startsWith('comment-'))
-		{
-			// Remove "comment-" from the id
-			let newId = id.replace('comment-', '');
-		
-			// Set the new id to the element
-			element.id = newId;
-		}
-	});
-	*/
-
-
-
-
 
 
 
