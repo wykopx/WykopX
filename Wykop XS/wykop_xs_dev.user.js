@@ -210,7 +210,6 @@
 
 	// LOCAL STORAGE
 	let localStorageMirkoukrywacz = null;
-	let localStorageTextsaver = null;
 	let localStorageNotatkowator = null;
 	let localStorageUserLabels = null;
 	let localStorageFirstDailyIDs = null;
@@ -234,12 +233,10 @@
 		settings.filterUserComments = wykopxSettings.getPropertyValue("--filterUserComments") ? wykopxSettings.getPropertyValue("--filterUserComments") === '1' : true;
 		settings.filterUserReplies = wykopxSettings.getPropertyValue("--filterUserReplies") ? wykopxSettings.getPropertyValue("--filterUserReplies") === '1' : true;
 		settings.mirkoukrywaczEnable = wykopxSettings.getPropertyValue("--mirkoukrywaczEnable") ? wykopxSettings.getPropertyValue("--mirkoukrywaczEnable") === '1' : true;
-		settings.textsaverEnable = wykopxSettings.getPropertyValue("--textsaverEnable") ? wykopxSettings.getPropertyValue("--textsaverEnable") === '1' : true;
 	}
 	else
 	{
 		settings.mirkoukrywaczEnable = false;
-		settings.textsaverEnable = false;
 	}
 
 
@@ -259,18 +256,6 @@
 		settings.mirkoukrywaczHideLinks = wykopxSettings.getPropertyValue("--mirkoukrywaczHideLinks") ? wykopxSettings.getPropertyValue("--mirkoukrywaczHideLinks") === '1' : true; // 1 || 0
 	}
 
-	if (settings.textsaverEnable)
-	{
-		// LOCALSTORAGE
-		localStorageTextsaver = localforage.createInstance({
-			driver: localforage.LOCALSTORAGE,
-			name: "wykopx",
-			storeName: "textsaver",
-		});
-
-		settings.textsaverSaveEntries = wykopxSettings.getPropertyValue("--textsaverSaveEntries") ? wykopxSettings.getPropertyValue("--textsaverSaveEntries") === '1' : true; // 1 || 0
-		settings.textsaverSaveComments = wykopxSettings.getPropertyValue("--textsaverSaveComments") ? wykopxSettings.getPropertyValue("--textsaverSaveComments") === '1' : true; // 1 || 0
-	}
 
 
 
@@ -312,7 +297,7 @@
 			// LISTA FAŁSZYWYCH RÓŻOWYCH PASKÓW
 			const listafalszywychrozowych = ['Mantusabra', 'Nighthuntero', 'WyuArtykyu', 'ElCidX', 'cword',
 				'washington', 'Obrzydzenie', 'conamirko', 'i_took_a_pill_in_remiza', 'Riolet',
-				'ChwilowaPomaranczka', 'RobieZdrowaZupke', 'IlllIlIIIIIIIIIlllllIlIlIlIlIlIlIII',
+				'ChwilowaPomaranczka', 'RobieZdrowaZupke', 'IlllIlIIIIIIIIIlllllIlIlIlIlIlIlIII', 'Banderoza',
 				'deiceberg', 'Chodtok', 'kierowcaautobusuofficial', 'ToJestNiepojete', 'model_wygenerowany_na_wykoppl',
 				'chwilowypaczelok', 'sinls', 'KRZYSZTOF_DZONG_UN', 'miszczu90', 'ToJestNiepojete', ' powodzenia'];
 
@@ -1616,10 +1601,6 @@
 
 		if (settings.actionBoxEnable)
 		{
-			if (settings.textsaverEnable)
-			{
-				if (event.target.closest("button.wxs_save")) saveThisEntryContent.call(event.target, event); // TODO
-			}
 
 			if (settings.filterUserComments || settings.filterUserReplies)
 			{
@@ -2548,13 +2529,7 @@
 
 
 						}
-						if (settings.textsaverEnable)
-						{
-							if (settings.textsaverSaveEntries || settings.textsaverSaveComments)
-							{
-								wxs_menu_action_box_html += `<button data-wxs_object_id="${object_id}" data-wxs_id="${id}" data-wxs_resource="${resource}" data-wxs_parent_id="${parent_id}" data-wxs_parent_resource="${parent_resource}" data-wxs_author_username="${wxs_author_username}" data-wxs_author_gender="${wxs_author_gender}" class="wxs_save" title=" 𝗪𝘆𝗸𝗼𝗽 𝗫 — 𝘇𝗮𝗽𝗮𝗺𝗶𝗲̨𝘁𝗮𝗷 𝘁𝗿𝗲𝘀́𝗰́ \n \n Treść wybranego wpisu/komentarza zostanie zapisana lokalnie w Twojej przeglądarce. W przypadku późniejszej edycji treści lub usunięcia komentarza, zobaczysz odtworzoną zapisaną przez Wykop X wersję. \n \n ">Zapisz</button>`;
-							}
-						}
+
 						if (settings.mirkoukrywaczEnable)
 						{
 							if (settings.mirkoukrywaczHideComments || settings.mirkoukrywaczHideEntries || settings.mirkoukrywaczHideLinks)
