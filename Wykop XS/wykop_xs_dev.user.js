@@ -393,12 +393,14 @@
 	settings.topNavProfileIconButton = wykopxSettings.getPropertyValue("--topNavProfileIconButton") ? wykopxSettings.getPropertyValue("--topNavProfileIconButton") === '1' : false;
 	settings.topNavNightSwitchIconButton = wykopxSettings.getPropertyValue("--topNavNightSwitchIconButton") ? wykopxSettings.getPropertyValue("--topNavNightSwitchIconButton") === '1' : false;
 	settings.mobileNavBarHide = wykopxSettings.getPropertyValue("--mobileNavBarHide") ? wykopxSettings.getPropertyValue("--mobileNavBarHide") === '1' : false;
+
 	if (settings.mobileNavBarHide == false)
 	{
 		settings.mobileNavBarMyWykopButton = wykopxSettings.getPropertyValue("--mobileNavBarMyWykopButton") ? wykopxSettings.getPropertyValue("--mobileNavBarMyWykopButton") === '1' : false;
 		settings.mobileNavBarMessagesButton = wykopxSettings.getPropertyValue("--mobileNavBarMessagesButton") ? wykopxSettings.getPropertyValue("--mobileNavBarMessagesButton") === '1' : false;
 		settings.mobileNavBarProfileButton = wykopxSettings.getPropertyValue("--mobileNavBarProfileButton") ? wykopxSettings.getPropertyValue("--mobileNavBarProfileButton") === '1' : false;
 	}
+
 
 	// default numbers
 	settings.observedTagsInRightSidebarUpdateInterval = 12;
@@ -5061,7 +5063,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		consoleX("addExtraButtons()", 1)
 
 		const wykopx_wykopwnowymstylu_li = `<li class="wykopxs wykopx_wykopwnowymstylu_li dropdown"><a href="/tag/wykopwnowymstylu" class="wykopx_wykopwnowymstylu_button" title="Przejdź na #wykopwnowymstylu"><span>#</span></a></li>`;
-
 		const wykopx_mywykop_mobile_li = `<li class="wykopxs wykopx_mywykop_mobile_li dropdown"><a href="/obserwowane" class="wykopx_mywykop_mobile_button" title="Mój Wykop ${promoString}"><figure></figure></a></li>`;
 		const wykopx_microblog_mobile_li = `<li class="wykopxs wykopx_microblog_mobile_li dropdown"><a href="/mikroblog" class="wykopx_microblog_mobile_button" title="Mikroblog ${promoString}"><figure> </figure></a></li>`;
 		const wykopx_profile_mobile_li = `<li class="wykopxs wykopx_profile_mobile_li ${user.username}"><a href="/ludzie/${user.username}" class="wykopx wykopx_profile_button" title="Przejdź na swój profil ${user.username} ${promoString}"><figure></figure></a></li>`;
@@ -5082,7 +5083,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		}
 
 		/* dolna belka mobilna */
-		if (settings.mobileNavBarHide != false)
+		if (settings.mobileNavBarHide == false)
 		{
 			const mobileNavbarUlElement = document.querySelector('body > section > nav.mobile-navbar > ul')
 			if (mobileNavbarUlElement)
@@ -7420,8 +7421,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		runWithDelay(8000, function ()
 		{
 			if (settings.topNavNightSwitchIconButton) addNightModeButtonToNavBar();
-
-
 			addExtraButtons();
 			hideWykopXSPromo();
 			topNavLogoClick();
