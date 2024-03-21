@@ -14,7 +14,7 @@
 // @match               https://wykop.pl/*
 
 
-// @description         Wykop XS - Informacje o banach na strnach użytkowników. Wykop X Style znajdziesz na: http://styl.wykopx.pl
+// @description         Wykop XS - Informacje o banach na profilach zbanowanych użytkowników. Wykop X Style znajdziesz na: http://styl.wykopx.pl
 // @description:en      Wykop XS - Shows precise info about banned users on Wykop.pl. Check out Wykop X Style here: http://styl.wykopx.pl
 
 
