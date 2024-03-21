@@ -18,11 +18,8 @@
 // @description:en      Wykop XS - Shows precise info about banned users on Wykop.pl. Check out Wykop X Style here: http://styl.wykopx.pl
 
 
-
-
 // @require		https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
-// @require		http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
-// @require		https://greasyfork.org/scripts/383527-wait-for-key-elements/code/Wait_for_key_elements.js?version=701631
+// @require		https://cdn.jsdelivr.net/gh/CoeJoder/waitForKeyElements.js@latest/waitForKeyElements.js
 // @compatible	chrome, firefox, opera, safari, edge
 // @license		No License
 
@@ -49,14 +46,15 @@
 		waitForKeyElements("aside.profile-top:has(aside.info-box.red)", bannedUserProfileAside, false);
 
 		// DODAJEMY INFO NA STRONIE PROFILOWEJ O SZCZEGÓŁACH BANA
-		function bannedUserProfileAside(jNode)
+		function bannedUserProfileAside(element)
 		{
-			const bannedUserObject = jNode[0]?.__vue__?.user; // jNode => DOMElement
+			const bannedUserObject = element?.__vue__?.user;
+
 			if (!bannedUserObject) return;
 
 			if (bannedUserObject.status == "banned" || bannedUserObject.status == "suspended")
 			{
-				const bannedRedBox = jNode[0].querySelector("aside.info-box.red p");
+				const bannedRedBox = element.querySelector("aside.info-box.red p");
 				let bannedRedBoxInnerHTML = `To konto jest obecnie ${bannedUserObject.status == "suspended" ? "zawieszone do wyjaśnienia" : "zbanowane"}. <br/><br/><strong>Wykop X</strong>: <br/>`;
 
 				bannedUserObject.banned.wxs_ban_end_date_string = bannedUserObject.banned.expired; 											// "2024-01-04 17:22:31"
