@@ -5,13 +5,13 @@
 // @version     2.60.2
 
 
+// @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
+// @contributionURL  	https://buycoffee.to/wykopx
+
+
 // @author      Wykop X <wykopx@gmail.com>
 // @namespace   Violentmonkey Scripts
 // @match       https://wykop.pl/*
-
-
-// @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
-// @contributionURL  	https://buycoffee.to/wykopx
 
 
 // @description Wykop XS - XHR Blocker Wykop X Style znajdziesz na: http://style.wykopx.pl

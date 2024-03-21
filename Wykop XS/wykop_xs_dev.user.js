@@ -30,21 +30,11 @@
 	dayjs.extend(window.dayjs_plugin_relativeTime);
 	let loadTime = dayjs();
 
-	// user.username -> nazwa zalogowanego uzytkownika
-
-	const root = document.documentElement;
-	const head = document.head;
-	const body = document.body;
-	const bodySection = body.querySelector("section");
-
-
 	let user = {
 		data: null,
-		username: null
+		username: null		// user.username -> nazwa zalogowanego uzytkownika
 	};
-
 	let wxs_modal = null;
-
 	let votesFetchingLimitMinimumVotes = 5;
 	let votesFetchingLimitMaximumHoursOld = 48;
 	let votesFetchingFirstDelayInSeconds = 1;		// seconds
@@ -55,11 +45,12 @@
 	let votesFetchingHigherFrequencyDelayInSeconds = 3; // seconds
 
 
-
-
-	// getComputedStyle(document.documentElement) -- nie działa, nie wczytuje właściwości z :root
-	let wykopxSettings = getComputedStyle(head);
-	let settings = {};
+	const root = document.documentElement;
+	const head = document.head;
+	const body = document.body;
+	const bodySection = body.querySelector("section");
+	const wykopxSettings = getComputedStyle(head); // getComputedStyle(document.documentElement) -- nie działa, nie wczytuje właściwości z :root
+	const settings = {};
 
 	settings.WykopXSEnabled = wykopxSettings.getPropertyValue("--WykopXSEnabled") ? wykopxSettings.getPropertyValue("--WykopXSEnabled") === '1' : true;
 	if (settings.WykopXSEnabled == false) return;
@@ -317,13 +308,14 @@
 		}
 	}
 
+	// wykop_xs_banned.user.js
+	settings.infoboxUserBannedInfoOnProfilePage = wykopxSettings.getPropertyValue("--infoboxUserBannedInfoOnProfilePage") ? wykopxSettings.getPropertyValue("--infoboxUserBannedInfoOnProfilePage") === '1' : true; // 1 || 0
 
 	settings.infoboxEnable = wykopxSettings.getPropertyValue("--infoboxEnable") ? wykopxSettings.getPropertyValue("--infoboxEnable") === '1' : true;
 	if (settings.infoboxEnable)
 	{
 		settings.infoboxUserBannedEmoji = wykopxSettings.getPropertyValue("--infoboxUserBannedEmoji") ? wykopxSettings.getPropertyValue("--infoboxUserBannedEmoji") === '1' : true; // 1 || 0
 		settings.infoboxUserBannedInfo = wykopxSettings.getPropertyValue("--infoboxUserBannedInfo") ? wykopxSettings.getPropertyValue("--infoboxUserBannedInfo") === '1' : true; // 1 || 0
-		settings.infoboxUserBannedInfoOnProfilePage = wykopxSettings.getPropertyValue("--infoboxUserBannedInfoOnProfilePage") ? wykopxSettings.getPropertyValue("--infoboxUserBannedInfoOnProfilePage") === '1' : true; // 1 || 0
 		settings.infoboxUserMemberSince = wykopxSettings.getPropertyValue("--infoboxUserMemberSince") ? wykopxSettings.getPropertyValue("--infoboxUserMemberSince") === '1' : true; // 1 || 0
 		settings.infoboxUserMemberSinceYear = wykopxSettings.getPropertyValue("--infoboxUserMemberSinceYear") ? wykopxSettings.getPropertyValue("--infoboxUserMemberSinceYear") === '1' : true; // 1 || 0
 		settings.infoboxUserSummaryFollowers = wykopxSettings.getPropertyValue("--infoboxUserSummaryFollowers") ? wykopxSettings.getPropertyValue("--infoboxUserSummaryFollowers") === '1' : true; // 1 || 0
@@ -3244,6 +3236,8 @@
 
 
 
+	// WYKOP XS -- START
+	// wykop_xs_banned_user.js
 	if (settings.infoboxUserBannedInfoOnProfilePage)
 	{
 		waitForKeyElements("aside.profile-top:has(aside.info-box.red)", bannedUserProfileAside, false);
@@ -3251,55 +3245,47 @@
 		// DODAJEMY INFO NA STRONIE PROFILOWEJ O SZCZEGÓŁACH BANA
 		function bannedUserProfileAside(jNode)
 		{
-			const bannedUserProfileAsidePElement = jNode[0]; // jNode => DOMElement
+			const bannedUserObject = jNode[0]?.__vue__?.user; // jNode => DOMElement
+			if (!bannedUserObject) return;
 
-			if (bannedUserProfileAsidePElement.__vue__.user.status == "banned" || bannedUserProfileAsidePElement.__vue__.user.status == "suspended")
+			if (bannedUserObject.status == "banned" || bannedUserObject.status == "suspended")
 			{
-				addUserDataObjectWXSBanInfo(bannedUserProfileAsidePElement.__vue__.user);
+				const bannedRedBox = jNode[0].querySelector("aside.info-box.red p");
+				let bannedRedBoxInnerHTML = `To konto jest obecnie ${bannedUserObject.status == "suspended" ? "zawieszone do wyjaśnienia" : "zbanowane"}. <br/><br/><strong>Wykop X</strong>: <br/>`;
 
-				let userDataObject = addUserDataObjectWXSBanInfo(bannedUserProfileAsidePElement.__vue__.user);
-				const bannedRedBox = bannedUserProfileAsidePElement.querySelector("aside.info-box.red p");
-				bannedRedBox.innerHTML = `To konto jest obecnie zbanowane. <br/><br/><strong>Wykop X</strong>: <br/>${userDataObject.banned?.wxs_info_text_1} <br/> <small title=" Czas końca bana dotyczy czasu letniego. \n Wykop posiada błąd i nie rozpoznaje czasu zimowego, \n dlatego zimą i jesienią ban "trwa o godzinę dłużej" niż podany">${userDataObject.banned?.wxs_info_text_2}<br/> ${userDataObject.banned?.wxs_info_text_3} <span style="cursor: help; padding: 0px 5px">ℹ</span></small>`
+				bannedUserObject.banned.wxs_ban_end_date_string = bannedUserObject.banned.expired; 											// "2024-01-04 17:22:31"
+				bannedUserObject.banned.wxs_ban_end_date_object = dayjs(bannedUserObject.banned.wxs_ban_end_date_string);
+				bannedUserObject.banned.wxs_ban_end_in_years = bannedUserObject.banned.wxs_ban_end_date_object.diff(loadTime, 'year');		// 5 > koniec bana za "5" lat
+				bannedUserObject.banned.wxs_ban_end_in_months = bannedUserObject.banned.wxs_ban_end_date_object.diff(loadTime, 'month');	// 3 > koniec bana za: "3" miesiące
+				bannedUserObject.banned.wxs_ban_end_in_days = bannedUserObject.banned.wxs_ban_end_date_object.diff(loadTime, 'day');		// 31 > koniec bana za 31 dni
+				bannedUserObject.banned.wxs_ban_end_in_days = bannedUserObject.banned.wxs_ban_end_date_object.diff(loadTime, 'day');		// 31 > koniec bana za 31 dni
+				bannedUserObject.banned.wxs_reason_lowercase = bannedUserObject.banned.reason.toLowerCase();
+				// banEndDateDuration = banEndDateObject.toNow()
+
+
+				// "Użytkowniczka @NadiaFrance dsotała bana za naruszenie regulaminu"
+				if (bannedUserObject.status == "suspended") bannedRedBoxInnerHTML += `${bannedUserObject.gender == "f" ? "Użytkowniczka @" + bannedUserObject.username + " została zawieszona za" : "Użytkownik @" + bannedUserObject.username + " został zawieszony za"} ${bannedUserObject.banned.wxs_reason_lowercase}`;
+				else bannedRedBoxInnerHTML += `${bannedUserObject.gender == "f" ? "Użytkowniczka @" + bannedUserObject.username + " dostała" : "Użytkownik @" + bannedUserObject.username + " dostał"} bana za ${bannedUserObject.banned.wxs_reason_lowercase}`;
+
+				if (bannedUserObject.banned.wxs_ban_end_in_years > 100)
+				{
+					// Ban permanentny na 999 lat
+					bannedRedBoxInnerHTML += `[*] Ban permanentny `;
+				}
+				else
+				{
+					// "Koniec bana za 14 dni"
+					bannedRedBoxInnerHTML += `<br/><small title="Czas końca bana dotyczy czasu letniego. \nWykop posiada błąd i nie rozpoznaje czasu zimowego, \ndlatego zimą i jesienią ban trwa o godzinę dłużej niż podany">
+						Koniec bana <strong>${bannedUserObject.banned.wxs_ban_end_in_years > 1 ? "za " + bannedUserObject.banned.wxs_ban_end_in_years + " lat(a)" : bannedUserObject.banned.wxs_ban_end_in_months > 1 ? "za " + bannedUserObject.banned.wxs_ban_end_in_months + " miesiące(ęcy)" : bannedUserObject.banned.wxs_ban_end_in_days > 1 ? "za " + bannedUserObject.banned.wxs_ban_end_in_days + " dni" : bannedUserObject.banned.wxs_ban_end_date_object.isSame(loadTime, 'day') == true ? " już dzisiaj!  " : " jutro"}</strong><br/>`;
+					// "Ban trwa do 2024-12-12 23:59:59"
+					bannedRedBoxInnerHTML += `Ban trwa do ${bannedUserObject.banned.wxs_ban_end_date_string}<span style="cursor: help; padding: 0px 5px">ℹ</span></small>`;
+				}
+
+				bannedRedBox.innerHTML = bannedRedBoxInnerHTML;
 			}
 		}
 	}
-	// DODAJEMY INFO NA STRONIE PROFILOWEJ O SZCZEGÓŁACH BANA
-	function addUserDataObjectWXSBanInfo(userDataObject)
-	{
-		consoleX(`addUserDataObjectWXSBanInfo()`, 1)
-		if (userDataObject.banned)
-		{
-			userDataObject.banned.wxs_ban_end_date_string = userDataObject.banned.expired; 											// "2024-01-04 17:22:31"
-			userDataObject.banned.wxs_ban_end_date_object = dayjs(userDataObject.banned.wxs_ban_end_date_string);
-			userDataObject.banned.wxs_ban_end_in_years = userDataObject.banned.wxs_ban_end_date_object.diff(loadTime, 'year');		// 5 > koniec bana za "5" lat
-			userDataObject.banned.wxs_ban_end_in_months = userDataObject.banned.wxs_ban_end_date_object.diff(loadTime, 'month');	// 3 > koniec bana za: "3" miesiące
-			userDataObject.banned.wxs_ban_end_in_days = userDataObject.banned.wxs_ban_end_date_object.diff(loadTime, 'day');		// 31 > koniec bana za 31 dni
-			userDataObject.banned.wxs_ban_end_in_days = userDataObject.banned.wxs_ban_end_date_object.diff(loadTime, 'day');		// 31 > koniec bana za 31 dni
-
-			userDataObject.banned.wxs_reason_lowercase = userDataObject.banned.reason.toLowerCase();
-			// banEndDateDuration = banEndDateObject.toNow()
-
-			// "Użytkowniczka @NadiaFrance dsotała bana za naruszenie regulaminu"
-			userDataObject.banned.wxs_info_text_1 = `${userDataObject.gender == "f" ? "Użytkowniczka @" + userDataObject.username + " dostała" : "Użytkownik @" + userDataObject.username + " dostał"} bana za ${userDataObject.banned.wxs_reason_lowercase}`;
-
-			if (userDataObject.banned.wxs_ban_end_in_years > 100)
-			{
-				// Ban permanentny na 999 lat
-				userDataObject.banned.wxs_info_text_2 = ``;
-				userDataObject.banned.wxs_info_text_3 = `Ban permanentny`;
-			}
-			else
-			{
-				// "Koniec bana za 14 dni"
-				userDataObject.banned.wxs_info_text_2 = `Koniec bana ${userDataObject.banned.wxs_ban_end_in_years > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_years + " lat(a)" : userDataObject.banned.wxs_ban_end_in_months > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_months + " miesiące(ęcy)" : userDataObject.banned.wxs_ban_end_in_days > 1 ? "za " + userDataObject.banned.wxs_ban_end_in_days + " dni" : userDataObject.banned.wxs_ban_end_date_object.isSame(loadTime, 'day') == true ? " już dzisiaj!  " : " jutro"}`;
-
-				// "Ban trwa do 2024-12-12 23:59:59"
-				userDataObject.banned.wxs_info_text_3 = `Ban trwa do ${userDataObject.banned.wxs_ban_end_date_string}`;
-			}
-
-			return userDataObject;
-		}
-	}
+	// WYKOP XS -- END
 
 
 
