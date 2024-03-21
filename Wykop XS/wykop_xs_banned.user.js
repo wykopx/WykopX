@@ -76,7 +76,7 @@
 				if (bannedUserObject.banned.wxs_ban_end_in_years > 100)
 				{
 					// Ban permanentny na 999 lat
-					bannedRedBoxInnerHTML += `[*] Ban permanentny `;
+					bannedRedBoxInnerHTML += `<br/><small>Ban permanentny. Śpij słodko aniołku [*] </small>`;
 				}
 				else
 				{
