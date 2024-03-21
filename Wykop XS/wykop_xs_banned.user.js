@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name                Wykop XS - Informacje o banach
 // @name:pl             Wykop XS - Informacje o banach
-// @name:en             Wykop XS Ban Info
+// @name:en             Wykop XS - Ban Info
 // @version             3.0.0
 
 
@@ -20,11 +20,11 @@
 
 
 
-// @require https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
-// @require http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
-// @require https://greasyfork.org/scripts/383527-wait-for-key-elements/code/Wait_for_key_elements.js?version=701631
-// @compatible chrome, firefox, opera, safari, edge
-// @license No License
+// @require		https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
+// @require		http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
+// @require		https://greasyfork.org/scripts/383527-wait-for-key-elements/code/Wait_for_key_elements.js?version=701631
+// @compatible	chrome, firefox, opera, safari, edge
+// @license		No License
 
 // ==/UserScript==
 
