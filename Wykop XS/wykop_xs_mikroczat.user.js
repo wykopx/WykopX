@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name        Wykop XS MikroCzat
-// @name:pl     Wykop XS MikroCzat
-// @name:en     Wykop XS MikroCzat
+// @name        Wykop XS - MikroCzat
+// @name:pl     Wykop XS - MikroCzat
+// @name:en     Wykop XS - MikroCzat
 // @version     3.0.0
 
 
@@ -14,7 +14,7 @@
 // @match       https://wykop.pl/*
 
 
-// @description Wykop X / MirkoCzat
+// @description Wykop X / MirkoCzat / MirkoCzat
 // @description:en Wykop X MikroCzat / MirkoCzat
 
 
