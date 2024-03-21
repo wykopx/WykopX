@@ -2,7 +2,7 @@
 // @name                Wykop XS - Informacje o banach
 // @name:pl             Wykop XS - Informacje o banach
 // @name:en             Wykop XS - Ban Info
-// @version             3.0.2
+// @version             3.0.0
 
 
 // @supportURL          http://wykop.pl/tag/wykopwnowymstylu
