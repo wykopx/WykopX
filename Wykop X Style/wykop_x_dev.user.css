@@ -2401,7 +2401,7 @@ TODO    checkbox hideAdultEntriesAndLinks
                                                                         "Pełna szerokość, bez sidebara po prawej":"calaszerokosc",
                                                                         "Dopasowana":"wezszadolewej",
                                                                     } 
-TODO range      mainContentWidthValue                           `⟺ Domyślna szerokość strony`                                        [100, 10, 100, 5, '%']
+//TODO range      mainContentWidthValue                           `⟺ Domyślna szerokość strony`                                        [100, 10, 100, 5, '%']
 @var range      mainContentManualLeftMargin                     `🢂 Ręcznie dostosuj odległość od lewej (dla szerokich ekranów)`      [0, 0, 1200, 10, 'px']
 @var range      gapWidth                                        `ᛨ Odstępy pomiędzy elementami innymi niż wpisy i znaleziska`         [20, 0, 100, 1, 'px']
 @var range      borderRadius                                    `Stopień zaokrąglenia rogów`                                          [4, 0, 25, 1, 'px']
@@ -2417,7 +2417,7 @@ TODO range      mainContentWidthValue                           `⟺ Domyślna s
 
 
 @var range      HR_GENERAL                          `OPCJE OGÓLNE`                                                                   [0, 0, 99900, 1, 'mm']
-TODO var select     scrollbarsStyle                             `Paski przewijania` {
+//TODO var select     scrollbarsStyle                             `Paski przewijania` {
                                                                             "Nowe (domyślne)": "domyslne",
                                                                             "Klasyczne*": "klasyczne",
                                                                             "Dzienne/nocne": "dziennoc",
