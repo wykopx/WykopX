@@ -30,7 +30,7 @@
 	// @require		https://cdn.jsdelivr.net/gh/CoeJoder/waitForKeyElements.js@latest/waitForKeyElements.js
 
 
-	const currentVersion = "3.0.10";
+	const currentVersion = "3.0.11";
 	let dev = false;
 	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
 
