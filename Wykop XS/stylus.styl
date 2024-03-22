@@ -1,0 +1,144 @@
+section > nav.mobile-navbar
+{
+	padding: 0!important;   
+} 
+body > section:not(.is-mobile) main.main
+{
+    width: 100% !important;
+    max-width: unset !important;
+}
+
+
+section > nav.mobile-navbar > ul
+{
+	border-radius: 0!important;   
+	display: flex!important;
+} 
+section > nav.mobile-navbar > ul > li
+{
+	background: var(--mobileNavbarButtonBackgroundColorInactive)!important; 
+	width: 100%!important;
+	opacity: 0.6!important; 
+	border-top: 3px solid transparent!important;
+} 
+
+section > nav.mobile-navbar > ul > li:hover
+{
+	opacity: 1!important; 
+}
+[data-night-mode] section > nav.mobile-navbar:hover > ul > li
+{
+	background-color: rgb(60, 60, 60);
+} 
+section > nav.mobile-navbar > ul > li:hover span:before
+{
+	background: unset!important;
+} 
+section > nav.mobile-navbar > ul > li.active
+{
+	opacity: 1!important;
+	border-color: var(--mobileNavbarButtonColorActive)!important; 
+	background: var(--mobileNavbarButtonBackgroundColorActive)!important; 
+} 
+section > nav.mobile-navbar > ul > li > a
+{
+	display: block!important;
+	height: 100%!important;
+	width: 100%!important;
+	color: white!important;
+} 
+
+
+/* dodatkowe przyciski */
+section > nav.mobile-navbar > ul > li > a > figure,
+section > nav.mobile-navbar > ul > li > a > span
+{
+	display: block!important;
+	height: 100%!important;
+	width: 100%!important;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	color: transparent!important;
+} 
+section > nav.mobile-navbar > ul > li > a > figure
+{
+	display: block!important;
+	height: 100%!important;
+	width: 100%!important;
+	background-repeat: no-repeat!important;
+	background-position: 50% 50%!important;
+} 
+
+section > nav.mobile-navbar > ul > li > a > span
+{
+	height: 100%!important;
+	width: 100%!important;
+	color: transparent!important;
+} 
+section > nav.mobile-navbar > ul > li > a > span:hover
+{
+	color: transparent!important;
+} 
+
+section.is-mobile > nav.mobile-navbar > ul > li > a > span:before
+{
+	width:100%!important;
+	height: 100%!important;
+	border-radius:0!important;
+} 
+section.is-mobile > nav.mobile-navbar > ul > li > a > span:after
+{
+	display: none!important;
+} 
+section > nav.mobile-navbar > ul > li > a > span > i
+{
+	display: none!important;
+} 
+
+
+
+
+
+
+
+/* BELKA MOBILNA - WIADOMOŚCI */
+if(mobileNavBarMessagesButton == 1)
+{
+
+
+} 
+
+
+/* BELKA MOBILNA - STRONA GŁÓWNA */
+section > nav.mobile-navbar > ul > li.home > a > span
+{
+	background-image: url('https://i.imgur.com/UQamDsQ.png');
+}
+
+[data-night-mode] section > nav.mobile-navbar > ul > li.home > a > span
+{
+	background-image: url('https://i.imgur.com/4wpzWuo.png');
+}
+
+/* BELKA MOBILNA - WYKOPALISKO */
+section > nav.mobile-navbar > ul > li.upcoming > a > span
+{
+	background-image: url('https://i.imgur.com/UQamDsQ.png');
+	background-image: url('https://i.imgur.com/tYQMm7Q.png');
+}
+
+[data-night-mode] section > nav.mobile-navbar > ul > li.upcoming > a > span
+{
+	background-image: url('https://i.imgur.com/IeIwCWa.png');
+} 
+
+/* BELKA MOBILNA - MIKROBLOG */
+section > nav.mobile-navbar > ul > li.microblog > a > span
+{
+	background-image: url('https://i.imgur.com/OcgW9zq.png');
+} 
+
+[data-night-mode] section > nav.mobile-navbar > ul > li.microblog > a > span
+{
+	background-image: url('https://i.imgur.com/DRyLFtj.png');
+}   

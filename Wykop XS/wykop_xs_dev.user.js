@@ -2,7 +2,7 @@
 // @name        Wykop XS DEV
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
-// @version     3.0.9
+// @version     3.0.10
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
 // @contributionURL  	https://buycoffee.to/wykopx
 // @author      Wykop X <wykopx@gmail.com>
@@ -13,8 +13,12 @@
 // @require https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
 // @require https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
 // @require https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js
+
+
 // @require http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
 // @require https://greasyfork.org/scripts/383527-wait-for-key-elements/code/Wait_for_key_elements.js?version=701631
+
+
 // @compatible  chrome, firefox, opera, safari, edge
 // @license     No License
 // ==/UserScript==
@@ -22,7 +26,11 @@
 {
 	'use strict';
 
-	const currentVersion = "3.0.9";
+
+	// @require		https://cdn.jsdelivr.net/gh/CoeJoder/waitForKeyElements.js@latest/waitForKeyElements.js
+
+
+	const currentVersion = "3.0.10";
 	let dev = false;
 	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
 
@@ -361,18 +369,23 @@
 	settings.topNavHomeButtonClickRefreshOrRedirect = wykopxSettings.getPropertyValue("--topNavHomeButtonClickRefreshOrRedirect") ? wykopxSettings.getPropertyValue("--topNavHomeButtonClickRefreshOrRedirect") === '1' : false;
 	settings.topNavMicroblogButtonClickRefreshOrRedirect = wykopxSettings.getPropertyValue("--topNavMicroblogButtonClickRefreshOrRedirect") ? wykopxSettings.getPropertyValue("--topNavMicroblogButtonClickRefreshOrRedirect") === '1' : false;
 	settings.quickLinksEnable = wykopxSettings.getPropertyValue("--quickLinksEnable") ? wykopxSettings.getPropertyValue("--quickLinksEnable") === '1' : false;
-	settings.topNavMyWykopIconButton = wykopxSettings.getPropertyValue("--topNavMyWykopIconButton") ? wykopxSettings.getPropertyValue("--topNavMyWykopIconButton") === '1' : false;
-	settings.topNavMicroblogIconButton = wykopxSettings.getPropertyValue("--topNavMicroblogIconButton") ? wykopxSettings.getPropertyValue("--topNavMicroblogIconButton") === '1' : false;
-	settings.topNavMessagesIconButton = wykopxSettings.getPropertyValue("--topNavMessagesIconButton") ? wykopxSettings.getPropertyValue("--topNavMessagesIconButton") === '1' : false;
-	settings.topNavProfileIconButton = wykopxSettings.getPropertyValue("--topNavProfileIconButton") ? wykopxSettings.getPropertyValue("--topNavProfileIconButton") === '1' : false;
-	settings.topNavNightSwitchIconButton = wykopxSettings.getPropertyValue("--topNavNightSwitchIconButton") ? wykopxSettings.getPropertyValue("--topNavNightSwitchIconButton") === '1' : false;
-	settings.mobileNavBarHide = wykopxSettings.getPropertyValue("--mobileNavBarHide") ? wykopxSettings.getPropertyValue("--mobileNavBarHide") === '1' : false;
 
+	// DODATKOWE PRZYCISKI NA GORNEJ BELCE
+	settings.topNavProfileButton = wykopxSettings.getPropertyValue("--topNavProfileButton") ? wykopxSettings.getPropertyValue("--topNavProfileButton") === '1' : false;
+	settings.topNavNotificationsButton = wykopxSettings.getPropertyValue("--topNavNotificationsButton") ? wykopxSettings.getPropertyValue("--topNavNotificationsButton") === '1' : false;
+	settings.topNavMyWykopButton = wykopxSettings.getPropertyValue("--topNavMyWykopButton") ? wykopxSettings.getPropertyValue("--topNavMyWykopButton") === '1' : false;
+	settings.topNavMicroblogButton = wykopxSettings.getPropertyValue("--topNavMicroblogButton") ? wykopxSettings.getPropertyValue("--topNavMicroblogButton") === '1' : false;
+	settings.topNavMessagesButton = wykopxSettings.getPropertyValue("--topNavMessagesButton") ? wykopxSettings.getPropertyValue("--topNavMessagesButton") === '1' : false;
+	settings.topNavNightSwitchButton = wykopxSettings.getPropertyValue("--topNavNightSwitchButton") ? wykopxSettings.getPropertyValue("--topNavNigtopNavNightSwitchButtonhtSwitchButton") === '1' : false;
+
+	// DODATKOWE PRZYCISKI NA BELCE MOBILNEJ
+	settings.mobileNavBarHide = wykopxSettings.getPropertyValue("--mobileNavBarHide") ? wykopxSettings.getPropertyValue("--mobileNavBarHide") === '1' : false;
 	if (settings.mobileNavBarHide == false)
 	{
 		settings.mobileNavBarMyWykopButton = wykopxSettings.getPropertyValue("--mobileNavBarMyWykopButton") ? wykopxSettings.getPropertyValue("--mobileNavBarMyWykopButton") === '1' : false;
 		settings.mobileNavBarMessagesButton = wykopxSettings.getPropertyValue("--mobileNavBarMessagesButton") ? wykopxSettings.getPropertyValue("--mobileNavBarMessagesButton") === '1' : false;
 		settings.mobileNavBarProfileButton = wykopxSettings.getPropertyValue("--mobileNavBarProfileButton") ? wykopxSettings.getPropertyValue("--mobileNavBarProfileButton") === '1' : false;
+		settings.mobileNavBarNotificationsButton = wykopxSettings.getPropertyValue("--mobileNavBarNotificationsButton") ? wykopxSettings.getPropertyValue("--mobileNavBarNotificationsButton") === '1' : false;
 	}
 
 
@@ -5011,7 +5024,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	// TRYB NOCNY W BELCE NAWIGACYJNEJ
 	function addNightModeButtonToNavBar()
 	{
-		if (settings.topNavNightSwitchIconButton)
+		if (settings.topNavNightSwitchButton)
 		{
 			consoleX("addNightModeButtonToNavBar()", 1)
 
@@ -5040,23 +5053,27 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	{
 		consoleX("addExtraButtons()", 1)
 
+		/* Przyciski dodawane tylko na górną belkę nawigacyjną */
 		const wykopx_wykopwnowymstylu_li = `<li class="wykopxs wykopx_wykopwnowymstylu_li dropdown"><a href="/tag/wykopwnowymstylu" class="wykopx_wykopwnowymstylu_button" title="Przejdź na #wykopwnowymstylu"><span>#</span></a></li>`;
-		const wykopx_mywykop_mobile_li = `<li class="wykopxs wykopx_mywykop_mobile_li dropdown"><a href="/obserwowane" class="wykopx_mywykop_mobile_button" title="Mój Wykop ${promoString}"><figure></figure></a></li>`;
 		const wykopx_microblog_mobile_li = `<li class="wykopxs wykopx_microblog_mobile_li dropdown"><a href="/mikroblog" class="wykopx_microblog_mobile_button" title="Mikroblog ${promoString}"><figure> </figure></a></li>`;
-		const wykopx_profile_mobile_li = `<li class="wykopxs wykopx_profile_mobile_li ${user.username}"><a href="/ludzie/${user.username}" class="wykopx wykopx_profile_button" title="Przejdź na swój profil ${user.username} ${promoString}"><figure></figure></a></li>`;
-		const wykopx_messages_mobile_li = `<li class="wykopxs wykopx_messages_mobile_li dropdown"><a href="/wiadomosci" class="wykopx wykopx_messages_button" title="Wiadomości ${promoString}"><figure></figure></a></li>`;
+		/* Te przyciski także na belce mobilnej */
+		const wykopx_mywykop_mobile_li = `<li data-v-1adb6cc8 class="wykopxs wykopx_mywykop_mobile_li dropdown"><a data-v-1adb6cc8 href="/obserwowane" class="wykopx_mywykop_mobile_button" title="Mój Wykop ${promoString}"><span data-v-1adb6cc8>Mój Wykop</span></a></li>`;
+		const wykopx_profile_mobile_li = `<li data-v-1adb6cc8 class="wykopxs wykopx_profile_mobile_li ${user.username}"><a data-v-1adb6cc8 href="/ludzie/${user.username}" class="wykopx wykopx_profile_button" title="Przejdź na swój profil ${user.username} ${promoString}"><span data-v-1adb6cc8>Profil</span></a></li>`;
+		const wykopx_messages_mobile_li = `<li data-v-1adb6cc8 class="wykopxs wykopx_messages_mobile_li dropdown"><a data-v-1adb6cc8 href="/wiadomosci" class="wykopx wykopx_messages_button" title="Wiadomości ${promoString}"><span data-v-1adb6cc8>Wiadomości</span></a></li>`;
+		const wykopx_notifications_mobile_li = `<li data-v-1adb6cc8 class="wykopxs wykopx_notifications_mobile_li dropdown"><a data-v-1adb6cc8 href="/powiadomienia" class="wykopx wykopx_notifications_button" title="Powiadomienia ${promoString}"><span data-v-1adb6cc8>Powiadomienia</span></a></li>`;
 
 		if (topNavHeaderRightElement)
 		{
 			topNavHeaderRightElement.insertAdjacentHTML('beforeend', wykopx_wykopwnowymstylu_li);
 
-			if (settings.topNavMicroblogIconButton) topNavHeaderRightElement.insertAdjacentHTML('beforeend', wykopx_microblog_mobile_li);
+			if (settings.topNavMicroblogButton) topNavHeaderRightElement.insertAdjacentHTML('beforeend', wykopx_microblog_mobile_li);
 
 			if (user !== null)
 			{
-				if (settings.topNavMyWykopIconButton) topNavHeaderRightElement.insertAdjacentHTML('beforeend', wykopx_mywykop_mobile_li);
-				if (settings.topNavProfileIconButton) topNavHeaderRightElement.insertAdjacentHTML('beforeend', wykopx_profile_mobile_li);
-				if (settings.topNavMessagesIconButton) topNavHeaderRightElement.insertAdjacentHTML('beforeend', wykopx_messages_mobile_li);
+				if (settings.topNavMyWykopButton) topNavHeaderRightElement.insertAdjacentHTML('beforeend', wykopx_mywykop_mobile_li);
+				if (settings.topNavMessagesButton) topNavHeaderRightElement.insertAdjacentHTML('beforeend', wykopx_messages_mobile_li);
+				if (settings.topNavNotificationsButton) topNavHeaderRightElement.insertAdjacentHTML('beforeend', wykopx_notifications_mobile_li);
+				if (settings.topNavProfileButton) topNavHeaderRightElement.insertAdjacentHTML('beforeend', wykopx_profile_mobile_li);
 			}
 		}
 
@@ -5069,8 +5086,9 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				if (user !== null)
 				{
 					if (settings.mobileNavBarMyWykopButton) mobileNavbarUlElement.insertAdjacentHTML('beforeend', wykopx_mywykop_mobile_li);
-					if (settings.mobileNavBarProfileButton) mobileNavbarUlElement.insertAdjacentHTML('beforeend', wykopx_profile_mobile_li);
+					if (settings.mobileNavBarNotificationsButton) mobileNavbarUlElement.insertAdjacentHTML('beforeend', wykopx_notifications_mobile_li);
 					if (settings.mobileNavBarMessagesButton) mobileNavbarUlElement.insertAdjacentHTML('beforeend', wykopx_messages_mobile_li);
+					if (settings.mobileNavBarProfileButton) mobileNavbarUlElement.insertAdjacentHTML('beforeend', wykopx_profile_mobile_li);
 				}
 			}
 		}
@@ -7372,7 +7390,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		// 8s
 		runWithDelay(8000, function ()
 		{
-			if (settings.topNavNightSwitchIconButton) addNightModeButtonToNavBar();
+			if (settings.topNavNightSwitchButton) addNightModeButtonToNavBar();
 			hideWykopXSPromo();
 			topNavLogoClick();
 			topNavHomeButtonClickRefreshOrRedirect();
