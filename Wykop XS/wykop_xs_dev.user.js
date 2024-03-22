@@ -5057,10 +5057,10 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		const wykopx_wykopwnowymstylu_li = `<li class="wykopxs wykopx_wykopwnowymstylu_li dropdown"><a href="/tag/wykopwnowymstylu" class="wykopx_wykopwnowymstylu_button" title="Przejdź na #wykopwnowymstylu"><span>#</span></a></li>`;
 		const wykopx_microblog_mobile_li = `<li class="wykopxs wykopx_microblog_mobile_li dropdown"><a href="/mikroblog" class="wykopx_microblog_mobile_button" title="Mikroblog ${promoString}"><figure> </figure></a></li>`;
 		/* Te przyciski także na belce mobilnej */
-		const wykopx_mywykop_mobile_li = `<li data-v-1adb6cc8 class="wykopxs wykopx_mywykop_mobile_li dropdown"><a data-v-1adb6cc8 href="/obserwowane" class="wykopx_mywykop_mobile_button" title="Mój Wykop ${promoString}"><span data-v-1adb6cc8>Mój Wykop</span></a></li>`;
-		const wykopx_profile_mobile_li = `<li data-v-1adb6cc8 class="wykopxs wykopx_profile_mobile_li ${user.username}"><a data-v-1adb6cc8 href="/ludzie/${user.username}" class="wykopx wykopx_profile_button" title="Przejdź na swój profil ${user.username} ${promoString}"><span data-v-1adb6cc8>Profil</span></a></li>`;
-		const wykopx_messages_mobile_li = `<li data-v-1adb6cc8 class="wykopxs wykopx_messages_mobile_li dropdown"><a data-v-1adb6cc8 href="/wiadomosci" class="wykopx wykopx_messages_button" title="Wiadomości ${promoString}"><span data-v-1adb6cc8>Wiadomości</span></a></li>`;
-		const wykopx_notifications_mobile_li = `<li data-v-1adb6cc8 class="wykopxs wykopx_notifications_mobile_li dropdown"><a data-v-1adb6cc8 href="/powiadomienia" class="wykopx wykopx_notifications_button" title="Powiadomienia ${promoString}"><span data-v-1adb6cc8>Powiadomienia</span></a></li>`;
+		const wykopx_mywykop_mobile_li = `<li data-v-1adb6cc8 class="wykopxs wykopx_mywykop_mobile_li dropdown"><a data-v-1adb6cc8 href="/obserwowane" class="wykopx_mywykop_mobile_button" title="Mój Wykop ${promoString}"><span data-v-1adb6cc8><i data-v-1adb6cc8>Mój Wykop</i></span></a></li>`;
+		const wykopx_profile_mobile_li = `<li data-v-1adb6cc8 class="wykopxs wykopx_profile_mobile_li ${user.username}"><a data-v-1adb6cc8 href="/ludzie/${user.username}" class="wykopx wykopx_profile_button" title="Przejdź na swój profil ${user.username} ${promoString}"><span data-v-1adb6cc8><i data-v-1adb6cc8>Profil</i></span></a></li>`;
+		const wykopx_messages_mobile_li = `<li data-v-1adb6cc8 class="wykopxs wykopx_messages_mobile_li dropdown"><a data-v-1adb6cc8 href="/wiadomosci" class="wykopx wykopx_messages_button" title="Wiadomości ${promoString}"><span data-v-1adb6cc8><i data-v-1adb6cc8>Wiadomości</i></span></a></li>`;
+		const wykopx_notifications_mobile_li = `<li data-v-1adb6cc8 class="wykopxs wykopx_notifications_mobile_li dropdown"><a data-v-1adb6cc8 href="/powiadomienia" class="wykopx wykopx_notifications_button" title="Powiadomienia ${promoString}"><span data-v-1adb6cc8><i data-v-1adb6cc8>Powiadomienia</i></span></a></li>`;
 
 		if (topNavHeaderRightElement)
 		{
