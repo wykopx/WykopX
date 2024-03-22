@@ -2,7 +2,7 @@
 // @name        Wykop XS DEV
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
-// @version     3.0.10
+// @version     3.0.11
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
 // @contributionURL  	https://buycoffee.to/wykopx
 // @author      Wykop X <wykopx@gmail.com>
