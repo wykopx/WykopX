@@ -2,7 +2,7 @@
 // @name        Wykop XS DEV
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
-// @version     3.0.11
+// @version     3.0.12
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
 // @contributionURL  	https://buycoffee.to/wykopx
 // @author      Wykop X <wykopx@gmail.com>
@@ -276,18 +276,18 @@
 		if (settings.wxsUserLabelsFakeFemales)
 		{
 			// LISTA FAŁSZYWYCH RÓŻOWYCH PASKÓW
-			const listafalszywychrozowych = ['Mantusabra', 'Nighthuntero', 'WyuArtykyu', 'ElCidX', 'cword',
+			const listafalszywychrozowych = ['SebastianDosiadlgo', 'Diamond-kun', 'Mantusabra', 'Nighthuntero', 'WyuArtykyu', 'ElCidX', 'cword',
 				'washington', 'Obrzydzenie', 'conamirko', 'i_took_a_pill_in_remiza', 'Riolet',
 				'ChwilowaPomaranczka', 'RobieZdrowaZupke', 'IlllIlIIIIIIIIIlllllIlIlIlIlIlIlIII', 'Banderoza',
 				'deiceberg', 'Chodtok', 'kierowcaautobusuofficial', 'ToJestNiepojete', 'model_wygenerowany_na_wykoppl',
 				'chwilowypaczelok', 'sinls', 'KRZYSZTOF_DZONG_UN', 'miszczu90', 'ToJestNiepojete', ' powodzenia'];
 
-
 			localStorageUserLabels.setItem('falszyweRozowe', listafalszywychrozowych).then(() => { });
-
 			// get from localstorage
 			falszyweRozoweArray = await localStorageUserLabels.getItem("falszyweRozowe");
 		}
+
+
 		if (settings.wxsUserLabelsTrolls)
 		{
 			const trollsMap = new Map();
@@ -304,6 +304,9 @@
 			trollsMap.set("ISSTrackerPL", { "label": "Bot", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Boty-na-Wykopie#iss-tracker" });
 			trollsMap.set("januszowybot", { "label": "Bot", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Boty-na-Wykopie#januszowy-bot" });
 			trollsMap.set("mirko_anonim", { "label": "Anonim", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Aplikacje#mirkoanonim" });
+
+			trollsMap.set("SebastianDosiadlgo", { "label": "test", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Aplikacje#mirkoanonim" });
+
 
 			// trollsMap.set("BayzedMan", { "label": "Wykopowy Troll" });
 			trollsMap.set("ChwilowaPomaranczka", { "label": "Wykopowy Troll" });
@@ -2042,7 +2045,7 @@
 
 	async function callWykopAPI(method, ...pathAPIargs)
 	{
-		if (dev) console.log(`callWykopAPI(): method: ${method},  pathAPIargs: `, pathAPIargs)
+		if (dev) console.log(`callWykopAPI() ->  method: ${method},  pathAPIargs: `, pathAPIargs)
 		try
 		{
 			const response = await fetch(`https://wykop.pl/api/v3/${pathAPIargs.join('/')}`, {
@@ -2053,8 +2056,8 @@
 				},
 			});
 
-			console.log("callWykopAPI, URL: " + `https://wykop.pl/api/v3/${pathAPIargs.join('/')}`)
-			console.log(response)
+			if (dev) console.log("callWykopAPI() -> URL: " + `https://wykop.pl/api/v3/${pathAPIargs.join('/')}`)
+			if (dev) console.log(response)
 
 			// if (!response.ok)
 			// {
@@ -2065,13 +2068,13 @@
 			try
 			{
 				data = await response.json();
-				console.log("callWykopAPI-data", data)
+				if (dev) console.log("callWykopAPI() -> data", data)
 			}
 			catch (error)
 			{
 				//console.log('No body or not a JSON body:', error);
 				data = response.status; // 204 
-				console.log("callWykopAPI-response.status", response.status)
+				if (dev) console.log("callWykopAPI() -> response.status", response.status)
 			}
 			return data;
 		}
@@ -2620,14 +2623,21 @@
 		{
 			div.classList = `wykopxs wxs_user_info wxs_user_info_year`;  					// <div class="wykopxs wxs_user_info wxs_user_info_year"
 
-
 			let noteVarElement = null;
 			let noteURLsElement = null;
 			let infoboxInnerHTML = "";
 
-			// XLABEL 
+			// XLABEL // tttttttttt
 			if (settings.wxsUserLabelsEnable)
 			{
+				if (userDataObject.changeSexTo == "male")
+				{
+					infoboxInnerHTML += `<span class="wxs_user_label wxs_user_label_fake_gender wxs_user_label_fake_female"><span>#falszywyrozowypasek</span></span>`;
+				}
+				else if (userDataObject.changeSexTo == "female")
+				{
+					infoboxInnerHTML += `<span class="wxs_user_label wxs_user_label_fake_gender wxs_user_label_fake_male"><span>#falszywyniebieskipasek</span></span>`;
+				}
 				if (userDataObject.wxsUserLabel)
 				{
 					infoboxInnerHTML += `<span class="wxs_user_label wxs_user_label_name"><span>${userDataObject.wxsUserLabel}</span></span>`;
@@ -2968,18 +2978,20 @@
 					}
 				}
 
-				let div_tooltipSlot = a_username.closest("div.tooltip-slot");
-				let userInfoboxDiv = div.cloneNode(true);
 
-				if (div_tooltipSlot)
-				{
-					div_tooltipSlot.insertAdjacentElement('afterend', userInfoboxDiv);
-				}
-				else
-				{
-					a_username.title = userInfoElementTitle;
-					a_username.insertAdjacentElement('afterend', userInfoboxDiv);
-				}
+				//let div_tooltipSlot = a_username.closest("div.tooltip-slot");
+				let userInfoboxDiv = div.cloneNode(true);
+				a_username.closest("div.right > div:has(a.username)").appendChild(userInfoboxDiv);
+
+				// if (div_tooltipSlot)
+				// {
+				// 	div_tooltipSlot.insertAdjacentElement('afterend', userInfoboxDiv);
+				// }
+				// else
+				// {
+				// 	a_username.title = userInfoElementTitle;
+				// 	a_username.insertAdjacentElement('afterend', userInfoboxDiv);
+				// }
 			}
 
 
@@ -5639,12 +5651,16 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 
 
+
+
+
+
 	function checkPluses(sectionObjectElement, ratingBoxSection, showUpdatedValues = true)
 	{
-		consoleX(`checkPluses(showUpdatedValues: ${showUpdatedValues})`, 1)
+		consoleX(`checkPluses(showUpdatedValues: ${showUpdatedValues})`, 0);
 
-		if (dev) console.log("checkPluses(), sectionObjectElement: ", sectionObjectElement)
-		if (dev) console.log("checkPluses(), ratingBoxSection: ", ratingBoxSection)
+		console.log("checkPluses() -> sectionObjectElement: ", sectionObjectElement)
+		console.log("checkPluses() -> ratingBoxSection: ", ratingBoxSection)
 
 		if (sectionObjectElement == null && ratingBoxSection)
 		{
@@ -5658,8 +5674,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			}
 		}
 
-		//console.log("checkPluses()-sectionObjectElement")
-		//console.log(sectionObjectElement)
+		console.log("checkPluses() -> sectionObjectElement", sectionObjectElement)
 
 		if (sectionObjectElement && sectionObjectElement.__vue__ && sectionObjectElement.__vue__.item.deleted == null)
 		{
@@ -5679,8 +5694,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 			if (votesObject) // nie dla subkomentarzy
 			{
-				if (dev) console.log("votesObject");
-				if (dev) console.log(votesObject);
+				console.log("checkPluses() -> votesObject", votesObject);
 
 				// let sectionObjectElement = votesObject.sectionObjectElement;
 				sectionObjectElement.classList.remove("plusesAdded", "plusesRemoved", "minusesAdded", "minusesRemoved");
@@ -5689,8 +5703,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				// sectionObjectElement.style.removeProperty('--plusesRemoved');
 				// sectionObjectElement.style.removeProperty('--minusesAdded');
 				// sectionObjectElement.style.removeProperty('--minusesRemoved');
-
-				console.log("API fetch: " + votesObject.fetchURL);
 
 				fetch(votesObject.fetchURL,
 					{
@@ -5703,7 +5715,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 					.then(x => x.json())
 					.then(data =>
 					{
-						console.log("data for URL: " + votesObject.fetchURL)
+						console.log("checkPluses() -> data for URL: " + votesObject.fetchURL)
 						console.log(data)
 
 						if (!data.data) return false;
@@ -5713,8 +5725,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 						else if (data.data && data.data.id === votesObject.id) data_fetched = data.data;
 						else { return false; }
 
-						console.log("data_fetched-data.data for URL: " + votesObject.fetchURL);
-						console.log(data_fetched);
+						console.log("checkPluses() -> data_fetched", data_fetched);
 
 						votesObject.votesUpPrevious = votesObject.votesUp; 			// sectionObjectElement.dataset.wxs_votes_up;
 						votesObject.votesDownPrevious = votesObject.votesDown; 		// sectionObjectElement.dataset.wxs_votes_down;
@@ -5742,9 +5753,8 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 						// ZMIENIŁA SIĘ LICZBA PLUSÓW / WYKOPÓW
 						if (votesObject.votesCountChanged)
 						{
-							console.log("--------------------");
-							console.log("VOTES COUNT CHANGED")
-							console.log(sectionObjectElement)
+							console.log("checkPluses() -> --------------------");
+							console.log("checkPluses() -> VOTES COUNT CHANGED", sectionObjectElement)
 
 
 							sectionObjectElement.dataset.wxs_votes_up = votesObject.votesUp;				//  10
@@ -5765,9 +5775,11 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 
 
+
+
 	function updateFetchedVotesData(sectionObjectElement, votesObject, showUpdatedValues = true, onlyPluses = false)
 	{
-		consoleX(`updateVisibleLinkVotesCount(showUpdatedValues: ${showUpdatedValues}, onlyPluses: ${onlyPluses})`, 1);
+		consoleX(`updateFetchedVotesData() -> updateVisibleLinkVotesCount(showUpdatedValues: ${showUpdatedValues}, onlyPluses: ${onlyPluses})`, 1);
 
 		let ratingBoxSection;
 		let ratingBoxVotesUpCountElement;
@@ -6013,7 +6025,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			{
 				ratingBoxSection.addEventListener('mouseenter', function (event)
 				{
-					var clickedButton = event.target;
+					//var clickedButton = event.target;
 					console.log("mouseenter rating box")
 					checkPluses(sectionObjectElement, ratingBoxSection, false);
 				});
@@ -8358,13 +8370,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 	/* HIDE ADS ALWAYS */
 	CSS += `
-
-			body:not(:has(> section.default-layout))
-			{
-				--bodyBackgroundColor: rgba(18, 18, 20, 1);
-			}
-
-
 			.pub-slot-wrapper
 			{
 				display: none!important;
