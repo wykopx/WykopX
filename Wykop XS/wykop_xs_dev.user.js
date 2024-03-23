@@ -276,7 +276,7 @@
 		if (settings.wxsUserLabelsFakeFemales)
 		{
 			// LISTA FAŁSZYWYCH RÓŻOWYCH PASKÓW
-			const listafalszywychrozowych = ['SebastianDosiadlgo', 'Diamond-kun', 'Mantusabra', 'Nighthuntero', 'WyuArtykyu', 'ElCidX', 'cword',
+			const listafalszywychrozowych = ['Diamond-kun', 'Mantusabra', 'Nighthuntero', 'WyuArtykyu', 'ElCidX', 'cword',
 				'washington', 'Obrzydzenie', 'conamirko', 'i_took_a_pill_in_remiza', 'Riolet',
 				'ChwilowaPomaranczka', 'RobieZdrowaZupke', 'IlllIlIIIIIIIIIlllllIlIlIlIlIlIlIII', 'Banderoza',
 				'deiceberg', 'Chodtok', 'kierowcaautobusuofficial', 'ToJestNiepojete', 'model_wygenerowany_na_wykoppl',
@@ -304,11 +304,6 @@
 			trollsMap.set("ISSTrackerPL", { "label": "Bot", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Boty-na-Wykopie#iss-tracker" });
 			trollsMap.set("januszowybot", { "label": "Bot", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Boty-na-Wykopie#januszowy-bot" });
 			trollsMap.set("mirko_anonim", { "label": "Anonim", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Aplikacje#mirkoanonim" });
-
-			trollsMap.set("SebastianDosiadlgo", { "label": "test", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Aplikacje#mirkoanonim" });
-
-
-			// trollsMap.set("BayzedMan", { "label": "Wykopowy Troll" });
 			trollsMap.set("ChwilowaPomaranczka", { "label": "Wykopowy Troll" });
 
 
