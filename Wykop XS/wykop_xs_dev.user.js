@@ -270,7 +270,7 @@
 		if (settings.wxsUserLabelsFakeFemales)
 		{
 			// LISTA FAŁSZYWYCH RÓŻOWYCH PASKÓW
-			const listafalszywychrozowych = ['konserwix', 'Diamond-kun', 'Mantusabra', 'Nighthuntero', 'WyuArtykyu', 'ElCidX', 'cword',
+			const listafalszywychrozowych = ['nenq123', 'konserwix', 'Diamond-kun', 'Mantusabra', 'Nighthuntero', 'WyuArtykyu', 'ElCidX', 'cword',
 				'washington', 'Obrzydzenie', 'conamirko', 'i_took_a_pill_in_remiza', 'Riolet',
 				'ChwilowaPomaranczka', 'RobieZdrowaZupke', 'IlllIlIIIIIIIIIlllllIlIlIlIlIlIlIII', 'Banderoza',
 				'deiceberg', 'Chodtok', 'kierowcaautobusuofficial', 'ToJestNiepojete', 'model_wygenerowany_na_wykoppl',
