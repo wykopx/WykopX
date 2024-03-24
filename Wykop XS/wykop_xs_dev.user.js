@@ -2,7 +2,7 @@
 // @name        Wykop XS DEV
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
-// @version     3.0.13
+// @version     3.0.14
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
 // @contributionURL  	https://buycoffee.to/wykopx
 // @author      Wykop X <wykopx@gmail.com>
@@ -14,9 +14,7 @@
 // @require https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
 // @require https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js
 
-
-// @require http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
-// @require https://greasyfork.org/scripts/383527-wait-for-key-elements/code/Wait_for_key_elements.js?version=701631
+// @require		https://cdn.jsdelivr.net/gh/CoeJoder/waitForKeyElements.js@latest/waitForKeyElements.js
 
 
 // @compatible  chrome, firefox, opera, safari, edge
@@ -26,12 +24,8 @@
 {
 	'use strict';
 
-
-	// @require		https://cdn.jsdelivr.net/gh/CoeJoder/waitForKeyElements.js@latest/waitForKeyElements.js
-
-
-	const currentVersion = "3.0.13";
-	let dev = false;
+	const currentVersion = "3.0.14";
+	let dev = true;
 	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
 
 	//dayjs.extend(relativeTime); // https://day.js.org/docs/en/plugin/relative-time // https://www.jsdelivr.com/package/npm/dayjs?tab=files&path=plugin
@@ -896,12 +890,12 @@
 		}
 		else
 		{
-			headerStreamTopElement = jNodeHeaderStreamTop[0];
+			headerStreamTopElement = jNodeHeaderStreamTop;
 		}
 
 		if (headerStreamTopElement)
 		{
-			return;
+			//return;
 			const wxs_console = document.getElementById("wxs_console");
 			if (!wxs_console)
 			{
@@ -1009,16 +1003,12 @@
 	{
 		waitForKeyElements("body > section > header.header > div.left > button", topNavHamburgerHoverMinimize, true);
 	}
-	function topNavHamburgerHoverMinimize(jQueryHamburgerButton)
+	function topNavHamburgerHoverMinimize(hamburgerButton)
 	{
 		consoleX(`topNavHamburgerHoverMinimize()`, 1);
-
-		let hamburgerButton = jQueryHamburgerButton[0];
 		body.dataset.wxs_category_menu_minimized = 'true';
-
 		hamburgerButton.addEventListener("mouseover", () => 
 		{
-
 			if (body.dataset.wxs_category_menu_minimized === 'true')
 			{
 				//delete body.dataset.wxs_category_menu_minimized;
@@ -1047,11 +1037,9 @@
 		}
 	}
 
-	function tagHeaderEditable(jNode)
+	function tagHeaderEditable(tagHeaderEditable)
 	{
 		consoleX(`tagHeaderEditable()`, 1);
-
-		let tagHeaderEditable = jNode[0];
 		let originalValue = tagHeaderEditable.textContent.toLowerCase();
 		tagHeaderEditable.contentEditable = "true";
 		tagHeaderEditable.className = "wykopx_quick_search";
@@ -1070,11 +1058,9 @@
 
 	waitForKeyElements("input.wykopx_quick_search", wykopx_quick_search, false);
 
-	function wykopx_quick_search(jNodeWykopxQuickSearch)
+	function wykopx_quick_search(wykopxQuickSearch)
 	{
 		consoleX(`wykopx_quick_search()`, 1);
-
-		const wykopxQuickSearch = jNodeWykopxQuickSearch[0];
 		wykopxQuickSearch.addEventListener("blur", eventInsertedTagOrUser);
 		wykopxQuickSearch.addEventListener("keydown", eventInsertedTagOrUser);
 	}
@@ -2114,10 +2100,9 @@
 	/// :not(.deleted)
 	waitForKeyElements("section.entry:has(> article), section.link-block:not(.premium-pub, .market-pub):has(> section > article)", sectionObjectDetected, false);
 
-	function sectionObjectDetected(jNodeSectionElement)
+	function sectionObjectDetected(sectionObjectElement)
 	{
 		// consoleX(`sectionObjectDetected()`, 1)
-		const sectionObjectElement = jNodeSectionElement[0];
 		sectionObjectIntersectionObserver.observe(sectionObjectElement);
 	}
 
@@ -3268,14 +3253,15 @@
 		waitForKeyElements("aside.profile-top:has(aside.info-box.red)", bannedUserProfileAside, false);
 
 		// DODAJEMY INFO NA STRONIE PROFILOWEJ O SZCZEGÓŁACH BANA
-		function bannedUserProfileAside(jNode)
+		function bannedUserProfileAside(element)
 		{
-			const bannedUserObject = jNode[0]?.__vue__?.user; // jNode => DOMElement
+			const bannedUserObject = element?.__vue__?.user;
+
 			if (!bannedUserObject) return;
 
 			if (bannedUserObject.status == "banned" || bannedUserObject.status == "suspended")
 			{
-				const bannedRedBox = jNode[0].querySelector("aside.info-box.red p");
+				const bannedRedBox = element.querySelector("aside.info-box.red p");
 				let bannedRedBoxInnerHTML = `To konto jest obecnie ${bannedUserObject.status == "suspended" ? "zawieszone do wyjaśnienia" : "zbanowane"}. <br/><br/><strong>Wykop X</strong>: <br/>`;
 
 				bannedUserObject.banned.wxs_ban_end_date_string = bannedUserObject.banned.expired; 											// "2024-01-04 17:22:31"
@@ -3900,7 +3886,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	}
 
 	// przyciski MIRKO w kategoriach
-	function categoryRedirectToMicroblogButton()
+	function categoryRedirectToMicroblogButton(ul_category_element)
 	{
 		consoleX("categoryRedirectToMicroblogButton()", 1);
 
@@ -6429,11 +6415,9 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		waitForKeyElements("[maxlength]", disableNewLinkEditorPastedTextLimit, false);
 	}
 
-	function disableNewLinkEditorPastedTextLimit(jNodeInput)
+	function disableNewLinkEditorPastedTextLimit(input)
 	{
 		consoleX(`disableNewLinkEditorPastedTextLimit()`, 1)
-
-		const input = jNodeInput[0];
 		const maxLength = input.getAttribute('maxlength');
 		input.removeAttribute('maxlength');
 
@@ -7010,11 +6994,9 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	{
 		waitForKeyElements("section.entry section.entry-photo figure", wxsDownloadImageButton, false);
 
-		function wxsDownloadImageButton(jNode)
+		function wxsDownloadImageButton(entryPhotoFigureElement)
 		{
 			consoleX(`wxsDownloadImageButton()`, 1);
-
-			const entryPhotoFigureElement = jNode[0]; // jNode => DOMElement
 			let html = `<div class="wykopxs wxs_download_image_button"><a title="Pobierz ten obrazek w pełnej rozdzielczości ${promoString}" href="${entryPhotoFigureElement.querySelector('figcaption a').getAttribute('href')} " download>Pobierz ten obrazek</a></div>`;
 			entryPhotoFigureElement.insertAdjacentHTML('beforeend', html);
 		}
@@ -7026,14 +7008,11 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 	/* ------ IMAGE UPLOADER CTRL+V --------- */
-
-
 	waitForKeyElements("section.editor", sectionEditor, false);
 
-	function sectionEditor(sectionEditorjNodeElement)
+	function sectionEditor(sectionEditorElement)
 	{
 		consoleX("sectionEditor", 1)
-		const sectionEditorElement = sectionEditorjNodeElement[0]; // jNode => DOMElement
 		const textareaEditorElement = sectionEditorElement.querySelector("textarea");
 
 		if (settings.editorSendHotkey != "domyslnie")
@@ -7800,7 +7779,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 					}
 					consoleData.annoyances[nodeName].count++;
 				}
-
 			}
 			else if (Node instanceof Element)
 			{
