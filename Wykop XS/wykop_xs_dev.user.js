@@ -2,7 +2,7 @@
 // @name        Wykop XS DEV
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
-// @version     3.0.12
+// @version     3.0.13
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
 // @contributionURL  	https://buycoffee.to/wykopx
 // @author      Wykop X <wykopx@gmail.com>
@@ -30,7 +30,7 @@
 	// @require		https://cdn.jsdelivr.net/gh/CoeJoder/waitForKeyElements.js@latest/waitForKeyElements.js
 
 
-	const currentVersion = "3.0.11";
+	const currentVersion = "3.0.13";
 	let dev = false;
 	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
 
@@ -276,7 +276,7 @@
 		if (settings.wxsUserLabelsFakeFemales)
 		{
 			// LISTA FAŁSZYWYCH RÓŻOWYCH PASKÓW
-			const listafalszywychrozowych = ['Diamond-kun', 'Mantusabra', 'Nighthuntero', 'WyuArtykyu', 'ElCidX', 'cword',
+			const listafalszywychrozowych = ['konserwix', 'Diamond-kun', 'Mantusabra', 'Nighthuntero', 'WyuArtykyu', 'ElCidX', 'cword',
 				'washington', 'Obrzydzenie', 'conamirko', 'i_took_a_pill_in_remiza', 'Riolet',
 				'ChwilowaPomaranczka', 'RobieZdrowaZupke', 'IlllIlIIIIIIIIIlllllIlIlIlIlIlIlIII', 'Banderoza',
 				'deiceberg', 'Chodtok', 'kierowcaautobusuofficial', 'ToJestNiepojete', 'model_wygenerowany_na_wykoppl',
@@ -2601,7 +2601,7 @@
 		consoleX(`createInfoboxDivsForUserEverywhere(username: ${username})`, 1);
 
 		let userInfoElementTitle = "";
-		const a_usernameAll = document.querySelectorAll(`a.username[href="/ludzie/${username}"]:not(:has([data-wxs_username]))`);
+		const a_usernameAll = document.querySelectorAll(`div.right div.tooltip-slot > span > a.username[href="/ludzie/${username}"]:not(:has([data-wxs_username]))`);
 		let changeSexTo = false;
 		if (userDataObject.changeSexTo) changeSexTo = userDataObject.changeSexTo;
 
@@ -2622,7 +2622,7 @@
 			let noteURLsElement = null;
 			let infoboxInnerHTML = "";
 
-			// XLABEL // tttttttttt
+			// XLABEL
 			if (settings.wxsUserLabelsEnable)
 			{
 				if (userDataObject.changeSexTo == "male")
@@ -2976,6 +2976,11 @@
 
 				//let div_tooltipSlot = a_username.closest("div.tooltip-slot");
 				let userInfoboxDiv = div.cloneNode(true);
+				console.log(`userInfoboxDiv`, userInfoboxDiv);
+				console.log(`a_username`, a_username);
+				console.log(`a_username.closest("div.right > div:has(a.username)")`, a_username.closest("div.right > div:has(a.username)"));
+
+
 				a_username.closest("div.right > div:has(a.username)").appendChild(userInfoboxDiv);
 
 				// if (div_tooltipSlot)
