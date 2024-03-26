@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style 3.0 (beta)
-@version        3.0.13
+@version        3.0.16
 
 @description    WERSJA BETA W FAZIE TESTÓW  - Wykop X Style 3.0b
 @description    Jeśli chcesz przetestować również Wykop XS v.3.0 - znajdziesz go tutaj:
@@ -384,7 +384,7 @@ TODO range      checkEntryCommentsPerHour_INFO                  `Pokazuje aktual
                                                                                 "YouTube":"youtube",
                                                                                 "𝕏 (Twitter)":"x",
                                                                             }
-@var range      SUB_HR_NEW_TAB_TITLE                         `Tytuł strony na karcie ⭐`                                                              [0, 0, 99999, 1, 'mm']
+@var range      SUB_HR_NEW_TAB_TITLE                 `TYTUŁ KARTY ⭐`                                                              [0, 0, 99999, 1, 'mm']
 @var range      tabChangeTitleEnabled_ON_INFO                  `Tytuł kart z Wykopem jest zmieniany`               [0, 0,111100, 1, 'mm']
 @var checkbox   tabChangeTitleEnabled                          `❎ Włącz zmianę Tytułu karty z Wykopem ⭐`                          0
 @var select     tabChangeTitleSuffix                           `❎ Zmień sufiks ":: 𝗪𝘆𝗸𝗼𝗽.𝗽𝗹" w tytule karty ⭐` {
@@ -867,7 +867,7 @@ TODO: var checkbox   replyEditorShowTagsFollowers               `❎ Wyświetl l
 
 
 
-@var range      HR_LOGO                             `𝕎   LOGO WYKOPU`                                   [0, 0, 99900, 1, 'mm']
+@var range      HR_LOGO                             `𝕎   LOGO WYKOPU`                                   [0, 0, 99900, 1, 'mm']
 // 𝓦𝕎🆆𝐖𝑾ᏇW̳
 @var checkbox   customLogoColorEnabled                          `Własne kolory domyślnego logo Wykopu`                                           0
 @var color      topNavLogoColorCustom                           `🌞 Własny kolor domyślnego logo Wykopu`                                         rgba(255, 254, 253, 1)
@@ -1164,7 +1164,7 @@ var checkbox  topNavSnowGirl                                    `❄ Snow Girl` 
 @var checkbox   avatarHideNotificationDot                       `📱 Ukryj kropkę nowych powiadomień nad avatarem (na smartfonie)`         0
 
 
-@var checkbox   fixNotificationBadgeBug                         `✔ Napraw błąd nieznikającej ikonki z liczbą gdy brak nieprzeczytanych powiadomień` 1
+@var checkbox   fixNotificationBadgeBug                         `✔ Napraw błąd nieznikających ikonek z liczbą gdy brak nieprzeczytanych powiadomień` 1
 REMOVED select     iconsAlignment                               `Położenie panelu z ikonkami` {
                                                                         "Na belce nawigacyjnej (domyślnie)": "nabelce",
                                                                         "Po prawej stronie (TYMCZASOWO NIE DZIAŁA)": "poprawej"
@@ -1188,12 +1188,12 @@ REMOVED checkbox   notificationsShowUnreadNumber                `❎ Pokaż licz
 @var color      notificationsStreamColorEntries                 `Kolor powiadomień z 🔹mikrobloga`                                              rgba(22, 69, 155, 1)
 @var checkbox   notificationsStreamHideScrollbar                `Ukryj pasek przewijania przy dużej liczbie powiadomień`                        0
 
-@var checkbox   removeNotificationButtonIsBigger                `Przycisk ☒ do usuwania powiadomień - powiększony`                             0
-@var checkbox   removeNotificationButtonIsAlwaysVisible         `Przycisk ☒ do usuwania powiadomień - zawsze widoczny`                         0
-@var checkbox   removingNotificationsMoreResponsive             `Natychmiastowe ukrywanie przeczytanych/usuniętych powiadomień`                0
+@var checkbox   removeNotificationButtonIsBigger                `Przycisk ☒ do usuwania powiadomień - powiększony`                             1
+@var checkbox   removeNotificationButtonIsAlwaysVisible         `Przycisk ☒ do usuwania powiadomień - zawsze widoczny`                         1
+@var checkbox   removingNotificationsMoreResponsive             `Natychmiastowe ukrywanie przeczytanych/usuniętych powiadomień`                 1
 
-REMOVED checkbox  middleClickOpensNotificationsInNewTab         `❎🐁 Środkowy przycisk myszy otwiera powiadomienie w nowej karcie`         0
-REMOVED checkbox  notificationOpenStraightToComment             `❎🐁 Przenieś do komentarza po kliknięciu w powiadomienie o wołaniu`       0
+REMOVED checkbox  middleClickOpensNotificationsInNewTab         `❎🐁 Środkowy przycisk myszy otwiera powiadomienie w nowej karcie`            0
+REMOVED checkbox  notificationOpenStraightToComment             `❎🐁 Przenieś do komentarza po kliknięciu w powiadomienie o wołaniu`          0
 REMOVED select    gradientBorders                               `[Test] Gradient-borders w trakcie usuwania/ładowania powiadomień`  {
                                                                             "Brak (domyślnie)*":"brak",
                                                                             "Rainbow":"teczowe",
@@ -1230,8 +1230,8 @@ REMOVED select    gradientBorders                               `[Test] Gradient
 
 @var range      SUB_HR_NOTIFICATIONS_DROPDOWNS_TAGS      `#️⃣ LISTA POWIADOMIEŃ Z #TAGÓW`                        [0, 0, 99999, 1, 'mm']
 @var checkbox   notificationsStreamTagsHideRead                 `#tagi - Ukryj przeczytane powiadomienia z listy`                                  0
-@var checkbox   notificationsStreamTagsHideIfNoUnread           `#tagi - Ukryj listę jeśli brak nowych powiadomień z #tagów ⭐`                    0
-@var checkbox   notificationsStreamTagsHideMediaQuery           `#tagi - Chowaj listę powiadomień w wąskim oknie ⭐`                               0
+@var checkbox   notificationsStreamTagsHideIfNoUnread           `#tagi - Ukryj listę jeśli brak nowych powiadomień z #tagów ⭐`                    1
+@var checkbox   notificationsStreamTagsHideMediaQuery           `#tagi - Chowaj listę powiadomień w wąskim oknie ⭐`                               1
 @var range      notificationsStreamTagsHideMediaQueryWidth      `#tagi - Chowaj przy szerokości mniejszej niż ⭐`                                  [1040, 1040, 3840, 20, 'px']
 @var range      notificationsStreamTagsAsSidebarWidth           `#tagi - Szerokość listy`                                                          [350, 310, 1000, 10, 'px']
 @var select     notificationsStreamTagsGroupLinksAndEntries     `#tagi - Grupowanie/ukrywanie powiadomień z wpisów/znalezisk` {
@@ -1246,8 +1246,8 @@ REMOVED select    gradientBorders                               `[Test] Gradient
 
 @var range      SUB_HR_NOTIFICATIONS_DROPDOWNS_ENTRIES   `🔔 LISTA POWIADOMIEŃ Z @WOŁAŃ`                          [0, 0, 99999, 1, 'mm']
 @var checkbox   notificationsStreamEntriesHideRead              `@wołania - Ukryj przeczytane powiadomienia z listy`                                 0
-@var checkbox   notificationsStreamEntriesHideIfNoUnread        `@wołania - Ukryj listę jeśli brak nowych powiadomień z @wołaniami ⭐`               0
-@var checkbox   notificationsStreamEntriesHideMediaQuery        `@wołania - Chowaj listę powiadomień w węższym oknie ⭐`                             0
+@var checkbox   notificationsStreamEntriesHideIfNoUnread        `@wołania - Ukryj listę jeśli brak nowych powiadomień z @wołaniami ⭐`               1
+@var checkbox   notificationsStreamEntriesHideMediaQuery        `@wołania - Chowaj listę powiadomień w węższym oknie ⭐`                             1
 @var range      notificationsStreamEntriesHideMediaQueryWidth   `@wołania - Chowaj przy szerokości mniejszej niż ⭐`                              [1040, 1040, 3840, 20, 'px']
 @var range      notificationsStreamEntriesAsSidebarWidth        `@wołania - Szerokość listy`                                                      [350, 310, 1000, 10, 'px']
 @var select     notificationsStreamEntriesGroupLinksAndEntries  `@wołania - Grupowanie/ukrywanie powiadomień z wpisów/znalezisk` {
@@ -1268,15 +1268,15 @@ REMOVED select    gradientBorders                               `[Test] Gradient
 
 
 @var range      HR_KATEGORIE_PRESET                 `KATEGORIE`                                                       [0, 0, 99900, 1, 'mm']
-@var checkbox   presetDisableCategories                         `[PRESET] Nie używam kategorii. Całkowicie je wyłącz`                                  0
-@var checkbox   hideExpanderDefaultCategories                   `🚫 Ukryj zwijacz 𝗞𝗮𝘁𝗲𝗴𝗼𝗿𝗶𝗲`                                           0
-@var checkbox   hideExpanderCustomCategories                    `🚫 Ukryj zwijacz 𝗞𝗮𝘁𝗲𝗴𝗼𝗿𝗶𝗲 𝘄ł𝗮𝘀𝗻𝗲`                                    0
+@var checkbox   presetDisableCategories                         `[PRESET] Nie używam kategorii. Całkowicie je wyłącz`                 0
+@var checkbox   hideExpanderDefaultCategories                   `🚫 Ukryj zwijacz 𝗞𝗮𝘁𝗲𝗴𝗼𝗿𝗶𝗲`                                           1
+@var checkbox   hideExpanderCustomCategories                    `🚫 Ukryj zwijacz 𝗞𝗮𝘁𝗲𝗴𝗼𝗿𝗶𝗲 𝘄ł𝗮𝘀𝗻𝗲`                                    1
 @var select     hideNewCategoryButton                           `🚫 Ukryj przycisk "Utwórz kategorię" 👤` {
                                                                             "Nie ukrywaj (domyślnie)":"nieukrywaj",
                                                                             "👤 Ukrywaj jeśli niezalogowany*":"ukrywaj_niezalogowany",
                                                                             "🚫 Ukrywaj zawsze":"ukrywaj_zawsze"
                                                                         }
-@var checkbox   categoryActiveFirst                             `Przeglądana kategoria pierwsza na liście`                              0
+@var checkbox   categoryActiveFirst                             `Przeglądana kategoria pierwsza na liście`                             0
 @var select     categoryNoNewNotifications                      `Kategorie bez nowych wpisów` {
                                                                             "Wyświetlaj normalnie (domyślnie)":"domyslnie",
                                                                             "Wyszarzone*":"wyszarzone",
@@ -1295,7 +1295,7 @@ REMOVED select    gradientBorders                               `[Test] Gradient
                                                                             "🔴 Czerwone kółko (styl iPhone)":"czerwona_iphone",
                                                                             "🟧 Pomarańczowy kwadrat (styl Wykop 1.0)":"pomaranczowy_wykop10",
                                                                         } 
-@var checkbox   categoryNotificationBadgeAnimation              `Animacja kropki`                                                         0
+@var checkbox   categoryNotificationBadgeAnimation              `Animacja kropki`                                                      1
 @var checkbox   ignoreCategoryColor                             `Nie zmieniaj kolorystyki w kategoriach `                              0
 
 
@@ -1404,22 +1404,18 @@ REMOVED select    gradientBorders                               `[Test] Gradient
 
 
 @var range      HR_LINKS_STREAMS                           `🔶 GŁÓWNA / WYKOPALISKO / ZNALEZISKA ⭐ Nowe`                                                                    [0, 0, 99900, 1, 'mm']
-
-@var range      linksColumnsEnable_ON_INFO                      `Wyświetlanie znalezisk w kolumnach jest włączone`       [0, 0,111100, 1, 'mm']
-@var checkbox   linksColumnsEnable                              `Znaleziska w kilku kolumnach ⭐ `                       0
-@var range      linksColumns                                    `Maks. liczba kolumn ze znaleziskami⭐ `                 [1, 1, 4, 1, '']
-@var range      linksColumnsEnable_INFO                         `Wybierz maksymalną liczbę kolumn ze znaleziskami. Faktyczna liczba kolumn będzie dostosowana automatycznie - przy zbyt wąskim oknie nawet przy ustaleniu 3 lub 4 kolumn znaleziska wyświetlą się w 2 kolumnach lub jednej. 2 kolumny włączają się od 1170px, 3 kolumny od 1880px, 4 kolumny od 2525px. Brana jest pod uwagę szerokość nie całego okna, lecz bloku w którym znajdują się znaleziska. Lewe menu kategorii, sidebar po prawej stronie, boczne panele powiadomień wpływają na szerokość tego bloku. Domyślnie blok znalezisk jest zbyt wąski, więc włącz chowanie panelu po prawej stronie (SIDEBAR PO PRAWEJ > Chowaj Sidebar) lub zmień szerokość (OPCJE LAYOUTU > ⟺ Szerokość strony)`             [0, 0,88800, 1, 'mm']
-
-@var range      linksSpacing                                    `Odstępy pomiędzy znaleziskami`       [10, 0, 69, 1, 'px']
-
-@var checkbox   linkVideoPlayerBlackBackground                  `Czarne tło podczas odtwarzanego wideo ⭐ `              0
-
-@var checkbox   visitedLinksGrayedOut                           `Zaznaczaj znaleziska jako ✔ 𝗣𝗥𝗭𝗘𝗖𝗭𝗬𝗧𝗔𝗡𝗘`                 0
+@var checkbox   visitedLinksGrayedOut                           `Oznaczaj ✔ 𝗣𝗥𝗭𝗘𝗖𝗭𝗬𝗧𝗔𝗡𝗘 znaleziska`                1
 @var select     linkThumbnail                                   `Miniaturki obrazków znalezisk` {
                                                                         "Po prawej (domyślnie)"                 :   "poprawej",
                                                                         "Po lewej (Wykop 1.0)*":"polewej",
                                                                         "Nie pokazuj"                           :   "niepokazuj"
                                                                     } 
+
+@var checkbox   linkToWykopEntry                                `🔹 Oznaczaj znaleziska kierujące na wpis z Mikrobloga`      1
+@var checkbox   linkToWykopArticle                              `Oznaczaj znaleziska kierujące do Wykopowego Artykułu`       1
+@var checkbox   linkVideoPlayerBlackBackground                  `▶ Czarne tło podczas odtwarzanego wideo ⭐ `                1
+@var checkbox   linkToVideoDuration                             `▶ ❎ Pokaż czas trwania filmików na miniaturce ⭐`          1
+
 
 @var select     linksDescriptionJustify                         `☰ Justowanie opisu znaleziska ⭐` {
                                                                             "Brak justowania (domyślnie)"               :   "domyslnie",
@@ -1439,6 +1435,14 @@ REMOVED select    gradientBorders                               `[Test] Gradient
 @var checkbox   linkTagsHide                                    `🚫 Ukryj tagi znaleziska`                           0
 TODO checkbox   commentsCountAlignment                          `🗨️ Przenieś liczbę komentarzy pod liczbę wykopów`   0
 @var checkbox   actionMenuLinkHideCommentsCountOnHomepage       `🗨️🚫 Ukryj licznik komentarzy w znalezisku ⭐`     0
+
+@var range      linksSpacing                                    `Odstępy pomiędzy znaleziskami`       [10, 0, 69, 1, 'px']
+
+@var range      SUB_HR_LINKS_COLUMNS                    `🔶 ZNALEZISKA W KOLUMNACH ⭐ Nowe`                                      [0, 0, 99999, 1, 'mm']
+@var range      linksColumnsEnable_ON_INFO                      `Wyświetlanie znalezisk w kolumnach jest włączone`       [0, 0,111100, 1, 'mm']
+@var checkbox   linksColumnsEnable                              `Znaleziska w kilku kolumnach ⭐ `                       1
+@var range      linksColumns                                    `Maks. liczba kolumn ze znaleziskami⭐ `                 [1, 1, 4, 1, '']
+@var range      linksColumnsEnable_INFO                         `Wybierz maksymalną liczbę kolumn ze znaleziskami. Faktyczna liczba kolumn będzie dostosowana automatycznie - przy zbyt wąskim oknie nawet przy ustaleniu 3 lub 4 kolumn znaleziska wyświetlą się w 2 kolumnach lub jednej. 2 kolumny włączają się od 1170px, 3 kolumny od 1880px, 4 kolumny od 2525px. Brana jest pod uwagę szerokość nie całego okna, lecz bloku w którym znajdują się znaleziska. Lewe menu kategorii, sidebar po prawej stronie, boczne panele powiadomień wpływają na szerokość tego bloku. Domyślnie blok znalezisk jest zbyt wąski, więc włącz chowanie panelu po prawej stronie (SIDEBAR PO PRAWEJ > Chowaj Sidebar) lub zmień szerokość (OPCJE LAYOUTU > ⟺ Szerokość strony)`             [0, 0,88800, 1, 'mm']
 
 
 @var range      SUB_HR_GLOWNA                           `🔶 STRONA GŁÓWNA ⭐ Nowe`                                      [0, 0, 99999, 1, 'mm']
@@ -1760,16 +1764,16 @@ TODO checkbox   commentsCountAlignment                          `🗨️ Przenie
                                                                         "🔹Tylko wpisy":"tylko_wpisy"
                                                                     } 
 
-@var checkbox   tagHeaderEditable                               `🔷❎ Pole edycji #tagu, aby przejść na inny #tag lub wyszukać @użytkownika`            0
+@var checkbox   tagHeaderEditable                               `🔷❎ Edytuj nagłówek #tagu, aby przejść na inny #tag lub wyszukać @użytkownika`        1
 
-@var checkbox   tagPageFollowTagButton                          `🔷 Ładniejszy przycisk "Obserwuj tag" / "Obserwujesz tag"`                             0
+@var checkbox   tagPageFollowTagButton                          `🔷 Ładniejszy przycisk "Obserwuj tag" / "Obserwujesz tag"`                             1
 
 @var select     tagPageHideAddTagToCategoryButton               `🔷🚫 Ukryj przycisk "Dodaj do Kategorii" 👤` {
                                                                             "Nie ukrywaj (domyślnie)":"nieukrywaj",
                                                                             "👤 Ukrywaj jeśli niezalogowany*":"ukrywaj_niezalogowany",
                                                                             "🚫 Ukrywaj zawsze":"ukrywaj_zawsze"
                                                                         }
-@var checkbox   tagPageFixedCoverImage                          `🔷 Przypięta okładka na wyróżnionych i autorskich tagach`                                0
+@var checkbox   tagPageFixedCoverImage                          `🔷 Przypięta okładka na wyróżnionych i autorskich tagach`                               0
 
 
 
@@ -1834,7 +1838,10 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
                                                                             "Ukrywaj wszystkie wpisy zielonek":"niepokazuj",
                                                                     }
 
-
+@var range      HR_ENTRIES_VIDEOS                         `🔷▶ FILMIKI WE WPISACH ⭐ Nowe`                                           [0, 0, 99900, 1, 'mm']
+@var checkbox   entryWithVideoDuration                          `▶ ❎ Pokaż czas trwania filmików na miniaturce ⭐`          1
+                                                                   
+                                                                    
 
 @var range      HR_PHOTO_VIEWER                         `🔷🌆 Wykop X Photo Viewer `                                                                                [0, 0, 99900, 1, 'mm']
 @var checkbox   photoViewerEnable                               `Włącz 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗣𝗵𝗼𝘁𝗼 𝗩𝗶𝗲𝘄𝗲𝗿 na #tagach`                                                      0
@@ -1932,7 +1939,7 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
                                                                             "Po lewej":"polewej"
                                                                             } 
 
-@var checkbox   rightSidebarMediaQueryHide                      ` Chowaj Sidebar jeśli okno jest zbyt wąskie ⭐`            0
+@var checkbox   rightSidebarMediaQueryHide                      ` Chowaj Sidebar jeśli okno jest zbyt wąskie ⭐`       1
 @var range      rightSidebarMediaQueryWidth                     ` Chowaj Sidebar przy szerokości mniejszej niż ⭐`   [1040, 1040, 3840, 20, 'px']
 @var checkbox   rightSidebarHide                                `🚫 Całkowicie ukryj Sidebar`                          0
 
@@ -1994,8 +2001,8 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
 
 @var range      SUB_HR_RIGHT_SIDEBAR_ENTRIES            `🔹 WPISY W SIDEBARZE`                                   [0, 0, 99999, 1, 'mm']
 
-@var checkbox   rightSidebarAllowToCopyEntriesText              `🐁 Możliwość zaznaczania i skopiowanie treści wpisów ⭐`            0
-@var checkbox   rightSidebarDisableEntryContentPointerEvent     `🐁 Kliknięcie w treść nie przenosi do wpisu  ⭐`         0
+@var checkbox   rightSidebarAllowToCopyEntriesText              `🐁 Możliwość zaznaczania i skopiowanie treści wpisów ⭐`  1
+@var checkbox   rightSidebarDisableEntryContentPointerEvent     `🐁 Kliknięcie w treść nie przenosi do wpisu  ⭐`           0
 
 @var select     rightSidebarEntriesJustify                      `🔹☰ Justowanie treści wpisów ⭐` {
                                                                             "Brak justowania (domyślnie)": "domyslnie",
@@ -2014,6 +2021,8 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
                                                                             "🚫 Ukryj #tagi": `ukryj_tagi`,
                                                                         } 
 
+@var checkbox   rightSidebarImagesShowFirst                     `🔹🌆 Wyświetl obrazki jako pierwsze (nad treścią wpisu) ⭐`     1
+
 @var select     rightSidebarImages                              `🔹🌆 Obrazki we wpisach ⭐` {
                                                                             "Pokazuj normalnie (domyślnie)": `domyslnie`,
                                                                             "Ukryj obrazki, pokaż po najechaniu myszą": `ukryj_obrazki_pokaz_on_hover`,
@@ -2026,24 +2035,23 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
                                                                         }            
 
 
-@var checkbox   rightSidebarImagesShowFirst                     `🔹🌆 Wyświetl obrazki jako pierwsze (nad treścią wpisu) ⭐`                 0
 
-@var checkbox   rightSidebarHideEntriesWithImages               `🚫🔹🌆 Nie wyświetlaj wpisów z obrazkami ⭐`                                     0
-@var checkbox   rightSidebarHideEntriesWithoutContent           `🚫🔹🌆 Nie wyświetlaj wpisów bez treści (z samymi obrazkami) ⭐`                0
-@var checkbox   rightSidebarHideEntriesWithoutImages            `🚫🔹🌆 Nie wyświetlaj wpisów bez obrazków ⭐`                                    0
+@var checkbox   rightSidebarHideEntriesWithImages               `🚫🔹🌆 Ukryj wpisy z obrazkami ⭐`                                     0
+@var checkbox   rightSidebarHideEntriesWithoutContent           `🚫🔹🌆 Ukryj wpisy bez treści (z samymi obrazkami) ⭐`                0
+@var checkbox   rightSidebarHideEntriesWithoutImages            `🚫🔹🌆 Ukryj wpisy bez obrazków ⭐`                                    0
 
 
-@var checkbox   rightSidebarHideEntriesHot                      `🚫 Ukryj 🔹 𝗚𝗼𝗿𝗮𝗰𝗲 𝘄𝗽𝗶𝘀𝘆 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ) ⭐`                            0
-@var checkbox   rightSidebarHideEntriesActive                   `🚫 Ukryj 🔹 𝗔𝗸𝘁𝘆𝘄𝗻𝗲 𝘄𝗽𝗶𝘀𝘆 (ᵐᶦᵏʳᵒᵇˡᵒᵍ/ʷᵖᶦˢ) ⭐`                              0
-@var checkbox   rightSidebarHideEntriesPopular                  `🚫 Ukryj 🔹 𝗣𝗼𝗽𝘂𝗹𝗮𝗿𝗻𝗲 𝘄𝗽𝗶𝘀𝘆 𝘄 𝗸𝗮𝘁𝗲𝗴𝗼𝗿𝗶𝗶 (ᵏᵃᵗᵉᵍᵒʳᶦᵉ) ⭐`                        0
+@var checkbox   rightSidebarHideEntriesHot                      `🚫 Ukryj sekcję 🔹 𝗚𝗼𝗿𝗮𝗰𝗲 𝘄𝗽𝗶𝘀𝘆 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ) ⭐`                            0
+@var checkbox   rightSidebarHideEntriesActive                   `🚫 Ukryj sekcję  🔹 𝗔𝗸𝘁𝘆𝘄𝗻𝗲 𝘄𝗽𝗶𝘀𝘆 (ᵐᶦᵏʳᵒᵇˡᵒᵍ/ʷᵖᶦˢ) ⭐`                              0
+@var checkbox   rightSidebarHideEntriesPopular                  `🚫 Ukryj sekcję  🔹 𝗣𝗼𝗽𝘂𝗹𝗮𝗿𝗻𝗲 𝘄𝗽𝗶𝘀𝘆 𝘄 𝗸𝗮𝘁𝗲𝗴𝗼𝗿𝗶𝗶 (ᵏᵃᵗᵉᵍᵒʳᶦᵉ) ⭐`                        0
 
 
 @var range      SUB_HR_RIGHT_SIDEBAR_LINKS            `🔸 ZNALEZISKA W SIDEBARZE`                                   [0, 0, 99999, 1, 'mm']
-@var checkbox   rightSidebarHideHits                            `🚫 Ukryj 🔸 𝗛𝗶𝘁𝘆 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ/ᶻⁿᵃˡᵉᶻᶦˢᵏᵒ) ⭐`                  0
-@var checkbox   rightSidebarHideUpcomingActive                  `🚫 Ukryj 🔸 𝗪𝘆𝗸𝗼𝗽𝗮𝗹𝗶𝘀𝗸𝗼: 𝗮𝗸𝘁𝘆𝘄𝗻𝗲 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ) ⭐`         0
-@var checkbox   rightSidebarHideLinksNewest                     `🚫 Ukryj 🔸 𝗡𝗮𝗷𝗻𝗼𝘄𝘀𝘇𝗲 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 (ᵐᶦᵏʳᵒᵇˡᵒᵍ) ⭐`                0
-@var checkbox   rightSidebarHideLinksActive                     `🚫 Ukryj 🔸 𝗔𝗸𝘁𝘆𝘄𝗻𝗲 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 (ʷᵖᶦˢ) ⭐`                     0
-@var checkbox   rightSidebarHideLinksPopular                    `🚫 Ukryj 🔸 𝗣𝗼𝗽𝘂𝗹𝗮𝗿𝗻𝗲 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 𝘄 𝗸𝗮𝘁𝗲𝗴𝗼𝗿𝗶𝗶 (ᵏᵃᵗᵉᵍᵒʳᶦᵉ) ⭐`       0
+@var checkbox   rightSidebarHideHits                            `🚫 Ukryj sekcję  🔸 𝗛𝗶𝘁𝘆 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ/ᶻⁿᵃˡᵉᶻᶦˢᵏᵒ) ⭐`                  0
+@var checkbox   rightSidebarHideUpcomingActive                  `🚫 Ukryj sekcję  🔸 𝗪𝘆𝗸𝗼𝗽𝗮𝗹𝗶𝘀𝗸𝗼: 𝗮𝗸𝘁𝘆𝘄𝗻𝗲 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ) ⭐`         0
+@var checkbox   rightSidebarHideLinksNewest                     `🚫 Ukryj sekcję  🔸 𝗡𝗮𝗷𝗻𝗼𝘄𝘀𝘇𝗲 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 (ᵐᶦᵏʳᵒᵇˡᵒᵍ) ⭐`                0
+@var checkbox   rightSidebarHideLinksActive                     `🚫 Ukryj sekcję  🔸 𝗔𝗸𝘁𝘆𝘄𝗻𝗲 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 (ʷᵖᶦˢ) ⭐`                     0
+@var checkbox   rightSidebarHideLinksPopular                    `🚫 Ukryj sekcję  🔸 𝗣𝗼𝗽𝘂𝗹𝗮𝗿𝗻𝗲 𝘇𝗻𝗮𝗹𝗲𝘇𝗶𝘀𝗸𝗮 𝘄 𝗸𝗮𝘁𝗲𝗴𝗼𝗿𝗶𝗶 (ᵏᵃᵗᵉᵍᵒʳᶦᵉ) ⭐`       0
 
 
 
@@ -2352,7 +2360,7 @@ TODO    checkbox hideAdultEntriesAndLinks
 
 
 
-@var range      HR_ANTY_RUMUN                       `🚫 BLOKOWANIE SPAMU, PORNOGRAFII I ZIELONEK`            [0, 0, 99900, 1, 'mm']
+@var range      HR_ANTY_RUMUN                       `🚫 BLOKOWANIE SPAMU, PORNOGRAFII I ZIELONEK`            [0, 0, 99900, 1, 'mm']
 @var checkbox   userGreenEntriesWithPhotos                      `🟢🚯🔷 AntyRumun: Blokuj wpisy zielonek ze zdjęciami`                                               0
 @var checkbox   userGreenEntriesWithVideos                      `🟢🚯🔷 AntyRumun: Blokuj wpisy zielonek z filmikami`                                                0
 @var checkbox   userGreenEntriesWithURLS                        `🟢🚯🔷 AntySpam: Blokuj wpisy zielonek z linkami UR`                                               0
@@ -5031,7 +5039,58 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         } 
     }
 
+    
+    
+    if(linkToWykopEntry == 1 || linkToWykopArticle == 1 )
+    {
+        /* WYKOP XS CODE - START --> linkToVideoDuration == 1 || entryWithVideoDuration == 1 */
+        section.link-block > section > article > figure::before
+        {
+            z-index: 1;
+            max-width: 80px;
+            animation-name: fadeIn;
+            animation-duration: 0.4s;
+            animation-delay: 1s;
+            animation-fill-mode: both;
+            animation-timing-function: ease-in-out;
+            position: absolute;
+            bottom: 10%;
+            padding: 4rem 25rem 4rem 25rem;
+            display: flex;
+            border-bottom: 1px solid var(--alto);
+            justify-content: center;
+            align-items: center;
+            color: rgba(180, 180, 180, 1);
+            background-color: rgba(0, 0, 0, 1);
+            opacity: 1;
+            //content-visibility: auto;
+            //font-weight: bolder;
 
+            @starting-style {
+                opacity: 0; scale: 0.9; translate: -40px;
+            }
+        }
+        /* WYKOP XS CODE - END */     
+    }
+    if(linkToWykopEntry == 1)
+    {
+        section.link-block:has(section > article > div.content > section.info > span > div span > a[href^="https://wykop.pl/wpis/"]) article > figure::before
+        {
+            content: "/wpis";
+        }
+
+    }
+    if(linkToWykopArticle == 1)
+    {
+        section.link-block:has(section > article > div.content > section.info > span > div span > a[href^="https://wykop.pl/artykul/"]) article > figure::before
+        {
+            content: "/artykuł";
+        }
+    }  
+
+      
+      
+    
     /* LICZNIK KOMENTARZY POD PRZYCISKIEM "Wykop" */
     if(commentsCountAlignment == 1)
     {
@@ -17951,31 +18010,36 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
 
             //:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-            if(fontFamily == "Roboto Flex")
+            /*if(fontFamily == "Roboto Flex")
             {
                 @font-face
                 {
                     // RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght
                     font-family: 'Roboto Flex'; 
+                    src: 
+                        local("Roboto Flex"),
+                        url('https://wykopx.pl/fonts/RobotoFlex.ttf') format('ttf-variations');
                     //src:url('https://github.com/googlefonts/roboto-flex/raw/main/fonts/RobotoFlex%5BGRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght%5D.ttf');
                     //src: url('https://wykopx.pl/fonts/RobotoFlex.ttf') format('ttf-variations');
                     //font-style: normal;
-
                 }
-            }
+            }*/
 
             section.entry div.content section.entry-content > div.wrapper
             {
-/*              font-family: "%s" % (fontFamily); */
-                font-family: 'Roboto Flex' !important;
-
-                font-size: fontSize!important;
+                // https://fonts.google.com/knowledge/using_type/loading_variable_fonts_on_the_web
+                //font-family: 'Roboto Flex' !important;
+                //font-variation-settings: "opsz" 44.8333, "wght" 231.25, "GRAD" -66.3196, "wdth" 101.125, "slnt" -7.98611, "XOPQ" 96, "YOPQ" 79, "XTRA" 468, "YTUC" 712, "YTLC" 514, "YTAS" 750, "YTDE" -203, "YTFI" 738;
+                /* font-family: "%s" % (fontFamily); */
+                //font-family: fontFamily !important;
+                //font-size: fontSize!important;
+                //font-weight: unset;
                 //line-height: fontSize!important;
-
-                //font-weight: fontWeight!important;
-                font-variation-settings: "wght" fontVariableWght !important;// , "wdth" fontStretch, "opsz" fontVariableOpsz!important;
-                            
-/*                             
+                //font-weight: fontVariableWght!important;
+                //font-stretch: fontVariableWdth!important;
+                //font-variation-settings: "wght" fontVariableWght !important;// , "wdth" fontStretch, "opsz" fontVariableOpsz!important;
+                //font-variation-settings: 'wght' 350, 'slnt' , ;   
+            /*                             
                             '                
                             'slnt' fontVariableSlnt,    
                             'GRAD' fontVariableGRAD,
@@ -21317,7 +21381,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     /* VARIABLES */
 
     versor = "style"; // "style", "blank", "block"
-    version = "3.0.13";   
+    version = "3.0.16";   
     /* xblocker = "2.49" */
     
     
@@ -21417,11 +21481,10 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
 
 
             
-            --intersectionObserverRootMargin:           intersectionObserverRootMargin;
-            
-            
-
-            
+            --intersectionObserverRootMargin:           intersectionObserverRootMargin;      
+           
+            --linkToVideoDuration:                      linkToVideoDuration;
+            --entryWithVideoDuration:                   entryWithVideoDuration;
             
             --actionBoxEnable:                          actionBoxEnable;
             --notatkowatorEnable:                       notatkowatorEnable;
@@ -21578,12 +21641,14 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         text-transform: capitalize;
         position: relative i;
         opacity: 1 i;
-        z-index: 69;
+        z-index: unset;
         font-size: 14px;
         color: rgba(220,220,220,0.2);
         display: flex;
         justify-content: center;
-        padding-bottom: 20px;
+        
+        padding-bottom: 30px;
+        margin-top: 70px;
         width: auto;
     }
 
@@ -21834,6 +21899,739 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             min-width: 100%;
             max-width: 100%;
         }
+    } 
+}
+@-moz-document url-prefix("moz-extension://"), url-prefix("chrome-extension://")
+{
+    
+    body#stylus-manage > div#message-box 
+    {
+        border: 1px solid var(--accent-2);
+	    box-shadow: 1px 0px 10px 13px rgba(0, 0, 0, 0.3);
+        //margin: 10px;
+        
+        left: unset!important;
+        right: 20px!important;
+        top: 20px;
+        bottom: 20px;
+        
+        width: 30%;
+        min-width: 800px;
+        max-width: 2000px;
+    }
+    
+    @media screen and (max-width: 840px)
+    {
+        body#stylus-manage > div#message-box 
+        {
+            left: 5px!important;
+            right: 5px!important;
+            top: 5px!important;
+            bottom: 5px!important;
+                    
+            width: calc(100% - 10px);
+            min-width: unset;
+            max-width: unset;
+        }
+    }
+    body#stylus-manage > div#message-box > div
+    {
+        left: unset!important;
+        right: 0px!important;
+        position: sticky!important;
+        width: 100%!important;
+    }
+    
+    /* for screenshot */
+    /*  
+    body#stylus-manage
+    {
+        background-color: rgb(13, 17, 23);
+    }
+    body#stylus-manage > div#message-box
+    {
+            position: relative!important;
+        width: 100%;
+        min-width: 700px;
+        max-width: 2000px;
+        margin: 60px!important;
+    } 
+    body#stylus-manage > div#message-box > div
+    {
+        position: sticky!important;
+        width: 100%!important;
+    }
+    */
+
+    
+    
+    
+    body#stylus-manage > div#installed > div.entry:has(> h2 > a[href*="wykopx.pl"])
+    {
+        order: -888;
+    }
+    body#stylus-manage > div#installed > div.entry.disabled:has(> h2 > a[href*="wykopx.pl"]) > h2.style-name > a.style-name-link
+    {
+        color: var(--accent-2)!important;
+    }
+    body#stylus-manage > div#installed > div.entry.enabled:has(> h2 > a[href*="wykopx.pl"])
+    {
+        order: -999;
+        background-color: var(--accent-3)!important;
+    }
+    body#stylus-manage > div#installed > div.entry:has(> h2 > a[href*="wykopx.pl"]) > p > a.configure-usercss > i::after      
+    {
+        color: var(--c00);
+        font-size: 22px;
+    }
+    body#stylus-manage > div#installed > div.entry:has(> h2 > a[href*="wykopx.pl"]) > p > a.configure-usercss > i:hover::after     
+    {
+        color: var(--accent-1);
+    }
+    body#stylus-manage
+    {
+        height: max-content!important;
+    }
+
+
+
+    #message-box > div > #message-box-contents::-webkit-scrollbar
+    {
+      width: 24px!important;
+    }
+    #message-box > div > #message-box-contents::-webkit-scrollbar-button
+    {
+        display: none!important;
+    }
+
+    #message-box > div > #message-box-contents::-webkit-scrollbar-thumb
+    {
+        height: 100px!important;
+        background: #111!important;
+        background: linear-gradient(#1b1b1b, #111)!important;
+        border: 1px solid #000!important;
+        box-shadow: inset 0 0 0 1px #272727!important;
+        border-radius: 6px!important;
+        transition: background 0.3s linear;
+    }
+    #message-box > div > #message-box-contents::-webkit-scrollbar-thumb:hover
+    {
+        background: linear-gradient(rgba(32, 44, 34, 1), #111)!important;
+        background: linear-gradient(rgba(56, 148, 148, 0.21) 0%, #111 60%)!important;
+    }
+    #message-box > div > #message-box-contents::-webkit-scrollbar-thumb:active
+    {
+        background: linear-gradient(rgba(32, 44, 34, 1), #111)!important;
+        background: linear-gradient(rgba(56, 148, 148, 0.61) 25%, #111 75%)!important;
+    }
+    #message-box > div > #message-box-contents::-webkit-scrollbar-track-piece
+    {
+        background-color: var(--bg)!important;
+    }
+
+    /*
+        ::-webkit-scrollbar — the entire scrollbar.
+        ::-webkit-scrollbar-button — the buttons on the scrollbar (arrows pointing upwards and downwards that scroll one line at a time).
+        ::-webkit-scrollbar:horizontal{} — the horizontal scrollbar.
+        ::-webkit-scrollbar-thumb — the draggable scrolling handle.
+        ::-webkit-scrollbar-track — the track (progress bar) of the scrollbar, where there is a gray bar on top of a white bar.
+        ::-webkit-scrollbar-track-piece — the part of the track (progress bar) not covered by the handle.
+        ::-webkit-scrollbar:vertical{} — the vertical scrollbar.
+        ::-webkit-scrollbar-corner — the bottom corner of the scrollbar, where both horizontal and vertical scrollbars meet. This is often the bottom-right corner of the browser window.
+        ::-webkit-resizer — the draggable resizing handle that appears at the bottom corner of some elements.
+    */
+
+    
+    
+    
+    #message-box > div
+    {
+        max-width: 100%!important;
+        max-height: 100%!important;
+        top: 0px!important;
+    } 
+
+    /* Closing setting box */
+    #message-box > div > #message-box-close-icon
+    {
+        position: absolute;
+        right: 11px;
+        top: 10px;
+        transition: all 0.1s ease-in-out; 
+
+    } 
+    #message-box > div > #message-box-close-icon i
+    {
+        display: none;
+    } 
+    #message-box > div > #message-box-close-icon:before
+    {
+        width: 20px; height: 20px;
+        content: "❌";
+        font-size: 16px;
+    } 
+    #message-box > div > #message-box-close-icon:hover
+    {
+        scale: 1.4;
+    } 
+    
+    
+    
+    
+    .config-body .select-wrapper
+    {
+        max-width: 100%;
+    }
+    #message-box.config-dialog .config-body
+    {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+    #message-box.config-dialog .config-body input[type="text"], 
+    #message-box.config-dialog .config-body .select-resizer, 
+    #message-box.config-dialog .config-body select,
+    #message-box.config-dialog .config-body input[type="range"],
+    #message-box.config-dialog .config-body label.config-select > div
+    {
+        min-width: 210px;
+    } 
+    
+        
+    #message-box-contents div.config-heading a[href$="wykopx.pl"]
+    {
+        font-size: 0;
+        text-decoration: none;
+    } 
+    #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
+    #message-box-contents div.config-heading a[href$="wykopx.pl"]:after
+    {
+        font-size: 13px;
+    } 
+
+
+    #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
+    {
+        text-decoration: underline;
+    } 
+
+
+    #message-box-contents div.config-heading 
+    {
+        text-align: center;
+
+        a[href$="wykopx.pl"]
+        {
+        } 
+        a[href$="wykopx.pl"]:before,
+        a[href$="wykopx.pl"]:after
+        {
+                font-size: 16px
+                display: block;
+                cursor: default
+                color: rgba(255, 255, 255, 0.6);
+        } 
+        a[href$="wykopx.pl"]:before,
+        {
+            margin-top: 30px!important
+        } 
+        a[href$="wykopx.pl"]:hover
+        {
+            
+        } 
+    } 
+
+    [data-ui-theme="light"] #message-box-contents div.config-heading  a[href$="wykopx.pl"]:after,
+    [data-ui-theme="light"] #message-box-contents div.config-heading  a[href$="wykopx.pl"]:before
+    {
+        color: rgba(0, 0, 0, 0.6);
+    } 
+
+    /* tylko komputer przy wąskim okienku Stylusa */
+    @media (pointer: fine) and (max-width: 519px)
+    {
+        #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
+        {
+            color: #df2c2c;
+            content: "Wejdź w  Ustawienia Stylusa '⚙' i w sekcji '𝗢𝗸𝗻𝗼 𝗽𝗼𝗱𝗿𝗲𝗰𝘇𝗻𝗲' wpisz w polu '𝗦𝘇𝗲𝗿𝗼𝗸𝗼𝘀𝗰 𝗼𝗸𝗻𝗮 (𝘄 𝗽𝗶𝗸𝘀𝗲𝗹𝗮𝗰𝗵)' wartość między 𝟲𝟬𝟬 a 𝟴𝟬𝟬 pikseli. "!important;
+        } 
+    } 
+    /* telefon lub komputer z rozszerzonym okienkiem Stylusa */
+    @media (pointer: none), (min-width: 520px)
+    {
+        #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
+        {
+            content: "Zaobserwuj tag #𝘄𝘆𝗸𝗼𝗽𝘄𝗻𝗼𝘄𝘆𝗺𝘀𝘁𝘆𝗹𝘂 ▫ Do funkcji oznaczonych ❎ zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦 Szczegóły na xs.wykopx.pl     ▫  Opis najciekawszych funkcji 𝗪𝘆𝗸𝗼𝗽 𝗫 na stronie ";
+            text-decoration: none;
+        } 
+        #message-box-contents div.config-heading a[href$="wykopx.pl"]:after
+        {
+            content: "wiki.wykopx.pl"
+        }
+        #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
+        {
+            cursor: pointer;
+            color: rgba(255, 255, 255, 1);
+        } 
+        [data-ui-theme="light"] #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
+        {
+            color: rgba(0, 0, 0, 1);
+        } 
+    } 
+    
+    
+    .config-body > label
+    {
+        padding: 7px 0px 7px 15px;
+        font-size: 13px;
+        display: flex;
+    }
+
+    [data-ui-theme="light"] .config-body > label{color: rgba(0, 0, 0, 1); } 
+    [data-ui-theme="dark"] .config-body > label{color: rgba(255, 255, 255, 1); } 
+
+    [data-ui-theme="light"] .config-body > label:has(.onoffswitch)                 { color: rgba(0, 0, 0, 0.5); } 
+    [data-ui-theme="light"] .config-body > label:has(.onoffswitch input:checked)   { color: rgba(0, 0, 0, 1); } 
+    [data-ui-theme="dark"] .config-body > label:has(.onoffswitch)                  { color: rgba(255, 255, 255, 0.5); } 
+    [data-ui-theme="dark"] .config-body > label:has(.onoffswitch input:checked)    { color: rgba(255, 255, 255, 1); } 
+
+
+
+    /* NAZWA SEKCJI */
+    [data-ui-theme="light"] label.config-range:has(input[type="range"][max="99900"])
+    {
+        border-top: 1px solid rgba(128,128,128,1);
+        background: #cfcfcf;
+        background: linear-gradient(#ffffff, #dfdfdf);
+        border: 1px solid #fff;
+        box-shadow: inset 0 0 0 1px #c7c7c7;
+    }
+    [data-ui-theme="dark"] label.config-range:has(input[type="range"][max="99900"])
+    {
+        border-top: 1px solid rgba(128,128,128,1);
+        background: #111;
+        background: linear-gradient(#1b1b1b, #111);
+        border: 1px solid #000;
+        box-shadow: inset 0 0 0 1px #272727;
+    }
+    label.config-range:has(input[type="range"][max="99900"])
+    {
+        display: flex!important;
+        padding: 10px!important;
+
+        margin-top: 40px;
+        
+        margin-bottom: 10px;
+        border-radius: 5px;
+        z-index: 1;
+
+        & + label
+        {
+            border-top: none;
+        } 
+        span.config-name
+        {
+            text-align: center;
+            text-align: left;
+            padding-left: 30px;
+            
+            font-weight: 300;
+            font-family: system-ui;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            text-wrap: pretty;
+        } 
+
+        input[type="range"][max="99900"], span.current-value, a.config-reset-icon
+        {
+            display: none!important;
+        } 
+    }
+    
+    /* NAZWA PODSEKCJI */
+    [data-ui-theme="light"] label.config-range:has(input[type="range"][max="99999"])
+    {
+        border-top: 1px solid rgba(128,128,128,1);
+        background: #cfcfcf;
+        //background: linear-gradient(#ffffff, #dfdfdf);
+        border: 1px solid #fff;
+        box-shadow: inset 0 0 0 1px #c7c7c7;
+        
+        align-self: center;
+    }
+    [data-ui-theme="dark"] label.config-range:has(input[type="range"][max="99999"])
+    {
+        border-top: 1px solid rgba(128,128,128,1);
+        background: #111;
+        //background: linear-gradient(#1b1b1b, #111);
+        border: 1px solid #000;
+        box-shadow: inset 0 0 0 1px #272727;
+    }
+    label.config-range:has(input[type="range"][max="99999"])
+    {
+        display: flex!important;
+	    align-self: center;        
+	    //align-self: start;        
+        margin-top: 15px;   //
+        padding: 4px!important; //
+        margin-bottom: 10px;
+        border-radius: 5px;
+        z-index: 1;
+        
+        width: 70%; //
+
+        & + label
+        {
+            border-top: none;
+        } 
+        span.config-name
+        {
+            text-align: center;
+            //text-align: left;
+            padding-left: 10px;
+            font-weight: 300;
+            font-family: system-ui;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            text-wrap: pretty;
+        } 
+
+        input[type="range"][max="99999"], span.current-value, a.config-reset-icon
+        {
+            display: none!important;
+        } 
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    /* border NAD elementem opcji */
+    .config-body label:not(:first-child)
+    {
+        border-top: 1px dotted var(--c80);
+    }
+    
+    // WŁĄCZONY/WYŁĄCZONY CHECKBOX PONIŻEJ
+    label.config-range:has(input[type="range"][max="111100"]),
+    label.config-range:has(input[type="range"][max="100000"])
+    {
+        display: none;
+        border-top: none!important;
+        
+        input[type="range"][max="111100"], 
+        input[type="range"][max="100000"], 
+        span.current-value,
+        a.config-reset-icon
+        {
+            display: none!important;
+        }
+    }
+    
+    // INFO WŁĄCZONY
+    label.config-range:has(input[type="range"][max="111100"]):has(+ label.config-checkbox input.slider:checked)
+    {
+        display: block;
+        background-color: rgba(0, 128, 30, .09);
+        color: #7ab37a;
+    }
+    label.config-range:has(input[type="range"][max="100000"]):has(+ label.config-range + label.config-checkbox input.slider:not(:checked)),
+    label.config-range:has(input[type="range"][max="100000"]):has(+ label.config-checkbox input.slider:not(:checked))
+    {
+        display: block;
+        background-color: rgba(128, 0, 30, .09);
+        color: #b37a7e;
+    }
+    label.config-range:has(input[type="range"][max="111100"]) + label.config-checkbox:has(input.slider:checked),
+    label.config-range:has(input[type="range"][max="100000"]) + label.config-range + label.config-checkbox:has(input.slider:not(:checked))
+    {
+        border-top: none!important;
+    }
+    
+    
+    
+    
+    
+    // OPIS INFO DLA POPRZEDNIEJ FUNKCJI
+    div.config-body label:has(+ label.config-range input[type="range"][max="88800"]):before
+    {
+        content: "🛈"; //❔ 
+        position: absolute;
+        font-size: 14px;
+        width: 20px;
+        translate: -10px -8px;
+    }
+    label.config-range:has(input[type="range"][max="88800"])
+    {
+        transition-property: border-bottom, opacity, display, height, font-size;
+        transition-duration: 1s, 1s, 1s, 0.1s, 1s;
+        transition-behavior: allow-discrete;
+        
+        @starting-style
+        {
+            opacity: 0;
+            font-size: 0px;
+            height: 0px;
+        }
+
+        opacity: 1;
+        display: block;
+        font-size: 0px;
+        height: 0px;
+        padding: 0px;
+        border: transparent;
+        padding: 0px 0px 2px 15px;
+
+        color: var(--c60);
+        
+        input[type="range"][max="88800"], span.current-value, a.config-reset-icon
+        {
+            display: none!important;
+        }
+    }
+    div.config-body label:hover + label.config-range:has(input[type="range"][max="88800"])
+    {
+        transition-property: border-bottom, opacity, display, height, font-size;
+        transition-duration: 0.2s, 0.2s, 0.2s, 0.1s, 0.2s;
+        transition-behavior: allow-discrete;
+        transition-delay: 1.2s;
+        
+        @starting-style
+        {
+            opacity: 1;
+            display: block;
+            height: 20px;
+            font-size: 11px;
+        }
+        
+        opacity: 1;
+        display: block;
+        height: max-content;
+        min-height: max-content;
+        max-height: max-content;
+        font-size: 11px;
+        
+        border-bottom: 1px solid var(--accent-3);
+                
+        border-top: 0px dashed var(--c90);
+    }
+    
+    /* Ikonka resetowania do wartosci domyslnej przy Checkboxie na wąskim ekranie */
+    #message-box-contents div.config-body label a.config-reset-icon
+    {           
+        translate: 22px;
+    }
+    #message-box-contents div.config-body label a.config-reset-icon:hover i
+    {           
+        color: var(--accent-1);
+    }
+    
+    @media (max-width: 600px)
+    {   
+        #message-box-contents div.config-body label
+        {
+            margin-bottom: 10px;
+        }
+        #message-box-contents div.config-body label > span.config-name 
+        {
+            line-height: 21px;
+        }
+        
+        /* TYTUL SEKCJI */
+        #message-box-contents div.config-body label.config-range:has(input[type="range"][max="99900"]) span.config-name
+        {
+            font-size: 0.9rem!important;
+        }
+        
+        #message-box-contents div.config-body label.config-checkbox,
+        #message-box-contents div.config-body label.config-select,
+        #message-box-contents div.config-body label.config-range,
+        #message-box-contents div.config-body label.config-text
+        {
+            display: grid;
+            row-gap: 10px;
+        }
+        
+        // CHECKBOX
+        #message-box-contents div.config-body label.config-checkbox,
+        {
+            grid-template-columns: 1fr 30px 30px;
+            grid-template-rows: 1fr;
+            width: 100%;
+            row-gap: 0px;
+        }
+        #message-box-contents div.config-body label.config-checkbox span.config-name,
+        {
+            display: flex;
+            grid-column-start: 1;
+            grid-column-end: 2;
+            
+            text-wrap: pretty;
+        }
+        #message-box-contents div.config-body label.config-checkbox input.config-value,
+        {
+            display: flex;
+            grid-column-start: 2;
+            grid-column-end: 3;
+            
+            align-self: start;
+        }
+        
+        /* Ikonka resetowania do wartosci domyslnej przy Checkboxie na wąskim ekranie */
+        #message-box-contents div.config-body label.config-checkbox a.config-reset-icon
+        {           
+            display: flex;
+            grid-column-start: 3;
+            grid-column-end: 4;
+            
+            align-self: start;
+        }
+        // SELECT
+        #message-box-contents div.config-body label.config-select,
+        #message-box-contents div.config-body label.config-text
+        {
+            grid-template-columns: auto 10px;
+            grid-template-rows: 1fr 1fr;
+            width: 100%;
+        }
+        #message-box-contents div.config-body label.config-select span.config-name,
+        #message-box-contents div.config-body label.config-text span.config-name
+        {
+            display: flex;
+            grid-column-start: 1;
+            grid-column-end: 3;
+            grid-row-start: 1;
+            grid-row-end: 2;
+        }
+        #message-box-contents div.config-body label.config-select div.config-value,
+        #message-box-contents div.config-body label.config-text input.config-value
+        {
+            display: flex;
+            grid-column-start: 1;
+            grid-column-end: 2;
+            grid-row-start: 2;
+            grid-row-end: 3;
+            
+            margin-top: 2px;
+        }
+        #message-box-contents div.config-body label.config-select div.config-value > select,
+        #message-box-contents div.config-body label.config-text input.config-value
+        {
+            min-width: 90%;
+            height: 27px;
+        }
+        
+        #message-box-contents div.config-body label.config-select div.config-value > select > option
+        {
+            font-size: 1.2rem;
+            border: 1px solid #f00!important;
+        }
+        
+        #message-box-contents div.config-body label.config-select div.config-value::after
+        {
+            position: relative;
+            left: 4px;
+        }
+        #message-box-contents div.config-body label.config-select a.config-reset-icon,
+        #message-box-contents div.config-body label.config-text a.config-reset-icon
+        {
+            display: flex;
+            grid-column-start: 2;
+            grid-column-end: 3;
+            grid-row-start: 2;
+            grid-row-end: 3;
+            position: relative;
+            top: 0px;
+        }
+        
+        
+        // RANGE
+        #message-box-contents div.config-body label.config-range
+        {
+            grid-template-columns: auto auto 0px;
+            grid-template-rows: 1fr 1fr;
+            width: 100%;
+        }
+
+        
+        #message-box-contents div.config-body label.config-range span.config-name
+        {
+            display: flex;
+            grid-column-start: 1;
+            grid-column-end: 2;
+            grid-row-start: 1;
+            grid-row-end: 2;
+        }
+        #message-box-contents div.config-body label.config-range span.current-value
+        {
+            display: flex;
+            grid-column-start: 3;
+            grid-column-end: 4;
+            grid-row-start: 1;
+            grid-row-end: 2;
+            position: relative;
+            top: 0px;
+            left: -100px;
+            width: 20px;
+            justify-content: end;
+        }
+        #message-box-contents div.config-body label.config-range a.config-reset-icon
+        {
+            display: flex;
+            grid-column-start: 3;
+            grid-column-end: 4;
+            grid-row-start: 2;
+            grid-row-end: 3;
+            position: relative;
+            top: 0px;
+            left: -20px;
+            width: 20px;
+        }
+        #message-box-contents div.config-body label.config-range input.config-value 
+        {
+            display: flex;
+            width: 90%;
+            grid-column-start: 1;
+            grid-column-end: 3;
+            grid-row-start: 2;
+            grid-row-end: 3;
+        }
+    }
+} 
+    
+
+
+@-moz-document url-prefix("https://userstyles.world/")
+{   
+    nmzc1 = 8162 
+    nmzc2 = 8185     
+    nmzc3 = 8259
+
+    div.card:has(a[href*={"\/style\/" + nmzc1}]) span.author:before,
+    div.card:has(a[href*={"\/style\/" + nmzc2}]) span.author:before,
+    div.card:has(a[href*={"\/style\/" + nmzc3}]) span.author:before,
+    div.details a[href={"\/user\/vocus"}]:after
+    {
+        content: "Uwaga. Autor tego stylu jest złodziejem! ";
+        font-size: 0.8em;
+        color: red;
+    } 
+    div.card:has(a[href*={"\/style\/" + nmzc1}]), 
+    div.card:has(a[href*={"\/style\/" + nmzc2}]), 
+    div.card:has(a[href*={"\/style\/" + nmzc3}])
+    {
+        border: 1px solid #f00!important;
+    } 
+    div.card:has(a[href*={"\/style\/" + nmzc1}]) img,
+    div.card:has(a[href*={"\/style\/" + nmzc2}]) img,
+    div.card:has(a[href*={"\/style\/" + nmzc3}]) img
+    {
+        filter: blur(4px) grayscale(100%) sepia(100%) hue-rotate(307deg) saturate(335%) i;
     } 
 }
 
