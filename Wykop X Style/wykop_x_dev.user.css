@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style 3.0 (beta)
-@version        3.0.16
+@version        3.0.17
 
 @description    WERSJA BETA W FAZIE TESTÓW  - Wykop X Style 3.0b
 @description    Jeśli chcesz przetestować również Wykop XS v.3.0 - znajdziesz go tutaj:
@@ -1517,14 +1517,56 @@ TODO checkbox   commentsCountAlignment                          `🗨️ Przenie
 
 
 @var range      SUB_HR_ZNALEZISKA                       `🔸 ZNALEZISKO`                                                  [0, 0, 99999, 1, 'mm']
-@var select     hideRelatedLinks                                `🔸 Treści powiązane ze znaleziskiem` {
+@var select     linkOrderFirst                                 `🔸 Wyświetlaj jako pierwsze ⭐` {
+                                                                            "🔸 Nagłówek znaleziska (domyślnie)":"znalezisko",
+                                                                            "🔗 Treści powiązane":"tresci_powiazane",
+                                                                            "🗨️ Komentarze":"komentarze",
+                                                                            "🔼 Lista wykopujących/zakopujących":"wykopujacy_i_zakopujacy",
+                                                                            "✍ Edytor dodawania komentarza":"edytor_komentarza",
+                                                                    }
+@var select     linkOrderSecond                                  `🔸 Wyświetlaj jako drugie ⭐` {
+                                                                            "🔗 Treści powiązane (domyślnie)":"tresci_powiazane",
+                                                                            "🔸 Nagłówek znaleziska":"znalezisko",
+                                                                            "🗨️ Komentarze":"komentarze",
+                                                                            "✍ Edytor dodawania komentarza":"edytor_komentarza",
+                                                                            "🔼 Lista wykopujących/zakopujących":"wykopujacy_i_zakopujacy",
+                                                                    } 
+@var select     linkOrderThird                                 `🔸 Wyświetlaj jako trzecie ⭐` {
+                                                                            "🗨️ Komentarze (domyślnie)":"komentarze",
+                                                                            "🔸 Nagłówek znaleziska":"znalezisko",
+                                                                            "🔗 Treści powiązane":"tresci_powiazane",
+                                                                            "✍ Edytor dodawania komentarza":"edytor_komentarza",
+                                                                            "🔼 Lista wykopujących/zakopujących*":"wykopujacy_i_zakopujacy",
+                                                                    }
+@var select     linkOrderFourth                                 `🔸 Wyświetlaj jako czwarte ⭐` {
+                                                                            "✍ Edytor dodawania komentarza (domyślnie)":"edytor_komentarza",
+                                                                            "🔸 Nagłówek znaleziska":"znalezisko",
+                                                                            "🔗 Treści powiązane":"tresci_powiazane",
+                                                                            "🗨️ Komentarze*":"komentarze",
+                                                                            "🔼 Lista wykopujących/zakopujących":"wykopujacy_i_zakopujacy",
+                                                                    }
+
+@var select     linkOrderFifth                                  `🔸 Wyświetlaj jako ostatnie ⭐` {
+                                                                            "🔼 Lista wykopujących/zakopujących (domyślnie)":"wykopujacy_i_zakopujacy",
+                                                                            "🔸 Nagłówek znaleziska":"znalezisko",
+                                                                            "🔗 Treści powiązane ":"tresci_powiazane",
+                                                                            "🗨️ Komentarze":"komentarze",
+                                                                            "✍ Edytor dodawania komentarza*":"edytor_komentarza",
+                                                                    }
+
+
+
+
+@var select     hideRelatedLinks                                `🔸🔗 Treści powiązane ze znaleziskiem` {
                                                                         "Zawsze wyświetlaj (domyślnie)"                 :   "zawszewyswietlaj",
                                                                         "Wyświetlaj. Ukryj jeśli brak powiązanych"      :   "niepokazujjeslipuste",
                                                                         "Zwinięte"                                      :   "zwiniete",
                                                                         "🚫 Zwinięte. Ukryj jeśli brak powiązanych"     :   "zwinieteniepokazujjeslipuste",
                                                                         "🚫 Nie pokazuj"                                :   "niepokazuj"
-                                                                    } 
-@var checkbox   hideLinkComments                               `🚫🗨️🔸 Nie pokazuj komentarzy w znaleziskach`                               0
+                                                                    }
+
+@var checkbox   hideLinkComments                               `🗨️🔸🚫 Nie pokazuj komentarzy w znaleziskach`                               0
+
 
 
 @var range      SUB_HR_ZNALEZISKO_POPOVER_MENU          `🔸 MENU NAD ZNALEZISKIEM (POPOVER)`                          [0, 0, 99999, 1, 'mm']
@@ -13914,7 +13956,6 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                 width: calc(var(--avatarSize))!important;
             } 
         } 
-
     
         section.entry > article > header > div.left > a.avatar
         section.entry > article > header > div.left > a.avatar > figure,
@@ -13928,7 +13969,6 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             min-width: var(--avatarSize)!important;
             max-width: var(--avatarSize)!important;
         } 
-
         section.entry > article > header > div.right[data-v-2aacfeb5]
         {
             width: 100%!important;
@@ -13938,9 +13978,6 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             // align-items: start!important; // tttttttttt
         } 
 
-
-
-  
         if(avatarSize < 32rem)
         {
             section.entry > article > header[data-v-2aacfeb5]
@@ -17753,7 +17790,242 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
       order: 10 i;
       margin-top: 0 i;
       margin-bottom: 0 i;
-    } 
+    }
+
+
+// KOLEJNOŚĆ PANELI NA STRONIE ZNALEZISKA
+/*  order:
+        -0 - na gorz
+        -10 - WykopXS
+        -1- 1. miejsce
+        -10- 2. miejsce
+        -100- 3. miejsce (domyslnie)
+        -1000- 4. miejsce
+        -10000- 5. miejsce
+        -99999 - footer ze stopka
+*/
+    section.link-page > section.link
+    {
+        display: flex!important;
+        flex-direction: column!important;
+    }
+    
+    section.link-page > section.link > section.comments
+    {
+        display: contents!important;
+    }
+    section.link-page > section.link > section:is(.link-block, .related, .comments, .voters),
+    section.link-page > section.link > section.comments > section:is(.stream, .editor, .stream-top)
+    {
+        order: 10000;
+    }
+    
+    section.link-page > section.link > section.related,
+    section.link-page > section.link > section.voters > section.stream > div.content,
+    section.link-page > section.link > section.comments > section.stream > div.content
+    {
+        margin-bottom: gapWidth;
+    }
+    
+    
+    /* PIĄTE, OSTATNIE MIEJSCE */
+    if(linkOrderFifth == "wykopujacy_i_zakopujacy")
+    {
+        section.link-page > section.link > section:is(.voters)
+        {
+            order: 10000;
+        }
+    }
+    else if(linkOrderFifth == "edytor_komentarza")
+    {
+        section.link-page > section.link > section.comments > header:is(.stream-top),
+        section.link-page > section.link > section.comments > section:is(.editor)
+        {
+            order: 10000;
+        }
+    }
+    else if(linkOrderFifth == "komentarze")
+    {
+        section.link-page > section.link > section.comments > section:is(.stream.link-comments)
+        {
+            order: 10000;
+        }
+    }
+    else if(linkOrderFifth == "tresci_powiazane")
+    {
+        section.link-page > section.link > section:is(.related)
+        {
+            order: 10000;
+        }
+    }
+    else if(linkOrderFifth == "znalezisko")
+    {
+        section.link-page > section.link > section:is(.link-block)
+        {
+            order: 10000;
+        }
+    }
+    /* CZWARTE MIEJSCE */
+    if(linkOrderFourth == "edytor_komentarza")
+    {
+        section.link-page > section.link > section.comments > header:is(.stream-top),
+        section.link-page > section.link > section.comments > section:is(.editor)
+        {
+            order: 1000;
+        }
+    }
+    else if(linkOrderFourth == "wykopujacy_i_zakopujacy")
+    {
+        section.link-page > section.link > section:is(.voters)
+        {
+            order: 1000;
+        }
+    }
+    
+    else if(linkOrderFourth == "komentarze")
+    {
+        section.link-page > section.link > section.comments > section:is(.stream.link-comments)
+        {
+            order: 1000;
+        }
+    }
+    else if(linkOrderFourth == "tresci_powiazane")
+    {
+        section.link-page > section.link > section:is(.related)
+        {
+            order: 1000;
+        }
+    }
+    else if(linkOrderFourth == "znalezisko")
+    {
+        section.link-page > section.link > section:is(.link-block)
+        {
+            order: 1000;
+        }
+    }
+    /* TRZECIE MIEJSCE */
+    if(linkOrderThird == "komentarze")
+    {
+        section.link-page > section.link > section.comments > section:is(.stream.link-comments)
+        {
+            order: 100;
+        }
+    }
+    else if(linkOrderThird == "edytor_komentarza")
+    {
+        section.link-page > section.link > section.comments > header:is(.stream-top),
+        section.link-page > section.link > section.comments > section:is(.editor)
+        {
+            order: 100;
+        }
+    }
+    else if(linkOrderThird == "wykopujacy_i_zakopujacy")
+    {
+        section.link-page > section.link > section:is(.voters)
+        {
+            order: 100;
+        }
+    }
+    
+    
+    else if(linkOrderThird == "tresci_powiazane")
+    {
+        section.link-page > section.link > section:is(.related)
+        {
+            order: 100;
+        }
+    }
+    else if(linkOrderThird == "znalezisko")
+    {
+        section.link-page > section.link > section:is(.link-block)
+        {
+            order: 100;
+        }
+    }
+    /* DRUGIE MIEJSCE */
+    if(linkOrderSecond == "tresci_powiazane")
+    {
+        section.link-page > section.link > section:is(.related)
+        {
+            order: 100;
+        }
+    }
+    else if(linkOrderSecond == "komentarze")
+    {
+        section.link-page > section.link > section.comments > section:is(.stream.link-comments)
+        {
+            order: 10;
+        }
+    }
+    else if(linkOrderSecond == "edytor_komentarza")
+    {
+        section.link-page > section.link > section.comments > header:is(.stream-top),
+        section.link-page > section.link > section.comments > section:is(.editor)
+        {
+            order: 10;
+        }
+    }
+    else if(linkOrderSecond == "wykopujacy_i_zakopujacy")
+    {
+        section.link-page > section.link > section:is(.voters)
+        {
+            order: 10;
+        }
+    }
+    else if(linkOrderSecond == "znalezisko")
+    {
+        section.link-page > section.link > section:is(.link-block)
+        {
+            order: 10;
+        }
+    }
+    /* PIERWSZE MIEJSCE */
+    if(linkOrderFirst == "znalezisko")
+    {
+        section.link-page > section.link > section:is(.link-block)
+        {
+            order: 1;
+        }
+    }
+    else if(linkOrderFirst == "tresci_powiazane")
+    {
+        section.link-page > section.link > section:is(.related)
+        {
+            order: 1;
+        }
+    }
+    else if(linkOrderFirst == "komentarze")
+    {
+        section.link-page > section.link > section.comments > section:is(.stream.link-comments)
+        {
+            order: 1;
+        }
+    }
+    else if(linkOrderFirst == "edytor_komentarza")
+    {
+        section.link-page > section.link > section.comments > header:is(.stream-top),
+        section.link-page > section.link > section.comments > section:is(.editor)
+        {
+            order: 1;
+        }
+    }
+    else if(linkOrderFirst == "wykopujacy_i_zakopujacy")
+    {
+        section.link-page > section.link > section:is(.voters)
+        {
+            order: 1;
+        }
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     /* UKRYWANIE WSZYSTKICH KOMENTARZY POD ZNALEZISKIEM */
@@ -18000,72 +18272,12 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         } 
     } 
     
-
-    if(fontCustomEnable == 1)
-    {
-        if(fontFamily != "default")
-        {
-            //@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100..800&display=swap");
-            //@import url('https://github.com/googlefonts/roboto-flex/raw/main/fonts/RobotoFlex%5BGRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght%5D.ttf');
-
-            //:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-            /*if(fontFamily == "Roboto Flex")
-            {
-                @font-face
-                {
-                    // RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght
-                    font-family: 'Roboto Flex'; 
-                    src: 
-                        local("Roboto Flex"),
-                        url('https://wykopx.pl/fonts/RobotoFlex.ttf') format('ttf-variations');
-                    //src:url('https://github.com/googlefonts/roboto-flex/raw/main/fonts/RobotoFlex%5BGRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght%5D.ttf');
-                    //src: url('https://wykopx.pl/fonts/RobotoFlex.ttf') format('ttf-variations');
-                    //font-style: normal;
-                }
-            }*/
-
-            section.entry div.content section.entry-content > div.wrapper
-            {
-                // https://fonts.google.com/knowledge/using_type/loading_variable_fonts_on_the_web
-                //font-family: 'Roboto Flex' !important;
-                //font-variation-settings: "opsz" 44.8333, "wght" 231.25, "GRAD" -66.3196, "wdth" 101.125, "slnt" -7.98611, "XOPQ" 96, "YOPQ" 79, "XTRA" 468, "YTUC" 712, "YTLC" 514, "YTAS" 750, "YTDE" -203, "YTFI" 738;
-                /* font-family: "%s" % (fontFamily); */
-                //font-family: fontFamily !important;
-                //font-size: fontSize!important;
-                //font-weight: unset;
-                //line-height: fontSize!important;
-                //font-weight: fontVariableWght!important;
-                //font-stretch: fontVariableWdth!important;
-                //font-variation-settings: "wght" fontVariableWght !important;// , "wdth" fontStretch, "opsz" fontVariableOpsz!important;
-                //font-variation-settings: 'wght' 350, 'slnt' , ;   
-            /*                             
-                            '                
-                            'slnt' fontVariableSlnt,    
-                            'GRAD' fontVariableGRAD,
-                            'XTRA' fontVariableXTRA,
-                            'XOPQ' fontVariableXOPQ,
-                            'YOPQ' fontVariableYOPQ,
-                            'YTLC' fontVariableYTLC,
-                            'YTUC' fontVariableYTUC,
-                            'YTAS' fontVariableYTAS,
-                            'YTDE' fontVariableYTDE,
-                            'YTFI' fontVariableYTFI !important; */
-                //font-stretch: fontStretch!important;
-                //font-style: italic;
-                // slnt - /* font-style: oblique + 40deg (angle) */
-                //font-variation-settings: "ital" fontVariableItal;  /* ital (0...1) */
-                //font-synthesis: none;
-                /* font-optical-sizing: auto;  /* auto / none */
-
-            }
-        }
-    }
     
-    
-    
-    
-    
+
+
+
+
+
     
     /* OBRAZEK OTWARTY W NOWEJ KARCIE */
     if(nightModeWhiteBackgroundImages == 1)
@@ -21381,7 +21593,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     /* VARIABLES */
 
     versor = "style"; // "style", "blank", "block"
-    version = "3.0.16";   
+    version = "3.0.17";   
     /* xblocker = "2.49" */
     
     
