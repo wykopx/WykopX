@@ -22111,7 +22111,72 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             min-width: 100%;
             max-width: 100%;
         }
-    } 
+    }
+    /* WYKOP X PHOTO VIEWER - END */
+
+
+    /* FONT FAMILY / VARIABLE FONTS / ROBOTO FLEX */
+    /*
+    if(fontCustomEnable == 1)
+    {
+        if(fontFamily != "default")
+        {
+            //@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100..800&display=swap");
+            //@import url('https://github.com/googlefonts/roboto-flex/raw/main/fonts/RobotoFlex%5BGRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght%5D.ttf');
+            //:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+            if(fontFamily == "Roboto Flex")
+            {
+                @font-face
+                {
+                    // RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght
+                    //font-family: 'Roboto Flex'; 
+                    //src: local("Roboto Flex"), url('https://wykopx.pl/fonts/RobotoFlex.ttf') format('ttf-variations');
+                    //src:url('https://github.com/googlefonts/roboto-flex/raw/main/fonts/RobotoFlex%5BGRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght%5D.ttf');
+                    //src: url('https://wykopx.pl/fonts/RobotoFlex.ttf') format('ttf-variations');
+                    //font-style: normal;
+                }
+            }
+
+            section.entry div.content section.entry-content > div.wrapper
+            {
+                // https://fonts.google.com/knowledge/using_type/loading_variable_fonts_on_the_web
+                //font-family: 'Roboto Flex' !important;
+                //font-variation-settings: "opsz" 44.8333, "wght" 231.25, "GRAD" -66.3196, "wdth" 101.125, "slnt" -7.98611, "XOPQ" 96, "YOPQ" 79, "XTRA" 468, "YTUC" 712, "YTLC" 514, "YTAS" 750, "YTDE" -203, "YTFI" 738;
+                //font-family: "%s" % (fontFamily);
+                //font-family: fontFamily !important;
+                //font-size: fontSize!important;
+                //font-weight: unset;
+                //line-height: fontSize!important;
+                //font-weight: fontVariableWght!important;
+                //font-stretch: fontVariableWdth!important;
+                //font-variation-settings: "wght" fontVariableWght !important;// , "wdth" fontStretch, "opsz" fontVariableOpsz!important;
+                //font-variation-settings: 'wght' 350, 'slnt' , ;   
+                
+                            'slnt' fontVariableSlnt,    
+                            'GRAD' fontVariableGRAD,
+                            'XTRA' fontVariableXTRA,
+                            'XOPQ' fontVariableXOPQ,
+                            'YOPQ' fontVariableYOPQ,
+                            'YTLC' fontVariableYTLC,
+                            'YTUC' fontVariableYTUC,
+                            'YTAS' fontVariableYTAS,
+                            'YTDE' fontVariableYTDE,
+                            'YTFI' fontVariableYTFI !important; */
+                //font-stretch: fontStretch!important;
+                //font-style: italic;
+                //slnt - /* font-style: oblique + 40deg (angle) */
+                //font-variation-settings: "ital" fontVariableItal;  /* ital (0...1) */
+                //font-synthesis: none;
+                // font-optical-sizing: auto;  // auto / none */
+            }
+        }
+    }
+*/
+
+
+
+
 }
 @-moz-document url-prefix("moz-extension://"), url-prefix("chrome-extension://")
 {

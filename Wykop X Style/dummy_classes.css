@@ -1,0 +1,34 @@
+    /* dummyClass - https://github.com/openstyles/stylus/issues/1719  */
+
+    /* WPISY - przypiete na stronie głównej */
+    main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.entry
+    /* WPISY */
+    main.main > section > div.content > section.bucket-page > section.microblog > section.stream > div.content > section.entry,
+    main.main > section > div.content > section.category-page > section.microblog > section.stream > div.content > section.entry,
+    main.main > section > div.content > section.search-page > section.search > section > section.stream > div.content > section.entry,
+    main.main > section > div.content > section.favourites-page > section.favourites > section.stream > div.content > section.entry,
+    main.main > section > div.content > section.observed-page > section.observed > section.stream > div.content > section.entry,
+    main.main > section > div.content > section.profile-page > section.profile > section > section.stream > div.content > section.entry,
+    main.main > section > div.content > section.tag-page > section.stream > article > section.stream > div.content > section.entry,
+
+    main.main > section > div.content > section.microblog-page > section.microblog > section.stream > div.content > section.entry
+    /* WPISY :is() */
+    main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry main.main > section > div.content > section:is(.bucket-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .microblog-page) > section section.stream > div.content > section.entry:not(.own) main.main > section > div.content > section.search-page > section section.stream > div.content section.entry:not(.own)
+    /* przy uzywaniu dwoch selektorow jeden po drugim, dodac .dummyClassX - https://github.com/openstyles/stylus/issues/1719  */
+
+    /* WPISY W SIDEBARZE: */
+    main.main > section > section.sidebar > section.custom-sidebar > div.content > section.entries > section.entry
+    /* ZNALEZISKA */
+    main.main > section > div.content > section.bucket-page > section.bucket > section.stream > div.content > section.link-block,
+    main.main > section > div.content > section.category-page > section.category > section.stream > div.content > section.link-block,
+    main.main > section > div.content > section.search-page > section.search > section > section.stream > div.content > section.link-block,
+    main.main > section > div.content > section.favourites-page > section.favourites > section.stream > div.content > section.link-block,
+    main.main > section > div.content > section.observed-page > section.observed > section.stream > div.content > section.link-block,
+    main.main > section > div.content > section.profile-page > section.profile > section > section.stream > div.content > section.link-block,
+    main.main > section > div.content > section.tag-page > section.stream > article > section.stream > div.content > section.link-block,
+    main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.link-block,
+    main.main > section > div.content > section.hits-page > section.hits > section.stream > div.content > section.link-block,
+    main.main > section > div.content > section.upcoming-page > section.upcoming > section.stream > div.content > section.link-block,
+
+    main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .hits-page, .upcoming-page) > section section.stream > div.content > section.link-block
+    {}
