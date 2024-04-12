@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name        Wykop XS - MikroCzat
-// @name:pl     Wykop XS - MikroCzat
-// @name:en     Wykop XS - MikroCzat
+// @name        Wykop XS - Mikroczat
+// @name:pl     Wykop XS - Mikroczat
+// @name:en     Wykop XS - Mikroczat
 // @version     3.0.0
 
 
@@ -14,13 +14,8 @@
 // @match       https://wykop.pl/*
 
 
-// @description Wykop X / MirkoCzat / MirkoCzat
-// @description:en Wykop X MikroCzat / MirkoCzat
-
-
-
-
-
+// @description Wykop X - Mikroczat.pl / Mirkoczat
+// @description:en Wykop X - Mikroczat.pl / Mirkoczat
 
 
 // @require https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
@@ -41,8 +36,8 @@ let CSS = "";
 
 	let wykopDomain = "https://wykop.pl";
 	let wxDomain = "https://wykopx.pl";
-	let mikroczatDomain = "https://github.com";
-	let mikroczatPath = "/wykopx/WykopX/wiki/MikroCzat";
+	let mikroczatDomain = "https://mikroczat.pl";
+	let mikroczatPath = "/czat/";
 
 	let mikroczatWindow = null;
 
@@ -99,7 +94,7 @@ let CSS = "";
 
 	createNewNavBarButton({
 		position: "left",
-		text: "MikroCzat ",
+		text: "Mikro<strong>czat</strong>",
 		title: `Wejdź na MikroCzat ${promoString}`,
 		class: "open_mikroczat", // wykopx_open_mikroczat_li
 		hideWithoutXStyle: false,
@@ -107,29 +102,31 @@ let CSS = "";
 		target: "mikroczat",
 		icon: "https://i.imgur.com/9PvHlaA.png",
 		number: null,
-		data: "",
 	})
 
 	function createNewNavBarButton(options)
 	{
-
 		let nav_ul;
 
 		if (options.position == "left") nav_ul = document.querySelector("body header div.left nav.main ul");
 		else if (options.position == "center") nav_ul = document.querySelector("body header div.right nav aside"); // doodle
-		else nav_ul = document.querySelector("body header div.right nav ul");
+		else nav_ul = document.querySelector("body header div.right nav ul"); // brak na wersji mobilnej
 
-		if (nav_ul) // brak na wersji mobilnej
+		if (nav_ul) 
 		{
-			let nav_ul_li = nav_ul.querySelector(`li.wykopx_${options.class}_li`);
+			let nav_ul_li;  // = nav_ul.querySelector(`li.wykopx_${options.class}_li`);
+
 			if (!nav_ul_li)
 			{
 				nav_ul_li = document.createElement("li");
+				nav_ul_li.dataset["v-5182b5f6"] = "";
+
 				if (options.data) nav_ul_li.setAttribute(options.data, null);
 				if (options.hideWithoutXStyle == true) nav_ul_li.classList.add("wykopxs");
 				addWykopXSClassesToElement(nav_ul_li, options.class, "li") // class="wykopx_aaaaaa_li"
 
 				let nav_ul_li_a = document.createElement("a");
+				nav_ul_li_a.dataset["v-5182b5f6"] = "";
 				if (options.url) nav_ul_li_a.setAttribute("href", options.url);
 				if (options.href) nav_ul_li_a.setAttribute("href", options.href);
 				if (options.target) nav_ul_li_a.setAttribute("target", options.target);
@@ -139,9 +136,8 @@ let CSS = "";
 				nav_ul_li_a.classList.add("hybrid");
 				if (options.class) addWykopXSClassesToElement(nav_ul_li_a, options.class);
 
-
 				let nav_ul_li_a_span = document.createElement("span");
-				nav_ul_li_a_span.textContent = options.text;
+				nav_ul_li_a_span.innerHTML = options.text;
 
 				nav_ul_li_a.appendChild(nav_ul_li_a_span);
 				nav_ul_li.appendChild(nav_ul_li_a);
