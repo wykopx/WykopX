@@ -2,7 +2,7 @@
 // @name        Wykop XS - Mikroczat
 // @name:pl     Wykop XS - Mikroczat
 // @name:en     Wykop XS - Mikroczat
-// @version     3.0.0
+// @version     3.0.17
 
 
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
@@ -25,19 +25,24 @@
 // @license     No License
 
 // ==/UserScript==
-const promoString = "Wykop X - MikroCzat";
+const promoString = "- Wykop X";
 const head = document.head;
 let CSS = "";
+
+
 
 (async function ()
 {
 
-	// MIKROCZAT
+
+	// MIKROCZAT XS -- START
 
 	let wykopDomain = "https://wykop.pl";
 	let wxDomain = "https://wykopx.pl";
 	let mikroczatDomain = "https://mikroczat.pl";
-	let mikroczatPath = "/czat/";
+	let mikroczatPath = "/czat";
+
+	let mikroczatChannel = ""; 						// 	https://mikroczat.pl/czat/sejm
 
 	let mikroczatWindow = null;
 
@@ -48,12 +53,18 @@ let CSS = "";
 		event.preventDefault();
 		let windowOptions = "";
 
+		const pathnameArray = new URL(document.URL).pathname.split("/");
+		if (pathnameArray[1] == "tag")
+		{
+			mikroczatChannel = "/" + pathnameArray[2]; // nazwatagu
+		}
+
 		if (event.shiftKey || event.ctrlKey || event.altKey || event.button === 2)
 		{
 			windowOptions = "popup";
 		}
-		mikroczatWindow = window.open(`${mikroczatDomain}${mikroczatPath}`, 'mikroczat', windowOptions);
 
+		mikroczatWindow = window.open(`${mikroczatDomain}${mikroczatPath}${mikroczatChannel}`, 'mikroczat', windowOptions);
 	});
 	document.addEventListener("click", (event) =>
 	{
@@ -62,14 +73,22 @@ let CSS = "";
 	});
 
 
+
 	// WIADOMOŚCI OD MIKROCZAT
 	window.addEventListener('message', function (event)
 	{
 		if (event.origin !== mikroczatDomain) return;
-		console.log('Widomość od Mikroczat', event.data);
-		if (event.data == "MikroCzatOpened") mikroczatWindow.postMessage(window.localStorage.token, mikroczatDomain);
+		console.log('Wiadomość z mikroczat.pl', event.data);
+		//if (event.data == "MikroCzatOpened") mikroczatWindow.postMessage({ type: "token", token: window.localStorage.getItem("token") }, mikroczatDomain);
+		if (event.data == "MikroCzatOpened") mikroczatWindow.postMessage({ type: "TokensObject", token: window.localStorage.getItem("token"), userKeep: window.localStorage.getItem("userKeep") }, mikroczatDomain);
+
+
 		if (event.data == "MikroCzatLoggedIn") bodySection.dataset.mikroczatLogged = true;
-		if (event.data == "MikroCzatClosed") bodySection.dataset.mikroczatLogged = false;
+		if (event.data == "MikroCzatClosed")
+		{
+			bodySection.dataset.mikroczatLogged = false;
+			mikroczatWindow = null;
+		}
 	}, false);
 
 	CSS += `body > section[data-mikroczat-logged="true"] li.wykopx_open_mikroczat_li:after
@@ -89,13 +108,13 @@ let CSS = "";
 		right: -2px;
 	}`;
 
-	document.querySelector("body header div.left nav.main ul");
+
 
 
 	createNewNavBarButton({
 		position: "left",
 		text: "Mikro<strong>czat</strong>",
-		title: `Wejdź na MikroCzat ${promoString}`,
+		title: `Otwórz mikroczat.pl ${promoString}`,
 		class: "open_mikroczat", // wykopx_open_mikroczat_li
 		hideWithoutXStyle: false,
 		url: mikroczatDomain + mikroczatPath,
@@ -114,19 +133,20 @@ let CSS = "";
 
 		if (nav_ul) 
 		{
-			let nav_ul_li;  // = nav_ul.querySelector(`li.wykopx_${options.class}_li`);
+			let nav_ul_li;  // ! = nav_ul.querySelector(`li.wykopx_${options.class}_li`);
 
 			if (!nav_ul_li)
 			{
 				nav_ul_li = document.createElement("li");
-				nav_ul_li.dataset["v-5182b5f6"] = "";
 
 				if (options.data) nav_ul_li.setAttribute(options.data, null);
 				if (options.hideWithoutXStyle == true) nav_ul_li.classList.add("wykopxs");
 				addWykopXSClassesToElement(nav_ul_li, options.class, "li") // class="wykopx_aaaaaa_li"
 
 				let nav_ul_li_a = document.createElement("a");
+				nav_ul_li.dataset["v-5182b5f6"] = "";
 				nav_ul_li_a.dataset["v-5182b5f6"] = "";
+
 				if (options.url) nav_ul_li_a.setAttribute("href", options.url);
 				if (options.href) nav_ul_li_a.setAttribute("href", options.href);
 				if (options.target) nav_ul_li_a.setAttribute("target", options.target);

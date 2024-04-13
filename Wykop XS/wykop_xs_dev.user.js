@@ -2,7 +2,7 @@
 // @name        Wykop XS DEV
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
-// @version     3.0.16
+// @version     3.0.17
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
 // @contributionURL  	https://buycoffee.to/wykopx
 // @author      Wykop X <wykopx@gmail.com>
@@ -10,10 +10,9 @@
 // @match       https://wykop.pl/*
 // @description Wykop XS służy do wspomagania działania stylu "Wykop X Style", który jest wymagany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://style.wykopx.pl
 // @description:en Wykop XS is a helper script for userstyle "Wykop X Style" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://style.wykopx.pl
-// @require https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
-// @require https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
-// @require https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js
-
+// @require 	https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
+// @require 	https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
+// @require 	https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js
 // @require		https://cdn.jsdelivr.net/gh/CoeJoder/waitForKeyElements.js@latest/waitForKeyElements.js
 
 
@@ -26,7 +25,7 @@
 
 	const currentVersion = "3.0.16";
 	let dev = false;
-	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
+	const promoString = " [Dodane przez Wykop X #wykopwnowymstylu]";
 
 	//dayjs.extend(relativeTime); // https://day.js.org/docs/en/plugin/relative-time // https://www.jsdelivr.com/package/npm/dayjs?tab=files&path=plugin
 	dayjs.extend(window.dayjs_plugin_relativeTime);
@@ -39,14 +38,7 @@
 	let wxs_modal = null;
 
 
-	let votesFetchingLimitMinimumVotes = 5;
-	let votesFetchingLimitMaximumHoursOld = 48;
-	let votesFetchingFirstDelayInSeconds = 1;		// seconds
-	let votesFetchingOngoingDelayInSeconds = 20; 	// seconds
 
-	let votesFetchingHigherFrequencyLimitMinimumVotes = 30;
-	let votesFetchingHigherFrequencyLimitMaximumHoursOld = 24;
-	let votesFetchingHigherFrequencyDelayInSeconds = 20; // seconds
 
 
 	const root = document.documentElement;
@@ -143,6 +135,17 @@
 	}
 
 	settings.votingExplosionEnable = wykopxSettings.getPropertyValue("--votingExplosionEnable") ? wykopxSettings.getPropertyValue("--votingExplosionEnable") === '1' : false;
+
+	// checkPluses()
+	let votesFetchingLimitMinimumVotes = 1;
+	let votesFetchingLimitMaximumHoursOld = 48;
+	let votesFetchingFirstDelayInSeconds = 1;		// seconds
+	let votesFetchingOngoingDelayInSeconds = 990; 	// seconds
+
+	let votesFetchingHigherFrequencyLimitMinimumVotes = 30;
+	let votesFetchingHigherFrequencyLimitMaximumHoursOld = 24;
+	let votesFetchingHigherFrequencyDelayInSeconds = 990; // seconds
+
 	settings.checkEntryPlusesWhenVoting = wykopxSettings.getPropertyValue("--checkEntryPlusesWhenVoting") ? wykopxSettings.getPropertyValue("--checkEntryPlusesWhenVoting") === '1' : true;
 	settings.checkEntryPlusesEnable = wykopxSettings.getPropertyValue("--checkEntryPlusesEnable") ? wykopxSettings.getPropertyValue("--checkEntryPlusesEnable") === '1' : true;
 	if (settings.checkEntryPlusesEnable) 
@@ -263,7 +266,9 @@
 	settings.wxsUserLabelsEnable = wykopxSettings.getPropertyValue("--wxsUserLabelsEnable") ? wykopxSettings.getPropertyValue("--wxsUserLabelsEnable") === '1' : true;
 
 	let falszyweRozoweArray = null;
+	let falszyweNiebieskieArray = null;
 	let mapaTrolli = null;
+
 	if (settings.wxsUserLabelsEnable)
 	{
 		IntersectionObserverEnabled = true;
@@ -279,15 +284,24 @@
 		if (settings.wxsUserLabelsFakeFemales)
 		{
 			// LISTA FAŁSZYWYCH RÓŻOWYCH PASKÓW
-			const listafalszywychrozowych = ['nenq123', 'konserwix', 'Diamond-kun', 'Mantusabra', 'Nighthuntero', 'WyuArtykyu', 'ElCidX', 'cword',
+			const listafalszywychrozowych = ['nenq123', 'domek_drewniany', 'konserwix', 'Diamond-kun', 'Mantusabra', 'Nighthuntero', 'WyuArtykyu', 'ElCidX', 'cword',
 				'washington', 'Obrzydzenie', 'conamirko', 'i_took_a_pill_in_remiza', 'Riolet',
 				'ChwilowaPomaranczka', 'RobieZdrowaZupke', 'IlllIlIIIIIIIIIlllllIlIlIlIlIlIlIII', 'Banderoza',
 				'deiceberg', 'Chodtok', 'kierowcaautobusuofficial', 'ToJestNiepojete', 'model_wygenerowany_na_wykoppl',
 				'chwilowypaczelok', 'sinls', 'KRZYSZTOF_DZONG_UN', 'miszczu90', 'ToJestNiepojete', ' powodzenia'];
+			listafalszywychrozowych.push('BlackBlack');
+
+			const listafalszywychniebieskich = ['Kantor_wymiany_mysli_i_wrazen'];
+			listafalszywychniebieskich.push("DragonTattoo2404");
+
 
 			localStorageUserLabels.setItem('falszyweRozowe', listafalszywychrozowych).then(() => { });
+			localStorageUserLabels.setItem('falszyweNiebieskie', listafalszywychniebieskich).then(() => { });
+
+
 			// get from localstorage
 			falszyweRozoweArray = await localStorageUserLabels.getItem("falszyweRozowe");
+			falszyweNiebieskieArray = await localStorageUserLabels.getItem("falszyweNiebieskie");
 		}
 
 
@@ -378,7 +392,9 @@
 	settings.topNavMyWykopButton = wykopxSettings.getPropertyValue("--topNavMyWykopButton") ? wykopxSettings.getPropertyValue("--topNavMyWykopButton") === '1' : false;
 	settings.topNavMicroblogButton = wykopxSettings.getPropertyValue("--topNavMicroblogButton") ? wykopxSettings.getPropertyValue("--topNavMicroblogButton") === '1' : false;
 	settings.topNavMessagesButton = wykopxSettings.getPropertyValue("--topNavMessagesButton") ? wykopxSettings.getPropertyValue("--topNavMessagesButton") === '1' : false;
-	settings.topNavNightSwitchButton = wykopxSettings.getPropertyValue("--topNavNightSwitchButton") ? wykopxSettings.getPropertyValue("--topNavNigtopNavNightSwitchButtonhtSwitchButton") === '1' : false;
+	settings.topNavNightSwitchButton = wykopxSettings.getPropertyValue("--topNavNightSwitchButton") ? wykopxSettings.getPropertyValue("--topNavNightSwitchButton") === '1' : false;
+
+
 
 	// DODATKOWE PRZYCISKI NA BELCE MOBILNEJ
 	settings.mobileNavBarHide = wykopxSettings.getPropertyValue("--mobileNavBarHide") ? wykopxSettings.getPropertyValue("--mobileNavBarHide") === '1' : false;
@@ -571,7 +587,7 @@
 		else if (pathnameArray[1] == "tag")
 		{
 			pageType = "tag";
-			pageSubtype = "tag";
+			pageSubtype = pathnameArray[2]; // nazwatagu
 			pageObjects = ["znaleziska", "wpisy", "komentarze"];
 		}
 		consoleX(`Typ strony: ${pageType} ${pageType != pageSubtype ? pageSubtype : ""}`, 1)
@@ -579,34 +595,6 @@
 	}
 
 
-
-	// ----- NAVIGATION PAGE CHANGES
-	async function browserExecuteOnPageChange(event)
-	{
-		consoleX(`browserExecuteOnPageChange() -> navigation -> navigate event — ${event.type}`, 1);
-		consoleX(`browserExecuteOnPageChange() -> document.title: ${document.title}`, 1);
-		//console.log(event);
-
-		pageTabTitleOriginal = document.title;
-		pageTabTitleProcessed = pageTabTitleOriginal;
-
-		//visiblePlusesObserver.disconnect();
-		//if (sectionObjectIntersectionObserver) sectionObjectIntersectionObserver.disconnect();
-		//if (settings.actionBoxEnable && (settings.filterUserComments || settings.filterUserReplies)) filterUserOff(); // usuniecie filtra komentarzy
-
-		runWithDelay(500, function ()
-		{
-			if (isURLChanged())
-			{
-				const previousPageSubtype = pageSubtype;
-				newPageURL();
-				if (pageSubtype == previousPageSubtype) removeAllDataWXSAttributes();
-			}
-		});
-
-		// 7s
-		if (!settings.tabChangeOnlyOnHiddenState) runWithDelay(7000, () => { executeTabAndFaviconChanges() })
-	}
 
 
 	function removeAllDataWXSAttributes()
@@ -635,77 +623,6 @@
 	}
 
 
-	// PAGE LOAD + PAGE CHANGES
-	function browserExecuteOnPageLoadAndPageChange()
-	{
-		consoleX(`browserExecuteOnPageLoadAndPageChange()`, 1);
-
-		runWithDelay(100, function ()
-		{
-			countNumberOfNotificationsOnDesktop();
-		});
-
-		if (settings.mirkoukrywaczEnable) 
-		{
-			runWithDelay(3000, function ()
-			{
-				mirkoukrywaczHideAllBlockedElements(); // ukrycie elementow blokowanych przez Mirkowolacz oraz actionBox
-			});
-		}
-
-		if (pageType == "tag" && settings.tagHeaderEditable)
-		{
-			runWithDelay(2200, function ()
-			{
-				tagHeaderEditableWatcher();
-			})
-		}
-
-		if (pageType == "profil")	// info o blokadzie
-		{
-			// runWithDelay(100, function ()
-			// {
-
-			// })
-		}
-
-		if (settings.autoOpenMoreContentEverywhere)
-		{
-			runWithDelay(6000, function ()
-			{
-				autoOpenMoreContentEverywhere();
-			})
-		}
-
-
-		// 10s
-		if (settings.autoOpenSpoilersEverywhere)
-		{
-			runWithDelay(10000, function ()
-			{
-				autoOpenSpoilersEverywhere();
-			});
-		}
-
-		if (settings.removeAnnoyancesEnable)
-		{
-			runWithDelay(18000, function ()
-			{
-				if (settings.removeAnnoyancesIframes) waitForKeyElements(`html > iframe, html > body > iframe`, removeFromDOM, false);
-				if (settings.removeAnnoyancesScripts) waitForKeyElements(`html > head > script[src^="https://"]`, removeFromDOM, false);
-			})
-
-			runWithDelay(3000, function ()
-			{
-				removeAnnoyances()
-			})
-		}
-
-		// waitForKeyElements("main.main > section > div.content section.stream > header.stream-top", buildConsole, false)
-		// buildConsole();
-		// refreshConsole();
-	}
-
 
 
 
@@ -726,8 +643,10 @@
 			}
 		}
 
-		// # przekierowanie URL http://wykop.pl/#heheszki albo http://wykop.pl/#wykop/@m__b
-		if (hash.length > 0)
+		let excludedPaths = ["szukaj", "wpis", "link", "artykul", "k", "wykopalisko", "mikroblog", "osberwowane", "hity", "powiadomienia", "ustawienia"];
+
+		// # przekierowanie URL http://wykop.pl/#heheszki albo http://wykop.pl/#wykop/@m__b ale nie https://wykop.pl/wpis/213123/tresc#123456
+		if (!excludedPaths.includes(pathnameArray[1]) && hash.length > 0)
 		{
 			let tagWithHash = hash.split("/")[0];
 			let tagWithoutHash = tagWithHash.slice(1);
@@ -741,7 +660,7 @@
 		}
 
 		// @ przekierowanie URL http://wykop.pl/@NadiaFrance albo http://wykop.pl/#wykop/@m__b
-		if (pathnameArray[1] !== "szukaj" && pathname.length > 2)
+		if (!excludedPaths.includes(pathnameArray[1]) && pathname.length > 2)
 		{
 			if (at || (at = getUserFromUrl(pathname))) { }
 		}
@@ -1271,7 +1190,7 @@
 
 		if (Object.keys(dataPOST).length >= 2)
 		{
-			if (dev) console.log(" 🍌🍌🍌🍌 Sending this data to api.wykopx.pl: ", dataPOST)
+			console.log(" 🍌🍌🍌🍌 Sending this data to api.wykopx.pl: ", dataPOST)
 
 			// TODO
 			// fetch('https://api.wykopx.pl/api/v3/', { 
@@ -2120,7 +2039,7 @@
 		CSS += `
 			/* WYKOP XS CODE - START */
 			section.link-block > section > article > figure::before,
-			section.link-page section.link-block[data-wxs_video_duration] > section::before, 				/* WYKOP XS ONLY */
+			section.link-page section.link-block[data-wxs_video_duration] > section::before, 										/* WYKOP XS ONLY */
 			section.entry[data-wxs_video_duration] > article > div.edit-wrapper > section.embed > section.embed-ghost::before		/* WYKOP XS ONLY */
 			{
 				content: var(--wxs_video_duration);	/* WYKOP XS ONLY */
@@ -2137,6 +2056,7 @@
 				padding: 4rem 25rem 4rem 25rem;
 				display: flex;
 				border-bottom: 1px solid var(--alto);
+				border-radius: 0 var(--borderRadius) var(--borderRadius) 0!important;
 				justify-content: center;
 				align-items: center;
 				color: rgba(180, 180, 180, 1);
@@ -2210,16 +2130,16 @@
 				{
 					if (settings.checkEntryPlusesEnable)
 					{
-						sectionObjectElement.style.setProperty('--votesAll', `"👨${wxs_votes_all}"`);
+						sectionObjectElement.style.setProperty('--votesAll', `"👨${wxs_votes_all}"`);		// var(--votesAll)
 						sectionObjectElement.dataset.wxs_votes_all = wxs_votes_all;							// data-wxs_votes_all="-10"
-						sectionObjectElement.style.setProperty('--votesUp', `"${wxs_votes_up > 0 ? settings.prefixBeforePlusesCount : ""}${wxs_votes_up}"`);
+						sectionObjectElement.style.setProperty('--votesUp', `"${wxs_votes_up > 0 ? settings.prefixBeforePlusesCount : ""}${wxs_votes_up}"`);	// var(--votesUp);
 						sectionObjectElement.dataset.wxs_votes_up = wxs_votes_up;							// data-wxs_votes_all="10"
-						sectionObjectElement.style.setProperty('--votesDown', `"${wxs_votes_down > 0 ? settings.prefixBeforeMinusesCount : ""}${wxs_votes_down}"`);
+						sectionObjectElement.style.setProperty('--votesDown', `"${wxs_votes_down > 0 ? settings.prefixBeforeMinusesCount : ""}${wxs_votes_down}"`);	//var(--votesDown)
 						sectionObjectElement.dataset.wxs_votes_down = wxs_votes_down;						// data-wxs_votes_all="20"
-						sectionObjectElement.style.setProperty('--votesCount', `"${wxs_votes_up > 0 ? settings.prefixBeforePlusesCount : wxs_votes_up < 0 ? settings.prefixBeforeMinusesCount : ""}${wxs_votes_count}"`);
+						sectionObjectElement.style.setProperty('--votesCount', `"${wxs_votes_up > 0 ? settings.prefixBeforePlusesCount : wxs_votes_up < 0 ? settings.prefixBeforeMinusesCount : ""}${wxs_votes_count}"`); // var(--votesCount)
 						sectionObjectElement.dataset.wxs_votes_count = wxs_votes_count;						// data-wxs_votes_all="30"
 
-						sectionObjectElement.dataset.wxs_voted = sectionObjectElement.__vue__.item.voted;	// data-wxs_voted=
+						sectionObjectElement.dataset.wxs_voted = sectionObjectElement.__vue__.item.voted;	// data-wxs_voted=1  data-wxs_voted=0
 
 						if (settings.checkEntryPlusesPerHour && !sectionObjectElement.dataset.wxs_first_load_votes_count)
 						{
@@ -2488,12 +2408,23 @@
 							}
 							if (settings.wxsUserLabelsEnable)
 							{
-								if (settings.wxsUserLabelsFakeFemales && falszyweRozoweArray && falszyweRozoweArray.includes(userDataObject.username))
+								if (settings.wxsUserLabelsFakeFemales)
 								{
-									userDataObject.gender = "m";
-									sectionObjectElement.__vue__.item.author.gender = "m";
-									userDataObject.changeSexTo = "male";
+									if (falszyweRozoweArray && falszyweRozoweArray.includes(userDataObject.username))
+									{
+										userDataObject.gender = "m";
+										sectionObjectElement.__vue__.item.author.gender = "m";
+										userDataObject.changeSexTo = "male";
+									}
+									else if (falszyweNiebieskieArray && falszyweNiebieskieArray.includes(userDataObject.username))
+									{
+										userDataObject.gender = "f";
+										sectionObjectElement.__vue__.item.author.gender = "f";
+										userDataObject.changeSexTo = "female";
+									}
 								}
+
+
 								if (settings.wxsUserLabelsTrolls && mapaTrolli)
 								{
 									let wxsUserLabelObject = null;
@@ -2840,12 +2771,12 @@
 								infoboxInnerHTML += `<var class="wxs_user_member_since">${membersSinceInDays} dni </var>`;
 							}
 						}
-						// mniej niz 8 miesiecy
-						else if (membersSinceInMonths < 9)
+						// mniej niz 12 miesiecy
+						else if (membersSinceInMonths < 12)
 						{
 							infoboxInnerHTML += `<var class="wxs_user_member_since">${membersSinceInMonths} mies. </var>`;
 						}
-						// ponad 8 miesiecy
+						// ponad 11 miesiecy
 						else
 						{
 							if (settings.infoboxUserMemberSinceYear) infoboxInnerHTML += `<var class="wxs_user_member_since">${memberSinceDate.year()}</var>`; // 2011
@@ -4463,13 +4394,17 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 
 
-	// MIKROCZAT
+	// MIKROCZAT XS -- START
+
 	let wykopDomain = "https://wykop.pl";
 	let wxDomain = "https://wykopx.pl";
-	let mikroczatDomain = "https://mikroczat.pl"; 		// 	https://mikroczat.pl
-	let mikroczatPath = "/czat"; 		// 	https://mikroczat.pl/czat
+	const mikroczatDomain = "https://mikroczat.pl"; 		// 	https://mikroczat.pl
+	const mikroczatPath = "/chat"; 							// 	https://mikroczat.pl/czat
+	let mikroczatChannel = "/sejm"; 						// 	https://mikroczat.pl/czat/sejm
 
 	let mikroczatWindow = null;
+
+
 	document.addEventListener("mousedown", (event) =>
 	{
 		if (!event.target.closest(".wykopx_open_mikroczat")) return;
@@ -4480,8 +4415,8 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		{
 			windowOptions = "popup";
 		}
-		mikroczatWindow = window.open(`${mikroczatDomain}${mikroczatPath}`, 'mikroczat', windowOptions);
-
+		if (pageType == "tag") mikroczatChannel = `/${pageSubtype}`
+		mikroczatWindow = window.open(`${mikroczatDomain}${mikroczatPath}${mikroczatChannel}`, 'mikroczat', windowOptions);
 	});
 	document.addEventListener("click", (event) =>
 	{
@@ -4490,14 +4425,23 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	});
 
 
+
+
 	// WIADOMOŚCI OD MIKROCZAT
 	window.addEventListener('message', function (event)
 	{
 		if (event.origin !== mikroczatDomain) return;
 		console.log('Widomość od Mikroczat', event.data);
-		if (event.data == "MikroCzatOpened") mikroczatWindow.postMessage(window.localStorage.token, mikroczatDomain);
+		//if (event.data == "MikroCzatOpened") mikroczatWindow.postMessage({ type: "token", token: window.localStorage.getItem("token") }, mikroczatDomain);
+		if (event.data == "MikroCzatOpened") mikroczatWindow.postMessage({ type: "TokensObject", token: window.localStorage.getItem("token"), userKeep: window.localStorage.getItem("userKeep") }, mikroczatDomain);
+
+
 		if (event.data == "MikroCzatLoggedIn") bodySection.dataset.mikroczatLogged = true;
-		if (event.data == "MikroCzatClosed") bodySection.dataset.mikroczatLogged = false;
+		if (event.data == "MikroCzatClosed")
+		{
+			bodySection.dataset.mikroczatLogged = false;
+			mikroczatWindow = null;
+		}
 	}, false);
 
 	CSS += `body > section[data-mikroczat-logged="true"] li.wykopx_open_mikroczat_li:after
@@ -4516,6 +4460,16 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		top: -2px;
 		right: -2px;
 	}`;
+	// MIKROCZAT XS -- END
+
+
+
+
+
+
+
+
+
 
 
 	function addWykopXButtonsToNavBar()
@@ -4524,15 +4478,14 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 		createNewNavBarButton({
 			position: "left",
-			text: "MikroCzat ",
-			title: `Wejdź na MikroCzat ${promoString}`,
+			text: "Mikro<strong>czat</strong>",
+			title: `Otwórz mikroczat.pl ${promoString}`,
 			class: "open_mikroczat", // wykopx_open_mikroczat_li
 			hideWithoutXStyle: false,
-			url: "https://wykopx.pl/_test",
+			url: mikroczatDomain + mikroczatPath,
 			target: "mikroczat",
 			icon: "https://i.imgur.com/9PvHlaA.png",
 			number: null,
-			data: "",
 		})
 
 
@@ -4905,11 +4858,12 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				</div>
 			</a>
 		</aside>*/
-		else nav_ul = document.querySelector("body header div.right nav ul");
+		else nav_ul = document.querySelector("body header div.right nav ul"); // brak na wersji mobilnej
 
-		if (nav_ul) // brak na wersji mobilnej
+		if (nav_ul) 
 		{
 			let nav_ul_li = nav_ul.querySelector(`li.wykopx_${options.class}_li`);
+
 			if (!nav_ul_li)
 			{
 				nav_ul_li = document.createElement("li");
@@ -4918,6 +4872,8 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				addWykopXSClassesToElement(nav_ul_li, options.class, "li") // class="wykopx_aaaaaa_li"
 
 				let nav_ul_li_a = document.createElement("a");
+				nav_ul_li.dataset["v-5182b5f6"] = "";
+				nav_ul_li_a.dataset["v-5182b5f6"] = "";
 				if (options.url) nav_ul_li_a.setAttribute("href", options.url);
 				if (options.href) nav_ul_li_a.setAttribute("href", options.href);
 				if (options.target) nav_ul_li_a.setAttribute("target", options.target);
@@ -4929,7 +4885,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 
 				let nav_ul_li_a_span = document.createElement("span");
-				nav_ul_li_a_span.textContent = options.text;
+				nav_ul_li_a_span.innerHTML = options.text;
 
 				nav_ul_li_a.appendChild(nav_ul_li_a_span);
 				nav_ul_li.appendChild(nav_ul_li_a);
@@ -5106,12 +5062,15 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				{
 					body.setAttribute('data-night-mode', 'true');
 					localStorage.setItem('nightMode', 1);
+					if (mikroczatWindow && mikroczatDomain) mikroczatWindow.postMessage({ type: "nightMode", value: 1 }, mikroczatDomain);
 				}
 				else
 				{
 					body.removeAttribute('data-night-mode');
 					localStorage.setItem('nightMode', 0);
+					if (mikroczatWindow && mikroczatDomain) mikroczatWindow.postMessage({ type: "nightMode", value: 0 }, mikroczatDomain);
 				}
+
 			});
 		}
 	}
@@ -5738,9 +5697,9 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		console.clear();
 		consoleX(`checkPluses(showUpdatedValues: ${showUpdatedValues})`, 0);
 
-		if (sectionObjectElement == null && ratingBoxSection)
+		if (sectionObjectElement == null && ratingBoxSection?.__vue__?.$parent)
 		{
-			if (sectionObjectElement.__vue__.item.resource == "link")
+			if (ratingBoxSection?.__vue__?.$parent.item.resource == "link")
 			{
 				sectionObjectElement = ratingBoxSection.closest("section.link-block")
 			}
@@ -5770,21 +5729,21 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 			const votesObject = getVotesObject(sectionObjectElement, ratingBoxSection);
 
-			if (votesObject) // nie dla subkomentarzy
+			if (votesObject) // TODO subkomentarze
 			{
 				console.log("checkPluses() -> votesObject", votesObject);
 
 				// let sectionObjectElement = votesObject.sectionObjectElement;
 				sectionObjectElement.classList.remove("plusesAdded", "plusesRemoved", "minusesAdded", "minusesRemoved");
 
-				// sectionObjectElement.style.removeProperty('--plusesAdded');
-				// sectionObjectElement.style.removeProperty('--plusesRemoved');
-				// sectionObjectElement.style.removeProperty('--minusesAdded');
-				// sectionObjectElement.style.removeProperty('--minusesRemoved');
+				sectionObjectElement.style.removeProperty('--plusesAdded');
+				sectionObjectElement.style.removeProperty('--plusesRemoved');
+				sectionObjectElement.style.removeProperty('--minusesAdded');
+				sectionObjectElement.style.removeProperty('--minusesRemoved');
 
 				fetch(votesObject.fetchURL,
 					{
-						method: "GET", // or 'PUT'
+						method: "GET",
 						headers: {
 							"Content-Type": "application/json",
 							Authorization: "Bearer " + window.localStorage.token,
@@ -5829,6 +5788,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 						// ZMIENIŁA SIĘ LICZBA PLUSÓW / WYKOPÓW
 						if (votesObject.votesCountChanged)
 						{
+							//alert("votesCountChanged")
 							console.log("checkPluses() -> --------------------");
 							console.log("checkPluses() -> VOTES COUNT CHANGED", sectionObjectElement)
 
@@ -5841,17 +5801,11 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 							sectionObjectElement.dataset.wxs_votes_separated = votesObject.separated || true;
 
 							updateFetchedVotesData(sectionObjectElement, votesObject, showUpdatedValues);
-
 						}
 					});
 			}
 		}
 	}
-
-
-
-
-
 
 	function updateFetchedVotesData(sectionObjectElement, votesObject, showUpdatedValues = true, onlyPluses = false)
 	{
@@ -7378,9 +7332,29 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 	/* ------------- EVENTS ------------ */
+
+	// lOADED PAGE
+	window.onload = function (event)
+	{
+		consoleX("windows.onload", 1)
+		loadTime = dayjs();
+
+		browserExecuteOnPageLoad();
+		browserExecuteOnPageLoadAndPageChange();
+	};
+
+	/* NEW WYKOP PAGE REDIRECTION */
+	navigation.addEventListener("navigate", (event) =>
+	{
+		consoleX(`🎈 Event: "navigate"`)
+		loadTime = dayjs();
+		browserExecuteOnPageChange(event);
+		browserExecuteOnPageLoadAndPageChange();
+	});
+
 	function handleWindowEvent(event)
 	{
-		// console.log(`handleWindowEvent() -> event.type: ${event.type} was fired`);
+		console.log(`handleWindowEvent() -> event.type: ${event.type} was fired`);
 		// console.log(event);
 	}
 	window.addEventListener('load', handleWindowEvent); 		// 1.
@@ -7405,32 +7379,11 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		“replacestate”: This event is fired when the history.replaceState() method is called, which modifies the current state in the history stack. This event can be used to perform some actions when the current state is changed.
 	*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-	// async function awariaSerwera()
-	// {
-	// 	let awaria = document.querySelector(`body > section > footer > a[onclick="window.location.href = reloadURL"`);
-	// 	if (awaria) alert("AWARIA");
-	// }
-
-
-	// ---- PAGE OPENED
+	// ---- PAGE OPENED 1st TIME
 	async function browserExecuteOnPageLoad()
 	{
 		// awariaSerwera();
-
 		consoleX(`browserExecuteOnPageLoad`, 1);
-
 		if (isURLChanged()) newPageURL()
 
 		const topHeaderProfileButton = document.querySelector("body header > div.right > nav > ul > li.account a.avatar");
@@ -7449,8 +7402,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		// if (user.username == null) consoleX(`Cześć Anon.Nie jesteś zalogowany na Wykopie(⌐ ͡■ ͜ʖ ͡■)`);
 		// else consoleX(`Cześć ${ user.username }(⌐ ͡■ ͜ʖ ͡■)`);  
-
-
 
 		focusOnAddingNewMicroblogEntry();
 		addWykopXButtonsToNavBar();
@@ -7502,10 +7453,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			});
 		}
 
-
-
-
-
 		// 20s
 		//runWithDelay(25000, function ()
 		runWithDelay(1000, function ()
@@ -7525,9 +7472,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 			addWykopXPromoBanner();
 		});
-
-
-
 
 		runWithDelay(30000, async function ()
 		{
@@ -7565,6 +7509,103 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			archiveXNewestEntry();
 		}
 	}
+	// ----- PAGE NAVIGATION
+	async function browserExecuteOnPageChange(event)
+	{
+		consoleX(`browserExecuteOnPageChange() -> navigation -> navigate event — ${event.type}`, 1);
+		consoleX(`browserExecuteOnPageChange() -> document.title: ${document.title}`, 1);
+		//console.log(event);
+
+		pageTabTitleOriginal = document.title;
+		pageTabTitleProcessed = pageTabTitleOriginal;
+
+		//visiblePlusesObserver.disconnect();
+		//if (sectionObjectIntersectionObserver) sectionObjectIntersectionObserver.disconnect();
+		//if (settings.actionBoxEnable && (settings.filterUserComments || settings.filterUserReplies)) filterUserOff(); // usuniecie filtra komentarzy
+
+		runWithDelay(500, function ()
+		{
+			if (isURLChanged())
+			{
+				const previousPageSubtype = pageSubtype;
+				newPageURL();
+				if (pageSubtype == previousPageSubtype) removeAllDataWXSAttributes();
+			}
+		});
+
+		// 7s
+		if (!settings.tabChangeOnlyOnHiddenState) runWithDelay(7000, () => { executeTabAndFaviconChanges() })
+	}
+	// ---- PAGE OPENED 1st TIME + PAGE NAVIGATION
+	async function browserExecuteOnPageLoadAndPageChange()
+	{
+		consoleX(`browserExecuteOnPageLoadAndPageChange()`, 1);
+
+		runWithDelay(100, function ()
+		{
+			countNumberOfNotificationsOnDesktop();
+		});
+
+		if (settings.mirkoukrywaczEnable) 
+		{
+			runWithDelay(3000, function ()
+			{
+				mirkoukrywaczHideAllBlockedElements(); // ukrycie elementow blokowanych przez Mirkowolacz oraz actionBox
+			});
+		}
+
+		if (pageType == "tag" && settings.tagHeaderEditable)
+		{
+			runWithDelay(2200, function ()
+			{
+				tagHeaderEditableWatcher();
+			})
+		}
+
+		if (pageType == "profil")	// info o blokadzie
+		{
+			// runWithDelay(100, function ()
+			// {
+
+			// })
+		}
+
+		if (settings.autoOpenMoreContentEverywhere)
+		{
+			runWithDelay(6000, function ()
+			{
+				autoOpenMoreContentEverywhere();
+			})
+		}
+
+
+		// 10s
+		if (settings.autoOpenSpoilersEverywhere)
+		{
+			runWithDelay(10000, function ()
+			{
+				autoOpenSpoilersEverywhere();
+			});
+		}
+
+		if (settings.removeAnnoyancesEnable)
+		{
+			runWithDelay(18000, function ()
+			{
+				if (settings.removeAnnoyancesIframes) waitForKeyElements(`html > iframe, html > body > iframe`, removeFromDOM, false);
+				if (settings.removeAnnoyancesScripts) waitForKeyElements(`html > head > script[src^="https://"]`, removeFromDOM, false);
+			})
+
+			runWithDelay(3000, function ()
+			{
+				removeAnnoyances()
+			})
+		}
+
+		// waitForKeyElements("main.main > section > div.content section.stream > header.stream-top", buildConsole, false)
+		// buildConsole();
+		// refreshConsole();
+	}
 
 
 
@@ -7572,6 +7613,18 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
+
+
+
+
+
+
+
+	// async function awariaSerwera()
+	// {
+	// 	let awaria = document.querySelector(`body > section > footer > a[onclick="window.location.href = reloadURL"`);
+	// 	if (awaria) alert("AWARIA");
+	// }
 
 	// XHR BLOCKER
 
@@ -7579,7 +7632,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 	// Wykop XS-XHR Blocker
 	// https://greasyfork.org/en/scripts/486722-wykop-xs-xhr-blocker
-
 	settings.wxsBlockXHREnable = wykopxSettings.getPropertyValue("--wxsBlockXHREnable") ? wykopxSettings.getPropertyValue("--wxsBlockXHREnable") === '1' : true;
 	if (settings.wxsBlockXHREnable)
 	{
@@ -7601,7 +7653,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		settings.rightSidebarHideLinksActive = wykopxSettings.getPropertyValue("--rightSidebarHideLinksActive") ? wykopxSettings.getPropertyValue("--rightSidebarHideLinksActive") === '1' : false;
 		settings.rightSidebarHideLinksPopular = wykopxSettings.getPropertyValue("--rightSidebarHideLinksPopular") ? wykopxSettings.getPropertyValue("--rightSidebarHideLinksPopular") === '1' : false;
 	}
-
 
 	let xhook = null;
 	if (settings.infiniteScrollEntriesEnabled || settings.infiniteScrollLinksEnabled || settings.wxsBlockXHREnable)
@@ -7667,7 +7718,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		xhook.before((request, callback) =>
 		{
-
 			if (allowed.some(str => request.url.includes(str)) && !prohibited.some(str => request.url.includes(str)))
 			{
 				if (settings.wxsBlockXHRConsoleLogAllowed) console.log("Wykop XS: XHR Blocker | XHR: 🌍 " + request.url);
@@ -7680,11 +7730,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		});
 	}
 
-
-
-
-
-
 	if (xhook != null && (settings.infiniteScrollEntriesEnabled || settings.infiniteScrollLinksEnabled))
 	{
 		xhook.after((request, response) =>
@@ -7693,7 +7738,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			// console.log(request);
 			// console.log("✔ xhook.after-response");
 			// console.log(response);
-
 
 			if (response.status == 200 && request.url.endsWith("page=1"))
 			{
@@ -7770,7 +7814,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 									json['data'] = json['data'].concat(data)
 								}
-
 
 								// Hide pagination
 								json['pagination']['total'] = 0
@@ -7887,29 +7930,9 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
-	// lOADED PAGE
-	window.onload = function (event)
-	{
-		consoleX("windows.onload", 1)
-		loadTime = dayjs();
 
-		browserExecuteOnPageLoad();
-		browserExecuteOnPageLoadAndPageChange();
-	};
-
-	/* NEW WYKOP PAGE REDIRECTION */
-	navigation.addEventListener("navigate", (event) =>
-	{
-		consoleX(`🎈 Event: "navigate"`)
-		loadTime = dayjs();
-
-		browserExecuteOnPageChange(event);
-		browserExecuteOnPageLoadAndPageChange();
-	});
 
 	/* CSS STYLES */
-	CSS += ``;
-
 	CSS += `
 	html { font-size: 6.25%; }
     body { font-size: 1.6rem; }                                             /* 10px * 1.6rem = 16 px -- https://nekocalc.com/px-to-rem-converter */
