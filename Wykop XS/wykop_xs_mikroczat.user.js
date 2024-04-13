@@ -2,7 +2,7 @@
 // @name        Wykop XS - Mikroczat
 // @name:pl     Wykop XS - Mikroczat
 // @name:en     Wykop XS - Mikroczat
-// @version     3.0.17
+// @version     3.0.18
 
 
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
@@ -39,11 +39,9 @@ let CSS = "";
 
 	let wykopDomain = "https://wykop.pl";
 	let wxDomain = "https://wykopx.pl";
-	let mikroczatDomain = "https://mikroczat.pl";
-	let mikroczatPath = "/czat";
-
-	let mikroczatChannel = ""; 						// 	https://mikroczat.pl/czat/sejm
-
+	const mikroczatDomain = "https://mikroczat.pl";
+	const mikroczatPath = "/chat";
+	let mikroczatChannel = "/";
 	let mikroczatWindow = null;
 
 
@@ -52,19 +50,19 @@ let CSS = "";
 		if (!event.target.closest(".wykopx_open_mikroczat")) return;
 		event.preventDefault();
 		let windowOptions = "";
-
-		const pathnameArray = new URL(document.URL).pathname.split("/");
-		if (pathnameArray[1] == "tag")
-		{
-			mikroczatChannel = "/" + pathnameArray[2]; // nazwatagu
-		}
+		let mikroczatURL = `${mikroczatDomain}`;
 
 		if (event.shiftKey || event.ctrlKey || event.altKey || event.button === 2)
 		{
 			windowOptions = "popup";
 		}
+		if (pageType == "tag")
+		{
+			mikroczatChannel = `/${pageSubtype}`;
+			mikroczatURL += `${mikroczatPath}${mikroczatChannel}`;
+		}
 
-		mikroczatWindow = window.open(`${mikroczatDomain}${mikroczatPath}${mikroczatChannel}`, 'mikroczat', windowOptions);
+		mikroczatWindow = window.open(mikroczatURL, 'mikroczat', windowOptions);
 	});
 	document.addEventListener("click", (event) =>
 	{
@@ -117,7 +115,7 @@ let CSS = "";
 		title: `Otwórz mikroczat.pl ${promoString}`,
 		class: "open_mikroczat", // wykopx_open_mikroczat_li
 		hideWithoutXStyle: false,
-		url: mikroczatDomain + mikroczatPath,
+		url: mikroczatDomain,
 		target: "mikroczat",
 		icon: "https://i.imgur.com/9PvHlaA.png",
 		number: null,

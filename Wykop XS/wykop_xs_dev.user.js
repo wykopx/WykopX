@@ -2,7 +2,7 @@
 // @name        Wykop XS DEV
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
-// @version     3.0.17
+// @version     3.0.18
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
 // @contributionURL  	https://buycoffee.to/wykopx
 // @author      Wykop X <wykopx@gmail.com>
@@ -4398,10 +4398,9 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 	let wykopDomain = "https://wykop.pl";
 	let wxDomain = "https://wykopx.pl";
-	const mikroczatDomain = "https://mikroczat.pl"; 		// 	https://mikroczat.pl
-	const mikroczatPath = "/chat"; 							// 	https://mikroczat.pl/czat
-	let mikroczatChannel = "/sejm"; 						// 	https://mikroczat.pl/czat/sejm
-
+	const mikroczatDomain = "https://mikroczat.pl";
+	const mikroczatPath = "/chat";
+	let mikroczatChannel = "/";
 	let mikroczatWindow = null;
 
 
@@ -4410,13 +4409,19 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		if (!event.target.closest(".wykopx_open_mikroczat")) return;
 		event.preventDefault();
 		let windowOptions = "";
+		let mikroczatURL = `${mikroczatDomain}`;
 
 		if (event.shiftKey || event.ctrlKey || event.altKey || event.button === 2)
 		{
 			windowOptions = "popup";
 		}
-		if (pageType == "tag") mikroczatChannel = `/${pageSubtype}`
-		mikroczatWindow = window.open(`${mikroczatDomain}${mikroczatPath}${mikroczatChannel}`, 'mikroczat', windowOptions);
+		if (pageType == "tag")
+		{
+			mikroczatChannel = `/${pageSubtype}`;
+			mikroczatURL += `${mikroczatPath}${mikroczatChannel}`;
+		}
+
+		mikroczatWindow = window.open(mikroczatURL, 'mikroczat', windowOptions);
 	});
 	document.addEventListener("click", (event) =>
 	{
@@ -4482,7 +4487,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			title: `Otwórz mikroczat.pl ${promoString}`,
 			class: "open_mikroczat", // wykopx_open_mikroczat_li
 			hideWithoutXStyle: false,
-			url: mikroczatDomain + mikroczatPath,
+			url: mikroczatDomain,
 			target: "mikroczat",
 			icon: "https://i.imgur.com/9PvHlaA.png",
 			number: null,
