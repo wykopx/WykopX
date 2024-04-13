@@ -4399,7 +4399,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	let wykopDomain = "https://wykop.pl";
 	let wxDomain = "https://wykopx.pl";
 	const mikroczatDomain = "https://mikroczat.pl";
-	const mikroczatPath = "/chat";
+	const mikroczatPath = "/czat";
 	let mikroczatChannel = "/";
 	let mikroczatWindow = null;
 
