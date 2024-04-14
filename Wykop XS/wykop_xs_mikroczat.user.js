@@ -2,7 +2,7 @@
 // @name        Wykop XS - Mikroczat
 // @name:pl     Wykop XS - Mikroczat
 // @name:en     Wykop XS - Mikroczat
-// @version     3.0.18
+// @version     3.0.19
 
 
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
@@ -56,11 +56,15 @@ let CSS = "";
 		{
 			windowOptions = "popup";
 		}
-		if (pageType == "tag")
+
+		// WykopXS unique
+		const pathnameArray = new URL(document.URL).pathname.split("/");
+		if (pathnameArray[1] == "tag")
 		{
-			mikroczatChannel = `/${pageSubtype}`;
+			mikroczatChannel = "/" + pathnameArray[2]; // nazwatagu
 			mikroczatURL += `${mikroczatPath}${mikroczatChannel}`;
 		}
+
 
 		mikroczatWindow = window.open(mikroczatURL, 'mikroczat', windowOptions);
 	});
