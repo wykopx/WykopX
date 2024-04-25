@@ -283,16 +283,48 @@
 
 		if (settings.wxsUserLabelsFakeFemales)
 		{
-			// LISTA FAŁSZYWYCH RÓŻOWYCH PASKÓW
-			const listafalszywychrozowych = ['nenq123', 'domek_drewniany', 'konserwix', 'Diamond-kun', 'Mantusabra', 'Nighthuntero', 'WyuArtykyu', 'ElCidX', 'cword',
-				'washington', 'Obrzydzenie', 'conamirko', 'i_took_a_pill_in_remiza', 'Riolet',
-				'ChwilowaPomaranczka', 'RobieZdrowaZupke', 'IlllIlIIIIIIIIIlllllIlIlIlIlIlIlIII', 'Banderoza',
-				'deiceberg', 'Chodtok', 'kierowcaautobusuofficial', 'ToJestNiepojete', 'model_wygenerowany_na_wykoppl',
-				'chwilowypaczelok', 'sinls', 'KRZYSZTOF_DZONG_UN', 'miszczu90', 'ToJestNiepojete', ' powodzenia'];
-			listafalszywychrozowych.push('BlackBlack');
+			// LISTA FAŁSZYWYCH RÓŻOWYCH PASKÓW fałszywe różowe
+			const listafalszywychrozowych = [];
 
-			const listafalszywychniebieskich = ['Kantor_wymiany_mysli_i_wrazen'];
+			listafalszywychrozowych.push('washington');
+			listafalszywychrozowych.push('Obrzydzenie');
+			listafalszywychrozowych.push('conamirko');
+			listafalszywychrozowych.push('i_took_a_pill_in_remiza');
+			listafalszywychrozowych.push('Riolet');
+			listafalszywychrozowych.push('ChwilowaPomaranczka');
+			listafalszywychrozowych.push('RobieZdrowaZupke');
+			listafalszywychrozowych.push('IlllIlIIIIIIIIIlllllIlIlIlIlIlIlIII');
+			listafalszywychrozowych.push('Banderoza');
+			listafalszywychrozowych.push('deiceberg');
+			listafalszywychrozowych.push('Chodtok');
+			listafalszywychrozowych.push('kierowcaautobusuofficial');
+			listafalszywychrozowych.push('ToJestNiepojete');
+			listafalszywychrozowych.push('model_wygenerowany_na_wykoppl');
+			listafalszywychrozowych.push('chwilowypaczelok');
+			listafalszywychrozowych.push('sinls');
+			listafalszywychrozowych.push('KRZYSZTOF_DZONG_UN');
+			listafalszywychrozowych.push('miszczu90');
+			listafalszywychrozowych.push('nenq123');
+			listafalszywychrozowych.push('domek_drewniany');
+			listafalszywychrozowych.push('konserwix');
+			listafalszywychrozowych.push('Diamond');
+			listafalszywychrozowych.push('BlackBl-kunack');
+			listafalszywychrozowych.push('Mantusabra');
+			listafalszywychrozowych.push('ElCidX');
+			listafalszywychrozowych.push('cword');
+			listafalszywychrozowych.push('ToJestNiepojete');
+			listafalszywychrozowych.push('powodzenia');
+			listafalszywychrozowych.push('washington');
+			listafalszywychrozowych.push('sipson204');
+			listafalszywychrozowych.push('36873');
+
+			// LISTA FAŁSZYWYCH NIEBIESKICH PASKÓW fałszywe niebieskie
+			const listafalszywychniebieskich = [];
+			listafalszywychniebieskich.push("Kantor_wymiany_mysli_i_wrazen");
 			listafalszywychniebieskich.push("DragonTattoo2404");
+			listafalszywychniebieskich.push("qksgh");
+
+
 
 
 			localStorageUserLabels.setItem('falszyweRozowe', listafalszywychrozowych).then(() => { });
@@ -1588,6 +1620,12 @@
 		if (body.dataset.wxs_filter_username) delete body.dataset.wxs_filter_username
 
 		document.getElementById('wxs_css_filter_user_comments')?.parentNode?.removeChild(styleElement);
+
+		// let dynamicCSS = head.querySelector(`style[data-fn="${options.fn}"][data-channel="${options.channelName}"]`);
+		// if (dynamicCSS)
+		// {
+		// 	dynamicCSS.parentNode.removeChild(dynamicCSS);
+		// }
 
 	}
 	function filterUserComments(PointerEvent, filterType)
