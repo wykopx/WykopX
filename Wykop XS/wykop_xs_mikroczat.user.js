@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name        Mikroczat + listy plusujących
-// @name:pl     Mikroczat + listy plusujących
-// @name:en     Mikroczat + listy plusujących
+// @name        Listy plusujących + MirkoCzat
+// @name:pl     Listy plusujących + MirkoCzat
+// @name:en     Listy plusujących + MirkoCzat
 // @version     3.0.20
 
 
@@ -68,6 +68,8 @@ let dev = true;
 
 		mikroczatWindow = window.open(mikroczatURL, 'mikroczat', windowOptions);
 	});
+
+
 	document.addEventListener("click", (event) =>
 	{
 		if (!event.target.closest(".wykopx_open_mikroczat")) return;
@@ -123,9 +125,6 @@ let dev = true;
 		icon: "https://i.imgur.com/9PvHlaA.png",
 		number: null,
 	})
-
-
-
 
 
 
@@ -363,6 +362,7 @@ document.addEventListener('click', async function (event)
 
 function createNewNavBarButton(options)
 {
+
 	let nav_ul;
 
 	if (options.position == "left") nav_ul = document.querySelector("body header div.left nav.main ul");
