@@ -2,7 +2,7 @@
 // @name        Listy plusujących + MirkoCzat
 // @name:pl     Listy plusujących + MirkoCzat
 // @name:en     Listy plusujących + MirkoCzat
-// @version     3.0.26
+// @version     3.0.27
 
 
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
