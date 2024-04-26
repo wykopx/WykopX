@@ -219,7 +219,7 @@ const settings =
 		{
 			for (let node of mutation.addedNodes)
 			{
-				console.log(node);
+				// console.log(node);
 
 				if (node.matches && node.matches('section.entry'))
 				{
