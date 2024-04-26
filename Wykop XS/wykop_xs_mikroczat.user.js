@@ -2,7 +2,7 @@
 // @name        Listy plusujących + MirkoCzat
 // @name:pl     Listy plusujących + MirkoCzat
 // @name:en     Listy plusujących + MirkoCzat
-// @version     3.0.25
+// @version     3.0.26
 
 
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
@@ -63,7 +63,7 @@ Domyślne wartości wyglądają tak:
 const settings =
 {
 	showVotersList: true,			// włącza pokazywanie listy plusujących
-	showAllVotersIfLessThan: 5,		// domyślnie Wykop pokazywał 5 osób, które zaplusowały. Możesz zmienić tę wartość na np. 10 albo 20. W sumie ile chcesz.
+	expandAllVotersIfLessThan: 5,	// domyślnie Wykop pokazywał 5 osób, które zaplusowały. Możesz zmienić tę wartość na np. 10 albo 20. W sumie ile chcesz.
 	votersFollow: true,				// pokazuje 🔔 przed użytkownikami, których obserwujesz
 	votersBlacklist: true,			// pokazuje ⛔ przed użytkownikami, których blokujesz
 	votersBanned: true,				// pokazuje użytkowników z aktywnym banem w kolorze i z ikonką 🍌
@@ -79,8 +79,8 @@ const settings =
 	showFavouriteButton: true,		// pokazuje przycisk "Dodaj do ulubionych" (samą gwiazdkę)
 	showFavouriteButtonLabel: true,	// pokazuje oprócz gwiazdki także tekst "Ulubione"
 
-	addCommentPlus1WhenVotingOnEntry: false,		// gdy plusujesz wpis, dodaje komentarz "+1"
-	addCommentPlus1WhenVotingOnComment: false,	// gdy plusujesz komentarz, dodaje komentarz "+1"
+	addCommentPlusWhenVotingOnEntry: false,		// gdy plusujesz wpis, dodaje komentarz "+1"
+	addCommentPlusWhenVotingOnComment: false,	// gdy plusujesz komentarz, dodaje komentarz "+1"
 };
 
 
@@ -448,7 +448,7 @@ const settings =
 		if (sectionEntry && sectionEntry?.__vue__ && sectionEntry?.__vue__.item.votes.up > 0)
 		{
 
-			if (sectionEntry?.__vue__ && settings.showAllVotersIfLessThan > 5 && sectionEntry?.__vue__.item.votes.up <= settings.showAllVotersIfLessThan)
+			if (sectionEntry?.__vue__ && settings.expandAllVotersIfLessThan > 5 && sectionEntry?.__vue__.item.votes.up <= settings.expandAllVotersIfLessThan)
 			{
 				let entryId, commentId;
 
@@ -533,7 +533,7 @@ const settings =
 			sectionEntryVotersHTML += getListItemForUser(voter);
 		});
 
-		if (sectionEntry?.__vue__?.item?.votes.up > settings.showAllVotersIfLessThan && voters.length <= settings.showAllVotersIfLessThan)
+		if (sectionEntry?.__vue__?.item?.votes.up > settings.expandAllVotersIfLessThan && voters.length <= settings.expandAllVotersIfLessThan)
 		{
 			sectionEntryVotersHTML += `
 				<li data-v-6e6ed6ee="" data-no-bubble="" class="more">
@@ -817,11 +817,18 @@ const settings =
 		if (event.target.closest("div.buttons button.plus"))
 		{
 			const sectionEntry = event.target.closest("section.entry[id]");
+			if (sectionEntry.__vue__?.item?.voted == 1)
+			{
+				if (settings.addCommentPlusWhenVotingOnEntry && sectionEntry && sectionEntry.__vue__?.item?.resource == "entry") 
+				{
+					postCommentPlus1ToAPI(sectionEntry);
+				}
+				else if (settings.addCommentPlusWhenVotingOnComment && sectionEntry && sectionEntry.__vue__?.item?.resource == "entry_comment")
+				{
+					postCommentPlus1ToAPI(sectionEntry);
+				}
+			}
 
-			// alert(sectionEntry.__vue__?.item?.voted)
-
-			if (settings.addCommentPlus1WhenVotingOnEntry && sectionEntry && sectionEntry.__vue__?.item?.resource == "entry") postCommentPlus1ToAPI(sectionEntry);
-			else if (settings.addCommentPlus1WhenVotingOnComment && sectionEntry && sectionEntry.__vue__?.item?.resource == "entry_comment") postCommentPlus1ToAPI(sectionEntry);
 		}
 
 
