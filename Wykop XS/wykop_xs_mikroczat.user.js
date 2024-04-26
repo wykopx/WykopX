@@ -424,7 +424,7 @@ const settings =
 	:root { --kolorBananowy1: rgba(255, 185, 0, 1); }
 	section.entry-voters ul li a.username:is(.banned, .suspended):not(.removed) span  { color: var(--kolorBananowy1); };
 	section.entry-voters ul li a.username.removed { color: rgb(0, 0, 0); }
-	[data-night-mode] section.entry-voters ul li a.username.removed { background-color: rgba(255, 255, 255, 0.3); padding-left: 5rem; padding-right: 5rem; }
+	[data-night-mode] section.entry-voters ul li a.username.removed { background-color: rgba(255, 255, 255, 0.1); padding-left: 5px; padding-right: 5px; }
 		`;
 
 
