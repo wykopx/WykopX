@@ -2,7 +2,7 @@
 // @name        Listy plusujących + MirkoCzat
 // @name:pl     Listy plusujących + MirkoCzat
 // @name:en     Listy plusujących + MirkoCzat
-// @version     3.0.21
+// @version     3.0.22
 
 
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
@@ -32,7 +32,7 @@ const promoString = "- Wykop X";
 const head = document.head;
 const styleElement = document.createElement('style');
 let CSS = "";
-let dev = true;
+let dev = false;
 
 
 
@@ -211,24 +211,37 @@ const settings =
 	}
 	let debounceAddVotersList = debounce((target) => addVotersList(target), 1000);
 
-
 	let parentNode = document.body;
 	let observer = new MutationObserver((mutations) =>
 	{
 		mutations.forEach((mutation) =>
 		{
-			for (let node of mutation.addedNodes)
+			if (mutation.target && mutation.target.tagName === "SECTION")
 			{
-				// console.log(node);
+				// console.log(" ------------- ");
+				// console.log(" mutation.addedNodes: " + mutation.addedNodes);
+				// console.log(mutation.addedNodes);
+				// console.log(" mutation.attributeName: " + mutation.attributeName);
+				// console.log(mutation.attributeName);
+				// console.log(" mutation.attributeNamespace: " + mutation.attributeNamespace);
+				// console.log(mutation.attributeNamespace);
+				// console.log(" mutation.nextSibling: " + mutation.nextSibling);
+				// console.log(mutation.nextSibling);
+				// console.log(" mutation.oldValue: " + mutation.oldValue);
+				// console.log(mutation.oldValue);
+				// console.log(" mutation.previousSibling: " + mutation.previousSibling);
+				// console.log(mutation.previousSibling);
+				// console.log(" mutation.removedNodes: " + mutation.removedNodes);
+				// console.log(mutation.removedNodes);
+				// console.log(" mutation.target: " + mutation.target);
+				// console.log(mutation.target);
+				// console.log(" mutation.type: " + mutation.type);
 
-				if (node.matches && node.matches('section.entry'))
+				if (mutation.target.matches("section.entry"))
 				{
-					addVotersList(node);
-				}
+					addVotersList(mutation.target);
 
-				else if (node.matches && node.matches('div.content'))
-				{
-					let sectionEntryArray = node.querySelectorAll('section.entry');
+					let sectionEntryArray = mutation.target.querySelectorAll('section.entry');
 					if (sectionEntryArray)
 					{
 						sectionEntryArray.forEach((el) =>
@@ -237,13 +250,15 @@ const settings =
 						})
 					}
 				}
-
-				else if (node.nodeName == "SECTION" && node.parentNode && node.parentNode.matches('div.edit-wrapper')) // node.nodeName === "#text" && 
+				else if (mutation.target.matches("section.stream.microblog"))
 				{
-					let sectionEntryAncestor = node.parentNode.closest('section.entry');
-					if (sectionEntryAncestor)
+					let sectionEntryArray = mutation.target.querySelectorAll('section.entry');
+					if (sectionEntryArray)
 					{
-						// addVotersList(sectionEntryAncestor);
+						sectionEntryArray.forEach((el) =>
+						{
+							addVotersList(el);
+						})
 					}
 				}
 			}
@@ -267,7 +282,9 @@ const settings =
 		ul
 		{
 			display: block flex;
-			gap: 0.5em;
+			column-gap: 0.5em;
+			row-gap: 5px;
+			
 			align-items: baseline;
 			flex-wrap: wrap;
 
@@ -347,7 +364,6 @@ const settings =
 
 	styleElement.textContent = CSS;
 	document.head.appendChild(styleElement);
-
 
 
 
@@ -613,8 +629,6 @@ const settings =
 	}
 
 
-
-
 	document.addEventListener('click', async function (event)
 	{
 		if (!event.target.matches('li.more span')) return;
@@ -624,7 +638,6 @@ const settings =
 		appendVotersToEntry(entry, voters);
 
 	}, false);
-
 
 
 })();
