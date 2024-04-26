@@ -2,7 +2,7 @@
 // @name        Listy plusujących + MirkoCzat
 // @name:pl     Listy plusujących + MirkoCzat
 // @name:en     Listy plusujących + MirkoCzat
-// @version     3.0.24
+// @version     3.0.25
 
 
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
@@ -79,8 +79,8 @@ const settings =
 	showFavouriteButton: true,		// pokazuje przycisk "Dodaj do ulubionych" (samą gwiazdkę)
 	showFavouriteButtonLabel: true,	// pokazuje oprócz gwiazdki także tekst "Ulubione"
 
-	addCommentPlus1WhenVotingOnEntry: true,		// gdy plusujesz wpis, dodaje komentarz "+1"
-	addCommentPlus1WhenVotingOnComment: true,	// gdy plusujesz komentarz, dodaje komentarz "+1"
+	addCommentPlus1WhenVotingOnEntry: false,		// gdy plusujesz wpis, dodaje komentarz "+1"
+	addCommentPlus1WhenVotingOnComment: false,	// gdy plusujesz komentarz, dodaje komentarz "+1"
 };
 
 
@@ -814,12 +814,14 @@ const settings =
 	// li.more click
 	document.addEventListener("click", async function (event)
 	{
-
-
 		if (event.target.closest("div.buttons button.plus"))
 		{
 			const sectionEntry = event.target.closest("section.entry[id]");
-			postCommentPlus1ToAPI(sectionEntry);
+
+			// alert(sectionEntry.__vue__?.item?.voted)
+
+			if (settings.addCommentPlus1WhenVotingOnEntry && sectionEntry && sectionEntry.__vue__?.item?.resource == "entry") postCommentPlus1ToAPI(sectionEntry);
+			else if (settings.addCommentPlus1WhenVotingOnComment && sectionEntry && sectionEntry.__vue__?.item?.resource == "entry_comment") postCommentPlus1ToAPI(sectionEntry);
 		}
 
 
