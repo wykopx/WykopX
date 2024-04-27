@@ -2,7 +2,7 @@
 // @name        Listy plusujących + mirkoczat
 // @name:pl     Listy plusujących + mirkoczat
 // @name:en     Listy plusujących + mirkoczat
-// @version     3.0.29
+// @version     3.0.30
 
 
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
@@ -336,17 +336,15 @@ const settings =
 
 	});
 
-	navigation.addEventListener("navigate", (event) =>
-	{
-		if (dev) console.log(`🎈 Event: "navigate"`, event)
+	// navigation.addEventListener("navigate", (event) =>
+	// {
+	// 	if (dev) console.log(`🎈 Event: "navigate"`, event)
+	// });
 
-
-	});
-
-	window.addEventListener('load', () =>
-	{
-		if (dev) console.log("window.load()");
-	});
+	// window.addEventListener('load', () =>
+	// {
+	// 	if (dev) console.log("window.load()");
+	// });
 
 
 
