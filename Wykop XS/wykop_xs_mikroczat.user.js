@@ -2,7 +2,7 @@
 // @name        Listy plusujących + mirkoczat
 // @name:pl     Listy plusujących + mirkoczat
 // @name:en     Listy plusujących + mirkoczat
-// @version     3.0.28
+// @version     3.0.20
 
 
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
@@ -65,7 +65,7 @@ const settings =
 	showVotersList: true,			// włącza pokazywanie listy plusujących
 
 	// expandAllVotersIfLessThan - domyślnie Wykop pokazywał 5 osób, które zaplusowały. 
-	// Możesz zmienić tę wartość na np. 10 albo 20. Jeśli wpis ma mniej plusów niż ta liczba, zostaną od razu wyświetleni wszyscy plusujący bez przycisku "+100 INNYCH"
+	// Możesz zmienić tę wartość na np. 10 albo 25. Jeśli wpis ma mniej plusów niż ta liczba, zostaną od razu wyświetleni wszyscy plusujący bez przycisku "+15 INNYCH"
 	expandAllVotersIfLessThan: 20,
 
 	votersFollow: true,								// pokazuje 🔔 przed użytkownikami, których obserwujesz
@@ -235,16 +235,36 @@ const settings =
 
 	let observer = new MutationObserver((mutations) =>
 	{
+		if (dev) console.log(`${mutations.length} mutations`, mutations);
+
 		mutations.forEach((mutation) =>
 		{
+
+			if (dev) console.log("----------new mutation-----");
+			if (dev) console.log(mutation);
+			if (mutation.type)
+			{
+				if (dev) console.log(`mutation.type: `, mutation.type)
+			}
+			if (mutation.attributeName)
+			{
+				if (dev) console.log(`mutation.attributeName: ${mutation.attributeName}`, mutation.attributeName)
+			}
+			if (mutation.addedNodes.length > 0 && mutation.addedNodes[0] && mutation.addedNodes[0] instanceof Element)
+			{
+				if (dev) console.log(`mutation.addedNodes.length: ${mutation.addedNodes.length}`, mutation.addedNodes[0])
+			}
+
 			if (mutation.addedNodes.length > 0 && mutation.addedNodes[0] && mutation.addedNodes[0] instanceof Element)
 			{
 				if (mutation.addedNodes[0].matches("section.entry[id]"))
 				{
 					const sectionEntry = mutation.addedNodes[0];
+					if (dev) console.log("mutation 1", sectionEntry)
 					processSectionEntry(sectionEntry)
 
 					const sectionCommentsArray = sectionEntry.querySelectorAll("section.entry[id]");
+					if (dev) console.log("mutation 1 - forEach: sectionEntryArray", sectionCommentsArray);
 					sectionCommentsArray.forEach((sectionComment) =>
 					{
 						processSectionEntry(sectionComment)
@@ -253,6 +273,7 @@ const settings =
 				else if (mutation.addedNodes[0].matches("div.content:has(>section.entry[id])"))
 				{
 					const sectionEntriesArray = mutation.addedNodes[0].querySelectorAll("section.entry[id]");
+					if (dev) console.log("mutation 2 - forEach: sectionEntriesArray", sectionEntriesArray);
 					sectionEntriesArray.forEach((sectionEntry) =>
 					{
 						processSectionEntry(sectionEntry)
@@ -261,13 +282,31 @@ const settings =
 				else if (mutation.target.tagName === "SECTION" && mutation.target.matches("section.entry.detailed[id]"))
 				{
 					const sectionEntry = mutation.target;
+					if (dev) console.log("mutation 3", sectionEntry)
+					if (dev) console.log("mutation 3: mutation.target", mutation.target);
+
 					processSectionEntry(sectionEntry);
 
 					const sectionCommentsArray = sectionEntry.querySelectorAll("section.entry[id]");
+					if (dev) console.log("mutation 3 - forEach: sectionEntryArray", sectionCommentsArray);
 					sectionCommentsArray.forEach((sectionComment) =>
 					{
 						processSectionEntry(sectionComment)
 					})
+				}
+
+			}
+
+			if (mutation.target)
+			{
+				if (dev) console.log(`mutation.target: ${mutation.target.tagName}`, mutation.target)
+
+				if (mutation.target.tagName === "SECTION")
+				{
+					if (mutation.target.matches("section.entry[id]"))
+					{
+
+					}
 				}
 			}
 		});
@@ -275,12 +314,15 @@ const settings =
 
 
 	let main;
+
 	document.addEventListener('readystatechange', (event) => 
 	{
+		if (dev) console.log('readyState:' + document.readyState);
 		main = document.querySelector('main.main');
 		if (main)
 		{
 			const sectionEntryArray = main.querySelectorAll("section.entry[id]");
+			// if (dev) console.log("sectionEntryArray", sectionEntryArray);
 			sectionEntryArray.forEach((sectionEntry) =>
 			{
 				processSectionEntry(sectionEntry)
@@ -294,48 +336,73 @@ const settings =
 
 	});
 
-	// navigation.addEventListener("navigate", (event) =>
-	// {
-	// 	if (dev) console.log(`🎈 Event: "navigate"`, event)
-	// });
+	navigation.addEventListener("navigate", (event) =>
+	{
+		if (dev) console.log(`🎈 Event: "navigate"`, event)
 
-	// window.addEventListener('load', () =>
-	// {
-	// 	if (dev) console.log("window.load()");
-	// });
+
+	});
+
+	window.addEventListener('load', () =>
+	{
+		if (dev) console.log("window.load()");
+	});
 
 
 
 	function processSectionEntry(sectionEntry)
 	{
+		if (dev) console.log("processSectionEntry()", sectionEntry)
+
 		if (!sectionEntry) return;
 
 		if (settings.showFavouriteButton) addFavouriteButton(sectionEntry);
 
 		if (settings.showVotersList && sectionEntry?.__vue__?.item) 
 		{
+			if (dev) console.log("sectionEntry?.__vue__.item.id", sectionEntry?.__vue__.item.id);
+			if (dev) console.log("sectionEntry.dataset?.votersLoaded", sectionEntry.dataset?.votersLoaded);
+
 			if (sectionEntry.dataset?.votersLoaded == sectionEntry?.__vue__.item.id) return;
-			if (sectionEntry?.__vue__.item.votes.up == 0) return;
+			if (sectionEntry?.__vue__.item.votes.up == 0)
+			{
+				removeVotersListWhenNoVoters(sectionEntry);
+				return;
+			}
 
 			if (settings.expandAllVotersIfLessThan > 5 && sectionEntry?.__vue__.item.votes.up <= settings.expandAllVotersIfLessThan && sectionEntry?.__vue__.item.votes.up > 5) 
 			{
+				if (dev) console.log(`processSectionEntry() wybrano 💛throttledAddVotersList  ${sectionEntry.__vue__.item.id} | plusow: ${sectionEntry.__vue__.item.votes.up}`,)
 				throttledAddVotersList(sectionEntry);
 			}
 			else
 			{
+				if (dev) console.log(`processSectionEntry() wybrano 🤎addVotersList  ${sectionEntry.__vue__.item.id} | plusow: ${sectionEntry.__vue__.item.votes.up}`,)
 				addVotersList(sectionEntry)
 			}
 		}
 	}
 
+	function removeVotersListWhenNoVoters(sectionEntry)
+	{
+		if (sectionEntry)
+		{
+			delete sectionEntry.dataset?.votersLoaded;
+			sectionEntry.querySelector("section.entry-voters")?.remove();
+		}
 
-
-
+	}
 
 	async function addVotersList(sectionEntry)
 	{
+		if (dev) console.log(`addVotersList precheck: `, sectionEntry)
+
 		if (!sectionEntry || !sectionEntry.__vue__) return;
+
 		if (sectionEntry.dataset?.votersLoaded == sectionEntry?.__vue__.item.id) return;
+
+		if (dev) console.log(`addVotersList execute: `, sectionEntry)
+
 		if (sectionEntry?.__vue__ && sectionEntry?.__vue__.item.votes.up > 0)
 		{
 			if (sectionEntry?.__vue__ && settings.expandAllVotersIfLessThan > 5 && sectionEntry?.__vue__.item.votes.up <= settings.expandAllVotersIfLessThan && sectionEntry?.__vue__.item.votes.up > 5)
@@ -351,7 +418,9 @@ const settings =
 					commentId = sectionEntry?.__vue__?.item.id;
 				}
 				let voters = await fetchAllVotersFromAPI(entryId, commentId);
+
 				appendVotersToEntry(sectionEntry, voters);
+
 			}
 			else
 			{
@@ -408,11 +477,18 @@ const settings =
 
 	function appendVotersToEntry(sectionEntry, voters)
 	{
+
+
 		if (!sectionEntry) return;
 		const divEditWrapperElement = sectionEntry.querySelector('article > div.edit-wrapper');
 		if (!divEditWrapperElement) return;
 
+		if (dev) console.log(`💚 appendVotersToEntry start`, sectionEntry)
+
 		sectionEntry.dataset.votersLoaded = sectionEntry?.__vue__?.item.id;
+
+		if (dev) console.log(`appendVotersToEntry: ${sectionEntry?.__vue__?.item.id}`, voters)
+
 
 		const fiveVoters = voters;
 
