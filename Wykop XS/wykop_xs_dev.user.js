@@ -23,7 +23,7 @@
 {
 	'use strict';
 
-	const currentVersion = "3.0.19";
+	const currentVersion = "3.0.22";
 	let dev = false;
 	const promoString = " [Dodane przez Wykop X #wykopwnowymstylu]";
 
