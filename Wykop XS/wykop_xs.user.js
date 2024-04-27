@@ -2,7 +2,7 @@
 // @name        Wykop XS
 // @name:pl     Wykop XS
 // @name:en     Wykop XS
-// @version     2.50.3
+// @version     2.51.0
 
 
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
@@ -41,7 +41,7 @@
 {
 	'use strict';
 
-	const currentVersion = "2.50.3";
+	const currentVersion = "2.51.0";
 	let dev = false;
 	const promoString = " [Dodane przez Wykop XS #wykopwnowymstylu]";
 
