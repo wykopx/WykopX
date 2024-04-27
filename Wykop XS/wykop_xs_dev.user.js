@@ -317,6 +317,8 @@
 			listafalszywychrozowych.push('washington');
 			listafalszywychrozowych.push('sipson204');
 			listafalszywychrozowych.push('36873');
+			listafalszywychrozowych.push('Defined');
+			listafalszywychrozowych.push('toniemojebuty');
 
 			// LISTA FAŁSZYWYCH NIEBIESKICH PASKÓW fałszywe niebieskie
 			const listafalszywychniebieskich = [];
