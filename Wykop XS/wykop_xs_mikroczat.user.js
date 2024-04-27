@@ -2,7 +2,7 @@
 // @name        Listy plusujących + mirkoczat
 // @name:pl     Listy plusujących + mirkoczat
 // @name:en     Listy plusujących + mirkoczat
-// @version     3.0.20
+// @version     3.0.29
 
 
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
