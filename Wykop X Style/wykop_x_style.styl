@@ -1,12 +1,12 @@
 /* ==UserStyle==
 @name           Wykop X Style 2.0
-@version        2.50.4
+@version        2.51.0
 
 @description    Ponad 500 funkcji usprawniających i naprawiających Wykop.pl
 
 
-@description    ---- Wykop X Blank ----
-@description    Wersja Blank z wyłączonymi wszystkimi ustawieniami znajduje się tutaj:
+@description    ---- Wykop X Style BLANK ----
+@description    Wersja BLANK z wyłączonymi wszystkimi ustawieniami znajduje się tutaj:
 @description    http://blank.wykopx.pl
 @description    https://userstyles.world/style/8419/wykop-x-blank
 
@@ -15,7 +15,7 @@
 
 @author         Wykop X <wykopx@gmail.com> | wiki.wykopx.pl
 @homepageURL    http://wiki.wykopx.pl
-@supportURL     http://wiki.wykopx.pl
+@supportURL     http://changelog.wykopx.pl
 
 ---- AUTOR WYKOP X ----
 
@@ -47,22 +47,7 @@
 
 
 
-@var range      HR_BOT_WYKOPGPT       `🤖 WYKOP GPT ⭐ Nowe 2.46`                                                                               [0, 0, 99900, 1, 'mm']
 
-@var select     botWykopGptMentionsEntries                      `Wpisy na Mikroblogu tagujące @wykop-gpt`  {
-                                                                            "Wyświetlaj normalnie (domyślnie)*":"domyslnie",
-                                                                            "Wyróżniaj wpisy z @wykop-gpt":"wyrozniaj",
-                                                                            "Wyświetlaj zwinięte":"minimized",
-                                                                            "Nie pokazuj żadnych wpisów tagująych @wykop-gpt":"niepokazuj"
-                                                                        } 
-
-
-@var range      HR_DOODLE                           `BELKA`                                                                         [0, 0, 99900, 1, 'mm']
-@var checkbox  hideTopNavDoodle                                 `❤ Ukryj Logo WOŚP`          0
-@var checkbox  topNavSanta                                      `🎅 Wolnorynkowy Mikołaj`    0
-@var checkbox  topNavSnowMan                                    `⛄ Bałwan`                  1
-@var checkbox  topNavSnowMan2                                   `⛄ Bałwan 2`                0
-@var checkbox  topNavSnowGirl                                   `❄ Snow Girl`                1
 
 
 
@@ -74,22 +59,6 @@
 
 var checkbox   hotLinksShowFirst                              `check: 🔸🔥 Gorące Znaleziska wyświetlaj jako pierwsze`                           1
 
-@var range      HR_ACTION_MENU_ENTRIES                  `🔹 MENU AKCJI KOMENTARZY I WPISÓW ⭐ Nowe v.2.44`                                                              [0, 0, 99900, 1, 'mm']
-@var checkbox   actionMenuRenameTwitterToX                      `✔ Zamień wykopowe "TT / Twitter" na "𝕏"`                 1
-@var checkbox   actionMenuEntryHideShareToFacebook              `🚫 Ukryj udostępnianie na Facebooku`                     0
-@var checkbox   actionMenuEntryHideShareToTwitter               `🚫 Ukryj udostępnianie na Twitter/𝕏`                     0
-@var checkbox   actionMenuEntryHideFavoriteButton               `🚫 Ukryj przycisk "☆" (Dodaj do ulubionych) `           0 
-@var checkbox   actionMenuEntriesHideReport                     `🚫 Ukryj akcję "Zgłoś"`                                  0 
-@var checkbox   actionMenuEntriesHide                           `🚫 Ukryj całe menu akcji`                                     0 
-
-@var range      HR_ACTION_MENU_LINKS                    `🔸 MENU AKCJI ZNALEZISK ⭐ Nowe v.2.44`                                                              [0, 0, 99900, 1, 'mm']
-@var checkbox   actionMenuLinkShowTwitterXTitle                 `Napisy "Facebook" i "Twitter/𝕏" obok ikonek `              1
-@var checkbox   actionMenuLinkHideShareToFacebook               `🚫 Ukryj udostępnianie na Facebooku`                       0
-@var checkbox   actionMenuLinkHideShareToTwitter                `🚫 Ukryj udostępnianie na Twitter/𝕏`                       0
-@var checkbox   actionMenuLinkHideCommentsCount                 `🚫 Ukryj liczbę komentarzy`                                0 
-@var checkbox   actionMenuLinkHideAddCommentButton              `🚫 Ukryj przycisk "Dodaj komentarz" gdy brak komentarzy`   1 
-@var checkbox   actionMenuLinkHideFavoriteButton                `🚫 Ukryj przycisk "☆" (Dodaj do ulubionych) `              0 
-@var checkbox   actionMenuLinkHideReport                        `🚫 Ukryj akcję "Zgłoś"`                                     0 
 
 
 
@@ -143,9 +112,6 @@ var checkbox   hotLinksShowFirst                              `check: 🔸🔥 G
 @var checkbox   tabTitleShowNotificationsCountTagsNewEntry      `❎💻 # Liczba nowych wpisów z obserwowanych #tagów ⭐`                   0
 
 
-
-@var range      HR_MIKRO_242                            `🔷 STRONA #TAGU ⭐ Nowe v.2.42`                                                                          [0, 0, 99900, 1, 'mm']
-@var checkbox   tagPageFollowTagButton                          `🔷 Ładniejszy przycisk "Obserwuj tag" / "Obserwujesz tag" ⭐`                 1
 
 
 @var range      HR_BANNED_USER_242                      `🍌 ZBANOWANE KONTO ⭐ Nowe v.2.42`                                                                  [0, 0, 99900, 1, 'mm']
@@ -236,7 +202,7 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
                                                                             "Ukrywaj wszystkie wpisy zielonek":"niepokazuj",
                                                                             }
 @var checkbox   prettySurveys                                   `Ładniejsze ankiety ⭐`                                 1
-@var checkbox   prettyEntries                                   `Ładniejsze wpisy ⭐`                                   1
+@var checkbox   prettyEntries                                   `Ładniejsze wpisy ⭐`                                   0
 
 @var select     tagPageHomeFilter                              `Na stronie głównej #tagu wyświetlaj ⭐` {
                                                                     "🔸🔹Znaleziska i wpisy (domyślnie)":"znaleziska_i_wpisy",
@@ -541,6 +507,14 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
 
 
 
+@var range      HR_DOODLE                           `BELKA`                                                                         [0, 0, 99900, 1, 'mm']
+@var checkbox  hideTopNavDoodle                                 `❤ Ukryj Wielkanocne Pisanki`   0
+var checkbox  topNavSanta                                      `🎅 Wolnorynkowy Mikołaj`    0
+var checkbox  topNavSnowMan                                    `⛄ Bałwan`                  1
+var checkbox  topNavSnowMan2                                   `⛄ Bałwan 2`                0
+var checkbox  topNavSnowGirl                                   `❄ Snow Girl`                1
+
+
 
 
 @var range      HR_TAPETA_TOP_NAV                   `𝗕𝗘𝗟𝗞𝗔: TAPETA W TLE`                                                                                                [0, 0, 99900, 1, 'mm']
@@ -687,13 +661,20 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
 @var checkbox   notificationsShowUnreadNumber                   `❎💻 Pokaż liczbę powiadomień zamiast kropki`                          1
 @var checkbox   avatarHideNotificationDot                       `📱 Ukryj kropkę nowych powiadomień nad avatarem `                       0
 
-@var checkbox   showNotificationSummary                         `❎📱 Pokaż ikonki @ ✉ #  powiadomień (na smartfonie)`                     1
+@var checkbox   showNotificationSummary                         `❎📱 Pokaż ikonki @ ✉ #  powiadomień (na smartfonie)`                  1
 
-@var checkbox   fixNotificationBadgeBug                         `✔ Ukryj ikonkę z liczbą gdy brak nieprzeczytanych powiadomień`             1
+@var checkbox   fixNotificationBadgeBug                         `✔ Ukryj ikonkę z liczbą gdy brak nieprzeczytanych powiadomień 🔥`          1
 
 
 
 @var range      HR_NOTIFICATIONS_GENERAL            `✴️ POWIADOMIENIA`                                                                                  [0, 0, 99900, 1, 'mm']
+
+@var checkbox   notificationsPointerEventsToLinks               `Klikalne linki (autor, tag, wpis, komentarz) wewnątrz powiadomienia ⭐`       1
+@var checkbox   middleClickOpensNotificationsInNewTab           `💻❎🐁 Środkowy przycisk myszy otwiera powiadomienie w nowej karcie`         0
+@var checkbox   notificationOpenStraightToComment               `💻❎🐁 Przenieś do komentarza po kliknięciu w powiadomienie o wołaniu`       0
+
+@var checkbox   notificationsStreamHideReadLinks                `Ukryj przeczytane powiadomienia`                                                0
+@var checkbox   notificationsStreamHideReadEntries              `Ukryj przeczytane powiadomienia`                                                0
 
 @var checkbox   notificationsStreamColorizeLinksAndEntries      `Osobny kolorem z 🔹wpisów i 🔸znalezisk`                                       1
 @var color      notificationsStreamColorLinks                   `Kolor powiadomień ze znalezisk`                                                rgba(222, 120, 12, 1)
@@ -701,8 +682,7 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
 @var checkbox   notificationsStreamHideScrollbar                `Ukryj paski przewijania na listach powiadomień`                                1
 @var checkbox   removeNotificationButtonIsAlwaysVisible         `Przycisk ☒ do usuwania powiadomień - zawsze widoczny`                         1
 @var checkbox   removeNotificationButtonIsBigger                `Przycisk ☒ do usuwania powiadomień - powiększony`                             1
-@var checkbox   middleClickOpensNotificationsInNewTab           `💻❎🐁 Środkowy przycisk myszy otwiera powiadomienie w nowej karcie`         0
-@var checkbox   notificationOpenStraightToComment               `💻❎🐁 Przenieś do komentarza po kliknięciu w powiadomienie o wołaniu`       0
+
 @var checkbox   removingNotificationsMoreResponsive             `Szybsze usuwanie powiadomień`                                                  1
   var select    gradientBorders                                 `[Test] Gradient-borders w trakcie usuwania/ładowania powiadomień`  {
                                                                             "Brak (domyślnie)*":"brak",
@@ -720,8 +700,8 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
 
 
 @var range      HR_NOTIFICATIONS_SIDEBAR             `✴️ PANEL BOCZNY POWIADOMIEŃ`                                                                     [0, 0, 99900, 1, 'mm']
-@var checkbox   notificationsStreamTagsAsSidebar                `Powiadomienia z #tagów jako panel boczny zamiast menu`                                1
-@var checkbox   notificationsStreamEntriesAsSidebar             `Powiadomienia z @wołań jako panel boczny zamiast menu`                                1
+@var checkbox   notificationsStreamTagsAsSidebar                `Powiadomienia z #tagów jako panel boczny zamiast menu`                                0
+@var checkbox   notificationsStreamEntriesAsSidebar             `Powiadomienia z @wołań jako panel boczny zamiast menu`                                0
 
 @var select     notificationsStreamEntriesSidebarAboveTagsSidebar   `Jeśli panel @wołań i #tagów są w tym samym miejscu` {
                                                                             "Podziel 50/50, #tagi u góry, @wołania na dole":"split_tags_entries",
@@ -734,7 +714,7 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
 @var range      HR_NOTIFICATIONS_DROPDOWNS_TAGS      `✴️ PANEL POWIADOMIEŃ Z #TAGÓW`                                                                   [0, 0, 99900, 1, 'mm']
 
 @var checkbox   notificationsStreamTagsHideIfNoUnread           `Ukryj panel jeśli brak nowych powiadomień z #tagów`                                    1
-@var checkbox   notificationsStreamHideReadLinks                `Ukryj przeczytane powiadomienia`                                                       1
+
 
 @var select     notificationsStreamTagsAsSidebarAlignment       `Położenie panelu` {
                                                                             "Po lewej, pełna wysokość":"polewejpelnawysokosc",
@@ -760,7 +740,6 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
 
 @var checkbox   notificationsStreamEntriesHideIfNoUnread        `Ukryj panel jeśli brak nowych powiadomień z @wołaniami`                                    1
 
-@var checkbox   notificationsStreamHideReadEntries              `Ukryj przeczytane powiadomienia`                                                           0
 
 @var select     notificationsStreamEntriesAsSidebarAlignment    `Położenie panelu` {
                                                                             "Po lewej, pełna wysokość":"polewejpelnawysokosc",
@@ -1002,6 +981,8 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
                                                                             "🚫 Ukrywaj zawsze":"ukrywaj_zawsze"
                                                                             }
 @var checkbox   tagHeaderEditable                               `❎ Pole edycji #tagu, aby przejść na inny #tag lub wyszukać @użytkownika`            1
+@var checkbox   tagPageFollowTagButton                          `🔷 Ładniejszy przycisk "Obserwuj tag" / "Obserwujesz tag" ⭐`                 1
+
 
 
 @var range      HR_COMMENTS                         `🗨️ WPISY I KOMENTARZE`                                                                                   [0, 0, 99900, 1, 'mm']
@@ -1017,6 +998,22 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
 @var checkbox   autoOpenSpoilersEverywhere                      `❎ 𝗣𝗢𝗞𝗔𝗭̇ 𝗦𝗣𝗢𝗜𝗟𝗘𝗥 - Automatycznie pokazuj spoilery`                                    0
 @var checkbox   showTargetIconOnLinks                           `🔗 Pokazuj ikonki celu przy odnośnikach`                                               1
 
+@var range      HR_ACTION_MENU_ENTRIES                  `🔹 MENU AKCJI KOMENTARZY I WPISÓW ⭐ Nowe v.2.44`                                                              [0, 0, 99900, 1, 'mm']
+@var checkbox   actionMenuRenameTwitterToX                      `✔ Zamień wykopowe "TT / Twitter" na "𝕏"`                 1
+@var checkbox   actionMenuEntryHideShareToFacebook              `🚫 Ukryj udostępnianie na Facebooku`                     0
+@var checkbox   actionMenuEntryHideShareToTwitter               `🚫 Ukryj udostępnianie na Twitter/𝕏`                     0
+@var checkbox   actionMenuEntryHideFavoriteButton               `🚫 Ukryj przycisk "☆" (Dodaj do ulubionych) `           0 
+@var checkbox   actionMenuEntriesHideReport                     `🚫 Ukryj akcję "Zgłoś"`                                  0 
+@var checkbox   actionMenuEntriesHide                           `🚫 Ukryj całe menu akcji`                                     0 
+
+@var range      HR_ACTION_MENU_LINKS                    `🔸 MENU AKCJI ZNALEZISK ⭐ Nowe v.2.44`                                                              [0, 0, 99900, 1, 'mm']
+@var checkbox   actionMenuLinkShowTwitterXTitle                 `Napisy "Facebook" i "Twitter/𝕏" obok ikonek `              1
+@var checkbox   actionMenuLinkHideShareToFacebook               `🚫 Ukryj udostępnianie na Facebooku`                       0
+@var checkbox   actionMenuLinkHideShareToTwitter                `🚫 Ukryj udostępnianie na Twitter/𝕏`                       0
+@var checkbox   actionMenuLinkHideCommentsCount                 `🚫 Ukryj liczbę komentarzy`                                0 
+@var checkbox   actionMenuLinkHideAddCommentButton              `🚫 Ukryj przycisk "Dodaj komentarz" gdy brak komentarzy`   1 
+@var checkbox   actionMenuLinkHideFavoriteButton                `🚫 Ukryj przycisk "☆" (Dodaj do ulubionych) `              0 
+@var checkbox   actionMenuLinkHideReport                        `🚫 Ukryj akcję "Zgłoś"`                                     0 
 
 
 
@@ -1391,6 +1388,15 @@ var select     editorNewComments                                `Edytor dodawani
                                                                             "Zawsze pierwsze*":"pierwszy",
                                                                             "Zawsze na końcu jako ostatni komentarz":"ostatni"
                                                                             } 
+
+@var range      HR_BOT_WYKOPGPT       `🤖 WYKOP GPT ⭐ Nowe 2.46`                                                                               [0, 0, 99900, 1, 'mm']
+
+@var select     botWykopGptMentionsEntries                      `Wpisy na Mikroblogu tagujące @wykop-gpt`  {
+                                                                            "Wyświetlaj normalnie (domyślnie)*":"domyslnie",
+                                                                            "Wyróżniaj wpisy z @wykop-gpt":"wyrozniaj",
+                                                                            "Wyświetlaj zwinięte":"minimized",
+                                                                            "Nie pokazuj żadnych wpisów tagująych @wykop-gpt":"niepokazuj"
+                                                                        } 
 
 
 @var range      HR_ANONIMOWEMIRKOWYZNANIA       `🤖 MIRKOANONIM 🔷 mikroblog`                                                                               [0, 0, 99900, 1, 'mm']
@@ -7887,6 +7893,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     if(hideTopNavDoodle == 1)
     {
         header.header aside.doodle figure img,
+        header.header aside.doodle figure div,
         header.header aside.doodle a,
         {display: none!important;} 
     } 
@@ -9663,6 +9670,45 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     } 
 
 
+
+
+    
+    
+    
+    
+        
+    header.header > .right > nav > ul > li.notifications:not(.active) section.dropdown-body
+    {
+        display: none;
+    }
+    header.header > .right > nav > ul > li.notifications.active section.dropdown-body
+    {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Zamiast przenoszenia do wpisu/komentarza, klikalne linki wewnątrz powiadomienia */
+    if(notificationsPointerEventsToLinks == 1)
+    {
+        li.notifications:is(.entries, .tags) section.dropdown-body section.notifications section.notifications-stream > div.content > section.notify > a
+        {
+            pointer-events: none;
+        }
+        li.notifications:is(.entries, .tags) section.dropdown-body section.notifications section.notifications-stream > div.content > section.notify > div.content > p > a
+        {
+            pointer-events: all;
+        }
+        li.notifications:is(.entries, .tags) section.dropdown-body section.notifications section.notifications-stream > div.content > section.notify > div.content > p > a:hover
+        {
+            color: var(--blackish)!important;
+        }
+        li.notifications.tags section.dropdown-body section.notifications section.notifications-stream > div.content > section.notify > div.content > p > a[href^="/tag/"]
+        {
+            font-weight: bolder!important;
+        }
+    }
+    
+    
     
     
     /* Jeśli panel @wołań i #tagów są w tym samym miejscu - CZĘŚĆ 1 z 2 */
@@ -10438,6 +10484,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
     
 
 
+
     /* Rozróżniaj kolorem powiadomienia z wpisów i ze znalezisk */
     if(notificationsStreamColorizeLinksAndEntries == 1)
     {
@@ -11105,7 +11152,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         display: flex;
     } 
     
-    
+
     
     
     
@@ -14015,21 +14062,22 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
         body > section > div.main-content > main > section > div.content > section > section > section > div.content > section.link-block:has(a[href*={"\/ludzie\/" + highlightUser1}], a[href*={"\/ludzie\/" + highlightUser2}], a[href*={"\/ludzie\/" + highlightUser3}])
         {
             order: -88888!important;
-        } 
-    } 
-    body > section > div.main-content > main > section > div.content > section > section > section > div.content > section.link-block:has(a[href="/ludzie/WykopX"])
-    {
-        order: -89999!important;
-        
-        background-image:  url("https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykopx-transparent.png") !important
-        background-size: 100px;
-        background-position: bottom 2px right 20px;
-        if(linkThumbnail == "polewej")
-        {
-            background-position: bottom 0px left 10px;
         }
-        background-repeat: no-repeat;
+        body > section > div.main-content > main > section > div.content > section > section > section > div.content > section.link-block:has(a[href="/ludzie/WykopX"])
+        {
+            order: -89999!important;
+
+            background-image:  url("https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/wykopx-transparent.png") !important
+            background-size: 100px;
+            background-position: bottom 2px right 20px;
+            if(linkThumbnail == "polewej")
+            {
+                background-position: bottom 0px left 10px;
+            }
+            background-repeat: no-repeat;
+        }
     } 
+    
     
 
     
@@ -17422,7 +17470,7 @@ https://wykop.pl/moje/
 {    
     
     versor = "style"; // "style", "blank", "block"
-    version = "2.50.4";   
+    version = "2.51.0";   
     // xblocker = 2.49
     
     /* Wykop XS Settings  */
