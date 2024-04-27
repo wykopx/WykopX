@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name        Listy plusujących + MirkoCzat
-// @name:pl     Listy plusujących + MirkoCzat
-// @name:en     Listy plusujących + MirkoCzat
-// @version     3.0.27
+// @name        Listy plusujących + mirkoczat
+// @name:pl     Listy plusujących + mirkoczat
+// @name:en     Listy plusujących + mirkoczat
+// @version     3.0.28
 
 
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
@@ -14,12 +14,11 @@
 // @match       https://wykop.pl/*
 
 
-// @description Wykop X - Mikroczat.pl / Mirkoczat oraz dodanie usuniętej listy plusujących
-// @description:en Wykop X - Mikroczat.pl / Mirkoczat and list of entry/comment voters
+// @description Wykop XS - mirkoczat oraz dodanie usuniętej listy plusujących i przycisku Ulubione
+// @description:en Wykop XS - mirkoczat oraz dodanie usuniętej listy plusujących i przycisku Ulubione
 
 
 // @require https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
-// ///require https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js
 
 
 // @compatible  chrome, firefox, opera, safari, edge
@@ -28,12 +27,14 @@
 // ==/UserScript==
 
 
-const promoString = "- Wykop X";
+const promoString = "- Wykop XS";
 const head = document.head;
 const styleElement = document.createElement('style');
 styleElement.id = "wykopxs_mikroczat";
 let CSS = "";
 let dev = false;
+
+
 
 
 
@@ -49,38 +50,52 @@ Zmień je w przeglądarce w następujący sposób:
 6. zmień wybraną opcję na true (aby ją włączyć) lub false (aby wyłączyć)
 
 
-Domyślne wartości wyglądają tak:
+Domyślne wartości wyglądają przykładowo tak:
 
-{"votersFollow":true,"votersBlacklist":true,"votersBanned":true,"votersSuspended":true,"votersRemoved":true,"votersGenderF":false,"votersGenderM":false,"votersColorGreen":true,"votersColorOrange":false,"votersColorBurgundy":true}
+{"expandAllVotersIfLessThan": 5, "votersFollow":true, "votersBlacklist":true, "votersBanned":true, "votersSuspended":true, "votersRemoved":true, "votersGenderF":false, "votersGenderM":false, "votersColorGreen":true, "votersColorOrange":false,"votersColorBurgundy":true}
 
 */
 
 
 
-
-
-// DEFAULT SETTINGS - nie zmieniaj wartości poniżej. Zmień je w sposób opisany powyżej
+// DEFAULT SETTINGS - nie zmieniaj wartości settings w kodzie. 
+// Zmień je w sposób opisany powyżej
 const settings =
 {
 	showVotersList: true,			// włącza pokazywanie listy plusujących
-	expandAllVotersIfLessThan: 5,	// domyślnie Wykop pokazywał 5 osób, które zaplusowały. Możesz zmienić tę wartość na np. 10 albo 20. W sumie ile chcesz.
-	votersFollow: true,				// pokazuje 🔔 przed użytkownikami, których obserwujesz
-	votersBlacklist: true,			// pokazuje ⛔ przed użytkownikami, których blokujesz
-	votersBanned: true,				// pokazuje użytkowników z aktywnym banem w kolorze i z ikonką 🍌
-	votersSuspended: true,			// pokazuje ✖ przed kontami, które są w trakcie usuwania
-	votersRemoved: true,			// pokazuje ✖ przed kontami, które są usunięte
-	votersGenderF: false,			// pokazuje różową kropkę przed kobietami
-	votersGenderM: false,			// pokazuje niebieską kropkę przed mężczyznami
-	votersColorGreen: true,			// pokazuje zielonki w kolorze
-	votersColorOrange: false,		// pokazuje pomarańczowych użytkowników w kolorze
-	votersColorBurgundy: true,		// pokazuje użytkowników bordo w kolorze
 
-	hideShareButton: true,			// ukrywa przycisk "Udostępnij"
-	showFavouriteButton: true,		// pokazuje przycisk "Dodaj do ulubionych" (samą gwiazdkę)
-	showFavouriteButtonLabel: true,	// pokazuje oprócz gwiazdki także tekst "Ulubione"
+	// expandAllVotersIfLessThan - domyślnie Wykop pokazywał 5 osób, które zaplusowały. 
+	// Możesz zmienić tę wartość na np. 10 albo 20. Jeśli wpis ma mniej plusów niż ta liczba, zostaną od razu wyświetleni wszyscy plusujący bez przycisku "+100 INNYCH"
+	expandAllVotersIfLessThan: 20,
 
-	addCommentPlusWhenVotingOnEntry: false,		// gdy plusujesz wpis, dodaje komentarz "+1"
-	addCommentPlusWhenVotingOnComment: false,	// gdy plusujesz komentarz, dodaje komentarz "+1"
+	votersFollow: true,								// pokazuje 🔔 przed użytkownikami, których obserwujesz
+	votersBlacklist: true,							// pokazuje ⛔ przed użytkownikami, których blokujesz
+	votersBanned: true,								// pokazuje użytkowników z aktywnym banem w kolorze i z ikonką 🍌
+	votersSuspended: true,							// pokazuje ✖ przed kontami, które są w trakcie usuwania
+	votersRemoved: true,							// pokazuje ✖ przed kontami, które są usunięte
+	votersGenderF: false,							// pokazuje różową kropkę przed kobietami
+	votersGenderM: false,							// pokazuje niebieską kropkę przed mężczyznami
+	votersColorGreen: true,							// pokazuje zielonki w kolorze
+	votersColorOrange: false,						// pokazuje pomarańczowych użytkowników w kolorze
+	votersColorBurgundy: true,						// pokazuje użytkowników bordo w kolorze
+
+	votersFollowFirst: true,						// pokazuje użytkowników, których obserwujesz pierwszych na liście
+	votersBlackFirst: false,						// pokazuje plusy od moderacji pierwsze na liście (konta typu @wykop, @m__b, @a__s itd.)
+	votersBurgundyFirst: false,						// pokazuje użytkowników bordo pierwszych na liście
+	votersOrangeFirst: false,						// pokazuje zielonki pierwszych na liście
+	votersGreenFirst: false,						// pokazuje pomarańczki pierwszych na liście
+
+	votersBlacklistLast: false,						// pokazuje użytkowników, których zablokowałeś na końcu listy
+	votersRemovedLast: false,						// pokazuje usunięte konta na końcu listy
+	votersBannedLast: false,						// pokazuje zbanowanych na końcu listy
+	votersSuspendedLast: false,						// pokazuje konta w trakcie usuwania na końcu listy
+
+	hideShareButton: true,							// ukrywa przycisk "Udostępnij"
+	showFavouriteButton: true,						// pokazuje przycisk "Dodaj do ulubionych" (samą gwiazdkę)
+	showFavouriteButtonLabel: true,					// pokazuje oprócz gwiazdki także tekst "Ulubione"
+
+	addCommentPlusWhenVotingOnEntry: false,			// gdy plusujesz wpis, dodaje komentarz "+1"
+	addCommentPlusWhenVotingOnComment: false,		// gdy plusujesz komentarz, dodaje komentarz "+1"
 };
 
 
@@ -95,8 +110,6 @@ const settings =
 	let mikroczatChannel = "/";
 	let mikroczatWindow = null;
 
-
-
 	// LOCALSTORAGE
 	localStorageSettings = localforage.createInstance({
 		driver: localforage.LOCALSTORAGE,
@@ -104,22 +117,21 @@ const settings =
 		storeName: "settings",
 	});
 
-	// Try to get the settings from local storage
 	await localStorageSettings.getItem('settings').then(async (localSettings) =>
 	{
 		if (localSettings)
 		{
 			mergeSettings(localSettings, settings);
-		} else
+		}
+		else
 		{
 			localStorageSettings.setItem('settings', settings);
 		}
 		await localStorageSettings.setItem('settings', settings);
 	}).catch((err) =>
 	{
-		console.error('An error occurred: ', err);
+		console.error('Error', err);
 	});
-
 
 	document.addEventListener("mousedown", (event) =>
 	{
@@ -145,20 +157,17 @@ const settings =
 		mikroczatWindow = window.open(mikroczatURL, 'mikroczat', windowOptions);
 	});
 
-
 	document.addEventListener("click", (event) =>
 	{
 		if (!event.target.closest(".wykopx_open_mikroczat")) return;
 		event.preventDefault();
 	});
 
-
-
 	// WIADOMOŚCI OD MIKROCZAT
 	window.addEventListener('message', function (event)
 	{
 		if (event.origin !== mikroczatDomain) return;
-		console.log('Wiadomość z mikroczat.pl', event.data);
+		if (dev) console.log('Wiadomość z mikroczat.pl', event.data);
 		//if (event.data == "MikroCzatOpened") mikroczatWindow.postMessage({ type: "token", token: window.localStorage.getItem("token") }, mikroczatDomain);
 		if (event.data == "MikroCzatOpened") mikroczatWindow.postMessage({ type: "TokensObject", token: window.localStorage.getItem("token"), userKeep: window.localStorage.getItem("userKeep") }, mikroczatDomain);
 
@@ -188,7 +197,6 @@ const settings =
 		right: -2px;
 	}`;
 
-
 	createNewNavBarButton({
 		position: "left",
 		// text: "Mikro<strong>czat</strong>",
@@ -204,251 +212,325 @@ const settings =
 
 
 
-
-
-
-	const debounce = (fn, time) =>
+	function throttle(func, delay)
 	{
-		let timeoutHandler;
-		return (...args) =>
+		let promise = Promise.resolve();
+		return function (...args)
 		{
-			clearTimeout(timeoutHandler);
-			timeoutHandler = setTimeout(() =>
+			promise = promise.then(() =>
 			{
-				fn(...args)
-			}, time);
-		}
+				return new Promise((resolve) =>
+				{
+					setTimeout(() =>
+					{
+						func(...args);
+						resolve();
+					}, delay);
+				});
+			});
+		};
 	}
-	let debounceAddVotersList = debounce((target) => addVotersList(target), 1000);
 
-	let parentNode = document.body;
+	const throttledAddVotersList = throttle(addVotersList, 200);
+
 	let observer = new MutationObserver((mutations) =>
 	{
+		if (dev) console.log(`${mutations.length} mutations`, mutations);
+
 		mutations.forEach((mutation) =>
 		{
-			if (mutation.target && mutation.target.tagName === "SECTION")
+
+			if (dev) console.log("----------new mutation-----");
+			// if(dev) console.log(mutation);
+			if (mutation.type)
 			{
+				// if(dev) console.log(`mutation.type: `, mutation.type)
+			}
+			if (mutation.attributeName)
+			{
+				// if(dev) console.log(`mutation.attributeName: ${mutation.attributeName}`, mutation.attributeName)
+			}
+			if (mutation.addedNodes.length > 0 && mutation.addedNodes[0] && mutation.addedNodes[0] instanceof Element)
+			{
+				// if(dev) console.log(`mutation.addedNodes.length: ${mutation.addedNodes.length}`, mutation.addedNodes[0])
+			}
 
-
-				if (mutation.target.matches("section.entry"))
+			if (mutation.addedNodes.length > 0 && mutation.addedNodes[0] && mutation.addedNodes[0] instanceof Element)
+			{
+				if (mutation.addedNodes[0].matches("section.entry[id]"))
 				{
-					if (settings.showVotersList) addVotersList(mutation.target);
-					if (settings.showFavouriteButton) addFavouriteButton(mutation.target);
+					const sectionEntry = mutation.addedNodes[0];
+					if (dev) console.log("mutation 1", sectionEntry)
+					processSectionEntry(sectionEntry)
 
-					let sectionEntryArray = mutation.target.querySelectorAll('section.entry');
-					if (sectionEntryArray)
+					const sectionCommentsArray = sectionEntry.querySelectorAll("section.entry[id]");
+					if (dev) console.log("mutation 1 - forEach: sectionEntryArray", sectionCommentsArray);
+					sectionCommentsArray.forEach((sectionComment) =>
+					{
+						processSectionEntry(sectionComment)
+					})
+				}
+				else if (mutation.addedNodes[0].matches("div.content:has(>section.entry[id])"))
+				{
+					const sectionEntriesArray = mutation.addedNodes[0].querySelectorAll("section.entry[id]");
+					if (dev) console.log("mutation 2 - forEach: sectionEntriesArray", sectionEntriesArray);
+					sectionEntriesArray.forEach((sectionEntry) =>
+					{
+						processSectionEntry(sectionEntry)
+					})
+				}
+				else if (mutation.target.tagName === "SECTION" && mutation.target.matches("section.entry.detailed[id]"))
+				{
+					const sectionEntry = mutation.target;
+					if (dev) console.log("mutation 3", sectionEntry)
+					if (dev) console.log("mutation 3: mutation.target", mutation.target);
+
+					processSectionEntry(sectionEntry);
+
+					const sectionCommentsArray = sectionEntry.querySelectorAll("section.entry[id]");
+					if (dev) console.log("mutation 3 - forEach: sectionEntryArray", sectionCommentsArray);
+					sectionCommentsArray.forEach((sectionComment) =>
+					{
+						processSectionEntry(sectionComment)
+					})
+				}
+
+			}
+
+			if (mutation.target)
+			{
+				// if(dev) console.log(`mutation.target: ${mutation.target.tagName}`, mutation.target)
+
+				if (mutation.target.tagName === "SECTION")
+				{
+					if (mutation.target.matches("section.entry[id]"))
 					{
 
-						sectionEntryArray.forEach((el) =>
-						{
-							if (settings.showVotersList) addVotersList(el);
-							if (settings.showFavouriteButton) addFavouriteButton(el);
-						})
-					}
-				}
-				else if (mutation.target.matches("section.stream.microblog"))
-				{
-					let sectionEntryArray = mutation.target.querySelectorAll('section.entry');
-					if (sectionEntryArray)
-					{
-						sectionEntryArray.forEach((el) =>
-						{
-							if (settings.showVotersList) addVotersList(el);
-							if (settings.showFavouriteButton) addFavouriteButton(el);
-						})
 					}
 				}
 
+
+
+				/*
+				if (mutation.target.tagName === "ccccccccSECTION")
+				{
+					if (mutation.target.matches("section.entry[id]"))
+					{
+						if(dev) console.log(`💙 MUTATION A - main`, mutation.target)
+
+						if (settings.showFavouriteButton) addFavouriteButton(mutation.target);
+
+						if (settings.showVotersList && mutation.target?.__vue__)
+						{
+							if (mutation.target.dataset?.votersLoaded != mutation.target?.__vue__.item.id)
+							{
+								if (settings.expandAllVotersIfLessThan > 5 && mutation.target?.__vue__.item.votes.up <= settings.expandAllVotersIfLessThan && mutation.target?.__vue__.item.votes.up > 5) throttledAddVotersList(mutation.target);
+								else addVotersList(mutation.target)
+							}
+
+						}
+
+						let sectionEntryArray = mutation.target.querySelectorAll('section.entry');
+
+						if (sectionEntryArray)
+						{
+							sectionEntryArray.forEach((sectionEntry) =>
+							{
+								if(dev) console.log(`💙 MUTATION A - forEach`, sectionEntry)
+
+								if (settings.showFavouriteButton) addFavouriteButton(sectionEntry);
+								if (settings.showVotersList && sectionEntry?.__vue__) 
+								{
+									if (sectionEntry.dataset?.votersLoaded != sectionEntry?.__vue__.item.id)
+									{
+										if (settings.expandAllVotersIfLessThan > 5 && sectionEntry?.__vue__.item.votes.up <= settings.expandAllVotersIfLessThan && sectionEntry?.__vue__.item.votes.up > 5) throttledAddVotersList(sectionEntry);
+										else addVotersList(sectionEntry)
+									}
+								}
+							})
+						}
+					}
+					if (mutation.target.matches("section.stream:is(.microblog, .entry-comments)"))
+					{
+						if(dev) console.log(`💙 MUTATION B - section.stream:is(.microblog, .entry-comments) `, mutation.target)
+						let sectionEntryArray = mutation.target.querySelectorAll('section.entry[id]');
+
+						if (sectionEntryArray)
+						{
+							sectionEntryArray.forEach((sectionEntry) =>
+							{
+								if(dev) console.log(`💙 MUTATION B - forEach`, sectionEntry)
+
+								if (settings.showFavouriteButton) addFavouriteButton(sectionEntry);
+
+								if (sectionEntry.dataset?.votersLoaded != sectionEntry?.__vue__.item.id)
+								{
+									if (settings.showVotersList && sectionEntry?.__vue__) 
+									{
+										if (settings.expandAllVotersIfLessThan > 5 && sectionEntry?.__vue__.item.votes.up <= settings.expandAllVotersIfLessThan && sectionEntry?.__vue__.item.votes.up > 5) throttledAddVotersList(sectionEntry);
+										else addVotersList(sectionEntry)
+									}
+								}
+
+							})
+						}
+					}
+
+					else
+					{
+						// if(dev) console.log(" ------------- ");
+						// if(dev) console.log(" mutation.addedNodes: " + mutation.addedNodes);
+						// if(dev) console.log(mutation.addedNodes);
+						// if(dev) console.log(" mutation.attributeName: " + mutation.attributeName);
+						// if(dev) console.log(mutation.attributeName);
+						// if(dev) console.log(" mutation.attributeNamespace: " + mutation.attributeNamespace);
+						// if(dev) console.log(mutation.attributeNamespace);
+						// if(dev) console.log(" mutation.nextSibling: " + mutation.nextSibling);
+						// if(dev) console.log(mutation.nextSibling);
+						// if(dev) console.log(" mutation.oldValue: " + mutation.oldValue);
+						// if(dev) console.log(mutation.oldValue);
+						// if(dev) console.log(" mutation.previousSibling: " + mutation.previousSibling);
+						// if(dev) console.log(mutation.previousSibling);
+						// if(dev) console.log(" mutation.removedNodes: " + mutation.removedNodes);
+						// if(dev) console.log(mutation.removedNodes);
+						// if(dev) console.log(" mutation.target: " + mutation.target);
+						// if(dev) console.log(mutation.target);
+						// if(dev) console.log(" mutation.type: " + mutation.type);
+					}
+				}
+				if (mutation.target.tagName === "DIV")
+				{
+					if (mutation.target.matches("div.content:has( > section.entry)"))
+					{
+						if(dev) console.log(`💙 MUTATION C - main - div.content:has( > section.entry) `, mutation.target)
+						let sectionEntryArray = mutation.target.querySelectorAll('section.entry[id]');
+						if (sectionEntryArray)
+						{
+							sectionEntryArray.forEach((sectionEntry) =>
+							{
+								if(dev) console.log(`💙 MUTATION C - forEach`, sectionEntry)
+
+								if (settings.showFavouriteButton) addFavouriteButton(sectionEntry);
+								if (settings.showVotersList && sectionEntry.__vue__) 
+								{
+									if (sectionEntry.dataset?.votersLoaded != sectionEntry?.__vue__.item.id)
+									{
+										if (settings.expandAllVotersIfLessThan > 5 && sectionEntry?.__vue__.item.votes.up <= settings.expandAllVotersIfLessThan && sectionEntry?.__vue__.item.votes.up > 5) throttledAddVotersList(sectionEntry);
+										else addVotersList(sectionEntry)
+									}
+								}
+							})
+						}
+					}
+				}
 				else
 				{
-					// console.log(" ------------- ");
-					// console.log(" mutation.addedNodes: " + mutation.addedNodes);
-					// console.log(mutation.addedNodes);
-					// console.log(" mutation.attributeName: " + mutation.attributeName);
-					// console.log(mutation.attributeName);
-					// console.log(" mutation.attributeNamespace: " + mutation.attributeNamespace);
-					// console.log(mutation.attributeNamespace);
-					// console.log(" mutation.nextSibling: " + mutation.nextSibling);
-					// console.log(mutation.nextSibling);
-					// console.log(" mutation.oldValue: " + mutation.oldValue);
-					// console.log(mutation.oldValue);
-					// console.log(" mutation.previousSibling: " + mutation.previousSibling);
-					// console.log(mutation.previousSibling);
-					// console.log(" mutation.removedNodes: " + mutation.removedNodes);
-					// console.log(mutation.removedNodes);
-					// console.log(" mutation.target: " + mutation.target);
-					// console.log(mutation.target);
-					// console.log(" mutation.type: " + mutation.type);
+					// if(dev) console.log(" ------------- ");
+					// if(dev) console.log(" mutation.addedNodes: " + mutation.addedNodes);
+					// if(dev) console.log(mutation.addedNodes);
+					// if(dev) console.log(" mutation.attributeName: " + mutation.attributeName);
+					// if(dev) console.log(mutation.attributeName);
+					// if(dev) console.log(" mutation.attributeNamespace: " + mutation.attributeNamespace);
+					// if(dev) console.log(mutation.attributeNamespace);
+					// if(dev) console.log(" mutation.nextSibling: " + mutation.nextSibling);
+					// if(dev) console.log(mutation.nextSibling);
+					// if(dev) console.log(" mutation.oldValue: " + mutation.oldValue);
+					// if(dev) console.log(mutation.oldValue);
+					// if(dev) console.log(" mutation.previousSibling: " + mutation.previousSibling);
+					// if(dev) console.log(mutation.previousSibling);
+					// if(dev) console.log(" mutation.removedNodes: " + mutation.removedNodes);
+					// if(dev) console.log(mutation.removedNodes);
+					// if(dev) console.log(" mutation.target: " + mutation.target);
+					// if(dev) console.log(mutation.target);
+					// if(dev) console.log(" mutation.type: " + mutation.type);
 				}
+				*/
 			}
 		});
 	});
 
-	let config = { childList: true, subtree: true };
-	observer.observe(parentNode, config);
 
+	let main;
 
-
-
-
-
-
-
-
-	CSS += `
-	section.entry-voters
+	document.addEventListener('readystatechange', (event) => 
 	{
-		ul
+		if (dev) console.log('readyState:' + document.readyState);
+		main = document.querySelector('main.main');
+		if (main)
 		{
-			display: block flex;
-			column-gap: 0.5em;
-			row-gap: 0px;
-			
-			align-items: baseline;
-			flex-wrap: wrap;
-
-			padding: 0 0 0 0;
-			margin: 0;
-			list-style-type: none;
-			position: relative;
-			font-size: 12px;
-			color: var(--gullGray);
-
-			
-			&::before
+			const sectionEntryArray = main.querySelectorAll("section.entry[id]");
+			// if (dev) console.log("sectionEntryArray", sectionEntryArray);
+			sectionEntryArray.forEach((sectionEntry) =>
 			{
-				content: "Plusujący: ";
+				processSectionEntry(sectionEntry)
+			})
+			const config = {
+				childList: true,
+				subtree: true,
+			};
+			observer.observe(main, config);
+		}
+
+	});
+
+	navigation.addEventListener("navigate", (event) =>
+	{
+		if (dev) console.log(`🎈 Event: "navigate"`, event)
+
+
+	});
+
+	window.addEventListener('load', () =>
+	{
+		if (dev) console.log("window.load()");
+	});
+
+
+
+	function processSectionEntry(sectionEntry)
+	{
+		if (dev) console.log("processSectionEntry()", sectionEntry)
+
+		if (!sectionEntry) return;
+
+		if (settings.showFavouriteButton) addFavouriteButton(sectionEntry);
+
+		if (settings.showVotersList && sectionEntry?.__vue__?.item) 
+		{
+			if (dev) console.log("sectionEntry?.__vue__.item.id", sectionEntry?.__vue__.item.id)
+			if (dev) console.log("sectionEntry.dataset?.votersLoaded", sectionEntry.dataset?.votersLoaded)
+			if (sectionEntry.dataset?.votersLoaded == sectionEntry?.__vue__.item.id) return;
+			if (sectionEntry?.__vue__.item.votes.up == 0) return;
+
+			if (settings.expandAllVotersIfLessThan > 5 && sectionEntry?.__vue__.item.votes.up <= settings.expandAllVotersIfLessThan && sectionEntry?.__vue__.item.votes.up > 5) 
+			{
+				if (dev) console.log(`processSectionEntry() wybrano 💛throttledAddVotersList  ${sectionEntry.__vue__.item.id} | plusow: ${sectionEntry.__vue__.item.votes.up}`,)
+				throttledAddVotersList(sectionEntry);
 			}
-
-			li
+			else
 			{
-				a.username
-				{
-					
-					span
-					{
-						font-weight: normal;
-					}
-
-					&.banned, &.suspended
-					{
-						color: 
-					}
-				}
-
-				&.more
-				{
-					cursor: pointer;
-					font-weight: 700;
-					text-transform: uppercase;
-				}
+				if (dev) console.log(`processSectionEntry() wybrano 🤎addVotersList  ${sectionEntry.__vue__.item.id} | plusow: ${sectionEntry.__vue__.item.votes.up}`,)
+				addVotersList(sectionEntry)
 			}
 		}
 	}
-	
-	section.entry-voters ul li:not(:last-child):after 		{ content: " • "; margin-left: 0.3em; }
-	
-	section.entry-voters ul li a.username i 				{ display: none; font-size: 0.8em; font-style: normal; bottom: 0px; position: relative; }
-	section.entry-voters ul li a.username i:has(+span) 		{ margin-right: 1px; }
-	section.entry-voters ul li a.username i.follow-true,
-	section.entry-voters ul li a.username i.blacklist-true,
-	section.entry-voters ul li a.username i.banned ,
-	section.entry-voters ul li a.username i.suspended,
-	section.entry-voters ul li a.username i.removed,
-	section.entry-voters ul li a.username i.f-gender,
-	section.entry-voters ul li a.username i.m-gender
-	{ display: inline flex;} 
-	
-	
-	section.entry-voters ul li a.username i.follow-true::before { content: '🔔'; }
-	section.entry-voters ul li a.username i.blacklist-true::before { content: '⛔'; }
-	section.entry-voters ul li a.username i.banned::before { content: '🍌'; }
-	section.entry-voters ul li a.username i.suspended::before { content: '✖'; }
-	section.entry-voters ul li a.username i.removed::before { content: '✖'; }
-	section.entry-voters ul li a.username i.f-gender::before { content: '🟣'; font-size: 0.7em; bottom: 3px; }
-	
-	section.entry-voters ul li:has(a.username.burgundy-profile) { order: 5; }
-	section.entry-voters ul li:has(a.username.green-profile) { order: 6; }
-	section.entry-voters ul li:has(a.username.orange-profile) { order: 6; }
-	section.entry-voters ul li:has(a.username.follow-true) { order: 1; }
-	section.entry-voters ul li:has(a.username.blacklist-true) { order: 9; }
-	section.entry-voters ul li.more { order: 10; }
-	`;
 
-
-	if (!settings?.votersColorOrange) CSS += `section.entry-voters ul li a.username.orange-profile { color: var(--gullGray); }`;
-	if (!settings?.votersColorGreen) CSS += `section.entry-voters ul li a.username.green-profile { color: var(--gullGray); }`;
-	if (!settings?.votersColorBurgundy) CSS += `section.entry-voters ul li a.username.burgundy-profile { color: var(--gullGray); }`;
-
-	if (settings.hideShareButton) CSS += `section.actions ul li.sharing { display: none!important; }`;
-
-
-	/* ULUBIONE */
-	CSS += `
-
-	section.actions > ul > li.favourite 
-	{
-		cursor: pointer;
-		user-select: none;
-		color: var(--gullGray);
-		font-size: 14px;
-		padding-left: 26px;
-		transition: color .2s ease, opacity .2s ease;
-	}
-
-	.actions li.favourite span::before
-	{
-		content: '';
-		width: 18px;
-		height: 18px;
-		display: block;
-		position: absolute;
-		left: 0;
-		mask-size: 18px 18px;
-		background: var(--gullGray);
-		transition: background .2s ease;
-		mask-image: url(/static/img/svg/favourite.svg);
-	}
-	
-	.actions li.favourite.active span::before 
-	{
-		mask-image: url(/static/img/svg/favourite-filled.svg);
-		background: var(--orange);
-	}
-
-	`;
-
-
-	/* Wykop X Style 3.0 */
-	CSS += `
-	:root { --kolorBananowy1: rgba(255, 185, 0, 1); }
-	section.entry-voters ul li a.username:is(.banned, .suspended):not(.removed) span  { color: var(--kolorBananowy1); };
-	section.entry-voters ul li a.username.removed { color: rgb(0, 0, 0); }
-	[data-night-mode] section.entry-voters ul li a.username.removed { background-color: rgba(255, 255, 255, 0.1); padding-left: 5px; padding-right: 5px; }
-		`;
-
-
-
-	/* HIDE ADS ALWAYS */
-	CSS += `
-		.pub-slot-wrapper
-		{
-			display: none!important;
-		}`;
-
-
-	styleElement.textContent = CSS;
-	document.head.appendChild(styleElement);
 
 
 
 
 	async function addVotersList(sectionEntry)
 	{
-		if (sectionEntry && sectionEntry?.__vue__ && sectionEntry?.__vue__.item.votes.up > 0)
-		{
+		if (dev) console.log(`addVotersList precheck: `, sectionEntry)
 
-			if (sectionEntry?.__vue__ && settings.expandAllVotersIfLessThan > 5 && sectionEntry?.__vue__.item.votes.up <= settings.expandAllVotersIfLessThan)
+		if (!sectionEntry || !sectionEntry.__vue__) return;
+
+		if (sectionEntry.dataset?.votersLoaded == sectionEntry?.__vue__.item.id) return;
+
+		if (dev) console.log(`addVotersList execute: `, sectionEntry)
+		if (sectionEntry?.__vue__ && sectionEntry?.__vue__.item.votes.up > 0)
+		{
+			if (sectionEntry?.__vue__ && settings.expandAllVotersIfLessThan > 5 && sectionEntry?.__vue__.item.votes.up <= settings.expandAllVotersIfLessThan && sectionEntry?.__vue__.item.votes.up > 5)
 			{
 				let entryId, commentId;
 
@@ -463,6 +545,7 @@ const settings =
 				}
 
 				let voters = await fetchAllVotersFromAPI(entryId, commentId);
+
 				appendVotersToEntry(sectionEntry, voters);
 
 			}
@@ -521,6 +604,14 @@ const settings =
 
 	function appendVotersToEntry(sectionEntry, voters)
 	{
+		if (!sectionEntry) return;
+		const divEditWrapperElement = sectionEntry.querySelector('article > div.edit-wrapper');
+		if (!divEditWrapperElement) return;
+
+		sectionEntry.dataset.votersLoaded = sectionEntry?.__vue__?.item.id;
+
+		if (dev) console.log(`appendVotersToEntry: ${sectionEntry?.__vue__?.item.id}`, voters)
+
 
 		const fiveVoters = voters;
 
@@ -533,6 +624,7 @@ const settings =
 			sectionEntryVotersHTML += getListItemForUser(voter);
 		});
 
+		// <li class="more">
 		if (sectionEntry?.__vue__?.item?.votes.up > settings.expandAllVotersIfLessThan && voters.length <= settings.expandAllVotersIfLessThan)
 		{
 			sectionEntryVotersHTML += `
@@ -551,16 +643,16 @@ const settings =
 
 			sectionEntryVotersHTML += `>+${sectionEntry?.__vue__?.item?.votes.up - 5} innych</span></li>`;
 		}
-
-
 		sectionEntryVotersHTML += `</ul>`;
+
 		const sectionEntryVoters = document.createElement("section");
 		sectionEntryVoters.classList.add("entry-voters");
 		sectionEntryVoters.setAttribute('data-v-6e6ed6ee', '');
 		sectionEntryVoters.setAttribute('data-v-2aacfeb5', '');
 		sectionEntryVoters.innerHTML = sectionEntryVotersHTML;
 
-		const sectionEntryVotersElement = sectionEntry.querySelector('section.entry-voters');
+		const sectionEntryVotersElement = divEditWrapperElement.querySelector('section.entry-voters');
+
 		if (sectionEntryVotersElement)
 		{
 			let parentElement = sectionEntryVotersElement.parentNode;
@@ -629,6 +721,7 @@ const settings =
 
 	function fetchAllVotersFromAPI(entryId, commentId)
 	{
+		if (dev) console.log(`fetchAllVotersFromAPI: ${entryId}, ${commentId}`)
 		let apiURL = `https://wykop.pl/api/v3/entries/${entryId}/votes?page=1`
 		if (commentId) apiURL = `https://wykop.pl/api/v3/entries/${entryId}/comments/${commentId}/votes`;
 
@@ -798,12 +891,12 @@ const settings =
 	{
 		for (let key in defaultSettings)
 		{
-			if (localSettings[key])
+			if (key in localSettings)
 			{
 				settings[key] = localSettings[key];
 			}
 
-			else if (!localSettings[key])
+			else if (!(key in localSettings))
 			{
 				settings[key] = defaultSettings[key];
 			}
@@ -828,20 +921,23 @@ const settings =
 					postCommentPlus1ToAPI(sectionEntry);
 				}
 			}
-
 		}
-
-
 
 
 
 		if (event.target.matches("li.more span"))
 		{
 			event.preventDefault();
-			console.log(`Wykop XS pobiera listę ${event.target.dataset.votesUp} plusujących`);
-			let voters = await fetchAllVotersFromAPI(event.target.dataset.entryId, event.target.dataset.commentId);
-			let entry = event.target.closest("section.entry");
-			appendVotersToEntry(entry, voters);
+
+			let sectionEntry = event.target.closest("section.entry");
+			const entryId = event.target.dataset.entryId;
+			const commentId = event.target.dataset.commentId;
+			if (dev) console.log(`Wykop XS pobiera listę ${event.target.dataset.votesUp} plusujących`);
+			event.target.closest("section.entry-voters").innerHTML = `<span>(Wykop X: wczytywanie ${event.target.dataset.votesUp} plusujących...)</span>`;
+
+			let voters = await fetchAllVotersFromAPI(entryId, commentId);
+
+			appendVotersToEntry(sectionEntry, voters);
 			return;
 		}
 
@@ -940,11 +1036,168 @@ const settings =
 	}
 
 
+	{
+
+		CSS += `
+			section.entry-voters
+			{
+				& > span 
+				{
+					font-size: 12px;
+					color: var(--gullGray);
+				}
+				ul
+				{
+					display: block flex;
+					column-gap: 0.5em;
+					row-gap: 0px;
+					
+					align-items: baseline;
+					flex-wrap: wrap;
+
+					padding: 0 0 0 0;
+					margin: 0;
+					list-style-type: none;
+					position: relative;
+					font-size: 12px;
+					color: var(--gullGray);
+
+					
+					&::before
+					{
+						content: "Plusujący: ";
+					}
+
+					li
+					{
+						a.username
+						{
+							
+							span
+							{
+								font-weight: normal;
+							}
+
+							&.banned, &.suspended
+							{
+								color: 
+							}
+						}
+
+						&.more
+						{
+							cursor: pointer;
+							font-weight: 700;
+							text-transform: uppercase;
+						}
+					}
+				}
+			}
+	
+			section.entry-voters ul li:not(:last-child):after 		{ content: " • "; margin-left: 0.3em; }
+			
+			section.entry-voters ul li a.username i 				{ display: none; font-size: 0.8em; font-style: normal; bottom: 0px; position: relative; }
+			section.entry-voters ul li a.username i:has(+span) 		{ margin-right: 1px; }
+			section.entry-voters ul li a.username i.follow-true,
+			section.entry-voters ul li a.username i.blacklist-true,
+			section.entry-voters ul li a.username i.banned ,
+			section.entry-voters ul li a.username i.suspended,
+			section.entry-voters ul li a.username i.removed,
+			section.entry-voters ul li a.username i.f-gender,
+			section.entry-voters ul li a.username i.m-gender
+			{ display: inline flex;} 
+			
+			
+			section.entry-voters ul li a.username i.follow-true::before { content: '🔔'; }
+			section.entry-voters ul li a.username i.blacklist-true::before { content: '⛔'; }
+			section.entry-voters ul li a.username i.banned::before { content: '🍌'; }
+			section.entry-voters ul li a.username i.suspended::before { content: '✖'; }
+			section.entry-voters ul li a.username i.removed::before { content: '✖'; }
+			section.entry-voters ul li a.username i.f-gender::before { content: '🟣'; font-size: 0.7em; bottom: 3px; }
+			
+			
+			section.entry-voters ul li:has(a.username) { order: 6; }
+			section.entry-voters ul li.more { order: 100; }
+			`;
+
+
+
+		if (settings?.votersFollowFirst) CSS += `section.entry-voters ul li:has(a.username.follow-true) { order: 1; }`;
+		if (settings?.votersBlackFirst) CSS += `section.entry-voters ul li:has(a.username.burgundy-profile) { order: 3; }`;
+		if (settings?.votersOrangeFirst) CSS += `section.entry-voters ul li:has(a.username.orange-profile) { order: 4; }`;
+		if (settings?.votersGreenFirst) CSS += `section.entry-voters ul li:has(a.username.green-profile) { order: 5; }`;
+
+		if (settings?.votersBlacklistLast) CSS += `section.entry-voters ul li:has(a.username.blacklist-true) { order: 7; }`;
+		if (settings?.votersBannedLast) CSS += `section.entry-voters ul li:has(a.username.banned) { order: 8; }`;
+		if (settings?.votersSuspendedLast) CSS += `section.entry-voters ul li:has(a.username.banned) { order: 9; }`;
+		if (settings?.votersRemovedLast) CSS += `section.entry-voters ul li:has(a.username.removed) { order: 10; }`;
+
+		if (!settings?.votersColorOrange) CSS += `section.entry-voters ul li a.username.orange-profile 		{ color: var(--gullGray); }`;
+		if (!settings?.votersColorGreen) CSS += `section.entry-voters ul li a.username.green-profile 		{ color: var(--gullGray); }`;
+		if (!settings?.votersColorBurgundy) CSS += `section.entry-voters ul li a.username.burgundy-profile 	{ color: var(--gullGray); }`;
+
+		if (settings.hideShareButton) CSS += `section.actions ul li.sharing { display: none!important; }`;
+
+
+
+		/* ULUBIONE */
+		CSS += `
+			section.actions > ul > li.favourite 
+			{
+				cursor: pointer;
+				user-select: none;
+				color: var(--gullGray);
+				font-size: 14px;
+				padding-left: 26px;
+				transition: color .2s ease, opacity .2s ease;
+			}
+
+			.actions li.favourite span::before
+			{
+				content: '';
+				width: 18px;
+				height: 18px;
+				display: block;
+				position: absolute;
+				left: 0;
+				mask-size: 18px 18px;
+				background: var(--gullGray);
+				transition: background .2s ease;
+				mask-image: url(/static/img/svg/favourite.svg);
+			}
+			
+			.actions li.favourite.active span::before 
+			{
+				mask-image: url(/static/img/svg/favourite-filled.svg);
+				background: var(--orange);
+			}
+		`;
+
+
+		/* Wykop X Style 3.0 */
+		CSS += `
+			:root { --kolorBananowy1: rgba(255, 185, 0, 1); }
+			section.entry-voters ul li a.username:is(.banned, .suspended):not(.removed) span  { color: var(--kolorBananowy1); };
+			section.entry-voters ul li a.username.removed { color: rgb(0, 0, 0); }
+			[data-night-mode] section.entry-voters ul li a.username.removed { background-color: rgba(255, 255, 255, 0.1); padding-left: 5px; padding-right: 5px; }
+		`;
+
+
+
+		/* HIDE ADS ALWAYS */
+		CSS += `
+			.pub-slot-wrapper
+			{
+				display: none!important;
+			}`;
+
+		styleElement.textContent = CSS;
+		document.head.appendChild(styleElement);
+	}
+
+
+
 })();
-
-
-
-
 
 
 
