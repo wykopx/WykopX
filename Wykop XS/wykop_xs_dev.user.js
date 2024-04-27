@@ -2,7 +2,7 @@
 // @name        Wykop XS DEV
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
-// @version     3.0.18
+// @version     3.0.22
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
 // @contributionURL  	https://buycoffee.to/wykopx
 // @author      Wykop X <wykopx@gmail.com>
@@ -23,7 +23,7 @@
 {
 	'use strict';
 
-	const currentVersion = "3.0.16";
+	const currentVersion = "3.0.19";
 	let dev = false;
 	const promoString = " [Dodane przez Wykop X #wykopwnowymstylu]";
 
@@ -1004,9 +1004,13 @@
 	{
 		consoleX(`tagHeaderEditable()`, 1);
 		let originalValue = tagHeaderEditable.textContent.toLowerCase();
-		tagHeaderEditable.contentEditable = "true";
 		tagHeaderEditable.className = "wykopx_quick_search";
 		tagHeaderEditable.setAttribute("data-wykopx-original-value", originalValue); //todo dataset
+		tagHeaderEditable.setAttribute("tabindex", 1);
+		tagHeaderEditable.setAttribute("spellcheck", false);
+		tagHeaderEditable.contentEditable = "true";
+		tagHeaderEditable.role = "textbox";
+
 
 		let wykopx_quick_search = document.querySelector(".wykopx_quick_search");
 		if (originalValue != "") 
