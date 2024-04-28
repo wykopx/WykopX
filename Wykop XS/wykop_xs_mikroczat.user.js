@@ -360,7 +360,7 @@ const settings =
 
 		if (!sectionEntry) return;
 
-		if (settings.showAnimatedAvatars) animatedAvatar(asideProfileTop);
+		if (settings.showAnimatedAvatars) animatedAvatar(sectionEntry);
 
 		if (settings.showFavouriteButton) addFavouriteButton(sectionEntry);
 
