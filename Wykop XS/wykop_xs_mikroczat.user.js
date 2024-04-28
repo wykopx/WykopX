@@ -1,11 +1,13 @@
 // ==UserScript==
-// @name        Listy plusujących + mirkoczat
-// @name:pl     Listy plusujących + mirkoczat
-// @name:en     Listy plusujących + mirkoczat
-// @version     3.0.30
+// @name        Plusujący, animowane avatary, mirkoczat
+// @name:pl     Plusujący, animowane avatary, mirkoczat
+// @name:en     Plusujący, animowane avatary, mirkoczat
+// @version     3.0.31
 
 
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
+
+// Chcesz wesprzeć projekt Wykop X? Postaw kawkę:
 // @contributionURL  	https://buycoffee.to/wykopx
 
 
@@ -14,8 +16,8 @@
 // @match       https://wykop.pl/*
 
 
-// @description Wykop XS - mirkoczat oraz dodanie usuniętej listy plusujących i przycisku Ulubione
-// @description:en Wykop XS - mirkoczat oraz dodanie usuniętej listy plusujących i przycisku Ulubione
+// @description Wykop XS - mirkoczat, animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
+// @description:en Wykop XS - mirkoczat, animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 
 
 // @require https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
@@ -96,6 +98,9 @@ const settings =
 
 	addCommentPlusWhenVotingOnEntry: false,			// gdy plusujesz wpis, dodaje komentarz "+1"
 	addCommentPlusWhenVotingOnComment: false,		// gdy plusujesz komentarz, dodaje komentarz "+1"
+
+	blockAds: true,									// blokuje wszystkie reklamy na wykopie
+	showAnimatedAvatars: true,						// pokazuje animowane avatary
 };
 
 
@@ -294,7 +299,10 @@ const settings =
 						processSectionEntry(sectionComment)
 					})
 				}
-
+				else if (settings.showAnimatedAvatars && mutation.addedNodes[0].matches("aside.profile-top"))
+				{
+					animatedAvatar(mutation.addedNodes[0]);
+				}
 			}
 
 			if (mutation.target)
@@ -305,7 +313,6 @@ const settings =
 				{
 					if (mutation.target.matches("section.entry[id]"))
 					{
-
 					}
 				}
 			}
@@ -313,14 +320,17 @@ const settings =
 	});
 
 
-	let main;
 
+	// CONTENT LOADED
+	let main;
 	document.addEventListener('readystatechange', (event) => 
 	{
 		if (dev) console.log('readyState:' + document.readyState);
 		main = document.querySelector('main.main');
+
 		if (main)
 		{
+
 			const sectionEntryArray = main.querySelectorAll("section.entry[id]");
 			// if (dev) console.log("sectionEntryArray", sectionEntryArray);
 			sectionEntryArray.forEach((sectionEntry) =>
@@ -332,19 +342,15 @@ const settings =
 				subtree: true,
 			};
 			observer.observe(main, config);
+
+			if (settings.showAnimatedAvatars)
+			{
+				const asideProfileTop = main.querySelector("aside.profile-top");
+				if (asideProfileTop) animatedAvatar(asideProfileTop);
+			}
 		}
 
 	});
-
-	// navigation.addEventListener("navigate", (event) =>
-	// {
-	// 	if (dev) console.log(`🎈 Event: "navigate"`, event)
-	// });
-
-	// window.addEventListener('load', () =>
-	// {
-	// 	if (dev) console.log("window.load()");
-	// });
 
 
 
@@ -353,6 +359,8 @@ const settings =
 		if (dev) console.log("processSectionEntry()", sectionEntry)
 
 		if (!sectionEntry) return;
+
+		if (settings.showAnimatedAvatars) animatedAvatar(asideProfileTop);
 
 		if (settings.showFavouriteButton) addFavouriteButton(sectionEntry);
 
@@ -379,6 +387,27 @@ const settings =
 				addVotersList(sectionEntry)
 			}
 		}
+	}
+
+
+	function animatedAvatar(sectionEntry)
+	{
+		const image = sectionEntry.querySelector('a.avatar figure img'); // Replace with your actual selector
+		if (image)
+		{
+			if (dev) console.log("image", image)
+			const currentSrc = image.getAttribute('src');
+			if (dev) console.log("currentSrc", currentSrc)
+			if (currentSrc.endsWith('.gif'))
+			{
+				const modifiedSrc = currentSrc.replace(/,.*?\./, '.');
+				image.setAttribute('src', modifiedSrc);
+				if (dev) console.log("image.src", image.src)
+
+			}
+
+		}
+
 	}
 
 	function removeVotersListWhenNoVoters(sectionEntry)
@@ -1060,11 +1089,14 @@ const settings =
 
 
 		/* HIDE ADS ALWAYS */
-		CSS += `
+		if (settings.blockAds)
+		{
+			CSS += `
 			.pub-slot-wrapper
 			{
 				display: none!important;
 			}`;
+		}
 
 		styleElement.textContent = CSS;
 		document.head.appendChild(styleElement);
