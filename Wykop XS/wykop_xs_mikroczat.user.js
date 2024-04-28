@@ -2,7 +2,7 @@
 // @name        Plusujący, animowane avatary, mirkoczat
 // @name:pl     Plusujący, animowane avatary, mirkoczat
 // @name:en     Plusujący, animowane avatary, mirkoczat
-// @version     3.0.31
+// @version     3.0.32
 
 
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
