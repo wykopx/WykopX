@@ -2,7 +2,7 @@
 // @name        Plusujący, animowane avatary, mirkoczat
 // @name:pl     Plusujący, animowane avatary, mirkoczat
 // @name:en     Plusujący, animowane avatary, mirkoczat
-// @version     3.0.33
+// @version     3.0.34
 
 
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
@@ -31,6 +31,8 @@
 
 const promoString = "- Wykop XS";
 const head = document.head;
+const bodySection = document.body.querySelector("section");
+
 const styleElement = document.createElement('style');
 styleElement.id = "wykopxs_mikroczat";
 let CSS = "";
@@ -171,16 +173,27 @@ const settings =
 		event.preventDefault();
 	});
 
-	// WIADOMOŚCI OD MIKROCZAT
+
+	// WIADOMOŚCI OD MIKROCZAT.PL
 	window.addEventListener('message', function (event)
 	{
 		if (event.origin !== mikroczatDomain) return;
 		if (dev) console.log('Wiadomość z mikroczat.pl', event.data);
+
 		//if (event.data == "MikroCzatOpened") mikroczatWindow.postMessage({ type: "token", token: window.localStorage.getItem("token") }, mikroczatDomain);
-		if (event.data == "MikroCzatOpened") mikroczatWindow.postMessage({ type: "TokensObject", token: window.localStorage.getItem("token"), userKeep: window.localStorage.getItem("userKeep") }, mikroczatDomain);
+
+		if (event.data == "MikroCzatOpened")
+		{
+			mikroczatWindow.postMessage({ type: "TokensObject", token: window.localStorage.getItem("token"), userKeep: window.localStorage.getItem("userKeep") }, mikroczatDomain);
+		}
 
 
-		if (event.data == "MikroCzatLoggedIn") bodySection.dataset.mikroczatLogged = true;
+		if (event.data == "MikroCzatLoggedIn")
+		{
+			console.log("event.data", event.data)
+			bodySection.dataset.mikroczatLogged = true;
+		}
+
 		if (event.data == "MikroCzatClosed")
 		{
 			bodySection.dataset.mikroczatLogged = false;
@@ -188,21 +201,21 @@ const settings =
 		}
 	}, false);
 
-	CSS += `body > section[data-mikroczat-logged="true"] li.wykopx_open_mikroczat_li:after
+	CSS += `body > section[data-mikroczat-logged="true"] li.wykopx_open_mikroczat_li span:after
 	{
-		content: "🗯";
+		content: "•";
 		color: white;
 		position: absolute;
-		top: -2px;
-		right: -2px;
+		top: 4px;
+		right: 5px;
 	}
-	body > section[data-mikroczat-logged="false"] li.wykopx_open_mikroczat_li:after
+	body > section[data-mikroczat-logged="false"] li.wykopx_open_mikroczat_li span:after
 	{
-		content: "⊗";
+		content: "•";
 		color: rgb(255, 255, 255, 0.3);
 		position: absolute;
-		top: -2px;
-		right: -2px;
+		top: 4px;
+		right: 5px;
 	}`;
 
 	createNewNavBarButton({

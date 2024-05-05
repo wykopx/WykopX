@@ -319,12 +319,14 @@
 			listafalszywychrozowych.push('36873');
 			listafalszywychrozowych.push('Defined');
 			listafalszywychrozowych.push('toniemojebuty');
+			listafalszywychrozowych.push('wcaleniepchamsiewmultikonto');
 
 			// LISTA FAŁSZYWYCH NIEBIESKICH PASKÓW fałszywe niebieskie
 			const listafalszywychniebieskich = [];
 			listafalszywychniebieskich.push("Kantor_wymiany_mysli_i_wrazen");
 			listafalszywychniebieskich.push("DragonTattoo2404");
 			listafalszywychniebieskich.push("qksgh");
+			listafalszywychniebieskich.push("mariusz9922");
 
 
 
@@ -421,13 +423,12 @@
 	settings.quickLinksEnable = wykopxSettings.getPropertyValue("--quickLinksEnable") ? wykopxSettings.getPropertyValue("--quickLinksEnable") === '1' : false;
 
 	// DODATKOWE PRZYCISKI NA GORNEJ BELCE
+	settings.topNavMyWykopButton = wykopxSettings.getPropertyValue("--topNavMyWykopButton") ? wykopxSettings.getPropertyValue("--topNavMyWykopButton") === '1' : true;
+	settings.topNavMicroblogButton = wykopxSettings.getPropertyValue("--topNavMicroblogButton") ? wykopxSettings.getPropertyValue("--topNavMicroblogButton") === '1' : true;
+	settings.topNavNightSwitchButton = wykopxSettings.getPropertyValue("--topNavNightSwitchButton") ? wykopxSettings.getPropertyValue("--topNavNightSwitchButton") === '1' : true;
+	settings.topNavMessagesButton = wykopxSettings.getPropertyValue("--topNavMessagesButton") ? wykopxSettings.getPropertyValue("--topNavMessagesButton") === '1' : false;
 	settings.topNavProfileButton = wykopxSettings.getPropertyValue("--topNavProfileButton") ? wykopxSettings.getPropertyValue("--topNavProfileButton") === '1' : false;
 	settings.topNavNotificationsButton = wykopxSettings.getPropertyValue("--topNavNotificationsButton") ? wykopxSettings.getPropertyValue("--topNavNotificationsButton") === '1' : false;
-	settings.topNavMyWykopButton = wykopxSettings.getPropertyValue("--topNavMyWykopButton") ? wykopxSettings.getPropertyValue("--topNavMyWykopButton") === '1' : false;
-	settings.topNavMicroblogButton = wykopxSettings.getPropertyValue("--topNavMicroblogButton") ? wykopxSettings.getPropertyValue("--topNavMicroblogButton") === '1' : false;
-	settings.topNavMessagesButton = wykopxSettings.getPropertyValue("--topNavMessagesButton") ? wykopxSettings.getPropertyValue("--topNavMessagesButton") === '1' : false;
-	settings.topNavNightSwitchButton = wykopxSettings.getPropertyValue("--topNavNightSwitchButton") ? wykopxSettings.getPropertyValue("--topNavNightSwitchButton") === '1' : false;
-
 
 
 	// DODATKOWE PRZYCISKI NA BELCE MOBILNEJ
@@ -2579,7 +2580,7 @@
 	const sectionObjectIntersectionObserverOptions =
 	{
 		root: null,
-		rootMargin: "0px 0px -900px 0px",	// rootMargin: "0px 0px -100px 0px",
+		rootMargin: "0px 0px -50px 0px",	// rootMargin: "0px 0px -100px 0px",
 		threshold: 0,
 	};
 	// powiekszenie wczytywania ponizej viewportu
@@ -4485,7 +4486,12 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		if (event.data == "MikroCzatOpened") mikroczatWindow.postMessage({ type: "TokensObject", token: window.localStorage.getItem("token"), userKeep: window.localStorage.getItem("userKeep") }, mikroczatDomain);
 
 
-		if (event.data == "MikroCzatLoggedIn") bodySection.dataset.mikroczatLogged = true;
+		if (event.data == "MikroCzatLoggedIn")
+		{
+			console.log("event.data", event.data)
+			bodySection.dataset.mikroczatLogged = true;
+		}
+
 		if (event.data == "MikroCzatClosed")
 		{
 			bodySection.dataset.mikroczatLogged = false;
@@ -4493,21 +4499,21 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		}
 	}, false);
 
-	CSS += `body > section[data-mikroczat-logged="true"] li.wykopx_open_mikroczat_li:after
+	CSS += `body > section[data-mikroczat-logged="true"] li.wykopx_open_mikroczat_li span:after
 	{
-		content: "🗯";
+		content: "•";
 		color: white;
 		position: absolute;
-		top: -2px;
-		right: -2px;
+		top: 4px;
+		right: 5px;
 	}
-	body > section[data-mikroczat-logged="false"] li.wykopx_open_mikroczat_li:after
+	body > section[data-mikroczat-logged="false"] li.wykopx_open_mikroczat_li span:after
 	{
-		content: "⊗";
+		content: "•";
 		color: rgb(255, 255, 255, 0.3);
 		position: absolute;
-		top: -2px;
-		right: -2px;
+		top: 4px;
+		right: 5px;
 	}`;
 	// MIKROCZAT XS -- END
 
@@ -5094,6 +5100,9 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	}
 
 
+
+
+
 	// TRYB NOCNY W BELCE NAWIGACYJNEJ
 	function addNightModeButtonToNavBar()
 	{
@@ -5119,10 +5128,13 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 					localStorage.setItem('nightMode', 0);
 					if (mikroczatWindow && mikroczatDomain) mikroczatWindow.postMessage({ type: "nightMode", value: 0 }, mikroczatDomain);
 				}
-
 			});
 		}
 	}
+
+
+
+
 
 
 	function addExtraButtons()
@@ -5130,13 +5142,13 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		consoleX("addExtraButtons()", 1)
 
 		/* Przyciski dodawane tylko na górną belkę nawigacyjną */
-		const wykopx_wykopwnowymstylu_li = `<li class="wykopxs wykopx_wykopwnowymstylu_li dropdown"><a href="/tag/wykopwnowymstylu" class="wykopx_wykopwnowymstylu_button" title="Przejdź na #wykopwnowymstylu"><span>#</span></a></li>`;
-		const wykopx_microblog_mobile_li = `<li class="wykopxs wykopx_microblog_mobile_li dropdown"><a href="/mikroblog" class="wykopx_microblog_mobile_button" title="Mikroblog ${promoString}"><figure> </figure></a></li>`;
+		const wykopx_wykopwnowymstylu_li = `<li class="wykopx_wykopwnowymstylu_li dropdown"><a href="/tag/wykopwnowymstylu" class="wykopx_wykopwnowymstylu_button" title="Przejdź na #wykopwnowymstylu"><span>#</span></a></li>`;
+		const wykopx_microblog_mobile_li = `<li class="wykopx_microblog_mobile_li dropdown"><a href="/mikroblog" class="wykopx_microblog_mobile_button" title="Mikroblog ${promoString}"><figure> </figure></a></li>`;
 		/* Te przyciski także na belce mobilnej */
-		const wykopx_mywykop_mobile_li = `<li data-v-1adb6cc8 class="wykopxs wykopx_mywykop_mobile_li dropdown"><a data-v-1adb6cc8 href="/obserwowane" class="wykopx_mywykop_mobile_button" title="Mój Wykop ${promoString}"><span data-v-1adb6cc8><i data-v-1adb6cc8>Mój Wykop</i></span></a></li>`;
-		const wykopx_profile_mobile_li = `<li data-v-1adb6cc8 class="wykopxs wykopx_profile_mobile_li ${user.username}"><a data-v-1adb6cc8 href="/ludzie/${user.username}" class="wykopx wykopx_profile_button" title="Przejdź na swój profil ${user.username} ${promoString}"><span data-v-1adb6cc8><i data-v-1adb6cc8>Profil</i></span></a></li>`;
-		const wykopx_messages_mobile_li = `<li data-v-1adb6cc8 class="wykopxs wykopx_messages_mobile_li dropdown"><a data-v-1adb6cc8 href="/wiadomosci" class="wykopx wykopx_messages_button" title="Wiadomości ${promoString}"><span data-v-1adb6cc8><i data-v-1adb6cc8>Wiadomości</i></span></a></li>`;
-		const wykopx_notifications_mobile_li = `<li data-v-1adb6cc8 class="wykopxs wykopx_notifications_mobile_li dropdown"><a data-v-1adb6cc8 href="/powiadomienia" class="wykopx wykopx_notifications_button" title="Powiadomienia ${promoString}"><span data-v-1adb6cc8><i data-v-1adb6cc8>Powiadomienia</i></span></a></li>`;
+		const wykopx_mywykop_mobile_li = `<li data-v-1adb6cc8 class="wykopx_mywykop_mobile_li dropdown"><a data-v-1adb6cc8 href="/obserwowane" class="wykopx_mywykop_mobile_button" title="Mój Wykop ${promoString}"><span data-v-1adb6cc8><i data-v-1adb6cc8>Mój Wykop</i></span></a></li>`;
+		const wykopx_profile_mobile_li = `<li data-v-1adb6cc8 class="wykopx_profile_mobile_li dropdown ${user.username}"><a data-v-1adb6cc8 href="/ludzie/${user.username}" class="wykopx wykopx_profile_button" title="Przejdź na swój profil ${user.username} ${promoString}"><span data-v-1adb6cc8><i data-v-1adb6cc8>Profil</i></span></a></li>`;
+		const wykopx_messages_mobile_li = `<li data-v-1adb6cc8 class="wykopx_messages_mobile_li dropdown"><a data-v-1adb6cc8 href="/wiadomosci" class="wykopx wykopx_messages_button" title="Wiadomości ${promoString}"><span data-v-1adb6cc8><i data-v-1adb6cc8>Wiadomości</i></span></a></li>`;
+		const wykopx_notifications_mobile_li = `<li data-v-1adb6cc8 class="wykopx_notifications_mobile_li dropdown"><a data-v-1adb6cc8 href="/powiadomienia" class="wykopx wykopx_notifications_button" title="Powiadomienia ${promoString}"><span data-v-1adb6cc8><i data-v-1adb6cc8>Powiadomienia</i></span></a></li>`;
 
 		if (topNavHeaderRightElement)
 		{
@@ -5168,13 +5180,125 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				}
 			}
 		}
+	}
+
+	CSS += `
+    /* ikona extra MW Mój Wykop w panelu powiadomień */
+
+	header.header > .right > nav > ul > li
+	{
+		display: flex!important;
+		height: 100%!important;
+		justify-content: center;
+		align-items: center;
+	}
+
+    ul > li.wykopx_microblog_mobile_li > a > figure,
+
+    ul > li.wykopx_mywykop_mobile_li > a > span,
+    ul > li.wykopx_profile_mobile_li > a > span,
+    ul > li.wykopx_notifications_mobile_li > a > span,
+    ul > li.wykopx_messages_mobile_li > a > span
+    {
+        display: flex!important;
+        background-repeat: no-repeat;
+        background-position: 0 10px;
+        width: 20px;
+        height: 100%;
+    }
+	ul > li.wykopx_microblog_mobile_li > a > figure
+	{
+		background-image: url('https://i.imgur.com/F8BqeCx.png');
+	}
+    
+	/* mój wykop */
+    ul > li.wykopx_mywykop_mobile_li > a > span
+    {
+        background-image: url('https://i.imgur.com/4oQuftz.png'); /* 20p */
+        background-image: url('https://i.imgur.com/qtGPe78.png'); /* 20p */
+        /*background-image: url('https://i.imgur.com/GoTmF0m.png');
+          background-image: url('https://i.imgur.com/7DArcw6.png'); */
+    }
+    [data-night-mode] ul > li.wykopx_mywykop_mobile_li > a > span
+    {
+        background-image: url('https://i.imgur.com/qtGPe78.png');
+    } 
+	/* profile */
+    ul > li.wykopx_profile_mobile_li > a > span
+    {
+        background-image: url('https://i.imgur.com/XD7q4hY.png'); /* black*/
+        background-image: url('https://i.imgur.com/EpytPvb.png'); /* white*/
+    }
+    [data-night-mode] ul > li.wykopx_profile_mobile_li > a > span
+    {
+        background-image: url('https://i.imgur.com/EpytPvb.png');
+    }
+	/* wiadomosci */
+    ul > li.wykopx_messages_mobile_li > a > span
+    {
+        background-image: url('https://i.imgur.com/Yx1ZAYt.png'); /* black*/
+        background-image: url('https://i.imgur.com/dE4f85B.png'); /* white*/
+    } 
+    [data-night-mode] ul > li.wykopx_messages_mobile_li > a > figure
+    {
+        background-image: url('https://i.imgur.com/dE4f85B.png');
+    } 
+
+	/* powiadomienia */
+	ul > li.wykopx_notifications_mobile_li > a > span
+    {
+        background-image: url('https://i.imgur.com/UpYMDtr.png');
+    } 
+	
+	header.header > .right > nav > ul > li > a > span > i
+	{
+		display: none;
+	}
 
 
+	/* wykopwnowymstylu */
+    header.header > .right > nav > ul > li.wykopx_wykopwnowymstylu_li > a > span
+    {
+        font-size: 1.2em;
+        color: var(--x-inactive-button, rgba(255,255,255,0.3));
+    } 
+    header.header > .right > nav > ul > li.wykopx_wykopwnowymstylu_li > a:hover > span
+    {
+        color: white;
+    }
+
+    header.header > .right > nav > ul > li.wykopx_wykopwnowymstylu_li
+    {
+        display: none!important;
+    }`;
+
+	if (settings.topNavNightSwitchButton)
+	{
+		CSS += `
+		/* PRZYCISK TRYB NOCNY W BELCE NAWIGACYJNEJ */
+		
+
+		header.header > .right > nav > ul > li.wykopx_night_mode figure
+		{
+			width: 20px!important;
+			height: 20px!important;
+			background: url("/static/img/svg/night-mode.svg") no-repeat center;
+		} 
+
+		[data-night-mode] header.header > .right > nav > ul > li.wykopx_night_mode figure
+		{
+			background: url("/static/img/svg/day-mode.svg") no-repeat center;
+		} 
+		`;
 	}
 
 
 
-	// DODAJ NOWY WPIS NA MIRKO
+
+
+
+
+	// DODAJ NOWY WPIS NA MIRKO /mikroblog/#dodaj
 	function focusOnAddingNewMicroblogEntry()
 	{
 		consoleX(`focusOnAddingNewMicroblogEntry()`, 1)
