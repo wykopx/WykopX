@@ -2,7 +2,7 @@
 // @name        Mikroblog+ / Czat
 // @name:pl     Mikroblog+ / Czat
 // @name:en     Mikroblog+ / Czat
-// @version     3.0.35
+// @version     3.0.36
 
 
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
@@ -16,8 +16,8 @@
 // @match       https://wykop.pl/*
 
 
-// @description Wykop XS - mirkoczat, animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
-// @description:en Wykop XS - mirkoczat, animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
+// @description Wykop XS - Darmowy dostęp do Mikroblog+, mirkoczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
+// @description:en Wykop XS - Darmowy dostęp do Mikroblog+, mirkoczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 
 
 // @require https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
@@ -963,29 +963,27 @@ const settings =
 			{
 				& > span 
 				{
-					font-size: 12px;
+					font-size: var(--entryVotersTextFontSize, 12px);
 					color: var(--gullGray);
 				}
 				ul
 				{
-					display: block flex;
-					column-gap: 0.5em;
-					row-gap: 0px;
-					
-					align-items: baseline;
-					flex-wrap: wrap;
+					font-size: var(--entryVotersTextFontSize, 12px);
+					color: var(--gullGray);
 
+					display: block flex;
+					row-gap: 0px;
+					flex-wrap: wrap;
+					align-items: baseline;
 					padding: 0 0 0 0;
 					margin: 0;
 					list-style-type: none;
 					position: relative;
-					font-size: 12px;
-					color: var(--gullGray);
-
 					
 					&::before
 					{
 						content: "Plusujący: ";
+						margin-right: 0.2em;
 					}
 
 					li
@@ -1014,8 +1012,13 @@ const settings =
 				}
 			}
 	
-			section.entry-voters ul li:not(:last-child):after 		{ content: " • "; margin-left: 0.3em; }
-			
+			section.entry-voters ul li:after 			{ content: " • "; margin: 0px 0.2em 0px 0em; }
+			section.entry-voters ul li.more:after,
+			section.entry-voters ul li:only-child:after
+			{
+				content: none;
+			}
+
 			section.entry-voters ul li a.username i 				{ display: none; font-size: 0.8em; font-style: normal; bottom: 0px; position: relative; }
 			section.entry-voters ul li a.username i:has(+span) 		{ margin-right: 1px; }
 			section.entry-voters ul li a.username i.follow-true,
@@ -1028,35 +1031,32 @@ const settings =
 			{ display: inline flex;} 
 			
 			
-			section.entry-voters ul li a.username i.follow-true::before { content: '🔔'; }
-			section.entry-voters ul li a.username i.blacklist-true::before { content: '⛔'; }
-			section.entry-voters ul li a.username i.banned::before { content: '🍌'; }
-			section.entry-voters ul li a.username i.suspended::before { content: '✖'; }
-			section.entry-voters ul li a.username i.removed::before { content: '✖'; }
-			section.entry-voters ul li a.username i.f-gender::before { content: '🟣'; font-size: 0.7em; bottom: 3px; }
+			section.entry-voters ul li a.username i.follow-true::before 										{ content: '🔔'; }
+			section.entry-voters ul li a.username i.blacklist-true::before 										{ content: '⛔'; }
+			section.entry-voters ul li a.username i.banned::before 												{ content: '🍌'; }
+			section.entry-voters ul li a.username i.suspended::before 											{ content: '✖'; }
+			section.entry-voters ul li a.username i.removed::before 											{ content: '❌'; }
+			section.entry-voters ul li a.username i.f-gender::before 											{ content: '🟣'; font-size: 0.7em; bottom: 3px; }
 			
-			
-			section.entry-voters ul li:has(a.username) { order: 6; }
-			section.entry-voters ul li.more { order: 100; }
+			section.entry-voters ul li:has(a.username) 															{ order: 6; }
+			section.entry-voters ul li.more 																	{ order: 100; }
 			`;
 
+		if (settings?.votersFollowFirst) CSS += `section.entry-voters ul li:has(a.username.follow-true) 		{ order: 1; }`;
+		if (settings?.votersBlackFirst) CSS += `section.entry-voters ul li:has(a.username.burgundy-profile) 	{ order: 3; }`;
+		if (settings?.votersOrangeFirst) CSS += `section.entry-voters ul li:has(a.username.orange-profile) 		{ order: 4; }`;
+		if (settings?.votersGreenFirst) CSS += `section.entry-voters ul li:has(a.username.green-profile) 		{ order: 5; }`;
 
+		if (settings?.votersBlacklistLast) CSS += `section.entry-voters ul li:has(a.username.blacklist-true) 	{ order: 7; }`;
+		if (settings?.votersBannedLast) CSS += `section.entry-voters ul li:has(a.username.banned) 				{ order: 8; }`;
+		if (settings?.votersSuspendedLast) CSS += `section.entry-voters ul li:has(a.username.banned) 			{ order: 9; }`;
+		if (settings?.votersRemovedLast) CSS += `section.entry-voters ul li:has(a.username.removed) 			{ order: 10; }`;
 
-		if (settings?.votersFollowFirst) CSS += `section.entry-voters ul li:has(a.username.follow-true) { order: 1; }`;
-		if (settings?.votersBlackFirst) CSS += `section.entry-voters ul li:has(a.username.burgundy-profile) { order: 3; }`;
-		if (settings?.votersOrangeFirst) CSS += `section.entry-voters ul li:has(a.username.orange-profile) { order: 4; }`;
-		if (settings?.votersGreenFirst) CSS += `section.entry-voters ul li:has(a.username.green-profile) { order: 5; }`;
+		if (!settings?.votersColorOrange) CSS += `section.entry-voters ul li a.username.orange-profile 			{ color: var(--gullGray); }`;
+		if (!settings?.votersColorGreen) CSS += `section.entry-voters ul li a.username.green-profile 			{ color: var(--gullGray); }`;
+		if (!settings?.votersColorBurgundy) CSS += `section.entry-voters ul li a.username.burgundy-profile 		{ color: var(--gullGray); }`;
 
-		if (settings?.votersBlacklistLast) CSS += `section.entry-voters ul li:has(a.username.blacklist-true) { order: 7; }`;
-		if (settings?.votersBannedLast) CSS += `section.entry-voters ul li:has(a.username.banned) { order: 8; }`;
-		if (settings?.votersSuspendedLast) CSS += `section.entry-voters ul li:has(a.username.banned) { order: 9; }`;
-		if (settings?.votersRemovedLast) CSS += `section.entry-voters ul li:has(a.username.removed) { order: 10; }`;
-
-		if (!settings?.votersColorOrange) CSS += `section.entry-voters ul li a.username.orange-profile 		{ color: var(--gullGray); }`;
-		if (!settings?.votersColorGreen) CSS += `section.entry-voters ul li a.username.green-profile 		{ color: var(--gullGray); }`;
-		if (!settings?.votersColorBurgundy) CSS += `section.entry-voters ul li a.username.burgundy-profile 	{ color: var(--gullGray); }`;
-
-		if (settings.hideShareButton) CSS += `section.actions ul li.sharing { display: none!important; }`;
+		if (settings?.hideShareButton) CSS += `section.actions ul li.sharing 									{ display: none!important; }`;
 
 
 
@@ -1097,9 +1097,10 @@ const settings =
 		/* Wykop X Style 3.0 */
 		CSS += `
 			:root { --kolorBananowy1: rgba(255, 185, 0, 1); }
-			section.entry-voters ul li a.username:is(.banned, .suspended):not(.removed) span  { color: var(--kolorBananowy1); };
-			section.entry-voters ul li a.username.removed { color: rgb(0, 0, 0); }
-			[data-night-mode] section.entry-voters ul li a.username.removed { background-color: rgba(255, 255, 255, 0.1); padding-left: 5px; padding-right: 5px; }
+			section.entry-voters ul li a.username.banned:not(.removed) span  				{ color: var(--kolorBananowy1); };
+			section.entry-voters ul li a.username.suspended:not(.removed) span 				{ color: var(--heather); }
+			section.entry-voters ul li a.username.removed span 								{ color: var(--heather); }
+			[data-night-mode] section.entry-voters ul li a.username.removed span 			{ background-color: rgba(255, 255, 255, 0.1); padding-left: 5px; padding-right: 5px; }
 		`;
 
 		if (settings.fixNotificationBadgeBug)
