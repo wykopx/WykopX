@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name        Plusujący, animowane avatary, mirkoczat
-// @name:pl     Plusujący, animowane avatary, mirkoczat
-// @name:en     Plusujący, animowane avatary, mirkoczat
-// @version     3.0.34
+// @name        Mikroblog+ / Czat
+// @name:pl     Mikroblog+ / Czat
+// @name:en     Mikroblog+ / Czat
+// @version     3.0.35
 
 
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
