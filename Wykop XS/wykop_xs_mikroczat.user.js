@@ -2,7 +2,7 @@
 // @name        Mikroblog+ / Czat
 // @name:pl     Mikroblog+ / Czat
 // @name:en     Mikroblog+ / Czat
-// @version     3.0.36
+// @version     3.0.37
 
 
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
@@ -1101,6 +1101,7 @@ const settings =
 			section.entry-voters ul li a.username.suspended:not(.removed) span 				{ color: var(--heather); }
 			section.entry-voters ul li a.username.removed span 								{ color: var(--heather); }
 			[data-night-mode] section.entry-voters ul li a.username.removed span 			{ background-color: rgba(255, 255, 255, 0.1); padding-left: 5px; padding-right: 5px; }
+			div[data-modal="entryVoters"] section.entry-voters::after {content: none!important;} /* Wykop X Style PROMO */
 		`;
 
 		if (settings.fixNotificationBadgeBug)
