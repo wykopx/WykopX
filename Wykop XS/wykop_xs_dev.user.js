@@ -319,6 +319,7 @@
 			listafalszywychrozowych.push('36873');
 			listafalszywychrozowych.push('Defined');
 			listafalszywychrozowych.push('toniemojebuty');
+			listafalszywychrozowych.push('DigitalPasztet');
 			listafalszywychrozowych.push('wcaleniepchamsiewmultikonto');
 
 			// LISTA FAŁSZYWYCH NIEBIESKICH PASKÓW fałszywe niebieskie
