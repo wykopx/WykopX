@@ -2,7 +2,7 @@
 // @name        Wykop XS DEV
 // @name:pl     Wykop XS DEV
 // @name:en     Wykop XS DEV
-// @version     3.0.22
+// @version     3.0.39
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
 // @contributionURL  	https://buycoffee.to/wykopx
 // @author      Wykop X <wykopx@gmail.com>
@@ -23,9 +23,8 @@
 {
 	'use strict';
 
-	const currentVersion = "3.0.22";
-	let dev = false;
-	const promoString = " [Dodane przez Wykop X #wykopwnowymstylu]";
+	const currentVersion = "3.0.39";
+	let dev = true;
 
 	//dayjs.extend(relativeTime); // https://day.js.org/docs/en/plugin/relative-time // https://www.jsdelivr.com/package/npm/dayjs?tab=files&path=plugin
 	dayjs.extend(window.dayjs_plugin_relativeTime);
@@ -40,16 +39,62 @@
 
 
 
+	const promoString = " [Dodane przez Wykop X #wykopwnowymstylu]";
 
 	const root = document.documentElement;
 	const head = document.head;
 	const body = document.body;
 	const bodySection = body.querySelector("section");
+
+	const styleElement = document.createElement('style');
+	styleElement.id = "wykopxs";
+	let CSS = "";
+
+
+
+
+
 	const wykopxSettings = getComputedStyle(head); // getComputedStyle(document.documentElement) -- nie działa, nie wczytuje właściwości z :root
 	const settings = {};
 
 	settings.WykopXSEnabled = wykopxSettings.getPropertyValue("--WykopXSEnabled") ? wykopxSettings.getPropertyValue("--WykopXSEnabled") === '1' : true;
 	if (settings.WykopXSEnabled == false) return;
+
+
+	// wykop_xs_mikroczat.user.js -MIKROCZAT/LISTA PLUSUJĄCYCH - settings
+	settings.showVotersList = true;			// włącza pokazywanie listy plusujących
+	// expandAllVotersIfLessThan - domyślnie Wykop pokazywał 5 osób, które zaplusowały. 
+	// Możesz zmienić tę wartość na np. 10 albo 25. Jeśli wpis ma mniej plusów niż ta liczba, zostaną od razu wyświetleni wszyscy plusujący bez przycisku "+15 INNYCH"
+	settings.expandAllVotersIfLessThan = 20;
+	settings.votersFollow = true;							// pokazuje 🔔 przed użytkownikami, których obserwujesz
+	settings.votersBlacklist = true;						// pokazuje ⛔ przed użytkownikami, których blokujesz
+	settings.votersBanned = true;							// pokazuje użytkowników z aktywnym banem w kolorze i z ikonką 🍌
+	settings.votersSuspended = true;						// pokazuje ✖ przed kontami, które są w trakcie usuwania
+	settings.votersRemoved = true;							// pokazuje ✖ przed kontami, które są usunięte
+	settings.votersGenderF = false;							// pokazuje różową kropkę przed kobietami
+	settings.votersGenderM = false;							// pokazuje niebieską kropkę przed mężczyznami
+	settings.votersColorGreen = true;						// pokazuje zielonki w kolorze
+	settings.votersColorOrange = false;						// pokazuje pomarańczowych użytkowników w kolorze
+	settings.votersColorBurgundy = true;					// pokazuje użytkowników bordo w kolorze
+	settings.votersFollowFirst = true;						// pokazuje użytkowników, których obserwujesz pierwszych na liście
+	settings.votersBlackFirst = false;						// pokazuje plusy od moderacji pierwsze na liście (konta typu @wykop, @m__b, @a__s itd.)
+	settings.votersBurgundyFirst = false;					// pokazuje użytkowników bordo pierwszych na liście
+	settings.votersOrangeFirst = false;						// pokazuje zielonki pierwszych na liście
+	settings.votersGreenFirst = false;						// pokazuje pomarańczki pierwszych na liście
+	settings.votersBlacklistLast = false;					// pokazuje użytkowników, których zablokowałeś na końcu listy
+	settings.votersRemovedLast = false;						// pokazuje usunięte konta na końcu listy
+	settings.votersBannedLast = false;						// pokazuje zbanowanych na końcu listy
+	settings.votersSuspendedLast = false;					// pokazuje konta w trakcie usuwania na końcu listy
+	settings.hideShareButton = true;						// ukrywa przycisk "Udostępnij"
+	settings.showFavouriteButton = true;					// pokazuje przycisk "Dodaj do ulubionych" (samą gwiazdkę)
+	settings.showFavouriteButtonLabel = true;				// pokazuje oprócz gwiazdki także tekst "Ulubione"
+	settings.addCommentPlusWhenVotingOnEntry = false;		// gdy plusujesz wpis, dodaje komentarz "+1"
+	settings.addCommentPlusWhenVotingOnComment = false;		// gdy plusujesz komentarz, dodaje komentarz "+1"
+	settings.blockAds = true;								// blokuje wszystkie reklamy na wykopie
+	settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
+	settings.fixNotificationBadgeBug = true;				// naprawia wykopowy błąd - ukrywa liczbę nieprzeczytanych powiadomien, gdy wszystkie powiadomienia sa juz przeczytane
+
+
 
 	settings.version = (getComputedStyle(bodySection).getPropertyValue("--version").trim().slice(1, -1)); 	// "2.48";
 	settings.versor = (getComputedStyle(bodySection).getPropertyValue("--versor").trim().slice(1, -1)); 	// "style", "blank", "block"
@@ -60,9 +105,6 @@
 	if (!dev) dev = wykopxSettings.getPropertyValue("--wxsDev") ? wykopxSettings.getPropertyValue("--wxsDev") === '1' : false;
 
 	settings.WykopXStyleEnabled = wykopxSettings.getPropertyValue("--WykopXStyleEnabled") ? wykopxSettings.getPropertyValue("--WykopXStyleEnabled") === '1' : true;
-
-
-
 
 
 	settings.hitsInTopNavJS = wykopxSettings.getPropertyValue("--hitsInTopNavJS") ? wykopxSettings.getPropertyValue("--hitsInTopNavJS") === '1' : true;
@@ -507,10 +549,6 @@
 
 
 
-
-
-	/* CSS STYLES */
-	let CSS = `<style>`;
 
 
 	if (dev) consoleX("Settings: ", 1);
@@ -1174,13 +1212,9 @@
 
 
 
-
-
-
-
 	async function POSTDATATOWYKOPX()
 	{
-		console.log(" 🍌🍌🍌🍌 POSTDATATOWYKOPX() ")
+		if (dev) console.log(" 🍌🍌🍌🍌 POSTDATATOWYKOPX() ")
 
 
 		await getSettingsList("blacklists", "tags");
@@ -1230,7 +1264,7 @@
 
 		if (Object.keys(dataPOST).length >= 2)
 		{
-			console.log(" 🍌🍌🍌🍌 Sending this data to api.wykopx.pl: ", dataPOST)
+			if (dev) console.log(" 🍌🍌🍌🍌 Sending this data to api.wykopx.pl: ", dataPOST)
 
 			// TODO
 			// fetch('https://api.wykopx.pl/api/v3/', { 
@@ -1250,14 +1284,6 @@
 			// 	})
 			// 	.catch(error => console.error('Error:', error));
 		}
-
-
-
-
-
-
-
-
 	}
 
 	/*
@@ -1526,14 +1552,9 @@
 	// ACTION BOX BUTTONS
 	document.addEventListener("click", (event) =>
 	{
-
-
 		//if (event.target.closest("button.wxsDownVote")) downVoteLink.call(event.target, event); // zakopywanie znaleziska na głównej
-
-
 		if (settings.actionBoxEnable)
 		{
-
 			if (settings.filterUserComments || settings.filterUserReplies)
 			{
 				if (event.target.closest("button.wxs_filter_off")) filterUserOff.call(event.target, event);
@@ -1578,10 +1599,7 @@
 				});
 			}
 		}
-
 	});
-
-
 
 
 
@@ -1627,7 +1645,7 @@
 		if (body.dataset.wxs_filter_style) delete body.dataset.wxs_filter_style
 		if (body.dataset.wxs_filter_username) delete body.dataset.wxs_filter_username
 
-		document.getElementById('wxs_css_filter_user_comments')?.parentNode?.removeChild(styleElement);
+		// TODO check -> document.getElementById('wxs_css_filter_user_comments')?.parentNode?.removeChild(styleElement);
 
 		// let dynamicCSS = head.querySelector(`style[data-fn="${options.fn}"][data-channel="${options.channelName}"]`);
 		// if (dynamicCSS)
@@ -1810,8 +1828,8 @@
 		}`;
 		}
 
-		console.log("css");
-		console.log(css);
+		if (dev) console.log("css");
+		if (dev) console.log(css);
 
 		if (wxs_css_style_filter_user_comments)
 		{
@@ -4439,110 +4457,21 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 
 
-
-	// MIKROCZAT XS -- START
-
-	let wykopDomain = "https://wykop.pl";
-	let wxDomain = "https://wykopx.pl";
-	const mikroczatDomain = "https://mikroczat.pl";
-	const mikroczatPath = "/czat";
-	let mikroczatChannel = "/";
-	let mikroczatWindow = null;
-
-
-	document.addEventListener("mousedown", (event) =>
-	{
-		if (!event.target.closest(".wykopx_open_mikroczat")) return;
-		event.preventDefault();
-		let windowOptions = "";
-		let mikroczatURL = `${mikroczatDomain}`;
-
-		if (event.shiftKey || event.ctrlKey || event.altKey || event.button === 2)
-		{
-			windowOptions = "popup";
-		}
-		if (pageType == "tag")
-		{
-			mikroczatChannel = `/${pageSubtype}`;
-			mikroczatURL += `${mikroczatPath}${mikroczatChannel}`;
-		}
-
-		mikroczatWindow = window.open(mikroczatURL, 'mikroczat', windowOptions);
-	});
-	document.addEventListener("click", (event) =>
-	{
-		if (!event.target.closest(".wykopx_open_mikroczat")) return;
-		event.preventDefault();
-	});
-
-
-
-
-	// WIADOMOŚCI OD MIKROCZAT
-	window.addEventListener('message', function (event)
-	{
-		if (event.origin !== mikroczatDomain) return;
-		console.log('Widomość od Mikroczat', event.data);
-		//if (event.data == "MikroCzatOpened") mikroczatWindow.postMessage({ type: "token", token: window.localStorage.getItem("token") }, mikroczatDomain);
-		if (event.data == "MikroCzatOpened") mikroczatWindow.postMessage({ type: "TokensObject", token: window.localStorage.getItem("token"), userKeep: window.localStorage.getItem("userKeep") }, mikroczatDomain);
-
-
-		if (event.data == "MikroCzatLoggedIn")
-		{
-			console.log("event.data", event.data)
-			bodySection.dataset.mikroczatLogged = true;
-		}
-
-		if (event.data == "MikroCzatClosed")
-		{
-			bodySection.dataset.mikroczatLogged = false;
-			mikroczatWindow = null;
-		}
-	}, false);
-
-	CSS += `body > section[data-mikroczat-logged="true"] li.wykopx_open_mikroczat_li span:after
-	{
-		content: "•";
-		color: white;
-		position: absolute;
-		top: 4px;
-		right: 5px;
-	}
-	body > section[data-mikroczat-logged="false"] li.wykopx_open_mikroczat_li span:after
-	{
-		content: "•";
-		color: rgb(255, 255, 255, 0.3);
-		position: absolute;
-		top: 4px;
-		right: 5px;
-	}`;
-	// MIKROCZAT XS -- END
-
-
-
-
-
-
-
-
-
-
-
 	function addWykopXButtonsToNavBar()
 	{
 		consoleX("addWykopXButtonsToNavBar()", 1)
 
-		createNewNavBarButton({
-			position: "left",
-			text: "Czat",
-			title: `Otwórz mikroczat.pl ${promoString}`,
-			class: "open_mikroczat", // wykopx_open_mikroczat_li
-			hideWithoutXStyle: false,
-			url: mikroczatDomain,
-			target: "mikroczat",
-			icon: "https://i.imgur.com/9PvHlaA.png",
-			number: null,
-		})
+		// createNewNavBarButton({
+		// 	position: "left",
+		// 	text: "Czat",
+		// 	title: `Otwórz mikroczat.pl ${promoString}`,
+		// 	class: "open_mikroczat", // wykopx_open_mikroczat_li
+		// 	hideWithoutXStyle: false,
+		// 	url: mikroczatDomain,
+		// 	target: "mikroczat",
+		// 	icon: "https://i.imgur.com/9PvHlaA.png",
+		// 	number: null,
+		// })
 
 
 		if (settings.myWykopInTopNavJS)
@@ -5295,10 +5224,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 
 
-
-
-
-
 	// DODAJ NOWY WPIS NA MIRKO /mikroblog/#dodaj
 	function focusOnAddingNewMicroblogEntry()
 	{
@@ -5310,21 +5235,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			document.querySelector(`section.microblog-page section.microblog section.editor div.content textarea`).focus();
 		}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -5612,23 +5522,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	// PLUSES OBSERVER
 	function getVotesObject(sectionObjectElement, ratingBoxSection)
 	{
@@ -5652,7 +5545,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			votesDownPrevious: 4,
 			plusesDelta: 1
 			minusesDelta: 1
-
+	
 			commentsCount: 100,	// liczba komentarzy dla znalezisk, wpisów i main-comments pod znaleziskami
 			commentsHot: true // dla gorących znalezisk 
 		}
@@ -5766,13 +5659,13 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		/*  
 			block.commentsCount 
 			__vue__.item.comments = 
-
+	
 			- znalezisko na stronie głównej i stronie znaleziska 
 			comments = { count: 42, hot: false }
 			
 			- na stronie mikrobloga i wpisie (na stronie Mikrobloga Array[2])
 			comments = { count: 142, items: Array[50] }
-
+	
 			komentarze nie mają "comments"
 		*/
 
@@ -6696,11 +6589,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
-
-
-
-
-
 	/* ------ HELPER FUNCTIONS --------- */
 
 	// consoleX("TEXT")
@@ -7203,17 +7091,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 	/* ------ PRZYCISK DO POBIERANIA OBRAZKÓW --------- */
 	if (settings.wxsDownloadImageButton)
 	{
@@ -7226,7 +7103,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			entryPhotoFigureElement.insertAdjacentHTML('beforeend', html);
 		}
 	}
-
 
 
 
@@ -7507,7 +7383,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 	/* ------------- EVENTS ------------ */
 
-	// lOADED PAGE
+	// LOADED PAGE
 	window.onload = function (event)
 	{
 		consoleX("windows.onload", 1)
@@ -8401,7 +8277,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		}`;
 	}
 
-
 	if (settings.quickLinksEnable)
 	{
 		CSS += `:root
@@ -8622,7 +8497,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	} `;
 	}
 
-
 	/* HIDE ADS ALWAYS */
 	CSS += `
 			.pub-slot-wrapper
@@ -8715,7 +8589,1156 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		}
 	`;
 
-	CSS += `</style > `;
-	head.insertAdjacentHTML("beforeend", CSS);
+
+
+
+
+
+
+
+
+
+
+
+
+	// XS MIKROCZAT  -- START
+	let wykopDomain = "https://wykop.pl";
+	let wxDomain = "https://wykopx.pl";
+	const mikroczatDomain = "https://mikroczat.pl";
+	const mikroczatPath = "/"; /* /czat */
+	// let mikroczatChannel = "/";
+	let mikroczatWindow = null;
+
+
+
+	function openMikroczat(channel, windowOptions, target = "mikroczat")
+	{
+		if (bodySection.dataset.key_shift) delete bodySection.dataset.key_shift;
+		if (bodySection.dataset.key_ctrl) delete bodySection.dataset.key_ctrl;
+		if (bodySection.dataset.key_alt) delete bodySection.dataset.key_alt;
+
+		let mikroczatURL = `${mikroczatDomain}`;
+		mikroczatURL += `${mikroczatPath}${channel}`;
+
+		mikroczatWindow = window.open(mikroczatURL, target, windowOptions);
+	}
+
+	// OTWIERANIE MIKROCZATU Z PRZYCISKU NA BELCE
+	document.addEventListener("mousedown", wykopx_open_mikroczat_event_listener);
+
+	function wykopx_open_mikroczat_event_listener(e)
+	{
+		if (!e.target.closest(".wykopx_open_mikroczat")) return;
+		e.preventDefault();
+		let windowOptions = "";
+		let channel = "";
+
+		if (e.shiftKey || e.ctrlKey || e.altKey || e.button === 2)
+		{
+			windowOptions = "popup";
+		}
+
+		// WykopXS unique
+		const pathnameArray = new URL(document.URL).pathname.split("/");
+		if (pathnameArray[1] == "tag")
+		{
+			channel = "/" + pathnameArray[2]; // nazwatagu
+		}
+
+		openMikroczat(channel, windowOptions);
+	}
+
+
+
+	// PREVENT DEFAULT EVENT
+	function preventDefaultEvent(e)
+	{
+		e.preventDefault();
+	}
+	document.addEventListener("click", (e) =>
+	{
+		if (!e.target.closest(".wykopx_open_mikroczat")) return;
+		e.preventDefault();
+	});
+
+	document.addEventListener("keydown", (e) =>
+	{
+		if (e.target.tagName.toLowerCase() === 'textarea') return;
+		if (e.shiftKey) bodySection.dataset.key_shift = "true"; // <section data-key_shift="true">
+		if (e.altKey) bodySection.dataset.key_alt = "true"; // <section data-key_alt="true">
+		if (e.ctrlKey) bodySection.dataset.key_ctrl = "true"; // <section data-key_ctrl="true">
+	});
+	document.addEventListener("keyup", (e) =>
+	{
+		if (e.target.tagName.toLowerCase() === 'textarea') return;
+		if (e.key == "Shift" || e.shiftKey) delete bodySection.dataset.key_shift;
+		if (e.key == "Control" || e.ctrlKey) delete bodySection.dataset.key_ctrl;
+		if (e.key == "Alt" || e.key == "AltGraph" || e.altKey) delete bodySection.dataset.key_alt;
+	});
+
+
+
+
+	document.addEventListener("mouseover", (e) =>
+	{
+		if (e.target.matches(`a[href^="/tag/"]`))
+		{
+			e.target.title = `Wciśnij klawisz SHIFT lub CTRL klikając na tag,\naby otworzyć kanał #${e.target.innerText} na 🗯 Mikroczacie`;
+
+			e.target.addEventListener("click", preventDefaultEvent, true);
+			e.target.addEventListener("mousedown", tagHrefEventListenerWithShift, true);
+			e.target.addEventListener("mouseup", preventDefaultEvent, true);
+		}
+	});
+
+	document.addEventListener("mouseout", (e) =>
+	{
+		if (e.target.matches(`a[href^="/tag/"]`))
+		{
+			e.target.removeEventListener("click", preventDefaultEvent, true);
+			e.target.removeEventListener("mousedown", tagHrefEventListenerWithShift, true);
+			e.target.removeEventListener("mouseup", preventDefaultEvent, true);
+		}
+	});
+
+	function tagHrefEventListenerWithShift(e)
+	{
+		const channel = e.target.href.split("tag/").pop();
+
+		if (e.ctrlKey || e.altKey) // || e.button === 2)
+		{
+			e.preventDefault();
+			openMikroczat(channel, null, "_blank");
+		}
+		else if (e.shiftKey)
+		{
+			e.preventDefault();
+			openMikroczat(channel, "popup");
+		}
+		else if (e.button === 2) // PPM
+		{
+
+		}
+		else
+		{
+			window.location.href = e.target.href;
+		}
+	}
+
+
+	// WIADOMOŚCI OD MIKROCZAT.PL
+	window.addEventListener('message', function (event)
+	{
+		if (event.origin !== mikroczatDomain) return;
+		if (dev) console.log('Wiadomość z mikroczat.pl', event.data);
+
+		//if (event.data == "MikroCzatOpened") mikroczatWindow.postMessage({ type: "token", token: window.localStorage.getItem("token") }, mikroczatDomain);
+
+		if (event.data == "MikroCzatOpened")
+		{
+			mikroczatWindow.postMessage({ type: "TokensObject", token: window.localStorage.getItem("token"), userKeep: window.localStorage.getItem("userKeep") }, mikroczatDomain);
+		}
+
+
+		if (event.data == "MikroCzatLoggedIn")
+		{
+			if (dev) console.log("event.data", event.data)
+			bodySection.dataset.mikroczatLogged = true;
+		}
+
+		if (event.data == "MikroCzatClosed")
+		{
+			bodySection.dataset.mikroczatLogged = false;
+			mikroczatWindow = null;
+		}
+	}, false);
+
+	{
+		CSS += `
+	section.entry-content[class]
+	{
+		overflow: visible!important;
+	}
+	section.entry-content .wrapper a[href^="/tag/"]
+	{
+		padding-right: 2px !important;
+		margin-right: 1px;
+		transition: none!important;
+	}
+	section.entry-content .wrapper a[href^="https://mikroczat.pl/"]
+	{
+		padding-right: 2px!important;
+		padding-left: 2px!important;
+	}
+	section.entry-content .wrapper a[href^="/tag/"],
+	section.entry-content .wrapper a[href^="https://mikroczat.pl/"]
+	{
+		border: 1px solid transparent!important;
+		position: relative!important;
+	}
+
+	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"],
+	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"],
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"],
+	body > section[data-key_shift="true"] section.entry-content a[href^="https://mikroczat.pl/"],
+	body > section[data-key_alt="true"] section.entry-content a[href^="https://mikroczat.pl/"],
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="https://mikroczat.pl/"]
+	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"] *,
+	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"] *,
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"] *,
+	body > section[data-key_shift="true"] section.entry-content a[href^="https://mikroczat.pl/"] *,
+	body > section[data-key_alt="true"] section.entry-content a[href^="https://mikroczat.pl/"] *,
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="https://mikroczat.pl/"] *
+	{
+		color: var(--tagChannelColor)!important;
+	}
+
+	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"],
+	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"],
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"],
+	body > section[data-key_shift="true"] section.entry-content a[href^="https://mikroczat.pl/"],
+	body > section[data-key_alt="true"] section.entry-content a[href^="https://mikroczat.pl/"],
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="https://mikroczat.pl/"]
+	{
+		border-color: var(--tagChannelColor)!important;
+		background-color: color-mix(in srgb, var(--whitish) 90%, var(--tagChannelColor))!important;
+		border-radius: var(--smallBorderRadius)!important;
+	}
+	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"]:hover,
+	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"]:hover,
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"]:hover,
+	body > section[data-key_shift="true"] section.entry-content a[href^="https://mikroczat.pl/"]:hover,
+	body > section[data-key_alt="true"] section.entry-content a[href^="https://mikroczat.pl/"]:hover,
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="https://mikroczat.pl/"]:hover
+	{
+		background-color: color-mix(in srgb, var(--whitish) 60%, var(--tagChannelColor))!important;
+	}
+
+	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"],
+	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"],
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"]
+	{
+
+		padding-left: 3px !important;
+		margin-left: -12px !important;
+
+	}
+	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"]:hover,
+	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"]:hover,
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"]:hover
+	{
+		text-decoration: none!important;
+	}
+	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"]::before,
+	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"]::before,
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"]::before
+	{
+		content: "#";
+		position:
+	}
+	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"]::after,
+	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"]::after,
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"]::after,
+	body > section[data-key_shift="true"] section.entry-content a[href^="https://mikroczat.pl/"]::after,
+	body > section[data-key_alt="true"] section.entry-content a[href^="https://mikroczat.pl/"]::after,
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="https://mikroczat.pl/"]::after
+	{
+		color: white;
+		content: "🗯";
+		position: absolute;
+		top: -1em;
+		right: -0.5em;
+	}
+	
+	body > section[data-mikroczat-logged="true"] li.wykopx_open_mikroczat_li span:after
+	{
+		content: "•";
+		color: white;
+		position: absolute;
+		top: 4px;
+		right: 5px;
+	}
+	body > section[data-mikroczat-logged="false"] li.wykopx_open_mikroczat_li span:after
+	{
+		content: "•";
+		color: rgb(255, 255, 255, 0.3);
+		position: absolute;
+		top: 4px;
+		right: 5px;
+	}`;
+
+	}
+
+	createNewNavBarButton({
+		position: "left",
+		// text: "Mikro<strong>czat</strong>",
+		text: "Czat",
+		title: `Otwórz wykopowy MikroCzat`,
+		class: "open_mikroczat", // wykopx_open_mikroczat_li
+		hideWithoutXStyle: false,
+		url: mikroczatDomain,
+		target: "mikroczat",
+		number: null,
+	})
+
+
+
+	function throttle(func, delay)
+	{
+		let promise = Promise.resolve();
+		return function (...args)
+		{
+			promise = promise.then(() =>
+			{
+				return new Promise((resolve) =>
+				{
+					setTimeout(() =>
+					{
+						func(...args);
+						resolve();
+					}, delay);
+				});
+			});
+		};
+	}
+
+	const throttledAddVotersList = throttle(addVotersList, 200);
+
+	let observer = new MutationObserver((mutations) =>
+	{
+		if (dev) console.log(`${mutations.length} mutations`, mutations);
+
+		mutations.forEach((mutation) =>
+		{
+
+			if (dev) console.log("----------new mutation-----");
+			if (dev) console.log(mutation);
+			if (mutation.type)
+			{
+				if (dev) console.log(`mutation.type: `, mutation.type)
+			}
+			if (mutation.attributeName)
+			{
+				if (dev) console.log(`mutation.attributeName: ${mutation.attributeName}`, mutation.attributeName)
+			}
+			if (mutation.addedNodes.length > 0 && mutation.addedNodes[0] && mutation.addedNodes[0] instanceof Element)
+			{
+				if (dev) console.log(`mutation.addedNodes.length: ${mutation.addedNodes.length}`, mutation.addedNodes[0])
+			}
+
+			if (mutation.addedNodes.length > 0 && mutation.addedNodes[0] && mutation.addedNodes[0] instanceof Element)
+			{
+				if (mutation.addedNodes[0].matches("section.entry[id]"))
+				{
+					const sectionEntry = mutation.addedNodes[0];
+					if (dev) console.log("mutation 1", sectionEntry)
+					processSectionEntry(sectionEntry)
+
+					const sectionCommentsArray = sectionEntry.querySelectorAll("section.entry[id]");
+					if (dev) console.log("mutation 1 - forEach: sectionEntryArray", sectionCommentsArray);
+					sectionCommentsArray.forEach((sectionComment) =>
+					{
+						processSectionEntry(sectionComment)
+					})
+				}
+				else if (mutation.addedNodes[0].matches("div.content:has(>section.entry[id])"))
+				{
+					const sectionEntriesArray = mutation.addedNodes[0].querySelectorAll("section.entry[id]");
+					if (dev) console.log("mutation 2 - forEach: sectionEntriesArray", sectionEntriesArray);
+					sectionEntriesArray.forEach((sectionEntry) =>
+					{
+						processSectionEntry(sectionEntry)
+					})
+				}
+				else if (mutation.target.tagName === "SECTION" && mutation.target.matches("section.entry.detailed[id]"))
+				{
+					const sectionEntry = mutation.target;
+					if (dev) console.log("mutation 3", sectionEntry)
+					if (dev) console.log("mutation 3: mutation.target", mutation.target);
+
+					processSectionEntry(sectionEntry);
+
+					const sectionCommentsArray = sectionEntry.querySelectorAll("section.entry[id]");
+					if (dev) console.log("mutation 3 - forEach: sectionEntryArray", sectionCommentsArray);
+					sectionCommentsArray.forEach((sectionComment) =>
+					{
+						processSectionEntry(sectionComment)
+					})
+				}
+				else if (settings.showAnimatedAvatars && mutation.addedNodes[0].matches("aside.profile-top"))
+				{
+					animatedAvatar(mutation.addedNodes[0]);
+				}
+			}
+
+			if (mutation.target)
+			{
+				if (dev) console.log(`mutation.target: ${mutation.target.tagName}`, mutation.target)
+
+				if (mutation.target.tagName === "SECTION")
+				{
+					if (mutation.target.matches("section.entry[id]"))
+					{
+					}
+				}
+			}
+		});
+	});
+
+
+
+	// CONTENT LOADED
+	let main;
+	document.addEventListener('readystatechange', (event) => 
+	{
+		if (dev) console.log('readyState:' + document.readyState);
+		main = document.querySelector('main.main');
+
+		if (main)
+		{
+
+			const sectionEntryArray = main.querySelectorAll("section.entry[id]");
+			// if (dev) console.log("sectionEntryArray", sectionEntryArray);
+			sectionEntryArray.forEach((sectionEntry) =>
+			{
+				processSectionEntry(sectionEntry)
+			})
+			const config = {
+				childList: true,
+				subtree: true,
+			};
+			observer.observe(main, config);
+
+			if (settings.showAnimatedAvatars)
+			{
+				const asideProfileTop = main.querySelector("aside.profile-top");
+				if (asideProfileTop) animatedAvatar(asideProfileTop);
+			}
+		}
+
+	});
+
+
+
+	function processSectionEntry(sectionEntry)
+	{
+		if (dev) console.log("processSectionEntry()", sectionEntry)
+
+		if (!sectionEntry) return;
+
+		if (settings.showAnimatedAvatars) animatedAvatar(sectionEntry);
+
+		if (settings.showFavouriteButton) addFavouriteButton(sectionEntry);
+
+		if (settings.showVotersList && sectionEntry?.__vue__?.item) 
+		{
+			if (dev) console.log("sectionEntry?.__vue__.item.id", sectionEntry?.__vue__.item.id);
+			if (dev) console.log("sectionEntry.dataset?.votersLoaded", sectionEntry.dataset?.votersLoaded);
+
+			if (sectionEntry.dataset?.votersLoaded == sectionEntry?.__vue__.item.id) return;
+			if (sectionEntry?.__vue__.item.votes.up == 0)
+			{
+				removeVotersListWhenNoVoters(sectionEntry);
+				return;
+			}
+
+			if (settings.expandAllVotersIfLessThan > 5 && sectionEntry?.__vue__.item.votes.up <= settings.expandAllVotersIfLessThan && sectionEntry?.__vue__.item.votes.up > 5) 
+			{
+				if (dev) console.log(`processSectionEntry() wybrano 💛throttledAddVotersList  ${sectionEntry.__vue__.item.id} | plusow: ${sectionEntry.__vue__.item.votes.up}`,)
+				throttledAddVotersList(sectionEntry);
+			}
+			else
+			{
+				if (dev) console.log(`processSectionEntry() wybrano 🤎addVotersList  ${sectionEntry.__vue__.item.id} | plusow: ${sectionEntry.__vue__.item.votes.up}`,)
+				addVotersList(sectionEntry)
+			}
+		}
+	}
+
+
+	function animatedAvatar(sectionEntry)
+	{
+		const image = sectionEntry.querySelector('a.avatar figure img'); // Replace with your actual selector
+		if (image)
+		{
+			if (dev) console.log("image", image)
+			const currentSrc = image.getAttribute('src');
+			if (dev) console.log("currentSrc", currentSrc)
+			if (currentSrc.endsWith('.gif'))
+			{
+				const modifiedSrc = currentSrc.replace(/,.*?\./, '.');
+				image.setAttribute('src', modifiedSrc);
+				if (dev) console.log("image.src", image.src)
+			}
+		}
+	}
+
+	function removeVotersListWhenNoVoters(sectionEntry)
+	{
+		if (sectionEntry)
+		{
+			delete sectionEntry.dataset?.votersLoaded;
+			sectionEntry.querySelector("section.entry-voters")?.remove();
+		}
+
+	}
+
+	async function addVotersList(sectionEntry)
+	{
+		if (dev) console.log(`addVotersList precheck: `, sectionEntry)
+
+		if (!sectionEntry || !sectionEntry.__vue__) return;
+
+		if (sectionEntry.dataset?.votersLoaded == sectionEntry?.__vue__.item.id) return;
+
+		if (dev) console.log(`addVotersList execute: `, sectionEntry)
+
+		if (sectionEntry?.__vue__ && sectionEntry?.__vue__.item.votes.up > 0)
+		{
+			if (sectionEntry?.__vue__ && settings.expandAllVotersIfLessThan > 5 && sectionEntry?.__vue__.item.votes.up <= settings.expandAllVotersIfLessThan && sectionEntry?.__vue__.item.votes.up > 5)
+			{
+				let entryId, commentId;
+				if (sectionEntry?.__vue__?.item.resource == "entry") 
+				{
+					entryId = sectionEntry?.__vue__?.item.id;
+				}
+				else if (sectionEntry?.__vue__?.item.resource == "entry_comment") 
+				{
+					entryId = sectionEntry?.__vue__?.item.parent.id;
+					commentId = sectionEntry?.__vue__?.item.id;
+				}
+				let voters = await fetchAllVotersFromAPI(entryId, commentId);
+
+				appendVotersToEntry(sectionEntry, voters);
+
+			}
+			else
+			{
+				appendVotersToEntry(sectionEntry, sectionEntry?.__vue__?.item?.votes?.users);
+			}
+		}
+	}
+
+	function addFavouriteButton(sectionEntry)
+	{
+		if (sectionEntry && sectionEntry?.__vue__)
+		{
+			const sectionActionsUL = sectionEntry.querySelector("section.actions:not(:has(li.favourite)) > ul");
+			if (!sectionActionsUL) return;
+
+			let entryId, commentId;
+
+			let isFavourite = sectionEntry?.__vue__?.item.favourite;
+
+			if (sectionEntry?.__vue__?.item.resource == "entry") 
+			{
+				entryId = sectionEntry?.__vue__?.item.id;
+			}
+			else if (sectionEntry?.__vue__?.item.resource == "entry_comment") 
+			{
+				entryId = sectionEntry?.__vue__?.item.parent.id;
+				commentId = sectionEntry?.__vue__?.item.id;
+			}
+
+			const favButtonLI = document.createElement("li");
+			favButtonLI.classList.add("favourite", "icon", "icon-favourite");
+			favButtonLI.setAttribute('data-v-3791abaf', '');
+
+			if (isFavourite) { favButtonLI.classList.add("active"); }
+
+			const favButtonSpan = document.createElement("span");
+			favButtonSpan.classList.add("favouriteButton");
+			favButtonSpan.setAttribute('data-v-3791abaf', '');
+			favButtonSpan.dataset.isFavourite = isFavourite;
+			favButtonSpan.dataset.entryId = entryId;
+			if (commentId) favButtonSpan.dataset.commentId = commentId;
+			if (settings.showFavouriteButtonLabel) favButtonSpan.innerText = `Ulubione`;
+			favButtonLI.appendChild(favButtonSpan);
+
+			const sharingElement = sectionActionsUL.querySelector(".sharing");
+			if (sharingElement) sharingElement.insertAdjacentElement("afterend", favButtonLI);
+
+		}
+
+	}
+
+
+
+
+	function appendVotersToEntry(sectionEntry, voters)
+	{
+
+
+		if (!sectionEntry) return;
+		const divEditWrapperElement = sectionEntry.querySelector('article > div.edit-wrapper');
+		if (!divEditWrapperElement) return;
+
+		if (dev) console.log(`💚 appendVotersToEntry start`, sectionEntry)
+
+		sectionEntry.dataset.votersLoaded = sectionEntry?.__vue__?.item.id;
+
+		if (dev) console.log(`appendVotersToEntry: ${sectionEntry?.__vue__?.item.id}`, voters)
+
+
+		const fiveVoters = voters;
+
+		if (!fiveVoters || fiveVoters.length < 1) return false;
+
+		let sectionEntryVotersHTML = `<ul data-v-6e6ed6ee="">`;
+
+		fiveVoters.forEach(voter =>
+		{
+			sectionEntryVotersHTML += getListItemForUser(voter);
+		});
+
+		// <li class="more">
+		if (sectionEntry?.__vue__?.item?.votes.up > settings.expandAllVotersIfLessThan && voters.length <= settings.expandAllVotersIfLessThan)
+		{
+			sectionEntryVotersHTML += `
+				<li data-v-6e6ed6ee="" data-no-bubble="" class="more">
+					<span data-v-6e6ed6ee="" data-votes-up="${sectionEntry?.__vue__?.item?.votes.up}"`;
+
+			if (sectionEntry?.__vue__?.item.resource == "entry") 
+			{
+				sectionEntryVotersHTML += `data-entry-id="${sectionEntry?.__vue__?.item.id}"`;
+			}
+			else if (sectionEntry?.__vue__?.item.resource == "entry_comment") 
+			{
+				sectionEntryVotersHTML += `data-entry-id="${sectionEntry?.__vue__?.item.parent.id}"`;
+				sectionEntryVotersHTML += `data-comment-id="${sectionEntry?.__vue__?.item.id}"`;
+			}
+
+			sectionEntryVotersHTML += `>+${sectionEntry?.__vue__?.item?.votes.up - 5} innych</span></li>`;
+		}
+		sectionEntryVotersHTML += `</ul>`;
+
+		const sectionEntryVoters = document.createElement("section");
+		sectionEntryVoters.classList.add("entry-voters");
+		sectionEntryVoters.setAttribute('data-v-6e6ed6ee', '');
+		sectionEntryVoters.setAttribute('data-v-2aacfeb5', '');
+		sectionEntryVoters.innerHTML = sectionEntryVotersHTML;
+
+		const sectionEntryVotersElement = divEditWrapperElement.querySelector('section.entry-voters');
+
+		if (sectionEntryVotersElement)
+		{
+			let parentElement = sectionEntryVotersElement.parentNode;
+			parentElement.replaceChild(sectionEntryVoters, sectionEntryVotersElement);
+		}
+		else
+		{
+			const editWrapper = sectionEntry.querySelector(".edit-wrapper");
+			if (editWrapper) editWrapper.appendChild(sectionEntryVoters);
+		}
+	}
+
+	function getListItemForUser(voter)
+	{
+		let userHTML = `<li data-v-6e6ed6ee="">
+				<a data-v-ed9f6c56="" data-v-6e6ed6ee="" href="/ludzie/${voter.username}" class="username`;
+
+		userHTML += ` ${voter.color}-profile`; 		// orange-profile green-profile burgundy-profile
+		userHTML += ` ${voter.status}`;				// active banned suspended removed
+		userHTML += ` follow-${voter.follow}`;		// follow-true  follow-false
+		userHTML += ` verified-${voter.verified}`;	// verified-false
+		userHTML += ` blacklist-${voter.blacklist}`;// blacklist-true blacklist-false
+		userHTML += ` online-${voter.online}`;		// online-true online-false
+
+		userHTML += ` ${voter.gender}-gender`;		// m-gender, f-gender, null-gender
+		if (voter.gender == "m") userHTML += ` male`;
+		else if (voter.gender == "f") userHTML += ` female`;
+		userHTML += `">`;
+
+
+		if (settings?.votersFollow && voter.follow) userHTML += `<i class="follow-true" title="Obserwujesz tego użytkownika"></i>`;
+		if (settings?.votersVerified && voter.verified) userHTML += `<i class="verified-true" title="Ten użytkownik jest zweryfikowany"></i>`;
+		if (settings?.votersBlacklist && voter.blacklist) userHTML += `<i class="blacklist-true" title="Ten użytkownik jest na Twojej czarnej liście"></i>`;
+		if (settings?.votersOffline && !voter.online) userHTML += `<i class="online-false" title="Ten uzytkownik jest teraz offline"></i>`;
+		if (settings?.votersOnline && voter.online) userHTML += `<i class="online-true" title="Ten uzytkownik jest teraz online"></i>`;
+		if (settings?.votersBanned && voter.status == "banned") userHTML += `<i class="banned" title="Użytkownik dostał bana. Z dodatkiem Wykop XS - Ban Info możesz szybko sprawdzić przyczynę i długość trwania bana."></i>`;
+		if (settings?.votersSuspended && voter.status == "suspended") userHTML += `<i class="suspended" title="To konto jest w trakcie usuwania."></i>`;
+		if (settings?.votersRemoved && voter.status == "removed") userHTML += `<i class="removed" title="Konto usunięte"></i>`;
+		if (settings?.votersGenderM && voter.gender == "m") userHTML += `<i class="${voter.gender}-gender" title="Wpis od niebieskiego"></i>`;
+		if (settings?.votersGenderF && voter.gender == "f") userHTML += `<i class="${voter.gender}-gender" title="Plus od różowej"></i>`;
+
+		userHTML += `<span data-v-ed9f6c56="">${voter.username}</span>
+				</a>
+			</li>`;
+
+		return userHTML;
+	}
+
+
+	/*
+	<section data-v-6e6ed6ee="" data-v-2aacfeb5="" class="entry-voters">
+		<ul data-v-6e6ed6ee="">
+			<li data-v-6e6ed6ee="" class="">
+				<a data-v-ed9f6c56="" data-v-6e6ed6ee="" href="/ludzie/NaczelnyAgnostyk" class="username orange-profile active">
+					<span data-v-ed9f6c56="">
+						NaczelnyAgnostyk<!---->
+					</span>
+				</a>
+			</li>
+			<li data-v-6e6ed6ee="" data-no-bubble="" class="more">
+				<span data-v-6e6ed6ee="">+5 innych</span>
+			</li>
+		</ul>
+	</section>
+	*/
+
+	function fetchAllVotersFromAPI(entryId, commentId)
+	{
+		if (dev) console.log(`fetchAllVotersFromAPI: ${entryId}, ${commentId}`)
+		let apiURL = `https://wykop.pl/api/v3/entries/${entryId}/votes?page=1`
+		if (commentId) apiURL = `https://wykop.pl/api/v3/entries/${entryId}/comments/${commentId}/votes`;
+
+		return new Promise(async (resolve, reject) =>
+		{
+			await fetch(apiURL, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + window.localStorage.getItem("token"),
+				},
+			})
+				.then((response) =>
+				{
+					if (!response.ok)
+					{
+						if (dev) console.log("HTTP error! status: ${response.status}");
+						// throw new Error(`HTTP error! status: ${response.status}`);
+					}
+					return response.json();
+				})
+				.then(async (responseJSON) =>
+				{
+					resolve(responseJSON.data);
+
+				}).catch((error) =>
+				{
+					if (error instanceof TypeError)
+					{
+						console.error('Network error:', error); // AWARIA SERWERA WYPOKU
+					} else
+					{
+						console.error('Other error:', error);
+					}
+					reject(error);
+				});
+		});
+	}
+
+	function postFavouriteToAPI(favourite, resource, id)
+	{
+		let apiURL = `https://wykop.pl/api/v3/favourites`;
+		const method = favourite ? "POST" : "DELETE";
+		const body = {
+			data: {
+				type: resource,
+				source_id: id
+			}
+		}
+
+		return new Promise(async (resolve, reject) =>
+		{
+			await fetch(apiURL, {
+				method: method,
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + window.localStorage.getItem("token"),
+				},
+				body: JSON.stringify(body)
+			})
+				.then((response) =>
+				{
+					if (!response.ok)
+					{
+						if (dev) console.log("HTTP error! status: ${response.status}");
+						// throw new Error(`HTTP error! status: ${response.status}`);
+					}
+					return response.json();
+				})
+				.then(async (responseJSON) =>
+				{
+					resolve(responseJSON.data);
+
+				}).catch((error) =>
+				{
+					if (error instanceof TypeError)
+					{
+						console.error('Network error:', error); // AWARIA SERWERA WYPOKU
+					} else
+					{
+						console.error('Other error:', error);
+					}
+					reject(error);
+				});
+
+		});
+	}
+
+	function postCommentPlus1ToAPI(sectionEntry)
+	{
+		if (!sectionEntry || !sectionEntry.__vue__) return;
+
+		const resource = sectionEntry.__vue__.item.resource;
+		let entryId;
+		let authorUsername = sectionEntry.__vue__.item.author.username;
+		if (resource === "entry")
+			entryId = sectionEntry.__vue__.item.id;
+
+		else if (resource === "entry_comment")
+			entryId = sectionEntry.__vue__.item.parent.id;
+
+		// TODO ZNALEZISKA
+
+		let apiURL = `https://wykop.pl/api/v3/entries/${entryId}/comments`;
+		const method = "POST";
+		const body = {
+			data: {
+				"content": `@${authorUsername} [+](https://greasyfork.org/en/scripts/489949)1`,
+				"adult": false
+			}
+		}
+		/*
+		"data": 
+			{
+				"content": "**foobar** __foobar__ [lorem](https://www.wykop.pl) impsum!!! #nsfw #wykop",
+				"embed": "1fde707843ss3fbe9cb4eed0asdfsdfc64ab9a4df6084199b39d2",
+				"photo": "e07843ss3fbe9cb4saeed0asdfsdfc64b9a4df6084199b39d2",
+				"adult": false
+				}
+			}
+		*/
+
+		return new Promise(async (resolve, reject) =>
+		{
+			await fetch(apiURL, {
+				method: method,
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + window.localStorage.getItem("token"),
+				},
+				body: JSON.stringify(body)
+			})
+				.then((response) =>
+				{
+					if (!response.ok)
+					{
+						if (dev) console.log("HTTP error! status: ${response.status}");
+						// throw new Error(`HTTP error! status: ${response.status}`);
+					}
+					return response.json();
+				})
+				.then(async (responseJSON) =>
+				{
+					resolve(responseJSON.data);
+
+				}).catch((error) =>
+				{
+					if (error instanceof TypeError)
+					{
+						console.error('Network error:', error); // AWARIA SERWERA WYPOKU
+					} else
+					{
+						console.error('Other error:', error);
+					}
+					reject(error);
+				});
+
+		});
+	}
+
+
+
+
+
+	// li.more click
+	document.addEventListener("click", async function (e)
+	{
+		if (e.target.closest("div.buttons button.plus"))
+		{
+			const sectionEntry = e.target.closest("section.entry[id]");
+			if (sectionEntry.__vue__?.item?.voted == 1)
+			{
+				if (settings.addCommentPlusWhenVotingOnEntry && sectionEntry && sectionEntry.__vue__?.item?.resource == "entry") 
+				{
+					postCommentPlus1ToAPI(sectionEntry);
+				}
+				else if (settings.addCommentPlusWhenVotingOnComment && sectionEntry && sectionEntry.__vue__?.item?.resource == "entry_comment")
+				{
+					postCommentPlus1ToAPI(sectionEntry);
+				}
+			}
+		}
+
+		if (e.target.matches("li.more span"))
+		{
+			e.preventDefault();
+
+			let sectionEntry = e.target.closest("section.entry");
+			const entryId = e.target.dataset.entryId;
+			const commentId = e.target.dataset.commentId;
+			if (dev) console.log(`Wykop XS pobiera listę ${e.target.dataset.votesUp} plusujących`);
+			e.target.closest("section.entry-voters").innerHTML = `<span>(Wykop X: wczytywanie ${e.target.dataset.votesUp} plusujących...)</span>`;
+
+			let voters = await fetchAllVotersFromAPI(entryId, commentId);
+
+			appendVotersToEntry(sectionEntry, voters);
+			return;
+		}
+
+		if (e.target.matches("span.favouriteButton"))
+		{
+			e.preventDefault();
+			if (e.target.dataset.isFavourite == "true")
+			{
+				if (e.target.dataset.commentId) postFavouriteToAPI(false, "entry_comment", e.target.dataset.commentId);
+				else postFavouriteToAPI(false, "entry", e.target.dataset.entryId);
+				e.target.parentElement.classList.remove("active");
+				e.target.dataset.isFavourite = "false";
+
+			}
+			else if (e.target.dataset.isFavourite == "false")
+			{
+				if (e.target.dataset.commentId) postFavouriteToAPI(true, "entry_comment", e.target.dataset.commentId);
+				else postFavouriteToAPI(true, "entry", e.target.dataset.entryId);
+				e.target.parentElement.classList.add("active");
+				e.target.dataset.isFavourite = "true";
+			}
+			return;
+		}
+	}, false);
+
+
+
+	{
+
+		CSS += `
+			section.entry-voters
+			{
+				& > span 
+				{
+					font-size: var(--entryVotersTextFontSize, 12px);
+					color: var(--gullGray);
+				}
+				ul
+				{
+					font-size: var(--entryVotersTextFontSize, 12px);
+					color: var(--gullGray);
+
+					display: block flex;
+					row-gap: 0px;
+					flex-wrap: wrap;
+					align-items: baseline;
+					padding: 0 0 0 0;
+					margin: 0;
+					list-style-type: none;
+					position: relative;
+					
+					&::before
+					{
+						content: "Plusujący: ";
+						margin-right: 0.2em;
+					}
+
+					li
+					{
+						a.username
+						{
+							
+							span
+							{
+								font-weight: normal;
+							}
+
+							&.banned, &.suspended
+							{
+								color: 
+							}
+						}
+
+						&.more
+						{
+							cursor: pointer;
+							font-weight: 700;
+							text-transform: uppercase;
+						}
+					}
+				}
+			}
+	
+			section.entry-voters ul li:after 			{ content: " • "; margin: 0px 0.2em 0px 0em; }
+			section.entry-voters ul li.more:after,
+			section.entry-voters ul li:only-child:after
+			{
+				content: none;
+			}
+
+			section.entry-voters ul li a.username i 				{ display: none; font-size: 0.8em; font-style: normal; bottom: 0px; position: relative; }
+			section.entry-voters ul li a.username i:has(+span) 		{ margin-right: 1px; }
+			section.entry-voters ul li a.username i.follow-true,
+			section.entry-voters ul li a.username i.blacklist-true,
+			section.entry-voters ul li a.username i.banned ,
+			section.entry-voters ul li a.username i.suspended,
+			section.entry-voters ul li a.username i.removed,
+			section.entry-voters ul li a.username i.f-gender,
+			section.entry-voters ul li a.username i.m-gender
+			{ display: inline flex;} 
+			
+			
+			section.entry-voters ul li a.username i.follow-true::before 										{ content: '🔔'; }
+			section.entry-voters ul li a.username i.blacklist-true::before 										{ content: '⛔'; }
+			section.entry-voters ul li a.username i.banned::before 												{ content: '🍌'; }
+			section.entry-voters ul li a.username i.suspended::before 											{ content: '✖'; }
+			section.entry-voters ul li a.username i.removed::before 											{ content: '❌'; }
+			section.entry-voters ul li a.username i.f-gender::before 											{ content: '🟣'; font-size: 0.7em; bottom: 3px; }
+			
+			section.entry-voters ul li:has(a.username) 															{ order: 6; }
+			section.entry-voters ul li.more 																	{ order: 100; }
+			`;
+
+		if (settings?.votersFollowFirst) CSS += `section.entry-voters ul li:has(a.username.follow-true) 		{ order: 1; }`;
+		if (settings?.votersBlackFirst) CSS += `section.entry-voters ul li:has(a.username.burgundy-profile) 	{ order: 3; }`;
+		if (settings?.votersOrangeFirst) CSS += `section.entry-voters ul li:has(a.username.orange-profile) 		{ order: 4; }`;
+		if (settings?.votersGreenFirst) CSS += `section.entry-voters ul li:has(a.username.green-profile) 		{ order: 5; }`;
+
+		if (settings?.votersBlacklistLast) CSS += `section.entry-voters ul li:has(a.username.blacklist-true) 	{ order: 7; }`;
+		if (settings?.votersBannedLast) CSS += `section.entry-voters ul li:has(a.username.banned) 				{ order: 8; }`;
+		if (settings?.votersSuspendedLast) CSS += `section.entry-voters ul li:has(a.username.banned) 			{ order: 9; }`;
+		if (settings?.votersRemovedLast) CSS += `section.entry-voters ul li:has(a.username.removed) 			{ order: 10; }`;
+
+		if (!settings?.votersColorOrange) CSS += `section.entry-voters ul li a.username.orange-profile 			{ color: var(--gullGray); }`;
+		if (!settings?.votersColorGreen) CSS += `section.entry-voters ul li a.username.green-profile 			{ color: var(--gullGray); }`;
+		if (!settings?.votersColorBurgundy) CSS += `section.entry-voters ul li a.username.burgundy-profile 		{ color: var(--gullGray); }`;
+
+		if (settings?.hideShareButton) CSS += `section.actions ul li.sharing 									{ display: none!important; }`;
+
+
+
+		/* ULUBIONE */
+		CSS += `
+			section.actions > ul > li.favourite 
+			{
+				cursor: pointer;
+				user-select: none;
+				color: var(--gullGray);
+				font-size: 14px;
+				padding-left: 26px;
+				transition: color .2s ease, opacity .2s ease;
+			}
+
+			.actions li.favourite span::before
+			{
+				content: '';
+				width: 18px;
+				height: 18px;
+				display: block;
+				position: absolute;
+				left: 0;
+				mask-size: 18px 18px;
+				background: var(--gullGray);
+				transition: background .2s ease;
+				mask-image: url(/static/img/svg/favourite.svg);
+			}
+			
+			.actions li.favourite.active span::before 
+			{
+				mask-image: url(/static/img/svg/favourite-filled.svg);
+				background: var(--orange);
+			}
+		`;
+
+
+		/* Wykop X Style 3.0 */
+		CSS += `
+			:root {
+				--kolorBananowy1: rgba(255, 185, 0, 1);
+				--tagChannelColor: rgba(0, 183, 255, 1);
+				--smallBorderRadius: 4px;
+			}
+			section.entry-voters ul li a.username.banned:not(.removed) span  				{ color: var(--kolorBananowy1); };
+			section.entry-voters ul li a.username.suspended:not(.removed) span 				{ color: var(--heather); }
+			section.entry-voters ul li a.username.removed span 								{ color: var(--heather); }
+			[data-night-mode] section.entry-voters ul li a.username.removed span 			{ background-color: rgba(255, 255, 255, 0.1); padding-left: 5px; padding-right: 5px; }
+			div[data-modal="entryVoters"] section.entry-voters::after {content: none!important;} /* Wykop X Style PROMO */
+		`;
+
+		if (settings.fixNotificationBadgeBug)
+		{
+			CSS += `
+			:root
+			{
+				/* brak nowych powiadomień */
+				--notificationIconWithoutUnreadNotificationsColor:                 rgba(255, 255, 255, 0.2);   /* ikonka powiadomienia ✉ 🕭 #, jesli nie ma nowych powiadomien  */
+				--notificationIconWithoutUnreadNotificationsBackgroundColor:       rgba(0, 0, 0, 0);           /* tło powiadomienia ✉ 🕭 #, jesli nie ma nowych powiadomien     */
+				--notificationIconWithoutUnreadNotificationsHoverColor:            rgba(255, 255, 255, 0.8);
+				--notificationIconWithoutUnreadNotificationsHoverBackgroundColor:  rgba(255, 255, 255, 0.3);
+				--notificationIconWithoutUnreadNotificationsActiveColor:           rgba(255, 255, 255, 0.4);
+				--notificationIconWithoutUnreadNotificationsActiveBackgroundColor: rgba(255, 255, 255, 0.2);
+			}
+
+    		/* naprawienie błędu: Wykop wyswietla w badge liczbe nieprzeczytanych powiadomien, gdy wszystkie powiadomienia sa juz przeczytane */
+			
+			/* ukrycie badge z liczbą powiadomien jeśli wszystkie powiadomienia w okienku są przeczytane */
+			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications 	> section.stream > div.content > section.notify:not(.read))) > a:after,
+			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications 	> section.stream > div.content > section.notify:not(.read))) > a:before,
+			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 						    > section.stream > div.content > section.item.unread))       > a.new:after,
+			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a.new:before
+			{ 
+				display: none!important;
+			}
+			/* naprawienie kolorów ikonek - brak nieprzeczytanych */
+			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications    > section.stream > div.content > section.notify:not(.read))) > a > div.svg-inline > svg,
+			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a > div.svg-inline > svg
+			{
+				fill: var(--notificationIconWithoutUnreadNotificationsColor) !important;
+			} 
+			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications    > section.stream > div.content > section.notify:not(.read))) > a,
+			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a
+			{
+				background-color: var(--notificationIconWithoutUnreadNotificationsBackgroundColor) !important;
+			} 
+			/* :hover */
+			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications    > section.stream > div.content > section.notify:not(.read))) > a:hover > div.svg-inline > svg,
+			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a:hover > div.svg-inline > svg
+			{
+				fill: var(--notificationIconWithoutUnreadNotificationsHoverColor) !important;
+			} 
+			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications    > section.stream > div.content > section.notify:not(.read))) > a:hover,
+			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a:hover
+			{
+				background-color: var(--notificationIconWithoutUnreadNotificationsHoverBackgroundColor) !important;
+			} 
+			/* otwarte menu */
+			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications.dropdown.active:not(:has( > section.dropdown-body > section.notifications > section.stream > div.content > section.notify:not(.read))) > a > div.svg-inline > svg,
+			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm.dropdown.active:not(:has(            > section.dropdown-body                         > section.stream > div.content > section.item.unread))       > a > div.svg-inline > svg
+			{
+				fill: var(--notificationIconWithoutUnreadNotificationsActiveColor) !important;
+			} 
+			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications.dropdown.active:not(:has( > section.dropdown-body > section.notifications > section.stream > div.content > section.notify:not(.read))) > a,
+			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm.dropdown.active:not(:has(            > section.dropdown-body                         > section.stream > div.content > section.item.unread))       > a
+			{
+				background-color: var(--notificationIconWithoutUnreadNotificationsActiveBackgroundColor) !important;
+			} 
+		`;
+		}
+
+		/* HIDE ADS ALWAYS */
+		if (settings.blockAds)
+		{
+			CSS += `
+			.pub-slot-wrapper
+			{
+				display: none!important;
+			}`;
+		}
+	}
+
+
+	styleElement.textContent = CSS;
+	document.head.appendChild(styleElement);
+
+	// head.insertAdjacentHTML("beforeend", CSS);
 
 })();
