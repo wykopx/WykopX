@@ -1,11 +1,22 @@
 /* ==UserStyle==
-@name           Wykop X Blank
-@version        2.47
+@name           Wykop X Style 3.0 (beta) BLANK
+@version        3.0.14
 
-@description    Ponad 500 funkcji usprawniających i naprawiających Wykop.pl
-@description    Blank - ta wersja ma WYŁĄCZONE wszystkie opcje i funkcje
+@description    WERSJA BETA W FAZIE TESTÓW  - Wykop X Style 3.0b
+@description    Jeśli chcesz przetestować również Wykop XS v.3.0 - znajdziesz go tutaj:
+@description    https://github.com/wykopx/WykopX/blob/main/Wykop%20XS/wykop_xs_dev.user.js
 
 
-@description    Wykop X Style - wersja z włączonymi niektórymi ustawieniami znajduje się tutaj:
-@description    http://styl.wykopx.pl
-@description    https://userstyles.world/style/8174/wykop-x
+@description    ---- WYKOP X ----
+@description    http://wiki.wykopx.pl
+@description    https://userstyles.world/style/8174/wykop-x-style-2
+
+
+---- AUTOR WYKOP X ----
+
+@author         Wykop X <wykopx@gmail.com> | wiki.wykopx.pl
+@homepageURL    http://wiki.wykopx.pl
+@supportURL     http://wiki.wykopx.pl
+
+---- AUTOR WYKOP X ----
+
