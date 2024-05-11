@@ -604,7 +604,7 @@
 		pathname = new URL(document.URL).pathname;
 		pathnameArray = pathname.split("/");
 		consoleX(`newPageURL() -> document.URL: ${document.URL} hash: ${hash}, pathname: ${pathname}, pathnameArray: `, 1)
-		console.log(pathnameArray)
+		if (dev) console.log(pathnameArray)
 
 		currentPageTotalVotesUpCount = 0;
 
@@ -665,7 +665,7 @@
 			pageObjects = ["znaleziska", "wpisy", "komentarze"];
 		}
 		consoleX(`Typ strony: ${pageType} ${pageType != pageSubtype ? pageSubtype : ""}`, 1)
-		// console.log(`pageObjects:`, pageObjects)
+		// if(dev) console.log(`pageObjects:`, pageObjects)
 	}
 
 
@@ -683,7 +683,7 @@
 
 	function removeWXSAttributes(sectionObjectElement)
 	{
-		console.log(`removeWXSAttributes() from id: ${sectionObjectElement.__vue__.item.id}`, + sectionObjectElement);
+		if (dev) console.log(`removeWXSAttributes() from id: ${sectionObjectElement.__vue__.item.id}`, + sectionObjectElement);
 
 		sectionObjectElement.removeAttribute('style'); // custom css properties removed 
 
@@ -1081,7 +1081,7 @@
 			consoleX("eventInsertedTagOrUser() -- event blur || eydown .wykopx_quick_search", 1);
 			e.preventDefault();
 
-			console.log("Type of the element: " + e.target.tagName);
+			if (dev) console.log("Type of the element: " + e.target.tagName);
 			let editedValue;
 			if (e.target.tagName == "INPUT") editedValue = e.target.value.toLowerCase();
 			else if (e.target.tagName == "H1") editedValue = e.target.textContent.toLowerCase();
@@ -1170,7 +1170,7 @@
 			}
 		} catch (err)
 		{
-			console.log(err);
+			if (dev) console.log(err);
 		}
 	}
 
@@ -1192,8 +1192,8 @@
 			.then((response) => response.json())
 			.then((responseJSON) =>
 			{
-				console.log("🟢🟢🟢responseJSON")
-				console.log(responseJSON)
+				if (dev) console.log("🟢🟢🟢responseJSON")
+				if (dev) console.log(responseJSON)
 				const responseJSONData = responseJSON.data; // data = [{name: 'wykopwnowymstylu'}, {name: 'wykop'}, {name: 'wykopx'}]
 				const fetchedValuesArray = responseJSONData.map(function (item)
 				{ return item.name; });
@@ -1279,8 +1279,8 @@
 			// 	{
 			// 		localStorageObserved.setItem(`settings_list_update`, loadTime);
 
-			// 		console.log(" 🍌🍌🍌🍌 response from api.wykopx.pl: ")
-			// 		console.log(data)
+			// 		if(dev) console.log(" 🍌🍌🍌🍌 response from api.wykopx.pl: ")
+			// 		if(dev) console.log(data)
 			// 	})
 			// 	.catch(error => console.error('Error:', error));
 		}
@@ -1893,8 +1893,8 @@
 			{
 				sectionObject = this.closest('.link-block');
 			}
-			console.log("sectionObject");
-			console.log(sectionObject);
+			if (dev) console.log("sectionObject");
+			if (dev) console.log(sectionObject);
 
 			if (sectionObjectIntersectionObserver) sectionObjectIntersectionObserver.unobserve(sectionObject);
 			mirkoukrywaczBlockNewElement(sectionObject, null, "hidden");
@@ -1932,11 +1932,11 @@
 	// getWykopXAPIData("entry", "first-by-date")		-> https://archiwum.wykopx.pl/api/entry/first-by-date
 	async function getWykopXAPIData(...pathAPIargs)
 	{
-		console.log("❎ getWykopXAPIData", pathAPIargs)
+		if (dev) console.log("❎ getWykopXAPIData", pathAPIargs)
 		try
 		{
 			let apiURL = `https://archiwum.wykopx.pl/api/${pathAPIargs.join('/')}`;
-			console.log("❎ getWykopXAPIData apiURL: ", apiURL)
+			if (dev) console.log("❎ getWykopXAPIData apiURL: ", apiURL)
 
 			const response = await fetch(apiURL,
 				{
@@ -1946,17 +1946,17 @@
 					},
 				});
 
-			console.log("❎ getWykopXAPIData response:", response)
+			if (dev) console.log("❎ getWykopXAPIData response:", response)
 			let data;
 			try
 			{
 				data = await response.json();
-				console.log("❎ getWykopXAPIData data: ", data)
+				if (dev) console.log("❎ getWykopXAPIData data: ", data)
 			}
 			catch (error)
 			{
 				data = response.status; // 204 
-				console.log("❎ getWykopXAPIData-response.status")
+				if (dev) console.log("❎ getWykopXAPIData-response.status")
 			}
 			return data;
 		}
@@ -2046,7 +2046,7 @@
 			}
 			catch (error)
 			{
-				//console.log('No body or not a JSON body:', error);
+				// if(dev) console.log('No body or not a JSON body:', error);
 				data = response.status; // 204 
 				if (dev) console.log("callWykopAPI() -> response.status", response.status)
 			}
@@ -2160,19 +2160,19 @@
 			// ----- ANY INTERSECTION CHANGED 
 			let sectionObjectElement = IntersectionObserverEntry.target;														// element <section class="entry"> 
 			let resource = null;		// resource = "link", "entry", "entry_comment"
-			//console.log(`intersectingObject: `, sectionObjectElement)
+			// if(dev) console.log(`intersectingObject: `, sectionObjectElement)
 			if (!sectionObjectElement?.__vue__?.item) return false;
 
 
 			// ----- ONLY ONCE: INTERSECTION CHANGED FOR THE FIRST TIME:
 			if (!sectionObjectElement.dataset.wxs_first_load_time) 
 			{
-				// console.log("intersectingObject-sectionObjectElement.__vue__.item")
-				// console.log(sectionObjectElement)
-				// console.log("intersectingObject-sectionObjectElement.__vue__.item")
-				// console.log(sectionObjectElement.__vue__)
-				// console.log("intersectingObject-sectionObjectElement.__vue__.item")
-				// console.log(sectionObjectElement.__vue__.item)
+				// if(dev) console.log("intersectingObject-sectionObjectElement.__vue__.item")
+				// if(dev) console.log(sectionObjectElement)
+				// if(dev) console.log("intersectingObject-sectionObjectElement.__vue__.item")
+				// if(dev) console.log(sectionObjectElement.__vue__)
+				// if(dev) console.log("intersectingObject-sectionObjectElement.__vue__.item")
+				// if(dev) console.log(sectionObjectElement.__vue__.item)
 				// data-wxs_first_load_time="2024-12-12..."
 				sectionObjectElement.dataset.wxs_first_load_time = dayjs().valueOf(); // data unix kiedy przybyly ostatnio odswiezone plusy-tutaj czas załadowania strony
 				resource = sectionObjectElement.__vue__.item.resource;
@@ -2236,8 +2236,8 @@
 
 							a_mention.insertAdjacentElement("afterend", a_mentions_filter_button);
 
-							// console.log("=== BUTTON ADDED: a_mentions_filter_button")
-							// console.log(a_mentions_filter_button)
+							// if(dev) console.log("=== BUTTON ADDED: a_mentions_filter_button")
+							// if(dev) console.log(a_mentions_filter_button)
 						})
 					}
 
@@ -2492,7 +2492,7 @@
 								if (settings.wxsUserLabelsTrolls && mapaTrolli)
 								{
 									let wxsUserLabelObject = null;
-									//console.log(mapaTrolli.get(userDataObject.username));
+									// if(dev) console.log(mapaTrolli.get(userDataObject.username));
 									if ((wxsUserLabelObject = mapaTrolli.get(userDataObject.username)))
 									{
 										userDataObject.wxsUserLabel = wxsUserLabelObject.label;
@@ -2658,9 +2658,9 @@
 		// const a_usernameAll = document.querySelectorAll(`section:is(.entry, .link-block):has(> article > header > div.right > div > div a.username[href="/ludzie/${username}"])`);
 		// const a_usernameAll = document.querySelectorAll(`section[data-wxs_username="${username}"]`);
 		// const a_usernameAll = document.querySelectorAll(`section.entry-voters > ul > li > a.username[href="/ludzie/${username}"]`);
-		// console.log(`--- username ${username}`);
-		// console.log(`--- a_usernameAll`);
-		// console.log(a_usernameAll);
+		// if(dev) console.log(`--- username ${username}`);
+		// if(dev) console.log(`--- a_usernameAll`);
+		// if(dev) console.log(a_usernameAll);
 
 		// informacja o użytkowniku pobrana z __vue__ lub fetch z API
 		// DIV Z INFOBOXEM i NOTATKAMI
@@ -2697,11 +2697,11 @@
 			// NOTATKI
 			if (settings.notatkowatorEnable && userDataObject.note == true && userNoteObject)
 			{
-				// console.log("NOTATKI 222: ")
-				// console.log("userDataObject.note")
-				// console.log(userDataObject.note);
-				// console.log("userNoteObject");
-				// console.log(userNoteObject);
+				// if(dev) console.log("NOTATKI 222: ")
+				// if(dev) console.log("userDataObject.note")
+				// if(dev) console.log(userDataObject.note);
+				// if(dev) console.log("userNoteObject");
+				// if(dev) console.log(userNoteObject);
 				/* 
 					Notes from API:
 						user.data = { username: 'NadiaFrance', content: 'Treść notatki' } 
@@ -2715,8 +2715,8 @@
 					}
 				*/
 				let usernoteParsedToDisplay = removePlusWords(userNoteObject.usernote);
-				// console.log("usernoteParsedToDisplay");
-				// console.log(usernoteParsedToDisplay);
+				// if(dev) console.log("usernoteParsedToDisplay");
+				// if(dev) console.log(usernoteParsedToDisplay);
 
 				if (settings.notatkowatorVerticalBar)
 				{
@@ -2929,15 +2929,15 @@
 			div.title = `${userInfoElementTitle} \n.`;
 		}
 
-		// console.log("gotowy user infobox div:")
-		// console.log(div)
+		// if(dev) console.log("gotowy user infobox div:")
+		// if(dev) console.log(div)
 
 		// dołączenie info o użytkowniku do każdego wystąpienia jego nicka na stronie
 		a_usernameAll.forEach((a_username) =>
 		{
-			// console.log(`Dodaję infobox przy każdym linku a.username:`);
-			// console.log(a_username);
-			// console.log(a_username.parentNode.nodeName);
+			// if(dev) console.log(`Dodaję infobox przy każdym linku a.username:`);
+			// if(dev) console.log(a_username);
+			// if(dev) console.log(a_username.parentNode.nodeName);
 			if (a_username.dataset.wxs_username == undefined)
 			{
 				a_username.dataset.wxs_username = userDataObject.username;
@@ -3026,9 +3026,9 @@
 
 				//let div_tooltipSlot = a_username.closest("div.tooltip-slot");
 				let userInfoboxDiv = div.cloneNode(true);
-				// console.log(`userInfoboxDiv`, userInfoboxDiv);
-				// console.log(`a_username`, a_username);
-				// console.log(`a_username.closest("div.right > div:has(a.username)")`, a_username.closest("div.right > div:has(a.username)"));
+				// if(dev) console.log(`userInfoboxDiv`, userInfoboxDiv);
+				// if(dev) console.log(`a_username`, a_username);
+				// if(dev) console.log(`a_username.closest("div.right > div:has(a.username)")`, a_username.closest("div.right > div:has(a.username)"));
 
 
 				a_username.closest("div.right > div:has(a.username)").appendChild(userInfoboxDiv);
@@ -3114,7 +3114,7 @@
 				let userNoteObject = await localStorageNotatkowator.getItem(username);
 
 				// consoleX(`getUserNoteObjectByUsername()`, 1);
-				// console.log(username);
+				// if(dev) console.log(username);
 
 				if (forceAPICheck == false)
 				{
@@ -3122,8 +3122,8 @@
 
 					if (userNoteObject == null || userNoteObject == "")
 					{
-						// console.log("typeof userNoteObject", typeof userNoteObject)
-						// console.log(userNoteObject);
+						// if(dev) console.log("typeof userNoteObject", typeof userNoteObject)
+						// if(dev) console.log(userNoteObject);
 
 						const date2 = dayjs(userNoteObject.lastUpdate);
 
@@ -3136,10 +3136,10 @@
 						{
 							// mamy aktualną notatkę z localforage
 							// consoleX(`Notatkowator wczytał notatkę z LocalStorage. Użytkownik: @${username}`);
-							// console.log("userNoteObject")
-							// console.log(userNoteObject)
-							// console.log("userNoteObject.usernote")
-							// console.log(userNoteObject.usernote)
+							// if(dev) console.log("userNoteObject")
+							// if(dev) console.log(userNoteObject)
+							// if(dev) console.log("userNoteObject.usernote")
+							// if(dev) console.log(userNoteObject.usernote)
 							usernote = userNoteObject.usernote;
 
 							return userNoteObject;
@@ -3184,8 +3184,8 @@
 						}
 
 						const plusWordsArray = getPlusWords(userNoteObject.usernote);
-						// console.log("plusWordsArray")
-						// console.log(plusWordsArray)
+						// if(dev) console.log("plusWordsArray")
+						// if(dev) console.log(plusWordsArray)
 
 						// dodane jakies +przełączniki
 						if (plusWordsArray[0] != "normal")
@@ -3210,16 +3210,16 @@
 						}
 
 
-						// console.log(jsonResponse);
-						// console.log("userNoteObject");
-						// console.log(userNoteObject);
+						// if(dev) console.log(jsonResponse);
+						// if(dev) console.log("userNoteObject");
+						// if(dev) console.log(userNoteObject);
 
 
 
 
 						if (usernote != "" && userNoteObject.usernote != null && userNoteObject.usernote != "")
 						{
-							// console.log(`API zwróciło ${userNoteObject.username} notatkę: ${userNoteObject.usernote}`);
+							// if(dev) console.log(`API zwróciło ${userNoteObject.username} notatkę: ${userNoteObject.usernote}`);
 							consoleData.notatkowator.count++;
 							refreshConsole();
 
@@ -3272,12 +3272,12 @@
 		{
 			// consoleX(`getUserDetailsForUsername() ${username}`, 1);
 
-			//console.log(`user: ${username}: `)
+			// if(dev) console.log(`user: ${username}: `)
 
 			// jesli jest zbanowany lub chcemy wszystkie dane (np. followersi — wysylamy zapytanie do API)
 			if (userDataObject.status == "banned" || userDataObject.status == "suspended" || forceAPICheck == true)
 			{
-				// console.log("---- getUserDetailsForUsername — sprawdzanie użytkownika w API: " + username)
+				// if(dev) console.log("---- getUserDetailsForUsername — sprawdzanie użytkownika w API: " + username)
 				try
 				{
 					// profile/users/{username}
@@ -3288,8 +3288,8 @@
 					{
 						let userDataObject = jsonResponse.data;
 
-						//console.log("userData fetched from API");
-						//console.log(userDataObject);
+						// if(dev) console.log("userData fetched from API");
+						// if(dev) console.log(userDataObject);
 						return userDataObject; // return the data
 					}
 
@@ -3302,7 +3302,7 @@
 			// jeśli wystarczą nam podstawowe informacje z __vue__ 
 			else
 			{
-				//console.log("---- getUserDetailsForUsername — zwracam danej użytkownika z vue: " + username)
+				// if(dev) console.log("---- getUserDetailsForUsername — zwracam danej użytkownika z vue: " + username)
 				return userDataObject;
 			}
 		}
@@ -3382,7 +3382,7 @@
 				if (!section.dataset.wxs_note || section.dataset.wxs_username != username)
 				{
 					section.dataset.wxs_note = "true"; // <section data-wxs-note="true" wxs_username="NadiaFrance">
-					// console.log(`Notatkowator — dodaje notatkę: ${ username } / ${usernote}`);
+					// if(dev) console.log(`Notatkowator — dodaje notatkę: ${ username } / ${usernote}`);
 					let resource = section.__vue__.item.resource;
 		
 					if (resource == "entry" || resource == "entry_comment" || resource == "link_comment")
@@ -3497,8 +3497,8 @@
 			const text = getTitleTextFromSectionObjectElement(sectionObjectElement);
 			if (!object_id) object_id = getObjectIdFromSectionObjectElement(sectionObjectElement);
 
-			// console.log("sectionObjectElement")
-			// console.log(sectionObjectElement);
+			// if(dev) console.log("sectionObjectElement")
+			// if(dev) console.log(sectionObjectElement);
 
 			localStorageMirkoukrywacz
 				.setItem(object_id,
@@ -3513,11 +3513,11 @@
 					})
 				.then(function (value)
 				{
-					//console.log(value);
+					// if(dev) console.log(value);
 				})
 				.catch(function (err)
 				{
-					console.log(`mirkoukrywaczBlockNewElement = error: ` + err);
+					if (dev) console.log(`mirkoukrywaczBlockNewElement = error: ` + err);
 				});
 			// mirkoukrywaczHideAllBlockedElements();
 		}
@@ -3526,7 +3526,7 @@
 	function mirkoukrywaczUnblockElement(sectionObjectElement = null, object_id = getObjectIdFromSectionObjectElement(sectionObjectElement))
 	{
 		console.clear();
-		console.log(`mirkoukrywaczUnblockElement(${object_id})`)
+		if (dev) console.log(`mirkoukrywaczUnblockElement(${object_id})`)
 
 		if (localStorageMirkoukrywacz)
 		{
@@ -3534,8 +3534,8 @@
 				.getItem(object_id)
 				.then(function (value)
 				{
-					console.log("getItem: " + object_id)
-					console.log(value)
+					if (dev) console.log("getItem: " + object_id)
+					if (dev) console.log(value)
 
 					localStorageMirkoukrywacz
 						.removeItem(object_id)
@@ -3555,7 +3555,7 @@
 						})
 						.catch(function (err)
 						{
-							console.log(err);
+							if (dev) console.log(err);
 						});
 				})
 		}
@@ -3573,10 +3573,10 @@
 
 			localStorageMirkoukrywacz.iterate(function (value, key, iterationNumber)
 			{
-				// console.log("value");
-				// console.log(value);
-				// console.log("key");
-				// console.log(key);
+				// if(dev) console.log("value");
+				// if(dev) console.log(value);
+				// if(dev) console.log("key");
+				// if(dev) console.log(key);
 
 				let foundElementToHide = document.getElementById(`${key}`); // comment-1234   link-12345
 				if (foundElementToHide)
@@ -3613,7 +3613,7 @@
 
 			}).catch(function (err)
 			{
-				console.log(err);
+				if (dev) console.log(err);
 			});
 
 		}
@@ -3841,7 +3841,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				}
 			}).catch(function (err)
 			{
-				console.log(err);
+				if (dev) console.log(err);
 			});
 		}
 	}
@@ -4404,7 +4404,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 					parentDropdown.classList.add(`unread_${numberOfNotifications}`);
 				}
 				unreadNotifications["pm"] = numberOfNotifications;
-				// console.log(`Liczba nowych wiadomości: ${unreadNotifications["pm"]}`);
+				// if(dev) console.log(`Liczba nowych wiadomości: ${unreadNotifications["pm"]}`);
 			}
 		});
 
@@ -5297,10 +5297,10 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	{
 		consoleX(`changeDocumentTitle(${new_document_title})`, 1)
 
-		// console.log(`changeDocumentTitle() > start:  document.title:`);
-		// console.log(document.title);
-		// console.log(`changeDocumentTitle() > start:  pageTabTitleOriginal`);
-		// console.log(pageTabTitleOriginal);
+		// if(dev) console.log(`changeDocumentTitle() > start:  document.title:`);
+		// if(dev) console.log(document.title);
+		// if(dev) console.log(`changeDocumentTitle() > start:  pageTabTitleOriginal`);
+		// if(dev) console.log(pageTabTitleOriginal);
 
 		pageTabTitleProcessed = pageTabTitleOriginal;
 
@@ -5397,7 +5397,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			documentTitle += pageTabTitleProcessed;
 		}
 		document.title = documentTitle;
-		// console.log("changeDocumentTitle() > zmieniam document.title na: " + documentTitle);
+		// if(dev) console.log("changeDocumentTitle() > zmieniam document.title na: " + documentTitle);
 	}
 
 
@@ -5451,7 +5451,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	{
 		consoleX(`browserTabVisibilityChanged() -> ${document.visibilityState}`, 1);
 
-		// console.log("browserTabVisibilityChanged(): " + document.visibilityState)
+		// if(dev) console.log("browserTabVisibilityChanged(): " + document.visibilityState)
 		// document.visibilityState > "visible"/"hidden"
 		// document.hidden > true/false
 		if (document.hidden == false)
@@ -5464,7 +5464,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			if (document.hidden)
 			{
 				executeTabAndFaviconChanges();
-				// console.log(`document.hidden -> true > document.visibilityState: ${document.visibilityState}`);
+				// if(dev) console.log(`document.hidden -> true > document.visibilityState: ${document.visibilityState}`);
 			}
 			else
 			{
@@ -5499,19 +5499,19 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				// if (mutatedTitle.endsWith(":: Wykop.pl"))
 				// {
 				// 	pageTabTitleOriginal = mutatedTitle;
-				// 	console.log(`mutatedTitle.endsWith(":: Wykop.pl")`);
+				// 	if(dev) console.log(`mutatedTitle.endsWith(":: Wykop.pl")`);
 				// }
 
 				// if (!mutatedTitle.includes(specialCharacter)) // tytul nie zostal jeszcze zmieniony i dodane są liczby powiadomien zeby sie nie powtarzalo (1)(1)
 				// {
 				// 	pageTabTitleProcessed = mutatedTitle;
-				// 	// console.log(`!mutatedTitle.includes("specialCharacter")`);
+				// 	// if(dev) console.log(`!mutatedTitle.includes("specialCharacter")`);
 				// }
 
 				// titleMutationObserver.disconnect();
 				// executeTabAndFaviconChanges();
 				// titleMutationObserver.observe(document.querySelector('title'), { childList: true, })
-				// console.log("pageTabTitleProcessed: " + pageTabTitleProcessed)
+				// if(dev) console.log("pageTabTitleProcessed: " + pageTabTitleProcessed)
 			}
 		}
 	});
@@ -5644,7 +5644,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		blocks.separated = ratingBoxSection.__vue__.separated;
 		blocks.votesUp = ratingBoxSection.__vue__.up;
 
-		console.log(blocks.votesUp)
+		if (dev) console.log(blocks.votesUp)
 		blocks.votesDown = ratingBoxSection.__vue__.down;
 
 		blocks.votesCount = blocks.votesUp - blocks.votesDown;				// -10 (suma plusów i minusów nie dotyczy entry, entry_comment)
@@ -5746,8 +5746,8 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		//blocks.sectionObjectElement.dataset.wxs_votes_up = blocks.votesUp;			// <section data-wxs_votes_up="1" data_wxs_votes_down="8">
 		//blocks.sectionObjectElement.dataset.wxs_votes_down = blocks.votesDown;
 
-		// console.log("blocks");
-		// console.log(blocks);
+		// if(dev) console.log("blocks");
+		// if(dev) console.log(blocks);
 
 		return blocks;
 	}
@@ -5791,14 +5791,14 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				}
 			}
 
-			console.log("checkPluses() -> sectionObjectElement: ", sectionObjectElement)
-			console.log("checkPluses() -> ratingBoxSection: ", ratingBoxSection)
+			if (dev) console.log("checkPluses() -> sectionObjectElement: ", sectionObjectElement)
+			if (dev) console.log("checkPluses() -> ratingBoxSection: ", ratingBoxSection)
 
 			const votesObject = getVotesObject(sectionObjectElement, ratingBoxSection);
 
 			if (votesObject) // TODO subkomentarze
 			{
-				console.log("checkPluses() -> votesObject", votesObject);
+				if (dev) console.log("checkPluses() -> votesObject", votesObject);
 
 				// let sectionObjectElement = votesObject.sectionObjectElement;
 				sectionObjectElement.classList.remove("plusesAdded", "plusesRemoved", "minusesAdded", "minusesRemoved");
@@ -5826,7 +5826,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 						else if (data.data && data.data.id === votesObject.id) data_fetched = data.data;
 						else { return false; }
 
-						console.log(`checkPluses() -> data_fetched from ${votesObject.fetchURL}`, data_fetched);
+						if (dev) console.log(`checkPluses() -> data_fetched from ${votesObject.fetchURL}`, data_fetched);
 
 						votesObject.votesUpPrevious = votesObject.votesUp; 			// sectionObjectElement.dataset.wxs_votes_up;
 						votesObject.votesDownPrevious = votesObject.votesDown; 		// sectionObjectElement.dataset.wxs_votes_down;
@@ -5847,17 +5847,17 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 						votesObject.votesCountChanged = (votesObject.plusesDelta != 0 || votesObject.minusesDelta != 0);
 
 
-						// console.log("dataset.votesup: " + sectionObjectElement.dataset.wxs_votes_up + " / votesObject.plusesDelta: " + votesObject.plusesDelta)
-						// console.log("sectionObjectElement.dataset")
-						// console.log(sectionObjectElement.dataset)
-						// console.log(sectionObjectElement)
+						// if(dev) console.log("dataset.votesup: " + sectionObjectElement.dataset.wxs_votes_up + " / votesObject.plusesDelta: " + votesObject.plusesDelta)
+						// if(dev) console.log("sectionObjectElement.dataset")
+						// if(dev) console.log(sectionObjectElement.dataset)
+						// if(dev) console.log(sectionObjectElement)
 
 						// ZMIENIŁA SIĘ LICZBA PLUSÓW / WYKOPÓW
 						if (votesObject.votesCountChanged)
 						{
 							//alert("votesCountChanged")
-							console.log("checkPluses() -> --------------------");
-							console.log("checkPluses() -> VOTES COUNT CHANGED", sectionObjectElement)
+							if (dev) console.log("checkPluses() -> --------------------");
+							if (dev) console.log("checkPluses() -> VOTES COUNT CHANGED", sectionObjectElement)
 
 
 							sectionObjectElement.dataset.wxs_votes_up = votesObject.votesUp;				//  10
@@ -5971,10 +5971,10 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		// 	sectionObjectElement.dataset.wxs_comment_count = votesObject.commentsCount;
 		// }
 
-		// console.log("votesObject:");
-		// console.log(votesObject);
-		// console.log("sectionObjectElement.dataset:");
-		// console.log(sectionObjectElement.dataset);
+		// if(dev) console.log("votesObject:");
+		// if(dev) console.log(votesObject);
+		// if(dev) console.log("sectionObjectElement.dataset:");
+		// if(dev) console.log(sectionObjectElement.dataset);
 
 
 
@@ -6082,7 +6082,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 	function parseRatingBoxCurrentContentAndCreateDataValues(ratingBoxSection)
 	{
 		// dodanie data-wxs_pluses na podstawie aktualnych wartosci plusow w HTML
-		// console.log("parseRatingBoxCurrentContentAndCreateDataValues(ratingBoxSection)")
+		// if(dev) console.log("parseRatingBoxCurrentContentAndCreateDataValues(ratingBoxSection)")
 		consoleX(`parseRatingBoxCurrentContentAndCreateDataValues()`, 1);
 
 		const minusLi = ratingBoxSection.querySelector('li.minus');
@@ -6123,7 +6123,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				ratingBoxSection.addEventListener('mouseenter', function (event)
 				{
 					//var clickedButton = event.target;
-					console.log("mouseenter rating box")
+					if (dev) console.log("mouseenter rating box")
 					checkPluses(sectionObjectElement, ratingBoxSection, false);
 				});
 			}
@@ -6315,7 +6315,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		//const link_id = linkBlock.id.replace("link-", ""); // 78643212
 		const link_id = linkBlock.__vue__.item.id;
 		const fetchURL = apiGetLink + link_id;
-		console.log(fetchURL);
+		if (dev) console.log(fetchURL);
 
 		let link_data;
 
@@ -6339,8 +6339,8 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 					.then(data =>
 					{
 						link_data = data.data;
-						console.log("link_data");
-						console.log(link_data);
+						if (dev) console.log("link_data");
+						if (dev) console.log(link_data);
 
 						linkBlock.dataset.wxs_votes_up = link_data.votes.up;								// liczba wykopów/plusów 10
 						linkBlock.dataset.wxs_votes_down = link_data.votes.down;							// liczba zakopów/minusów 20
@@ -6466,7 +6466,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				downVoteElement.addEventListener("click", async function ()
 				{
 					const downVoteButton = downVoteElement.children[0];
-					console.log(downVoteButton);
+					if (dev) console.log(downVoteButton);
 					let data = null;
 					if (downVoteButton.dataset.vote == "down")
 					{
@@ -6493,8 +6493,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 						}
 					}
 
-					console.log("downVoteLink data:");
-					console.log(data);
+					if (dev) console.log("downVoteLink data:");
+					if (dev) console.log(data);
 				})
 			}
 		}
@@ -6602,7 +6602,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			if (only_on_dev_mode) tpl += `color:rgba(43, 255, 75, 1);`;
 			else tpl += `color:rgba(255, 255, 255, 0.8);`;
 
-			console.log(`%cWykop X%c` + text, `${tpl}`, `font-family: "Segoe UI", "Open Sans"`);
+			if (dev) console.log(`%cWykop X%c` + text, `${tpl}`, `font-family: "Segoe UI", "Open Sans"`);
 		}
 
 	}
@@ -6722,7 +6722,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	// Output: ["normal"]
 	function getPlusWords(str)
 	{
-		//console.log("getPlusWords(string): " + str)
+		// if(dev) console.log("getPlusWords(string): " + str)
 
 		let matches = str.match(/\+\p{L}+/gu); // diacritics characters, nie działa dla: str.match(/\+\w+/g); 
 		if (matches)
@@ -6848,26 +6848,26 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	// getEntryDailyNumber(wykopObjectData, "2023-01-01")		-> 678 - zwraca który wpis tego dnia
 	async function getEntryDailyNumber(objectData) // "2024-03-14 21:34:51",
 	{
-		// console.log(`getEntryDailyNumber(objectData.id: ${objectData.id}, createdAtDate: ${objectData.created_at})`);
-		// console.log(`getEntryDailyNumber() - firstInDayID[${objectData.resource}]: `, firstInDayID[objectData.resource]);
+		// if(dev) console.log(`getEntryDailyNumber(objectData.id: ${objectData.id}, createdAtDate: ${objectData.created_at})`);
+		// if(dev) console.log(`getEntryDailyNumber() - firstInDayID[${objectData.resource}]: `, firstInDayID[objectData.resource]);
 
 		const dateToCheck = dayjs(objectData.created_at).format("YYYY-MM-DD");
 
 		if (firstInDayID[objectData.resource] != null)
 		{
-			// console.log(`mapa firstInDayID[${objectData.resource}] = null, sprawdzamy localstorage`);
+			// if(dev) console.log(`mapa firstInDayID[${objectData.resource}] = null, sprawdzamy localstorage`);
 
 			await localStorageFirstDailyIDs.getItem(`${objectData.resource}FirstInDayIDsMap`).then(val =>	// localstorage: entryFirstInDayIDsMap / linkFirstInDayIDsMap
 			{
 				if (val !== null)
 				{
 					firstInDayID[objectData.resource] = new Map(Object.entries(val));
-					// console.log("znaleziono w localstorage val = ", val);
-					// console.log("znaleziono w localstorage firstInDayID[objectData.resource] = ", firstInDayID[objectData.resource]);
+					// if(dev) console.log("znaleziono w localstorage val = ", val);
+					// if(dev) console.log("znaleziono w localstorage firstInDayID[objectData.resource] = ", firstInDayID[objectData.resource]);
 				}
 				else
 				{
-					// console.log('Mapa nie istniała, a w localstorage nie było zapisanych danych');
+					// if(dev) console.log('Mapa nie istniała, a w localstorage nie było zapisanych danych');
 					firstInDayID[objectData.resource] = new Map();
 				}
 			}).catch(err =>
@@ -6878,18 +6878,18 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		if (firstInDayID[objectData.resource])
 		{
-			// console.log('Mapa już istnieje: firstInDayID[objectData.resource]', firstInDayID[objectData.resource]);
+			// if(dev) console.log('Mapa już istnieje: firstInDayID[objectData.resource]', firstInDayID[objectData.resource]);
 
 			if (firstInDayID[objectData.resource].has(dateToCheck))
 			{
-				// console.log(`Mapa posiada dla daty ${dateToCheck}, wartość: ${firstInDayID[objectData.resource].get(dateToCheck)}`);
-				// console.log("firstInDayID[objectData.resource]", firstInDayID[objectData.resource])
+				// if(dev) console.log(`Mapa posiada dla daty ${dateToCheck}, wartość: ${firstInDayID[objectData.resource].get(dateToCheck)}`);
+				// if(dev) console.log("firstInDayID[objectData.resource]", firstInDayID[objectData.resource])
 
 				return (objectData.id - firstInDayID[objectData.resource].get(dateToCheck)) / 2;
 			}
 			else
 			{
-				// console.log(`Mapa istnieje, ale dla daty ${dateToCheck} nie posiada jeszcze wartości`);
+				// if(dev) console.log(`Mapa istnieje, ale dla daty ${dateToCheck} nie posiada jeszcze wartości`);
 			}
 		}
 		else
@@ -6898,16 +6898,16 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		}
 
 
-		// console.log('Mapa przed wyslaniem zapytania do API WykopX: firstInDayID[objectData.resource]', firstInDayID[objectData.resource]);
+		// if(dev) console.log('Mapa przed wyslaniem zapytania do API WykopX: firstInDayID[objectData.resource]', firstInDayID[objectData.resource]);
 
 		const firstEntryData = await getWykopXAPIData(objectData.resource, "first-by-date") // https://archiwum.wykopx.pl/api/entry/first-by-date  // https://archiwum.wykopx.pl/api/link/first-by-date
-		// console.log('Pobrano z Archiwum Wykop X: firstEntryData, ', firstEntryData);
+		// if(dev) console.log('Pobrano z Archiwum Wykop X: firstEntryData, ', firstEntryData);
 
 		if (firstEntryData && firstEntryData.id != null)
 		{
 			firstInDayID[objectData.resource].set(dateToCheck, firstEntryData.id);
 			localStorageFirstDailyIDs.setItem(`${objectData.resource}FirstInDayIDsMap`, Object.fromEntries(firstInDayID[objectData.resource]));//.then(() => { });
-			// console.log("firstInDayID[objectData.resource]", firstInDayID[objectData.resource])
+			// if(dev) console.log("firstInDayID[objectData.resource]", firstInDayID[objectData.resource])
 
 			return (objectData.id - firstEntryData.id) / 2;
 		}
@@ -7178,7 +7178,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	{
 		consoleX(`imagePasteFromClipboardListener()`, 1);
 		const textarea = sectionEditorElement.querySelector("textarea");
-		// console.log(textarea);
+		// if(dev) console.log(textarea);
 		const imageUploadPreview = document.createElement('figure');
 		imageUploadPreview.classList.add("wxs_uploaded_image_placeholder");
 		textarea.parentNode.appendChild(imageUploadPreview);
@@ -7196,12 +7196,12 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			// e.preventDefault();
 			// e.stopPropagation(); 
 			console.clear();
-			// console.log("e.clipboardData.items") // object DataTransferItemList {0: DataTransferItem, 1: DataTransferItem, ...}
-			// console.log(e.clipboardData.items)
-			// console.log("clipboardData.types")
-			// console.log(e.clipboardData.types) //  Array: ['Files', 'text/plain', 'text/html', 'application/vnd.code.copymetadata', 'vscode-editor-data']
-			// console.log("clipboardData.files")
-			// console.log(e.clipboardData.files)
+			// if(dev) console.log("e.clipboardData.items") // object DataTransferItemList {0: DataTransferItem, 1: DataTransferItem, ...}
+			// if(dev) console.log(e.clipboardData.items)
+			// if(dev) console.log("clipboardData.types")
+			// if(dev) console.log(e.clipboardData.types) //  Array: ['Files', 'text/plain', 'text/html', 'application/vnd.code.copymetadata', 'vscode-editor-data']
+			// if(dev) console.log("clipboardData.files")
+			// if(dev) console.log(e.clipboardData.files)
 			/*
 				FileList = { 0: File, length: 1 }
 				FileList = { 0: 
@@ -7229,10 +7229,10 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			// W SCHOWKU BYŁ OBRAZEK
 			if (e.clipboardData.files.length > 0)
 			{
-				console.log(e.clipboardData.files[0]);
+				if (dev) console.log(e.clipboardData.files[0]);
 				let imageFile = e.clipboardData.files[0];
-				console.log("imageFile (original)");
-				console.log(imageFile);
+				if (dev) console.log("imageFile (original)");
+				if (dev) console.log(imageFile);
 
 				// próba konwersji z WEBP na PNG
 				// if (imageFile.type == "image/webp") // image/gif				// image/png				// image/jpeg				// image/webp
@@ -7251,7 +7251,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				// 			canvas.toBlob(function (blob)
 				// 			{
 				// 				imageFile = new File([blob], "test.png", { type: "image/png" });
-				// 				console.log(imageFile);
+				// 				if(dev) console.log(imageFile);
 				// 			}, 'image/png');
 				// 		};
 				// 		img.src = event.target.result;
@@ -7264,8 +7264,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 					imageFile = new File([imageFile], "WykopX", { type: imageFile.type });
 				}
 
-				console.log("imageFile");
-				console.log(imageFile);
+				if (dev) console.log("imageFile");
+				if (dev) console.log(imageFile);
 
 				const bitmap = await createImageBitmap(imageFile)
 				let canvas = document.createElement('canvas');
@@ -7280,8 +7280,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				canvas.getContext('2d').drawImage(bitmap, 0, 0, bitmap.width, bitmap.height);
 				imageUploadPreview.appendChild(canvas);
 
-				console.log("bitmap");
-				console.log(bitmap);
+				if (dev) console.log("bitmap");
+				if (dev) console.log(bitmap);
 
 				if (!fileInput)
 				{
@@ -7319,9 +7319,9 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			// wklejono tekst
 			else if (e.clipboardData.files.length == 0 && e.clipboardData.items.length > 0)
 			{
-				console.log("e.clipboardData.items.length > 0");
+				if (dev) console.log("e.clipboardData.items.length > 0");
 				let textPlainFromClipboard = e.clipboardData.getData('text/plain');
-				console.log("Clipboard text/plain: " + textPlainFromClipboard);
+				if (dev) console.log("Clipboard text/plain: " + textPlainFromClipboard);
 
 				let urlsArray = getURLsFromString(textPlainFromClipboard, true);
 				if (urlsArray && urlsArray.length > 0)
@@ -7335,7 +7335,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 						}
 
 
-						console.log("probuje pobrać plik: " + urlFromClipboard);
+						if (dev) console.log("probuje pobrać plik: " + urlFromClipboard);
 
 						let img = new Image();
 
@@ -7404,8 +7404,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 	function handleWindowEvent(event)
 	{
-		console.log(`handleWindowEvent() -> event.type: ${event.type} was fired`);
-		// console.log(event);
+		if (dev) console.log(`handleWindowEvent() -> event.type: ${event.type} was fired`);
+		// if(dev) console.log(event);
 	}
 	window.addEventListener('load', handleWindowEvent); 		// 1.
 	window.addEventListener('pageshow', handleWindowEvent); 	// 2.
@@ -7548,7 +7548,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				}
 				catch (err)
 				{
-					console.log(err);
+					if (dev) console.log(err);
 				}
 			}
 		});
@@ -7564,7 +7564,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	{
 		consoleX(`browserExecuteOnPageChange() -> navigation -> navigate event — ${event.type}`, 1);
 		consoleX(`browserExecuteOnPageChange() -> document.title: ${document.title}`, 1);
-		//console.log(event);
+		// if(dev) console.log(event);
 
 		pageTabTitleOriginal = document.title;
 		pageTabTitleProcessed = pageTabTitleOriginal;
@@ -7784,14 +7784,14 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	{
 		xhook.after((request, response) =>
 		{
-			// console.log("✔ xhook.after-request: " + request.url);
-			// console.log(request);
-			// console.log("✔ xhook.after-response");
-			// console.log(response);
+			// if(dev) console.log("✔ xhook.after-request: " + request.url);
+			// if(dev) console.log(request);
+			// if(dev) console.log("✔ xhook.after-response");
+			// if(dev) console.log(response);
 
 			if (response.status == 200 && request.url.endsWith("page=1"))
 			{
-				//console.log("request.url.endsWith(page = 1)")
+				// if(dev) console.log("request.url.endsWith(page = 1)")
 				if ((settings.infiniteScrollEntriesEnabled && pageType == "wpis") || (settings.infiniteScrollLinksEnabled && pageType == "znalezisko"))
 				{
 					let url = null;
@@ -7805,37 +7805,37 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 						return
 					}
 
-					// console.log("xhook.after-request.url");
-					// console.log(request.url);
-					// console.log(url);
+					// if(dev) console.log("xhook.after-request.url");
+					// if(dev) console.log(request.url);
+					// if(dev) console.log(url);
 
 					//if (url.host == "wykop.pl")
 					if (1)
 					{
 						let searchParams = new URLSearchParams(url.searchParams)
 
-						// console.log("✔ xhook.after-url.href");
-						// console.log(url.href);
-						// console.log("✔ xhook.after-searchParams");
-						// console.log(searchParams);
-						// console.log(`✔ xhook.after-${url.href} searchParams.has('page'): ` + searchParams.has('page'))
-						// console.log(`✔ xhook.after-${url.href} searchParams.get('page'): ` + searchParams.get('page'))
+						// if(dev) console.log("✔ xhook.after-url.href");
+						// if(dev) console.log(url.href);
+						// if(dev) console.log("✔ xhook.after-searchParams");
+						// if(dev) console.log(searchParams);
+						// if(dev) console.log(`✔ xhook.after-${url.href} searchParams.has('page'): ` + searchParams.has('page'))
+						// if(dev) console.log(`✔ xhook.after-${url.href} searchParams.get('page'): ` + searchParams.get('page'))
 
 						if (searchParams.has('page') && searchParams.get('page') == 1)
 						{
-							// console.log("✔ xhook.after-INFINITE SCROLL");
+							// if(dev) console.log("✔ xhook.after-INFINITE SCROLL");
 
 							let regex = /\/api\/v3\/entries\/\d+\/comments$/;
 							if (pageType == "znalezisko") regex = /\/api\/v3\/links\/\d+\/comments$/;
 
-							// console.log("url.pathname");
-							// console.log(url.pathname);
+							// if(dev) console.log("url.pathname");
+							// if(dev) console.log(url.pathname);
 
 							if (regex.test(url.pathname))
 							{
 								let json = JSON.parse(response.text)
-								// console.log("json")
-								// console.log(json)
+								// if(dev) console.log("json")
+								// if(dev) console.log(json)
 
 								for (let page = 2; page <= Math.ceil(json['pagination']['total'] / json['pagination']['per_page']); ++page)
 								{
@@ -7956,10 +7956,10 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			if (Node instanceof Element)
 			{
 				consoleX("removeFromDOM(): REMOVING DOM Node", 1);
-				//console.log(Node)
+				// if(dev) console.log(Node)
 				let nodeName = Node.nodeName;
 				nodeName = nodeName.toLowerCase()
-				//console.log("nodeName:" + nodeName)
+				// if(dev) console.log("nodeName:" + nodeName)
 				if (!consoleData.annoyances[nodeName])
 				{
 					consoleData.annoyances[nodeName] = { count: 0 };
@@ -7969,9 +7969,9 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			}
 
 			consoleData.annoyances.count++;
-			//console.log("removeFromDOM(): REMOVED TOTAL: ", consoleData.annoyances.count)
-			//console.log("removeFromDOM(): consoleData:");
-			//console.log(consoleData);
+			// if(dev) console.log("removeFromDOM(): REMOVED TOTAL: ", consoleData.annoyances.count)
+			// if(dev) console.log("removeFromDOM(): consoleData:");
+			// if(dev) console.log(consoleData);
 
 			refreshConsole();
 		}
