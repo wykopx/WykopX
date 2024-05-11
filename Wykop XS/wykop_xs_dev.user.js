@@ -190,6 +190,43 @@
 
 	settings.checkEntryPlusesWhenVoting = wykopxSettings.getPropertyValue("--checkEntryPlusesWhenVoting") ? wykopxSettings.getPropertyValue("--checkEntryPlusesWhenVoting") === '1' : true;
 	settings.checkEntryPlusesEnable = wykopxSettings.getPropertyValue("--checkEntryPlusesEnable") ? wykopxSettings.getPropertyValue("--checkEntryPlusesEnable") === '1' : true;
+
+	settings.prefixBeforePlusesCount = wykopxSettings.getPropertyValue("--prefixBeforePlusesCount") ? wykopxSettings.getPropertyValue("--prefixBeforePlusesCount") : "brak";  // domyslnie puste, dodajemy plus przed liczbą plusów
+	const prefixBeforePlusesCountMap = new Map([
+		['brak', ''],
+		['plus', '+'],	// domyslnie 
+		['emoji_serce', '💚'],
+		['emoji_index_pointing_up', '☝'],
+		['emoji_thumbs_up', '👍'],
+		['emoji_backhand_index_pointing_up', '👆'],
+		['emoji_upwards_button', '🔼'],
+		['emoji_up_arrow', '⬆'],
+		['emoji_up_right_arrow', '↗'],
+		['emoji_up_left_arrow', '↖'],
+		['emoji_right_arrow_curving_up', '⤴'],
+		['emoji_heavy_tick', '✔'],
+		['emoji_plus_sign', '➕'],
+		['emoji_red_triangle_pointed_up', '🔺']
+	]);
+	settings.prefixBeforePlusesCount = prefixBeforePlusesCountMap.get(settings.prefixBeforePlusesCount);
+
+	settings.prefixBeforeMinusesCount = wykopxSettings.getPropertyValue("--prefixBeforeMinusesCount") ? wykopxSettings.getPropertyValue("--prefixBeforeMinusesCount") : "minus"; // domyślnie minus i tak zostawiamy
+	const prefixBeforeMinusesCountMap = new Map([
+		['brak', ''],
+		['minus', '-'],	// domyslnie
+		['emoji_cross_mark', '❌'],
+		['emoji_backhand_index_pointing_down', '👇'],
+		['emoji_thumbs_down', '👎'],
+		['emoji_downwards_button', '🔽'],
+		['emoji_down_arrow', '⬇'],
+		['emoji_down_right_arrow', '↘'],
+		['emoji_down_left_arrow', '↙'],
+		['emoji_right_arrow_curving_down', '⤵'],
+		['emoji_minus_sign', '➖'],
+		['emoji_red_triangle_pointed_down', '🔻']
+	]);
+	settings.prefixBeforeMinusesCount = prefixBeforeMinusesCountMap.get(settings.prefixBeforeMinusesCount);
+
 	if (settings.checkEntryPlusesEnable) 
 	{
 		IntersectionObserverEnabled = true;
@@ -197,41 +234,8 @@
 		settings.checkEntryCommentsPerHour = wykopxSettings.getPropertyValue("--checkEntryCommentsPerHour") ? wykopxSettings.getPropertyValue("--checkEntryCommentsPerHour") === '1' : true;
 		settings.checkEntryPlusesForVotingGame = wykopxSettings.getPropertyValue("--checkEntryPlusesForVotingGame") ? wykopxSettings.getPropertyValue("--checkEntryPlusesForVotingGame") === '1' : true;
 
-		settings.prefixBeforePlusesCount = wykopxSettings.getPropertyValue("--prefixBeforePlusesCount") ? wykopxSettings.getPropertyValue("--prefixBeforePlusesCount") : "brak";  // domyslnie puste, dodajemy plus przed liczbą plusów
 
-		const prefixBeforePlusesCountMap = new Map([
-			['brak', ''],
-			['plus', '+'],	// domyslnie 
-			['emoji_serce', '💚'],
-			['emoji_index_pointing_up', '☝'],
-			['emoji_thumbs_up', '👍'],
-			['emoji_backhand_index_pointing_up', '👆'],
-			['emoji_upwards_button', '🔼'],
-			['emoji_up_arrow', '⬆'],
-			['emoji_up_right_arrow', '↗'],
-			['emoji_up_left_arrow', '↖'],
-			['emoji_right_arrow_curving_up', '⤴'],
-			['emoji_heavy_tick', '✔'],
-			['emoji_plus_sign', '➕'],
-			['emoji_red_triangle_pointed_up', '🔺']
-		]);
-		settings.prefixBeforePlusesCount = prefixBeforePlusesCountMap.get(settings.prefixBeforePlusesCount);
-		settings.prefixBeforeMinusesCount = wykopxSettings.getPropertyValue("--prefixBeforeMinusesCount") ? wykopxSettings.getPropertyValue("--prefixBeforeMinusesCount") : "minus"; // domyślnie minus i tak zostawiamy
-		const prefixBeforeMinusesCountMap = new Map([
-			['brak', ''],
-			['minus', '-'],	// domyslnie
-			['emoji_cross_mark', '❌'],
-			['emoji_backhand_index_pointing_down', '👇'],
-			['emoji_thumbs_down', '👎'],
-			['emoji_downwards_button', '🔽'],
-			['emoji_down_arrow', '⬇'],
-			['emoji_down_right_arrow', '↘'],
-			['emoji_down_left_arrow', '↙'],
-			['emoji_right_arrow_curving_down', '⤵'],
-			['emoji_minus_sign', '➖'],
-			['emoji_red_triangle_pointed_down', '🔻']
-		]);
-		settings.prefixBeforeMinusesCount = prefixBeforeMinusesCountMap.get(settings.prefixBeforeMinusesCount);
+
 	}
 
 
@@ -297,7 +301,7 @@
 			storeName: "notatkowator",
 		});
 
-		settings.notatkowatorUpdateInterval = parseFloat(wykopxSettings.getPropertyValue("--notatkowatorUpdateInterval")); // number 0 ... 120
+		//settings.notatkowatorUpdateInterval = parseFloat(wykopxSettings.getPropertyValue("--notatkowatorUpdateInterval")); // number 0 ... 120
 		settings.notatkowatorVerticalBar = wykopxSettings.getPropertyValue("--notatkowatorVerticalBar") ? wykopxSettings.getPropertyValue("--notatkowatorVerticalBar") === '1' : true; // 1 || 0
 		settings.notatkowatorWebsiteURL = wykopxSettings.getPropertyValue("--notatkowatorWebsiteURL") ? wykopxSettings.getPropertyValue("--notatkowatorWebsiteURL") === '1' : true; // 1 || 0
 		settings.notatkowatorStyle = wykopxSettings.getPropertyValue("--notatkowatorStyle").trim();	// string "pod_avatarem" "obok_nicka"
@@ -2192,11 +2196,14 @@
 				// wpisy i komentarze
 				if (resource != "link") 
 				{
-					if (settings.checkEntryPlusesEnable)
+					if (settings.checkEntryPlusesEnable || settings.votingExplosionEnable)
 					{
 						sectionObjectElement.style.setProperty('--votesAll', `"👨${wxs_votes_all}"`);		// var(--votesAll)
 						sectionObjectElement.dataset.wxs_votes_all = wxs_votes_all;							// data-wxs_votes_all="-10"
 						sectionObjectElement.style.setProperty('--votesUp', `"${wxs_votes_up > 0 ? settings.prefixBeforePlusesCount : ""}${wxs_votes_up}"`);	// var(--votesUp);
+
+
+
 						sectionObjectElement.dataset.wxs_votes_up = wxs_votes_up;							// data-wxs_votes_all="10"
 						sectionObjectElement.style.setProperty('--votesDown', `"${wxs_votes_down > 0 ? settings.prefixBeforeMinusesCount : ""}${wxs_votes_down}"`);	//var(--votesDown)
 						sectionObjectElement.dataset.wxs_votes_down = wxs_votes_down;						// data-wxs_votes_all="20"
@@ -2205,7 +2212,7 @@
 
 						sectionObjectElement.dataset.wxs_voted = sectionObjectElement.__vue__.item.voted;	// data-wxs_voted=1  data-wxs_voted=0
 
-						if (settings.checkEntryPlusesPerHour && !sectionObjectElement.dataset.wxs_first_load_votes_count)
+						if (settings.votingExplosionEnable || settings.checkEntryPlusesPerHour && !sectionObjectElement.dataset.wxs_first_load_votes_count)
 						{
 							// liczba plusow podczas zaladowania strony
 							sectionObjectElement.dataset.wxs_first_load_votes_count = sectionObjectElement.__vue__.item.votes.up - sectionObjectElement.__vue__.item.votes.down;
@@ -3127,23 +3134,22 @@
 
 						const date2 = dayjs(userNoteObject.lastUpdate);
 
-						if (loadTime.diff(date2, "second") > parseFloat(settings.notatkowatorUpdateInterval * 3600))
-						{
-							// notatka jest zbyt stara
-							userNoteObject = null;
-						}
-						else
-						{
-							// mamy aktualną notatkę z localforage
-							// consoleX(`Notatkowator wczytał notatkę z LocalStorage. Użytkownik: @${username}`);
-							// if(dev) console.log("userNoteObject")
-							// if(dev) console.log(userNoteObject)
-							// if(dev) console.log("userNoteObject.usernote")
-							// if(dev) console.log(userNoteObject.usernote)
-							usernote = userNoteObject.usernote;
+						//if (loadTime.diff(date2, "second") > parseFloat(settings.notatkowatorUpdateInterval * 3600))
+						//{
+						// userNoteObject = null; /* notatka jest zbyt stara */
+						//}
+						//else
+						//{
+						// mamy aktualną notatkę z localforage
+						// consoleX(`Notatkowator wczytał notatkę z LocalStorage. Użytkownik: @${username}`);
+						// if(dev) console.log("userNoteObject")
+						// if(dev) console.log(userNoteObject)
+						// if(dev) console.log("userNoteObject.usernote")
+						// if(dev) console.log(userNoteObject.usernote)
+						usernote = userNoteObject.usernote;
 
-							return userNoteObject;
-						}
+						return userNoteObject;
+						//}
 					}
 				}
 
@@ -5617,7 +5623,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		
 		*/
 
-		let blocks =
+		let votesObject =
 		{
 			separated: false,
 
@@ -5636,24 +5642,24 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		};
 
 
-		blocks.sectionObjectElement = sectionObjectElement; 								// returns the section element above .rating-box
-		blocks.ratingBoxSection = ratingBoxSection; 										// returns .rating-box section
+		votesObject.sectionObjectElement = sectionObjectElement; 								// returns the section element above .rating-box
+		votesObject.ratingBoxSection = ratingBoxSection; 										// returns .rating-box section
 
 		//blocks.id = blocks.sectionObjectElement.__vue__.item.id;
-		blocks.id = ratingBoxSection.__vue__.id;
-		blocks.separated = ratingBoxSection.__vue__.separated;
-		blocks.votesUp = ratingBoxSection.__vue__.up;
+		votesObject.id = ratingBoxSection.__vue__.id;
+		votesObject.separated = ratingBoxSection.__vue__.separated;
+		votesObject.votesUp = ratingBoxSection.__vue__.up;
 
-		if (dev) console.log(blocks.votesUp)
-		blocks.votesDown = ratingBoxSection.__vue__.down;
+		if (dev) console.log(votesObject.votesUp)
+		votesObject.votesDown = ratingBoxSection.__vue__.down;
 
-		blocks.votesCount = blocks.votesUp - blocks.votesDown;				// -10 (suma plusów i minusów nie dotyczy entry, entry_comment)
-		blocks.votesAll = blocks.votesUp + blocks.votesDown;				// 30  (łączna liczba głosów nie dotyczy entry, entry_comment)
+		votesObject.votesCount = votesObject.votesUp - votesObject.votesDown;				// -10 (suma plusów i minusów nie dotyczy entry, entry_comment)
+		votesObject.votesAll = votesObject.votesUp + votesObject.votesDown;				// 30  (łączna liczba głosów nie dotyczy entry, entry_comment)
 
-		blocks.votesDownPercent = Math.ceil(blocks.votesDown * 100 / blocks.votesAll);											// nie dotyczy entry, entry_comment
-		blocks.votesUpPercent = Math.ceil(blocks.votesUp * 100 / blocks.votesAll);											// nie dotyczy entry, entry_comment zawsze 100%
+		votesObject.votesDownPercent = Math.ceil(votesObject.votesDown * 100 / votesObject.votesAll);											// nie dotyczy entry, entry_comment
+		votesObject.votesUpPercent = Math.ceil(votesObject.votesUp * 100 / votesObject.votesAll);											// nie dotyczy entry, entry_comment zawsze 100%
 
-		blocks.voted = ratingBoxSection.__vue__.voted;
+		votesObject.voted = ratingBoxSection.__vue__.voted;
 
 
 		/*  
@@ -5669,62 +5675,62 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			komentarze nie mają "comments"
 		*/
 
-		if (blocks?.sectionObjectElement?.__vue__?.item?.comments?.count) blocks.commentsCount = blocks.sectionObjectElement.__vue__.item.comments.count;
-		if (blocks?.sectionObjectElement?.__vue__?.item?.comments?.hot) blocks.commentsHot = blocks.sectionObjectElement.__vue__.item.comments.hot;
+		if (votesObject?.sectionObjectElement?.__vue__?.item?.comments?.count) votesObject.commentsCount = votesObject.sectionObjectElement.__vue__.item.comments.count;
+		if (votesObject?.sectionObjectElement?.__vue__?.item?.comments?.hot) votesObject.commentsHot = votesObject.sectionObjectElement.__vue__.item.comments.hot;
 
 
-		if (blocks.sectionObjectElement.__vue__.item.resource == "link") // znalezisko
+		if (votesObject.sectionObjectElement.__vue__.item.resource == "link") // znalezisko
 		{
-			blocks.resource = "link";
-			blocks.fetchURL = `https://wykop.pl/api/v3/links/${blocks.id}`; // TODO
+			votesObject.resource = "link";
+			votesObject.fetchURL = `https://wykop.pl/api/v3/links/${votesObject.id}`; // TODO
 
-			blocks.link_id = blocks.id;
-			blocks.link = blocks.sectionObjectElement; 		// parent = this
-			blocks.parent_element = blocks.sectionObjectElement; 		// parent = this
-			blocks.parent_id = blocks.id;
-			blocks.sectionObjectElement.dataset.wxs_resource = "link";
+			votesObject.link_id = votesObject.id;
+			votesObject.link = votesObject.sectionObjectElement; 		// parent = this
+			votesObject.parent_element = votesObject.sectionObjectElement; 		// parent = this
+			votesObject.parent_id = votesObject.id;
+			votesObject.sectionObjectElement.dataset.wxs_resource = "link";
 		}
 		else
 		{
-			if (blocks.sectionObjectElement.__vue__.item.resource == "link_comment")
+			if (votesObject.sectionObjectElement.__vue__.item.resource == "link_comment")
 			{
-				blocks.comment_element = blocks.sectionObjectElement;
+				votesObject.comment_element = votesObject.sectionObjectElement;
 
-				if (blocks.comment_element.__vue__.item.parent.resource == "link_comment") // subkomentarz
+				if (votesObject.comment_element.__vue__.item.parent.resource == "link_comment") // subkomentarz
 				{
-					blocks.resource = "link_subcomment";
-					blocks.comment_element.dataset.wxs_resource = "link_subcomment";
+					votesObject.resource = "link_subcomment";
+					votesObject.comment_element.dataset.wxs_resource = "link_subcomment";
 
-					blocks.comment_id = blocks.comment_element.__vue__.item.id;
-					blocks.parent_id = blocks.comment_element.__vue__.item.parent.link.id; 	// id znaleziska
-					blocks.parent_comment_id = blocks.comment_element.__vue__.item.parent.id; // id nadkomentarza
-					blocks.parent_element = document.getElementById(`comment-${blocks.parent_comment_id}`) // nadkomentarz
-					blocks.fetchURL = `https://wykop.pl/api/v3/links/${blocks.parent_id}/comments/${blocks.parent_comment_id}/comments`; // TODO
+					votesObject.comment_id = votesObject.comment_element.__vue__.item.id;
+					votesObject.parent_id = votesObject.comment_element.__vue__.item.parent.link.id; 	// id znaleziska
+					votesObject.parent_comment_id = votesObject.comment_element.__vue__.item.parent.id; // id nadkomentarza
+					votesObject.parent_element = document.getElementById(`comment-${votesObject.parent_comment_id}`) // nadkomentarz
+					votesObject.fetchURL = `https://wykop.pl/api/v3/links/${votesObject.parent_id}/comments/${votesObject.parent_comment_id}/comments`; // TODO
 				}
 				else
 				{
-					blocks.resource = "link_comment";
-					blocks.comment_element.dataset.wxs_resource = "link_comment";
-					blocks.comment_id = blocks.comment_element.__vue__.item.id;
-					blocks.parent_id = blocks.comment_element.__vue__.item.parent.id;
-					blocks.parent_element = document.getElementById(`link-${blocks.parent_id}`) // section.link-block
-					blocks.fetchURL = `https://wykop.pl/api/v3/links/${blocks.parent_id}/comments/${blocks.comment_id}`;
+					votesObject.resource = "link_comment";
+					votesObject.comment_element.dataset.wxs_resource = "link_comment";
+					votesObject.comment_id = votesObject.comment_element.__vue__.item.id;
+					votesObject.parent_id = votesObject.comment_element.__vue__.item.parent.id;
+					votesObject.parent_element = document.getElementById(`link-${votesObject.parent_id}`) // section.link-block
+					votesObject.fetchURL = `https://wykop.pl/api/v3/links/${votesObject.parent_id}/comments/${votesObject.comment_id}`;
 
 				}
 			}
 			// KOMENTARZ POD WPISEM
-			else if (blocks.sectionObjectElement.__vue__.item.resource == "entry_comment")
+			else if (votesObject.sectionObjectElement.__vue__.item.resource == "entry_comment")
 			{
-				blocks.comment_element = blocks.sectionObjectElement;
+				votesObject.comment_element = votesObject.sectionObjectElement;
 
-				if (blocks.comment_element.parentNode)
+				if (votesObject.comment_element.parentNode)
 				{
-					blocks.resource = "entry_comment"; 								// komentarz pod wpisem
-					blocks.comment_element.dataset.wxs_resource = "entry_comment";
-					blocks.parent_element = blocks.comment_element.parentNode.closest('section.entry');
-					blocks.parent_id = blocks.parent_element.__vue__.item.id;
-					blocks.comment_id = blocks.comment_element.__vue__.item.id;
-					blocks.fetchURL = `https://wykop.pl/api/v3/entries/${blocks.parent_id}/comments/${blocks.comment_id}`;
+					votesObject.resource = "entry_comment"; 								// komentarz pod wpisem
+					votesObject.comment_element.dataset.wxs_resource = "entry_comment";
+					votesObject.parent_element = votesObject.comment_element.parentNode.closest('section.entry');
+					votesObject.parent_id = votesObject.parent_element.__vue__.item.id;
+					votesObject.comment_id = votesObject.comment_element.__vue__.item.id;
+					votesObject.fetchURL = `https://wykop.pl/api/v3/entries/${votesObject.parent_id}/comments/${votesObject.comment_id}`;
 				}
 				else
 				{
@@ -5732,24 +5738,24 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				}
 			}
 			// WPIS NA MIKROBLOGU
-			else if (blocks.sectionObjectElement.__vue__.item.resource == "entry")
+			else if (votesObject.sectionObjectElement.__vue__.item.resource == "entry")
 			{
-				blocks.parent_element = blocks.sectionObjectElement; 	// parent = this
-				blocks.parent_id = blocks.id;
-				blocks.resource = "entry";
-				blocks.fetchURL = `https://wykop.pl/api/v3/entries/${blocks.id}`;
-				blocks.parent_element.dataset.wxs_resource = "entry";
+				votesObject.parent_element = votesObject.sectionObjectElement; 	// parent = this
+				votesObject.parent_id = votesObject.id;
+				votesObject.resource = "entry";
+				votesObject.fetchURL = `https://wykop.pl/api/v3/entries/${votesObject.id}`;
+				votesObject.parent_element.dataset.wxs_resource = "entry";
 			}
 		}
 
 
-		//blocks.sectionObjectElement.dataset.wxs_votes_up = blocks.votesUp;			// <section data-wxs_votes_up="1" data_wxs_votes_down="8">
-		//blocks.sectionObjectElement.dataset.wxs_votes_down = blocks.votesDown;
+		// votesObject.sectionObjectElement.dataset.wxs_votes_up = votesObject.votesUp;			// <section data-wxs_votes_up="1" data_wxs_votes_down="8">
+		// votesObject.sectionObjectElement.dataset.wxs_votes_down = votesObject.votesDown;
 
-		// if(dev) console.log("blocks");
-		// if(dev) console.log(blocks);
+		if (dev) console.log("votesObject");
+		if (dev) console.log(votesObject);
 
-		return blocks;
+		return votesObject;
 	}
 
 
@@ -5887,6 +5893,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		if (sectionObjectElement.__vue__.item.resource == "link")
 		{
 			ratingBoxSection = sectionObjectElement.querySelector("section.vote-box");
+
 			ratingBoxVotesUpCountElement = ratingBoxSection.querySelector("div.dig > p > span");
 			ratingBoxVotesDownCountElement = ratingBoxSection.querySelector(".wykopx_votesDownCount");
 			ratingBoxVotesDownPercentElement = ratingBoxSection.querySelector(".wykopx_votesDownPercent");
@@ -5895,12 +5902,24 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		else
 		{
 			ratingBoxSection = sectionObjectElement.querySelector("section.rating-box");
-			ratingBoxVotesUpCountElement = ratingBoxSection.querySelector("li.plus");
-			ratingBoxVotesDownCountElement = ratingBoxSection.querySelector("li.minus"); // tylko przy komentarzach pod znaleziskiem
+			sectionObjectElement.dataset.wxs_votes_separated = ratingBoxSection.__vue__.separated;
+
+			if (ratingBoxSection.__vue__.separated)
+			{
+				ratingBoxVotesUpCountElement = ratingBoxSection.querySelector("li.plus");	// li.plus.zero
+				ratingBoxVotesDownCountElement = ratingBoxSection.querySelector("li.minus"); // tylko przy komentarzach pod znaleziskiem
+			}
+			else
+			{
+				ratingBoxVotesUpCountElement = ratingBoxSection.querySelector("ul > li");
+			}
+
 			ratingBoxVotesPerHourElement = ratingBoxSection.querySelector(".wxs_votes_per_hour");
 		}
 
-		if (!votesObject)
+
+
+		if (!votesObject && ratingBoxSection)
 		{
 			votesObject = getVotesObject(sectionObjectElement, ratingBoxSection);
 		}
@@ -6002,13 +6021,11 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			else 
 			{
 				const separated = sectionObjectElement.dataset.wxs_votes_separated || true;
-
-
 				let votesCountDisplayValue = ((separated === "true" || separated === true) ? votesObject.votesCount : votesObject.votesUp);
 				if (votesCountDisplayValue > 0) votesCountDisplayValue = `${settings.prefixBeforePlusesCount}${votesCountDisplayValue}`
 				else if (votesCountDisplayValue < 0) votesCountDisplayValue = `${settings.prefixBeforeMinusesCount}${votesCountDisplayValue}`;
 
-				ratingBoxVotesUpCountElement.textContent = votesCountDisplayValue;
+
 			}
 
 			if (votesObject.plusesDelta > 0)
@@ -6067,9 +6084,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				//sectionObjectElement.style.setProperty('--minusesRemoved', `"+${votesObject.minusesDelta}"`);
 			}
 		}
-
-
-
 	}
 
 
@@ -6166,10 +6180,16 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			ratingBoxSection.addEventListener('click', function (event)
 			{
 				var clickedButton = event.target;
+
+				let up = 0;
+				let down = 0;
 				let count = 0;
+				let all = 0;
+
 				let vote = "voted"; // "voted", "unvoted"
 				let action = "plused"; // "plused", "minused"
 				let sign = "+";
+
 				// let votesUp = ratingBoxSection.__vue__.up;
 				// let votesDown = ratingBoxSection.__vue__.down;
 
@@ -6182,25 +6202,28 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 					action = "plused";
 					vote = "voted";
 					// count = votesUp;
-					count = Number(sectionObjectElement.dataset.wxs_votes_up) + 1
-					sectionObjectElement.dataset.wxs_votes_up = count;
+					up = Number(sectionObjectElement.dataset.wxs_votes_up) + 1;
+					count = Number(sectionObjectElement.dataset.wxs_votes_count) + 1;
+					all = Number(sectionObjectElement.dataset.wxs_votes_all) + 1;
+
 				}
 				else if (clickedButton.matches('button.plus:not(.voted)'))	// usunieto plusa
 				{
 					action = "plused";
 					vote = "unvoted";
 					//count = votesUp;
-					count = Number(sectionObjectElement.dataset.wxs_votes_up) - 1
-					sectionObjectElement.dataset.wxs_votes_up = count;
+					up = Number(sectionObjectElement.dataset.wxs_votes_up) - 1;
+					count = Number(sectionObjectElement.dataset.wxs_votes_count) - 1;
+					all = Number(sectionObjectElement.dataset.wxs_votes_all) - 1;
 				}
 				else if (clickedButton.matches('button.minus.voted')) 		//  dodano minusa
 				{
 					action = "minused";
 					vote = "voted";
 					sign = "-";
-					count = votesDown;
-					count = Number(sectionObjectElement.dataset.wxs_votes_down) + 1;
-					sectionObjectElement.dataset.wxs_votes_down = count;
+					down = Number(sectionObjectElement.dataset.wxs_votes_down) - 1;
+					count = Number(sectionObjectElement.dataset.wxs_votes_count) - 1;
+					all = Number(sectionObjectElement.dataset.wxs_votes_all) + 1;	// liczba głosów
 				}
 				else if (clickedButton.matches('button.minus:not(.voted)')) // usunięto minusa
 				{
@@ -6208,9 +6231,15 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 					vote = "unvoted";
 					sign = "-";
 					//count = votesDown;
-					count = Number(sectionObjectElement.dataset.wxs_votes_down) - 1
-					sectionObjectElement.dataset.wxs_votes_down = count;
+					down = Number(sectionObjectElement.dataset.wxs_votes_down) + 1;
+					count = Number(sectionObjectElement.dataset.wxs_votes_count) + 1;
+					all = Number(sectionObjectElement.dataset.wxs_votes_all) - 1;	// liczba głosów
 				}
+
+				sectionObjectElement.dataset.wxs_votes_up = up;
+				sectionObjectElement.dataset.wxs_votes_down = down;
+				sectionObjectElement.dataset.wxs_votes_all = all;
+				sectionObjectElement.dataset.wxs_votes_count = count;
 
 				updateFetchedVotesData(sectionObjectElement);
 
@@ -8755,93 +8784,90 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 	{
 		CSS += `
-	section.entry-content[class]
-	{
-		overflow: visible!important;
-	}
-	section.entry-content .wrapper a[href^="/tag/"]
+	section:is(.entry-content, .link-block)[class] { overflow: visible!important; }
+
+	section:is(.entry-content, .link-block) a[href^="/tag/"]
 	{
 		padding-right: 2px !important;
 		margin-right: 1px;
 		transition: none!important;
 	}
-	section.entry-content .wrapper a[href^="https://mikroczat.pl/"]
+	section:is(.entry-content, .link-block) a[href^="https://mikroczat.pl/"]
 	{
 		padding-right: 2px!important;
 		padding-left: 2px!important;
 	}
-	section.entry-content .wrapper a[href^="/tag/"],
+	section:is(.entry-content, .link-block) a[href^="/tag/"],
 	section.entry-content .wrapper a[href^="https://mikroczat.pl/"]
 	{
 		border: 1px solid transparent!important;
 		position: relative!important;
 	}
 
-	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"],
-	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"],
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"],
-	body > section[data-key_shift="true"] section.entry-content a[href^="https://mikroczat.pl/"],
-	body > section[data-key_alt="true"] section.entry-content a[href^="https://mikroczat.pl/"],
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="https://mikroczat.pl/"]
-	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"] *,
-	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"] *,
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"] *,
-	body > section[data-key_shift="true"] section.entry-content a[href^="https://mikroczat.pl/"] *,
-	body > section[data-key_alt="true"] section.entry-content a[href^="https://mikroczat.pl/"] *,
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="https://mikroczat.pl/"] *
+	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
+	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
+	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
+	body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+	body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+	body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *,
+	body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *,
+	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *
 	{
 		color: var(--tagChannelColor)!important;
 	}
 
-	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"],
-	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"],
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"],
-	body > section[data-key_shift="true"] section.entry-content a[href^="https://mikroczat.pl/"],
-	body > section[data-key_alt="true"] section.entry-content a[href^="https://mikroczat.pl/"],
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="https://mikroczat.pl/"]
+	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+	body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+	body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]
 	{
 		border-color: var(--tagChannelColor)!important;
 		background-color: color-mix(in srgb, var(--whitish) 90%, var(--tagChannelColor))!important;
 		border-radius: var(--smallBorderRadius)!important;
 	}
-	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"]:hover,
-	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"]:hover,
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"]:hover,
-	body > section[data-key_shift="true"] section.entry-content a[href^="https://mikroczat.pl/"]:hover,
-	body > section[data-key_alt="true"] section.entry-content a[href^="https://mikroczat.pl/"]:hover,
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="https://mikroczat.pl/"]:hover
+	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+	body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover,
+	body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover,
+	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover
 	{
 		background-color: color-mix(in srgb, var(--whitish) 60%, var(--tagChannelColor))!important;
 	}
 
-	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"],
-	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"],
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"]
+	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]
 	{
 
 		padding-left: 3px !important;
 		margin-left: -12px !important;
 
 	}
-	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"]:hover,
-	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"]:hover,
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"]:hover
+	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover
 	{
 		text-decoration: none!important;
 	}
-	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"]::before,
-	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"]::before,
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"]::before
+	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before,
+	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before,
+	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before
 	{
 		content: "#";
-		position:
 	}
-	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"]::after,
-	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"]::after,
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"]::after,
-	body > section[data-key_shift="true"] section.entry-content a[href^="https://mikroczat.pl/"]::after,
-	body > section[data-key_alt="true"] section.entry-content a[href^="https://mikroczat.pl/"]::after,
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="https://mikroczat.pl/"]::after
+	body > section[data-key_shift="true"] 	section.entry-content a[href^="/tag/"]::after,
+	body > section[data-key_alt="true"] 	section.entry-content a[href^="/tag/"]::after,
+	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="/tag/"]::after,
+	body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after,
+	body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after,
+	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after
 	{
 		color: white;
 		content: "🗯";
