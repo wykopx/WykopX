@@ -2,7 +2,7 @@
 // @name        Mikroblog+ / Czat
 // @name:pl     Mikroblog+ / Czat
 // @name:en     Mikroblog+ / Czat
-// @version     3.0.37
+// @version     3.0.39
 
 
 // @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
@@ -28,6 +28,8 @@
 
 // ==/UserScript==
 
+const currentVersion = "3.0.39";
+let dev = true;
 
 const promoString = "- Wykop XS";
 const head = document.head;
@@ -36,9 +38,6 @@ const bodySection = document.body.querySelector("section");
 const styleElement = document.createElement('style');
 styleElement.id = "wykopxs_mikroczat";
 let CSS = "";
-let dev = false;
-
-
 
 
 
@@ -64,62 +63,46 @@ Domyślne wartości wyglądają przykładowo tak:
 
 // DEFAULT SETTINGS - nie zmieniaj wartości settings w kodzie. 
 // Zmień je w sposób opisany powyżej
-const settings =
-{
-	showVotersList: true,			// włącza pokazywanie listy plusujących
+const settings = {};
 
-	// expandAllVotersIfLessThan - domyślnie Wykop pokazywał 5 osób, które zaplusowały. 
-	// Możesz zmienić tę wartość na np. 10 albo 25. Jeśli wpis ma mniej plusów niż ta liczba, zostaną od razu wyświetleni wszyscy plusujący bez przycisku "+15 INNYCH"
-	expandAllVotersIfLessThan: 20,
+settings.showVotersList = true;			// włącza pokazywanie listy plusujących
+// expandAllVotersIfLessThan - domyślnie Wykop pokazywał 5 osób, które zaplusowały. 
+// Możesz zmienić tę wartość na np. 10 albo 25. Jeśli wpis ma mniej plusów niż ta liczba, zostaną od razu wyświetleni wszyscy plusujący bez przycisku "+15 INNYCH"
+settings.expandAllVotersIfLessThan = 20;
+settings.votersFollow = true;							// pokazuje 🔔 przed użytkownikami, których obserwujesz
+settings.votersBlacklist = true;						// pokazuje ⛔ przed użytkownikami, których blokujesz
+settings.votersBanned = true;							// pokazuje użytkowników z aktywnym banem w kolorze i z ikonką 🍌
+settings.votersSuspended = true;						// pokazuje ✖ przed kontami, które są w trakcie usuwania
+settings.votersRemoved = true;							// pokazuje ✖ przed kontami, które są usunięte
+settings.votersGenderF = false;							// pokazuje różową kropkę przed kobietami
+settings.votersGenderM = false;							// pokazuje niebieską kropkę przed mężczyznami
+settings.votersColorGreen = true;						// pokazuje zielonki w kolorze
+settings.votersColorOrange = false;						// pokazuje pomarańczowych użytkowników w kolorze
+settings.votersColorBurgundy = true;					// pokazuje użytkowników bordo w kolorze
+settings.votersFollowFirst = true;						// pokazuje użytkowników, których obserwujesz pierwszych na liście
+settings.votersBlackFirst = false;						// pokazuje plusy od moderacji pierwsze na liście (konta typu @wykop, @m__b, @a__s itd.)
+settings.votersBurgundyFirst = false;					// pokazuje użytkowników bordo pierwszych na liście
+settings.votersOrangeFirst = false;						// pokazuje zielonki pierwszych na liście
+settings.votersGreenFirst = false;						// pokazuje pomarańczki pierwszych na liście
+settings.votersBlacklistLast = false;					// pokazuje użytkowników, których zablokowałeś na końcu listy
+settings.votersRemovedLast = false;						// pokazuje usunięte konta na końcu listy
+settings.votersBannedLast = false;						// pokazuje zbanowanych na końcu listy
+settings.votersSuspendedLast = false;					// pokazuje konta w trakcie usuwania na końcu listy
+settings.hideShareButton = true;						// ukrywa przycisk "Udostępnij"
+settings.showFavouriteButton = true;					// pokazuje przycisk "Dodaj do ulubionych" (samą gwiazdkę)
+settings.showFavouriteButtonLabel = true;				// pokazuje oprócz gwiazdki także tekst "Ulubione"
+settings.addCommentPlusWhenVotingOnEntry = false;		// gdy plusujesz wpis, dodaje komentarz "+1"
+settings.addCommentPlusWhenVotingOnComment = false;		// gdy plusujesz komentarz, dodaje komentarz "+1"
+settings.blockAds = true;								// blokuje wszystkie reklamy na wykopie
+settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
+settings.fixNotificationBadgeBug = true;				// naprawia wykopowy błąd - ukrywa liczbę nieprzeczytanych powiadomien, gdy wszystkie powiadomienia sa juz przeczytane
 
-	votersFollow: true,								// pokazuje 🔔 przed użytkownikami, których obserwujesz
-	votersBlacklist: true,							// pokazuje ⛔ przed użytkownikami, których blokujesz
-	votersBanned: true,								// pokazuje użytkowników z aktywnym banem w kolorze i z ikonką 🍌
-	votersSuspended: true,							// pokazuje ✖ przed kontami, które są w trakcie usuwania
-	votersRemoved: true,							// pokazuje ✖ przed kontami, które są usunięte
-	votersGenderF: false,							// pokazuje różową kropkę przed kobietami
-	votersGenderM: false,							// pokazuje niebieską kropkę przed mężczyznami
-	votersColorGreen: true,							// pokazuje zielonki w kolorze
-	votersColorOrange: false,						// pokazuje pomarańczowych użytkowników w kolorze
-	votersColorBurgundy: true,						// pokazuje użytkowników bordo w kolorze
 
-	votersFollowFirst: true,						// pokazuje użytkowników, których obserwujesz pierwszych na liście
-	votersBlackFirst: false,						// pokazuje plusy od moderacji pierwsze na liście (konta typu @wykop, @m__b, @a__s itd.)
-	votersBurgundyFirst: false,						// pokazuje użytkowników bordo pierwszych na liście
-	votersOrangeFirst: false,						// pokazuje zielonki pierwszych na liście
-	votersGreenFirst: false,						// pokazuje pomarańczki pierwszych na liście
-
-	votersBlacklistLast: false,						// pokazuje użytkowników, których zablokowałeś na końcu listy
-	votersRemovedLast: false,						// pokazuje usunięte konta na końcu listy
-	votersBannedLast: false,						// pokazuje zbanowanych na końcu listy
-	votersSuspendedLast: false,						// pokazuje konta w trakcie usuwania na końcu listy
-
-	hideShareButton: true,							// ukrywa przycisk "Udostępnij"
-	showFavouriteButton: true,						// pokazuje przycisk "Dodaj do ulubionych" (samą gwiazdkę)
-	showFavouriteButtonLabel: true,					// pokazuje oprócz gwiazdki także tekst "Ulubione"
-
-	addCommentPlusWhenVotingOnEntry: false,			// gdy plusujesz wpis, dodaje komentarz "+1"
-	addCommentPlusWhenVotingOnComment: false,		// gdy plusujesz komentarz, dodaje komentarz "+1"
-
-	blockAds: true,									// blokuje wszystkie reklamy na wykopie
-	showAnimatedAvatars: true,						// pokazuje animowane avatary
-
-	fixNotificationBadgeBug: true					// naprawia wykopowy błąd - ukrywa liczbę nieprzeczytanych powiadomien, gdy wszystkie powiadomienia sa juz przeczytane
-
-};
 
 
 
 (async function ()
 {
-	// MIKROCZAT XS -- START
-	let wykopDomain = "https://wykop.pl";
-	let wxDomain = "https://wykopx.pl";
-	const mikroczatDomain = "https://mikroczat.pl";
-	const mikroczatPath = "/chat";
-	let mikroczatChannel = "/";
-	let mikroczatWindow = null;
-
 	// LOCALSTORAGE
 	localStorageSettings = localforage.createInstance({
 		driver: localforage.LOCALSTORAGE,
@@ -142,15 +125,133 @@ const settings =
 	{
 		console.error('Error', err);
 	});
-
-	document.addEventListener("mousedown", (event) =>
+	function mergeSettings(localSettings, defaultSettings)
 	{
-		if (!event.target.closest(".wykopx_open_mikroczat")) return;
-		event.preventDefault();
-		let windowOptions = "";
-		let mikroczatURL = `${mikroczatDomain}`;
+		for (let key in defaultSettings)
+		{
+			if (key in localSettings)
+			{
+				settings[key] = localSettings[key];
+			}
 
-		if (event.shiftKey || event.ctrlKey || event.altKey || event.button === 2)
+			else if (!(key in localSettings))
+			{
+				settings[key] = defaultSettings[key];
+			}
+
+		}
+	}
+
+	function createNewNavBarButton(options)
+	{
+		let nav_ul;
+
+		if (options.position == "left") nav_ul = document.querySelector("body header div.left nav.main ul");
+		else if (options.position == "center") nav_ul = document.querySelector("body header div.right nav aside"); // doodle
+		else nav_ul = document.querySelector("body header div.right nav ul"); // brak na wersji mobilnej
+
+		if (nav_ul) 
+		{
+			let nav_ul_li;  // ! = nav_ul.querySelector(`li.wykopx_${options.class}_li`);
+
+			if (!nav_ul_li)
+			{
+				nav_ul_li = document.createElement("li");
+
+				if (options.data) nav_ul_li.setAttribute(options.data, null);
+				if (options.hideWithoutXStyle == true) nav_ul_li.classList.add("wykopxs");
+				addWykopXSClassesToElement(nav_ul_li, options.class, "li") // class="wykopx_aaaaaa_li"
+
+				let nav_ul_li_a = document.createElement("a");
+				nav_ul_li.dataset["v-5182b5f6"] = "";
+				nav_ul_li_a.dataset["v-5182b5f6"] = "";
+
+				if (options.url) nav_ul_li_a.setAttribute("href", options.url);
+				if (options.href) nav_ul_li_a.setAttribute("href", options.href);
+				if (options.target) nav_ul_li_a.setAttribute("target", options.target);
+				if (options.title) nav_ul_li_a.setAttribute("title", options.title);
+				if (options.data) nav_ul_li_a.setAttribute(options.data, null);
+
+				nav_ul_li_a.classList.add("hybrid");
+				if (options.class) addWykopXSClassesToElement(nav_ul_li_a, options.class);
+
+				let nav_ul_li_a_span = document.createElement("span");
+				nav_ul_li_a_span.innerHTML = options.text;
+
+				nav_ul_li_a.appendChild(nav_ul_li_a_span);
+				nav_ul_li.appendChild(nav_ul_li_a);
+
+				if (options.insertAfter != null)
+				{
+					let section = nav_ul.querySelector(options.insertAfter);
+					section.insertAdjacentElement('afterend', nav_ul_li);
+				}
+				else
+				{
+					nav_ul.appendChild(nav_ul_li);
+				}
+			}
+		}
+	}
+
+
+	function addWykopXSClassesToElement(element, inputClassOrArray, suffix = null)
+	{
+		if (inputClassOrArray)
+		{
+			if (typeof inputClassOrArray === 'string')
+			{
+				element.classList.add(`wykopx_${inputClassOrArray}${suffix != null ? "_" + suffix : ""}`);
+			}
+			else if (Array.isArray(inputClassOrArray) && inputClassOrArray.every(item => typeof item === 'string'))
+			{
+				inputClassOrArray.map(item =>
+				{
+					element.classList.add(`wykopx_${item}${suffix != null ? "_" + suffix : ""}`);
+				});
+			}
+		}
+	}
+
+
+
+
+
+
+
+	// XS MIKROCZAT  -- START
+	let wykopDomain = "https://wykop.pl";
+	let wxDomain = "https://wykopx.pl";
+	const mikroczatDomain = "https://mikroczat.pl";
+	const mikroczatPath = "/"; /* /czat */
+	// let mikroczatChannel = "/";
+	let mikroczatWindow = null;
+
+
+
+	function openMikroczat(channel, windowOptions, target = "mikroczat")
+	{
+		if (bodySection.dataset.key_shift) delete bodySection.dataset.key_shift;
+		if (bodySection.dataset.key_ctrl) delete bodySection.dataset.key_ctrl;
+		if (bodySection.dataset.key_alt) delete bodySection.dataset.key_alt;
+
+		let mikroczatURL = `${mikroczatDomain}`;
+		mikroczatURL += `${mikroczatPath}${channel}`;
+
+		mikroczatWindow = window.open(mikroczatURL, target, windowOptions);
+	}
+
+	// OTWIERANIE MIKROCZATU Z PRZYCISKU NA BELCE
+	document.addEventListener("mousedown", wykopx_open_mikroczat_event_listener);
+
+	function wykopx_open_mikroczat_event_listener(e)
+	{
+		if (!e.target.closest(".wykopx_open_mikroczat")) return;
+		e.preventDefault();
+		let windowOptions = "";
+		let channel = "";
+
+		if (e.shiftKey || e.ctrlKey || e.altKey || e.button === 2)
 		{
 			windowOptions = "popup";
 		}
@@ -159,19 +260,88 @@ const settings =
 		const pathnameArray = new URL(document.URL).pathname.split("/");
 		if (pathnameArray[1] == "tag")
 		{
-			mikroczatChannel = "/" + pathnameArray[2]; // nazwatagu
-			mikroczatURL += `${mikroczatPath}${mikroczatChannel}`;
+			channel = "/" + pathnameArray[2]; // nazwatagu
 		}
 
+		openMikroczat(channel, windowOptions);
+	}
 
-		mikroczatWindow = window.open(mikroczatURL, 'mikroczat', windowOptions);
-	});
 
-	document.addEventListener("click", (event) =>
+
+	// PREVENT DEFAULT EVENT
+	function preventDefaultEvent(e)
 	{
-		if (!event.target.closest(".wykopx_open_mikroczat")) return;
-		event.preventDefault();
+		e.preventDefault();
+	}
+	document.addEventListener("click", (e) =>
+	{
+		if (!e.target.closest(".wykopx_open_mikroczat")) return;
+		e.preventDefault();
 	});
+
+	document.addEventListener("keydown", (e) =>
+	{
+		if (e.target.tagName.toLowerCase() === 'textarea') return;
+		if (e.shiftKey) bodySection.dataset.key_shift = "true"; // <section data-key_shift="true">
+		if (e.altKey) bodySection.dataset.key_alt = "true"; // <section data-key_alt="true">
+		if (e.ctrlKey) bodySection.dataset.key_ctrl = "true"; // <section data-key_ctrl="true">
+	});
+	document.addEventListener("keyup", (e) =>
+	{
+		if (e.target.tagName.toLowerCase() === 'textarea') return;
+		if (e.key == "Shift" || e.shiftKey) delete bodySection.dataset.key_shift;
+		if (e.key == "Control" || e.ctrlKey) delete bodySection.dataset.key_ctrl;
+		if (e.key == "Alt" || e.key == "AltGraph" || e.altKey) delete bodySection.dataset.key_alt;
+	});
+
+
+
+
+	document.addEventListener("mouseover", (e) =>
+	{
+		if (e.target.matches(`a[href^="/tag/"]`))
+		{
+			e.target.title = `Wciśnij klawisz SHIFT lub CTRL klikając na tag,\naby otworzyć kanał #${e.target.innerText} na 🗯 Mikroczacie`;
+
+			e.target.addEventListener("click", preventDefaultEvent, true);
+			e.target.addEventListener("mousedown", tagHrefEventListenerWithShift, true);
+			e.target.addEventListener("mouseup", preventDefaultEvent, true);
+		}
+	});
+
+	document.addEventListener("mouseout", (e) =>
+	{
+		if (e.target.matches(`a[href^="/tag/"]`))
+		{
+			e.target.removeEventListener("click", preventDefaultEvent, true);
+			e.target.removeEventListener("mousedown", tagHrefEventListenerWithShift, true);
+			e.target.removeEventListener("mouseup", preventDefaultEvent, true);
+		}
+	});
+
+	function tagHrefEventListenerWithShift(e)
+	{
+		const channel = e.target.href.split("tag/").pop();
+
+		if (e.ctrlKey || e.altKey) // || e.button === 2)
+		{
+			e.preventDefault();
+			openMikroczat(channel, null, "_blank");
+		}
+		else if (e.shiftKey)
+		{
+			e.preventDefault();
+			openMikroczat(channel, "popup");
+		}
+		else if (e.button === 2) // PPM
+		{
+
+		}
+		else
+		{
+			window.location.href = e.target.href;
+		}
+	}
 
 
 	// WIADOMOŚCI OD MIKROCZAT.PL
@@ -190,7 +360,7 @@ const settings =
 
 		if (event.data == "MikroCzatLoggedIn")
 		{
-			console.log("event.data", event.data)
+			if (dev) console.log("event.data", event.data)
 			bodySection.dataset.mikroczatLogged = true;
 		}
 
@@ -201,7 +371,104 @@ const settings =
 		}
 	}, false);
 
-	CSS += `body > section[data-mikroczat-logged="true"] li.wykopx_open_mikroczat_li span:after
+	{
+		CSS += `
+	section.entry-content[class]
+	{
+		overflow: visible!important;
+	}
+	section.entry-content .wrapper a[href^="/tag/"]
+	{
+		padding-right: 2px !important;
+		margin-right: 1px;
+		transition: none!important;
+	}
+	section.entry-content .wrapper a[href^="https://mikroczat.pl/"]
+	{
+		padding-right: 2px!important;
+		padding-left: 2px!important;
+	}
+	section.entry-content .wrapper a[href^="/tag/"],
+	section.entry-content .wrapper a[href^="https://mikroczat.pl/"]
+	{
+		border: 1px solid transparent!important;
+		position: relative!important;
+	}
+
+	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"],
+	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"],
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"],
+	body > section[data-key_shift="true"] section.entry-content a[href^="https://mikroczat.pl/"],
+	body > section[data-key_alt="true"] section.entry-content a[href^="https://mikroczat.pl/"],
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="https://mikroczat.pl/"]
+	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"] *,
+	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"] *,
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"] *,
+	body > section[data-key_shift="true"] section.entry-content a[href^="https://mikroczat.pl/"] *,
+	body > section[data-key_alt="true"] section.entry-content a[href^="https://mikroczat.pl/"] *,
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="https://mikroczat.pl/"] *
+	{
+		color: var(--tagChannelColor)!important;
+	}
+
+	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"],
+	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"],
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"],
+	body > section[data-key_shift="true"] section.entry-content a[href^="https://mikroczat.pl/"],
+	body > section[data-key_alt="true"] section.entry-content a[href^="https://mikroczat.pl/"],
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="https://mikroczat.pl/"]
+	{
+		border-color: var(--tagChannelColor)!important;
+		background-color: color-mix(in srgb, var(--whitish) 90%, var(--tagChannelColor))!important;
+		border-radius: var(--smallBorderRadius)!important;
+	}
+	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"]:hover,
+	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"]:hover,
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"]:hover,
+	body > section[data-key_shift="true"] section.entry-content a[href^="https://mikroczat.pl/"]:hover,
+	body > section[data-key_alt="true"] section.entry-content a[href^="https://mikroczat.pl/"]:hover,
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="https://mikroczat.pl/"]:hover
+	{
+		background-color: color-mix(in srgb, var(--whitish) 60%, var(--tagChannelColor))!important;
+	}
+
+	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"],
+	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"],
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"]
+	{
+
+		padding-left: 3px !important;
+		margin-left: -12px !important;
+
+	}
+	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"]:hover,
+	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"]:hover,
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"]:hover
+	{
+		text-decoration: none!important;
+	}
+	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"]::before,
+	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"]::before,
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"]::before
+	{
+		content: "#";
+		position:
+	}
+	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"]::after,
+	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"]::after,
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"]::after,
+	body > section[data-key_shift="true"] section.entry-content a[href^="https://mikroczat.pl/"]::after,
+	body > section[data-key_alt="true"] section.entry-content a[href^="https://mikroczat.pl/"]::after,
+	body > section[data-key_ctrl="true"] section.entry-content a[href^="https://mikroczat.pl/"]::after
+	{
+		color: white;
+		content: "🗯";
+		position: absolute;
+		top: -1em;
+		right: -0.5em;
+	}
+	
+	body > section[data-mikroczat-logged="true"] li.wykopx_open_mikroczat_li span:after
 	{
 		content: "•";
 		color: white;
@@ -218,6 +485,8 @@ const settings =
 		right: 5px;
 	}`;
 
+	}
+
 	createNewNavBarButton({
 		position: "left",
 		// text: "Mikro<strong>czat</strong>",
@@ -227,7 +496,6 @@ const settings =
 		hideWithoutXStyle: false,
 		url: mikroczatDomain,
 		target: "mikroczat",
-		icon: "https://i.imgur.com/9PvHlaA.png",
 		number: null,
 	})
 
@@ -419,11 +687,8 @@ const settings =
 				const modifiedSrc = currentSrc.replace(/,.*?\./, '.');
 				image.setAttribute('src', modifiedSrc);
 				if (dev) console.log("image.src", image.src)
-
 			}
-
 		}
-
 	}
 
 	function removeVotersListWhenNoVoters(sectionEntry)
@@ -806,30 +1071,12 @@ const settings =
 
 
 
-
-	function mergeSettings(localSettings, defaultSettings)
-	{
-		for (let key in defaultSettings)
-		{
-			if (key in localSettings)
-			{
-				settings[key] = localSettings[key];
-			}
-
-			else if (!(key in localSettings))
-			{
-				settings[key] = defaultSettings[key];
-			}
-
-		}
-	}
-
 	// li.more click
-	document.addEventListener("click", async function (event)
+	document.addEventListener("click", async function (e)
 	{
-		if (event.target.closest("div.buttons button.plus"))
+		if (e.target.closest("div.buttons button.plus"))
 		{
-			const sectionEntry = event.target.closest("section.entry[id]");
+			const sectionEntry = e.target.closest("section.entry[id]");
 			if (sectionEntry.__vue__?.item?.voted == 1)
 			{
 				if (settings.addCommentPlusWhenVotingOnEntry && sectionEntry && sectionEntry.__vue__?.item?.resource == "entry") 
@@ -843,17 +1090,15 @@ const settings =
 			}
 		}
 
-
-
-		if (event.target.matches("li.more span"))
+		if (e.target.matches("li.more span"))
 		{
-			event.preventDefault();
+			e.preventDefault();
 
-			let sectionEntry = event.target.closest("section.entry");
-			const entryId = event.target.dataset.entryId;
-			const commentId = event.target.dataset.commentId;
-			if (dev) console.log(`Wykop XS pobiera listę ${event.target.dataset.votesUp} plusujących`);
-			event.target.closest("section.entry-voters").innerHTML = `<span>(Wykop X: wczytywanie ${event.target.dataset.votesUp} plusujących...)</span>`;
+			let sectionEntry = e.target.closest("section.entry");
+			const entryId = e.target.dataset.entryId;
+			const commentId = e.target.dataset.commentId;
+			if (dev) console.log(`Wykop XS pobiera listę ${e.target.dataset.votesUp} plusujących`);
+			e.target.closest("section.entry-voters").innerHTML = `<span>(Wykop X: wczytywanie ${e.target.dataset.votesUp} plusujących...)</span>`;
 
 			let voters = await fetchAllVotersFromAPI(entryId, commentId);
 
@@ -861,99 +1106,28 @@ const settings =
 			return;
 		}
 
-		if (event.target.matches("span.favouriteButton"))
+		if (e.target.matches("span.favouriteButton"))
 		{
-			event.preventDefault();
-			if (event.target.dataset.isFavourite == "true")
+			e.preventDefault();
+			if (e.target.dataset.isFavourite == "true")
 			{
-				if (event.target.dataset.commentId) postFavouriteToAPI(false, "entry_comment", event.target.dataset.commentId);
-				else postFavouriteToAPI(false, "entry", event.target.dataset.entryId);
-				event.target.parentElement.classList.remove("active");
-				event.target.dataset.isFavourite = "false";
+				if (e.target.dataset.commentId) postFavouriteToAPI(false, "entry_comment", e.target.dataset.commentId);
+				else postFavouriteToAPI(false, "entry", e.target.dataset.entryId);
+				e.target.parentElement.classList.remove("active");
+				e.target.dataset.isFavourite = "false";
 
 			}
-			else if (event.target.dataset.isFavourite == "false")
+			else if (e.target.dataset.isFavourite == "false")
 			{
-				if (event.target.dataset.commentId) postFavouriteToAPI(true, "entry_comment", event.target.dataset.commentId);
-				else postFavouriteToAPI(true, "entry", event.target.dataset.entryId);
-				event.target.parentElement.classList.add("active");
-				event.target.dataset.isFavourite = "true";
+				if (e.target.dataset.commentId) postFavouriteToAPI(true, "entry_comment", e.target.dataset.commentId);
+				else postFavouriteToAPI(true, "entry", e.target.dataset.entryId);
+				e.target.parentElement.classList.add("active");
+				e.target.dataset.isFavourite = "true";
 			}
 			return;
 		}
 	}, false);
 
-	function createNewNavBarButton(options)
-	{
-
-		let nav_ul;
-
-		if (options.position == "left") nav_ul = document.querySelector("body header div.left nav.main ul");
-		else if (options.position == "center") nav_ul = document.querySelector("body header div.right nav aside"); // doodle
-		else nav_ul = document.querySelector("body header div.right nav ul"); // brak na wersji mobilnej
-
-		if (nav_ul) 
-		{
-			let nav_ul_li;  // ! = nav_ul.querySelector(`li.wykopx_${options.class}_li`);
-
-			if (!nav_ul_li)
-			{
-				nav_ul_li = document.createElement("li");
-
-				if (options.data) nav_ul_li.setAttribute(options.data, null);
-				if (options.hideWithoutXStyle == true) nav_ul_li.classList.add("wykopxs");
-				addWykopXSClassesToElement(nav_ul_li, options.class, "li") // class="wykopx_aaaaaa_li"
-
-				let nav_ul_li_a = document.createElement("a");
-				nav_ul_li.dataset["v-5182b5f6"] = "";
-				nav_ul_li_a.dataset["v-5182b5f6"] = "";
-
-				if (options.url) nav_ul_li_a.setAttribute("href", options.url);
-				if (options.href) nav_ul_li_a.setAttribute("href", options.href);
-				if (options.target) nav_ul_li_a.setAttribute("target", options.target);
-				if (options.title) nav_ul_li_a.setAttribute("title", options.title);
-				if (options.data) nav_ul_li_a.setAttribute(options.data, null);
-
-				nav_ul_li_a.classList.add("hybrid");
-				if (options.class) addWykopXSClassesToElement(nav_ul_li_a, options.class);
-
-				let nav_ul_li_a_span = document.createElement("span");
-				nav_ul_li_a_span.innerHTML = options.text;
-
-				nav_ul_li_a.appendChild(nav_ul_li_a_span);
-				nav_ul_li.appendChild(nav_ul_li_a);
-
-				if (options.insertAfter != null)
-				{
-					let section = nav_ul.querySelector(options.insertAfter);
-					section.insertAdjacentElement('afterend', nav_ul_li);
-				}
-				else
-				{
-					nav_ul.appendChild(nav_ul_li);
-				}
-			}
-		}
-	}
-
-
-	function addWykopXSClassesToElement(element, inputClassOrArray, suffix = null)
-	{
-		if (inputClassOrArray)
-		{
-			if (typeof inputClassOrArray === 'string')
-			{
-				element.classList.add(`wykopx_${inputClassOrArray}${suffix != null ? "_" + suffix : ""}`);
-			}
-			else if (Array.isArray(inputClassOrArray) && inputClassOrArray.every(item => typeof item === 'string'))
-			{
-				inputClassOrArray.map(item =>
-				{
-					element.classList.add(`wykopx_${item}${suffix != null ? "_" + suffix : ""}`);
-				});
-			}
-		}
-	}
 
 
 	{
@@ -1096,7 +1270,11 @@ const settings =
 
 		/* Wykop X Style 3.0 */
 		CSS += `
-			:root { --kolorBananowy1: rgba(255, 185, 0, 1); }
+			:root {
+				--kolorBananowy1: rgba(255, 185, 0, 1);
+				--tagChannelColor: rgba(0, 183, 255, 1);
+				--smallBorderRadius: 4px;
+			}
 			section.entry-voters ul li a.username.banned:not(.removed) span  				{ color: var(--kolorBananowy1); };
 			section.entry-voters ul li a.username.suspended:not(.removed) span 				{ color: var(--heather); }
 			section.entry-voters ul li a.username.removed span 								{ color: var(--heather); }
@@ -1173,13 +1351,12 @@ const settings =
 				display: none!important;
 			}`;
 		}
-
-		styleElement.textContent = CSS;
-		document.head.appendChild(styleElement);
 	}
 
 
 
+	styleElement.textContent = CSS;
+	document.head.appendChild(styleElement);
 })();
 
 
