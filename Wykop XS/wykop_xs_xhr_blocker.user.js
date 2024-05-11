@@ -1,25 +1,39 @@
 // ==UserScript==
-// @name        Wykop XS - XHR blocker
-// @name:pl     Wykop XS - XHR blocker
-// @name:en     Wykop XS - XHR blocker
-// @version     2.60.2
+// @name							Wykop XS - XHR blocker
+// @name:pl							Wykop XS - XHR blocker
+// @name:en							Wykop XS - XHR blocker
+
+// @version							3.0.44
+
+// @description 					Wykop XS - XHR Blocker | Wykop X Style znajdziesz na: http://style.wykopx.pl
+// @description:en 					Wykop XS - XHR Blocker | Check out also: http://style.wykopx.pl
 
 
-// @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
-// @contributionURL  	https://buycoffee.to/wykopx
+// Chcesz wesprzeć projekt Wykop X? Postaw kawkę:
+// @contributionURL					https://buycoffee.to/wykopx
+
+// @author							Wykop X <wykopx@gmail.com>
 
 
-// @author      Wykop X <wykopx@gmail.com>
-// @namespace   Violentmonkey Scripts
-// @match       https://wykop.pl/*
 
 
-// @description Wykop XS - XHR Blocker Wykop X Style znajdziesz na: http://style.wykopx.pl
-// @description:en Wykop XS - XHR Blocker. Check it out here: http://style.wykopx.pl
 
 
-// @compatible  chrome, firefox, opera, safari, edge
-// @license     No License
+
+
+
+// @match							https://wykop.pl/*
+// @supportURL						http://wykop.pl/tag/wykopwnowymstylu
+// @namespace						Violentmonkey Scripts
+// @compatible						chrome, firefox, opera, safari, edge
+// @license							No License
+
+
+
+
+
+
+
 
 
 

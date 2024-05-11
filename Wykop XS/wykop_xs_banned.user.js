@@ -1,27 +1,41 @@
 // ==UserScript==
-// @name                Wykop XS - Informacje o banach
-// @name:pl             Wykop XS - Informacje o banach
-// @name:en             Wykop XS - Ban Info
-// @version             3.0.0
+// @name							Wykop XS - Informacje o banach
+// @name:pl							Wykop XS - Informacje o banach
+// @name:en							Wykop XS - Ban Info
+
+// @version							3.0.44
+
+// @description 					Wykop XS - Informacje o banach na profilach zbanowanych użytkowników. Wykop X Style znajdziesz na: http://styl.wykopx.pl
+// @description:en 					Wykop XS - Shows precise info about banned users on Wykop.pl. Check out Wykop X Style here: http://styl.wykopx.pl
 
 
-// @supportURL          http://wykop.pl/tag/wykopwnowymstylu
-// @contributionURL     https://buycoffee.to/wykopx
+// Chcesz wesprzeć projekt Wykop X? Postaw kawkę:
+// @contributionURL					https://buycoffee.to/wykopx
+
+// @author							Wykop X <wykopx@gmail.com>
 
 
-// @author              Wykop X <wykopx@gmail.com>
-// @namespace           Violentmonkey Scripts
-// @match               https://wykop.pl/*
 
 
-// @description         Wykop XS - Informacje o banach na profilach zbanowanych użytkowników. Wykop X Style znajdziesz na: http://styl.wykopx.pl
-// @description:en      Wykop XS - Shows precise info about banned users on Wykop.pl. Check out Wykop X Style here: http://styl.wykopx.pl
 
 
-// @require		https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
-// @require		https://cdn.jsdelivr.net/gh/CoeJoder/waitForKeyElements.js@latest/waitForKeyElements.js
-// @compatible	chrome, firefox, opera, safari, edge
-// @license		No License
+
+
+
+// @match							https://wykop.pl/*
+// @supportURL						http://wykop.pl/tag/wykopwnowymstylu
+// @namespace						Violentmonkey Scripts
+// @compatible						chrome, firefox, opera, safari, edge
+// @license							No License
+
+
+// @require							https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
+// @require							https://cdn.jsdelivr.net/gh/CoeJoder/waitForKeyElements.js@latest/waitForKeyElements.js
+
+
+
+
+
 
 // ==/UserScript==
 

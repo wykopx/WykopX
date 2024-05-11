@@ -1,34 +1,45 @@
 // ==UserScript==
-// @name        Mikroblog+ / Czat
-// @name:pl     Mikroblog+ / Czat
-// @name:en     Mikroblog+ / Czat
-// @version     3.0.39
+// @name							Wykop XS - Mikroczat, Lista plusujących, Animowane awatary
+// @name:pl							Wykop XS - Mikroczat, Lista plusujących, Animowane awatary
+// @name:en							Wykop XS - Mikroczat, Lista plusujących, Animowane awatary
 
+// @version							3.0.44
 
-// @supportURL  		http://wykop.pl/tag/wykopwnowymstylu
+// @description 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
+// @description:en 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
+
 
 // Chcesz wesprzeć projekt Wykop X? Postaw kawkę:
-// @contributionURL  	https://buycoffee.to/wykopx
+// @contributionURL					https://buycoffee.to/wykopx
+
+// @author							Wykop X <wykopx@gmail.com>
 
 
-// @author      Wykop X <wykopx@gmail.com>
-// @namespace   Violentmonkey Scripts
-// @match       https://wykop.pl/*
 
 
-// @description Wykop XS - Darmowy dostęp do Mikroblog+, mirkoczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
-// @description:en Wykop XS - Darmowy dostęp do Mikroblog+, mirkoczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 
 
-// @require https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
 
 
-// @compatible  chrome, firefox, opera, safari, edge
-// @license     No License
+
+// @match							https://wykop.pl/*
+// @supportURL						http://wykop.pl/tag/wykopwnowymstylu
+// @namespace						Violentmonkey Scripts
+// @compatible						chrome, firefox, opera, safari, edge
+// @license							No License
+
+
+// @require 						https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
+
+
+
+
+
+
 
 // ==/UserScript==
 
-const currentVersion = "3.0.39";
+const currentVersion = "3.0.44";
 let dev = true;
 
 const promoString = "- Wykop XS";
@@ -284,14 +295,14 @@ settings.fixNotificationBadgeBug = true;				// naprawia wykopowy błąd - ukrywa
 		if (e.target.tagName.toLowerCase() === 'textarea') return;
 		if (e.shiftKey) bodySection.dataset.key_shift = "true"; // <section data-key_shift="true">
 		if (e.altKey) bodySection.dataset.key_alt = "true"; // <section data-key_alt="true">
-		if (e.ctrlKey) bodySection.dataset.key_ctrl = "true"; // <section data-key_ctrl="true">
+		// if (e.ctrlKey) bodySection.dataset.key_ctrl = "true"; // <section data-key_ctrl="true">
 	});
 	document.addEventListener("keyup", (e) =>
 	{
 		if (e.target.tagName.toLowerCase() === 'textarea') return;
 		if (e.key == "Shift" || e.shiftKey) delete bodySection.dataset.key_shift;
-		if (e.key == "Control" || e.ctrlKey) delete bodySection.dataset.key_ctrl;
 		if (e.key == "Alt" || e.key == "AltGraph" || e.altKey) delete bodySection.dataset.key_alt;
+		// if (e.key == "Control" || e.ctrlKey) delete bodySection.dataset.key_ctrl;
 	});
 
 
@@ -301,7 +312,7 @@ settings.fixNotificationBadgeBug = true;				// naprawia wykopowy błąd - ukrywa
 	{
 		if (e.target.matches(`a[href^="/tag/"]`))
 		{
-			e.target.title = `Wciśnij klawisz SHIFT lub CTRL klikając na tag,\naby otworzyć kanał #${e.target.innerText} na 🗯 Mikroczacie`;
+			e.target.title = `Wciśnij klawisz ⇧ 𝗦𝗛𝗜𝗙𝗧 lub ⎇ 𝗔𝗟𝗧 (⌥ 𝗢𝗽𝘁𝗶𝗼𝗻 na Mac) klikając na tag,\naby otworzyć kanał #${e.target.innerText} na 🗯 Mikroczacie\n\n⎇ 𝗔𝗟𝗧 - mikroczat w nowej karcie\n⇧ 𝗦𝗛𝗜𝗙𝗧 - mikroczat w nowym oknie`;
 
 			e.target.addEventListener("click", preventDefaultEvent, true);
 			e.target.addEventListener("mousedown", tagHrefEventListenerWithShift, true);
@@ -373,93 +384,90 @@ settings.fixNotificationBadgeBug = true;				// naprawia wykopowy błąd - ukrywa
 
 	{
 		CSS += `
-	section.entry-content[class]
-	{
-		overflow: visible!important;
-	}
-	section.entry-content .wrapper a[href^="/tag/"]
+	section:is(.entry-content, .link-block)[class] { overflow: visible!important; }
+
+	section:is(.entry-content, .link-block) a[href^="/tag/"]
 	{
 		padding-right: 2px !important;
 		margin-right: 1px;
 		transition: none!important;
 	}
-	section.entry-content .wrapper a[href^="https://mikroczat.pl/"]
+	section:is(.entry-content, .link-block) a[href^="https://mikroczat.pl/"]
 	{
 		padding-right: 2px!important;
 		padding-left: 2px!important;
 	}
-	section.entry-content .wrapper a[href^="/tag/"],
+	section:is(.entry-content, .link-block) a[href^="/tag/"],
 	section.entry-content .wrapper a[href^="https://mikroczat.pl/"]
 	{
 		border: 1px solid transparent!important;
 		position: relative!important;
 	}
 
-	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"],
-	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"],
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"],
-	body > section[data-key_shift="true"] section.entry-content a[href^="https://mikroczat.pl/"],
-	body > section[data-key_alt="true"] section.entry-content a[href^="https://mikroczat.pl/"],
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="https://mikroczat.pl/"]
-	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"] *,
-	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"] *,
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"] *,
-	body > section[data-key_shift="true"] section.entry-content a[href^="https://mikroczat.pl/"] *,
-	body > section[data-key_alt="true"] section.entry-content a[href^="https://mikroczat.pl/"] *,
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="https://mikroczat.pl/"] *
+	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
+	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
+	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
+	body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+	body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+	body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *,
+	body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *,
+	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *
 	{
 		color: var(--tagChannelColor)!important;
 	}
 
-	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"],
-	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"],
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"],
-	body > section[data-key_shift="true"] section.entry-content a[href^="https://mikroczat.pl/"],
-	body > section[data-key_alt="true"] section.entry-content a[href^="https://mikroczat.pl/"],
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="https://mikroczat.pl/"]
+	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+	body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+	body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]
 	{
 		border-color: var(--tagChannelColor)!important;
 		background-color: color-mix(in srgb, var(--whitish) 90%, var(--tagChannelColor))!important;
 		border-radius: var(--smallBorderRadius)!important;
 	}
-	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"]:hover,
-	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"]:hover,
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"]:hover,
-	body > section[data-key_shift="true"] section.entry-content a[href^="https://mikroczat.pl/"]:hover,
-	body > section[data-key_alt="true"] section.entry-content a[href^="https://mikroczat.pl/"]:hover,
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="https://mikroczat.pl/"]:hover
+	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+	body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover,
+	body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover,
+	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover
 	{
 		background-color: color-mix(in srgb, var(--whitish) 60%, var(--tagChannelColor))!important;
 	}
 
-	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"],
-	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"],
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"]
+	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]
 	{
 
 		padding-left: 3px !important;
 		margin-left: -12px !important;
 
 	}
-	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"]:hover,
-	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"]:hover,
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"]:hover
+	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover
 	{
 		text-decoration: none!important;
 	}
-	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"]::before,
-	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"]::before,
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"]::before
+	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before,
+	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before,
+	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before
 	{
 		content: "#";
-		position:
 	}
-	body > section[data-key_shift="true"] section.entry-content a[href^="/tag/"]::after,
-	body > section[data-key_alt="true"] section.entry-content a[href^="/tag/"]::after,
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="/tag/"]::after,
-	body > section[data-key_shift="true"] section.entry-content a[href^="https://mikroczat.pl/"]::after,
-	body > section[data-key_alt="true"] section.entry-content a[href^="https://mikroczat.pl/"]::after,
-	body > section[data-key_ctrl="true"] section.entry-content a[href^="https://mikroczat.pl/"]::after
+	body > section[data-key_shift="true"] 	section.entry-content a[href^="/tag/"]::after,
+	body > section[data-key_alt="true"] 	section.entry-content a[href^="/tag/"]::after,
+	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="/tag/"]::after,
+	body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after,
+	body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after,
+	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after
 	{
 		color: white;
 		content: "🗯";
