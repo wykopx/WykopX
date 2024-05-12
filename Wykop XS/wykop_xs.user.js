@@ -2305,7 +2305,8 @@
 						{
 							// <section data-status="400"> jeśli autor cie blokuje i nie mozna dodac wpisu
 							// TODO - dodanie autora do listy blokujących
-							sectionObjectElement.dataset.status = await checkIfYouCanPostCommentInEntry(sectionObjectElement.__vue__.item.id);
+							let blockingStatus = await checkIfYouCanPostCommentInEntry(sectionObjectElement.__vue__.item.id);
+							if (blockingStatus == 400) sectionObjectElement.dataset.status = blockingStatus;
 						}
 
 
