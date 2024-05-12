@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name							Wykop XS 3
-// @name:pl							Wykop XS 3
-// @name:en							Wykop XS 3
+// @name							Wykop XS 3.0
+// @name:pl							Wykop XS 3.0
+// @name:en							Wykop XS 3.0
 
 // @version							3.0.44
 
