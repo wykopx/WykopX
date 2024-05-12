@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3.0
 // @name:en							Wykop XS 3.0
 
-// @version							3.0.44
+// @version							3.0.45
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://styl.wykopx.pl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://styl.wykopx.pl
@@ -42,8 +42,8 @@
 {
 	'use strict';
 
-	const currentVersion = "3.0.44";
-	let dev = true;
+	const currentVersion = "3.0.45";
+	let dev = false;
 
 	//dayjs.extend(relativeTime); // https://day.js.org/docs/en/plugin/relative-time // https://www.jsdelivr.com/package/npm/dayjs?tab=files&path=plugin
 	dayjs.extend(window.dayjs_plugin_relativeTime);
@@ -252,12 +252,9 @@
 		settings.checkEntryPlusesPerHour = wykopxSettings.getPropertyValue("--checkEntryPlusesPerHour") ? wykopxSettings.getPropertyValue("--checkEntryPlusesPerHour") === '1' : true;
 		settings.checkEntryCommentsPerHour = wykopxSettings.getPropertyValue("--checkEntryCommentsPerHour") ? wykopxSettings.getPropertyValue("--checkEntryCommentsPerHour") === '1' : true;
 		settings.checkEntryPlusesForVotingGame = wykopxSettings.getPropertyValue("--checkEntryPlusesForVotingGame") ? wykopxSettings.getPropertyValue("--checkEntryPlusesForVotingGame") === '1' : true;
-
-
-
 	}
 
-
+	settings.checkIfEntryAuthorBlocksYou = true;
 
 
 
@@ -2303,6 +2300,15 @@
 
 					if (resource == "entry") // TODO komentarze w znaleziskach
 					{
+
+						if (settings.checkIfEntryAuthorBlocksYou)
+						{
+							// <section data-status="400"> jeśli autor cie blokuje i nie mozna dodac wpisu
+							// TODO - dodanie autora do listy blokujących
+							sectionObjectElement.dataset.status = await checkIfYouCanPostCommentInEntry(sectionObjectElement.__vue__.item.id);
+						}
+
+
 						// sprawdzenie czy wpis zawiera grę w plusowanie
 						if (settings.checkEntryPlusesForVotingGame)
 						{
@@ -2318,8 +2324,8 @@
 								sectionObjectElement.style.setProperty('--votesUpHidden', `"${settings.prefixBeforePlusesCount}` + replaceDigitsWithDot(wxs_votes_up) + `"`);
 								sectionObjectElement.style.wxs_votes_up_hidden = replaceDigitsWithDot(wxs_votes_up);				// data-wxs_votes_up_hidden
 
-								let votingGameLastDigit = wxs_votes_up + 1; 						// liczba po zaplusowaniu
-								votingGameLastDigit = votingGameLastDigit.toString().slice(-1);		// ostatnia cyfra po zaplusowaniu
+								let votingGameLastDigit = wxs_votes_up + 1; 														// liczba po zaplusowaniu
+								votingGameLastDigit = votingGameLastDigit.toString().slice(-1);										// ostatnia cyfra po zaplusowaniu
 
 								sectionObjectElement.style.setProperty('--votingGameLastDigit', `"` + votingGameLastDigit + `"`);
 								sectionObjectElement.dataset.wxs_voting_game_last_digit = votingGameLastDigit;						// data-wxs_voting_game_last_digit="9"
@@ -7000,6 +7006,151 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
+
+	// zmodyfikowana funkcja z mikroczatu
+	// zwraca 400 jesli autor cię blokuje, 409 jeśli nie
+	async function checkIfYouCanPostCommentInEntry(entry_id)
+	{
+		if (dev) console.log(`checkIfYouCanPostCommentInEntry() entry_id: ${entry_id}`);
+
+		let newMessageBody = {
+			resource: "entry_comment",
+			entry_id: entry_id,
+			content: ""
+		}
+
+		if (dev) console.log(`checkIfYouCanPostCommentInEntry() newMessageBody:`, newMessageBody);
+
+		//try
+		//{
+		if (dev) console.log(`try > postNewMessageToChannel, entry_id: ${entry_id}`);
+		return await postNewMessageToChannel(newMessageBody)
+		//}
+		// catch (error)
+		// {
+		// 	let httpError = error;
+
+		// 	switch (httpError.status)
+		// 	{
+		// 		case 400:
+		// 			// UZYTKOWNIK CIĘ BLOKUJE
+		// 			return false;
+		// 			break;
+		// 		case 409:
+		// 			// MOZED ODPISYWAĆ - WSZYSTKO OK (po prostu za krotka wiadomosc)
+		// 			return true;
+		// 			break;
+		// 		case 429:
+		// 			// INNY BLAD - ZA DUZO REQUESTOW
+		// 			break;
+		// 		default:
+		// 		// Other status codes
+		// 	}
+		// }
+	}
+
+
+
+
+
+	/* POST */
+	// funkcja z mikroczatu
+	async function postNewMessageToChannel(message)
+	{
+		if (dev) console.log(`postNewMessageToChannel: message: `, message);
+		/*
+			{
+				"data":
+				{
+					"content": "**foobar** __foobar__ [lorem](https://www.wykop.pl) impsum!!! #nsfw #wykop",
+					"photo": "e07843ss3fbe9cb4saeed0asdfsdfc64b9a4df6084199b39d2",
+					"embed": "1fde707843ss3fbe9cb4eed0asdfsdfc64ab9a4df6084199b39d2",
+					"survey": "qErgdjp5K0xz",
+					"adult": false
+				}
+			}
+		*/
+
+		// nowy wpis (domyślnie)
+		let apiURL = "https://wykop.pl/api/v3/entries";
+
+		// nowy komentarz pod wpisem
+		if (message.resource && message.resource == "entry_comment" && message.entry_id)
+		{
+			apiURL = `https://wykop.pl/api/v3/entries/${message.entry_id}/comments`;
+		}
+
+		let bodyData = {};
+		message.content ? bodyData.content = message.content : "";
+		message.photo ? bodyData.photo = message.photo : "";
+		message.embed ? bodyData.embed = message.embed : "";
+		message.survey ? bodyData.survey = message.survey : "";
+		message.adult ? bodyData.adult = message.adult : "";
+
+		if (dev) console.log("bodyData to send: ", bodyData);
+		if (dev) console.log("apiURL: ", apiURL);
+
+		return new Promise(async (resolve, reject) =>
+		{
+			try
+			{
+				await fetch(apiURL,
+					{
+						method: "POST",
+						headers:
+						{
+							"Content-Type": "application/json",
+							Authorization: "Bearer " + window.localStorage.getItem("token"),
+						},
+						body: JSON.stringify(
+							{
+								"data": bodyData
+							})
+					})
+					.then((response) =>
+					{
+						if (dev) console.log("response", response)
+
+						if (!response.ok)
+						{
+							// zwraca error.status = 400 (jestes blokowany) albo error.status = 409 (pusta tresc)
+							if (dev) console.log(`HTTP error! status: ${response.status}`);
+							resolve(response.status);
+							// throw new T.HTTPError(`HTTP error! status: ${response.status}`, response.status);
+						}
+					})
+					.then(async (responseJSON) =>
+					{
+						if (dev) console.log("responseJSON")
+						if (dev) console.log(responseJSON)
+
+						resolve(responseJSON.data);
+
+					}).catch((error) =>
+					{
+						if (error instanceof TypeError)
+						{
+							//console.error('xxx Network error:', error); // AWARIA SERWERA
+						} else
+						{
+							//console.error('Other error:', error);
+						}
+						reject(error);
+					});
+			}
+			catch (error)
+			{
+				//console.error('Other catched error:', error);
+				reject(error);
+			}
+		});
+	}
+
+
+
+
+
+
 	async function getNewestEntryFromAPI(sectionElement = newestEntrySection)
 	{
 		sectionElement.classList.remove("animationRunning");
@@ -9821,6 +9972,16 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	// head.insertAdjacentHTML("beforeend", CSS);
 
 })();
+
+
+
+
+
+
+
+
+
+
 
 
 
