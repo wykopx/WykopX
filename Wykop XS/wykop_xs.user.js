@@ -254,7 +254,7 @@
 		settings.checkEntryPlusesForVotingGame = wykopxSettings.getPropertyValue("--checkEntryPlusesForVotingGame") ? wykopxSettings.getPropertyValue("--checkEntryPlusesForVotingGame") === '1' : true;
 	}
 
-	settings.checkIfEntryAuthorBlocksYou = true;
+	settings.authorBlocksYouCheckingEnable = true;
 
 
 
@@ -2301,7 +2301,7 @@
 					if (resource == "entry") // TODO komentarze w znaleziskach
 					{
 
-						if (settings.checkIfEntryAuthorBlocksYou)
+						if (settings.authorBlocksYouCheckingEnable)
 						{
 							// <section data-status="400"> jeśli autor cie blokuje i nie mozna dodac wpisu
 							// TODO - dodanie autora do listy blokujących
@@ -8953,7 +8953,11 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		{
 
 		}
-		else
+		else if (e.button === 1) // ŚPM
+		{
+
+		}
+		else if (e.button === 0) // LPM
 		{
 			window.location.href = e.target.href;
 		}
