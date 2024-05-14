@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3.0
 // @name:en							Wykop XS 3.0
 
-// @version							3.0.50
+// @version							3.0.51
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://styl.wykopx.pl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://styl.wykopx.pl
@@ -43,7 +43,7 @@
 {
 	'use strict';
 
-	const currentVersion = "3.0.50";
+	const currentVersion = "3.0.51";
 	let dev = false;
 
 	const promoString = " [Dodane przez Wykop X #wykopwnowymstylu]";
@@ -136,7 +136,7 @@
 	setSettingsValueFromCSSProperty("quickLinksEnable");
 	setSettingsValueFromCSSProperty("myWykopInTopNavJS");
 	setSettingsValueFromCSSProperty("favoritesInTopNavJS");
-	setSettingsValueFromCSSProperty("imageUploaderEnable");
+	setSettingsValueFromCSSProperty("imageUploaderEnable", false);
 	setSettingsValueFromCSSProperty("addNewLinkInTopNavJS");
 	setSettingsValueFromCSSProperty("disableNewLinkEditorPastedTextLimit");
 	setSettingsValueFromCSSProperty("autoOpenMoreContentEverywhere");
@@ -531,7 +531,6 @@
 	setSettingsValueFromCSSProperty("myWykopInTopNavJS");
 	setSettingsValueFromCSSProperty("notatkowatorEnable");
 	setSettingsValueFromCSSProperty("favoritesInTopNavJS");
-	setSettingsValueFromCSSProperty("imageUploaderEnable");
 	setSettingsValueFromCSSProperty("addNewLinkInTopNavJS");
 	setSettingsValueFromCSSProperty("addNewEntryInTopNavJS");
 	setSettingsValueFromCSSProperty("disableNewLinkEditorPastedTextLimit");
@@ -3523,7 +3522,7 @@
 	// mirkoukrywaczBlockNewElement(null, "comment-123456", "hidden")
 	function mirkoukrywaczBlockNewElement(sectionObjectElement = null, object_id = getObjectIdFromSectionObjectElement(sectionObjectElement), blockingType = "hidden")
 	{
-		console.clear();
+		// console.clear();
 		consoleX(`mirkoukrywaczBlockNewElement(blockingType: ${blockingType})`, 1);
 
 
@@ -3579,7 +3578,7 @@
 
 	function mirkoukrywaczUnblockElement(sectionObjectElement = null, object_id = getObjectIdFromSectionObjectElement(sectionObjectElement))
 	{
-		console.clear();
+		// console.clear();
 		if (dev) console.log(`mirkoukrywaczUnblockElement(${object_id})`)
 
 		if (localStorageMirkoukrywacz)
@@ -5815,7 +5814,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 	function checkPluses(sectionObjectElement, ratingBoxSection, showUpdatedValues = true)
 	{
-		console.clear();
+		// console.clear();
 		consoleX(`checkPluses(showUpdatedValues: ${showUpdatedValues})`, 0);
 
 		if (sectionObjectElement == null && ratingBoxSection?.__vue__?.$parent)
@@ -7616,21 +7615,28 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	};
 
 	/* NEW WYKOP PAGE REDIRECTION */
-	navigation.addEventListener("navigate", (event) =>
+
+
+	if (window?.navigation != null)  
 	{
-		consoleX(`🎈 Event: "navigate"`)
-		loadTime = dayjs();
-		browserExecuteOnPageChange(event);
-		browserExecuteOnPageLoadAndPageChange();
-	});
+		navigation.addEventListener("navigate", (event) =>
+		{
+			consoleX(`🎈 Event: "navigate"`)
+			loadTime = dayjs();
+			browserExecuteOnPageChange(event);
+			browserExecuteOnPageLoadAndPageChange();
+		});
+	}
+
+
 
 	function handleWindowEvent(event)
 	{
 		if (dev) console.log(`handleWindowEvent() -> event.type: ${event.type} was fired`);
 		// if(dev) console.log(event);
 	}
-	window.addEventListener('load', handleWindowEvent); 		// 1.
-	window.addEventListener('pageshow', handleWindowEvent); 	// 2.
+	// window.addEventListener('load', handleWindowEvent); 		// 1.
+	// window.addEventListener('pageshow', handleWindowEvent); 	// 2.
 	// window.addEventListener('popstate', handleWindowEvent);
 	// window.addEventListener('hashchange', handleWindowEvent);
 	// window.addEventListener('pagehide', handleWindowEvent);
@@ -7641,6 +7647,10 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		1. 	window.addEventListener('load', callback); (Event) event.srcElement.URL > "https://wykop.pl/wpis/74180083/pytanie#comment-261404235"
 		2. 	window.addEventListener('pageshow', callback); (PageTransitionEvent)
 		
+		firefox: 
+		- load, pageshow - OK
+		- brak wykrytych eventów podczas przechodzenia miedzy stronami
+		- brak obiektu window.navigator
 		przejscie na nowa strone, do innego #anchora po kliknieciu w permalink komentarza we wpisie
 		
 		3. navigation.addEventListener("navigate", callback) (NavigateEvent)
