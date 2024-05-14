@@ -271,11 +271,10 @@
 	let localStorageMirkoukrywacz = null;
 	let localStorageNotatkowator = null;
 	let localStorageUserLabels = null;
-	let localStorageFirstDailyIDs = null;
 
 
 	// LOCALSTORAGE
-	localStorageFirstDailyIDs = localforage.createInstance({
+	const localStorageFirstDailyIDs = localforage.createInstance({
 		driver: localforage.LOCALSTORAGE,
 		name: "wykopx",
 		storeName: "firstDailyIDs",

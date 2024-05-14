@@ -138,7 +138,7 @@ setSettingsValueFromCSSProperty("hideAds");				// blokuje wszystkie reklamy na w
 (async function ()
 {
 	// LOCALSTORAGE
-	localStorageSettings = localforage.createInstance({
+	const localStorageSettings = localforage.createInstance({
 		driver: localforage.LOCALSTORAGE,
 		name: "wykopx",
 		storeName: "settings",
