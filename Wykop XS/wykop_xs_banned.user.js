@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name							Wykop XS - Informacje o banach
-// @name:pl							Wykop XS - Informacje o banach
+// @name							Wykop XS - Ban Info - Informacje o banach
+// @name:pl							Wykop XS - Ban Info - Informacje o banach
 // @name:en							Wykop XS - Ban Info
 
-// @version							3.0.44
+// @version							3.0.50
 
 // @description 					Wykop XS - Informacje o banach na profilach zbanowanych użytkowników. Wykop X Style znajdziesz na: http://styl.wykopx.pl
 // @description:en 					Wykop XS - Shows precise info about banned users on Wykop.pl. Check out Wykop X Style here: http://styl.wykopx.pl
@@ -43,18 +43,41 @@
 {
 	'use strict';
 
-	let loadTime = dayjs();
+	const currentVersion = "3.0.50";
+	let dev = false;
+
+	const promoString = " [Dodane przez Wykop X #wykopwnowymstylu]";
+
 	const root = document.documentElement;
 	const head = document.head;
 	const body = document.body;
 	const bodySection = body.querySelector("section");
-	const wykopxSettings = getComputedStyle(document.querySelector("head"));
+	const wykopxSettings = getComputedStyle(head); // getComputedStyle(document.documentElement) -- nie działa, nie wczytuje właściwości z :root
 	const settings = {};
 
-	settings.infoboxUserBannedInfoOnProfilePage = wykopxSettings.getPropertyValue("--infoboxUserBannedInfoOnProfilePage") ? wykopxSettings.getPropertyValue("--infoboxUserBannedInfoOnProfilePage") === '1' : true; 	// 1 || 0
+	const styleElement = document.createElement('style');
+	styleElement.id = "wykopxs";
+	let CSS = "";
 
-	// WYKOP XS -- START
-	// wykop_xs_banned_user.js
+	function setSettingsValueFromCSSProperty(settingName, defaultValueForWykopXS = true, propertyValueInsteadOfBoolean = false)
+	{
+		if (propertyValueInsteadOfBoolean) settings[settingName] = wykopxSettings.getPropertyValue(`--${settingName}`) ? wykopxSettings.getPropertyValue(`--${settingName}`).trim() : defaultValueForWykopXS;
+		else settings[settingName] = wykopxSettings.getPropertyValue(`--${settingName}`) ? wykopxSettings.getPropertyValue(`--${settingName}`).trim() === '1' : defaultValueForWykopXS;
+	}
+
+	setSettingsValueFromCSSProperty("WykopXSEnabled");
+	if (settings.WykopXSEnabled == false) return;
+	/* WYKOP XS HEADER */
+
+
+
+	let loadTime = dayjs();
+
+	// wykop_xs_banned.user.js - START - 1
+	setSettingsValueFromCSSProperty("infoboxUserBannedInfoOnProfilePage");
+	// wykop_xs_banned.user.js - END - 1
+
+	// wykop_xs_banned.user.js - START - 2
 	if (settings.infoboxUserBannedInfoOnProfilePage)
 	{
 		waitForKeyElements("aside.profile-top:has(aside.info-box.red)", bannedUserProfileAside, false);
@@ -103,6 +126,6 @@
 			}
 		}
 	}
-	// WYKOP XS -- END
+	// wykop_xs_banned.user.js - END - 2
 
 })();

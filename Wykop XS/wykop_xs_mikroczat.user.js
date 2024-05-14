@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name							Wykop XS - Mikroczat, Lista plusujących, Animowane awatary
-// @name:pl							Wykop XS - Mikroczat, Lista plusujących, Animowane awatary
-// @name:en							Wykop XS - Mikroczat, Lista plusujących, Animowane awatary
+// @name							Wykop XS - Lista plusujących, animowane awatary, mikroczat
+// @name:pl							Wykop XS - Lista plusujących, animowane awatary, mikroczat
+// @name:en							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 
-// @version							3.0.45
+// @version							3.0.50
 
 // @description 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -39,16 +39,37 @@
 
 // ==/UserScript==
 
-const currentVersion = "3.0.45";
-let dev = true;
 
-const promoString = "- Wykop XS";
+'use strict';
+
+const currentVersion = "3.0.50";
+let dev = false;
+
+const promoString = " - Wykop XS";
+
+const root = document.documentElement;
 const head = document.head;
-const bodySection = document.body.querySelector("section");
+const body = document.body;
+const bodySection = body.querySelector("section");
+const wykopxSettings = getComputedStyle(head); // getComputedStyle(document.documentElement) -- nie działa, nie wczytuje właściwości z :root
+const settings = {};
 
 const styleElement = document.createElement('style');
 styleElement.id = "wykopxs_mikroczat";
 let CSS = "";
+
+function setSettingsValueFromCSSProperty(settingName, defaultValueForWykopXS = true, propertyValueInsteadOfBoolean = false)
+{
+	if (propertyValueInsteadOfBoolean) settings[settingName] = wykopxSettings.getPropertyValue(`--${settingName}`) ? wykopxSettings.getPropertyValue(`--${settingName}`).trim() : defaultValueForWykopXS;
+	else settings[settingName] = wykopxSettings.getPropertyValue(`--${settingName}`) ? wykopxSettings.getPropertyValue(`--${settingName}`).trim() === '1' : defaultValueForWykopXS;
+}
+
+setSettingsValueFromCSSProperty("WykopXSEnabled");
+if (settings.WykopXSEnabled == false) return;
+/* WYKOP XS HEADER */
+
+
+
 
 
 
@@ -74,7 +95,6 @@ Domyślne wartości wyglądają przykładowo tak:
 
 // DEFAULT SETTINGS - nie zmieniaj wartości settings w kodzie. 
 // Zmień je w sposób opisany powyżej
-const settings = {};
 
 settings.showVotersList = true;			// włącza pokazywanie listy plusujących
 // expandAllVotersIfLessThan - domyślnie Wykop pokazywał 5 osób, które zaplusowały. 

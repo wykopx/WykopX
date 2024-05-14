@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - XHR blocker
 // @name:en							Wykop XS - XHR blocker
 
-// @version							3.0.44
+// @version							3.0.50
 
 // @description 					Wykop XS - XHR Blocker | Wykop X Style znajdziesz na: http://style.wykopx.pl
 // @description:en 					Wykop XS - XHR Blocker | Check out also: http://style.wykopx.pl
@@ -43,18 +43,62 @@
 {
 	'use strict';
 
-	let dev = true;
-	let wykopxSettings = getComputedStyle(document.querySelector("head"));
+	const currentVersion = "3.0.50";
+	let dev = false;
 
-	let settings = {};
-	settings.WykopXSEnabled = wykopxSettings.getPropertyValue("--WykopXSEnabled") ? wykopxSettings.getPropertyValue("--WykopXSEnabled") === '1' : true;
-	if (settings.WykopXSEnabled == false) { return; }
+	const promoString = " [Dodane przez Wykop X #wykopwnowymstylu]";
 
+	const root = document.documentElement;
+	const head = document.head;
+	const body = document.body;
+	const bodySection = body.querySelector("section");
+	const wykopxSettings = getComputedStyle(head); // getComputedStyle(document.documentElement) -- nie działa, nie wczytuje właściwości z :root
+	const settings = {};
+
+	const styleElement = document.createElement('style');
+	styleElement.id = "wykopxs";
+	let CSS = "";
+
+	function setSettingsValueFromCSSProperty(settingName, defaultValueForWykopXS = true, propertyValueInsteadOfBoolean = false)
+	{
+		if (propertyValueInsteadOfBoolean) settings[settingName] = wykopxSettings.getPropertyValue(`--${settingName}`) ? wykopxSettings.getPropertyValue(`--${settingName}`).trim() : defaultValueForWykopXS;
+		else settings[settingName] = wykopxSettings.getPropertyValue(`--${settingName}`) ? wykopxSettings.getPropertyValue(`--${settingName}`).trim() === '1' : defaultValueForWykopXS;
+	}
+
+	setSettingsValueFromCSSProperty("WykopXSEnabled");
+	if (settings.WykopXSEnabled == false) return;
+	/* WYKOP XS HEADER */
+
+
+
+
+
+	setSettingsValueFromCSSProperty("infiniteScrollEntriesEnabled");
+	setSettingsValueFromCSSProperty("infiniteScrollLinksEnabled");
 
 	// Wykop XS - XHR Blocker
 	// https://greasyfork.org/en/scripts/486722-wykop-xs-xhr-blocker
-	settings.wxsBlockXHRExternal = wykopxSettings.getPropertyValue("--wxsBlockXHRExternal") ? wykopxSettings.getPropertyValue("--wxsBlockXHRExternal") === '1' : true;
-	settings.wxsBlockXHRInternalAds = wykopxSettings.getPropertyValue("--wxsBlockXHRInternalAds") ? wykopxSettings.getPropertyValue("--wxsBlockXHRInternalAds") === '1' : true;
+	setSettingsValueFromCSSProperty("wxsBlockXHREnable");
+	if (settings.wxsBlockXHREnable)
+	{
+		setSettingsValueFromCSSProperty("wxsBlockXHRExternal");
+		setSettingsValueFromCSSProperty("wxsBlockXHRInternalAds");
+		// setSettingsValueFromCSSProperty("wxsBlockXHRConsoleLogAllowed", false);
+		// setSettingsValueFromCSSProperty("wxsBlockXHRConsoleLogBlocked", false);
+		// setSettingsValueFromCSSProperty("rightSidebarHidePopularTags", false);
+		// setSettingsValueFromCSSProperty("rightSidebarHideRelatedTags", false);
+		// setSettingsValueFromCSSProperty("rightSidebarHideHits", false);
+		// setSettingsValueFromCSSProperty("rightSidebarHideEntriesHot", false);
+		// setSettingsValueFromCSSProperty("rightSidebarHideEntriesActive", false);
+		// setSettingsValueFromCSSProperty("rightSidebarHideEntriesPopular", false);
+		// setSettingsValueFromCSSProperty("rightSidebarHideUpcomingActive", false);
+		// setSettingsValueFromCSSProperty("rightSidebarHideLinksNewest", false);
+		// setSettingsValueFromCSSProperty("rightSidebarHideLinksActive", false);
+		// setSettingsValueFromCSSProperty("rightSidebarHideLinksPopular", false);
+	}
+
+
+
 	let xhook = null;
 	if (settings.infiniteScrollEntriesEnabled || settings.infiniteScrollLinksEnabled || settings.wxsBlockXHRExternal || settings.wxsBlockXHRInternalAds)
 	{
@@ -66,7 +110,7 @@
 
 	if (xhook != null && (settings.wxsBlockXHRExternal || settings.wxsBlockXHRInternalAds))
 	{
-		if (!dev) dev = wykopxSettings.getPropertyValue("--wxsDev") ? wykopxSettings.getPropertyValue("--wxsDev") === '1' : false;
+		if (!dev) dev = setSettingsValueFromCSSProperty("wxsDev", false);
 
 		const allowed = [];
 		if (settings.wxsBlockXHRExternal) allowed.push('https://wykop.pl/api/', 'https://raw.githubusercontent.com/wykopx/', 'wykopx.pl');

@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3.0
 // @name:en							Wykop XS 3.0
 
-// @version							3.0.45
+// @version							3.0.50
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://styl.wykopx.pl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://styl.wykopx.pl
@@ -38,25 +38,13 @@
 
 // ==/UserScript==
 
+
 (async function ()
 {
 	'use strict';
 
-	const currentVersion = "3.0.45";
+	const currentVersion = "3.0.50";
 	let dev = false;
-
-	//dayjs.extend(relativeTime); // https://day.js.org/docs/en/plugin/relative-time // https://www.jsdelivr.com/package/npm/dayjs?tab=files&path=plugin
-	dayjs.extend(window.dayjs_plugin_relativeTime);
-	let loadTime = dayjs();
-
-	let user = {
-		data: null,
-		username: null		// user.username -> nazwa zalogowanego uzytkownika
-	};
-	let wxs_modal = null;
-
-
-
 
 	const promoString = " [Dodane przez Wykop X #wykopwnowymstylu]";
 
@@ -64,21 +52,35 @@
 	const head = document.head;
 	const body = document.body;
 	const bodySection = body.querySelector("section");
+	const wykopxSettings = getComputedStyle(head); // getComputedStyle(document.documentElement) -- nie działa, nie wczytuje właściwości z :root
+	const settings = {};
 
 	const styleElement = document.createElement('style');
 	styleElement.id = "wykopxs";
 	let CSS = "";
 
+	function setSettingsValueFromCSSProperty(settingName, defaultValueForWykopXS = true, propertyValueInsteadOfBoolean = false)
+	{
+		if (propertyValueInsteadOfBoolean) settings[settingName] = wykopxSettings.getPropertyValue(`--${settingName}`) ? wykopxSettings.getPropertyValue(`--${settingName}`).trim() : defaultValueForWykopXS;
+		else settings[settingName] = wykopxSettings.getPropertyValue(`--${settingName}`) ? wykopxSettings.getPropertyValue(`--${settingName}`).trim() === '1' : defaultValueForWykopXS;
+	}
 
-
-
-
-	const wykopxSettings = getComputedStyle(head); // getComputedStyle(document.documentElement) -- nie działa, nie wczytuje właściwości z :root
-	const settings = {};
-
-	settings.WykopXSEnabled = wykopxSettings.getPropertyValue("--WykopXSEnabled") ? wykopxSettings.getPropertyValue("--WykopXSEnabled") === '1' : true;
+	setSettingsValueFromCSSProperty("WykopXSEnabled");
 	if (settings.WykopXSEnabled == false) return;
+	/* WYKOP XS HEADER */
 
+
+
+
+
+	let user = {
+		data: null,
+		username: null		// user.username -> nazwa zalogowanego uzytkownika
+	};
+	let wxs_modal = null;
+
+	let loadTime = dayjs();
+	dayjs.extend(window.dayjs_plugin_relativeTime); //dayjs.extend(relativeTime); // https://day.js.org/docs/en/plugin/relative-time // https://www.jsdelivr.com/package/npm/dayjs?tab=files&path=plugin
 
 	// wykop_xs_mikroczat.user.js -MIKROCZAT/LISTA PLUSUJĄCYCH - settings
 	settings.showVotersList = true;			// włącza pokazywanie listy plusujących
@@ -121,81 +123,82 @@
 
 
 
-	if (!dev) dev = wykopxSettings.getPropertyValue("--wxsDev") ? wykopxSettings.getPropertyValue("--wxsDev") === '1' : false;
-
-	settings.WykopXStyleEnabled = wykopxSettings.getPropertyValue("--WykopXStyleEnabled") ? wykopxSettings.getPropertyValue("--WykopXStyleEnabled") === '1' : true;
+	if (!dev) dev = setSettingsValueFromCSSProperty("wxsDev", false);
 
 
-	settings.hitsInTopNavJS = wykopxSettings.getPropertyValue("--hitsInTopNavJS") ? wykopxSettings.getPropertyValue("--hitsInTopNavJS") === '1' : true;
-	settings.quickLinksEnable = wykopxSettings.getPropertyValue("--quickLinksEnable") ? wykopxSettings.getPropertyValue("--quickLinksEnable") === '1' : true;
-	settings.myWykopInTopNavJS = wykopxSettings.getPropertyValue("--myWykopInTopNavJS") ? wykopxSettings.getPropertyValue("--myWykopInTopNavJS") === '1' : true;
-	settings.favoritesInTopNavJS = wykopxSettings.getPropertyValue("--favoritesInTopNavJS") ? wykopxSettings.getPropertyValue("--favoritesInTopNavJS") === '1' : true;
-	settings.imageUploaderEnable = wykopxSettings.getPropertyValue("--imageUploaderEnable") ? wykopxSettings.getPropertyValue("--imageUploaderEnable") === '1' : true;
-	settings.addNewLinkInTopNavJS = wykopxSettings.getPropertyValue("--addNewLinkInTopNavJS") ? wykopxSettings.getPropertyValue("--addNewLinkInTopNavJS") === '1' : true;
-	settings.disableNewLinkEditorPastedTextLimit = wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") ? wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") === '1' : true;
-	settings.autoOpenMoreContentEverywhere = wykopxSettings.getPropertyValue("--autoOpenMoreContentEverywhere") ? wykopxSettings.getPropertyValue("--autoOpenMoreContentEverywhere") === '1' : true;
-	settings.autoOpenSpoilersEverywhere = wykopxSettings.getPropertyValue("--autoOpenSpoilersEverywhere") ? wykopxSettings.getPropertyValue("--autoOpenSpoilersEverywhere") === '1' : true;
-	settings.observedTagsInRightSidebarEnable = wykopxSettings.getPropertyValue("--observedTagsInRightSidebarEnable") ? wykopxSettings.getPropertyValue("--observedTagsInRightSidebarEnable") === '1' : true;
-
-	settings.linkVoteDownButton = wykopxSettings.getPropertyValue("--linkVoteDownButton") ? wykopxSettings.getPropertyValue("--linkVoteDownButton") === '1' : true;
 
 
-	settings.infiniteScrollEntriesEnabled = wykopxSettings.getPropertyValue("--infiniteScrollEntriesEnabled") ? wykopxSettings.getPropertyValue("--infiniteScrollEntriesEnabled") === '1' : true;
-	settings.infiniteScrollLinksEnabled = wykopxSettings.getPropertyValue("--infiniteScrollLinksEnabled") ? wykopxSettings.getPropertyValue("--infiniteScrollLinksEnabled") === '1' : true;
 
-	settings.editorShowMyUsername = wykopxSettings.getPropertyValue("--editorShowMyUsername") ? wykopxSettings.getPropertyValue("--editorShowMyUsername") === '1' : true;
-	settings.editorShowMyUsernameOnSendButton = wykopxSettings.getPropertyValue("--editorShowMyUsernameOnSendButton") ? wykopxSettings.getPropertyValue("--editorShowMyUsernameOnSendButton") === '1' : true;
-
+	setSettingsValueFromCSSProperty("WykopXStyleEnabled", false);
+	setSettingsValueFromCSSProperty("hitsInTopNavJS");
+	setSettingsValueFromCSSProperty("quickLinksEnable");
+	setSettingsValueFromCSSProperty("myWykopInTopNavJS");
+	setSettingsValueFromCSSProperty("favoritesInTopNavJS");
+	setSettingsValueFromCSSProperty("imageUploaderEnable");
+	setSettingsValueFromCSSProperty("addNewLinkInTopNavJS");
+	setSettingsValueFromCSSProperty("disableNewLinkEditorPastedTextLimit");
+	setSettingsValueFromCSSProperty("autoOpenMoreContentEverywhere");
+	setSettingsValueFromCSSProperty("autoOpenSpoilersEverywhere");
+	setSettingsValueFromCSSProperty("observedTagsInRightSidebarEnable");
+	setSettingsValueFromCSSProperty("linkVoteDownButton");
+	setSettingsValueFromCSSProperty("infiniteScrollEntriesEnabled");
+	setSettingsValueFromCSSProperty("infiniteScrollLinksEnabled");
+	setSettingsValueFromCSSProperty("editorShowMyUsername");
+	setSettingsValueFromCSSProperty("editorShowMyUsernameOnSendButton");
 	// ARCHIWUM X
-	settings.wxsArchiveXNewestEntry = wykopxSettings.getPropertyValue("--wxsArchiveXNewestEntry") ? wykopxSettings.getPropertyValue("--wxsArchiveXNewestEntry") === '1' : true;
+	setSettingsValueFromCSSProperty("wxsArchiveXNewestEntry");
 	if (settings.wxsArchiveXNewestEntry) settings.wxsArchiveXNewestEntryRefresh = wykopxSettings.getPropertyValue("--wxsArchiveXNewestEntryRefresh") ? parseInt(wykopxSettings.getPropertyValue("--wxsArchiveXNewestEntryRefresh")) : 15000;
 
 	// PRZEŁĄCZNIKI
-	settings.wxsSwitchesEnable = wykopxSettings.getPropertyValue("--wxsSwitchesEnable") ? wykopxSettings.getPropertyValue("--wxsSwitchesEnable") === '1' : false;
+	setSettingsValueFromCSSProperty("wxsSwitchesEnable", false);
 	if (settings.wxsSwitchesEnable) 
 	{
-		settings.wxsSwitchPhotoViewer = wykopxSettings.getPropertyValue("--wxsSwitchPhotoViewer") ? wykopxSettings.getPropertyValue("--wxsSwitchPhotoViewer") === '1' : true;
-		settings.wxsSwitchImages = wykopxSettings.getPropertyValue("--wxsSwitchImages") ? wykopxSettings.getPropertyValue("--wxsSwitchImages") === '1' : true;
-		settings.wxsSwitchYouTube = wykopxSettings.getPropertyValue("--wxsSwitchYouTube") ? wykopxSettings.getPropertyValue("--wxsSwitchYouTube") === '1' : true;
-		settings.wxsSwitchAdult = wykopxSettings.getPropertyValue("--wxsSwitchAdult") ? wykopxSettings.getPropertyValue("--wxsSwitchAdult") === '1' : true;
-		settings.wxsSwitchNSFW = wykopxSettings.getPropertyValue("--wxsSwitchNSFW") ? wykopxSettings.getPropertyValue("--wxsSwitchNSFW") === '1' : true;
-		settings.wxsSwitchTags = wykopxSettings.getPropertyValue("--wxsSwitchTags") ? wykopxSettings.getPropertyValue("--wxsSwitchTags") === '1' : true;
-		settings.wxsSwitchByUserColor = wykopxSettings.getPropertyValue("--wxsSwitchByUserColor") ? wykopxSettings.getPropertyValue("--wxsSwitchByUserColor") === '1' : true;
-		settings.wxsSwitchByUserGender = wykopxSettings.getPropertyValue("--wxsSwitchByUserGender") ? wykopxSettings.getPropertyValue("--wxsSwitchByUserGender") === '1' : true;
+		setSettingsValueFromCSSProperty("wxsSwitchPhotoViewer");
+		setSettingsValueFromCSSProperty("wxsSwitchImages");
+		setSettingsValueFromCSSProperty("wxsSwitchYouTube");
+		setSettingsValueFromCSSProperty("wxsSwitchAdult");
+		setSettingsValueFromCSSProperty("wxsSwitchNSFW");
+		setSettingsValueFromCSSProperty("wxsSwitchTags");
+		setSettingsValueFromCSSProperty("wxsSwitchByUserColor");
+		setSettingsValueFromCSSProperty("wxsSwitchByUserGender");
 	}
 
 
-
-
-	settings.removeAnnoyancesEnable = wykopxSettings.getPropertyValue("--removeAnnoyancesEnable") ? wykopxSettings.getPropertyValue("--removeAnnoyancesEnable") === '1' : true;
+	setSettingsValueFromCSSProperty("removeAnnoyancesEnable");
 	if (settings.removeAnnoyancesEnable) 
 	{
-		settings.removeAnnoyancesIframes = wykopxSettings.getPropertyValue("--removeAnnoyancesIframes") ? wykopxSettings.getPropertyValue("--removeAnnoyancesIframes") === '1' : true;
-		settings.removeAnnoyancesScripts = wykopxSettings.getPropertyValue("--removeAnnoyancesScripts") ? wykopxSettings.getPropertyValue("--removeAnnoyancesScripts") === '1' : true;
-		settings.removeAnnoyancesAds = wykopxSettings.getPropertyValue("--removeAnnoyancesAds") ? wykopxSettings.getPropertyValue("--removeAnnoyancesAds") === '1' : true;
-		settings.removeAnnoyancesGDPR = wykopxSettings.getPropertyValue("--removeAnnoyancesGDPR") ? wykopxSettings.getPropertyValue("--removeAnnoyancesGDPR") === '1' : true;
+		setSettingsValueFromCSSProperty("removeAnnoyancesIframes");
+		setSettingsValueFromCSSProperty("removeAnnoyancesScripts");
+		setSettingsValueFromCSSProperty("removeAnnoyancesAds");
+		setSettingsValueFromCSSProperty("removeAnnoyancesGDPR");
 	}
+
+
+
+
 
 
 	// WYKOP OBJECTS INTERSECTION OBSERVER
 	let IntersectionObserverEnabled = false;
-	settings.intersectionObserverRootMargin = wykopxSettings.getPropertyValue("--intersectionObserverRootMargin") ? wykopxSettings.getPropertyValue("--intersectionObserverRootMargin") === '1' : true;
+	setSettingsValueFromCSSProperty("intersectionObserverRootMargin");
+	setSettingsValueFromCSSProperty("linkToVideoDuration");
+	setSettingsValueFromCSSProperty("entryWithVideoDuration");
 
-	settings.linkToVideoDuration = wykopxSettings.getPropertyValue("--linkToVideoDuration") ? wykopxSettings.getPropertyValue("--linkToVideoDuration") === '1' : true;
-	settings.entryWithVideoDuration = wykopxSettings.getPropertyValue("--entryWithVideoDuration") ? wykopxSettings.getPropertyValue("--entryWithVideoDuration") === '1' : true;
 	if (settings.linkToVideoDuration || settings.entryWithVideoDuration)
 	{
 		IntersectionObserverEnabled = true;
 	}
-	settings.checkLinkVotesEnable = wykopxSettings.getPropertyValue("--checkLinkVotesEnable") ? wykopxSettings.getPropertyValue("--checkLinkVotesEnable") === '1' : true;
+
+	setSettingsValueFromCSSProperty("checkLinkVotesEnable");
 	if (settings.checkLinkVotesEnable) 
 	{
 		IntersectionObserverEnabled = true;
-		settings.checkLinkVotesPerHour = wykopxSettings.getPropertyValue("--checkLinkVotesPerHour") ? wykopxSettings.getPropertyValue("--checkLinkVotesPerHour") === '1' : true;
-		settings.checkLinkCommentsPerHour = wykopxSettings.getPropertyValue("--checkLinkCommentsPerHour") ? wykopxSettings.getPropertyValue("--checkLinkCommentsPerHour") === '1' : true;
+		setSettingsValueFromCSSProperty("checkLinkVotesPerHour");
+		setSettingsValueFromCSSProperty("checkLinkCommentsPerHour");
 	}
 
-	settings.votingExplosionEnable = wykopxSettings.getPropertyValue("--votingExplosionEnable") ? wykopxSettings.getPropertyValue("--votingExplosionEnable") === '1' : false;
+	// voting explosion
+	setSettingsValueFromCSSProperty("votingExplosionEnable");
 
 	// checkPluses()
 	let votesFetchingLimitMinimumVotes = 1;
@@ -207,10 +210,11 @@
 	let votesFetchingHigherFrequencyLimitMaximumHoursOld = 24;
 	let votesFetchingHigherFrequencyDelayInSeconds = 990; // seconds
 
-	settings.checkEntryPlusesWhenVoting = wykopxSettings.getPropertyValue("--checkEntryPlusesWhenVoting") ? wykopxSettings.getPropertyValue("--checkEntryPlusesWhenVoting") === '1' : true;
-	settings.checkEntryPlusesEnable = wykopxSettings.getPropertyValue("--checkEntryPlusesEnable") ? wykopxSettings.getPropertyValue("--checkEntryPlusesEnable") === '1' : true;
+	setSettingsValueFromCSSProperty("checkEntryPlusesWhenVoting");
+	setSettingsValueFromCSSProperty("checkEntryPlusesEnable");
+	setSettingsValueFromCSSProperty("prefixBeforePlusesCount", "brak", true); // domyslnie puste, dodajemy plus przed liczbą plusów
 
-	settings.prefixBeforePlusesCount = wykopxSettings.getPropertyValue("--prefixBeforePlusesCount") ? wykopxSettings.getPropertyValue("--prefixBeforePlusesCount") : "brak";  // domyslnie puste, dodajemy plus przed liczbą plusów
+
 	const prefixBeforePlusesCountMap = new Map([
 		['brak', ''],
 		['plus', '+'],	// domyslnie 
@@ -229,7 +233,7 @@
 	]);
 	settings.prefixBeforePlusesCount = prefixBeforePlusesCountMap.get(settings.prefixBeforePlusesCount);
 
-	settings.prefixBeforeMinusesCount = wykopxSettings.getPropertyValue("--prefixBeforeMinusesCount") ? wykopxSettings.getPropertyValue("--prefixBeforeMinusesCount") : "minus"; // domyślnie minus i tak zostawiamy
+	setSettingsValueFromCSSProperty("prefixBeforeMinusesCount", "minus", true); // domyślnie minus i tak zostawiamy
 	const prefixBeforeMinusesCountMap = new Map([
 		['brak', ''],
 		['minus', '-'],	// domyslnie
@@ -249,11 +253,13 @@
 	if (settings.checkEntryPlusesEnable) 
 	{
 		IntersectionObserverEnabled = true;
-		settings.checkEntryPlusesPerHour = wykopxSettings.getPropertyValue("--checkEntryPlusesPerHour") ? wykopxSettings.getPropertyValue("--checkEntryPlusesPerHour") === '1' : true;
-		settings.checkEntryCommentsPerHour = wykopxSettings.getPropertyValue("--checkEntryCommentsPerHour") ? wykopxSettings.getPropertyValue("--checkEntryCommentsPerHour") === '1' : true;
-		settings.checkEntryPlusesForVotingGame = wykopxSettings.getPropertyValue("--checkEntryPlusesForVotingGame") ? wykopxSettings.getPropertyValue("--checkEntryPlusesForVotingGame") === '1' : true;
+		setSettingsValueFromCSSProperty("checkEntryPlusesPerHour");
+		setSettingsValueFromCSSProperty("checkEntryCommentsPerHour");
+		setSettingsValueFromCSSProperty("checkEntryPlusesForVotingGame");
 	}
 
+
+	// SPRAWDZANIE UZYTKOWNIKOW KTORZY CIE BLOKUJA
 	settings.authorBlocksYouCheckingEnable = true;
 
 
@@ -276,14 +282,13 @@
 
 
 
-
-	settings.actionBoxEnable = wykopxSettings.getPropertyValue("--actionBoxEnable") ? wykopxSettings.getPropertyValue("--actionBoxEnable") === '1' : true;
+	setSettingsValueFromCSSProperty("actionBoxEnable");
 	if (settings.actionBoxEnable)
 	{
 		IntersectionObserverEnabled = true;
-		settings.filterUserComments = wykopxSettings.getPropertyValue("--filterUserComments") ? wykopxSettings.getPropertyValue("--filterUserComments") === '1' : true;
-		settings.filterUserReplies = wykopxSettings.getPropertyValue("--filterUserReplies") ? wykopxSettings.getPropertyValue("--filterUserReplies") === '1' : true;
-		settings.mirkoukrywaczEnable = wykopxSettings.getPropertyValue("--mirkoukrywaczEnable") ? wykopxSettings.getPropertyValue("--mirkoukrywaczEnable") === '1' : true;
+		setSettingsValueFromCSSProperty("filterUserComments");
+		setSettingsValueFromCSSProperty("filterUserReplies");
+		setSettingsValueFromCSSProperty("mirkoukrywaczEnable");
 	}
 	else
 	{
@@ -299,15 +304,14 @@
 			storeName: "mirkoukrywacz",
 		});
 
-		settings.mirkoukrywaczMinimizeEntries = wykopxSettings.getPropertyValue("--mirkoukrywaczMinimizeEntries") ? wykopxSettings.getPropertyValue("--mirkoukrywaczMinimizeEntries") === '1' : true; // 1 || 0
-		settings.mirkoukrywaczMinimizeComments = wykopxSettings.getPropertyValue("--mirkoukrywaczMinimizeComments") ? wykopxSettings.getPropertyValue("--mirkoukrywaczMinimizeComments") === '1' : true; // 1 || 0
-		settings.mirkoukrywaczHideEntries = wykopxSettings.getPropertyValue("--mirkoukrywaczHideEntries") ? wykopxSettings.getPropertyValue("--mirkoukrywaczHideEntries") === '1' : true; // 1 || 0
-		settings.mirkoukrywaczHideComments = wykopxSettings.getPropertyValue("--mirkoukrywaczHideComments") ? wykopxSettings.getPropertyValue("--mirkoukrywaczHideComments") === '1' : true; // 1 || 0
-		settings.mirkoukrywaczHideLinks = wykopxSettings.getPropertyValue("--mirkoukrywaczHideLinks") ? wykopxSettings.getPropertyValue("--mirkoukrywaczHideLinks") === '1' : true; // 1 || 0
+		setSettingsValueFromCSSProperty("mirkoukrywaczMinimizeEntries");
+		setSettingsValueFromCSSProperty("mirkoukrywaczMinimizeComments");
+		setSettingsValueFromCSSProperty("mirkoukrywaczHideEntries");
+		setSettingsValueFromCSSProperty("mirkoukrywaczHideComments");
+		setSettingsValueFromCSSProperty("mirkoukrywaczHideLinks");
 	}
 
-
-	settings.notatkowatorEnable = wykopxSettings.getPropertyValue("--notatkowatorEnable") ? wykopxSettings.getPropertyValue("--notatkowatorEnable") === '1' : true;
+	setSettingsValueFromCSSProperty("notatkowatorEnable");
 	if (settings.notatkowatorEnable)
 	{
 		IntersectionObserverEnabled = true;
@@ -318,19 +322,17 @@
 		});
 
 		//settings.notatkowatorUpdateInterval = parseFloat(wykopxSettings.getPropertyValue("--notatkowatorUpdateInterval")); // number 0 ... 120
-		settings.notatkowatorVerticalBar = wykopxSettings.getPropertyValue("--notatkowatorVerticalBar") ? wykopxSettings.getPropertyValue("--notatkowatorVerticalBar") === '1' : true; // 1 || 0
-		settings.notatkowatorWebsiteURL = wykopxSettings.getPropertyValue("--notatkowatorWebsiteURL") ? wykopxSettings.getPropertyValue("--notatkowatorWebsiteURL") === '1' : true; // 1 || 0
-		settings.notatkowatorStyle = wykopxSettings.getPropertyValue("--notatkowatorStyle").trim();	// string "pod_avatarem" "obok_nicka"
+		setSettingsValueFromCSSProperty("notatkowatorVerticalBar");
+		setSettingsValueFromCSSProperty("notatkowatorWebsiteURL");
+		setSettingsValueFromCSSProperty("notatkowatorStyle", "obok_nicka", true); // obok_nicka, obok_nicka_druga_linia, pod_avatarem
 	}
 
-
-
-	settings.wxsUserLabelsEnable = wykopxSettings.getPropertyValue("--wxsUserLabelsEnable") ? wykopxSettings.getPropertyValue("--wxsUserLabelsEnable") === '1' : true;
 
 	let falszyweRozoweArray = null;
 	let falszyweNiebieskieArray = null;
 	let mapaTrolli = null;
 
+	setSettingsValueFromCSSProperty("wxsUserLabelsEnable");
 	if (settings.wxsUserLabelsEnable)
 	{
 		IntersectionObserverEnabled = true;
@@ -339,9 +341,8 @@
 			name: "wykopx",
 			storeName: "userlabels",
 		});
-
-		settings.wxsUserLabelsFakeFemales = wykopxSettings.getPropertyValue("--wxsUserLabelsFakeFemales") ? wykopxSettings.getPropertyValue("--wxsUserLabelsFakeFemales") === '1' : true;
-		settings.wxsUserLabelsTrolls = wykopxSettings.getPropertyValue("--wxsUserLabelsTrolls") ? wykopxSettings.getPropertyValue("--wxsUserLabelsTrolls") === '1' : true;
+		setSettingsValueFromCSSProperty("wxsUserLabelsFakeFemales");
+		setSettingsValueFromCSSProperty("wxsUserLabelsTrolls");
 
 		if (settings.wxsUserLabelsFakeFemales)
 		{
@@ -392,8 +393,6 @@
 			listafalszywychniebieskich.push("mariusz9922");
 
 
-
-
 			localStorageUserLabels.setItem('falszyweRozowe', listafalszywychrozowych).then(() => { });
 			localStorageUserLabels.setItem('falszyweNiebieskie', listafalszywychniebieskich).then(() => { });
 
@@ -409,7 +408,6 @@
 			const trollsMap = new Map();
 			trollsMap.set("WykopX", { "url": "https://github.com/wykopx/WykopX/wiki/X-Notatkowator" });
 			trollsMap.set("wykop", { "label": "Oficjalne konto", });
-
 			trollsMap.set("bakehaus", { "label": "Wypiek", "url": "https://nimble.li/vdr4ajlm" });
 			trollsMap.set("m__b", { "label": "Michał B.", "url": "https://pl.linkedin.com/in/michalbialek" });
 			trollsMap.set("paliwoda", { "url": "https://sjp.pwn.pl/sjp/chomato;2448428.html" });
@@ -420,9 +418,8 @@
 			trollsMap.set("ISSTrackerPL", { "label": "Bot", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Boty-na-Wykopie#iss-tracker" });
 			trollsMap.set("januszowybot", { "label": "Bot", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Boty-na-Wykopie#januszowy-bot" });
 			trollsMap.set("mirko_anonim", { "label": "Anonim", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Aplikacje#mirkoanonim" });
+
 			trollsMap.set("ChwilowaPomaranczka", { "label": "Wykopowy Troll" });
-
-
 			localStorageUserLabels.setItem('mapaTrolli', Object.fromEntries(trollsMap)).then(() => { });
 
 			// get from localstorage
@@ -430,78 +427,78 @@
 		}
 	}
 
-	// wykop_xs_banned.user.js
-	settings.infoboxUserBannedInfoOnProfilePage = wykopxSettings.getPropertyValue("--infoboxUserBannedInfoOnProfilePage") ? wykopxSettings.getPropertyValue("--infoboxUserBannedInfoOnProfilePage") === '1' : true; // 1 || 0
+	// wykop_xs_banned.user.js - START - 1
+	setSettingsValueFromCSSProperty("infoboxUserBannedInfoOnProfilePage");
+	// wykop_xs_banned.user.js - END - 1
 
-	settings.infoboxEnable = wykopxSettings.getPropertyValue("--infoboxEnable") ? wykopxSettings.getPropertyValue("--infoboxEnable") === '1' : true;
+
+
+
+	setSettingsValueFromCSSProperty("infoboxEnable");
 	if (settings.infoboxEnable)
 	{
 		IntersectionObserverEnabled = true;
-		settings.infoboxUserBannedEmoji = wykopxSettings.getPropertyValue("--infoboxUserBannedEmoji") ? wykopxSettings.getPropertyValue("--infoboxUserBannedEmoji") === '1' : true; // 1 || 0
-		settings.infoboxUserBannedInfo = wykopxSettings.getPropertyValue("--infoboxUserBannedInfo") ? wykopxSettings.getPropertyValue("--infoboxUserBannedInfo") === '1' : true; // 1 || 0
-		settings.infoboxUserMemberSince = wykopxSettings.getPropertyValue("--infoboxUserMemberSince") ? wykopxSettings.getPropertyValue("--infoboxUserMemberSince") === '1' : true; // 1 || 0
-		settings.infoboxUserMemberSinceYear = wykopxSettings.getPropertyValue("--infoboxUserMemberSinceYear") ? wykopxSettings.getPropertyValue("--infoboxUserMemberSinceYear") === '1' : true; // 1 || 0
-		settings.infoboxUserSummaryFollowers = wykopxSettings.getPropertyValue("--infoboxUserSummaryFollowers") ? wykopxSettings.getPropertyValue("--infoboxUserSummaryFollowers") === '1' : true; // 1 || 0
-		settings.infoboxUserSummaryActivity = wykopxSettings.getPropertyValue("--infoboxUserSummaryActivity") ? wykopxSettings.getPropertyValue("--infoboxUserSummaryActivity") === '1' : true; // 1 || 0
+		setSettingsValueFromCSSProperty("infoboxUserBannedEmoji");
+		setSettingsValueFromCSSProperty("infoboxUserBannedInfo");
+		setSettingsValueFromCSSProperty("infoboxUserMemberSince");
+		setSettingsValueFromCSSProperty("infoboxUserMemberSinceYear");
+		setSettingsValueFromCSSProperty("infoboxUserSummaryFollowers");
+		setSettingsValueFromCSSProperty("infoboxUserSummaryActivity");
 	}
 
 
-	settings.tabChangeEnabled = wykopxSettings.getPropertyValue("--tabChangeEnabled") ? wykopxSettings.getPropertyValue("--tabChangeEnabled") === '1' : false;
+	setSettingsValueFromCSSProperty("tabChangeEnabled", false);
 	if (settings.tabChangeEnabled)
 	{
-		settings.tabChangeOnlyOnHiddenState = wykopxSettings.getPropertyValue("--tabChangeOnlyOnHiddenState") ? wykopxSettings.getPropertyValue("--tabChangeOnlyOnHiddenState") === '1' : false;
-		settings.tabChangeFaviconEnabled = wykopxSettings.getPropertyValue("--tabChangeFaviconEnabled") ? wykopxSettings.getPropertyValue("--tabChangeFaviconEnabled") === '1' : false;
+		setSettingsValueFromCSSProperty("tabChangeOnlyOnHiddenState", false);
+		setSettingsValueFromCSSProperty("tabChangeFaviconEnabled", false);
 
 		if (settings.tabChangeFaviconEnabled)
 		{
-			settings.tabChangeFaviconSelect = wykopxSettings.getPropertyValue("--tabChangeFaviconSelect").trim();
+			setSettingsValueFromCSSProperty("tabChangeFaviconSelect", "wykop", true);
 		}
 
-		settings.tabChangeTitleEnabled = wykopxSettings.getPropertyValue("--tabChangeTitleEnabled") ? wykopxSettings.getPropertyValue("--tabChangeTitleEnabled") === '1' : false;
+		setSettingsValueFromCSSProperty("tabChangeTitleEnabled", false);
 		if (settings.tabChangeTitleEnabled)
 		{
-			settings.tabChangeTitleShowNotificationsEnabled = wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsEnabled") ? wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsEnabled") === '1' : false;
-			settings.tabChangeTitleShowNotificationsCountPM = wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsCountPM") ? wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsCountPM") === '1' : false;
-			settings.tabChangeTitleShowNotificationsCountEntries = wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsCountEntries") ? wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsCountEntries") === '1' : false;
-			settings.tabChangeTitleShowNotificationsCountSeparated = wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsCountSeparated") ? wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsCountSeparated") === '1' : false;
-			settings.tabChangeTitleShowNotificationsCountTagsNewLink = wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsCountTagsNewLink") ? wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsCountTagsNewLink") === '1' : false;
-			settings.tabChangeTitleShowNotificationsCountTagsNewEntry = wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsCountTagsNewEntry") ? wykopxSettings.getPropertyValue("--tabChangeTitleShowNotificationsCountTagsNewEntry") === '1' : false;
-
-			settings.tabChangeTitlePrefix = wykopxSettings.getPropertyValue("--tabChangeTitlePrefix") ? wykopxSettings.getPropertyValue("--tabChangeTitlePrefix") === '1' : false;
-			settings.tabChangeTitleSelect = wykopxSettings.getPropertyValue("--tabChangeTitleSelect").trim();
-			settings.tabChangeTitleCustom = wykopxSettings.getPropertyValue("--tabChangeTitleCustom").trim();
-			settings.tabChangeTitleSuffix = wykopxSettings.getPropertyValue("--tabChangeTitleSuffix") ? wykopxSettings.getPropertyValue("--tabChangeTitleSuffix").trim() : "domyslny";
+			setSettingsValueFromCSSProperty("tabChangeTitleShowNotificationsEnabled", false);
+			setSettingsValueFromCSSProperty("tabChangeTitleShowNotificationsCountPM", false);
+			setSettingsValueFromCSSProperty("tabChangeTitleShowNotificationsCountEntries", false);
+			setSettingsValueFromCSSProperty("tabChangeTitleShowNotificationsCountSeparated", false);
+			setSettingsValueFromCSSProperty("tabChangeTitleShowNotificationsCountTagsNewLink", false);
+			setSettingsValueFromCSSProperty("tabChangeTitleShowNotificationsCountTagsNewEntry", false);
+			setSettingsValueFromCSSProperty("tabChangeTitlePrefix", false);
+			setSettingsValueFromCSSProperty("tabChangeTitleSelect", "domyslny", true);
+			setSettingsValueFromCSSProperty("tabChangeTitleCustom", "Wykop X", true);
+			setSettingsValueFromCSSProperty("tabChangeTitleSuffix", "domyslny", true);
 		}
 	}
 
 
 
 	// DOMYŚLNIE WYŁĄCZONE BEZ WYKOP X STYLE
-	// boolean
-	settings.votePlusMinusOnHover = wykopxSettings.getPropertyValue("--votePlusMinusOnHover") ? wykopxSettings.getPropertyValue("--votePlusMinusOnHover") === '1' : false;
-
-	settings.observedTagsInRightSidebarSortAlphabetically = wykopxSettings.getPropertyValue("--observedTagsInRightSidebarSortAlphabetically") ? wykopxSettings.getPropertyValue("--observedTagsInRightSidebarSortAlphabetically") === '1' : false;
-	settings.topNavHomeButtonClickRefreshOrRedirect = wykopxSettings.getPropertyValue("--topNavHomeButtonClickRefreshOrRedirect") ? wykopxSettings.getPropertyValue("--topNavHomeButtonClickRefreshOrRedirect") === '1' : false;
-	settings.topNavMicroblogButtonClickRefreshOrRedirect = wykopxSettings.getPropertyValue("--topNavMicroblogButtonClickRefreshOrRedirect") ? wykopxSettings.getPropertyValue("--topNavMicroblogButtonClickRefreshOrRedirect") === '1' : false;
-	settings.quickLinksEnable = wykopxSettings.getPropertyValue("--quickLinksEnable") ? wykopxSettings.getPropertyValue("--quickLinksEnable") === '1' : false;
+	setSettingsValueFromCSSProperty("votePlusMinusOnHover", false);
+	setSettingsValueFromCSSProperty("observedTagsInRightSidebarSortAlphabetically", false);
+	setSettingsValueFromCSSProperty("topNavHomeButtonClickRefreshOrRedirect", false);
+	setSettingsValueFromCSSProperty("topNavMicroblogButtonClickRefreshOrRedirect", false);
+	setSettingsValueFromCSSProperty("quickLinksEnable", false);
 
 	// DODATKOWE PRZYCISKI NA GORNEJ BELCE
-	settings.topNavMyWykopButton = wykopxSettings.getPropertyValue("--topNavMyWykopButton") ? wykopxSettings.getPropertyValue("--topNavMyWykopButton") === '1' : true;
-	settings.topNavMicroblogButton = wykopxSettings.getPropertyValue("--topNavMicroblogButton") ? wykopxSettings.getPropertyValue("--topNavMicroblogButton") === '1' : true;
-	settings.topNavNightSwitchButton = wykopxSettings.getPropertyValue("--topNavNightSwitchButton") ? wykopxSettings.getPropertyValue("--topNavNightSwitchButton") === '1' : true;
-	settings.topNavMessagesButton = wykopxSettings.getPropertyValue("--topNavMessagesButton") ? wykopxSettings.getPropertyValue("--topNavMessagesButton") === '1' : false;
-	settings.topNavProfileButton = wykopxSettings.getPropertyValue("--topNavProfileButton") ? wykopxSettings.getPropertyValue("--topNavProfileButton") === '1' : false;
-	settings.topNavNotificationsButton = wykopxSettings.getPropertyValue("--topNavNotificationsButton") ? wykopxSettings.getPropertyValue("--topNavNotificationsButton") === '1' : false;
-
+	setSettingsValueFromCSSProperty("topNavMyWykopButton", true);
+	setSettingsValueFromCSSProperty("topNavMicroblogButton", true);
+	setSettingsValueFromCSSProperty("topNavNightSwitchButton", true);
+	setSettingsValueFromCSSProperty("topNavMessagesButton", false);
+	setSettingsValueFromCSSProperty("topNavProfileButton", false);
+	setSettingsValueFromCSSProperty("topNavNotificationsButton", false);
 
 	// DODATKOWE PRZYCISKI NA BELCE MOBILNEJ
-	settings.mobileNavBarHide = wykopxSettings.getPropertyValue("--mobileNavBarHide") ? wykopxSettings.getPropertyValue("--mobileNavBarHide") === '1' : false;
+	setSettingsValueFromCSSProperty("mobileNavBarHide", false);
 	if (settings.mobileNavBarHide == false)
 	{
-		settings.mobileNavBarMyWykopButton = wykopxSettings.getPropertyValue("--mobileNavBarMyWykopButton") ? wykopxSettings.getPropertyValue("--mobileNavBarMyWykopButton") === '1' : false;
-		settings.mobileNavBarMessagesButton = wykopxSettings.getPropertyValue("--mobileNavBarMessagesButton") ? wykopxSettings.getPropertyValue("--mobileNavBarMessagesButton") === '1' : false;
-		settings.mobileNavBarProfileButton = wykopxSettings.getPropertyValue("--mobileNavBarProfileButton") ? wykopxSettings.getPropertyValue("--mobileNavBarProfileButton") === '1' : false;
-		settings.mobileNavBarNotificationsButton = wykopxSettings.getPropertyValue("--mobileNavBarNotificationsButton") ? wykopxSettings.getPropertyValue("--mobileNavBarNotificationsButton") === '1' : false;
+		setSettingsValueFromCSSProperty("mobileNavBarMyWykopButton", false);
+		setSettingsValueFromCSSProperty("mobileNavBarMessagesButton", false);
+		setSettingsValueFromCSSProperty("mobileNavBarProfileButton", false);
+		setSettingsValueFromCSSProperty("mobileNavBarNotificationsButton", false);
 	}
 
 
@@ -523,27 +520,27 @@
 	settings.categoryRedirectToMicroblogButtonEnable = (wykopxSettings.getPropertyValue("--categoryRedirectToMicroblogButtonEnable").trim() == `"true"`); // boolean
 
 
-	// numbers
+
 	settings.homepagePinnedEntriesHideBelowLimit = parseFloat(wykopxSettings.getPropertyValue("--homepagePinnedEntriesHideBelowLimit")); // number
 
 
 	// boolean — domyslnie WŁĄCZONE bez Wykop X Style
-	settings.hitsInTopNavJS = wykopxSettings.getPropertyValue("--hitsInTopNavJS") ? wykopxSettings.getPropertyValue("--hitsInTopNavJS") === '1' : true;
-	settings.myWykopInTopNavJS = wykopxSettings.getPropertyValue("--myWykopInTopNavJS") ? wykopxSettings.getPropertyValue("--myWykopInTopNavJS") === '1' : true;
-	settings.notatkowatorEnable = wykopxSettings.getPropertyValue("--notatkowatorEnable") ? wykopxSettings.getPropertyValue("--notatkowatorEnable") === '1' : true;
-	settings.favoritesInTopNavJS = wykopxSettings.getPropertyValue("--favoritesInTopNavJS") ? wykopxSettings.getPropertyValue("--favoritesInTopNavJS") === '1' : true;
-	settings.imageUploaderEnable = wykopxSettings.getPropertyValue("--imageUploaderEnable") ? wykopxSettings.getPropertyValue("--imageUploaderEnable") === '1' : true;
-	settings.addNewLinkInTopNavJS = wykopxSettings.getPropertyValue("--addNewLinkInTopNavJS") ? wykopxSettings.getPropertyValue("--addNewLinkInTopNavJS") === '1' : true;
-	settings.addNewEntryInTopNavJS = wykopxSettings.getPropertyValue("--addNewEntryInTopNavJS") ? wykopxSettings.getPropertyValue("--addNewEntryInTopNavJS") === '1' : true;
-	settings.disableNewLinkEditorPastedTextLimit = wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") ? wykopxSettings.getPropertyValue("--disableNewLinkEditorPastedTextLimit") === '1' : true;
-
+	setSettingsValueFromCSSProperty("hitsInTopNavJS");
+	setSettingsValueFromCSSProperty("myWykopInTopNavJS");
+	setSettingsValueFromCSSProperty("notatkowatorEnable");
+	setSettingsValueFromCSSProperty("favoritesInTopNavJS");
+	setSettingsValueFromCSSProperty("imageUploaderEnable");
+	setSettingsValueFromCSSProperty("addNewLinkInTopNavJS");
+	setSettingsValueFromCSSProperty("addNewEntryInTopNavJS");
+	setSettingsValueFromCSSProperty("disableNewLinkEditorPastedTextLimit");
 
 
 	// strings
-	settings.linksAnalyzerSortBy = wykopxSettings.getPropertyValue("--linksAnalyzerSortBy").trim();
-	settings.topNavLogoClick = wykopxSettings.getPropertyValue("--topNavLogoClick") ? wykopxSettings.getPropertyValue("--topNavLogoClick").trim() : false; // jesli zdefiniowane to wartosc np. "mikroblog", w przeciwnym false 
-	settings.editorSendHotkey = wykopxSettings.getPropertyValue("--editorSendHotkey") ? wykopxSettings.getPropertyValue("--editorSendHotkey").trim() : "ctrl_enter"; // "domyslnie", "enter", "ctrl_enter", "ctrl_s"
-	if (settings.editorSendHotkey != "domyslnie") settings.editorSendHotkeyShowOnSendButton = wykopxSettings.getPropertyValue("--editorSendHotkeyShowOnSendButton") ? wykopxSettings.getPropertyValue("--editorSendHotkeyShowOnSendButton") === '1' : true;
+	setSettingsValueFromCSSProperty("linksAnalyzerSortBy", "domyslnie", true);
+	setSettingsValueFromCSSProperty("topNavLogoClick", "glowna", true);
+	setSettingsValueFromCSSProperty("editorSendHotkey", "ctrl_enter", true);   // "domyslnie", "enter", "ctrl_enter", "ctrl_s"
+
+	if (settings.editorSendHotkey != "domyslnie") setSettingsValueFromCSSProperty("editorSendHotkeyShowOnSendButton");
 
 	settings.categoryRedirectToMicroblogButtonFilter = wykopxSettings.getPropertyValue("--categoryRedirectToMicroblogButtonFilter").replaceAll("_", "/").replaceAll(" ", "");
 
@@ -554,22 +551,13 @@
 
 
 
-
-
 	let localStorageObserved = localforage.createInstance({
 		driver: localforage.LOCALSTORAGE,
 		name: "wykopx",
 		storeName: "observed",
 	});
 
-
-
-
 	const topNavHeaderRightElement = document.querySelector('header.header > .right > nav > ul');
-
-
-
-
 
 	if (dev) consoleX("Settings: ", 1);
 	if (dev) console.log(settings);
@@ -3376,8 +3364,7 @@
 
 
 
-	// WYKOP XS -- START
-	// wykop_xs_banned_user.js
+	// wykop_xs_banned.user.js - START - 2
 	if (settings.infoboxUserBannedInfoOnProfilePage)
 	{
 		waitForKeyElements("aside.profile-top:has(aside.info-box.red)", bannedUserProfileAside, false);
@@ -3426,7 +3413,7 @@
 			}
 		}
 	}
-	// WYKOP XS -- END
+	// wykop_xs_banned.user.js - END - 2
 
 
 
@@ -7915,26 +7902,23 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 	// Wykop XS-XHR Blocker
 	// https://greasyfork.org/en/scripts/486722-wykop-xs-xhr-blocker
-	settings.wxsBlockXHREnable = wykopxSettings.getPropertyValue("--wxsBlockXHREnable") ? wykopxSettings.getPropertyValue("--wxsBlockXHREnable") === '1' : true;
+	setSettingsValueFromCSSProperty("wxsBlockXHREnable");
 	if (settings.wxsBlockXHREnable)
 	{
-		settings.wxsBlockXHRExternal = wykopxSettings.getPropertyValue("--wxsBlockXHRExternal") ? wykopxSettings.getPropertyValue("--wxsBlockXHRExternal") === '1' : true;
-		settings.wxsBlockXHRInternalAds = wykopxSettings.getPropertyValue("--wxsBlockXHRInternalAds") ? wykopxSettings.getPropertyValue("--wxsBlockXHRInternalAds") === '1' : true;
-
-		settings.wxsBlockXHRConsoleLogAllowed = wykopxSettings.getPropertyValue("--wxsBlockXHRConsoleLogAllowed") ? wykopxSettings.getPropertyValue("--wxsBlockXHRConsoleLogAllowed") === '1' : false;
-		settings.wxsBlockXHRConsoleLogBlocked = wykopxSettings.getPropertyValue("--wxsBlockXHRConsoleLogBlocked") ? wykopxSettings.getPropertyValue("--wxsBlockXHRConsoleLogBlocked") === '1' : false;
-
-		settings.rightSidebarHidePopularTags = wykopxSettings.getPropertyValue("--rightSidebarHidePopularTags") ? wykopxSettings.getPropertyValue("--rightSidebarHidePopularTags") === '1' : false;
-		settings.rightSidebarHideRelatedTags = wykopxSettings.getPropertyValue("--rightSidebarHideRelatedTags") ? wykopxSettings.getPropertyValue("--rightSidebarHideRelatedTags") === '1' : false;
-
-		settings.rightSidebarHideHits = wykopxSettings.getPropertyValue("--rightSidebarHideHits") ? wykopxSettings.getPropertyValue("--rightSidebarHideHits") === '1' : false;
-		settings.rightSidebarHideEntriesHot = wykopxSettings.getPropertyValue("--rightSidebarHideEntriesHot") ? wykopxSettings.getPropertyValue("--rightSidebarHideEntriesHot") === '1' : false;
-		settings.rightSidebarHideEntriesActive = wykopxSettings.getPropertyValue("--rightSidebarHideEntriesActive") ? wykopxSettings.getPropertyValue("--rightSidebarHideEntriesActive") === '1' : false;
-		settings.rightSidebarHideEntriesPopular = wykopxSettings.getPropertyValue("--rightSidebarHideEntriesPopular") ? wykopxSettings.getPropertyValue("--rightSidebarHideEntriesPopular") === '1' : false;
-		settings.rightSidebarHideUpcomingActive = wykopxSettings.getPropertyValue("--rightSidebarHideUpcomingActive") ? wykopxSettings.getPropertyValue("--rightSidebarHideUpcomingActive") === '1' : false;
-		settings.rightSidebarHideLinksNewest = wykopxSettings.getPropertyValue("--rightSidebarHideLinksNewest") ? wykopxSettings.getPropertyValue("--rightSidebarHideLinksNewest") === '1' : false;
-		settings.rightSidebarHideLinksActive = wykopxSettings.getPropertyValue("--rightSidebarHideLinksActive") ? wykopxSettings.getPropertyValue("--rightSidebarHideLinksActive") === '1' : false;
-		settings.rightSidebarHideLinksPopular = wykopxSettings.getPropertyValue("--rightSidebarHideLinksPopular") ? wykopxSettings.getPropertyValue("--rightSidebarHideLinksPopular") === '1' : false;
+		setSettingsValueFromCSSProperty("wxsBlockXHRExternal");
+		setSettingsValueFromCSSProperty("wxsBlockXHRInternalAds");
+		setSettingsValueFromCSSProperty("wxsBlockXHRConsoleLogAllowed", false);
+		setSettingsValueFromCSSProperty("wxsBlockXHRConsoleLogBlocked", false);
+		setSettingsValueFromCSSProperty("rightSidebarHidePopularTags", false);
+		setSettingsValueFromCSSProperty("rightSidebarHideRelatedTags", false);
+		setSettingsValueFromCSSProperty("rightSidebarHideHits", false);
+		setSettingsValueFromCSSProperty("rightSidebarHideEntriesHot", false);
+		setSettingsValueFromCSSProperty("rightSidebarHideEntriesActive", false);
+		setSettingsValueFromCSSProperty("rightSidebarHideEntriesPopular", false);
+		setSettingsValueFromCSSProperty("rightSidebarHideUpcomingActive", false);
+		setSettingsValueFromCSSProperty("rightSidebarHideLinksNewest", false);
+		setSettingsValueFromCSSProperty("rightSidebarHideLinksActive", false);
+		setSettingsValueFromCSSProperty("rightSidebarHideLinksPopular", false);
 	}
 
 	let xhook = null;
