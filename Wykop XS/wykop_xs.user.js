@@ -200,7 +200,7 @@
 	}
 
 	// voting explosion
-	setSettingsValueFromCSSProperty("votingExplosionEnable");
+	setSettingsValueFromCSSProperty("votingExplosionEnable", false);
 
 	// checkPluses()
 	let votesFetchingLimitMinimumVotes = 1;
