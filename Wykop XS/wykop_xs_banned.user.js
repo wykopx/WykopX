@@ -56,7 +56,7 @@
 	const settings = {};
 
 	const styleElement = document.createElement('style');
-	styleElement.id = "wykopxs";
+	styleElement.id = "wykopxs_ban_info";
 	let CSS = "";
 
 	function setSettingsValueFromCSSProperty(settingName, defaultValueForWykopXS = true, propertyValueInsteadOfBoolean = false)

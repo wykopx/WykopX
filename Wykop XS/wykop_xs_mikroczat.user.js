@@ -95,10 +95,14 @@ Domyślne wartości wyglądają przykładowo tak:
 
 
 
-// DEFAULT SETTINGS - nie zmieniaj wartości settings w kodzie. 
+// DEFAULT SETTINGS - nie zmieniaj wartości settings w kodzie.
 // Zmień je w sposób opisany powyżej
 
-settings.showVotersList = true;			// włącza pokazywanie listy plusujących
+setSettingsValueFromCSSProperty("entryVotersListEnable");				// włącza pokazywanie listy plusujących z Wykop X Style
+setSettingsValueFromCSSProperty("fixNotificationBadgeBug");				// naprawia wykopowy błąd - ukrywa liczbę nieprzeczytanych powiadomien, gdy wszystkie powiadomienia sa juz przeczytane
+setSettingsValueFromCSSProperty("hideAds");								// blokuje wszystkie reklamy na wykopie
+
+
 // expandAllVotersIfLessThan - domyślnie Wykop pokazywał 5 osób, które zaplusowały. 
 // Możesz zmienić tę wartość na np. 10 albo 25. Jeśli wpis ma mniej plusów niż ta liczba, zostaną od razu wyświetleni wszyscy plusujący bez przycisku "+15 INNYCH"
 settings.expandAllVotersIfLessThan = 20;
@@ -127,11 +131,8 @@ settings.showFavouriteButtonLabel = true;				// pokazuje oprócz gwiazdki także
 settings.addCommentPlusWhenVotingOnEntry = false;		// gdy plusujesz wpis, dodaje komentarz "+1"
 settings.addCommentPlusWhenVotingOnComment = false;		// gdy plusujesz komentarz, dodaje komentarz "+1"
 settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
-settings.fixNotificationBadgeBug = true;				// naprawia wykopowy błąd - ukrywa liczbę nieprzeczytanych powiadomien, gdy wszystkie powiadomienia sa juz przeczytane
 
 
-settings.hideAds = true;								// blokuje wszystkie reklamy na wykopie
-setSettingsValueFromCSSProperty("hideAds");				// blokuje wszystkie reklamy na wykopie
 
 
 
@@ -411,115 +412,114 @@ setSettingsValueFromCSSProperty("hideAds");				// blokuje wszystkie reklamy na w
 
 	{
 		CSS += `
-	section:is(.entry-content, .link-block)[class] { overflow: visible!important; }
+		section:is(.entry-content, .link-block)[class] { overflow: visible!important; }
 
-	section:is(.entry-content, .link-block) a[href^="/tag/"]
-	{
-		padding-right: 2px !important;
-		margin-right: 1px;
-		transition: none!important;
-	}
-	section:is(.entry-content, .link-block) a[href^="https://mikroczat.pl/"]
-	{
-		padding-right: 2px!important;
-		padding-left: 2px!important;
-	}
-	section:is(.entry-content, .link-block) a[href^="/tag/"],
-	section.entry-content .wrapper a[href^="https://mikroczat.pl/"]
-	{
-		border: 1px solid transparent!important;
-		position: relative!important;
-	}
+		section:is(.entry-content, .link-block) a[href^="/tag/"]
+		{
+			padding-right: 2px !important;
+			margin-right: 1px;
+			transition: none!important;
+		}
+		section:is(.entry-content, .link-block) a[href^="https://mikroczat.pl/"]
+		{
+			padding-right: 2px!important;
+			padding-left: 2px!important;
+		}
+		section:is(.entry-content, .link-block) a[href^="/tag/"],
+		section.entry-content .wrapper a[href^="https://mikroczat.pl/"]
+		{
+			border: 1px solid transparent!important;
+			position: relative!important;
+		}
 
-	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
-	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
-	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
-	body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-	body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-	body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *,
-	body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *,
-	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *
-	{
-		color: var(--tagChannelColor)!important;
-	}
+		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
+		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
+		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
+		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *,
+		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *,
+		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *
+		{
+			color: var(--tagChannelColor)!important;
+		}
 
-	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-	body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-	body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]
-	{
-		border-color: var(--tagChannelColor)!important;
-		background-color: color-mix(in srgb, var(--whitish) 90%, var(--tagChannelColor))!important;
-		border-radius: var(--smallBorderRadius)!important;
-	}
-	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
-	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
-	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
-	body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover,
-	body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover,
-	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover
-	{
-		background-color: color-mix(in srgb, var(--whitish) 60%, var(--tagChannelColor))!important;
-	}
+		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]
+		{
+			border-color: var(--tagChannelColor)!important;
+			background-color: color-mix(in srgb, var(--whitish) 90%, var(--tagChannelColor))!important;
+			border-radius: var(--smallBorderRadius)!important;
+		}
+		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover,
+		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover,
+		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover
+		{
+			background-color: color-mix(in srgb, var(--whitish) 60%, var(--tagChannelColor))!important;
+		}
 
-	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]
-	{
+		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]
+		{
 
-		padding-left: 3px !important;
-		margin-left: -12px !important;
+			padding-left: 3px !important;
+			margin-left: -12px !important;
 
-	}
-	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
-	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
-	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover
-	{
-		text-decoration: none!important;
-	}
-	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before,
-	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before,
-	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before
-	{
-		content: "#";
-	}
-	body > section[data-key_shift="true"] 	section.entry-content a[href^="/tag/"]::after,
-	body > section[data-key_alt="true"] 	section.entry-content a[href^="/tag/"]::after,
-	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="/tag/"]::after,
-	body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after,
-	body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after,
-	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after
-	{
-		color: white;
-		content: "🗯";
-		position: absolute;
-		top: -1em;
-		right: -0.5em;
-	}
-	
-	body > section[data-mikroczat-logged="true"] li.wykopx_open_mikroczat_li span:after
-	{
-		content: "•";
-		color: white;
-		position: absolute;
-		top: 4px;
-		right: 5px;
-	}
-	body > section[data-mikroczat-logged="false"] li.wykopx_open_mikroczat_li span:after
-	{
-		content: "•";
-		color: rgb(255, 255, 255, 0.3);
-		position: absolute;
-		top: 4px;
-		right: 5px;
-	}`;
-
+		}
+		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover
+		{
+			text-decoration: none!important;
+		}
+		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before,
+		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before,
+		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before
+		{
+			content: "#";
+		}
+		body > section[data-key_shift="true"] 	section.entry-content a[href^="/tag/"]::after,
+		body > section[data-key_alt="true"] 	section.entry-content a[href^="/tag/"]::after,
+		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="/tag/"]::after,
+		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after,
+		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after,
+		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after
+		{
+			color: white;
+			content: "🗯";
+			position: absolute;
+			top: -1em;
+			right: -0.5em;
+		}
+		
+		body > section[data-mikroczat-logged="true"] li.wykopx_open_mikroczat_li span:after
+		{
+			content: "•";
+			color: white;
+			position: absolute;
+			top: 4px;
+			right: 5px;
+		}
+		body > section[data-mikroczat-logged="false"] li.wykopx_open_mikroczat_li span:after
+		{
+			content: "•";
+			color: rgb(255, 255, 255, 0.3);
+			position: absolute;
+			top: 4px;
+			right: 5px;
+		}`;
 	}
 
 	createNewNavBarButton({
@@ -683,7 +683,7 @@ setSettingsValueFromCSSProperty("hideAds");				// blokuje wszystkie reklamy na w
 
 		if (settings.showFavouriteButton) addFavouriteButton(sectionEntry);
 
-		if (settings.showVotersList && sectionEntry?.__vue__?.item) 
+		if (settings.entryVotersListEnable && sectionEntry?.__vue__?.item) 
 		{
 			if (dev) console.log("sectionEntry?.__vue__.item.id", sectionEntry?.__vue__.item.id);
 			if (dev) console.log("sectionEntry.dataset?.votersLoaded", sectionEntry.dataset?.votersLoaded);
@@ -1165,67 +1165,81 @@ setSettingsValueFromCSSProperty("hideAds");				// blokuje wszystkie reklamy na w
 
 
 
+
+
+
+	/* CSS WYKOP XS MIKROCZAT */
+	if (settings?.hideShareButton) CSS += `section.actions ul li.sharing 									{ display: none!important; }`;
+
+
+	/* Wykop X Style 3.0 */
+	CSS += `
+		:root
+		{
+			--kolorBananowy1: rgba(255, 185, 0, 1);
+			--tagChannelColor: rgba(0, 183, 255, 1);
+			--smallBorderRadius: 4px;
+		}
+		div[data-modal="entryVoters"] section.entry-voters::after {content: none!important;} /* Wykop X Style PROMO */
+	`;
+
+	/* LISTA PLUSUJĄCYCH CSS, PRZYCISK DODAJ DO ULUBIONYCH, fixNotificationBadgeBug*/
+	if (settings?.entryVotersListEnable)
 	{
-
 		CSS += `
-			section.entry-voters
+		/* Chrome 109, Firefox 115 */
+		@supports not (display: block flex)
+		{
+			section.entry-voters ul
 			{
-				& > span 
-				{
-					font-size: var(--entryVotersTextFontSize, 12px);
-					color: var(--gullGray);
-				}
-				ul
-				{
-					font-size: var(--entryVotersTextFontSize, 12px);
-					color: var(--gullGray);
-
-					display: block flex;
-					row-gap: 0px;
-					flex-wrap: wrap;
-					align-items: baseline;
-					padding: 0 0 0 0;
-					margin: 0;
-					list-style-type: none;
-					position: relative;
-					
-					&::before
-					{
-						content: "Plusujący: ";
-						margin-right: 0.2em;
-					}
-
-					li
-					{
-						a.username
-						{
-							
-							span
-							{
-								font-weight: normal;
-							}
-
-							&.banned, &.suspended
-							{
-								color: 
-							}
-						}
-
-						&.more
-						{
-							cursor: pointer;
-							font-weight: 700;
-							text-transform: uppercase;
-						}
-					}
-				}
+				display: flex;
 			}
-	
-			section.entry-voters ul li:after 			{ content: " • "; margin: 0px 0.2em 0px 0em; }
-			section.entry-voters ul li.more:after,
-			section.entry-voters ul li:only-child:after
+		}
+			section.entry-voters ul
 			{
-				content: none;
+				display: block flex;
+				row-gap: 0px;
+				flex-wrap: wrap;
+				align-items: baseline;
+				padding: 0 0 0 0;
+				margin: 0;
+				list-style-type: none;
+				position: relative;
+			}
+
+			section.entry-voters ul,
+			section.entry-voters > span
+			{
+				font-size: var(--entryVotersTextFontSize, 12px);
+				color: var(--gullGray);
+			}
+
+			section.entry-voters ul::before
+			{
+				content: "Plusujący: ";
+				margin-right: 0.2em;
+			}
+
+			section.entry-voters ul li.more
+			{
+				cursor: pointer;
+				font-weight: 700;
+				text-transform: uppercase;
+			}
+
+			section.entry-voters ul li::after
+			{
+				content: " • ";
+				margin: 0px 0.2em 0px 0em;
+			}
+
+			section.entry-voters ul li.more::after,
+			section.entry-voters ul li:only-child::after
+			{ content: none; }
+
+			section.entry-voters ul li a.username span
+			{
+				font-weight: normal;
 			}
 
 			section.entry-voters ul li a.username i 				{ display: none; font-size: 0.8em; font-style: normal; bottom: 0px; position: relative; }
@@ -1265,62 +1279,52 @@ setSettingsValueFromCSSProperty("hideAds");				// blokuje wszystkie reklamy na w
 		if (!settings?.votersColorGreen) CSS += `section.entry-voters ul li a.username.green-profile 			{ color: var(--gullGray); }`;
 		if (!settings?.votersColorBurgundy) CSS += `section.entry-voters ul li a.username.burgundy-profile 		{ color: var(--gullGray); }`;
 
-		if (settings?.hideShareButton) CSS += `section.actions ul li.sharing 									{ display: none!important; }`;
-
-
-
-		/* ULUBIONE */
 		CSS += `
-			section.actions > ul > li.favourite 
-			{
-				cursor: pointer;
-				user-select: none;
-				color: var(--gullGray);
-				font-size: 14px;
-				padding-left: 26px;
-				transition: color .2s ease, opacity .2s ease;
-			}
-
-			.actions li.favourite span::before
-			{
-				content: '';
-				width: 18px;
-				height: 18px;
-				display: block;
-				position: absolute;
-				left: 0;
-				mask-size: 18px 18px;
-				background: var(--gullGray);
-				transition: background .2s ease;
-				mask-image: url(/static/img/svg/favourite.svg);
-			}
-			
-			.actions li.favourite.active span::before 
-			{
-				mask-image: url(/static/img/svg/favourite-filled.svg);
-				background: var(--orange);
-			}
-		`;
-
-
-		/* Wykop X Style 3.0 */
-		CSS += `
-			:root {
-				--kolorBananowy1: rgba(255, 185, 0, 1);
-				--tagChannelColor: rgba(0, 183, 255, 1);
-				--smallBorderRadius: 4px;
-			}
 			section.entry-voters ul li a.username.banned:not(.removed) span  				{ color: var(--kolorBananowy1); };
 			section.entry-voters ul li a.username.suspended:not(.removed) span 				{ color: var(--heather); }
 			section.entry-voters ul li a.username.removed span 								{ color: var(--heather); }
 			[data-night-mode] section.entry-voters ul li a.username.removed span 			{ background-color: rgba(255, 255, 255, 0.1); padding-left: 5px; padding-right: 5px; }
-			div[data-modal="entryVoters"] section.entry-voters::after {content: none!important;} /* Wykop X Style PROMO */
 		`;
 	}
 
+	/* ULUBIONE */
+	CSS += `
+		section.actions > ul > li.favourite 
+		{
+			cursor: pointer;
+			user-select: none;
+			color: var(--gullGray);
+			font-size: 14px;
+			padding-left: 26px;
+			transition: color .2s ease, opacity .2s ease;
+		}
 
+		.actions li.favourite span::before
+		{
+			content: '';
+			width: 18px;
+			height: 18px;
+			display: block;
+			position: absolute;
+			left: 0;
+			background: var(--gullGray);
+			transition: background .2s ease;
 
+			-webkit-mask-size: 18px 18px;
+			mask-size: 18px 18px;
+			-webkit-mask: url(/static/img/svg/favourite.svg) no-repeat center;
+			mask-image: url(/static/img/svg/favourite.svg);
+		}
+		
+		.actions li.favourite.active span::before 
+		{
+			background: var(--orange);
+			-webkit-mask: url(/static/img/svg/favourite-filled.svg) no-repeat center;
+			mask-image: url(/static/img/svg/favourite-filled.svg);
+		}
+	`;
 
+	/* fixNotificationBadgeBug */
 	if (settings.fixNotificationBadgeBug)
 	{
 		CSS += `
@@ -1381,15 +1385,13 @@ setSettingsValueFromCSSProperty("hideAds");				// blokuje wszystkie reklamy na w
 		`;
 	}
 
-
-
 	/* HIDE ADS ALWAYS */
 	if (settings.hideAds) { CSS += `.pub-slot-wrapper { display: none!important; }`; }
 
+
+
 	styleElement.textContent = CSS;
 	document.head.appendChild(styleElement);
-
-
 })();
 
 
