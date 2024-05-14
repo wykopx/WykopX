@@ -64,8 +64,10 @@ function setSettingsValueFromCSSProperty(settingName, defaultValueForWykopXS = t
 	else settings[settingName] = wykopxSettings.getPropertyValue(`--${settingName}`) ? wykopxSettings.getPropertyValue(`--${settingName}`).trim() === '1' : defaultValueForWykopXS;
 }
 
-setSettingsValueFromCSSProperty("WykopXSEnabled");
-if (settings.WykopXSEnabled == false) return;
+//setSettingsValueFromCSSProperty("WykopXSEnabled");
+//if (settings.WykopXSEnabled == false) return;
+
+
 /* WYKOP XS HEADER */
 
 
@@ -124,11 +126,12 @@ settings.showFavouriteButton = true;					// pokazuje przycisk "Dodaj do ulubiony
 settings.showFavouriteButtonLabel = true;				// pokazuje oprócz gwiazdki także tekst "Ulubione"
 settings.addCommentPlusWhenVotingOnEntry = false;		// gdy plusujesz wpis, dodaje komentarz "+1"
 settings.addCommentPlusWhenVotingOnComment = false;		// gdy plusujesz komentarz, dodaje komentarz "+1"
-settings.blockAds = true;								// blokuje wszystkie reklamy na wykopie
 settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 settings.fixNotificationBadgeBug = true;				// naprawia wykopowy błąd - ukrywa liczbę nieprzeczytanych powiadomien, gdy wszystkie powiadomienia sa juz przeczytane
 
 
+settings.hideAds = true;								// blokuje wszystkie reklamy na wykopie
+setSettingsValueFromCSSProperty("hideAds");				// blokuje wszystkie reklamy na wykopie
 
 
 
@@ -1313,10 +1316,14 @@ settings.fixNotificationBadgeBug = true;				// naprawia wykopowy błąd - ukrywa
 			[data-night-mode] section.entry-voters ul li a.username.removed span 			{ background-color: rgba(255, 255, 255, 0.1); padding-left: 5px; padding-right: 5px; }
 			div[data-modal="entryVoters"] section.entry-voters::after {content: none!important;} /* Wykop X Style PROMO */
 		`;
+	}
 
-		if (settings.fixNotificationBadgeBug)
-		{
-			CSS += `
+
+
+
+	if (settings.fixNotificationBadgeBug)
+	{
+		CSS += `
 			:root
 			{
 				/* brak nowych powiadomień */
@@ -1372,23 +1379,17 @@ settings.fixNotificationBadgeBug = true;				// naprawia wykopowy błąd - ukrywa
 				background-color: var(--notificationIconWithoutUnreadNotificationsActiveBackgroundColor) !important;
 			} 
 		`;
-		}
-
-		/* HIDE ADS ALWAYS */
-		if (settings.blockAds)
-		{
-			CSS += `
-			.pub-slot-wrapper
-			{
-				display: none!important;
-			}`;
-		}
 	}
 
 
 
+	/* HIDE ADS ALWAYS */
+	if (settings.hideAds) { CSS += `.pub-slot-wrapper { display: none!important; }`; }
+
 	styleElement.textContent = CSS;
 	document.head.appendChild(styleElement);
+
+
 })();
 
 

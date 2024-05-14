@@ -70,6 +70,8 @@
 	/* WYKOP XS HEADER */
 
 
+	setSettingsValueFromCSSProperty("hideAds");				// blokuje wszystkie reklamy na wykopie
+
 
 	let loadTime = dayjs();
 
@@ -128,6 +130,14 @@
 	}
 	// wykop_xs_banned.user.js - END - 2
 
+
+
+
+	/* HIDE ADS ALWAYS */
+	if (settings.hideAds) { CSS += `.pub-slot-wrapper { display: none!important; }`; }
+
+	styleElement.textContent = CSS;
+	document.head.appendChild(styleElement);
 })();
 
 

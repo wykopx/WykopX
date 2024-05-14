@@ -70,7 +70,7 @@
 	/* WYKOP XS HEADER */
 
 
-
+	setSettingsValueFromCSSProperty("hideAds");				// blokuje wszystkie reklamy na wykopie
 
 
 	setSettingsValueFromCSSProperty("infiniteScrollEntriesEnabled");
@@ -153,4 +153,9 @@
 	}
 
 
+	/* HIDE ADS ALWAYS */
+	if (settings.hideAds) { CSS += `.pub-slot-wrapper { display: none!important; }`; }
+
+	styleElement.textContent = CSS;
+	document.head.appendChild(styleElement);
 })();

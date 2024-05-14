@@ -111,9 +111,11 @@
 	settings.showFavouriteButtonLabel = true;				// pokazuje oprócz gwiazdki także tekst "Ulubione"
 	settings.addCommentPlusWhenVotingOnEntry = false;		// gdy plusujesz wpis, dodaje komentarz "+1"
 	settings.addCommentPlusWhenVotingOnComment = false;		// gdy plusujesz komentarz, dodaje komentarz "+1"
-	settings.blockAds = true;								// blokuje wszystkie reklamy na wykopie
 	settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 	settings.fixNotificationBadgeBug = true;				// naprawia wykopowy błąd - ukrywa liczbę nieprzeczytanych powiadomien, gdy wszystkie powiadomienia sa juz przeczytane
+
+
+	setSettingsValueFromCSSProperty("hideAds");				// blokuje wszystkie reklamy na wykopie
 
 
 
@@ -9944,22 +9946,12 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		}
 
 		/* HIDE ADS ALWAYS */
-		if (settings.blockAds)
-		{
-			CSS += `
-			.pub-slot-wrapper
-			{
-				display: none!important;
-			}`;
-		}
+		if (settings.hideAds) { CSS += `.pub-slot-wrapper { display: none!important; }`; }
 	}
 
 
 	styleElement.textContent = CSS;
 	document.head.appendChild(styleElement);
-
-	// head.insertAdjacentHTML("beforeend", CSS);
-
 })();
 
 
