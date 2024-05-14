@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style 3
-@version        3.0.44
+@version        3.0.50
 
 @description    Wykop X Style 3 to 900 różnych funkcji zmieniających wykop!
 @description    Zainstaluj teź pomocniczy skrypt Wykop XS v.3.0 - znajdziesz go tutaj:
@@ -21,6 +21,75 @@
 @supportURL     http://wiki.wykopx.pl
 
 ---- AUTOR WYKOP X ----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -105,8 +174,8 @@
 @var checkbox   wxsArchiveXNewestEntryRefreshCounter                `❎ Odliczanie czasu odświeżania ⭐`                                           1     
 
 
-@var range      HR_MIKROCZAT                         `🗯 MIKROCZAT ⭐ Nowe`                                                                                                                                                                                                        [0, 0, 99900, 1, 'mm']
-@var checkbox   mikroczatDummy                                  `Mikroczat`                                                                   0  
+var range      HR_MIKROCZAT                         `🗯 MIKROCZAT ⭐ Nowe`                                                                                                                                                                                                        [0, 0, 99900, 1, 'mm']
+var checkbox   mikroczatDummy                                  `Mikroczat`                                                                   0  
 
 
 
@@ -279,18 +348,21 @@ TODO range      checkEntryCommentsPerHour_INFO                  `Pokazuje aktual
 
 
 
-@var range      HR_MIRKOUKRYWACZ                    `❎ ACTION BOX ⭐ Nowe`                                                                                           [0, 0, 99900, 1, 'mm']
+@var range      HR_MIRKOUKRYWACZ                    `❎ ACTION BOX - FILTROWANIE I UKRYWANIE ⭐ Nowe`                                                                                           [0, 0, 99900, 1, 'mm']
 @var range      actionBoxEnable_ON_INFO                         `ActionBox jest włączony`               [0, 0,111100, 1, 'mm']
+@var range      actionBoxEnable_OFF_INFO                        `ActionBox jest wyłączony. Przyciski filtrowania i ukrywania nie będą dostępne`              [0, 0, 100000, 1, 'mm']
+
 @var checkbox   actionBoxEnable                                 `❎ Włącz ActionBoX`                                             1      
 
 @var range      SUB_HR_MIRKOUKRYWACZ_USER                       ` Filtrowanie aktywności użytkowników`                                 [0, 0, 99999, 1, 'mm']
 
-@var checkbox   filterUserComments                              `❎ Przycisk [ ⚜ Filtruj ] do filtrowania komentarzy wybranego użytkownika`        1     
+@var checkbox   filterUserComments                              `❎ Przycisk [ ⚜ Filtruj ] do filtrowania komentarzy i znalezisk wybranego użytkownika`        1     
 @var checkbox   filterUserReplies                               `❎ Przycisk [ 🔰 Filtruj ] do filtrowania dyskusji z wybranym użytkownikiem`       1     
 
 
 @var range      SUB_HR_MIRKOUKRYWACZ_HIDE_MINIMIZE              ` Ukrywanie i zwijanie`                                 [0, 0, 99999, 1, 'mm']
-@var checkbox   mirkoukrywaczEnable                             `❎ Włącz 𝗠𝗶𝗿𝗸𝗼𝘂𝗸𝗿𝘆𝘄𝗮𝗰𝘇 i 𝗞𝗿𝗮𝘄𝗲𝘇𝗻𝗶𝗸`                            1     
+@var range      mirkoukrywaczEnable_ON_INFO                     `Przyciski do u zwijania i ukrywania wpisów będą dostępne we włączonym ActionBox`               [0, 0,111100, 1, 'mm']
+@var checkbox   mirkoukrywaczEnable                             `❎ Włącz 𝗠𝗶𝗿𝗸𝗼𝘂𝗸𝗿𝘆𝘄𝗮𝗰𝘇 i 𝗞𝗿𝗮𝘄𝗲𝘇𝗻𝗶𝗸`                          1     
 @var checkbox   mirkoukrywaczHideEntries                        `❎ Przycisk [ Ukryj ✖ ] do ukrywania wpisów`                 1     
 @var checkbox   mirkoukrywaczHideComments                       `❎ Przycisk [ Ukryj ✖ ] do ukrywania komentarzy`             1     
 @var checkbox   mirkoukrywaczHideLinks                          `❎ Przycisk [ Ukryj ✖ ] do ukrywania znalezisk`              1     
@@ -324,6 +396,14 @@ TODO range      checkEntryCommentsPerHour_INFO                  `Pokazuje aktual
 @var range      infoboxUserBannedInfoOnProfilePage_ON_INFO      `Informacje o szczegółach bana na profilu zbanowanego użytkownika są włączone`      [0, 0,111100, 1, 'mm']
 @var checkbox   infoboxUserBannedInfoOnProfilePage              `🍌❎ Szczegóły bana na profilu użytkownika ⭐` 1
 @var range      infoboxUserBannedInfoOnProfilePage_INFO         `Tę funkcję możesz użyć jeśli masz zainstalowany '❎ 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦' lub osobny mały skrypt '❎ 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦 - 𝗜𝗻𝗳𝗼𝗿𝗺𝗮𝗰𝗷𝗲 𝗼 𝗯𝗮𝗻𝗮𝗰𝗵'. Gdy wejdziesz na profil zbanowanego użytkownika, pokaże się informacja o tym za co i na jak długo został nałożony ban. Jeśli użytkownik dostał bana permanentnego lub jego konto zostało zawieszone do wyjaśnienia - pokaże się odpowiednia informacja. Funkcja ta nie wysyła żadnego dodatkowego zapytania do API Wykopu, gdyż potrzebne informacje są wczytane domyślnie na każdej stronie profilowej użytkownika `             [0, 0,88800, 1, 'mm']
+
+
+@var range      HR_AUTHOR_BLOCKS_YOU                `🔹🗨️ BLOCK DETECTOR - SPRAWDŹ KTO CIĘ BLOKUJE ⭐ Nowe`                                                                                   [0, 0, 99900, 1, 'mm']
+@var range      authorBlocksYouCheckingEnable_ON_INFO           `Block Detector jest włączony`               [0, 0,111100, 1, 'mm']
+@var checkbox   authorBlocksYouCheckingEnable                   `Włącz Block Detector - sprawdzanie kto Cię zablokował`                  1
+@var checkbox   authorBlocksYouShowInfOnProfilePage             `Przy wejściu na profil użytkownika sprawdź czy Cię blokuje`             1
+@var checkbox   authorBlocksYouShowInfo                         `Pokaż przy wpisie, że autor Cię zablokował`                             1
+@var checkbox   authorBlocksYouDisableTextarea                  `Zablokuj pole nowego komentarza, gdy nie możesz odpowiedzieć`           1
 
 
 
@@ -431,8 +511,8 @@ var range      notatkowatorUpdateInterval                      `📝❎ Odświe�
 
 
 
-@var range      HR_FONTS                            `🆎 Tekst i czcionki`                                                                                    [0, 0, 99900, 1, 'mm']
-@var checkbox   fontCustomEnable                                `Włącz zmianę tekstu i czcionek`      0  
+var range      HR_FONTS                            `🆎 Tekst i czcionki`                                                                                    [0, 0, 99900, 1, 'mm']
+var checkbox   fontCustomEnable                                `Włącz zmianę tekstu i czcionek`      0  
 var select     fontFamily                                      `Czcionka` {
                                                                     "Domyślna czcionka":"default",
                                                                     " ":"default",
@@ -479,7 +559,7 @@ var range      blockquoteItalicsVariableFontValue             `🆎 blockquoteIt
 var checkbox   blockquoteItalicsOff                           `🆎 Cytaty bez kursywy`                0
 
 
-@var select     entriesTextFontSize                            `🆎 Rozmiar tekstu we wpisach` {
+var select     entriesTextFontSize                            `🆎 Rozmiar tekstu we wpisach` {
                                                                             "16px - domyślny*":"16.0rem",
                                                                             "—————————":"16.00rem",
                                                                             "10px - najmniejszy":"10rem",
@@ -496,7 +576,7 @@ var checkbox   blockquoteItalicsOff                           `🆎 Cytaty bez k
                                                                             "21px - ogromny":"21rem",
                                                                         } 
                                                                         
-@var select     commentsTextFontSize                            `🆎 Rozmiar tekstu w komentarzach` {
+var select     commentsTextFontSize                            `🆎 Rozmiar tekstu w komentarzach` {
                                                                             "16px - domyślny*":"16.0rem",
                                                                             "—————————":"16.00rem",
                                                                             "10px - najmniejszy":"10rem",
@@ -1259,13 +1339,13 @@ var checkbox  topNavSnowGirl                                    `❄ Snow Girl` 
                                    
                                    
 @var range      SUB_HR_TOPNAV_RIGHT_BUTTONS             `DODATKOWE PRZYCISKI PO PRAWEJ`                               [0, 0, 99999, 1, 'mm']
-@var checkbox   topNavNightSwitchButton                         `❎ Pokaż przycisk "🌙" (𝗧𝗿𝘆𝗯 𝗻𝗼𝗰𝗻𝘆/𝗱𝘇𝗶𝗲𝗻𝗻𝘆)`                          1     
-@var checkbox   topNavMyWykopButton                             `❎ Pokaż przycisk "𝗠𝗪" (𝗠𝗼𝗷 𝘄𝘆𝗸𝗼𝗽)`                                1     
-@var checkbox   topNavMicroblogButton                           `❎ Pokaż przycisk "𝗠" (𝗠𝗶𝗸𝗿𝗼𝗯𝗹𝗼𝗴) `                                 0    
-@var checkbox   topNavMessagesButton                            `❎ Pokaż przycisk "✉" (𝗪𝗶𝗮𝗱𝗼𝗺𝗼𝘀𝗰𝗶) ⭐`                              0
-@var checkbox   topNavProfileButton                             `❎ Pokaż przycisk "👤" (𝗣𝗿𝗼𝗳𝗶𝗹) ⭐`                                   0    
-@var checkbox   topNavNotificationsButton                       `❎ Pokaż przycisk "🔔" (𝗣𝗼𝘄𝗶𝗮𝗱𝗼𝗺𝗶𝗲𝗻𝗶𝗮) ⭐`                           0
-@var checkbox   showNotificationSummary                         `❎📱 Pokaż ikonki @ ✉ # powiadomień (na smartfonie)`                0
+@var checkbox   topNavNightSwitchButton                         `❎ Pokaż przycisk "🌙" (𝗧𝗿𝘆𝗯 𝗻𝗼𝗰𝗻𝘆/𝗱𝘇𝗶𝗲𝗻𝗻𝘆)`                          1         
+@var checkbox   topNavMyWykopButton                             `❎ Pokaż przycisk "𝗠𝗪" (𝗠𝗼𝗷 𝘄𝘆𝗸𝗼𝗽)`                                1         
+@var checkbox   topNavMicroblogButton                           `❎ Pokaż przycisk "𝗠" (𝗠𝗶𝗸𝗿𝗼𝗯𝗹𝗼𝗴) `                                 0        
+@var checkbox   topNavMessagesButton                            `❎ Pokaż przycisk "✉" (𝗪𝗶𝗮𝗱𝗼𝗺𝗼𝘀𝗰𝗶) ⭐`                              0       
+@var checkbox   topNavProfileButton                             `❎ Pokaż przycisk "👤" (𝗣𝗿𝗼𝗳𝗶𝗹) ⭐`                                   0      
+@var checkbox   topNavNotificationsButton                       `❎ Pokaż przycisk "🔔" (𝗣𝗼𝘄𝗶𝗮𝗱𝗼𝗺𝗶𝗲𝗻𝗶𝗮) ⭐`                           0     
+@var checkbox   showNotificationSummary                         `❎📱 Pokaż ikonki @ ✉ # powiadomień (na smartfonie)`                0      
 
 
 
@@ -1273,15 +1353,15 @@ var checkbox  topNavSnowGirl                                    `❄ Snow Girl` 
 @var range      SUB_HR_TOPNAV_SWITCHES                  `Przyciski filtrów na belce ⭐`                                       [0, 0, 99999, 1, 'mm']
 @var range      wxsSwitchesEnable_OFF_INFO                       `Przyciski filtrów na górnej belce są wyłączone`              [0, 0, 100000, 1, 'mm']
 @var range      wxsSwitchesEnable_ON_INFO                        `Przyciski filtrów są włączone`               [0, 0,111100, 1, 'mm']
-@var checkbox   wxsSwitchesEnable                               `❎ Włącz Przyciski filtrów ⭐`                                  1 
-@var checkbox   wxsSwitchPhotoViewer                            `❎ Przycisk filtra PhotoViewer ⭐`                              0
-@var checkbox   wxsSwitchImages                                 `❎ Przycisk filtra Tylko z obrazkami/bez obrazków ⭐`           0
-@var checkbox   wxsSwitchYouTube                                `❎ Przycisk filtra YouTube ⭐`                                  1
-@var checkbox   wxsSwitchAdult                                  `❎ Przycisk filtra 18+ ⭐`                                      0
-@var checkbox   wxsSwitchNSFW                                   `❎ Przycisk filtra #nsfw ⭐`                                    1
-@var checkbox   wxsSwitchTags                                   `❎ Przycisk filtra #tagi/Tylko nocna ⭐`                        1
-@var checkbox   wxsSwitchByUserColor                            `❎ Przycisk filtra Ukrywanie zielonek/Tylko bordo ⭐`           0
-@var checkbox   wxsSwitchByUserGender                           `❎ Przycisk filtra Ukryj różowe/Tylko różowe`                   1
+@var checkbox   wxsSwitchesEnable                               `❎ Włącz Przyciski filtrów ⭐`                                  1      
+@var checkbox   wxsSwitchPhotoViewer                            `❎ Przycisk filtra PhotoViewer ⭐`                              0       
+@var checkbox   wxsSwitchImages                                 `❎ Przycisk filtra Tylko z obrazkami/bez obrazków ⭐`           0       
+@var checkbox   wxsSwitchYouTube                                `❎ Przycisk filtra YouTube ⭐`                                  1       
+@var checkbox   wxsSwitchAdult                                  `❎ Przycisk filtra 18+ ⭐`                                      0       
+@var checkbox   wxsSwitchNSFW                                   `❎ Przycisk filtra #nsfw ⭐`                                    1       
+@var checkbox   wxsSwitchTags                                   `❎ Przycisk filtra #tagi/Tylko nocna ⭐`                        1       
+@var checkbox   wxsSwitchByUserColor                            `❎ Przycisk filtra Ukrywanie zielonek/Tylko bordo ⭐`           0       
+@var checkbox   wxsSwitchByUserGender                           `❎ Przycisk filtra Ukryj różowe/Tylko różowe`                   1       
 
 
 
@@ -1587,13 +1667,13 @@ var checkbox    topNavFavoriteTagButton                         `TODO: Skrót do
 
 @var checkbox   categoryRedirectToMicroblogButtonEnable         `🔷❎ 𝗣𝗿𝘇𝘆𝗰𝗶𝘀𝗸𝗶 𝗠𝗜𝗥𝗞𝗢 - przenoszące na mikroblog wybranej kategorii`       0
 @var select     categoryRedirectToMicroblogButtonFilter         `🔷❎ 𝗣𝗿𝘇𝘆𝗰𝗶𝘀𝗸 𝗠𝗜𝗥𝗞𝗢 otwiera` {
-                                                                        "Najnowsze":"_mikroblog_najnowsze",
-                                                                        "Ostatnio wybrane":"_mikroblog",
-                                                                        "Aktywne":"_mikroblog_aktywne",
-                                                                        "Gorące (2h)":"_mikroblog_gorace_2",
-                                                                        "Gorące (6h)":"_mikroblog_gorace_6",
-                                                                        "Gorące (12h)":"_mikroblog_gorace_12",
-                                                                        "Gorące (24h)":"_mikroblog_gorace_24"
+                                                                        "Najnowsze"             :       "_mikroblog_najnowsze",
+                                                                        "Ostatnio wybrane"      :       "_mikroblog",
+                                                                        "Aktywne"               :       "_mikroblog_aktywne",
+                                                                        "Gorące (2h)"           :       "_mikroblog_gorace_2",
+                                                                        "Gorące (6h)"           :       "_mikroblog_gorace_6",
+                                                                        "Gorące (12h)"          :       "_mikroblog_gorace_12",
+                                                                        "Gorące (24h)"          :       "_mikroblog_gorace_24"
                                                                     } 
 @var checkbox   categoryMenuRedirectToMicroblogButtonShowOnMinimized   `❎ Pokazuj przyciski 𝗠𝗜𝗥𝗞𝗢 w zwężonym menu ⭐`    0
 
@@ -1856,6 +1936,8 @@ TODO checkbox   commentsCountAlignment                          `🗨️ Przenie
 @var checkbox   autoOpenMoreContentEverywhere                   `❎🔹 𝗣𝗢𝗞𝗔𝗭̇ 𝗖𝗔𝗟𝗢𝗦́𝗖́ - rozwijaj całą treść długich wpisów/komentarzy`                  1     
 
 
+
+
 @var range      SUB_HR_COMMENT_LABEL                `🔹🔸🗨️ OZNACZENIA KOMENTARZY ⭐ Nowe`                                                    [0, 0, 99999, 1, 'mm']
 @var select     commentAuthorLabel                              `Komentarz OPa (autora wpisu/znaleziska) - etykieta ⭐` {
                                                                         "Etykieta 'Autor' (domyślnie)"                      :   "autor",
@@ -1963,8 +2045,7 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
 
 @var range      HR_ENTRIES_VIDEOS                         `🔷▶ FILMIKI WE WPISACH ⭐ Nowe`                                           [0, 0, 99900, 1, 'mm']
 @var checkbox   entryWithVideoDuration                          `▶ ❎ Pokaż czas trwania filmików na miniaturce ⭐`                  1     
-                                                                   
-                                                                    
+
 
 @var range      HR_PHOTO_VIEWER                         `🔷🌆 Wykop X Photo Viewer `                                                                                [0, 0, 99900, 1, 'mm']
 @var checkbox   photoViewerEnable                               `Włącz 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗣𝗵𝗼𝘁𝗼 𝗩𝗶𝗲𝘄𝗲𝗿 na #tagach`                                                      0
@@ -1983,10 +2064,10 @@ TODO var checkbox   openImageInNewTabButton                     `Przycisk 𝗢�
 TODO var checkbox   fixWrongImageRatio                          `✔ Napraw błąd skurczonej wysokości wysokich obrazków we wpisach i komentarzach`                0
 TODO var range      fixWrongImageRatioMinWidth                  `✔ Napraw błąd skurczonej wysokości - minimalna szerokość obrazka`                               [30, 10, 100, 5, '%']
 @var select     mouseClickOpensImageInNewTab                    `❎🐁 Otwórz obrazek w nowej karcie kliknięciem` {
-                                                                        "Nie otwieraj w nowej karcie (domyślnie)":"nie_otwieraj",
-                                                                        "LPM - Lewym prz. myszy":"lewy_przycisk_myszy",
+                                                                        "Nie otwieraj w nowej karcie (domyślnie)"       :   "nie_otwieraj",
+                                                                        "LPM - Lewym prz. myszy"                        :   "lewy_przycisk_myszy",
                                                                         "ŚPM - Środkowym prz. myszy*":"srodkowy_przycisk_myszy",
-                                                                        "PPM - Prawym prz. myszy":"prawy_przycisk_myszy"
+                                                                        "PPM - Prawym prz. myszy"                       :   "prawy_przycisk_myszy"
                                                                     } 
 
 
@@ -2058,7 +2139,7 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
 
 @var range      HR_ACTION_MENU                `PRZYCISKI W STOPKACH ⭐`                                      [0, 0, 99900, 1, 'mm']
 @var range      SUB_HR_ACTION_MENU_ENTRIES                 `🔹 MENU W STOPCE KOMENTARZA I WPISU ⭐ `                                   [0, 0, 99999, 1, 'mm']
-@var checkbox   actionMenuEntriesRestoreFavoritesButtonEnable     `𝗪𝘆𝗸𝗼𝗽 𝗫𝗦 Przywróć usunięty przycisk "☆ Ulubione"  ⭐` 1
+@var checkbox   actionMenuEntriesRestoreFavoritesButtonEnable     `❎ Przywróć usunięty przycisk "☆ Ulubione"  ⭐` 1
 @var range      actionMenuEntriesRestoreFavoritesButton_INFO      `Aby przywrócić usunięty w kwietniu 2024 przycisk dodawania wpisu/komentarza do ulubionych zainstaluj skrypt '𝗪𝘆𝗸𝗼𝗽 𝗫𝗦' albo '𝗪𝘆𝗸𝗼𝗽 𝗫𝗦 - 𝗟𝗶𝘀𝘁𝗮 𝗽𝗹𝘂𝘀𝘂𝗷𝗮̨𝗰𝘆𝗰𝗵 𝗶 𝗽𝗿𝘇𝘆𝗰𝗶𝘀𝗸 𝗨𝗹𝘂𝗯𝗶𝗼𝗻𝗲'. Wejdź na stronę internetową: 𝗹𝗶𝘀𝘁𝗮.𝘄𝘆𝗸𝗼𝗽𝘅.𝗽𝗹 - tam znajdziesz szczegóły oraz link do skryptu w serwisie Greasyfork.`             [0, 0,88800, 1, 'mm']
 
 @var checkbox   actionMenuEntriesHideCommentsCount                 `🚫 Ukryj liczbę komentarzy ⭐`                             0 
@@ -20975,7 +21056,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     
     
     
-    /* -------- PLUSY I MINUSY YYYYYYY ---- */
+    /* -------- PLUSY I MINUSY ---- */
     if(minusesHide == 1 && plusesHide == 1 && voteButtonHide == 1)
     {
         plusesAndMinusesTransition = 0
@@ -22411,7 +22492,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     /* VARIABLES */
 
     versor = "style"; // "style", "blank", "block"
-    version = "3.0.44";   
+    version = "3.0.50";   
     /* xblocker = "2.49" */
     
     
@@ -22419,6 +22500,8 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     head 
     {        
         --WykopXSEnabled:                           WykopXSEnabled;   
+        
+        WykopXStyleEnabled = 1;
         --WykopXStyleEnabled:                       WykopXStyleEnabled;   
 
         if(WykopXSEnabled == 1)
@@ -22448,6 +22531,13 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                 --rightSidebarHideLinksActive               : rightSidebarHideLinksActive; 
                 --rightSidebarHideLinksPopular              : rightSidebarHideLinksPopular; 
             }
+            
+            
+            if(entryVotersListEnable)
+            {
+                --entryVotersListEnable                     : entryVotersListEnable;
+            }
+            
             
 
             --wxsArchiveXNewestEntry                        :   wxsArchiveXNewestEntry;      
@@ -22578,14 +22668,17 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             
             --checkEntryPlusesWhenVoting:               checkEntryPlusesWhenVoting;
             --checkEntryPlusesEnable:                   checkEntryPlusesEnable;
+            
             if(checkEntryPlusesEnable == 1)
             {
-                --prefixBeforePlusesCount:              prefixBeforePlusesCount;
-                --prefixBeforeMinusesCount:             prefixBeforeMinusesCount;
                 --checkEntryPlusesPerHour:              checkEntryPlusesPerHour;      
                 --checkEntryCommentsPerHour:            checkEntryCommentsPerHour;      
                 --checkEntryPlusesForVotingGame:        checkEntryPlusesForVotingGame;
             }
+
+            --prefixBeforePlusesCount:                  prefixBeforePlusesCount;
+            --prefixBeforeMinusesCount:                 prefixBeforeMinusesCount;
+
 
             --votingExplosionEnable                     votingExplosionEnable
 
