@@ -485,9 +485,10 @@
 	setSettingsValueFromCSSProperty("quickLinksEnable", false);
 
 	// DODATKOWE PRZYCISKI NA GORNEJ BELCE
-	setSettingsValueFromCSSProperty("topNavMyWykopButton", true);
-	setSettingsValueFromCSSProperty("topNavMicroblogButton", true);
 	setSettingsValueFromCSSProperty("topNavNightSwitchButton", true);
+
+	setSettingsValueFromCSSProperty("topNavMyWykopButton", false);
+	setSettingsValueFromCSSProperty("topNavMicroblogButton", false);
 	setSettingsValueFromCSSProperty("topNavMessagesButton", false);
 	setSettingsValueFromCSSProperty("topNavProfileButton", false);
 	setSettingsValueFromCSSProperty("topNavNotificationsButton", false);
@@ -4609,11 +4610,11 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		// TODO IF
 		createNewNavBarButton({
 			position: "left",
-			text: "Wykop X Style",
-			title: `Zainstaluj style CSS "𝗪𝘆𝗸𝗼𝗽 𝗫" w rozszerzeniu Stylus i odkryj dziesiątki dodatkowych funkcji Wykopu. Masz już zainstalowane rozszerzenie `,
+			text: "X",
+			title: `Zainstaluj style CSS "𝗪𝘆𝗸𝗼𝗽 𝗫" w rozszerzeniu Stylus i odkryj setki dodatkowych funkcji.`,
 			class: ["promo", "install_wykopx"], // wykopx_promo (ukrywane przez X Style) wykopx_install_wykopx_li hybrid" | a > wykopx_promo wykopx_install_wykopx_button hybrid
 			hideWithoutXStyle: false,
-			url: "https://bit.ly/wykopx_install_wykopx_button",
+			url: "https://userstyles.world/search?q=Wykop+X+Style+3&category=&sort=mostinstalls",
 			target: "_blank",
 			icon: null,
 			number: null,
