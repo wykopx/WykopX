@@ -4608,10 +4608,10 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		}
 
 		// TODO IF
-		createNewNavBarButton({
+		/* createNewNavBarButton({
 			position: "left",
-			text: "X",
-			title: `Zainstaluj style CSS "𝗪𝘆𝗸𝗼𝗽 𝗫" w rozszerzeniu Stylus i odkryj setki dodatkowych funkcji.`,
+			text: "Wykop X Style",
+			title: `Zainstaluj style CSS "𝗪𝘆𝗸𝗼𝗽 𝗫 𝗦𝘁𝘆𝗹𝗲" w rozszerzeniu Stylus i odkryj setki dodatkowych funkcji zmieniających i naprawiających Wykop`,
 			class: ["promo", "install_wykopx"], // wykopx_promo (ukrywane przez X Style) wykopx_install_wykopx_li hybrid" | a > wykopx_promo wykopx_install_wykopx_button hybrid
 			hideWithoutXStyle: false,
 			url: "https://userstyles.world/search?q=Wykop+X+Style+3&category=&sort=mostinstalls",
@@ -4619,7 +4619,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			icon: null,
 			number: null,
 			data: "data-v-5182b5f6",
-		})
+		}) */
 
 		addQuickLinksToNavBar();
 
@@ -8743,10 +8743,12 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 	/* ----- Wykop X Style promo banners ON */
-	CSS += `.wykopx_promo_banner a { width: 100 %; display: block!important; height: 300px!important; background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/promo-images/wykopx-install-sidebar-day.png'); }
-		[data-night-mode].wykopx_promo_banner a { background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/promo-images/wykopx-install-sidebar-night.png'); }
-		.wykopx_promo_banner:hover { filter: brightness(0.98) drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.2)); }
-		[data-night-mode].wykopx_promo_banner:hover { filter: brightness(1.2); }
+	CSS += `.wykopx_promo_banner a 
+			{ width: 100 %; display: block!important; height: 300px!important; background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/promo-images/wykopx-install-sidebar-day.png'); }
+			[data-night-mode] .wykopx_promo_banner a
+			{ background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/promo-images/wykopx-install-sidebar-night.png'); }
+			.wykopx_promo_banner:hover { filter: brightness(0.98) drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.2)); }
+			[data-night-mode] .wykopx_promo_banner:hover { filter: brightness(1.2); }
 
 		body > section > header.header > div.left > nav.main > ul > li
 		{
