@@ -148,7 +148,7 @@
 	setSettingsValueFromCSSProperty("editorShowMyUsername");
 	setSettingsValueFromCSSProperty("editorShowMyUsernameOnSendButton");
 	// ARCHIWUM X
-	setSettingsValueFromCSSProperty("wxsArchiveXNewestEntry");
+	setSettingsValueFromCSSProperty("wxsArchiveXNewestEntry", false);
 	if (settings.wxsArchiveXNewestEntry) settings.wxsArchiveXNewestEntryRefresh = wykopxSettings.getPropertyValue("--wxsArchiveXNewestEntryRefresh") ? parseInt(wykopxSettings.getPropertyValue("--wxsArchiveXNewestEntryRefresh")) : 15000;
 
 	// PRZEŁĄCZNIKI
