@@ -8738,7 +8738,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 	/* HIDE WYKOP XS PROMO FROM STYLUS */
-	CSS += `.wykopxs, body div.main - content section > section.sidebar::after  { display: none; }`;
+	CSS += `.wykopxs, body div.main-content[class] section > section.sidebar::after  { display: none!important; }`;
 
 
 	/* ----- Wykop X Style promo banners ON */

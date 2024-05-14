@@ -137,7 +137,7 @@
 	if (settings.hideAds) { CSS += `.pub-slot-wrapper { display: none!important; }`; }
 
 	/* HIDE WYKOP XS PROMO FROM STYLUS */
-	CSS += `.wykopxs, body div.main - content section > section.sidebar::after  { display: none; }`;
+	CSS += `.wykopxs, body div.main-content[class] section > section.sidebar::after  { display: none!important; }`;
 
 	styleElement.textContent = CSS;
 	document.head.appendChild(styleElement);
