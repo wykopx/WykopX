@@ -2058,7 +2058,7 @@ var checkbox  iHaveWykopXSInstalled                             `Tak, mam skrypt
 
         /* KOLORY PLUSÓW I MINUSÓW */
         --green:    rgb(59, 145, 95);
-        --red:      rgb(192, 57, 43)
+        --red:      rgb(192, 57, 43);
         --golden:   goldenrod;
         --numberZero: rgb(44, 62, 80);
 
@@ -17447,7 +17447,7 @@ https://wykop.pl/moje/
     div.details a[href={"\/user\/vocus"}]:after
     {
       content: "Uwaga. Autor tego stylu jest złodziejem! ";
-      font-size: 0.8em;
+    font-size: 0.8em;
       color: red;
     } 
     div.card:has(a[href*={"\/style\/" + nmzc1}]), 
