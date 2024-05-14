@@ -1388,7 +1388,8 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 	/* HIDE ADS ALWAYS */
 	if (settings.hideAds) { CSS += `.pub-slot-wrapper { display: none!important; }`; }
 
-
+	/* HIDE WYKOP XS PROMO FROM STYLUS */
+	CSS += `.wykopxs, body div.main - content section > section.sidebar::after  { display: none; }`;
 
 	styleElement.textContent = CSS;
 	document.head.appendChild(styleElement);

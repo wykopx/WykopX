@@ -8736,6 +8736,11 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				align-self: self-start;
 			}`;
 
+
+	/* HIDE WYKOP XS PROMO FROM STYLUS */
+	CSS += `.wykopxs, body div.main - content section > section.sidebar::after  { display: none; }`;
+
+
 	/* ----- Wykop X Style promo banners ON */
 	CSS += `.wykopx_promo_banner a { width: 100 %; display: block!important; height: 300px!important; background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/promo-images/wykopx-install-sidebar-day.png'); }
 		[data-night-mode].wykopx_promo_banner a { background: url('https://raw.githubusercontent.com/wykopx/wykopx-png/main/promo-images/wykopx-install-sidebar-night.png'); }
@@ -8775,15 +8780,12 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		}
 
 
-		/* ----- Hide XS features if Wykop X Style is not installed */
-		.wykopxs { display: none; }
+		
 
-		/* ----- Wykop XS promo banner from Wykop X Style disabled */
-		body div.main-content section > section.sidebar::after,
+
 		section.editor.expand section.inline-autocomplete section.inline-autocomplete-stream div.content::after,
 		header.header div.right section.search-input section.inline-autocomplete section.inline-autocomplete-stream div.content::after
 		{ display: none!important; }
-
 
 		/* ----- WykopXS new version available */
 		.wykopxs_info_bar
