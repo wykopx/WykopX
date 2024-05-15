@@ -385,6 +385,7 @@
 			listafalszywychrozowych.push('toniemojebuty');
 			listafalszywychrozowych.push('DigitalPasztet');
 			listafalszywychrozowych.push('wcaleniepchamsiewmultikonto');
+			listafalszywychrozowych.push('Wieczny_Prawiczek');
 
 			// LISTA FAŁSZYWYCH NIEBIESKICH PASKÓW fałszywe niebieskie
 			const listafalszywychniebieskich = [];
@@ -1443,9 +1444,9 @@
 		{
 			buttonsWrapper.innerHTML += `<div class="wxs_switch switchNSFW showOnLinksStream showOnEntriesStream showOnEntryPage">
 											<div>
-												<label class="label_ON_MINUS_1" title=" Wpisy z tagiem #nsfw są ukryte">Bez #nsfw ❌</label>
+												<label class="label_ON_MINUS_1" title=" Wpisy z tagiem #nsfw są ukryte">Bez #nsfw</label>
 												<label class="label_OFF_0">#nsfw</label>
-												<label class="label_ON_PLUS_1" title=" Wyświetlane są tylko wpisy z tagiem #nsfw">Tylko #nsfw ✅</label>
+												<label class="label_ON_PLUS_1" title=" Wyświetlane są tylko wpisy z tagiem #nsfw">Tylko #nsfw</label>
 											</div>
 											<div>
 												<input type="range" id="switchNSFW"  list="markers" name="switchNSFW" min="-1" max="1" step="1" value="0" />
@@ -1456,9 +1457,9 @@
 		{
 			buttonsWrapper.innerHTML += `<div class="wxs_switch switchAdult showOnLinksStream showOnEntriesStream showOnEntryPage">
 											<div>
-												<label class="label_ON_MINUS_1" title=" Treści oznaczne jako materiały 18+ są ukryte">Bez 18+ 🔞</label>
+												<label class="label_ON_MINUS_1" title=" Treści oznaczne jako materiały 18+ są ukryte">Bez 18+</label>
 												<label class="label_OFF_0">18+</label>
-												<label class="label_ON_PLUS_1" title=" Wyświetlane są tylko treści oznaczone jako 18+ ">Tylko 18+ ✅</label>
+												<label class="label_ON_PLUS_1" title=" Wyświetlane są tylko treści oznaczone jako 18+ ">Tylko 18+</label>
 											</div>
 											<div>
 												<input type="range" id="switchAdult" list="markers" name="switchAdult" min="-1" max="1" step="1" value="0" />
@@ -1483,7 +1484,7 @@
 		{
 			buttonsWrapper.innerHTML += `<div class="wxs_switch switchByUserGender showOnLinkPage showOnEntriesStream showOnEntryPage">
 											<div>
-												<label class="label_ON_MINUS_1" title="">Bez różowych ❌</label>
+												<label class="label_ON_MINUS_1" title="">Bez różowych</label>
 												<label class="label_OFF_0">Różowe</label>
 												<label class="label_ON_PLUS_1" title="">Tylko różowe </label>
 											</div>
@@ -1497,9 +1498,9 @@
 		{
 			buttonsWrapper.innerHTML += `<div class="wxs_switch switchYouTube showOnLinksStream showOnEntriesStream showOnEntriesStream showOnEntryPage">
 											<div>
-												<label class="label_ON_MINUS_1" title=" Treści bez filmików YouTube">Bez YT ❌</label>
+												<label class="label_ON_MINUS_1" title=" Treści bez filmików YouTube">Bez YT</label>
 												<label class="label_OFF_0">YouTube</label>
-												<label class="label_ON_PLUS_1" title=" Tylko YouTube ">Tylko YT ✅</label>
+												<label class="label_ON_PLUS_1" title=" Tylko YouTube ">Tylko YT</label>
 											</div>
 											<div>
 												<input type="range" id="switchYouTube" list="markers" name="switchYouTube" min="-1" max="1" step="1" value="0" />
@@ -1525,9 +1526,9 @@
 			buttonsWrapper.innerHTML += `<div class="wxs_switch switchImages showOnLinkPage showOnEntriesStream showOnEntryPage">
 											<div>
 												<label class="label_ON_MINUS_2" title=" Pokazuje tylko wpisy, które nie mają obrazków. Ukrywa wszystkie wpisy z obrazkami lub GIF-ami">Bez obr. 🚫</label>
-												<label class="label_ON_MINUS_1" title=" Ukrywa obrazki we wpisach i komentarzach pozostawiając tekst">Ukryj obr. ❌</label>
+												<label class="label_ON_MINUS_1" title=" Ukrywa obrazki we wpisach i komentarzach pozostawiając tekst">Ukryj obr.</label>
 												<label class="label_OFF_0">Obrazki</label>
-												<label class="label_ON_PLUS_1" title=" Pokazuje tylko wpisy, które zawierają obrazki">Tylko obr. ✅</label>
+												<label class="label_ON_PLUS_1" title=" Pokazuje tylko wpisy, które zawierają obrazki">Tylko obr.</label>
 											</div>
 											<div>
 												<input type="range" id="switchImages" list="markers" name="switchImages" min="-2" max="1" step="1" value="0" />
