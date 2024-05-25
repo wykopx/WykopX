@@ -1,0 +1,59 @@
+/* ==UserStyle==
+@name           Wykop X - blokowanie reklam
+@version        1.1.1
+@description    Blokowanie reklam i znalezisk Sponsorowanych na wykop.pl
+
+
+@author         SebastianDosiadlgo <wykopx@gmail.com> | www.wykopx.pl
+
+@homepageURL    http://www.wykopx.pl
+@supportURL     http://issues.wykopx.pl
+
+@preprocessor   stylus
+@namespace      userstyles.world/user/wykopchanger
+@license        No License (YOU CAN USE THIS CODE ONLY IN STYLUS EXTENSIONS. You are not allowed to: copy any part of the code, share, and use it anywhere)
+
+
+
+-- http://www.WykopX.pl
+
+-- https://wykop.pl/tag/wykopwnowymstylu
+
+
+Changelog
+
+1.1.1 [2023-02-26]
+- możliwość włączenia/wyłączenia całkowitego ukrywania reklam
+- możliwość włączenia/wyłączenia ukrywania znalezisk sponsorowanych "Wykop Sponsorowany"
+- możliwość włączenia/wyłączenia ukrywania znalezisk polecanych  "Wykop Poleca"
+
+1.1.0 [2023-01-22]
+- uproszczenie ukrywania reklam
+- ukrywanie także wpisów sponsorowanych
+
+
+
+
+@var checkbox  hideAds                                      ` Usuń reklamy`                                                 1
+@var checkbox  hideRecommendedLinks                         ` Ukryj znaleziska "Wykop Poleca"`                               1
+@var checkbox  hideSponsoredLinks                           ` Ukryj znaleziska "Wykop Sponsorowany"`                          1
+==/UserStyle== */
+
+@-moz-document domain("wykop.pl")
+{
+    if(hideAds)
+    {
+        .pub-slot-wrapper { display: none!important; }
+        .pub-slot-wrapper:has(section.premium-pub.link-block) { display: flex!important; }
+    }
+    if(hideSponsoredLinks)
+    {
+        .pub-slot-wrapper:has(section.premium-pub.link-block) { display: none!important; }
+    }
+    if(hideRecommendedLinks)
+    {
+        section.stream section.link-block:has(li.recommend-label) { display: none!important; }
+    }
+}
+
+
