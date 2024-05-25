@@ -197,8 +197,8 @@
 @var range      WykopXSEnabled_ON                               `Skrypt Wykop XS jest włączony`                                                          [0, 0, 111100, 1, 'mm']
 
 @var checkbox   WykopXSEnabled                                  `Aktywuj skrypt Wykop XS i działanie włączonych funkcji ❎ ⭐` 1
-@var checkbox   disableNewLinkEditorPastedTextLimit             `❎ Pokaż limity znaków + wklejanie tekstu o dowolnej długości ⭐`   1
-@var checkbox   intersectionObserverRootMargin                  `❎ Wczytuj z wyprzedzeniem (Notatki, ActionBox, InfoBox, l.plusów i l.wykopów) ⭐`     0
+@var checkbox   disableNewLinkEditorPastedTextLimit             `❎ Pokaż limity znaków + wklejanie tekstu o dowolnej długości ⭐`                         1
+@var checkbox   intersectionObserverRootMargin                  `❎ Wczytuj z wyprzedzeniem (Notatki, ActionBox, InfoBox, l.plusów i l.wykopów) ⭐`         0
 
 
 
@@ -1143,8 +1143,8 @@ var select     lennyFaceDropdownSkin                           `Okienko wyboru L
                                                                             "🟠 pomarańczki ➜ 🔴 bordo ➜ 🟢 zielonki  " : "pbz",
                                                                             "🟠 pomarańczki ➜ 🟢 zielonki ➜ 🔴 bordo  " : "pzb",
                                                                         }
-@var checkbox   entryVotersListUsersBlackFirst                  `🔹⚪ Plusy od moderacji na początku listy (@a__s, @m__b, @wykop) ⭐`   0
-@var checkbox   entryVotersListUsersPandaPlusFirst              `🔹🐼 Plusy od Pandy wyróżnione i na początku listy (@PandaPlus) ⭐`    1     
+@var checkbox   entryVotersListUsersBlackFirst                  `🔹⚪ Plusy od moderacji na początku listy (@a__s, @m__b, @wykop) ⭐`            0
+@var checkbox   entryVotersListUsersPandaPlusFirst              `🔹🐼 Plusy od Pandy wyróżnione i na początku listy (@PandaPlus) ⭐`             1     
 @var select     entryVotersListBannedLast                       `🔹🍌 Użytkownicy z banem ⭐ ` {
                                                                                 "Wyświetlaj normalnie (domyślnie)":"domyslnie",
                                                                                 "Wyświetlaj na końcu listy":"na_koncu"
@@ -1352,7 +1352,7 @@ var select     lennyFaceDropdownSkin                           `Okienko wyboru L
 @var checkbox   topNavHomeButtonTextBolder                      `Pogrubiony tekst przycisków w stylu Wykopu 2022 ⭐`      0
 @var select     upcomingCount                                   `Styl liczby nowych wykopalisk ⭐` {
                                                                                 "Wykop 2023 (domyślny)"        :    "domyslny",
-                                                                                "Wykop 2022*"                  :    "stylwykop2022",
+                                                                                "Wykop 2022*":    "stylwykop2022",
                                                                                 "Styl powiadomień"             :    "stylpowiadomien",
                                                                                 "🚫 Nie pokazuj"               :    "niepokazujliczby"
                                                                             } 
@@ -1771,10 +1771,10 @@ TODO range      mainContentWidthValue                           `⟺ Domyślna s
                                                                         "Nie pokazuj"                           :   "niepokazuj"
                                                                     } 
 
-@var checkbox   linkToWykopEntry                                `🔹 Oznaczaj znaleziska kierujące na wpisy z Mikrobloga ⭐`      1     
-@var checkbox   linkToWykopArticle                              `🔸 Oznaczaj znaleziska kierujące do Wykopowych Artykułów ⭐`    1     
-@var checkbox   linkVideoPlayerBlackBackground                  `▶ Widok teatralny podczas odtwarzanego wideo ⭐ `               0     
-@var checkbox   linkToVideoDuration                             `▶❎ Pokaż czas trwania filmików na miniaturce ⭐`            1     
+@var checkbox   linkToWykopEntry                                `🔹 Oznaczaj znaleziska kierujące na wpisy z Mikrobloga ⭐`         1     
+@var checkbox   linkToWykopArticle                              `🔸 Oznaczaj znaleziska kierujące do Wykopowych Artykułów ⭐`       1     
+@var checkbox   linkVideoPlayerBlackBackground                  `▶ Widok teatralny podczas odtwarzanego wideo ⭐ `                  0     
+@var checkbox   linkToVideoDuration                             `▶❎ Pokaż czas trwania filmików na miniaturce ⭐`                  1     
 
 
 @var select     linksDescriptionJustify                         `☰ Justowanie opisu znaleziska ⭐` {
@@ -1801,7 +1801,7 @@ TODO checkbox   commentsCountAlignment                          `🗨️ Przenie
 
 
 @var range      SUB_HR_GLOWNA                           `🔶 STRONA GŁÓWNA ⭐ Nowe`                                      [0, 0, 99999, 1, 'mm']
-@var checkbox   linkVoteDownButton                              `🔸❎ Przycisk "ZAKOP" przy znaleziskach na głównej ⭐`    1     
+@var checkbox   linkVoteDownButton                              `🔸❎ Przycisk "ZAKOP" przy znaleziskach na głównej ⭐`           1     
 
 // TOCHECK checkbox   hotLinksShowFirst              `check: 🔸🔥 Gorące Znaleziska wyświetlaj jako pierwsze`                 0
 
@@ -1903,7 +1903,7 @@ TODO checkbox   commentsCountAlignment                          `🗨️ Przenie
                                                                             "🔸 Nagłówek znaleziska"                                                :   "znalezisko",
                                                                             "🔗 Treści powiązane"                                                   :   "tresci_powiazane",
                                                                             "🗨️ Komentarze"                                                        :   "komentarze",
-                                                                            "✍ Edytor dodawania komentarza*"                                        :   "edytor_komentarza",
+                                                                            "✍ Edytor dodawania komentarza*":"edytor_komentarza",
                                                                     }
 @var select     hideRelatedLinks                                `🔸🔗 Treści powiązane ze znaleziskiem` {
                                                                         "Zawsze wyświetlaj (domyślnie)"                 :   "zawszewyswietlaj",
