@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3.0
 // @name:en							Wykop XS 3.0
 
-// @version							3.0.55
+// @version							3.0.56
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://styl.wykopx.pl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://styl.wykopx.pl
@@ -46,7 +46,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.0.55";
+	const currentVersion = "3.0.56";
 	let dev = false;
 
 	const promoString = " [Dodane przez Wykop XS]";
@@ -1523,20 +1523,26 @@
 
 				checkLocalForageupdatedDate(localStorageObserved, getObservedTags, settings.observedTagsInRightSidebarUpdateInterval * 3600);
 
+				// VUE SENSITIVE
+				/*
+					data-v-d5500d78
+					data-v-38d5cf90
+					data-v-7befdafc
+				*/
 				let section_html = `
-			<section class="wykopx_your_observed_tags custom-sidebar tags-sidebar" data-v-3f88526c="" data-v-89888658="" data-v-5d67dfc3="">
-				<header class="" data-v-3f88526c="">
-					<h4 data-v-3f88526c="">Przejdź na #tag lub @profil</h4>
+			<section class="wykopx_your_observed_tags custom-sidebar tags-sidebar" data-v-d5500d78 data-v-38d5cf90 data-v-0a0cb29b>
+				<header class="" data-v-d5500d78>
+					<h4 data-v-d5500d78>Przejdź na #tag lub @profil</h4>
 				</header>
-				<div class="content wykopx_quick_search_container" data-v-3f88526c="">
+				<div class="content wykopx_quick_search_container" data-v-d5500d78>
 					<input type="text" class="wykopx_quick_search" placeholder="#wykopwnowymstylu" title="${promoString}" />
 				</div>
-				<header data-v-3f88526c="">
-					<h4 data-v-3f88526c="">Twoje obserwowane tagi</h4>
+				<header data-v-d5500d78>
+					<h4 data-v-d5500d78>Twoje obserwowane tagi</h4>
 				</header>
-				<div class="content" data-v-3f88526c="">
-					<section class="tags" data-v-89888658="" data-v-3f88526c="">
-						<ul data-v-89888658="" data-v-3f88526c="">
+				<div class="content" data-v-d5500d78>
+					<section class="tags" data-v-7befdafc data-v-d5500d78>
+						<ul data-v-7befdafc data-v-d5500d78>
 				`;
 
 				localStorageObserved.getItem('observedTags').then(function (tagsArray)
@@ -1549,8 +1555,8 @@
 					fetchedValuesArray.forEach(function (tag)
 					{
 						section_html += `
-						<li data-v-89888658="" data-v-3f88526c="" title="Przejdź na tag #${tag}  ${promoString}">
-							<span data-v-89888658="" data-v-3f88526c="">#</span><a data-v-89888658="" href="https://go.wykopx.pl/#${tag}" class="hybrid" data-v-3f88526c="">${tag}</a>
+						<li data-v-7befdafc data-v-d5500d78 title="Przejdź na tag #${tag}  ${promoString}">
+							<span data-v-7befdafc data-v-d5500d78>#</span><a data-v-7befdafc href="https://go.wykopx.pl/#${tag}" class="hybrid" data-v-d5500d78>${tag}</a>
 						</li>`;
 					});
 					section_html += `</ul></section></div></section>`;
@@ -9827,13 +9833,19 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 				const favButtonLI = document.createElement("li");
 				favButtonLI.classList.add("favourite", "icon", "icon-favourite");
-				favButtonLI.setAttribute('data-v-3791abaf', '');
+
 
 				if (isFavourite) { favButtonLI.classList.add("active"); }
-
 				const favButtonSpan = document.createElement("span");
 				favButtonSpan.classList.add("favouriteButton");
-				favButtonSpan.setAttribute('data-v-3791abaf', '');
+
+				// VUE SENSITIVE
+				/*
+					data-v-90179052
+				*/
+				favButtonLI.setAttribute('data-v-90179052', '');
+				favButtonSpan.setAttribute('data-v-90179052', '');
+
 				favButtonSpan.dataset.isFavourite = isFavourite;
 				favButtonSpan.dataset.entryId = entryId;
 				if (commentId) favButtonSpan.dataset.commentId = commentId;
@@ -9869,7 +9881,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 			if (!fiveVoters || fiveVoters.length < 1) return false;
 
-			let sectionEntryVotersHTML = `<ul data-v-6e6ed6ee="">`;
+			let sectionEntryVotersHTML = `<ul>`;
 
 			fiveVoters.forEach(voter =>
 			{
@@ -9880,8 +9892,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			if (sectionEntry?.__vue__?.item?.votes.up > settings.entryVotersListExpandIfLessThan && voters.length <= settings.entryVotersListExpandIfLessThan)
 			{
 				sectionEntryVotersHTML += `
-				<li data-v-6e6ed6ee="" data-no-bubble="" class="more">
-					<span data-v-6e6ed6ee="" data-votes-up="${sectionEntry?.__vue__?.item?.votes.up}"`;
+				<li data-no-bubble="" class="more">
+					<span data-votes-up="${sectionEntry?.__vue__?.item?.votes.up}"`;
 
 				if (sectionEntry?.__vue__?.item.resource == "entry") 
 				{
@@ -9899,8 +9911,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 			const sectionEntryVoters = document.createElement("section");
 			sectionEntryVoters.classList.add("entry-voters");
-			sectionEntryVoters.setAttribute('data-v-6e6ed6ee', '');
-			sectionEntryVoters.setAttribute('data-v-2aacfeb5', '');
+			// sectionEntryVoters.setAttribute('data-v-6e6ed6ee', '');
+			// sectionEntryVoters.setAttribute('data-v-2aacfeb5', '');
 			sectionEntryVoters.innerHTML = sectionEntryVotersHTML;
 
 			const sectionEntryVotersElement = divEditWrapperElement.querySelector('section.entry-voters');
@@ -9919,8 +9931,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		function getListItemForUser(voter)
 		{
-			let userHTML = `<li data-v-6e6ed6ee="">
-				<a data-v-ed9f6c56="" data-v-6e6ed6ee="" href="/ludzie/${voter.username}" class="username`;
+			let userHTML = `<li>
+				<a href="/ludzie/${voter.username}" class="username`;
 
 			userHTML += ` ${voter.color}-profile`; 		// orange-profile green-profile burgundy-profile
 			userHTML += ` ${voter.status}`;				// active banned suspended removed
@@ -9946,7 +9958,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			if (settings?.votersGenderM && voter.gender == "m") userHTML += `<i class="${voter.gender}-gender" title="Wpis od niebieskiego"></i>`;
 			if (settings?.votersGenderF && voter.gender == "f") userHTML += `<i class="${voter.gender}-gender" title="Plus od różowej"></i>`;
 
-			userHTML += `<span data-v-ed9f6c56="">${voter.username}</span>
+			userHTML += `<span>${voter.username}</span>
 				</a>
 			</li>`;
 

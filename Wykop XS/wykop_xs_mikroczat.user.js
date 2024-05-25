@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 // @name:en							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 
-// @version							3.0.55
+// @version							3.0.56
 
 // @description 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -42,7 +42,7 @@
 
 'use strict';
 
-const currentVersion = "3.0.55";
+const currentVersion = "3.0.56";
 let dev = false;
 
 const promoString = " - Wykop XS";
@@ -801,15 +801,17 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 				commentId = sectionEntry?.__vue__?.item.id;
 			}
 
-			const favButtonLI = document.createElement("li");
-			favButtonLI.classList.add("favourite", "icon", "icon-favourite");
-			favButtonLI.setAttribute('data-v-3791abaf', '');
-
 			if (isFavourite) { favButtonLI.classList.add("active"); }
-
 			const favButtonSpan = document.createElement("span");
 			favButtonSpan.classList.add("favouriteButton");
-			favButtonSpan.setAttribute('data-v-3791abaf', '');
+
+			// VUE SENSITIVE
+			/*
+				data-v-90179052
+			*/
+			favButtonLI.setAttribute('data-v-90179052', '');
+			favButtonSpan.setAttribute('data-v-90179052', '');
+
 			favButtonSpan.dataset.isFavourite = isFavourite;
 			favButtonSpan.dataset.entryId = entryId;
 			if (commentId) favButtonSpan.dataset.commentId = commentId;
@@ -845,7 +847,7 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 
 		if (!fiveVoters || fiveVoters.length < 1) return false;
 
-		let sectionEntryVotersHTML = `<ul data-v-6e6ed6ee="">`;
+		let sectionEntryVotersHTML = `<ul>`;
 
 		fiveVoters.forEach(voter =>
 		{
@@ -856,8 +858,8 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 		if (sectionEntry?.__vue__?.item?.votes.up > settings.entryVotersListExpandIfLessThan && voters.length <= settings.entryVotersListExpandIfLessThan)
 		{
 			sectionEntryVotersHTML += `
-				<li data-v-6e6ed6ee="" data-no-bubble="" class="more">
-					<span data-v-6e6ed6ee="" data-votes-up="${sectionEntry?.__vue__?.item?.votes.up}"`;
+				<li data-no-bubble="" class="more">
+					<span data-votes-up="${sectionEntry?.__vue__?.item?.votes.up}"`;
 
 			if (sectionEntry?.__vue__?.item.resource == "entry") 
 			{
@@ -875,8 +877,6 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 
 		const sectionEntryVoters = document.createElement("section");
 		sectionEntryVoters.classList.add("entry-voters");
-		sectionEntryVoters.setAttribute('data-v-6e6ed6ee', '');
-		sectionEntryVoters.setAttribute('data-v-2aacfeb5', '');
 		sectionEntryVoters.innerHTML = sectionEntryVotersHTML;
 
 		const sectionEntryVotersElement = divEditWrapperElement.querySelector('section.entry-voters');
@@ -895,8 +895,8 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 
 	function getListItemForUser(voter)
 	{
-		let userHTML = `<li data-v-6e6ed6ee="">
-				<a data-v-ed9f6c56="" data-v-6e6ed6ee="" href="/ludzie/${voter.username}" class="username`;
+		let userHTML = `<li>
+				<a href="/ludzie/${voter.username}" class="username`;
 
 		userHTML += ` ${voter.color}-profile`; 		// orange-profile green-profile burgundy-profile
 		userHTML += ` ${voter.status}`;				// active banned suspended removed
@@ -922,7 +922,7 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 		if (settings?.votersGenderM && voter.gender == "m") userHTML += `<i class="${voter.gender}-gender" title="Wpis od niebieskiego"></i>`;
 		if (settings?.votersGenderF && voter.gender == "f") userHTML += `<i class="${voter.gender}-gender" title="Plus od różowej"></i>`;
 
-		userHTML += `<span data-v-ed9f6c56="">${voter.username}</span>
+		userHTML += `<span>${voter.username}</span>
 				</a>
 			</li>`;
 
