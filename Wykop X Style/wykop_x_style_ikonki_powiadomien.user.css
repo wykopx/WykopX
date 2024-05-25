@@ -1,0 +1,164 @@
+/* ==UserStyle==
+@name           Wykop X Style - ikonki powiadomień na wykopie
+@version        3.0.54
+
+
+@description    Wykop X Style
+@description    Ten styl to 900 różnych funkcji zmieniających wykop
+description     https://styl.wykopx.pl
+
+
+@description	Wykop X Style Blank
+@description	W wersji BLANK wszystkie opcje są wyłączone
+@description	https://blank.wykopx.pl
+
+
+@description    Wykop XS
+@description    Pomocniczy skrypt Wykop XS z dodatkowymi funkcjami
+@description    https://skrypt.wykopx.pl
+
+@description    ---- WYKOP X ----
+@description    http://wiki.wykopx.pl
+@description    https://userstyles.world/style/8174/wykop-x-style-3
+
+
+
+---- AUTOR WYKOP X ----
+
+@author         Wykop X <wykopx@gmail.com> | wiki.wykopx.pl
+@homepageURL    http://wiki.wykopx.pl
+@supportURL     http://wiki.wykopx.pl
+
+---- AUTOR WYKOP X ---- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@preprocessor   stylus
+@namespace      userstyles.world/user/wykopchanger
+@license        No License (YOU CAN USE THIS CODE ONLY IN STYLUS EXTENSIONS. You are NOT ALLOWED TO copy, share and use any part of this code anywhere else without author's written permission)
+
+
+
+
+
+
+
+==/UserStyle== */
+
+
+
+
+
+@-moz-document url-prefix("https://wykop.pl")
+{
+    hideAds = 1;
+    hideSponsoredLinks = 1;
+    
+    if(hideAds == 1)
+    {
+        .pub-slot-wrapper { display: none!important; } 
+        .pub-slot-wrapper:has(section.premium-pub.link-block) { display: flex!important; } 
+    } 
+    if(hideSponsoredLinks == 1)
+    {
+        .pub-slot-wrapper:has(section.premium-pub.link-block) { display: none!important; } 
+    }
+    
+    :root
+    {
+        --userCustomColorAccent:                                          rgb(57, 131, 175);   /* Kolor wiodący */
+
+        /* POWIADOMIENIA */
+        --notificationIconActiveColor:                                      var(--userCustomColorAccent);             /* ikonka powiadomienia ✉ 🕭 #, która została kliknięta */
+        --notificationIconActiveBackgroundColor:                          rgba(255, 255, 255, 0.3);                 /* tło ikonki powiadomienia, która została kliknięta */
+        
+        --inactiveButtonBackground:                                       rgba(255, 255, 255, 0.4);
+        /* ikonka z nowymi powiaodmieniami */
+        --notificationIconWithUnreadNotificationsColor:                   rgba(255, 255, 255, 0.8);     /* ikonka powiadomienia ✉ 🕭 #, jesli sa nieprzeczytane */
+        --notificationIconWithUnreadNotificationsBackgroundColor:         rgba(255, 255, 255, 0);       /* tło powiadomienia ✉ 🕭 #, jesli sa nieprzeczytane */
+        --notificationIconWithUnreadNotificationsHoverColor:              rgba(255, 255, 255, 1);    
+        --notificationIconWithUnreadNotificationsHoverBackgroundColor:    rgba(255, 255, 255, 0.2);    
+        --notificationIconWithUnreadNotificationsActiveColor:             rgba(255, 255, 255, 1);     
+        --notificationIconWithUnreadNotificationsActiveBackgroundColor:   rgba(255, 255, 255, 0.3);
+        
+        /* powiadomienia */
+        --notificationIconWithoutUnreadNotificationsColor:                 rgba(255, 255, 255, 0.2);   /* ikonka powiadomienia ✉ 🕭 #, jesli nie ma nowych powiadomien  */
+        --notificationIconWithoutUnreadNotificationsBackgroundColor:       rgba(255, 255, 255, 0);     /* tło powiadomienia ✉ 🕭 #, jesli nie ma nowych powiadomien  */
+        --notificationIconWithoutUnreadNotificationsHoverColor:            rgba(255, 255, 255, 0.6);    
+        --notificationIconWithoutUnreadNotificationsHoverBackgroundColor:  rgba(255, 255, 255, 0.2);    
+        --notificationIconWithoutUnreadNotificationsActiveColor:           rgba(255, 255, 255, 0.6);     
+        --notificationIconWithoutUnreadNotificationsActiveBackgroundColor: rgba(255, 255, 255, 0.3);   
+    }
+    
+    
+    if(fixNotificationBadgeBug == 1)
+    {  
+        /* ukrycie badge z liczbą powiadomien jeśli wszystkie powiadomienia w okienku są przeczytane */
+        body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications 	> section.stream > div.content > section.notify:not(.read))) > a:after,
+        body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications 	> section.stream > div.content > section.notify:not(.read))) > a:before,
+        body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 						    > section.stream > div.content > section.item.unread))       > a.new:after,
+        body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a.new:before
+        { 
+            display: none!important;
+        }
+        /* naprawienie kolorów ikonek - brak nieprzeczytanych */
+        body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications    > section.stream > div.content > section.notify:not(.read))) > a > div.svg-inline > svg,
+        body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a > div.svg-inline > svg
+        {
+            fill: var(--notificationIconWithoutUnreadNotificationsColor) !important;
+        } 
+        body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications    > section.stream > div.content > section.notify:not(.read))) > a,
+        body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a
+        {
+            background-color: var(--notificationIconWithoutUnreadNotificationsBackgroundColor) !important;
+        } 
+        /* :hover */
+        body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications    > section.stream > div.content > section.notify:not(.read))) > a:hover > div.svg-inline > svg,
+        body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a:hover > div.svg-inline > svg
+        {
+            fill: var(--notificationIconWithoutUnreadNotificationsHoverColor) !important;
+        } 
+        body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications    > section.stream > div.content > section.notify:not(.read))) > a:hover,
+        body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a:hover
+        {
+            background-color: var(--notificationIconWithoutUnreadNotificationsHoverBackgroundColor) !important;
+        } 
+        /* otwarte menu */
+        body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications.dropdown.active:not(:has( > section.dropdown-body > section.notifications > section.stream > div.content > section.notify:not(.read))) > a > div.svg-inline > svg,
+        body > section:not(.is-mobile) > header.header div.right > nav ul li.pm.dropdown.active:not(:has(            > section.dropdown-body                         > section.stream > div.content > section.item.unread))       > a > div.svg-inline > svg
+        {
+            fill: var(--notificationIconWithoutUnreadNotificationsActiveColor) !important;
+        } 
+        body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications.dropdown.active:not(:has( > section.dropdown-body > section.notifications > section.stream > div.content > section.notify:not(.read))) > a,
+        body > section:not(.is-mobile) > header.header div.right > nav ul li.pm.dropdown.active:not(:has(            > section.dropdown-body                         > section.stream > div.content > section.item.unread))       > a
+        {
+            background-color: var(--notificationIconWithoutUnreadNotificationsActiveBackgroundColor) !important;
+        } 
+    } 
+    
+    
+
+
+    
+
+}
