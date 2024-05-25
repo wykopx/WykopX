@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3.0
 // @name:en							Wykop XS 3.0
 
-// @version							3.0.54
+// @version							3.0.55
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://styl.wykopx.pl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://styl.wykopx.pl
@@ -46,7 +46,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.0.54";
+	const currentVersion = "3.0.55";
 	let dev = false;
 
 	const promoString = " [Dodane przez Wykop XS]";
@@ -2673,7 +2673,7 @@
 						if (resource == "entry") // TODO komentarze w znaleziskach
 						{
 
-							if (settings.authorBlocksYouCheckingEnable && user?.data?.status == "active")
+							if (settings.authorBlocksYouCheckingEnable && loggedUser?.status == "active")
 							{
 								// nie sprawdzamy, gdy ktoś ma bana, bo wtedy nigdzie nie można dodać wpisu
 
