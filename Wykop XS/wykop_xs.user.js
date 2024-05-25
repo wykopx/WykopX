@@ -5308,8 +5308,10 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 					addWykopXSClassesToElement(nav_ul_li, options.class, "li") // class="wykopx_aaaaaa_li"
 
 					let nav_ul_li_a = document.createElement("a");
-					nav_ul_li.dataset["v-5182b5f6"] = "";
-					nav_ul_li_a.dataset["v-5182b5f6"] = "";
+
+					nav_ul_li.dataset["v-6c2d0fdd"] = "";
+					nav_ul_li_a.dataset["v-6c2d0fdd"] = "";
+
 					if (options.url) nav_ul_li_a.setAttribute("href", options.url);
 					if (options.href) nav_ul_li_a.setAttribute("href", options.href);
 					if (options.target) nav_ul_li_a.setAttribute("target", options.target);

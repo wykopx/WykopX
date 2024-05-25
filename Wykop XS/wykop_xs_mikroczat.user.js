@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 // @name:en							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 
-// @version							3.0.50
+// @version							3.0.55
 
 // @description 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -42,7 +42,7 @@
 
 'use strict';
 
-const currentVersion = "3.0.50";
+const currentVersion = "3.0.55";
 let dev = false;
 
 const promoString = " - Wykop XS";
@@ -89,7 +89,7 @@ Zmień je w przeglądarce w następujący sposób:
 
 Domyślne wartości wyglądają przykładowo tak:
 
-{"expandAllVotersIfLessThan": 5, "votersFollow":true, "votersBlacklist":true, "votersBanned":true, "votersSuspended":true, "votersRemoved":true, "votersGenderF":false, "votersGenderM":false, "votersColorGreen":true, "votersColorOrange":false,"votersColorBurgundy":true}
+{"entryVotersListExpandIfLessThan": 5, "votersFollow":true, "votersBlacklist":true, "votersBanned":true, "votersSuspended":true, "votersRemoved":true, "votersGenderF":false, "votersGenderM":false, "votersColorGreen":true, "votersColorOrange":false,"votersColorBurgundy":true}
 
 */
 
@@ -99,41 +99,48 @@ Domyślne wartości wyglądają przykładowo tak:
 // Zmień je w sposób opisany powyżej
 
 setSettingsValueFromCSSProperty("entryVotersListEnable");				// włącza pokazywanie listy plusujących z Wykop X Style
+setSettingsValueFromCSSProperty("entryVotersListExpandIfLessThan", 50, true);
+
+
 setSettingsValueFromCSSProperty("fixNotificationBadgeBug");				// naprawia wykopowy błąd - ukrywa liczbę nieprzeczytanych powiadomien, gdy wszystkie powiadomienia sa juz przeczytane
 setSettingsValueFromCSSProperty("hideAds");								// blokuje wszystkie reklamy na wykopie
 
 
-// expandAllVotersIfLessThan - domyślnie Wykop pokazywał 5 osób, które zaplusowały. 
+// entryVotersListExpandIfLessThan - domyślnie Wykop pokazywał 5 osób, które zaplusowały. 
 // Możesz zmienić tę wartość na np. 10 albo 25. Jeśli wpis ma mniej plusów niż ta liczba, zostaną od razu wyświetleni wszyscy plusujący bez przycisku "+15 INNYCH"
-settings.expandAllVotersIfLessThan = 20;
-settings.votersFollow = true;							// pokazuje 🔔 przed użytkownikami, których obserwujesz
-settings.votersBlacklist = true;						// pokazuje ⛔ przed użytkownikami, których blokujesz
-settings.votersBanned = true;							// pokazuje użytkowników z aktywnym banem w kolorze i z ikonką 🍌
-settings.votersSuspended = true;						// pokazuje ✖ przed kontami, które są w trakcie usuwania
-settings.votersRemoved = true;							// pokazuje ✖ przed kontami, które są usunięte
-settings.votersGenderF = false;							// pokazuje różową kropkę przed kobietami
-settings.votersGenderM = false;							// pokazuje niebieską kropkę przed mężczyznami
-settings.votersColorGreen = true;						// pokazuje zielonki w kolorze
-settings.votersColorOrange = false;						// pokazuje pomarańczowych użytkowników w kolorze
-settings.votersColorBurgundy = true;					// pokazuje użytkowników bordo w kolorze
-settings.votersFollowFirst = true;						// pokazuje użytkowników, których obserwujesz pierwszych na liście
-settings.votersBlackFirst = false;						// pokazuje plusy od moderacji pierwsze na liście (konta typu @wykop, @m__b, @a__s itd.)
-settings.votersBurgundyFirst = false;					// pokazuje użytkowników bordo pierwszych na liście
-settings.votersOrangeFirst = false;						// pokazuje zielonki pierwszych na liście
-settings.votersGreenFirst = false;						// pokazuje pomarańczki pierwszych na liście
-settings.votersBlacklistLast = false;					// pokazuje użytkowników, których zablokowałeś na końcu listy
-settings.votersRemovedLast = false;						// pokazuje usunięte konta na końcu listy
-settings.votersBannedLast = false;						// pokazuje zbanowanych na końcu listy
-settings.votersSuspendedLast = false;					// pokazuje konta w trakcie usuwania na końcu listy
+
+if (settings.entryVotersListEnable)
+{
+	// entryVotersListExpandIfLessThan - domyślnie Wykop pokazywał 5 osób, które zaplusowały.
+	// Możesz zmienić tę wartość na np. 10 albo 25. Jeśli wpis ma mniej plusów niż ta liczba, zostaną od razu wyświetleni wszyscy plusujący bez przycisku "+15 INNYCH"
+	if (!settings.entryVotersListExpandIfLessThan) settings.entryVotersListExpandIfLessThan = 20;
+	settings.votersFollow = true;							// pokazuje 🔔 przed użytkownikami, których obserwujesz
+	settings.votersBlacklist = true;						// pokazuje ⛔ przed użytkownikami, których blokujesz
+	settings.votersBanned = true;							// pokazuje użytkowników z aktywnym banem w kolorze i z ikonką 🍌
+	settings.votersSuspended = true;						// pokazuje ✖ przed kontami, które są w trakcie usuwania
+	settings.votersRemoved = true;							// pokazuje ✖ przed kontami, które są usunięte
+	settings.votersGenderF = false;							// pokazuje różową kropkę przed kobietami
+	settings.votersGenderM = false;							// pokazuje niebieską kropkę przed mężczyznami
+	settings.votersColorGreen = true;						// pokazuje zielonki w kolorze
+	settings.votersColorOrange = false;						// pokazuje pomarańczowych użytkowników w kolorze
+	settings.votersColorBurgundy = true;					// pokazuje użytkowników bordo w kolorze
+	settings.votersFollowFirst = true;						// pokazuje użytkowników, których obserwujesz pierwszych na liście
+	settings.votersBlackFirst = false;						// pokazuje plusy od moderacji pierwsze na liście (konta typu @wykop, @m__b, @a__s itd.)
+	settings.votersBurgundyFirst = false;					// pokazuje użytkowników bordo pierwszych na liście
+	settings.votersOrangeFirst = false;						// pokazuje zielonki pierwszych na liście
+	settings.votersGreenFirst = false;						// pokazuje pomarańczki pierwszych na liście
+	settings.votersBlacklistLast = false;					// pokazuje użytkowników, których zablokowałeś na końcu listy
+	settings.votersRemovedLast = false;						// pokazuje usunięte konta na końcu listy
+	settings.votersBannedLast = false;						// pokazuje zbanowanych na końcu listy
+	settings.votersSuspendedLast = false;					// pokazuje konta w trakcie usuwania na końcu listy
+}
+
 settings.hideShareButton = true;						// ukrywa przycisk "Udostępnij"
 settings.showFavouriteButton = true;					// pokazuje przycisk "Dodaj do ulubionych" (samą gwiazdkę)
 settings.showFavouriteButtonLabel = true;				// pokazuje oprócz gwiazdki także tekst "Ulubione"
 settings.addCommentPlusWhenVotingOnEntry = false;		// gdy plusujesz wpis, dodaje komentarz "+1"
 settings.addCommentPlusWhenVotingOnComment = false;		// gdy plusujesz komentarz, dodaje komentarz "+1"
 settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
-
-
-
 
 
 (async function ()
@@ -198,8 +205,9 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 				addWykopXSClassesToElement(nav_ul_li, options.class, "li") // class="wykopx_aaaaaa_li"
 
 				let nav_ul_li_a = document.createElement("a");
-				nav_ul_li.dataset["v-5182b5f6"] = "";
-				nav_ul_li_a.dataset["v-5182b5f6"] = "";
+
+				nav_ul_li.dataset["v-6c2d0fdd"] = "";
+				nav_ul_li_a.dataset["v-6c2d0fdd"] = "";
 
 				if (options.url) nav_ul_li_a.setAttribute("href", options.url);
 				if (options.href) nav_ul_li_a.setAttribute("href", options.href);
@@ -695,7 +703,7 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 				return;
 			}
 
-			if (settings.expandAllVotersIfLessThan > 5 && sectionEntry?.__vue__.item.votes.up <= settings.expandAllVotersIfLessThan && sectionEntry?.__vue__.item.votes.up > 5) 
+			if (settings.entryVotersListExpandIfLessThan > 5 && sectionEntry?.__vue__.item.votes.up <= settings.entryVotersListExpandIfLessThan && sectionEntry?.__vue__.item.votes.up > 5) 
 			{
 				if (dev) console.log(`processSectionEntry() wybrano 💛throttledAddVotersList  ${sectionEntry.__vue__.item.id} | plusow: ${sectionEntry.__vue__.item.votes.up}`,)
 				throttledAddVotersList(sectionEntry);
@@ -748,7 +756,7 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 
 		if (sectionEntry?.__vue__ && sectionEntry?.__vue__.item.votes.up > 0)
 		{
-			if (sectionEntry?.__vue__ && settings.expandAllVotersIfLessThan > 5 && sectionEntry?.__vue__.item.votes.up <= settings.expandAllVotersIfLessThan && sectionEntry?.__vue__.item.votes.up > 5)
+			if (sectionEntry?.__vue__ && settings.entryVotersListExpandIfLessThan > 5 && sectionEntry?.__vue__.item.votes.up <= settings.entryVotersListExpandIfLessThan && sectionEntry?.__vue__.item.votes.up > 5)
 			{
 				let entryId, commentId;
 				if (sectionEntry?.__vue__?.item.resource == "entry") 
@@ -845,7 +853,7 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 		});
 
 		// <li class="more">
-		if (sectionEntry?.__vue__?.item?.votes.up > settings.expandAllVotersIfLessThan && voters.length <= settings.expandAllVotersIfLessThan)
+		if (sectionEntry?.__vue__?.item?.votes.up > settings.entryVotersListExpandIfLessThan && voters.length <= settings.entryVotersListExpandIfLessThan)
 		{
 			sectionEntryVotersHTML += `
 				<li data-v-6e6ed6ee="" data-no-bubble="" class="more">
