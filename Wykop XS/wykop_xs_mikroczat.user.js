@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 // @name:en							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 
-// @version							3.0.56
+// @version							3.0.57
 
 // @description 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -42,7 +42,7 @@
 
 'use strict';
 
-const currentVersion = "3.0.56";
+const currentVersion = "3.0.57";
 let dev = false;
 
 const promoString = " - Wykop XS";
@@ -322,19 +322,37 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 		e.preventDefault();
 	});
 
+	let keys = {};
 	document.addEventListener("keydown", (e) =>
 	{
 		if (e.target.tagName.toLowerCase() === 'textarea') return;
-		if (e.shiftKey) bodySection.dataset.key_shift = "true"; // <section data-key_shift="true">
-		if (e.altKey) bodySection.dataset.key_alt = "true"; // <section data-key_alt="true">
-		// if (e.ctrlKey) bodySection.dataset.key_ctrl = "true"; // <section data-key_ctrl="true">
+
+		if (!keys["SHIFT"] && e.key == "Shift")
+		{
+			keys["SHIFT"] = true;
+			bodySection.dataset.key_shift = "true";
+		}
+		else if (!keys["ALT"] && (e.key == "Alt" || e.key == "AltGraph"))
+		{
+			keys["ALT"] = true;
+			bodySection.dataset.key_alt = "true";
+		}
 	});
+
 	document.addEventListener("keyup", (e) =>
 	{
 		if (e.target.tagName.toLowerCase() === 'textarea') return;
-		if (e.key == "Shift" || e.shiftKey) delete bodySection.dataset.key_shift;
-		if (e.key == "Alt" || e.key == "AltGraph" || e.altKey) delete bodySection.dataset.key_alt;
-		// if (e.key == "Control" || e.ctrlKey) delete bodySection.dataset.key_ctrl;
+
+		if (keys["SHIFT"] && e.key == "Shift")
+		{
+			keys["SHIFT"] = false;
+			delete bodySection.dataset.key_shift;
+		}
+		else if (keys["ALT"] && (e.key == "Alt" || e.key == "AltGraph"))
+		{
+			keys["ALT"] = false;
+			delete bodySection.dataset.key_alt;
+		}
 	});
 
 

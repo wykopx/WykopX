@@ -6855,7 +6855,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 							{
 								linkBlock.dataset.wxs_created_at = link_data.created_at;
 								const timeCreatedAt = document.createElement("time");
-								timeCreatedAt.setAttribute("data-v-441f7cc5", null);
+								// timeCreatedAt.setAttribute("data-v-441f7cc5", null);
 								timeCreatedAt.innerHTML = `Dodane: ${link_data.created_at}`;
 								linkBlockInfoSpan.appendChild(timeCreatedAt);
 							}
@@ -6864,7 +6864,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 							{
 								linkBlock.dataset.wxs_published_at = link_data.published_at;
 								const timePublishedAt = document.createElement("time");
-								timePublishedAt.setAttribute("data-v-441f7cc5", null);
+								// timePublishedAt.setAttribute("data-v-441f7cc5", null);
 								timePublishedAt.innerHTML = `Na głównej od: ${link_data.published_at}`;
 								linkBlockInfoSpan.appendChild(timePublishedAt);
 							}
@@ -6906,7 +6906,8 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 							const span = document.createElement('span');
 							span.className = "wykopxs wykopx_votesDown";
-							span.setAttribute('data-v-83d9f12a', ''); // VUE 
+							// VUE SENSITIVE data-v-5bb34f93
+							span.setAttribute('data-v-5bb34f93', '');
 							span.setAttribute('data-dropdown', `buried-${link_id}`);
 							span.setAttribute('title', `Statystyki Wykop X:
 
@@ -9350,20 +9351,36 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			e.preventDefault();
 		});
 
+		let keys = {};
 		document.addEventListener("keydown", (e) =>
 		{
 			if (e.target.tagName.toLowerCase() === 'textarea') return;
-			if (e.shiftKey) bodySection.dataset.key_shift = "true"; // <section data-key_shift="true">
-			if (e.altKey) bodySection.dataset.key_alt = "true"; // <section data-key_alt="true">
-			if (e.key == "Alt" || e.key == "AltGraph" || e.altKey) bodySection.dataset.key_alt = "true"; // <section data-key_alt="true">
-			// if (e.ctrlKey) bodySection.dataset.key_ctrl = "true"; // <section data-key_ctrl="true">
+
+			if (!keys["SHIFT"] && e.key == "Shift")
+			{
+				keys["SHIFT"] = true;
+				bodySection.dataset.key_shift = "true";
+			}
+			else if (!keys["ALT"] && (e.key == "Alt" || e.key == "AltGraph"))
+			{
+				keys["ALT"] = true;
+				bodySection.dataset.key_alt = "true";
+			}
 		});
 		document.addEventListener("keyup", (e) =>
 		{
 			if (e.target.tagName.toLowerCase() === 'textarea') return;
-			if (e.key == "Shift" || e.shiftKey) delete bodySection.dataset.key_shift;
-			if (e.key == "Alt" || e.key == "AltGraph" || e.altKey) delete bodySection.dataset.key_alt;
-			// if (e.key == "Control" || e.ctrlKey) delete bodySection.dataset.key_ctrl;
+
+			if (keys["SHIFT"] && e.key == "Shift")
+			{
+				keys["SHIFT"] = false;
+				delete bodySection.dataset.key_shift;
+			}
+			else if (keys["ALT"] && (e.key == "Alt" || e.key == "AltGraph"))
+			{
+				keys["ALT"] = false;
+				delete bodySection.dataset.key_alt;
+			}
 		});
 
 
