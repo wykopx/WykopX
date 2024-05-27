@@ -1,26 +1,49 @@
 /* ==UserStyle==
 @name           Wykop X Style 3
-@version        3.0.54
+@version        3.0.57
 
 @description    Wykop X Style 3 to 900 różnych funkcji zmieniających wykop!
-@description    Zainstaluj teź pomocniczy skrypt Wykop XS v.3.0 - znajdziesz go tutaj:
-@description    https://skrypt.wykopx.pl
 
-@description	Możesz też skorzystać z wersji BLANK, w której wszystkie opcje są wyłączone:
-@description	https://blank.wykopx.pl
+
+
+Chcesz zostać patronem projektu Wykop X?
+Doborowolne wsparcie na stronie: https://buycoffee.to/wykopx
+
+
+--- Wykop X Style Blank ---
+
+Jeśli liczba funkcji w Wykop X Style cię przytłacza, zachęcam do wybrania 
+wersji BLANK, w której wszystkie opcje są wyłączone:
+
+>>> https://blank.wykopx.pl
+
+
+
+--- Wykop X XS ---
+
+Zainstaluj teź pomocniczy skrypt Wykop XS, który 
+dodaje ponad 100 nowych funkcji oznaczonych jako ❎
+
+>>> https://skrypt.wykopx.pl
+
+
+
+
 
 @description    ---- WYKOP X ----
 @description    http://wiki.wykopx.pl
 @description    https://userstyles.world/style/8174/wykop-x-style-3
 
 
----- AUTOR WYKOP X ----
+
+
+---- AUTOR ----
 
 @author         Wykop X <wykopx@gmail.com> | wiki.wykopx.pl
 @homepageURL    http://wiki.wykopx.pl
 @supportURL     http://wiki.wykopx.pl
 
----- AUTOR WYKOP X ---- 
+---- AUTOR ---- 
 
 
 
@@ -146,7 +169,7 @@
                                                                         }
 @var range      messageCounterEntries_OFF                       `Licznik numerowania wpisów na mikroblogu jest wyłączony`                  [0, 0, 100000, 1, 'mm']
 @var range      messageCounterEntries_ON                        `Wpisy na stronach mikrobloga będą numerowane`            [0, 0, 111100, 1, 'mm']
-@var checkbox   messageCounterEntries                           `🔷 Licznik wpisów na mikroblogu ⭐ `                 1
+@var checkbox   messageCounterEntries                           `🔷 Licznik wpisów na mikroblogu ⭐ `                 0
 @var select     messageCounterEntriesIncrement                  `🔷 Pokazuj numerację co X wpisów ⭐ `   {
                                                                             " 1 "        :"1",
                                                                             " 2 "        :"2",
@@ -158,7 +181,7 @@
                                                                         }
 @var range      messageCounterEntryComments_OFF                 `Licznik numerowania komentarzy pod wpisami jest wyłączony`                  [0, 0, 100000, 1, 'mm']
 @var range     messageCounterEntryComments_ON                   `Komentarze pod wpisami będą numerowane`            [0, 0, 111100, 1, 'mm']                                                                        
-@var checkbox   messageCounterEntryComments                     `🔹🗨️ Licznik komentarzy pod wpisem ⭐`             1
+@var checkbox   messageCounterEntryComments                     `🔹🗨️ Licznik komentarzy pod wpisem ⭐`             0
 @var select     messageCounterEntryCommentsIncrement            `🔹🗨️ Pokazuj numerację co X komentarzy ⭐`   {
                                                                             " 1 "        :"1",
                                                                             " 2 "        :"2",
@@ -197,7 +220,7 @@
 @var range      WykopXSEnabled_ON                               `Skrypt Wykop XS jest włączony`                                                          [0, 0, 111100, 1, 'mm']
 
 @var checkbox   WykopXSEnabled                                  `Aktywuj skrypt Wykop XS i działanie włączonych funkcji ❎ ⭐` 1
-@var checkbox   disableNewLinkEditorPastedTextLimit             `❎ Pokaż limity znaków + wklejanie tekstu o dowolnej długości ⭐`                         1
+@var checkbox   disableNewLinkEditorPastedTextLimit             `❎ Pokaż limity znaków + wklejanie tekstu o dowolnej długości ⭐`                          1
 @var checkbox   intersectionObserverRootMargin                  `❎ Wczytuj z wyprzedzeniem (Notatki, ActionBox, InfoBox, l.plusów i l.wykopów) ⭐`         0
 
 
@@ -760,7 +783,7 @@ TODO: var checkbox   replyEditorShowTagsFollowers               `❎ Wyświetl l
                                                                         "🚫 Nie pokazuj przycisku 𝗪𝗬𝗖𝗭𝗬𝗦́𝗖́": "niepokazuj",
                                                                     }
                                                                     
-@var checkbox   editorAdultSwitcherHide                         `Ukryj przycisk 18+ ⭐`                                                                       0    
+@var checkbox   editorAdultSwitcherHide                         `Ukryj przycisk 18+ ⭐ (Nowe 3.0.54)`                                                                       0    
                                                                     
 
 @var range      SUB_HR_IMAGEUPLOADER                    `WKLEJANIE ZDJĘĆ`                          [0, 0, 99999, 1, 'mm']
@@ -809,12 +832,12 @@ var select     lennyFaceDropdownSkin                           `Okienko wyboru L
 
 @var range      HR_AVATARS                          `🧑 AVATARY UŻYTKOWNIKÓW`                                                       [0, 0, 99900, 1, 'mm']
 @var select     presetAvatarAndSexBarThemes                    `[PRESET] Predefiniowane ustawienia avatarów i pasków ` {
-                                                                                "Domyślny wygląd Wykop":"domyslny",
+                                                                                "Domyślny wygląd Wykop*":"domyslny",
                                                                                 "Skórka 1 - Wykop X":"skin_1",
                                                                                 "Skórka 2":"skin_2",
                                                                                 "Skórka 3 - minimalistyczne":"skin_3",
                                                                                 "Skórka 4 - zaokrąglony kwadrat":"skin_4",
-                                                                                "Własne ustawienia (wybierz opcje poniżej)*":"wlasne",
+                                                                                "Własne ustawienia (wybierz opcje poniżej)":"wlasne",
                                                                             } 
 
 @var range      avatarSize                                      `🧑 Rozmiar avatarów we wpisach i komentarzach`         [40, 5, 69, 1, '']
@@ -1095,7 +1118,7 @@ var select     lennyFaceDropdownSkin                           `Okienko wyboru L
 
 @var checkbox   entryVotersListShowRealNicknameColorsGreen      `🟢 Zastosuj kolory zielonek ⭐`                                   0
 @var checkbox   entryVotersListShowRealNicknameColorsOrange     `🟠 Zastosuj kolory pomarańczek ⭐`                                0
-@var checkbox   entryVotersListShowRealNicknameColorsBurgundy   `🔴 Zastosuj kolory bordo ⭐`                                      1     
+@var checkbox   entryVotersListShowRealNicknameColorsBurgundy   `🔴 Zastosuj kolory bordo ⭐`                                      0     
 @var checkbox   entryVotersListShowRealNicknameColorsBlack      `⚪ Zastosuj kolory administracji wykopu ⭐`                       1     
 
 @var checkbox   entryVotersListShowRealNicknameColorsNiebiescy  `💙 Zastosuj kolory niebieskich ⭐`                                0
@@ -1103,10 +1126,10 @@ var select     lennyFaceDropdownSkin                           `Okienko wyboru L
 @var checkbox   entryVotersListShowRealNicknameColorsBezPaskow  `🖤 Zastosuj kolory bez pasków ⭐`                                 0
 
 @var checkbox   entryVotersListShowRealNicknameColorsBanned     `🍌 Kolory nicków: użytkownicy z banem ⭐`                          1     
-@var checkbox   entryVotersListShowRealNicknameColorsRemoved    `❌ Kolory nicków: k̶o̶n̶t̶ ̶u̶s̶u̶n̶i̶ę̶t̶y̶c̶h̶ ⭐ `                                1     
+@var checkbox   entryVotersListShowRealNicknameColorsRemoved    `❌ Kolory nicków: k̶o̶n̶t̶ ̶u̶s̶u̶n̶i̶ę̶t̶y̶c̶h̶ ⭐ `                             1     
 @var checkbox   entryVotersListShowRealNicknameColorsSuspended  `✖ Kolory nicków: konta w trakcie usuwania ⭐ `                     1     
 
-@var checkbox   entryVotersListColorsOnHover                    `Pokaż kolor po najechaniu kursorem ⭐ `                           1     
+@var checkbox   entryVotersListColorsOnHover                    `Pokaż kolor po najechaniu kursorem ⭐ `                            1     
 
 
 @var checkbox   entryVotersListNicknameColorsFollowing           `🔔 Zastosuj kolor tła: użytkownicy obserwowani ⭐`                1     
@@ -1116,12 +1139,12 @@ var select     lennyFaceDropdownSkin                           `Okienko wyboru L
 @var range      SUB_HR_ENTRY_VOTERS_OTHER                 `DODATKOWE`                          [0, 0, 99999, 1, 'mm']
 
 @var checkbox   entryVotersListEmojiBannedUser                      `🔹🍌 Emoji przy użytkownikach z banem ⭐`                      0
-@var checkbox   entryVotersListBannedHide                           `🔹🍌🚫 Ukryj konta zbanowane z listy plusujących ⭐`           0
+@var checkbox   entryVotersListBannedHide                           `🔹🍌🚫 Ukryj z listy plusujących konta z banem ⭐`             0
 
-@var checkbox   entryVotersListNicknameColorsRemovedNoStrikethrough `🔹❌ Tekst 'k̶o̶n̶t̶o̶ ̶u̶s̶u̶n̶i̶ę̶t̶e̶' bez przekreślenia ⭐`                  0
-@var checkbox   entryVotersListEmojiRemovedUser                     `🔹❌ Emoji przy k̶o̶n̶t̶a̶c̶h̶ ̶u̶s̶u̶n̶i̶ę̶t̶y̶c̶h̶ ⭐`                              0
-@var checkbox   entryVotersListEmojiRemovedUserTextHide             `🔹❌ Ukryj tekst 'k̶o̶n̶t̶o̶ ̶u̶s̶u̶n̶i̶ę̶t̶e̶' (wyświetl tylko emoji) ⭐`       0
-@var checkbox   entryVotersListRemovedHide                          `🔹❌🚫 Ukryj k̵o̵n̵t̵a̵ ̵u̵s̵u̵n̵i̵ę̵t̵e̵ z listy plusujących ⭐`                0
+@var checkbox   entryVotersListNicknameColorsRemovedNoStrikethrough `🔹❌ Tekst 'k̶o̶n̶t̶o̶ ̶u̶s̶u̶n̶i̶ę̶t̶e̶' bez przekreślenia ⭐`                 0
+@var checkbox   entryVotersListEmojiRemovedUser                     `🔹❌ Emoji przy k̶o̶n̶t̶a̶c̶h̶ ̶u̶s̶u̶n̶i̶ę̶t̶y̶c̶h̶ ⭐`                             0
+REMOVED checkbox   entryVotersListEmojiRemovedUserTextHide             `🔹❌ Ukryj tekst 'k̶o̶n̶t̶o̶ ̶u̶s̶u̶n̶i̶ę̶t̶e̶' (wyświetl tylko emoji) ⭐`       0
+@var checkbox   entryVotersListRemovedHide                          `🔹❌🚫 Ukryj z listy plusujących k̵o̵n̵t̵a̵ ̵u̵s̵u̵n̵i̵ę̵t̵e ⭐`               0
 
 
 @var checkbox   entryVotersListEmojiYourProfile                 `🔹 Emoji 🟠 przy Twoim nicku ⭐`                                   0
@@ -1700,7 +1723,7 @@ var checkbox    topNavFavoriteTagButton                         `TODO: Skrót do
 @var range      SUB_HR_CATEGORY_MENU_BUTTONS                    `MINIMALIZOWANIE MENU`                [0, 0, 99999, 1, 'mm']
 
 @var checkbox   topNavHamburgerButtonHide                       `🚫 Ukryj przycisk minimalizowania menu "☰"`                  0
-@var checkbox   categoryMenuMiniCompact                         `☰ Minimalistyczne Menu po zminimalizowaniu `                0
+@var checkbox   categoryMenuMiniCompact                         `☰ Minimalistyczne Menu po zminimalizowaniu `                 1
 @var select     categoryMenuMiniCompactVerticalAlign            `☰ Minimalistyczne Menu - położenie ` {
                                                                         "Na górze":"gora",
                                                                         "Na środku*":"srodek",
@@ -1773,6 +1796,7 @@ TODO range      mainContentWidthValue                           `⟺ Domyślna s
 
 @var checkbox   linkToWykopEntry                                `🔹 Oznaczaj znaleziska kierujące na wpisy z Mikrobloga ⭐`         1     
 @var checkbox   linkToWykopArticle                              `🔸 Oznaczaj znaleziska kierujące do Wykopowych Artykułów ⭐`       1     
+@var checkbox   linkToWykopAMA                                  `🔸 Oznaczaj znaleziska AMA ⭐ (Nowe 3.0.57)`                                      1     
 @var checkbox   linkVideoPlayerBlackBackground                  `▶ Widok teatralny podczas odtwarzanego wideo ⭐ `                  0     
 @var checkbox   linkToVideoDuration                             `▶❎ Pokaż czas trwania filmików na miniaturce ⭐`                  1     
 
@@ -1795,7 +1819,7 @@ TODO range      mainContentWidthValue                           `⟺ Domyślna s
 @var checkbox   linkTagsHide                                    `🚫 Ukryj tagi znaleziska`                           0
 @var checkbox   linkPublishedDateHide                           `🚫 Ukryj czas umieszczenia znaleziska na głównej`   0
 TODO checkbox   commentsCountAlignment                          `🗨️ Przenieś liczbę komentarzy pod liczbę wykopów`   0
-@var checkbox   actionMenuLinkHideCommentsCountOnHomepage       `🗨️🚫 Ukryj licznik komentarzy w znalezisku ⭐`     0
+@var checkbox   actionMenuLinkHideCommentsCountOnHomepage       `🗨️🚫 Ukryj liczbę komentarzy w znalezisku ⭐`     0
 
 @var range      linksSpacing                                    `Odstępy pomiędzy znaleziskami`       [10, 0, 69, 1, 'px']
 
@@ -2297,7 +2321,7 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
 @var checkbox   rightSidebarHideRelatedTags                     `🚫 Ukryj # 𝗣𝗼𝘄𝗶𝗮̨𝘇𝗮𝗻𝗲 𝘁𝗮𝗴𝗶 (ᵗᵃᵍ/ᵏᵃᵗᵉᵍᵒʳᶦᵉ/ᶻⁿᵃˡᵉᶻᶦˢᵏᵒ) ⭐`                  0
 @var checkbox   rightSidebarFooterHide                          `🚫 Ukryj stopkę 𝗪𝗬𝗞𝗢𝗣 © 𝟮𝟬𝟬𝟱`                                           1     
 
-@var checkbox   WykopXSpromoDisable                             `🚫 Ukryj baner informacyjny o skrypcie Wykop XS ⭐`                       0
+@var checkbox   WykopXSpromoDisable                             `🚫 Ukryj baner informacyjny o skrypcie Wykop XS ⭐ (Nowe 3.0.52)`                       0
 
 
 
@@ -2417,9 +2441,15 @@ TODO    checkbox hideAdultEntriesAndLinks
                                                                             "👤 Ukrywaj jeśli niezalogowany*":"ukrywaj_niezalogowany",
                                                                             "🚫 Ukrywaj zawsze":"ukrywaj_zawsze"
                                                                         } 
-@var range      HR_BANNED_USER_242                  `🍌 DLA ZBANOWANYCH ⭐`                                                                  [0, 0, 99900, 1, 'mm']
+@var range      HR_BANNED_USERS                  `🍌 DLA ZBANOWANYCH ⭐`                                                                  [0, 0, 99900, 1, 'mm']
 
-@var checkbox   haveBanDisableTextarea                                 `🍌 Pokaż informację o banie w edytorze nowego wpisu/komentarza ⭐`             1
+
+@var checkbox   haveBanHidePlusButtons                                 `🍌🚫 Ukryj przyciski do plusowania i minusowania gdy masz bana  ⭐ (Nowe 3.0.54)`              1
+@var checkbox   haveBanActionMenuEntriesHideReplyButton                `🍌🚫 Ukryj przycisk "Odpowiedz" pod wpisami gdy masz bana ⭐ (Nowe 3.0.54)`                   1 
+@var checkbox   haveBanActionMenuLinkHideReplyButton                   `🍌🚫 Ukryj przycisk "Odpowiedz" pod znaleziskami gdy masz bana ⭐ (Nowe 3.0.54)`                1 
+
+
+@var checkbox   haveBanDisableTextarea                                 `🍌 Pokaż informację o banie w edytorze nowego wpisu/komentarza ⭐ (Nowe 3.0.54)`             1
 
 @var select     haveBanRightSidebarBanAlert                            `🍌 Panel "Twoje konto zostało zbanowane" ⭐` {
                                                                             "🍌 Wyświetl jako pierwszy (domyślnie)": "domyslnie_na_gorze",
@@ -4745,8 +4775,9 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
 
 
 
-   
-    section.link-block > section[data-v-441f7cc5]
+    // VUE SENSITIVE
+    // data-v-69e67e26
+    section.link-block > section[data-v-69e67e26]
     {
         min-height: 150px!important;
     } 
@@ -5592,7 +5623,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
 
     
     
-    if(linkToWykopEntry == 1 || linkToWykopArticle == 1 )
+    if(linkToWykopEntry == 1 || linkToWykopArticle == 1 || linkToWykopAMA == 1)
     {
         /* WYKOP XS CODE - START --> linkToVideoDuration == 1 || entryWithVideoDuration == 1 */
         section.link-block > section > article > figure::before
@@ -5640,7 +5671,16 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             content: "/artykuł";
         }
+    }
+    if(linkToWykopAMA == 1)
+    {
+        body > section > div.main-content >  main.main > section > div.content > section:is(.home-page, .tag-page, .profile-page, .bucket-page, .category-page, .observed-page, .favourites-page, .microblog-page) section.link-block:has(section > article > div.content > section.info > span > div span > a[href*="/ama-"]) article > figure::before,
+        body > section > div.main-content > main.main > section > div.content > section.link-page > section.link:has(section.comments > section.stream > header > section.custom > div.switch.ama-btn) > section.link-block > section > article > figure::before
+        {
+            content: "/AMA";
+        }
     }  
+    
 
       
       
@@ -11505,15 +11545,15 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         if(avatarSexBarBorder == "pasek_domyslny")
         {
             /* SKIN: zmiana koloru paska w zależności od wybranych kolorów w skórce */
-            a.avatar > figure.male[data-v-fb64f4be]:before
+            a.avatar > figure.male[class]:before
             {
                 background-color: var(--bezplciowyPasek1)!important
             } 
-            a.avatar > figure.male[data-v-fb64f4be]:before
+            a.avatar > figure.male[class]:before
             {
                 background-color: var(--niebieskiPasek1)!important
             } 
-            a.avatar > figure.female[data-v-fb64f4be]:before
+            a.avatar > figure.female[class]:before
             {
                 background-color: var(--rozowyPasek1)!important
             } 
@@ -11525,7 +11565,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             a.avatar > figure:before  { display: none!important; } 
     
 
-            a.avatar > figure > img[data-v-fb64f4be]
+            a.avatar > figure > img[alt]
             {
                 border-style: solid !important;
                 border-color: var(--bezplciowyPasek1)!important
@@ -11541,11 +11581,11 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                 border-width: var(--sexBarBorderWidth) !important;
             } 
     
-            a.avatar figure.male img[data-v-fb64f4be]
+            a.avatar figure.male img[alt]
             {
                 border-color: var(--niebieskiPasek1)!important
             } 
-            a.avatar figure.female img[data-v-fb64f4be]
+            a.avatar figure.female img[alt]
             {
                 border-color: var(--rozowyPasek1)!important
             } 
@@ -11578,35 +11618,35 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                 avatarTransparentBackground = 0;
   
 
-                section.entry > article > header > div.left > a.avatar > figure > img[data-v-fb64f4be],
-                aside.profile-top > section > header > a.avatar > figure > img[data-v-fb64f4be]
+                section.entry > article > header > div.left > a.avatar > figure > img[alt],
+                aside.profile-top > section > header > a.avatar > figure > img[alt]
                 {
                     background: 
                         linear-gradient(transparent, transparent) padding-box, 
                         linear-gradient(0deg, #000, #3e3e3e) border-box;
       
                 } 
-                section.entry > article > header > div.left > a.avatar > figure.male > img[data-v-fb64f4be],
-                aside.profile-top > section > header > a.avatar > figure.male > img[data-v-fb64f4be]
+                section.entry > article > header > div.left > a.avatar > figure.male > img[alt],
+                aside.profile-top > section > header > a.avatar > figure.male > img[alt]
                 {
                     background: 
                         linear-gradient(transparent, transparent) padding-box, 
                         linear-gradient(0deg, rgb(19, 42, 82), rgb(29, 105, 221)) border-box;
                 } 
-                section.entry > article > header > div.left > a.avatar > figure.female > img[data-v-fb64f4be],
-                aside.profile-top > section > header > a.avatar > figure.female > img[data-v-fb64f4be]
+                section.entry > article > header > div.left > a.avatar > figure.female > img[alt],
+                aside.profile-top > section > header > a.avatar > figure.female > img[alt]
                 {
                     background: 
                         linear-gradient(transparent, transparent) padding-box, 
                         linear-gradient(180deg, #2e008b, darkorchid) border-box;
                 } 
   
-                section.entry > article > header > div.left > a.avatar > figure > img[data-v-fb64f4be],
-                section.entry > article > header > div.left > a.avatar > figure.male > img[data-v-fb64f4be],
-                section.entry > article > header > div.left > a.avatar > figure.female > img[data-v-fb64f4be],
-                aside.profile-top > section > header > a.avatar > figure > img[data-v-fb64f4be],
-                aside.profile-top > section > header > a.avatar > figure.male > img[data-v-fb64f4be],
-                aside.profile-top > section > header > a.avatar > figure.female > img[data-v-fb64f4be]
+                section.entry > article > header > div.left > a.avatar > figure > img[alt],
+                section.entry > article > header > div.left > a.avatar > figure.male > img[alt]
+                section.entry > article > header > div.left > a.avatar > figure.female > img[alt],
+                aside.profile-top > section > header > a.avatar > figure > img[alt],
+                aside.profile-top > section > header > a.avatar > figure.male > img[alt],
+                aside.profile-top > section > header > a.avatar > figure.female > img[alt]
                 {
                     background-size: 190% 190%;
                     background-position:   30% 60%;
@@ -11839,10 +11879,10 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         } 
 
 
-        /* biale tlo  z biala czcionka pod przyciskiem loginu uzytkowinka przy otwartym menu https://github.com/wykopx/WykopX/wiki/Changelog#2103 */
-        body > section header.header > .right > nav > ul[data-v-5182b5f6] > li.account.active > a
+        /* biale tlo z biala czcionka pod przyciskiem loginu uzytkowinka przy otwartym menu na wąskim ekranie rwd  https://github.com/wykopx/WykopX/wiki/Changelog#2103 */
+        body > section header.header > .right > nav > ul > li.account.active > a
         {
-          background-color: rgba(255, 255, 255, 0.1)!important; 
+            background-color: rgba(255, 255, 255, 0.1)!important; 
         } 
  
     }
@@ -13593,8 +13633,6 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                     display: none!important;
                 }
             }
-
-            
         }  
     } 
     /* RIGHT SIDEBAR -- END */
@@ -13602,9 +13640,33 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
 
 
 
+    /* DLA ZBANOWANYCH */
+    if(haveBanHidePlusButtons == 1)                         {  body > section > div.main-content > main.main:has(> section > section.sidebar > aside.ban-alert) section.rating-box div.buttons { display: none!important; } }
+    if(haveBanActionMenuEntriesHideReplyButton == 1)        {  body > section > div.main-content > main.main:has(> section > section.sidebar > aside.ban-alert) section.entry section.actions li.reply { display: none!important; } }
+    if(haveBanActionMenuLinkHideReplyButton == 1)           {  body > section > div.main-content > main.main:has(> section > section.sidebar > aside.ban-alert) section.link-block section.actions li.reply { display: none!important; } }
 
 
-
+    if(haveBanDisableTextarea == 1)
+    {
+        body > section:has(> div.main-content > main.main > section > section.sidebar > aside.ban-alert)
+        {  
+            --myUsernameAddingAs: "🍌 Masz bana. Nie możesz dodawać wpisów i komentarzy.";
+        }
+        
+        body > section > div.main-content > main.main:has(> section > section.sidebar > aside.ban-alert) section.editor > div.content::before
+        {  
+            content: var(--myUsernameAddingAs);
+            display: flex;
+            position: relative;
+            color: var(--gullGray);
+            font-size: 15rem;
+            text-transform: initial;
+            margin-top: 15rem;
+            margin-bottom: 15rem;
+            padding-bottom: 15rem;
+            border-bottom: 1px dotted rgba(120, 120, 120, 0.3);
+        }
+    }
 
     
     /* ULUBIONY TAG */
@@ -22597,7 +22659,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     /* VARIABLES */
 
     versor = "style"; // "style", "blank", "block"
-    version = "3.0.54";   
+    version = "3.0.57";   
     /* xblocker = "2.49" */
     
     
