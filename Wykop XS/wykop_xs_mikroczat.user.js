@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 // @name:en							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 
-// @version							3.0.58
+// @version							3.0.59
 
 // @description 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -42,7 +42,7 @@
 
 'use strict';
 
-const currentVersion = "3.0.58";
+const currentVersion = "3.0.59";
 let dev = false;
 
 const promoString = " - Wykop XS";
@@ -260,8 +260,6 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 
 
 
-
-
 	// XS MIKROCZAT  -- START
 	let wykopDomain = "https://wykop.pl";
 	let wxDomain = "https://wykopx.pl";
@@ -269,6 +267,8 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 	const mikroczatPath = "/"; /* /czat */
 	// let mikroczatChannel = "/";
 	let mikroczatWindow = null;
+	const mikroczatButtonOpenTitle = "Otwórz wykopowy MikroCzat";
+	const mikroczatButtonOpenLabel = "Czat";
 
 
 
@@ -284,12 +284,13 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 		mikroczatWindow = window.open(mikroczatURL, target, windowOptions);
 	}
 
-	// OTWIERANIE MIKROCZATU Z PRZYCISKU NA BELCE
+	// OTWIERANIE MIKROCZATU Z PRZYCISKU
 	document.addEventListener("mousedown", wykopx_open_mikroczat_event_listener);
 
 	function wykopx_open_mikroczat_event_listener(e)
 	{
 		if (!e.target.closest(".wykopx_open_mikroczat")) return;
+
 		e.preventDefault();
 		let windowOptions = "";
 		let channel = "";
@@ -308,8 +309,6 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 
 		openMikroczat(channel, windowOptions);
 	}
-
-
 
 	// PREVENT DEFAULT EVENT
 	function preventDefaultEvent(e)
@@ -354,9 +353,6 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 			delete bodySection.dataset.key_alt;
 		}
 	});
-
-
-
 
 	document.addEventListener("mouseover", (e) =>
 	{
@@ -436,8 +432,127 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 		}
 	}, false);
 
+
+
+	function createLeftPanelButton()
+	{
+		let aside_section_div_ul_li = document.createElement('li');
+		aside_section_div_ul_li.classList.add('wykopx_open_mikroczat', 'mikroczat');
+		aside_section_div_ul_li.title = mikroczatButtonOpenTitle;
+
+		aside_section_div_ul_li.innerHTML = `
+		<div class="popper-button">
+			<span>
+				<span class="button">
+					<a target="_mikroczat" class="hybrid">
+						<span>${mikroczatButtonOpenLabel}</span>
+					</a>
+				</span>
+			</span>
+		</div>`;
+
+		const aside_section_div_ul = document.querySelector("body aside.left-panel > section.buttons ul");
+		aside_section_div_ul.appendChild(aside_section_div_ul_li);
+	}
+
+
 	{
 		CSS += `
+		body > section.open-left-panel > div.main-content > aside.left-panel:not(.mini) > section.buttons > div.content > ul
+		{
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-around;
+			column-gap: 0px;
+		}
+		body > section.open-left-panel > div.main-content > aside.left-panel:not(.mini) > section.buttons > div.content > ul > li
+		{
+			flex-basis: 47%;
+			box-sizing: border-box;
+			padding: 0px;
+			margin-top: 7px;
+			cursor: pointer; 
+		}
+		
+
+
+		aside.left-panel>section.buttons>.content ul li a /*[data-v-5687662b] */
+		{
+			display: block;
+			position: relative;
+			color: var(--steelBluish);
+			font-size: 0;
+		}
+
+		aside.left-panel>section.buttons>.content ul li.active a, /* [data-v-5687662b] */
+		aside.left-panel>section.buttons>.content ul li:hover a /* [data-v-5687662b] */
+		{
+			color: var(--tuna);
+			font-weight: 600;
+		}
+
+		aside.left-panel>section.buttons>.content ul li a:before /* [data-v-5687662b] */
+		{
+			content: '';
+			display: block;
+			width: 100%;
+			height: 36px;
+			border: 1px solid var(--porcelain);
+			border-radius: 6px;
+			box-sizing: border-box;
+			transition: background .2s ease, border .2s ease;
+		}
+		[data-night-mode] aside.left-panel>section.buttons>.content ul li a:before 	/* [data-v-5687662b] */
+		{
+			border-color: #303032;
+		}
+
+		aside.left-panel>section.buttons>.content ul li:hover a:before,
+		[data-night-mode] aside.left-panel>section.buttons>.content ul li:hover a:before
+		{
+			border-color: var(--tuna);
+		}
+
+
+		aside.left-panel>section.buttons>.content ul li a:after 					/* [data-v-5687662b] */
+		{
+			content: '';
+			display: block;
+			position: absolute;
+			-webkit-mask-repeat: no-repeat;
+			mask-repeat: no-repeat;
+			-webkit-mask-position: center;
+			mask-position: center;
+			background: var(--gullGray);
+			height: 34px;
+			width: 100%;
+			top: 0;
+			left: 0;
+			-webkit-transition: background .2s ease;
+			transition: background .2s ease;
+		}
+
+		aside.left-panel>section.buttons>.content ul li.mikroczat a:after 			/* [data-v-5687662b] */
+		{
+			-webkit-mask-image: url(https://i.imgur.com/82a9CyK.png);
+			mask-image: url(https://i.imgur.com/82a9CyK.png);
+			-webkit-mask-size: 22px 22px;
+			mask-size: 22px 22px;
+		}
+		aside.left-panel>section.buttons>.content ul li a>span 						/*[data-v-5687662b] */
+		{
+			position: relative;
+			display: inline-block;
+			font-size: 11px;
+			left: 50%;
+			-webkit-transform: translateX(-50%);
+			transform: translateX(-50%);
+			white-space: nowrap;
+			margin-top: 2px;
+			line-height: 16px;
+			height: 16px;
+		}
+
 		section:is(.entry-content, .link-block)[class] { overflow: visible!important; }
 
 		section:is(.entry-content, .link-block) a[href^="/tag/"]
@@ -548,17 +663,20 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 		}`;
 	}
 
+
+	createLeftPanelButton();
+
 	createNewNavBarButton({
 		position: "left",
 		// text: "Mikro<strong>czat</strong>",
-		text: "Czat",
-		title: `Otwórz wykopowy MikroCzat`,
+		text: mikroczatButtonOpenLabel,
+		title: mikroczatButtonOpenTitle,
 		class: "open_mikroczat", // wykopx_open_mikroczat_li
 		hideWithoutXStyle: false,
 		url: mikroczatDomain,
-		target: "mikroczat",
+		target: "_mikroczat",
 		number: null,
-	})
+	});
 
 
 
@@ -1219,13 +1337,14 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 	{
 		CSS += `
 		/* Chrome 109, Firefox 115 */
-		@supports not (display: block flex)
-		{
-			section.entry-voters ul
+			@supports not (display: block flex)
 			{
-				display: flex;
+				section.entry-voters ul
+				{
+					display: flex;
+				}
 			}
-		}
+
 			section.entry-voters ul
 			{
 				display: block flex;
@@ -1234,6 +1353,7 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 				align-items: baseline;
 				padding: 0 0 0 0;
 				margin: 0;
+				margin-top: 8px;
 				list-style-type: none;
 				position: relative;
 			}

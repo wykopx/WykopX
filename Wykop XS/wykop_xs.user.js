@@ -9320,7 +9320,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		const mikroczatPath = "/"; /* /czat */
 		// let mikroczatChannel = "/";
 		let mikroczatWindow = null;
-
+		const mikroczatButtonOpenTitle = "Otwórz wykopowy MikroCzat";
+		const mikroczatButtonOpenLabel = "Czat";
 
 
 		function openMikroczat(channel, windowOptions, target = "mikroczat")
@@ -9335,7 +9336,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			mikroczatWindow = window.open(mikroczatURL, target, windowOptions);
 		}
 
-		// OTWIERANIE MIKROCZATU Z PRZYCISKU NA BELCE
+		// OTWIERANIE MIKROCZATU Z PRZYCISKU
 		document.addEventListener("mousedown", wykopx_open_mikroczat_event_listener);
 
 		function wykopx_open_mikroczat_event_listener(e)
@@ -9486,130 +9487,250 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			}
 		}, false);
 
+
+		function createLeftPanelButton()
+		{
+			let aside_section_div_ul_li = document.createElement('li');
+			aside_section_div_ul_li.classList.add('wykopx_open_mikroczat', 'mikroczat');
+			aside_section_div_ul_li.title = mikroczatButtonOpenTitle;
+
+			aside_section_div_ul_li.innerHTML = `
+		<div class="popper-button">
+			<span>
+				<span class="button">
+					<a target="_mikroczat" class="hybrid">
+						<span>${mikroczatButtonOpenLabel}</span>
+					</a>
+				</span>
+			</span>
+		</div>`;
+
+			const aside_section_div_ul = document.querySelector("body aside.left-panel > section.buttons ul");
+			aside_section_div_ul.appendChild(aside_section_div_ul_li);
+		}
+
+
 		{
 			CSS += `
-	section:is(.entry-content, .link-block)[class] { overflow: visible!important; }
+		body > section.open-left-panel > div.main-content > aside.left-panel:not(.mini) > section.buttons > div.content > ul
+		{
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-around;
+			column-gap: 0px;
+		}
+		body > section.open-left-panel > div.main-content > aside.left-panel:not(.mini) > section.buttons > div.content > ul > li
+		{
+			flex-basis: 47%;
+			box-sizing: border-box;
+			padding: 0px;
+			margin-top: 7px;
+			cursor: pointer; 
+		}
+		
 
-	section:is(.entry-content, .link-block) a[href^="/tag/"]
-	{
-		padding-right: 2px !important;
-		margin-right: 1px;
-		transition: none!important;
-	}
-	section:is(.entry-content, .link-block) a[href^="https://mikroczat.pl/"]
-	{
-		padding-right: 2px!important;
-		padding-left: 2px!important;
-	}
-	section:is(.entry-content, .link-block) a[href^="/tag/"],
-	section.entry-content .wrapper a[href^="https://mikroczat.pl/"]
-	{
-		border: 1px solid transparent!important;
-		position: relative!important;
-	}
 
-	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
-	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
-	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
-	body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-	body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-	body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *,
-	body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *,
-	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *
-	{
-		color: var(--tagChannelColor)!important;
-	}
+		aside.left-panel>section.buttons>.content ul li a /*[data-v-5687662b] */
+		{
+			display: block;
+			position: relative;
+			color: var(--steelBluish);
+			font-size: 0;
+		}
 
-	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-	body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-	body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]
-	{
-		border-color: var(--tagChannelColor)!important;
-		background-color: color-mix(in srgb, var(--whitish) 90%, var(--tagChannelColor))!important;
-		border-radius: var(--smallBorderRadius)!important;
-	}
-	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
-	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
-	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
-	body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover,
-	body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover,
-	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover
-	{
-		background-color: color-mix(in srgb, var(--whitish) 60%, var(--tagChannelColor))!important;
-	}
+		aside.left-panel>section.buttons>.content ul li.active a, /* [data-v-5687662b] */
+		aside.left-panel>section.buttons>.content ul li:hover a /* [data-v-5687662b] */
+		{
+			color: var(--tuna);
+			font-weight: 600;
+		}
 
-	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]
-	{
+		aside.left-panel>section.buttons>.content ul li a:before /* [data-v-5687662b] */
+		{
+			content: '';
+			display: block;
+			width: 100%;
+			height: 36px;
+			border: 1px solid var(--porcelain);
+			border-radius: 6px;
+			box-sizing: border-box;
+			transition: background .2s ease, border .2s ease;
+		}
+		[data-night-mode] aside.left-panel>section.buttons>.content ul li a:before 	/* [data-v-5687662b] */
+		{
+			border-color: #303032;
+		}
 
-		padding-left: 3px !important;
-		margin-left: -12px !important;
+		aside.left-panel>section.buttons>.content ul li:hover a:before,
+		[data-night-mode] aside.left-panel>section.buttons>.content ul li:hover a:before
+		{
+			border-color: var(--tuna);
+		}
 
-	}
-	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
-	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
-	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover
-	{
-		text-decoration: none!important;
-	}
-	body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before,
-	body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before,
-	body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before
-	{
-		content: "#";
-	}
-	body > section[data-key_shift="true"] 	section.entry-content a[href^="/tag/"]::after,
-	body > section[data-key_alt="true"] 	section.entry-content a[href^="/tag/"]::after,
-	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="/tag/"]::after,
-	body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after,
-	body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after,
-	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after
-	{
-		color: white;
-		content: "🗯";
-		position: absolute;
-		top: -1em;
-		right: -0.5em;
-	}
-	
-	body > section[data-mikroczat-logged="true"] li.wykopx_open_mikroczat_li span:after
-	{
-		content: "•";
-		color: white;
-		position: absolute;
-		top: 4px;
-		right: 5px;
-	}
-	body > section[data-mikroczat-logged="false"] li.wykopx_open_mikroczat_li span:after
-	{
-		content: "•";
-		color: rgb(255, 255, 255, 0.3);
-		position: absolute;
-		top: 4px;
-		right: 5px;
-	}`;
+
+		aside.left-panel>section.buttons>.content ul li a:after 					/* [data-v-5687662b] */
+		{
+			content: '';
+			display: block;
+			position: absolute;
+			-webkit-mask-repeat: no-repeat;
+			mask-repeat: no-repeat;
+			-webkit-mask-position: center;
+			mask-position: center;
+			background: var(--gullGray);
+			height: 34px;
+			width: 100%;
+			top: 0;
+			left: 0;
+			-webkit-transition: background .2s ease;
+			transition: background .2s ease;
+		}
+
+		aside.left-panel>section.buttons>.content ul li.mikroczat a:after 			/* [data-v-5687662b] */
+		{
+			-webkit-mask-image: url(https://i.imgur.com/82a9CyK.png);
+			mask-image: url(https://i.imgur.com/82a9CyK.png);
+			-webkit-mask-size: 22px 22px;
+			mask-size: 22px 22px;
+		}
+		aside.left-panel>section.buttons>.content ul li a>span 						/*[data-v-5687662b] */
+		{
+			position: relative;
+			display: inline-block;
+			font-size: 11px;
+			left: 50%;
+			-webkit-transform: translateX(-50%);
+			transform: translateX(-50%);
+			white-space: nowrap;
+			margin-top: 2px;
+			line-height: 16px;
+			height: 16px;
+		}
+
+		section:is(.entry-content, .link-block)[class] { overflow: visible!important; }
+
+		section:is(.entry-content, .link-block) a[href^="/tag/"]
+		{
+			padding-right: 2px !important;
+			margin-right: 1px;
+			transition: none!important;
+		}
+		section:is(.entry-content, .link-block) a[href^="https://mikroczat.pl/"]
+		{
+			padding-right: 2px!important;
+			padding-left: 2px!important;
+		}
+		section:is(.entry-content, .link-block) a[href^="/tag/"],
+		section.entry-content .wrapper a[href^="https://mikroczat.pl/"]
+		{
+			border: 1px solid transparent!important;
+			position: relative!important;
+		}
+
+		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
+		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
+		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
+		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *,
+		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *,
+		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *
+		{
+			color: var(--tagChannelColor)!important;
+		}
+
+		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]
+		{
+			border-color: var(--tagChannelColor)!important;
+			background-color: color-mix(in srgb, var(--whitish) 90%, var(--tagChannelColor))!important;
+			border-radius: var(--smallBorderRadius)!important;
+		}
+		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover,
+		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover,
+		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover
+		{
+			background-color: color-mix(in srgb, var(--whitish) 60%, var(--tagChannelColor))!important;
+		}
+
+		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]
+		{
+
+			padding-left: 3px !important;
+			margin-left: -12px !important;
 
 		}
+		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover
+		{
+			text-decoration: none!important;
+		}
+		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before,
+		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before,
+		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before
+		{
+			content: "#";
+		}
+		body > section[data-key_shift="true"] 	section.entry-content a[href^="/tag/"]::after,
+		body > section[data-key_alt="true"] 	section.entry-content a[href^="/tag/"]::after,
+		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="/tag/"]::after,
+		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after,
+		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after,
+		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after
+		{
+			color: white;
+			content: "🗯";
+			position: absolute;
+			top: -1em;
+			right: -0.5em;
+		}
+		
+		body > section[data-mikroczat-logged="true"] li.wykopx_open_mikroczat_li span:after
+		{
+			content: "•";
+			color: white;
+			position: absolute;
+			top: 4px;
+			right: 5px;
+		}
+		body > section[data-mikroczat-logged="false"] li.wykopx_open_mikroczat_li span:after
+		{
+			content: "•";
+			color: rgb(255, 255, 255, 0.3);
+			position: absolute;
+			top: 4px;
+			right: 5px;
+		}`;
+		}
+
+
+		createLeftPanelButton();
 
 		createNewNavBarButton({
 			position: "left",
 			// text: "Mikro<strong>czat</strong>",
-			text: "Czat",
-			title: `Otwórz wykopowy MikroCzat`,
+			text: mikroczatButtonOpenLabel,
+			title: mikroczatButtonOpenTitle,
 			class: "open_mikroczat", // wykopx_open_mikroczat_li
 			hideWithoutXStyle: false,
 			url: mikroczatDomain,
-			target: "mikroczat",
+			target: "_mikroczat",
 			number: null,
-		})
+		});
 
 
 
