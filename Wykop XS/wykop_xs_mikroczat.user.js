@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 // @name:en							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 
-// @version							3.0.59
+// @version							3.0.60
 
 // @description 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -42,7 +42,7 @@
 
 'use strict';
 
-const currentVersion = "3.0.59";
+const currentVersion = "3.0.60";
 let dev = false;
 
 const promoString = " - Wykop XS";
@@ -436,7 +436,15 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 
 	function createLeftPanelButton()
 	{
-		let aside_section_div_ul_li = document.createElement('li');
+		if (dev) console.log("createLeftPanelButton");
+
+		const aside_section_div_ul = document.querySelector("body aside.left-panel > section.buttons ul");
+		if (!aside_section_div_ul) return;
+
+		let aside_section_div_ul_li = aside_section_div_ul.querySelector("li.mikroczat");
+		if (aside_section_div_ul_li) return;
+
+		aside_section_div_ul_li = document.createElement('li');
 		aside_section_div_ul_li.classList.add('wykopx_open_mikroczat', 'mikroczat');
 		aside_section_div_ul_li.title = mikroczatButtonOpenTitle;
 
@@ -451,32 +459,56 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 			</span>
 		</div>`;
 
-		const aside_section_div_ul = document.querySelector("body aside.left-panel > section.buttons ul");
 		aside_section_div_ul.appendChild(aside_section_div_ul_li);
 	}
 
 
 	{
 		CSS += `
-		body > section.open-left-panel > div.main-content > aside.left-panel:not(.mini) > section.buttons > div.content > ul
+		/* LEFT MENU MIKROCZAT BUTTON - START */
+		body aside.left-panel:not(.mini) > section.buttons > div.content > ul
 		{
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: space-around;
 			column-gap: 0px;
 		}
-		body > section.open-left-panel > div.main-content > aside.left-panel:not(.mini) > section.buttons > div.content > ul > li
+		body aside.left-panel:not(.mini) > section.buttons > div.content > ul > li
 		{
 			flex-basis: 47%;
 			box-sizing: border-box;
 			padding: 0px;
 			margin-top: 7px;
-			cursor: pointer; 
+		}
+
+		body aside.left-panel > section > div.content > ul > li
+		{
+			position: relative;
+			cursor: pointer;
+		}
+
+		body aside.left-panel.mini > section > div.content > ul > li:hover,
+		body aside.left-panel:not(.mini) > section.buttons > div.content > ul > li:hover a::before
+		{
+			background: var(--squeeze);
+		}
+
+		aside.left-panel>section.links>.content ul li a 									/* [data-v-5687662b] */
+		{
+			padding: 0 6px;
+			display: block;
+			-webkit-box-sizing: border-box;
+			box-sizing: border-box;
+			font-weight: 400;
+			text-decoration: none;
+			font-size: 16px;
+			line-height: 36px;
+			height: 36px;
 		}
 		
 
 
-		aside.left-panel>section.buttons>.content ul li a /*[data-v-5687662b] */
+		aside.left-panel>section.buttons>.content ul li a 									/* [data-v-5687662b] */
 		{
 			display: block;
 			position: relative;
@@ -484,14 +516,14 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 			font-size: 0;
 		}
 
-		aside.left-panel>section.buttons>.content ul li.active a, /* [data-v-5687662b] */
-		aside.left-panel>section.buttons>.content ul li:hover a /* [data-v-5687662b] */
+		aside.left-panel>section.buttons>.content ul li.active a, 							/* [data-v-5687662b] */
+		aside.left-panel>section.buttons>.content ul li:hover a 							/* [data-v-5687662b] */
 		{
 			color: var(--tuna);
 			font-weight: 600;
 		}
 
-		aside.left-panel>section.buttons>.content ul li a:before /* [data-v-5687662b] */
+		aside.left-panel>section.buttons>.content ul li a:before 							/* [data-v-5687662b] */
 		{
 			content: '';
 			display: block;
@@ -502,19 +534,18 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 			box-sizing: border-box;
 			transition: background .2s ease, border .2s ease;
 		}
-		[data-night-mode] aside.left-panel>section.buttons>.content ul li a:before 	/* [data-v-5687662b] */
+		[data-night-mode] aside.left-panel>section.buttons>.content ul li a:before 			/* [data-v-5687662b] */
 		{
 			border-color: #303032;
 		}
 
-		aside.left-panel>section.buttons>.content ul li:hover a:before,
-		[data-night-mode] aside.left-panel>section.buttons>.content ul li:hover a:before
+		aside.left-panel:not(.mini)>section.buttons>.content ul li:hover a:before,
+		[data-night-mode] aside.left-panel:not(.mini)>section.buttons>.content ul li:hover a:before
 		{
 			border-color: var(--tuna);
 		}
 
-
-		aside.left-panel>section.buttons>.content ul li a:after 					/* [data-v-5687662b] */
+		aside.left-panel:not(.mini)>section.buttons>.content ul li a:after 							/* [data-v-5687662b] */
 		{
 			content: '';
 			display: block;
@@ -532,14 +563,52 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 			transition: background .2s ease;
 		}
 
-		aside.left-panel>section.buttons>.content ul li.mikroczat a:after 			/* [data-v-5687662b] */
+		aside.left-panel:not(.mini)>section.buttons>.content ul li.mikroczat a:after 					/* [data-v-5687662b] */
 		{
 			-webkit-mask-image: url(https://i.imgur.com/82a9CyK.png);
 			mask-image: url(https://i.imgur.com/82a9CyK.png);
 			-webkit-mask-size: 22px 22px;
 			mask-size: 22px 22px;
 		}
-		aside.left-panel>section.buttons>.content ul li a>span 						/*[data-v-5687662b] */
+
+		/* ZWINIETE MENU PO LEWEJ */
+		aside.left-panel>section.links>.content ul li a:before 								/* [data-v-5687662b] */
+		{
+			content: '';
+			display: block;
+			position: absolute;
+			-webkit-mask-repeat: no-repeat;
+			mask-repeat: no-repeat;
+			-webkit-mask-position: center;
+			mask-position: center;
+			-webkit-mask-size: cover;
+			mask-size: cover;
+			background: var(--gullGray);
+			-webkit-transform: translateX(-50%) translateY(-50%);
+			transform: translateX(-50%) translateY(-50%);
+			top: 50%;
+			left: 24px;
+			-webkit-transition: background .2s ease;
+			transition: background .2s ease;
+			z-index: 1;
+		}
+
+
+		aside.left-panel.mini > section.links > .content ul li.mikroczat a:before
+		{
+			-webkit-mask-image: url(https://i.imgur.com/82a9CyK.png);
+			mask-image: url(https://i.imgur.com/82a9CyK.png);
+			-webkit-mask-size: 22px 22px;
+			mask-size: 22px 22px;
+
+			mask-size: 22px 22px;
+			width: 22px;
+			height: 22px;
+			margin-top: 0px;
+		}
+
+
+		aside.left-panel:not(.mini)>section.buttons>.content ul li a>span 								/*[data-v-5687662b] */
 		{
 			position: relative;
 			display: inline-block;
@@ -552,7 +621,17 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 			line-height: 16px;
 			height: 16px;
 		}
+		aside.left-panel.mini > section.links > .content ul li a > span
+		{
+			display: none;
+		}
+	
+		/* LEFT MENU MIKROCZAT BUTTON - END */
 
+
+
+
+		/* MIKROCZAT TAG LINKS */
 		section:is(.entry-content, .link-block)[class] { overflow: visible!important; }
 
 		section:is(.entry-content, .link-block) a[href^="/tag/"]
@@ -703,32 +782,48 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 
 	let observer = new MutationObserver((mutations) =>
 	{
-		if (dev) console.log(`${mutations.length} mutations`, mutations);
+		if (dev) console.log(`--- ${mutations.length} mutations`, mutations);
 
 		mutations.forEach((mutation) =>
 		{
+			if (dev) 
+			{
+				console.log("---------- new mutation -----");
+				console.log(mutation);
 
-			if (dev) console.log("----------new mutation-----");
-			if (dev) console.log(mutation);
-			if (mutation.type)
-			{
-				if (dev) console.log(`mutation.type: `, mutation.type)
-			}
-			if (mutation.attributeName)
-			{
-				if (dev) console.log(`mutation.attributeName: ${mutation.attributeName}`, mutation.attributeName)
-			}
-			if (mutation.addedNodes.length > 0 && mutation.addedNodes[0] && mutation.addedNodes[0] instanceof Element)
-			{
-				if (dev) console.log(`mutation.addedNodes.length: ${mutation.addedNodes.length}`, mutation.addedNodes[0])
+				if (mutation.type)
+				{
+					console.log(`⭐ mutation.type: `, mutation.type)
+				}
+				if (mutation.attributeName)
+				{
+					console.log(`⭐ mutation.attributeName: ${mutation.attributeName}`, mutation.attributeName)
+				}
+				if (mutation.addedNodes.length > 0 && mutation.addedNodes[0] && mutation.addedNodes[0] instanceof Element)
+				{
+					console.log(`⭐ mutation.addedNodes.length: ${mutation.addedNodes.length}`, mutation.addedNodes[0])
+				}
+
+				if (mutation.target)
+				{
+					console.log(`⭐ mutation.target: ${mutation.target.tagName}`, mutation.target)
+
+					if (mutation.target.tagName === "SECTION")
+					{
+
+					}
+				}
 			}
 
+			// ADDED NODES
 			if (mutation.addedNodes.length > 0 && mutation.addedNodes[0] && mutation.addedNodes[0] instanceof Element)
 			{
 				if (mutation.addedNodes[0].matches("section.entry[id]"))
 				{
 					const sectionEntry = mutation.addedNodes[0];
-					if (dev) console.log("mutation 1", sectionEntry)
+
+					if (dev) console.log("mutation 1", sectionEntry);
+
 					processSectionEntry(sectionEntry)
 
 					const sectionCommentsArray = sectionEntry.querySelectorAll("section.entry[id]");
@@ -766,35 +861,30 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 				{
 					animatedAvatar(mutation.addedNodes[0]);
 				}
-			}
-
-			if (mutation.target)
-			{
-				if (dev) console.log(`mutation.target: ${mutation.target.tagName}`, mutation.target)
-
-				if (mutation.target.tagName === "SECTION")
+				// LEFT SIDE CATEGORY MENU OPENED
+				else if (mutation.addedNodes[0].matches("aside.left-panel.thin-scrollbar"))
 				{
-					if (mutation.target.matches("section.entry[id]"))
-					{
-					}
+					createLeftPanelButton();
 				}
 			}
+
+
 		});
 	});
 
 
 
 	// CONTENT LOADED
-	let main;
+	let mainSection;
 	document.addEventListener('readystatechange', (event) => 
 	{
 		if (dev) console.log('readyState:' + document.readyState);
-		main = document.querySelector('main.main');
+		mainSection = document.querySelector('body > section');
 
-		if (main)
+		if (mainSection)
 		{
 
-			const sectionEntryArray = main.querySelectorAll("section.entry[id]");
+			const sectionEntryArray = mainSection.querySelectorAll("section.entry[id]");
 			// if (dev) console.log("sectionEntryArray", sectionEntryArray);
 			sectionEntryArray.forEach((sectionEntry) =>
 			{
@@ -804,11 +894,12 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 				childList: true,
 				subtree: true,
 			};
-			observer.observe(main, config);
+
+			observer.observe(mainSection, config);
 
 			if (settings.showAnimatedAvatars)
 			{
-				const asideProfileTop = main.querySelector("aside.profile-top");
+				const asideProfileTop = mainSection.querySelector("aside.profile-top");
 				if (asideProfileTop) animatedAvatar(asideProfileTop);
 			}
 		}
