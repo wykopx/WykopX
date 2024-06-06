@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3.0
 // @name:en							Wykop XS 3.0
 
-// @version							3.0.57
+// @version							3.0.58
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://styl.wykopx.pl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://styl.wykopx.pl
@@ -46,7 +46,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.0.57";
+	const currentVersion = "3.0.58";
 	let dev = false;
 
 	const promoString = " [Dodane przez Wykop XS]";
@@ -170,7 +170,7 @@
 		setSettingsValueFromCSSProperty("quickLinksEnable");
 		setSettingsValueFromCSSProperty("myWykopInTopNavJS");
 		setSettingsValueFromCSSProperty("favoritesInTopNavJS");
-		setSettingsValueFromCSSProperty("imageUploaderEnable", false);
+		setSettingsValueFromCSSProperty("imageUploaderEnable", false); // https://github.com/wykopx/WykopX/wiki/X-Wklejanie-obrazkow-ze-schowka
 		setSettingsValueFromCSSProperty("addNewLinkInTopNavJS");
 		setSettingsValueFromCSSProperty("disableNewLinkEditorPastedTextLimit");
 		setSettingsValueFromCSSProperty("autoOpenMoreContentEverywhere");
@@ -375,7 +375,7 @@
     {
         border-radius: 0px 0px var(--buttonsBorderRadius, 4px) var(--buttonsBorderRadius, 4px);
         border-width: 0px 1px 1px 1px;
-        right: 100px;
+        right: 140px;
     }
 
     section.entry:not(.reply) .wxs_menu_action_box
@@ -3785,24 +3785,44 @@
 
 				if (bannedUserObject.status == "banned" || bannedUserObject.status == "suspended")
 				{
-					const bannedRedBox = element.querySelector("aside.info-box.red p");
-					let bannedRedBoxInnerHTML = `To konto jest obecnie ${bannedUserObject.status == "suspended" ? "zawieszone do wyjaśnienia" : "zbanowane"}. <br/><br/><strong>Wykop X</strong>: <br/>`;
-
-					bannedUserObject.banned.wxs_ban_end_date_string = bannedUserObject.banned.expired; 											// "2024-01-04 17:22:31"
-					bannedUserObject.banned.wxs_ban_end_date_object = dayjs(bannedUserObject.banned.wxs_ban_end_date_string);
-					bannedUserObject.banned.wxs_ban_end_in_years = bannedUserObject.banned.wxs_ban_end_date_object.diff(loadTime, 'year');		// 5 > koniec bana za "5" lat
-					bannedUserObject.banned.wxs_ban_end_in_months = bannedUserObject.banned.wxs_ban_end_date_object.diff(loadTime, 'month');	// 3 > koniec bana za: "3" miesiące
-					bannedUserObject.banned.wxs_ban_end_in_days = bannedUserObject.banned.wxs_ban_end_date_object.diff(loadTime, 'day');		// 31 > koniec bana za 31 dni
-					bannedUserObject.banned.wxs_ban_end_in_days = bannedUserObject.banned.wxs_ban_end_date_object.diff(loadTime, 'day');		// 31 > koniec bana za 31 dni
 					bannedUserObject.banned.wxs_reason_lowercase = bannedUserObject.banned.reason.toLowerCase();
-					// banEndDateDuration = banEndDateObject.toNow()
+
+					bannedUserObject.banned.wxs_ban_end_date_string = bannedUserObject.banned.expired; 											// "2024-01-04 17:22:31" / null
+					if (bannedUserObject.banned.wxs_ban_end_date_string != null)
+					{
+						bannedUserObject.banned.wxs_ban_end_date_object = dayjs(bannedUserObject.banned.wxs_ban_end_date_string);
+						bannedUserObject.banned.wxs_ban_end_in_years = bannedUserObject.banned.wxs_ban_end_date_object.diff(loadTime, 'year');		// 5 > koniec bana za "5" lat
+						bannedUserObject.banned.wxs_ban_end_in_months = bannedUserObject.banned.wxs_ban_end_date_object.diff(loadTime, 'month');	// 3 > koniec bana za: "3" miesiące
+						bannedUserObject.banned.wxs_ban_end_in_days = bannedUserObject.banned.wxs_ban_end_date_object.diff(loadTime, 'day');		// 31 > koniec bana za 31 dni
+						bannedUserObject.banned.wxs_ban_end_in_days = bannedUserObject.banned.wxs_ban_end_date_object.diff(loadTime, 'day');		// 31 > koniec bana za 31 dni
+						// banEndDateDuration = banEndDateObject.toNow()
+
+					}
+
+
+
+					const bannedRedBox = element.querySelector("aside.info-box.red p");
+					let bannedRedBoxInnerHTML = `To konto jest ${bannedUserObject.status == "suspended" ? "w trakcie usuwania" : "zbanowane"}. <br/><br/><strong>Informacja z Wykop X - Ban Info:</strong> <br/>`;
+
+					// Ban permanentny
+					if (bannedUserObject.status == "banned" && (bannedUserObject.banned.wxs_ban_end_date_string == null || bannedUserObject.banned.wxs_ban_end_in_years > 100))
+					{
+						bannedRedBoxInnerHTML = `To konto jest zbanowane permanentnie. <br/><br/><strong>Wykop XS Ban Info:</strong> <br/>`;
+					}
 
 
 					// "Użytkowniczka @NadiaFrance dsotała bana za naruszenie regulaminu"
-					if (bannedUserObject.status == "suspended") bannedRedBoxInnerHTML += `${bannedUserObject.gender == "f" ? "Użytkowniczka @" + bannedUserObject.username + " została zawieszona za" : "Użytkownik @" + bannedUserObject.username + " został zawieszony za"} ${bannedUserObject.banned.wxs_reason_lowercase}`;
-					else bannedRedBoxInnerHTML += `${bannedUserObject.gender == "f" ? "Użytkowniczka @" + bannedUserObject.username + " dostała" : "Użytkownik @" + bannedUserObject.username + " dostał"} bana za ${bannedUserObject.banned.wxs_reason_lowercase}`;
+					if (bannedUserObject.status == "suspended")
+					{
+						bannedRedBoxInnerHTML += `${bannedUserObject.gender == "f" ? "Użytkowniczka @" + bannedUserObject.username + " rozpoczęła usuwanie konta" : "Użytkownik @" + bannedUserObject.username + " rozpoczął usuwanie konta"}`;
+					}
+					else
+					{
+						bannedRedBoxInnerHTML += `${bannedUserObject.gender == "f" ? "Użytkowniczka @" + bannedUserObject.username + " dostała" : "Użytkownik @" + bannedUserObject.username + " dostał"} bana za <strong>${bannedUserObject.banned.wxs_reason_lowercase}</strong>`;
+					}
 
-					if (bannedUserObject.banned.wxs_ban_end_in_years > 100)
+					// Ban permanentny
+					if (bannedUserObject.banned.wxs_ban_end_date_string == null || bannedUserObject.banned.wxs_ban_end_in_years > 100)
 					{
 						// Ban permanentny na 999 lat
 						bannedRedBoxInnerHTML += `<br/><small>Ban permanentny. Śpij słodko aniołku [*] </small>`;
@@ -3811,9 +3831,9 @@
 					{
 						// "Koniec bana za 14 dni"
 						bannedRedBoxInnerHTML += `<br/><small title="Czas końca bana dotyczy czasu letniego. \nWykop posiada błąd i nie rozpoznaje czasu zimowego, \ndlatego zimą i jesienią ban trwa o godzinę dłużej niż podany">
-						Koniec bana <strong>${bannedUserObject.banned.wxs_ban_end_in_years > 1 ? "za " + bannedUserObject.banned.wxs_ban_end_in_years + " lat(a)" : bannedUserObject.banned.wxs_ban_end_in_months > 1 ? "za " + bannedUserObject.banned.wxs_ban_end_in_months + " miesiące(ęcy)" : bannedUserObject.banned.wxs_ban_end_in_days > 1 ? "za " + bannedUserObject.banned.wxs_ban_end_in_days + " dni" : bannedUserObject.banned.wxs_ban_end_date_object.isSame(loadTime, 'day') == true ? " już dzisiaj!  " : " jutro"}</strong><br/>`;
+						Koniec bana ${bannedUserObject.banned.wxs_ban_end_in_years > 1 ? "za <strong>" + bannedUserObject.banned.wxs_ban_end_in_years + " lat(a)" : bannedUserObject.banned.wxs_ban_end_in_months > 1 ? "za <strong>" + bannedUserObject.banned.wxs_ban_end_in_months + " miesiące(ęcy)" : bannedUserObject.banned.wxs_ban_end_in_days > 1 ? "za <strong>" + bannedUserObject.banned.wxs_ban_end_in_days + " dni" : bannedUserObject.banned.wxs_ban_end_date_object.isSame(loadTime, 'day') == true ? " <strong>już dzisiaj!  " : " jutro"}</strong><br/>`;
 						// "Ban trwa do 2024-12-12 23:59:59"
-						bannedRedBoxInnerHTML += `Ban trwa do ${bannedUserObject.banned.wxs_ban_end_date_string}<span style="cursor: help; padding: 0px 5px">ℹ</span></small>`;
+						bannedRedBoxInnerHTML += `Ban trwa do ${bannedUserObject.banned.wxs_ban_end_date_string}<span style="cursor: help; padding: 0px 7px">ℹ</span></small>`;
 					}
 
 					bannedRedBox.innerHTML = bannedRedBoxInnerHTML;
@@ -10250,13 +10270,14 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		{
 			CSS += `
 		/* Chrome 109, Firefox 115 */
-		@supports not (display: block flex)
-		{
-			section.entry-voters ul
+			@supports not (display: block flex)
 			{
-				display: flex;
+				section.entry-voters ul
+				{
+					display: flex;
+				}
 			}
-		}
+
 			section.entry-voters ul
 			{
 				display: block flex;
@@ -10265,6 +10286,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				align-items: baseline;
 				padding: 0 0 0 0;
 				margin: 0;
+				margin-top: 8px;
 				list-style-type: none;
 				position: relative;
 			}
