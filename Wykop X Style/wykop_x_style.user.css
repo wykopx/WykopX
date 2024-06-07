@@ -828,7 +828,7 @@ var select     lennyFaceDropdownSkin                           `Okienko wyboru L
                                                                                 "Skórka 1 - Wykop X":"skin_1",
                                                                                 "Skórka 2":"skin_2",
                                                                                 "Skórka 3 - minimalistyczne":"skin_3",
-                                                                                "Skórka 4 - zaokrąglony kwadrat*":"skin_4",
+                                                                                "Skórka 4 - zaokrąglony kwadrat":"skin_4",
                                                                                 "🧇 Moje ustawienia (wybierz opcje poniżej)":"wlasne",
                                                                             } 
 
@@ -947,7 +947,7 @@ var select     lennyFaceDropdownSkin                           `Okienko wyboru L
 
 @var range      SUB_HR_NICKNAME_COLORS_YOURS                `🔵 KOLOR TWOJEGO LOGINU ⭐ Nowe`                          [0, 0, 99999, 1, 'mm']
 @var select     nicknameColorsYours                             `🔵 Zmień kolor Twojego loginu 💭⭐` {
-                                                                            "Nie zmieniaj koloru (domyślny)":"domyslny", 
+                                                                            "Nie zmieniaj koloru (domyślny)":"kolor_konta", 
                                                                             "🟢 Zielonka":"zielony", 
                                                                             "🔴 Bordo":"bordo",
                                                                             "🟠 Pomarańczowy":"pomaranczowy",
@@ -960,7 +960,7 @@ var select     lennyFaceDropdownSkin                           `Okienko wyboru L
 
 @var range      SUB_HR_NICKNAME_COLORS_BANNED               `🍌 UŻYTKOWNICY ZBANOWANI ⭐ Nowe`                          [0, 0, 99999, 1, 'mm']
 @var select     nicknameColorsBanned                            `🍌 Kolory loginów: użytkownicy z banem 💭⭐` {
-                                                                            "🟢🟠🔴 Kolor konta (domyślny)":"domyslny",
+                                                                            "🟢🟠🔴 Kolor konta (domyślny)":"kolor_konta",
                                                                             "🍌 Bananowy*":"bananowy",
                                                                             "🔘 Szary":"szary",
                                                                             "🔴 Czerwony":"czerwony",
@@ -12359,8 +12359,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
 
 
     // KOLORY NICKÓW ZBANOWANYCH .banned
-    if(nicknameColorsBanned == "domyslny")          { a.username.banned:not(.removed, .suspended) { }} 
-    else if(nicknameColorsBanned == "szary")        { a.username.banned:not(.removed, .suspended) { --_statusColor: rgba(78, 78, 78, 1)!important;             }} 
+    if(nicknameColorsBanned == "szary")        { a.username.banned:not(.removed, .suspended) { --_statusColor: rgba(78, 78, 78, 1)!important;             }} 
     else if(nicknameColorsBanned == "bananowy")     { a.username.banned:not(.removed, .suspended) { --_statusColor: var(--kolorBananowy1)!important;             }} 
     else if(nicknameColorsBanned == "czerwony")     { a.username.banned:not(.removed, .suspended) { --_statusColor: rgb(153, 71, 60)!important;                }}
     else if(nicknameColorsBanned == "czarny")       
@@ -12513,7 +12512,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     
     
     // KOLOR TWOJEGO NICKA
-    if(nicknameColorsYours == "domyslny")  {{  }} 
+    if(nicknameColorsYours == "kolor_konta")  {{  }} 
     else if(nicknameColorsYours == "bordo")
     {
         a.username[href={"\/ludzie\/" + myUsername}],
