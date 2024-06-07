@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3.0
 // @name:en							Wykop XS 3.0
 
-// @version							3.0.60
+// @version							3.0.61
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://styl.wykopx.pl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://styl.wykopx.pl
@@ -33,6 +33,7 @@
 
 // @require							https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
 // @require							https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
+// @require							https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/pl.js
 // @require							https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js
 
 
@@ -46,7 +47,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.0.60";
+	const currentVersion = "3.0.61";
 	let dev = false;
 
 	const promoString = " [Dodane przez Wykop XS]";
@@ -56,6 +57,8 @@
 	const body = document.body;
 	const bodySection = body.querySelector("section");
 
+	dayjs.locale("pl");
+	dayjs.extend(window.dayjs_plugin_relativeTime); //dayjs.extend(relativeTime); // https://day.js.org/docs/en/plugin/relative-time // https://www.jsdelivr.com/package/npm/dayjs?tab=files&path=plugin
 
 
 	// github
@@ -111,7 +114,6 @@
 		let wxs_modal = null;
 
 		let loadTime = dayjs();
-		dayjs.extend(window.dayjs_plugin_relativeTime); //dayjs.extend(relativeTime); // https://day.js.org/docs/en/plugin/relative-time // https://www.jsdelivr.com/package/npm/dayjs?tab=files&path=plugin
 
 		// wykop_xs_mikroczat.user.js -MIKROCZAT/LISTA PLUSUJĄCYCH - settings
 		setSettingsValueFromCSSProperty("entryVotersListEnable");				// włącza pokazywanie listy plusujących z Wykop X Style
@@ -5567,7 +5569,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 				if (settings.topNavMicroblogButton) topNavHeaderRightElement.insertAdjacentHTML('beforeend', wykopx_microblog_mobile_li);
 
-				if (user !== null)
+				if (loggedUser !== null)
 				{
 					if (settings.topNavMyWykopButton) topNavHeaderRightElement.insertAdjacentHTML('beforeend', wykopx_mywykop_mobile_li);
 					if (settings.topNavMessagesButton) topNavHeaderRightElement.insertAdjacentHTML('beforeend', wykopx_messages_mobile_li);
@@ -5582,7 +5584,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				const mobileNavbarUlElement = document.querySelector('body > section > nav.mobile-navbar > ul')
 				if (mobileNavbarUlElement)
 				{
-					if (user !== null)
+					if (loggedUser !== null)
 					{
 						if (settings.mobileNavBarMyWykopButton) mobileNavbarUlElement.insertAdjacentHTML('beforeend', wykopx_mywykop_mobile_li);
 						if (settings.mobileNavBarNotificationsButton) mobileNavbarUlElement.insertAdjacentHTML('beforeend', wykopx_notifications_mobile_li);
