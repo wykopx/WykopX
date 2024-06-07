@@ -1,13 +1,8 @@
 /* ==UserStyle==
 @name           Wykop X Style 3
-@version        3.0.57
+@version        3.0.58
 
 @description    Wykop X Style 3 to 900 różnych funkcji zmieniających wykop!
-
-
-
-Chcesz zostać patronem projektu Wykop X?
-Doborowolne wsparcie na stronie: https://buycoffee.to/wykopx
 
 
 --- Wykop X Style Blank ---
@@ -15,8 +10,7 @@ Doborowolne wsparcie na stronie: https://buycoffee.to/wykopx
 Jeśli liczba funkcji w Wykop X Style cię przytłacza, zachęcam do wybrania 
 wersji BLANK, w której wszystkie opcje są wyłączone:
 
->>> https://blank.wykopx.pl
-
+https://blank.wykopx.pl
 
 
 --- Wykop X XS ---
@@ -24,7 +18,7 @@ wersji BLANK, w której wszystkie opcje są wyłączone:
 Zainstaluj teź pomocniczy skrypt Wykop XS, który 
 dodaje ponad 100 nowych funkcji oznaczonych jako ❎
 
->>> https://skrypt.wykopx.pl
+https://skrypt.wykopx.pl
 
 
 
@@ -33,8 +27,6 @@ dodaje ponad 100 nowych funkcji oznaczonych jako ❎
 @description    ---- WYKOP X ----
 @description    http://wiki.wykopx.pl
 @description    https://userstyles.world/style/8174/wykop-x-style-3
-
-
 
 
 ---- AUTOR ----
@@ -1248,9 +1240,10 @@ REMOVED checkbox   entryVotersListEmojiRemovedUserTextHide             `🔹❌ 
 @var checkbox   hideLogo                                        `𝕎🚫 Ukryj sygnet Wykopu`                                                            0
 
 @var range      SUB_HR_LOGOTYPE                     `LOGOTYP`                                      [0, 0, 99999, 1, 'mm']
-@var select     topNavLogotype                                  `Zmień logotyp 𝘄𝘆𝗸𝗼𝗽.𝗽𝗹` {
-                                                                            "𝘄𝘆𝗸𝗼𝗽.𝗽𝗹 (domyślny)"    :   "wykop",
-                                                                            "wykopx.pl": "wykopx",
+@var select     topNavLogotype                                  `Zmień logotyp 𝘄𝘆𝗸𝗼𝗽.𝗽𝗹 ⭐ (Nowe 3.0.58 (Nowe 3.0.58)` {
+                                                                            "𝘄𝘆𝗸𝗼𝗽.𝗽𝗹 (domyślny)"    :   "wykoppl",
+                                                                            "⭐ 𝘄𝘆𝗸𝗼𝗽*":   "wykop",
+                                                                            "⭐ wykopx.pl": "wykopx",
                                                                             "YouTube"               :   "youtube"
                                                                         }
 @var checkbox   topNavLogotypeHide                              `🚫 Ukryj logotyp 𝘄𝘆𝗸𝗼𝗽.𝗽𝗹`       0
@@ -2404,11 +2397,11 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
                                                                         "Wykop - Pomarańczka":"progressbar_theme_orange",
                                                                         "Wykop - Zielonka":"progressbar_theme_green"
                                                                     } 
-@var checkbox   readingProgressBarOnHomepage                    `🔶 Na głównej 📱`                                                               1     
-@var checkbox   readingProgressBarOnUpcoming                    `🔶 W wykopalisku 📱`                                                            1     
-@var checkbox   readingProgressBarOnLink                        `🔸 W znaleziskach 📱 `                                                          1     
-@var checkbox   readingProgressBarOnMicroblog                   `🔷 Na mikroblogu 📱 `                                                           1     
-@var checkbox   readingProgressBarOnEntries                     `🔹 We wpisach 📱`                                                               1     
+@var checkbox   readingProgressBarOnHomepage                    `🔶 Na głównej 📱` 1     
+@var checkbox   readingProgressBarOnUpcoming                    `🔶 W wykopalisku 📱` 1     
+@var checkbox   readingProgressBarOnLink                        `🔸 W znaleziskach 📱 ` 1     
+@var checkbox   readingProgressBarOnMicroblog                   `🔷 Na mikroblogu 📱 ` 1     
+@var checkbox   readingProgressBarOnEntries                     `🔹 We wpisach 📱` 1     
 
 
 
@@ -10232,7 +10225,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     }
     else
     {
-        if(topNavLogotype == "wykop")
+        if(topNavLogotype == "wykoppl")
         {
             body section header.header > .left > a.logotype,
             body[data-night-mode] section header.header > .left > a.logotype
@@ -10265,15 +10258,28 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                 mask-image: url(https://wykopx.pl/static/img/svg/wykopx.pl.svg) !important; */
             } 
 
-            if(topNavLogotype == "wykopx")
+            if(topNavLogotype == "wykop")
             {
                 header.header > .left > a.logotype
                 {
-                    background-image: url("https://wykopx.pl/static/img/svg/wykopx_white_small.png")!important;
-                    width: 93px!important;
-                    /* height: 72%!important; */
+                    background-image: url("https://wykopx.pl/static/img/svg/wykop_50.png")!important;
+                    height: 100%!important;
+                    width: calc(var(--topNavHeight) * 1.4)!important;
                     margin-right: 0px!important;
-                    margin-left: 7px!important;
+                    margin-left: calc(var(--topNavHeight) * 0.06)!important;
+                    padding-left: 0px!important
+                }
+            }
+            else if(topNavLogotype == "wykopx")
+            {
+                header.header > .left > a.logotype
+                {
+                    background-image: url("https://wykopx.pl/static/img/svg/wykopx_50.png")!important;
+                    height: 100%!important;
+                    width: calc(var(--topNavHeight) * 1.8)!important;
+                    margin-right: 0px!important;
+                    margin-left: calc(var(--topNavHeight) * 0.07)!important;
+                    padding-left: 0px!important
                 }
             }
             else if(topNavLogotype == "youtube")
@@ -22659,7 +22665,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     /* VARIABLES */
 
     versor = "style"; // "style", "blank", "block"
-    version = "3.0.57";   
+    version = "3.0.58";   
     /* xblocker = "2.49" */
     
     
