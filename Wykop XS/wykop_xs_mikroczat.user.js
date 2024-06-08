@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 // @name:en							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 
-// @version							3.0.61
+// @version							3.0.62
 
 // @description 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -44,7 +44,7 @@
 
 'use strict';
 
-const currentVersion = "3.0.61";
+const currentVersion = "3.0.62";
 let dev = false;
 
 const promoString = " - Wykop XS";
@@ -155,9 +155,9 @@ settings.showFavouriteButtonLabel = true;				// pokazuje oprócz gwiazdki także
 settings.mikroczatShowLeftMenuButton = false;
 settings.mikroczatShowLeftMenuLink = true;
 settings.mikroczatShowTopNavButton = true;
-settings.mikroczatOpenMikroczatOnMiddleMouseClick = true;
-settings.mikroczatOpenMikroczatOnCTRLClick = true;
-settings.mikroczatOpenMikroczatOnCTRLMiddleMouseClick = true;
+settings.mikroczatOpenMikroczatOnMiddleClick = false;
+settings.mikroczatOpenMikroczatOnCTRLLeftClick = true;
+settings.mikroczatOpenMikroczatOnCTRLMiddleClick = true;
 
 (async function ()
 {
@@ -410,7 +410,7 @@ settings.mikroczatOpenMikroczatOnCTRLMiddleMouseClick = true;
 	const keys = {};
 
 
-	if (settings.mikroczatOpenMikroczatOnCTRLClick || settings.mikroczatOpenMikroczatOnCTRLMiddleMouseClick)
+	if (settings.mikroczatOpenMikroczatOnCTRLLeftClick || settings.mikroczatOpenMikroczatOnCTRLMiddleClick)
 	{
 		document.addEventListener("keydown", (e) =>
 		{
@@ -462,7 +462,7 @@ settings.mikroczatOpenMikroczatOnCTRLMiddleMouseClick = true;
 
 	const performanceObserver = new PerformanceObserver((PerformanceObserverEntryList, PerformanceObserver) =>
 	{
-		if (settings.mikroczatOpenMikroczatOnCTRLClick || settings.mikroczatOpenMikroczatOnCTRLMiddleMouseClick)
+		if (settings.mikroczatOpenMikroczatOnCTRLLeftClick || settings.mikroczatOpenMikroczatOnCTRLMiddleClick)
 		{
 			clearKeysDatasetFromBody();
 		}
@@ -486,7 +486,7 @@ settings.mikroczatOpenMikroczatOnCTRLMiddleMouseClick = true;
 
 
 	// MOUSE OVER LINKS
-	if (settings.mikroczatOpenMikroczatOnCTRLClick || settings.mikroczatOpenMikroczatOnCTRLMiddleMouseClick || settings.mikroczatOpenMikroczatOnMiddleMouseClick)
+	if (settings.mikroczatOpenMikroczatOnCTRLLeftClick || settings.mikroczatOpenMikroczatOnCTRLMiddleClick || settings.mikroczatOpenMikroczatOnMiddleClick)
 	{
 		document.addEventListener("mouseover", (e) =>
 		{
@@ -509,8 +509,7 @@ lub kliknij w tag śordkowym przyciskiem myszy,
 Kanał tematyczny #${e.target.innerText}:
 
 ⌘ 𝗖𝗧𝗥𝗟 + kliknięcie LPM - w nowym oknie
-⌘ 𝗖𝗧𝗥𝗟 + kliknięcie ŚPM - w nowym oknie
-🖱️ Kliknięcie ŚPM  - w nowej karcie
+⌘ 𝗖𝗧𝗥𝗟 + kliknięcie ŚPM - w nowej karcie
 `;
 			}
 
@@ -521,13 +520,11 @@ Kanał tematyczny #${e.target.innerText}:
 				e.target.addEventListener("mousedown", hrefMouseDownEventListenerWithShift, true);
 				e.target.addEventListener("mouseup", hrefMouseUpEventListenerWithShift, true);
 				e.target.title = `Wciśnij klawisz 𝗖𝗧𝗥𝗟 klikając w login użytkownika,
-lub kliknij w login środkowym przyciskiem myszy,
 aby otworzyć rozmowę prywatną (PM) na 🗯 Mikroczacie
 
 Rozmowa prywatna:
 ⌘ 𝗖𝗧𝗥𝗟 + kliknięcie LPM - w nowym oknie
-⌘ 𝗖𝗧𝗥𝗟 + kliknięcie ŚPM - w nowym oknie
-🖱️ Kliknięcie ŚPM  - w nowej karcie
+⌘ 𝗖𝗧𝗥𝗟 + kliknięcie ŚPM - w nowej karcie
 `;
 			}
 			// PERMALINK DO WPISU
@@ -554,8 +551,7 @@ lub kliknij datę środkowym przyciskiem myszy,
 Widok dyskusji:
 
 ⌘ 𝗖𝗧𝗥𝗟 + kliknięcie LPM - w nowym oknie
-⌘ 𝗖𝗧𝗥𝗟 + kliknięcie ŚPM - w nowym oknie
-🖱️ Kliknięcie ŚPM  - w nowej karcie
+⌘ 𝗖𝗧𝗥𝗟 + kliknięcie ŚPM - w nowej karcie
 `;
 			}
 
@@ -580,7 +576,7 @@ Widok dyskusji:
 	function hrefClickEventListenerWithShift(e)
 	{
 		// ŚPM
-		if (settings.mikroczatOpenMikroczatOnMiddleMouseClick)
+		if (settings.mikroczatOpenMikroczatOnMiddleClick)
 		{
 			if (e.button === 1 && !e.shiftKey && !e.altKey && !e.ctrlKey) 
 			{
@@ -589,7 +585,7 @@ Widok dyskusji:
 		}
 
 		// ŚPM + CTRL
-		if (settings.mikroczatOpenMikroczatOnCTRLMiddleMouseClick)
+		if (settings.mikroczatOpenMikroczatOnCTRLMiddleClick)
 		{
 			if (e.button === 1 && !e.shiftKey && !e.altKey && e.ctrlKey)
 			{
@@ -604,7 +600,7 @@ Widok dyskusji:
 		}
 
 		// LPM + CTRL
-		if (settings.mikroczatOpenMikroczatOnCTRLClick)
+		if (settings.mikroczatOpenMikroczatOnCTRLLeftClick)
 		{
 			if (e.button === 0 && !e.shiftKey && !e.altKey && e.ctrlKey)
 			{
@@ -618,7 +614,7 @@ Widok dyskusji:
 	function hrefMouseDownEventListenerWithShift(e)
 	{
 		// ŚPM
-		if (settings.mikroczatOpenMikroczatOnMiddleMouseClick)
+		if (settings.mikroczatOpenMikroczatOnMiddleClick)
 		{
 			if (e.button === 1 && !e.shiftKey && !e.altKey && !e.ctrlKey) 
 			{
@@ -629,13 +625,13 @@ Widok dyskusji:
 		}
 
 		// ŚPM + CTRL
-		if (settings.mikroczatOpenMikroczatOnCTRLMiddleMouseClick)
+		if (settings.mikroczatOpenMikroczatOnCTRLMiddleClick)
 		{
 			if (e.button === 1 && !e.shiftKey && !e.altKey && e.ctrlKey)
 			{
 				e.preventDefault();
 				const ahrefElement = e.target.closest("a");
-				openMikroczat(ahrefElement.href, "popup");
+				openMikroczat(ahrefElement.href, null, "_blank");
 			}
 		}
 		// ŚPM + SHIFT
@@ -645,7 +641,7 @@ Widok dyskusji:
 			// openMikroczat(ahrefElement.href, "popup");
 		}
 		// CTRL + LPM
-		if (settings.mikroczatOpenMikroczatOnCTRLClick)
+		if (settings.mikroczatOpenMikroczatOnCTRLLeftClick)
 		{
 			if (e.button === 0 && !e.shiftKey && !e.altKey && e.ctrlKey)
 			{
@@ -662,7 +658,7 @@ Widok dyskusji:
 	{
 
 		// ŚPM
-		if (settings.mikroczatOpenMikroczatOnMiddleMouseClick)
+		if (settings.mikroczatOpenMikroczatOnMiddleClick)
 		{
 			if (e.button === 1 && !e.shiftKey && !e.altKey && !e.ctrlKey) 
 			{
@@ -671,7 +667,7 @@ Widok dyskusji:
 			}
 		}
 		// ŚPM + CTRL
-		if (settings.mikroczatOpenMikroczatOnCTRLMiddleMouseClick)
+		if (settings.mikroczatOpenMikroczatOnCTRLMiddleClick)
 		{
 			if (e.button === 1 && !e.shiftKey && !e.altKey && e.ctrlKey)
 			{
@@ -686,7 +682,7 @@ Widok dyskusji:
 		// }
 
 		// CTRL + LPM
-		if (settings.mikroczatOpenMikroczatOnCTRLClick)
+		if (settings.mikroczatOpenMikroczatOnCTRLLeftClick)
 		{
 			if (e.button === 0 && !e.shiftKey && !e.altKey && e.ctrlKey)
 			{
