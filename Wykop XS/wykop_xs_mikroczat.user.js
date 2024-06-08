@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 // @name:en							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 
-// @version							3.0.60
+// @version							3.0.61
 
 // @description 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -30,7 +30,9 @@
 
 
 // @require 						https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
-
+// @require							https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
+// @require							https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/pl.js
+// @require							https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js
 
 
 
@@ -42,15 +44,20 @@
 
 'use strict';
 
-const currentVersion = "3.0.60";
+const currentVersion = "3.0.61";
 let dev = false;
 
 const promoString = " - Wykop XS";
+
 
 const root = document.documentElement;
 const head = document.head;
 const body = document.body;
 const bodySection = body.querySelector("section");
+
+dayjs.locale("pl");
+dayjs.extend(window.dayjs_plugin_relativeTime); 		//dayjs.extend(relativeTime); // https://day.js.org/docs/en/plugin/relative-time // https://www.jsdelivr.com/package/npm/dayjs?tab=files&path=plugin
+
 const wykopxSettings = getComputedStyle(head); // getComputedStyle(document.documentElement) -- nie działa, nie wczytuje właściwości z :root
 const settings = {};
 
@@ -109,6 +116,8 @@ setSettingsValueFromCSSProperty("hideAds");								// blokuje wszystkie reklamy 
 // entryVotersListExpandIfLessThan - domyślnie Wykop pokazywał 5 osób, które zaplusowały. 
 // Możesz zmienić tę wartość na np. 10 albo 25. Jeśli wpis ma mniej plusów niż ta liczba, zostaną od razu wyświetleni wszyscy plusujący bez przycisku "+15 INNYCH"
 
+settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
+
 if (settings.entryVotersListEnable)
 {
 	// entryVotersListExpandIfLessThan - domyślnie Wykop pokazywał 5 osób, które zaplusowały.
@@ -138,10 +147,17 @@ if (settings.entryVotersListEnable)
 settings.hideShareButton = true;						// ukrywa przycisk "Udostępnij"
 settings.showFavouriteButton = true;					// pokazuje przycisk "Dodaj do ulubionych" (samą gwiazdkę)
 settings.showFavouriteButtonLabel = true;				// pokazuje oprócz gwiazdki także tekst "Ulubione"
-settings.addCommentPlusWhenVotingOnEntry = false;		// gdy plusujesz wpis, dodaje komentarz "+1"
-settings.addCommentPlusWhenVotingOnComment = false;		// gdy plusujesz komentarz, dodaje komentarz "+1"
-settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
+// settings.addCommentPlusWhenVotingOnEntry = false;		// gdy plusujesz wpis, dodaje komentarz "+1"
+// settings.addCommentPlusWhenVotingOnComment = false;		// gdy plusujesz komentarz, dodaje komentarz "+1"
 
+
+
+settings.mikroczatShowLeftMenuButton = false;
+settings.mikroczatShowLeftMenuLink = true;
+settings.mikroczatShowTopNavButton = true;
+settings.mikroczatOpenMikroczatOnMiddleMouseClick = true;
+settings.mikroczatOpenMikroczatOnCTRLClick = true;
+settings.mikroczatOpenMikroczatOnCTRLMiddleMouseClick = true;
 
 (async function ()
 {
@@ -272,28 +288,114 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 
 
 
-	function openMikroczat(channel, windowOptions, target = "mikroczat")
+	function openMikroczat(hrefURL, windowOptions, target = "mikroczat")
 	{
-		if (bodySection.dataset.key_shift) delete bodySection.dataset.key_shift;
-		if (bodySection.dataset.key_ctrl) delete bodySection.dataset.key_ctrl;
-		if (bodySection.dataset.key_alt) delete bodySection.dataset.key_alt;
+		let urlPathnameArray = hrefURL;
+
+		if (hrefURL.startsWith("https://wykop.pl"))
+		{
+			urlPathnameArray = hrefURL.replace("https://wykop.pl", "");
+		}
+		else if (hrefURL.startsWith("https://mikroczat.pl"))
+		{
+			// TODO
+		}
+
+		urlPathnameArray = urlPathnameArray.split("/");
 
 		let mikroczatURL = `${mikroczatDomain}`;
+		let channel = ""
+
+		if (typeof urlPathnameArray == "string")
+		{
+
+		}
+		else if (Array.isArray(urlPathnameArray))
+		{
+			// #nazwatagu
+			if (urlPathnameArray[1] == "tag")
+			{
+				channel = "czat/" + urlPathnameArray[2];
+			}
+			else if (urlPathnameArray[1] == "mikroblog")
+			{
+				if (urlPathnameArray[2] == "najnowsze")	 // /mikroblog/najnowsze
+				{
+					channel = "czat/mikroblog+";
+				}
+				// TODO pathnameArray[2] == "aktywne"
+				// TODO pathnameArray[2] == "gorace"
+				else
+				{
+					channel = "czat/mikroblog+"; // TODO
+				}
+			}
+			// /obserwowane
+			else if (urlPathnameArray[1] == "obserwowane")  	
+			{
+				channel = "czat/observed";					// Mikroczat "observed" 🤍
+				// TODO pathnameArray[2] == "profile"
+				// TODO pathnameArray[2] == "tagi"
+			}
+			// uzytkownik - profil lub rozmowa z użytkownikiem
+			else if (urlPathnameArray[1] == "ludzie" || urlPathnameArray[1] == "wiadomosci")
+			{
+				channel = "pm/@" + urlPathnameArray[2];
+			}
+			else if (urlPathnameArray[1] == "wpis")
+			{
+				channel = "mikroblog+/#" + urlPathnameArray[2]; // id wpisu - discussion view
+			}
+		}
+
 		mikroczatURL += `${mikroczatPath}${channel}`;
+		clearKeysDatasetFromBody();
 
 		mikroczatWindow = window.open(mikroczatURL, target, windowOptions);
 	}
 
-	// OTWIERANIE MIKROCZATU Z PRZYCISKU
-	document.addEventListener("mousedown", wykopx_open_mikroczat_event_listener);
 
+
+
+	// PREVENT DEFAULT EVENT
+	function preventDefaultEvent(e)
+	{
+		e.preventDefault();
+	}
+	function clearKeysDatasetFromBody()
+	{
+		if (bodySection.dataset.key_shift) delete bodySection.dataset.key_shift;
+		if (bodySection.dataset.key_ctrl) delete bodySection.dataset.key_ctrl;
+		if (bodySection.dataset.key_alt) delete bodySection.dataset.key_alt;
+	}
+
+	function removeEventListeners(etarget)
+	{
+		etarget.removeEventListener("click", hrefClickEventListenerWithShift, true);
+		etarget.removeEventListener("mousedown", hrefMouseDownEventListenerWithShift, true);
+		etarget.removeEventListener("mouseup", hrefMouseUpEventListenerWithShift, true);
+	}
+
+
+
+
+	// OTWIERANIE MIKROCZATU Z PRZYCISKÓW CZAT
+
+	if (settings.mikroczatShowLeftMenuButton || settings.mikroczatShowLeftMenuLink || settings.mikroczatShowTopNavButton)
+	{
+		document.addEventListener("mousedown", wykopx_open_mikroczat_event_listener);
+		document.addEventListener("click", (e) =>
+		{
+			if (e.target.closest(".wykopx_open_mikroczat")) e.preventDefault();
+		});
+
+	}
 	function wykopx_open_mikroczat_event_listener(e)
 	{
 		if (!e.target.closest(".wykopx_open_mikroczat")) return;
 
 		e.preventDefault();
 		let windowOptions = "";
-		let channel = "";
 
 		if (e.shiftKey || e.ctrlKey || e.altKey || e.button === 2)
 		{
@@ -301,106 +403,296 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 		}
 
 		// WykopXS unique
-		const pathnameArray = new URL(document.URL).pathname.split("/");
-		if (pathnameArray[1] == "tag")
-		{
-			channel = "/" + pathnameArray[2]; // nazwatagu
-		}
-
-		openMikroczat(channel, windowOptions);
+		openMikroczat(new URL(document.URL).pathname, windowOptions);
 	}
 
-	// PREVENT DEFAULT EVENT
-	function preventDefaultEvent(e)
+
+	const keys = {};
+
+
+	if (settings.mikroczatOpenMikroczatOnCTRLClick || settings.mikroczatOpenMikroczatOnCTRLMiddleMouseClick)
 	{
-		e.preventDefault();
+		document.addEventListener("keydown", (e) =>
+		{
+			if (e.target.tagName.toLowerCase() === 'textarea' || e.target.tagName.toLowerCase() === 'input') return;
+
+			// if (!keys["SHIFT"] && e.key == "Shift")
+			// {
+			// 	keys["SHIFT"] = true;
+			// 	bodySection.dataset.key_shift = "true";
+			// }
+
+			if (!keys["CTRL"] && e.key == "Control")
+			{
+				keys["CTRL"] = true;
+				bodySection.dataset.key_ctrl = "true";
+			}
+
+			// if (!keys["ALT"] && (e.key == "Alt" || e.key == "AltGraph"))
+			// {
+			// 	keys["ALT"] = true;
+			// 	bodySection.dataset.key_alt = "true";
+			// }
+		});
+
+		document.addEventListener("keyup", (e) =>
+		{
+			if (e.target.tagName.toLowerCase() === 'textarea' || e.target.tagName.toLowerCase() === 'input') return;
+
+			// if (keys["SHIFT"] && e.key == "Shift")
+			// {
+			// 	keys["SHIFT"] = false;
+			// 	delete bodySection.dataset.key_shift;
+			// }
+			if (keys["CTRL"] && e.key == "Control")
+			{
+				keys["CTRL"] = false;
+				delete bodySection.dataset.key_ctrl;
+			}
+			// if (keys["ALT"] && (e.key == "Alt" || e.key == "AltGraph"))
+			// {
+			// 	keys["ALT"] = false;
+			// 	delete bodySection.dataset.key_alt;
+			// }
+		});
 	}
-	document.addEventListener("click", (e) =>
+
+
+
+
+	const performanceObserver = new PerformanceObserver((PerformanceObserverEntryList, PerformanceObserver) =>
 	{
-		if (!e.target.closest(".wykopx_open_mikroczat")) return;
-		e.preventDefault();
+		if (settings.mikroczatOpenMikroczatOnCTRLClick || settings.mikroczatOpenMikroczatOnCTRLMiddleMouseClick)
+		{
+			clearKeysDatasetFromBody();
+		}
+
+		if (dev) console.log("PerformanceObserverEntryList", PerformanceObserverEntryList);
+		if (dev) console.log("PerformanceObserverEntryList.getEntries", PerformanceObserverEntryList.getEntries()[0].name);
+		/*
+		{
+			duration: 0
+			entryType: "soft-navigation",
+			name: "https://wykop.pl/wpis/76597433/ponad-700-wykopow-glowna-i-poprawnosc-polityczna-m#268853079",
+			navigationId: "229d696d-dc59-4874-a63b-fd753787d4fd",
+			source: Window {0: Window, 1: global, 2: global, 3: global, 4: global, 5: global, 6: global, 7: global, 8: global, 9: global, 10: global, 11: global, 12: global, 13: Window, 14: global, window: Window, self: Window, document: document, name: '', location: Location, …}
+			startTime: 82282.70000000298
+		}
+		*/
 	});
+	performanceObserver.observe({ type: "soft-navigation", buffered: true });
 
-	let keys = {};
-	document.addEventListener("keydown", (e) =>
+
+
+
+	// MOUSE OVER LINKS
+	if (settings.mikroczatOpenMikroczatOnCTRLClick || settings.mikroczatOpenMikroczatOnCTRLMiddleMouseClick || settings.mikroczatOpenMikroczatOnMiddleMouseClick)
 	{
-		if (e.target.tagName.toLowerCase() === 'textarea') return;
-
-		if (!keys["SHIFT"] && e.key == "Shift")
+		document.addEventListener("mouseover", (e) =>
 		{
-			keys["SHIFT"] = true;
-			bodySection.dataset.key_shift = "true";
-		}
-		else if (!keys["ALT"] && (e.key == "Alt" || e.key == "AltGraph"))
-		{
-			keys["ALT"] = true;
-			bodySection.dataset.key_alt = "true";
-		}
-	});
+			if (!e.target.matches(`a[href^="/tag/"]`) && !e.target.matches(`a.username[href^="/ludzie/"] > span`) && !e.target.matches(`a[href^="/ludzie/"]:not(:has(> span))`) && !e.target.matches(`a[href^="/wpis/"] > time`)) return;
 
-	document.addEventListener("keyup", (e) =>
+			// ⇧ 𝗦𝗛𝗜𝗙𝗧
+			// ⌘ 𝗖𝗧𝗥𝗟
+			// ⎇ 𝗔𝗟𝗧 
+			// #heheszki
+			if (e.target.matches(`a[href^="/tag/"]`))
+			{
+				e.target.addEventListener("click", hrefClickEventListenerWithShift, true);
+				e.target.addEventListener("mousedown", hrefMouseDownEventListenerWithShift, true);
+				e.target.addEventListener("mouseup", hrefMouseUpEventListenerWithShift, true);
+
+				e.target.title = `Klikając w tag wciśnij klawisz 𝗖𝗧𝗥𝗟,
+lub kliknij w tag śordkowym przyciskiem myszy,
+żeby otworzyć na 🗯 𝗠𝗶𝗸𝗿𝗼𝗰𝘇𝗮𝗰𝗶𝗲 kanał tematyczny 
+
+Kanał tematyczny #${e.target.innerText}:
+
+⌘ 𝗖𝗧𝗥𝗟 + kliknięcie LPM - w nowym oknie
+⌘ 𝗖𝗧𝗥𝗟 + kliknięcie ŚPM - w nowym oknie
+🖱️ Kliknięcie ŚPM  - w nowej karcie
+`;
+			}
+
+			// @NadiaFrance
+			else if (e.target.matches(`a.username[href^="/ludzie/"] > span`) || e.target.matches(`a[href^="/ludzie/"]:not(:has(> span))`))
+			{
+				e.target.addEventListener("click", hrefClickEventListenerWithShift, true);
+				e.target.addEventListener("mousedown", hrefMouseDownEventListenerWithShift, true);
+				e.target.addEventListener("mouseup", hrefMouseUpEventListenerWithShift, true);
+				e.target.title = `Wciśnij klawisz 𝗖𝗧𝗥𝗟 klikając w login użytkownika,
+lub kliknij w login środkowym przyciskiem myszy,
+aby otworzyć rozmowę prywatną (PM) na 🗯 Mikroczacie
+
+Rozmowa prywatna:
+⌘ 𝗖𝗧𝗥𝗟 + kliknięcie LPM - w nowym oknie
+⌘ 𝗖𝗧𝗥𝗟 + kliknięcie ŚPM - w nowym oknie
+🖱️ Kliknięcie ŚPM  - w nowej karcie
+`;
+			}
+			// PERMALINK DO WPISU
+			else if (e.target.matches(`a[href^="/wpis/"] > time`))
+			{
+				e.target.addEventListener("click", hrefClickEventListenerWithShift, true);
+				e.target.addEventListener("mousedown", hrefMouseDownEventListenerWithShift, true);
+				e.target.addEventListener("mouseup", hrefMouseUpEventListenerWithShift, true);
+
+				const dateObj = dayjs(e.target.dateTime);
+				const dateFull = dateObj.format('D MMMM YYYY');
+				const timeFull = dateObj.format('HH:mm:ss');
+				const dateDayOfWeek = dateObj.format('dddd');
+				const daysAgo = dateObj.fromNow();
+
+				e.target.title = `Dodany: 
+⌚ ${daysAgo}, ${timeFull}
+📅 ${dateDayOfWeek}, ${dateFull} r.
+
+Klikając w datę wpisu/komentarza wciśnij klawisz 𝗖𝗧𝗥𝗟
+lub kliknij datę środkowym przyciskiem myszy, 
+żeby otworzyć całą dyskusję ze wszystkimi komentarzami na 🗯 𝗠𝗶𝗸𝗿𝗼𝗰𝘇𝗮𝗰𝗶𝗲 
+
+Widok dyskusji:
+
+⌘ 𝗖𝗧𝗥𝗟 + kliknięcie LPM - w nowym oknie
+⌘ 𝗖𝗧𝗥𝗟 + kliknięcie ŚPM - w nowym oknie
+🖱️ Kliknięcie ŚPM  - w nowej karcie
+`;
+			}
+
+		});
+
+
+		// MOUSE OUT
+		document.addEventListener("mouseout", (e) =>
+		{
+			if (e.target.matches(`a[href^="/tag/"]`) || e.target.matches(`a.username[href^="/ludzie/"] > span`) || e.target.matches(`a[href^="/ludzie/"]`) || e.target.matches(`a[href^="/wpis/"] > time`))
+			{
+				removeEventListeners(e.target);
+			}
+		});
+	}
+
+
+
+
+
+	// CLICK EVENT
+	function hrefClickEventListenerWithShift(e)
 	{
-		if (e.target.tagName.toLowerCase() === 'textarea') return;
-
-		if (keys["SHIFT"] && e.key == "Shift")
+		// ŚPM
+		if (settings.mikroczatOpenMikroczatOnMiddleMouseClick)
 		{
-			keys["SHIFT"] = false;
-			delete bodySection.dataset.key_shift;
+			if (e.button === 1 && !e.shiftKey && !e.altKey && !e.ctrlKey) 
+			{
+				//e.preventDefault();
+			}
 		}
-		else if (keys["ALT"] && (e.key == "Alt" || e.key == "AltGraph"))
-		{
-			keys["ALT"] = false;
-			delete bodySection.dataset.key_alt;
-		}
-	});
 
-	document.addEventListener("mouseover", (e) =>
+		// ŚPM + CTRL
+		if (settings.mikroczatOpenMikroczatOnCTRLMiddleMouseClick)
+		{
+			if (e.button === 1 && !e.shiftKey && !e.altKey && e.ctrlKey)
+			{
+				//e.preventDefault();
+			}
+		}
+		// ŚPM + SHIFT
+		if (e.button === 1 && !e.shiftKey && !e.altKey && e.ctrlKey)
+		{
+			// e.preventDefault();
+			//openMikroczat(ahrefElement.href, "popup");
+		}
+
+		// LPM + CTRL
+		if (settings.mikroczatOpenMikroczatOnCTRLClick)
+		{
+			if (e.button === 0 && !e.shiftKey && !e.altKey && e.ctrlKey)
+			{
+				e.preventDefault();
+				// openMikroczat(ahrefElement.href, "popup");
+			}
+		}
+	}
+
+	// MOUSE DOWN
+	function hrefMouseDownEventListenerWithShift(e)
 	{
-		if (e.target.matches(`a[href^="/tag/"]`))
+		// ŚPM
+		if (settings.mikroczatOpenMikroczatOnMiddleMouseClick)
 		{
-			e.target.title = `Wciśnij klawisz ⇧ 𝗦𝗛𝗜𝗙𝗧 lub ⎇ 𝗔𝗟𝗧 (⌥ 𝗢𝗽𝘁𝗶𝗼𝗻 na Mac) klikając na tag,\naby otworzyć kanał #${e.target.innerText} na 🗯 Mikroczacie\n\n⎇ 𝗔𝗟𝗧 - mikroczat w nowej karcie\n⇧ 𝗦𝗛𝗜𝗙𝗧 - mikroczat w nowym oknie`;
-
-			e.target.addEventListener("click", preventDefaultEvent, true);
-			e.target.addEventListener("mousedown", tagHrefEventListenerWithShift, true);
-			e.target.addEventListener("mouseup", preventDefaultEvent, true);
+			if (e.button === 1 && !e.shiftKey && !e.altKey && !e.ctrlKey) 
+			{
+				e.preventDefault();
+				const ahrefElement = e.target.closest("a");
+				openMikroczat(ahrefElement.href, null, "_blank");
+			}
 		}
-	});
 
-	document.addEventListener("mouseout", (e) =>
+		// ŚPM + CTRL
+		if (settings.mikroczatOpenMikroczatOnCTRLMiddleMouseClick)
+		{
+			if (e.button === 1 && !e.shiftKey && !e.altKey && e.ctrlKey)
+			{
+				e.preventDefault();
+				const ahrefElement = e.target.closest("a");
+				openMikroczat(ahrefElement.href, "popup");
+			}
+		}
+		// ŚPM + SHIFT
+		if (e.button === 1 && e.shiftKey && !e.altKey && !e.ctrlKey)
+		{
+			// e.preventDefault();
+			// openMikroczat(ahrefElement.href, "popup");
+		}
+		// CTRL + LPM
+		if (settings.mikroczatOpenMikroczatOnCTRLClick)
+		{
+			if (e.button === 0 && !e.shiftKey && !e.altKey && e.ctrlKey)
+			{
+				e.preventDefault();
+				const ahrefElement = e.target.closest("a");
+				//removeEventListeners(ahrefElement);
+				openMikroczat(ahrefElement.href, "popup");
+			}
+		}
+
+	}
+	// MOUSE UP
+	function hrefMouseUpEventListenerWithShift(e)
 	{
-		if (e.target.matches(`a[href^="/tag/"]`))
-		{
-			e.target.removeEventListener("click", preventDefaultEvent, true);
-			e.target.removeEventListener("mousedown", tagHrefEventListenerWithShift, true);
-			e.target.removeEventListener("mouseup", preventDefaultEvent, true);
-		}
-	});
 
-	function tagHrefEventListenerWithShift(e)
-	{
-		const channel = e.target.href.split("tag/").pop();
+		// ŚPM
+		if (settings.mikroczatOpenMikroczatOnMiddleMouseClick)
+		{
+			if (e.button === 1 && !e.shiftKey && !e.altKey && !e.ctrlKey) 
+			{
+				removeEventListeners(e.target.closest("a"));
+				e.preventDefault();
+			}
+		}
+		// ŚPM + CTRL
+		if (settings.mikroczatOpenMikroczatOnCTRLMiddleMouseClick)
+		{
+			if (e.button === 1 && !e.shiftKey && !e.altKey && e.ctrlKey)
+			{
+				removeEventListeners(e.target.closest("a"));
+				e.preventDefault();
+			}
+		}
+		// ŚPM + SHIFT
+		// if (e.button === 1 && e.shiftKey && !e.altKey && !e.ctrlKey)
+		// {
+		// 	e.preventDefault();
+		// }
 
-		if (e.ctrlKey || e.altKey) // || e.button === 2)
+		// CTRL + LPM
+		if (settings.mikroczatOpenMikroczatOnCTRLClick)
 		{
-			e.preventDefault();
-			openMikroczat(channel, null, "_blank");
-		}
-		else if (e.shiftKey)
-		{
-			e.preventDefault();
-			openMikroczat(channel, "popup");
-		}
-		else if (e.button === 2) // PPM
-		{
-
-		}
-		else if (e.button === 1) // ŚPM
-		{
-
-		}
-		else if (e.button === 0) // LPM
-		{
-			window.location.href = e.target.href;
+			if (e.button === 0 && !e.shiftKey && !e.altKey && e.ctrlKey)
+			{
+				e.preventDefault();
+				removeEventListeners(e.target.closest("a"));
+			}
 		}
 	}
 
@@ -434,66 +726,81 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 
 
 
-	function createLeftPanelButton()
+
+
+
+	function createLeftMenuButtons(asideLeftPanel = null)
 	{
-		if (dev) console.log("createLeftPanelButton");
+		if (!asideLeftPanel)
+		{
+			asideLeftPanel = document.querySelector("body > section > div.main-content > aside.left-panel");
+		}
 
-		const aside_section_div_ul = document.querySelector("body aside.left-panel > section.buttons ul");
-		if (!aside_section_div_ul) return;
+		if (!asideLeftPanel) return;
 
-		let aside_section_div_ul_li = aside_section_div_ul.querySelector("li.mikroczat");
-		if (aside_section_div_ul_li) return;
+		let aside_section_div_ul_li = document.createElement('li');
 
-		aside_section_div_ul_li = document.createElement('li');
 		aside_section_div_ul_li.classList.add('wykopx_open_mikroczat', 'mikroczat');
 		aside_section_div_ul_li.title = mikroczatButtonOpenTitle;
-
 		aside_section_div_ul_li.innerHTML = `
-		<div class="popper-button">
-			<span>
-				<span class="button">
-					<a target="_mikroczat" class="hybrid">
-						<span>${mikroczatButtonOpenLabel}</span>
-					</a>
+			<div class="popper-button">
+				<span>
+					<span class="button">
+						<a target="_mikroczat" class="hybrid">
+							<span>${mikroczatButtonOpenLabel}</span>
+						</a>
+					</span>
 				</span>
-			</span>
-		</div>`;
+			</div>`;
 
-		aside_section_div_ul.appendChild(aside_section_div_ul_li);
+		if (settings.mikroczatShowLeftMenuButton)
+		{
+			let aside_section_buttons_div_ul;
+			if (asideLeftPanel) aside_section_buttons_div_ul = asideLeftPanel.querySelector("section.buttons > div.content > ul");
+			if (!aside_section_buttons_div_ul)
+			{
+				aside_section_buttons_div_ul = document.querySelector("body > section > div.main-content > aside.left-panel > section.buttons > div.content > ul");
+			}
+			if (aside_section_buttons_div_ul && !aside_section_buttons_div_ul.querySelector("li.mikroczat"))
+			{
+				let clone = aside_section_div_ul_li.cloneNode(true);
+				aside_section_buttons_div_ul.appendChild(clone);
+			}
+		}
+
+		if (settings.mikroczatShowLeftMenuLink)
+		{
+			let aside_section_links_div_ul;
+			if (asideLeftPanel) aside_section_links_div_ul = asideLeftPanel.querySelector("section.links > div.content > ul");
+			if (!aside_section_links_div_ul)
+			{
+				aside_section_links_div_ul = document.querySelector("body > section > div.main-content > aside.left-panel > section.links > div.content > ul");
+			}
+			if (aside_section_links_div_ul && !aside_section_links_div_ul.querySelector("li.mikroczat"))
+			{
+				let clone = aside_section_div_ul_li.cloneNode(true);
+				aside_section_links_div_ul.appendChild(clone);
+			}
+		}
 	}
 
 
+	// CSS
 	{
 		CSS += `
 		/* LEFT MENU MIKROCZAT BUTTON - START */
-		body aside.left-panel:not(.mini) > section.buttons > div.content > ul
-		{
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: space-around;
-			column-gap: 0px;
-		}
-		body aside.left-panel:not(.mini) > section.buttons > div.content > ul > li
-		{
-			flex-basis: 47%;
-			box-sizing: border-box;
-			padding: 0px;
-			margin-top: 7px;
-		}
 
-		body aside.left-panel > section > div.content > ul > li
+		body aside.left-panel > section.links > div.content > ul > li
 		{
 			position: relative;
-			cursor: pointer;
+			transition: none;
 		}
 
-		body aside.left-panel.mini > section > div.content > ul > li:hover,
-		body aside.left-panel:not(.mini) > section.buttons > div.content > ul > li:hover a::before
+		body aside.left-panel:not(.mini):has(section.buttons > div.content > ul > li.mikroczat) > section.links > div.content > ul > li.mikroczat
 		{
-			background: var(--squeeze);
+			display: none;
 		}
-
-		aside.left-panel>section.links>.content ul li a 									/* [data-v-5687662b] */
+		body aside.left-panel > section.links > div.content > ul > li a.hybrid[class] 								/* [data-v-5687662b] */
 		{
 			padding: 0 6px;
 			display: block;
@@ -504,75 +811,11 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 			font-size: 16px;
 			line-height: 36px;
 			height: 36px;
-		}
-		
 
-
-		aside.left-panel>section.buttons>.content ul li a 									/* [data-v-5687662b] */
-		{
-			display: block;
-			position: relative;
-			color: var(--steelBluish);
-			font-size: 0;
+			cursor: pointer;
+			transition: none;
 		}
-
-		aside.left-panel>section.buttons>.content ul li.active a, 							/* [data-v-5687662b] */
-		aside.left-panel>section.buttons>.content ul li:hover a 							/* [data-v-5687662b] */
-		{
-			color: var(--tuna);
-			font-weight: 600;
-		}
-
-		aside.left-panel>section.buttons>.content ul li a:before 							/* [data-v-5687662b] */
-		{
-			content: '';
-			display: block;
-			width: 100%;
-			height: 36px;
-			border: 1px solid var(--porcelain);
-			border-radius: 6px;
-			box-sizing: border-box;
-			transition: background .2s ease, border .2s ease;
-		}
-		[data-night-mode] aside.left-panel>section.buttons>.content ul li a:before 			/* [data-v-5687662b] */
-		{
-			border-color: #303032;
-		}
-
-		aside.left-panel:not(.mini)>section.buttons>.content ul li:hover a:before,
-		[data-night-mode] aside.left-panel:not(.mini)>section.buttons>.content ul li:hover a:before
-		{
-			border-color: var(--tuna);
-		}
-
-		aside.left-panel:not(.mini)>section.buttons>.content ul li a:after 							/* [data-v-5687662b] */
-		{
-			content: '';
-			display: block;
-			position: absolute;
-			-webkit-mask-repeat: no-repeat;
-			mask-repeat: no-repeat;
-			-webkit-mask-position: center;
-			mask-position: center;
-			background: var(--gullGray);
-			height: 34px;
-			width: 100%;
-			top: 0;
-			left: 0;
-			-webkit-transition: background .2s ease;
-			transition: background .2s ease;
-		}
-
-		aside.left-panel:not(.mini)>section.buttons>.content ul li.mikroczat a:after 					/* [data-v-5687662b] */
-		{
-			-webkit-mask-image: url(https://i.imgur.com/82a9CyK.png);
-			mask-image: url(https://i.imgur.com/82a9CyK.png);
-			-webkit-mask-size: 22px 22px;
-			mask-size: 22px 22px;
-		}
-
-		/* ZWINIETE MENU PO LEWEJ */
-		aside.left-panel>section.links>.content ul li a:before 								/* [data-v-5687662b] */
+		body aside.left-panel > section.links > div.content > ul > li a.hybrid[class]:before						/* [data-v-5687662b] */
 		{
 			content: '';
 			display: block;
@@ -584,178 +827,336 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 			-webkit-mask-size: cover;
 			mask-size: cover;
 			background: var(--gullGray);
-			-webkit-transform: translateX(-50%) translateY(-50%);
-			transform: translateX(-50%) translateY(-50%);
 			top: 50%;
 			left: 24px;
-			-webkit-transition: background .2s ease;
-			transition: background .2s ease;
 			z-index: 1;
+			transition: none;
 		}
-
-
-		aside.left-panel.mini > section.links > .content ul li.mikroczat a:before
+		
+		body aside.left-panel > section.links > div.content > ul > li.mikroczat a.hybrid[class]:before
 		{
 			-webkit-mask-image: url(https://i.imgur.com/82a9CyK.png);
 			mask-image: url(https://i.imgur.com/82a9CyK.png);
 			-webkit-mask-size: 22px 22px;
 			mask-size: 22px 22px;
-
-			mask-size: 22px 22px;
 			width: 22px;
 			height: 22px;
 			margin-top: 0px;
+
+			transition: none;
+		}
+		body aside.left-panel > section.links > div.content > ul > li.mikroczat a.hybrid[class]:before
+		{
+			top: 7px;
+			left: 13px;
 		}
 
-
-		aside.left-panel:not(.mini)>section.buttons>.content ul li a>span 								/*[data-v-5687662b] */
+		body aside.left-panel > section.links > div.content > ul > li a > span
 		{
-			position: relative;
-			display: inline-block;
-			font-size: 11px;
-			left: 50%;
-			-webkit-transform: translateX(-50%);
-			transform: translateX(-50%);
+			display: block;
+			padding: 0 16px 0 38px;
+			border-radius: 6px;
 			white-space: nowrap;
-			margin-top: 2px;
-			line-height: 16px;
-			height: 16px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			position: relative;
+
+			/* em */
+			font-style: normal;
+			color: var(--steelBluish);
+			transition: none;
+			position: relative;
 		}
-		aside.left-panel.mini > section.links > .content ul li a > span
+
+		body aside.left-panel > section.links > div.content > ul > li:hover a > span
 		{
-			display: none;
+			background: var(--squeeze);
+			cursor: pointer;
 		}
 	
-		/* LEFT MENU MIKROCZAT BUTTON - END */
+		body aside.left-panel.mini > section.links > div.content > ul > li.mikroczat a > span
+		{
+			font-size: 0;
+		}
+		`;
+
+
+		if (settings.mikroczatShowLeftMenuButton)
+		{
+			CSS += `
+			/* 4 BUTTONS */
+			body aside.left-panel:not(.mini) > section.buttons > div.content > ul
+			{
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-around;
+				column-gap: 0px;
+			}
+			body aside.left-panel:not(.mini) > section.buttons > div.content > ul > li
+			{
+				flex-basis: 47%;
+				box-sizing: border-box;
+				padding: 0px;
+				margin-top: 7px;
+			}
+
+			body aside.left-panel > section > div.content > ul > li
+			{
+				position: relative;
+				cursor: pointer;
+			}
+
+			body aside.left-panel.mini > section > div.content > ul > li:hover,
+			body aside.left-panel:not(.mini) > section.buttons > div.content > ul > li:hover a::before
+			{
+				background: var(--squeeze);
+			}
+
+			aside.left-panel>section.buttons>.content ul li a 									/* [data-v-5687662b] */
+			{
+				display: block;
+				position: relative;
+				color: var(--steelBluish);
+				font-size: 0;
+			}
+
+			aside.left-panel>section.buttons>.content ul li.active a, 							/* [data-v-5687662b] */
+			aside.left-panel>section.buttons>.content ul li:hover a 							/* [data-v-5687662b] */
+			{
+				color: var(--tuna);
+				font-weight: 600;
+			}
+
+			aside.left-panel>section.buttons>.content ul li a:before 							/* [data-v-5687662b] */
+			{
+				content: '';
+				display: block;
+				width: 100%;
+				height: 36px;
+				border: 1px solid var(--porcelain);
+				border-radius: 6px;
+				box-sizing: border-box;
+				transition: background .2s ease, border .2s ease;
+			}
+			[data-night-mode] aside.left-panel>section.buttons>.content ul li a:before 			/* [data-v-5687662b] */
+			{
+				border-color: #303032;
+			}
+
+			aside.left-panel:not(.mini)>section.buttons>.content ul li:hover a:before,
+			[data-night-mode] aside.left-panel:not(.mini)>section.buttons>.content ul li:hover a:before
+			{
+				border-color: var(--tuna);
+			}
+
+			aside.left-panel:not(.mini)>section.buttons>.content ul li a:after 							/* [data-v-5687662b] */
+			{
+				content: '';
+				display: block;
+				position: absolute;
+				-webkit-mask-repeat: no-repeat;
+				mask-repeat: no-repeat;
+				-webkit-mask-position: center;
+				mask-position: center;
+				background: var(--gullGray);
+				height: 34px;
+				width: 100%;
+				top: 0;
+				left: 0;
+				-webkit-transition: background .2s ease;
+				transition: background .2s ease;
+			}
+
+			aside.left-panel:not(.mini)>section.buttons>.content ul li.mikroczat a:after 					/* [data-v-5687662b] */
+			{
+				-webkit-mask-image: url(https://i.imgur.com/82a9CyK.png);
+				mask-image: url(https://i.imgur.com/82a9CyK.png);
+				-webkit-mask-size: 22px 22px;
+				mask-size: 22px 22px;
+			}
+	
+			aside.left-panel:not(.mini)>section.buttons>.content ul li a>span 								/*[data-v-5687662b] */
+			{
+				position: relative;
+				display: inline-block;
+				font-size: 11px;
+				left: 50%;
+				-webkit-transform: translateX(-50%);
+				transform: translateX(-50%);
+				white-space: nowrap;
+				margin-top: 2px;
+				line-height: 16px;
+				height: 16px;
+			}`;
+			/* LEFT MENU MIKROCZAT BUTTON - END */
+
+		}
 
 
 
 
 		/* MIKROCZAT TAG LINKS */
-		section:is(.entry-content, .link-block)[class] { overflow: visible!important; }
+		CSS += `
+			section:is(.entry-content, .link-block)[class]
+			{ overflow: visible!important; }
 
-		section:is(.entry-content, .link-block) a[href^="/tag/"]
-		{
-			padding-right: 2px !important;
-			margin-right: 1px;
-			transition: none!important;
-		}
-		section:is(.entry-content, .link-block) a[href^="https://mikroczat.pl/"]
-		{
-			padding-right: 2px!important;
-			padding-left: 2px!important;
-		}
-		section:is(.entry-content, .link-block) a[href^="/tag/"],
-		section.entry-content .wrapper a[href^="https://mikroczat.pl/"]
-		{
-			border: 1px solid transparent!important;
-			position: relative!important;
-		}
+			section:is(.entry-content, .link-block) a[href^="/tag/"]
+			{
+				padding-right: 2px !important;
+				margin-right: 1px;
+				transition: none!important;
+			}
 
-		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
-		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
-		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
-		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *,
-		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *,
-		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *
-		{
-			color: var(--tagChannelColor)!important;
-		}
+			section:is(.entry-content, .link-block) a[href^="https://mikroczat.pl/"]
+			{
+				padding-right: 2px!important;
+				padding-left: 2px!important;
+			}
 
-		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]
-		{
-			border-color: var(--tagChannelColor)!important;
-			background-color: color-mix(in srgb, var(--whitish) 90%, var(--tagChannelColor))!important;
-			border-radius: var(--smallBorderRadius)!important;
-		}
-		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
-		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
-		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
-		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover,
-		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover,
-		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover
-		{
-			background-color: color-mix(in srgb, var(--whitish) 60%, var(--tagChannelColor))!important;
-		}
 
-		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]
-		{
 
-			padding-left: 3px !important;
-			margin-left: -12px !important;
 
-		}
-		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
-		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
-		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover
-		{
-			text-decoration: none!important;
-		}
-		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before,
-		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before,
-		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before
-		{
-			content: "#";
-		}
-		body > section[data-key_shift="true"] 	section.entry-content a[href^="/tag/"]::after,
-		body > section[data-key_alt="true"] 	section.entry-content a[href^="/tag/"]::after,
-		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="/tag/"]::after,
-		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after,
-		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after,
-		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after
-		{
-			color: white;
-			content: "🗯";
-			position: absolute;
-			top: -1em;
-			right: -0.5em;
-		}
-		
-		body > section[data-mikroczat-logged="true"] li.wykopx_open_mikroczat_li span:after
-		{
-			content: "•";
-			color: white;
-			position: absolute;
-			top: 4px;
-			right: 5px;
-		}
-		body > section[data-mikroczat-logged="false"] li.wykopx_open_mikroczat_li span:after
-		{
-			content: "•";
-			color: rgb(255, 255, 255, 0.3);
-			position: absolute;
-			top: 4px;
-			right: 5px;
-		}`;
+			section.sidebar a[href^="/tag/"],
+			section:is(.entry-content, .link-block) a[href^="/tag/"],
+			section.entry div.right a[href^="/wpis/"],
+			section.entry-content a[href^="/ludzie/"],
+			section.entry div.right a.username[href^="/ludzie/"],
+			section.link-block a.username[href^="/ludzie/"],
+			section.entry-content .wrapper a[href^="https://mikroczat.pl/"]
+			{
+				border: 1px solid transparent!important;
+				position: relative!important;
+				cursor: pointer!important;
+				transition: none!important;
+			}
+
+
+
+
+			body > section[data-key_ctrl="true"] 	section.sidebar a[href^="/tag/"],
+			body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+			body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
+			body > section[data-key_ctrl="true"] 	section.entry div.right a[href^="/wpis/"] *,
+			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
+			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *
+			{
+				color: var(--tagChannelColor)!important;
+			}
+			body > section[data-key_ctrl="true"] 	section.sidebar a[href^="/tag/"],
+			body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+			body > section[data-key_ctrl="true"] 	section.entry div.right a[href^="/wpis/"],
+			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]
+			{
+				border-color: var(--tagChannelColor)!important;
+				background-color: color-mix(in srgb, var(--whitish) 90%, var(--tagChannelColor))!important;
+				border-radius: var(--smallBorderRadius)!important;
+			}
+			body > section[data-key_ctrl="true"] 	section.sidebar a[href^="/tag/"]:hover,
+			body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+			body > section[data-key_ctrl="true"] 	section.entry div.right a[href^="/wpis/"]:hover,
+			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover
+			{
+				background-color: color-mix(in srgb, var(--whitish) 60%, var(--tagChannelColor))!important;
+			}
+			body > section[data-key_ctrl="true"] 	section.sidebar a[href^="/tag/"],
+			body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
+			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="/ludzie/"],
+			body > section[data-key_ctrl="true"] 	section.link-block a.username[href^="/ludzie/"]
+			{
+				padding-left: 3px !important;
+				margin-left: -12px !important;
+			}
+			body > section[data-key_ctrl="true"] 	section.sidebar a[href^="/tag/"]:hover,
+			body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
+			body > section[data-key_ctrl="true"] 	section.entry div.right a[href^="/wpis/"]:hover,
+			body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/ludzie/"]:hover
+			{
+				text-decoration: none!important;
+			}
+			body > section[data-key_ctrl="true"] 	section.sidebar a[href^="/tag/"]::before,
+			body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]::before
+			{
+				content: "#";
+			}
+
+
+
+
+			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="/ludzie/"],
+			body > section[data-key_ctrl="true"] 	section.entry div.right a.username[href^="/ludzie/"],
+			body > section[data-key_ctrl="true"] 	section.link-block a.username[href^="/ludzie/"],
+			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/pm/"],
+			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/room/"]
+			{
+				color: var(--pmChannelColor)!important;
+				border-color: var(--pmChannelColor)!important;
+				background-color: color-mix(in srgb, var(--whitish) 90%, var(--pmChannelColor))!important;
+				padding: 0px 3px;
+				margin-left: 3px;
+			}
+			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="/ludzie/"]:hover,
+			body > section[data-key_ctrl="true"] 	section.entry div.right a.username[href^="/ludzie/"]:hover,
+			body > section[data-key_ctrl="true"] 	section.link-block a.username[href^="/ludzie/"]:hover,
+			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/pm/"]:hover,
+			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/room/"]:hover
+			{
+				background-color: color-mix(in srgb, var(--whitish) 60%, var(--pmChannelColor))!important;
+			}
+			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="/ludzie/"]::before,
+			body > section[data-key_ctrl="true"] 	section.entry div.right a.username[href^="/ludzie/"]::before,
+			body > section[data-key_ctrl="true"] 	section.link-block a.username[href^="/ludzie/"]::before
+			{
+				content: "";
+			}
+
+		`;
+
+
+
+		// /*
+		// 	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="/tag/"]::after,
+		// 	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="/ludzie/"]::after,
+		// 	body > section[data-key_ctrl="true"] 	section.entry div.right a.username[href^="/ludzie/"]::after,
+		// 	body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after
+		// 	{
+		// 		color: white;
+		// 		content: "🗯";
+		// 		position: absolute;
+		// 		top: -1em;
+		// 		right: -0.5em;
+		// 	}
+		// */
+
+
+
+
+		CSS += `
+			/* TOP NAV CZAT BUTTON */
+			body > section.open-left-panel > header.header > div.left > nav.main > ul > li.wykopx_open_mikroczat_li
+			{
+				display: none;
+			}
+			/*body > section[data-mikroczat-logged="true"] li.wykopx_open_mikroczat_li span:after
+			{
+				content: "•";
+				color: white;
+				position: absolute;
+				top: 4px;
+				right: 5px;
+			}*/
+			body > section[data-mikroczat-logged="false"] li.wykopx_open_mikroczat_li span:after
+			{
+				content: "•";
+				color: rgb(255, 255, 255, 0.3);
+				position: absolute;
+				top: 4px;
+				right: 5px;
+			}`;
 	}
 
 
-	createLeftPanelButton();
 
-	createNewNavBarButton({
-		position: "left",
-		// text: "Mikro<strong>czat</strong>",
-		text: mikroczatButtonOpenLabel,
-		title: mikroczatButtonOpenTitle,
-		class: "open_mikroczat", // wykopx_open_mikroczat_li
-		hideWithoutXStyle: false,
-		url: mikroczatDomain,
-		target: "_mikroczat",
-		number: null,
-	});
+
 
 
 
@@ -864,7 +1265,10 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 				// LEFT SIDE CATEGORY MENU OPENED
 				else if (mutation.addedNodes[0].matches("aside.left-panel.thin-scrollbar"))
 				{
-					createLeftPanelButton();
+					if (settings.mikroczatShowLeftMenuButton || settings.mikroczatShowLeftMenuLink)
+					{
+						createLeftMenuButtons(mutation.addedNodes[0]);
+					}
 				}
 			}
 
@@ -873,6 +1277,25 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 	});
 
 
+
+	if (settings.mikroczatShowLeftMenuButton || settings.mikroczatShowLeftMenuLink)
+	{
+		createLeftMenuButtons();
+	}
+	if (settings.mikroczatShowTopNavButton)
+	{
+		createNewNavBarButton({
+			position: "left",
+			// text: "Mikro<strong>czat</strong>",
+			text: mikroczatButtonOpenLabel,
+			title: mikroczatButtonOpenTitle,
+			class: "open_mikroczat", 		// wykopx_open_mikroczat_li
+			hideWithoutXStyle: false,
+			url: mikroczatDomain,
+			target: "_mikroczat",
+			number: null,
+		});
+	}
 
 	// CONTENT LOADED
 	let mainSection;
@@ -883,7 +1306,6 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 
 		if (mainSection)
 		{
-
 			const sectionEntryArray = mainSection.querySelectorAll("section.entry[id]");
 			// if (dev) console.log("sectionEntryArray", sectionEntryArray);
 			sectionEntryArray.forEach((sectionEntry) =>
@@ -1062,8 +1484,6 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 
 	function appendVotersToEntry(sectionEntry, voters)
 	{
-
-
 		if (!sectionEntry) return;
 		const divEditWrapperElement = sectionEntry.querySelector('article > div.edit-wrapper');
 		if (!divEditWrapperElement) return;
@@ -1266,10 +1686,10 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 					}
 					reject(error);
 				});
-
 		});
 	}
 
+	// settings.addCommentPlusWhenVotingOnEntry, settings.addCommentPlusWhenVotingOnComment
 	function postCommentPlus1ToAPI(sectionEntry)
 	{
 		if (!sectionEntry || !sectionEntry.__vue__) return;
@@ -1284,7 +1704,6 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 			entryId = sectionEntry.__vue__.item.parent.id;
 
 		// TODO ZNALEZISKA
-
 		let apiURL = `https://wykop.pl/api/v3/entries/${entryId}/comments`;
 		const method = "POST";
 		const body = {
@@ -1338,13 +1757,8 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 					}
 					reject(error);
 				});
-
 		});
 	}
-
-
-
-
 
 	// li.more click
 	document.addEventListener("click", async function (e)
@@ -1354,14 +1768,14 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 			const sectionEntry = e.target.closest("section.entry[id]");
 			if (sectionEntry.__vue__?.item?.voted == 1)
 			{
-				if (settings.addCommentPlusWhenVotingOnEntry && sectionEntry && sectionEntry.__vue__?.item?.resource == "entry") 
-				{
-					postCommentPlus1ToAPI(sectionEntry);
-				}
-				else if (settings.addCommentPlusWhenVotingOnComment && sectionEntry && sectionEntry.__vue__?.item?.resource == "entry_comment")
-				{
-					postCommentPlus1ToAPI(sectionEntry);
-				}
+				// if (settings.addCommentPlusWhenVotingOnEntry && sectionEntry && sectionEntry.__vue__?.item?.resource == "entry") 
+				// {
+				// 	postCommentPlus1ToAPI(sectionEntry);
+				// }
+				// else if (settings.addCommentPlusWhenVotingOnComment && sectionEntry && sectionEntry.__vue__?.item?.resource == "entry_comment")
+				// {
+				// 	postCommentPlus1ToAPI(sectionEntry);
+				// }
 			}
 		}
 
@@ -1418,6 +1832,7 @@ settings.showAnimatedAvatars = true;					// pokazuje animowane avatary
 		{
 			--kolorBananowy1: rgba(255, 185, 0, 1);
 			--tagChannelColor: rgba(0, 183, 255, 1);
+			--pmChannelColor: rgba(255, 89, 23, 1);
 			--smallBorderRadius: 4px;
 		}
 		div[data-modal="entryVoters"] section.entry-voters::after {content: none!important;} /* Wykop X Style PROMO */
