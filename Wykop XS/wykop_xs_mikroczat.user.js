@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 // @name:en							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 
-// @version							3.0.62
+// @version							3.0.63
 
 // @description 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -44,7 +44,7 @@
 
 'use strict';
 
-const currentVersion = "3.0.62";
+const currentVersion = "3.0.63";
 let dev = false;
 
 const promoString = " - Wykop XS";
@@ -200,6 +200,7 @@ settings.mikroczatOpenMikroczatOnCTRLMiddleClick = true;
 		}
 	}
 
+
 	function createNewNavBarButton(options)
 	{
 		let nav_ul;
@@ -254,6 +255,71 @@ settings.mikroczatOpenMikroczatOnCTRLMiddleClick = true;
 	}
 
 
+	function createLeftMenuButtons(asideLeftPanel = null)
+	{
+		console.log("createLeftMenuButtons(), asideLeftPanel: ", asideLeftPanel);
+
+		if (!asideLeftPanel)
+		{
+			asideLeftPanel = document.querySelector("body > section > div.main-content > aside.left-panel");
+		}
+
+		if (!asideLeftPanel) return;
+
+		let aside_section_div_ul_li = document.createElement('li');
+
+		aside_section_div_ul_li.classList.add('mikroczat');
+		aside_section_div_ul_li.title = mikroczatButtonOpenTitle;
+		aside_section_div_ul_li.innerHTML = `
+			<div class="popper-button">
+				<span>
+					<span class="button">
+						<a href="https://wykop.pl/czat" target="_mikroczat" class="wykopx_open_mikroczat hybrid">
+							<span>${mikroczatButtonOpenLabel}</span>
+						</a>
+					</span>
+				</span>
+			</div>`;
+
+		if (settings.mikroczatShowLeftMenuButton)
+		{
+			let aside_section_buttons_div_ul;
+			if (asideLeftPanel) aside_section_buttons_div_ul = asideLeftPanel.querySelector("section.buttons > div.content > ul");
+
+			if (!aside_section_buttons_div_ul)
+			{
+				aside_section_buttons_div_ul = document.querySelector("body > section > div.main-content > aside.left-panel > section.buttons > div.content > ul");
+			}
+			if (aside_section_buttons_div_ul && !aside_section_buttons_div_ul.querySelector("li.mikroczat"))
+			{
+				console.log("createLeftMenuButtons(), dodawanie BUTTON");
+				let clone = aside_section_div_ul_li.cloneNode(true);
+				aside_section_buttons_div_ul.appendChild(clone);
+			}
+		}
+
+		if (settings.mikroczatShowLeftMenuLink)
+		{
+			let aside_section_links_div_ul;
+			if (asideLeftPanel) aside_section_links_div_ul = asideLeftPanel.querySelector("section.links > div.content > ul");
+
+			if (!aside_section_links_div_ul)
+			{
+				aside_section_links_div_ul = document.querySelector("body > section > div.main-content > aside.left-panel > section.links > div.content > ul");
+			}
+			if (aside_section_links_div_ul && !aside_section_links_div_ul.querySelector("li.mikroczat"))
+			{
+				console.log("createLeftMenuButtons(), dodawanie LINKA");
+
+				let clone = aside_section_div_ul_li.cloneNode(true);
+				aside_section_links_div_ul.appendChild(clone);
+			}
+		}
+	}
+
+
+
+
 	function addWykopXSClassesToElement(element, inputClassOrArray, suffix = null)
 	{
 		if (inputClassOrArray)
@@ -283,13 +349,106 @@ settings.mikroczatOpenMikroczatOnCTRLMiddleClick = true;
 	const mikroczatPath = "/"; /* /czat */
 	// let mikroczatChannel = "/";
 	let mikroczatWindow = null;
-	const mikroczatButtonOpenTitle = "Otwórz wykopowy MikroCzat";
+	const mikroczatButtonOpenTitle = `Wykopowy Mikroczat
+
+Otwieranie czatu w 𝗡𝗢𝗪𝗘𝗝 𝗞𝗔𝗥𝗖𝗜𝗘:
+- 𝗟𝗣𝗠 - klik lewym przyciskiem myszy
+
+Otwieranie czatu w 𝗡𝗢𝗪𝗬𝗠 𝗢𝗞𝗡𝗜𝗘:
+- ŚPM - klik środkowym przyciskiem myszy
+- klawisz ⌘ 𝗖𝗧𝗥𝗟 + klik
+- klawisz ⇧ 𝗦𝗛𝗜𝗙𝗧 + klik
+- klawisz ⎇ 𝗔𝗟𝗧 + klik
+
+EXTRA:
+- będąc na stronie #tagu otworzysz kanał tematyczny czatu
+- będąc na stronie wpisu otworzysz widok dyskusji
+- będąc na profilu użytkownika lub rozmowie otworzysz kanał prywatnej rozmowy
+    
+`;
+
+
+
+
 	const mikroczatButtonOpenLabel = "Czat";
+
+
+
+
+	// OTWIERANIE MIKROCZATU Z PRZYCISKÓW CZAT
+	if (settings.mikroczatShowLeftMenuButton || settings.mikroczatShowLeftMenuLink || settings.mikroczatShowTopNavButton)
+	{
+
+		document.addEventListener("mousedown", (e) =>
+		{
+			if (e.target.matches("a.wykopx_open_mikroczat") || e.target.matches("a.wykopx_open_mikroczat > span"))
+			{
+				e.preventDefault();
+				e.stopImmediatePropagation();
+				e.stopPropagation();
+
+				wykopx_open_mikroczat_event(e);
+			}
+		});
+		document.addEventListener("click", (e) =>
+		{
+			if (e.target.matches("a.wykopx_open_mikroczat") || e.target.matches("a.wykopx_open_mikroczat > span"))
+			{
+				e.preventDefault();
+			}
+		});
+		document.addEventListener("auxclick", (e) =>
+		{
+			if (e.target.matches("a.wykopx_open_mikroczat") || e.target.matches("a.wykopx_open_mikroczat > span"))
+			{
+				e.preventDefault();
+			}
+		});
+
+
+		document.addEventListener("mouseout", (e) =>
+		{
+			if (e.target.matches("a.wykopx_open_mikroczat") && e.target.href != "https://wykop.pl/czat")
+			{
+				e.target.href = "https://wykop.pl/czat";
+			}
+		});
+		document.addEventListener("contextmenu", (e) =>
+		{
+			if (e.target.matches("a.wykopx_open_mikroczat"))
+			{
+				e.target.href = "https://mikroczat.pl";
+			}
+			if (e.target.matches("a.wykopx_open_mikroczat > span"))
+			{
+				e.target.closest("a").href = "https://mikroczat.pl";
+			}
+		});
+	}
+
+	function wykopx_open_mikroczat_event(e)
+	{
+		if (e.target.matches("a.wykopx_open_mikroczat") || e.target.matches("a.wykopx_open_mikroczat > span"))
+		{
+			if (e.button === 2) return; // RIGHT MOUSE CLICK OFF
+
+			let windowOptions = "";
+
+			if (e.shiftKey || e.ctrlKey || e.metaKey || e.altKey || e.button === 1) // ŚPM
+			{
+				windowOptions = "popup";
+			}
+
+			openMikroczat(new URL(document.URL).pathname, windowOptions);
+		}
+	}
 
 
 
 	function openMikroczat(hrefURL, windowOptions, target = "mikroczat")
 	{
+		console.log(`openMikroczat() hrefURL: ${hrefURL}, target: ${target}, windowOptions: `, windowOptions);
+
 		let urlPathnameArray = hrefURL;
 
 		if (hrefURL.startsWith("https://wykop.pl"))
@@ -357,11 +516,6 @@ settings.mikroczatOpenMikroczatOnCTRLMiddleClick = true;
 
 
 
-	// PREVENT DEFAULT EVENT
-	function preventDefaultEvent(e)
-	{
-		e.preventDefault();
-	}
 	function clearKeysDatasetFromBody()
 	{
 		if (bodySection.dataset.key_shift) delete bodySection.dataset.key_shift;
@@ -371,63 +525,33 @@ settings.mikroczatOpenMikroczatOnCTRLMiddleClick = true;
 
 	function removeEventListeners(etarget)
 	{
-		etarget.removeEventListener("click", hrefClickEventListenerWithShift, true);
+		etarget.removeEventListener("click", hrefClickEventListenerPreventDefault, true);
 		etarget.removeEventListener("mousedown", hrefMouseDownEventListenerWithShift, true);
-		etarget.removeEventListener("mouseup", hrefMouseUpEventListenerWithShift, true);
 	}
 
 
 
-
-	// OTWIERANIE MIKROCZATU Z PRZYCISKÓW CZAT
-
-	if (settings.mikroczatShowLeftMenuButton || settings.mikroczatShowLeftMenuLink || settings.mikroczatShowTopNavButton)
-	{
-		document.addEventListener("mousedown", wykopx_open_mikroczat_event_listener);
-		document.addEventListener("click", (e) =>
-		{
-			if (e.target.closest(".wykopx_open_mikroczat")) e.preventDefault();
-		});
-
-	}
-	function wykopx_open_mikroczat_event_listener(e)
-	{
-		if (!e.target.closest(".wykopx_open_mikroczat")) return;
-
-		e.preventDefault();
-		let windowOptions = "";
-
-		if (e.shiftKey || e.ctrlKey || e.altKey || e.button === 2)
-		{
-			windowOptions = "popup";
-		}
-
-		// WykopXS unique
-		openMikroczat(new URL(document.URL).pathname, windowOptions);
-	}
 
 
 	const keys = {};
 
 
+	// KEYDOWN CTRL SHIFT ALT
 	if (settings.mikroczatOpenMikroczatOnCTRLLeftClick || settings.mikroczatOpenMikroczatOnCTRLMiddleClick)
 	{
 		document.addEventListener("keydown", (e) =>
 		{
 			if (e.target.tagName.toLowerCase() === 'textarea' || e.target.tagName.toLowerCase() === 'input') return;
-
-			// if (!keys["SHIFT"] && e.key == "Shift")
-			// {
-			// 	keys["SHIFT"] = true;
-			// 	bodySection.dataset.key_shift = "true";
-			// }
-
 			if (!keys["CTRL"] && e.key == "Control")
 			{
 				keys["CTRL"] = true;
 				bodySection.dataset.key_ctrl = "true";
 			}
-
+			// if (!keys["SHIFT"] && e.key == "Shift")
+			// {
+			// 	keys["SHIFT"] = true;
+			// 	bodySection.dataset.key_shift = "true";
+			// }
 			// if (!keys["ALT"] && (e.key == "Alt" || e.key == "AltGraph"))
 			// {
 			// 	keys["ALT"] = true;
@@ -485,12 +609,23 @@ settings.mikroczatOpenMikroczatOnCTRLMiddleClick = true;
 
 
 
+
+
+
+
+
+
+
 	// MOUSE OVER LINKS
 	if (settings.mikroczatOpenMikroczatOnCTRLLeftClick || settings.mikroczatOpenMikroczatOnCTRLMiddleClick || settings.mikroczatOpenMikroczatOnMiddleClick)
 	{
 		document.addEventListener("mouseover", (e) =>
 		{
-			if (!e.target.matches(`a[href^="/tag/"]`) && !e.target.matches(`a.username[href^="/ludzie/"] > span`) && !e.target.matches(`a[href^="/ludzie/"]:not(:has(> span))`) && !e.target.matches(`a[href^="/wpis/"] > time`)) return;
+			if (!e.target.matches(`a[href^="/tag/"]`)
+				&& !e.target.matches(`a[href^="/ludzie/"]`)
+				// && !e.target.matches(`a.username[href^="/ludzie/"] > span`)
+				//&& !e.target.matches(`a[href^="/ludzie/"]:not(:has(> span))`)
+				&& !e.target.matches(`a[href^="/wpis/"] > time`)) return;
 
 			// ⇧ 𝗦𝗛𝗜𝗙𝗧
 			// ⌘ 𝗖𝗧𝗥𝗟
@@ -498,9 +633,10 @@ settings.mikroczatOpenMikroczatOnCTRLMiddleClick = true;
 			// #heheszki
 			if (e.target.matches(`a[href^="/tag/"]`))
 			{
-				e.target.addEventListener("click", hrefClickEventListenerWithShift, true);
-				e.target.addEventListener("mousedown", hrefMouseDownEventListenerWithShift, true);
-				e.target.addEventListener("mouseup", hrefMouseUpEventListenerWithShift, true);
+				e.target.addEventListener("click", hrefClickEventListenerPreventDefault);
+				e.target.addEventListener("auxclick", hrefClickEventListenerPreventDefault);
+				e.target.addEventListener("mousedown", hrefMouseDownEventListenerWithShift);
+				// e.target.addEventListener("mouseup", hrefMouseUpEventListenerWithShift, true);
 
 				e.target.title = `Klikając w tag wciśnij klawisz 𝗖𝗧𝗥𝗟,
 lub kliknij w tag śordkowym przyciskiem myszy,
@@ -508,31 +644,35 @@ lub kliknij w tag śordkowym przyciskiem myszy,
 
 Kanał tematyczny #${e.target.innerText}:
 
-⌘ 𝗖𝗧𝗥𝗟 + kliknięcie LPM - w nowym oknie
-⌘ 𝗖𝗧𝗥𝗟 + kliknięcie ŚPM - w nowej karcie
+⌘ 𝗖𝗧𝗥𝗟 + kliknięcie LPM - w nowej karcie
+⌘ 𝗖𝗧𝗥𝗟 + kliknięcie ŚPM - w nowym oknie
 `;
 			}
 
 			// @NadiaFrance
-			else if (e.target.matches(`a.username[href^="/ludzie/"] > span`) || e.target.matches(`a[href^="/ludzie/"]:not(:has(> span))`))
+			else if (e.target.matches(`a[href^="/ludzie/"]`))
 			{
-				e.target.addEventListener("click", hrefClickEventListenerWithShift, true);
-				e.target.addEventListener("mousedown", hrefMouseDownEventListenerWithShift, true);
-				e.target.addEventListener("mouseup", hrefMouseUpEventListenerWithShift, true);
+				e.target.addEventListener("click", hrefClickEventListenerPreventDefault);
+				e.target.addEventListener("auxclick", hrefClickEventListenerPreventDefault);
+				e.target.addEventListener("mousedown", hrefMouseDownEventListenerWithShift);
+				// e.target.addEventListener("mouseup", hrefMouseUpEventListenerWithShift, true);
+
 				e.target.title = `Wciśnij klawisz 𝗖𝗧𝗥𝗟 klikając w login użytkownika,
 aby otworzyć rozmowę prywatną (PM) na 🗯 Mikroczacie
 
 Rozmowa prywatna:
-⌘ 𝗖𝗧𝗥𝗟 + kliknięcie LPM - w nowym oknie
-⌘ 𝗖𝗧𝗥𝗟 + kliknięcie ŚPM - w nowej karcie
+⌘ 𝗖𝗧𝗥𝗟 + kliknięcie LPM - w nowej karcie
+⌘ 𝗖𝗧𝗥𝗟 + kliknięcie ŚPM - w nowym oknie
 `;
 			}
 			// PERMALINK DO WPISU
 			else if (e.target.matches(`a[href^="/wpis/"] > time`))
 			{
-				e.target.addEventListener("click", hrefClickEventListenerWithShift, true);
-				e.target.addEventListener("mousedown", hrefMouseDownEventListenerWithShift, true);
-				e.target.addEventListener("mouseup", hrefMouseUpEventListenerWithShift, true);
+				e.target.addEventListener("click", hrefClickEventListenerPreventDefault);
+				e.target.addEventListener("auxclick", hrefClickEventListenerPreventDefault);
+				e.target.addEventListener("mousedown", hrefMouseDownEventListenerWithShift);
+
+				// e.target.addEventListener("mouseup", hrefMouseUpEventListenerWithShift, true);
 
 				const dateObj = dayjs(e.target.dateTime);
 				const dateFull = dateObj.format('D MMMM YYYY');
@@ -550,8 +690,8 @@ lub kliknij datę środkowym przyciskiem myszy,
 
 Widok dyskusji:
 
-⌘ 𝗖𝗧𝗥𝗟 + kliknięcie LPM - w nowym oknie
-⌘ 𝗖𝗧𝗥𝗟 + kliknięcie ŚPM - w nowej karcie
+⌘ 𝗖𝗧𝗥𝗟 + kliknięcie LPM - w nowej karcie
+⌘ 𝗖𝗧𝗥𝗟 + kliknięcie ŚPM - w nowym oknie
 `;
 			}
 
@@ -561,7 +701,7 @@ Widok dyskusji:
 		// MOUSE OUT
 		document.addEventListener("mouseout", (e) =>
 		{
-			if (e.target.matches(`a[href^="/tag/"]`) || e.target.matches(`a.username[href^="/ludzie/"] > span`) || e.target.matches(`a[href^="/ludzie/"]`) || e.target.matches(`a[href^="/wpis/"] > time`))
+			if (e.target.matches(`a[href^="/tag/"]`) || e.target.matches(`a[href^="/ludzie/"]`) || e.target.matches(`a[href^="/wpis/"] > time`))
 			{
 				removeEventListeners(e.target);
 			}
@@ -573,39 +713,31 @@ Widok dyskusji:
 
 
 	// CLICK EVENT
-	function hrefClickEventListenerWithShift(e)
+	function hrefClickEventListenerPreventDefault(e)
 	{
 		// ŚPM
 		if (settings.mikroczatOpenMikroczatOnMiddleClick)
 		{
-			if (e.button === 1 && !e.shiftKey && !e.altKey && !e.ctrlKey) 
+			if (e.button === 1 && !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey) 
 			{
-				//e.preventDefault();
+				e.preventDefault();
 			}
 		}
 
 		// ŚPM + CTRL
 		if (settings.mikroczatOpenMikroczatOnCTRLMiddleClick)
 		{
-			if (e.button === 1 && !e.shiftKey && !e.altKey && e.ctrlKey)
+			if (e.button === 1 && !e.shiftKey && !e.altKey && (e.ctrlKey || e.metaKey))
 			{
-				//e.preventDefault();
+				e.preventDefault();
 			}
 		}
-		// ŚPM + SHIFT
-		if (e.button === 1 && !e.shiftKey && !e.altKey && e.ctrlKey)
-		{
-			// e.preventDefault();
-			//openMikroczat(ahrefElement.href, "popup");
-		}
-
 		// LPM + CTRL
 		if (settings.mikroczatOpenMikroczatOnCTRLLeftClick)
 		{
-			if (e.button === 0 && !e.shiftKey && !e.altKey && e.ctrlKey)
+			if (e.button === 0 && !e.shiftKey && !e.altKey && (e.ctrlKey || e.metaKey))
 			{
 				e.preventDefault();
-				// openMikroczat(ahrefElement.href, "popup");
 			}
 		}
 	}
@@ -616,81 +748,66 @@ Widok dyskusji:
 		// ŚPM
 		if (settings.mikroczatOpenMikroczatOnMiddleClick)
 		{
-			if (e.button === 1 && !e.shiftKey && !e.altKey && !e.ctrlKey) 
+			if (e.button === 1 && !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey) 
 			{
 				e.preventDefault();
-				const ahrefElement = e.target.closest("a");
-				openMikroczat(ahrefElement.href, null, "_blank");
+				e.stopImmediatePropagation();
+				e.stopPropagation();
+
+				let ahrefElement = e.target;
+				if (e.target.tagName != "A") ahrefElement = e.target.closest("a"); // <a><time>
+
+				openMikroczat(ahrefElement.href, null, "_blank"); // new tab
 			}
 		}
 
 		// ŚPM + CTRL
 		if (settings.mikroczatOpenMikroczatOnCTRLMiddleClick)
 		{
-			if (e.button === 1 && !e.shiftKey && !e.altKey && e.ctrlKey)
+			if (e.button === 1 && !e.shiftKey && !e.altKey && (e.ctrlKey || e.metaKey))
 			{
 				e.preventDefault();
-				const ahrefElement = e.target.closest("a");
-				openMikroczat(ahrefElement.href, null, "_blank");
+				e.stopImmediatePropagation();
+				e.stopPropagation();
+
+				let ahrefElement = e.target;
+				if (e.target.tagName != "A") ahrefElement = e.target.closest("a"); // <a><time>
+
+				openMikroczat(ahrefElement.href, "popup"); // new window popup
 			}
 		}
-		// ŚPM + SHIFT
-		if (e.button === 1 && e.shiftKey && !e.altKey && !e.ctrlKey)
-		{
-			// e.preventDefault();
-			// openMikroczat(ahrefElement.href, "popup");
-		}
-		// CTRL + LPM
+		// LPM + CTRL
 		if (settings.mikroczatOpenMikroczatOnCTRLLeftClick)
 		{
-			if (e.button === 0 && !e.shiftKey && !e.altKey && e.ctrlKey)
+			if (e.button === 0 && !e.shiftKey && !e.altKey && (e.ctrlKey || e.metaKey))
 			{
 				e.preventDefault();
-				const ahrefElement = e.target.closest("a");
-				//removeEventListeners(ahrefElement);
-				openMikroczat(ahrefElement.href, "popup");
+				e.stopImmediatePropagation();
+				e.stopPropagation();
+
+				let ahrefElement = e.target;
+				if (e.target.tagName != "A") ahrefElement = e.target.closest("a"); // <a><time>
+
+				openMikroczat(ahrefElement.href, null, "_blank"); // new tab
 			}
 		}
 
 	}
-	// MOUSE UP
-	function hrefMouseUpEventListenerWithShift(e)
-	{
 
-		// ŚPM
-		if (settings.mikroczatOpenMikroczatOnMiddleClick)
-		{
-			if (e.button === 1 && !e.shiftKey && !e.altKey && !e.ctrlKey) 
-			{
-				removeEventListeners(e.target.closest("a"));
-				e.preventDefault();
-			}
-		}
-		// ŚPM + CTRL
-		if (settings.mikroczatOpenMikroczatOnCTRLMiddleClick)
-		{
-			if (e.button === 1 && !e.shiftKey && !e.altKey && e.ctrlKey)
-			{
-				removeEventListeners(e.target.closest("a"));
-				e.preventDefault();
-			}
-		}
-		// ŚPM + SHIFT
-		// if (e.button === 1 && e.shiftKey && !e.altKey && !e.ctrlKey)
-		// {
-		// 	e.preventDefault();
-		// }
 
-		// CTRL + LPM
-		if (settings.mikroczatOpenMikroczatOnCTRLLeftClick)
-		{
-			if (e.button === 0 && !e.shiftKey && !e.altKey && e.ctrlKey)
-			{
-				e.preventDefault();
-				removeEventListeners(e.target.closest("a"));
-			}
-		}
-	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	// WIADOMOŚCI OD MIKROCZAT.PL
@@ -721,64 +838,6 @@ Widok dyskusji:
 	}, false);
 
 
-
-
-
-
-	function createLeftMenuButtons(asideLeftPanel = null)
-	{
-		if (!asideLeftPanel)
-		{
-			asideLeftPanel = document.querySelector("body > section > div.main-content > aside.left-panel");
-		}
-
-		if (!asideLeftPanel) return;
-
-		let aside_section_div_ul_li = document.createElement('li');
-
-		aside_section_div_ul_li.classList.add('wykopx_open_mikroczat', 'mikroczat');
-		aside_section_div_ul_li.title = mikroczatButtonOpenTitle;
-		aside_section_div_ul_li.innerHTML = `
-			<div class="popper-button">
-				<span>
-					<span class="button">
-						<a target="_mikroczat" class="hybrid">
-							<span>${mikroczatButtonOpenLabel}</span>
-						</a>
-					</span>
-				</span>
-			</div>`;
-
-		if (settings.mikroczatShowLeftMenuButton)
-		{
-			let aside_section_buttons_div_ul;
-			if (asideLeftPanel) aside_section_buttons_div_ul = asideLeftPanel.querySelector("section.buttons > div.content > ul");
-			if (!aside_section_buttons_div_ul)
-			{
-				aside_section_buttons_div_ul = document.querySelector("body > section > div.main-content > aside.left-panel > section.buttons > div.content > ul");
-			}
-			if (aside_section_buttons_div_ul && !aside_section_buttons_div_ul.querySelector("li.mikroczat"))
-			{
-				let clone = aside_section_div_ul_li.cloneNode(true);
-				aside_section_buttons_div_ul.appendChild(clone);
-			}
-		}
-
-		if (settings.mikroczatShowLeftMenuLink)
-		{
-			let aside_section_links_div_ul;
-			if (asideLeftPanel) aside_section_links_div_ul = asideLeftPanel.querySelector("section.links > div.content > ul");
-			if (!aside_section_links_div_ul)
-			{
-				aside_section_links_div_ul = document.querySelector("body > section > div.main-content > aside.left-panel > section.links > div.content > ul");
-			}
-			if (aside_section_links_div_ul && !aside_section_links_div_ul.querySelector("li.mikroczat"))
-			{
-				let clone = aside_section_div_ul_li.cloneNode(true);
-				aside_section_links_div_ul.appendChild(clone);
-			}
-		}
-	}
 
 
 	// CSS
@@ -1179,7 +1238,7 @@ Widok dyskusji:
 
 	let observer = new MutationObserver((mutations) =>
 	{
-		if (dev) console.log(`--- ${mutations.length} mutations`, mutations);
+		// console.log(`--- ${mutations.length} mutations`, mutations);
 
 		mutations.forEach((mutation) =>
 		{
@@ -1259,11 +1318,20 @@ Widok dyskusji:
 					animatedAvatar(mutation.addedNodes[0]);
 				}
 				// LEFT SIDE CATEGORY MENU OPENED
-				else if (mutation.addedNodes[0].matches("aside.left-panel.thin-scrollbar"))
+				else if (mutation.addedNodes[0].matches("aside.left-panel"))
 				{
+					console.log("MUTATION ASIDE.LEFT-PANEL - mutation.addedNodes[0]", mutation.addedNodes[0]);
 					if (settings.mikroczatShowLeftMenuButton || settings.mikroczatShowLeftMenuLink)
 					{
 						createLeftMenuButtons(mutation.addedNodes[0]);
+					}
+				}
+				else if (mutation.removedNodes[0].matches("aside.left-panel"))
+				{
+					console.log("MUTATION ASIDE.LEFT-PANEL - mutation.removedNodes[0]", mutation.removedNodes[0]);
+					if (settings.mikroczatShowLeftMenuButton || settings.mikroczatShowLeftMenuLink)
+					{
+						createLeftMenuButtons(mutation.removedNodes[0]);
 					}
 				}
 			}
@@ -1287,7 +1355,8 @@ Widok dyskusji:
 			title: mikroczatButtonOpenTitle,
 			class: "open_mikroczat", 		// wykopx_open_mikroczat_li
 			hideWithoutXStyle: false,
-			url: mikroczatDomain,
+			//url: mikroczatDomain,
+			url: "https://wykop.pl/czat",
 			target: "_mikroczat",
 			number: null,
 		});
