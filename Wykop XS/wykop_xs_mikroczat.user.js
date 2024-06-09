@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 // @name:en							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 
-// @version							3.0.63
+// @version							3.0.64
 
 // @description 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -44,7 +44,7 @@
 
 'use strict';
 
-const currentVersion = "3.0.63";
+const currentVersion = "3.0.64";
 let dev = false;
 
 const promoString = " - Wykop XS";
@@ -257,7 +257,7 @@ settings.mikroczatOpenMikroczatOnCTRLMiddleClick = true;
 
 	function createLeftMenuButtons(asideLeftPanel = null)
 	{
-		console.log("createLeftMenuButtons(), asideLeftPanel: ", asideLeftPanel);
+		if (dev) console.log("createLeftMenuButtons(), asideLeftPanel: ", asideLeftPanel);
 
 		if (!asideLeftPanel)
 		{
@@ -283,16 +283,9 @@ settings.mikroczatOpenMikroczatOnCTRLMiddleClick = true;
 
 		if (settings.mikroczatShowLeftMenuButton)
 		{
-			let aside_section_buttons_div_ul;
-			if (asideLeftPanel) aside_section_buttons_div_ul = asideLeftPanel.querySelector("section.buttons > div.content > ul");
-
-			if (!aside_section_buttons_div_ul)
-			{
-				aside_section_buttons_div_ul = document.querySelector("body > section > div.main-content > aside.left-panel > section.buttons > div.content > ul");
-			}
+			const aside_section_buttons_div_ul = asideLeftPanel.querySelector("section.buttons > div.content > ul");
 			if (aside_section_buttons_div_ul && !aside_section_buttons_div_ul.querySelector("li.mikroczat"))
 			{
-				console.log("createLeftMenuButtons(), dodawanie BUTTON");
 				let clone = aside_section_div_ul_li.cloneNode(true);
 				aside_section_buttons_div_ul.appendChild(clone);
 			}
@@ -300,19 +293,13 @@ settings.mikroczatOpenMikroczatOnCTRLMiddleClick = true;
 
 		if (settings.mikroczatShowLeftMenuLink)
 		{
-			let aside_section_links_div_ul;
-			if (asideLeftPanel) aside_section_links_div_ul = asideLeftPanel.querySelector("section.links > div.content > ul");
-
-			if (!aside_section_links_div_ul)
-			{
-				aside_section_links_div_ul = document.querySelector("body > section > div.main-content > aside.left-panel > section.links > div.content > ul");
-			}
+			const aside_section_links_div_ul = asideLeftPanel.querySelector("section.links > div.content > ul");
 			if (aside_section_links_div_ul && !aside_section_links_div_ul.querySelector("li.mikroczat"))
 			{
-				console.log("createLeftMenuButtons(), dodawanie LINKA");
 
 				let clone = aside_section_div_ul_li.cloneNode(true);
 				aside_section_links_div_ul.appendChild(clone);
+
 			}
 		}
 	}
@@ -447,8 +434,6 @@ EXTRA:
 
 	function openMikroczat(hrefURL, windowOptions, target = "mikroczat")
 	{
-		console.log(`openMikroczat() hrefURL: ${hrefURL}, target: ${target}, windowOptions: `, windowOptions);
-
 		let urlPathnameArray = hrefURL;
 
 		if (hrefURL.startsWith("https://wykop.pl"))
@@ -936,11 +921,11 @@ Widok dyskusji:
 		`;
 
 
-		if (settings.mikroczatShowLeftMenuButton)
+		//if (settings.mikroczatShowLeftMenuButton)
 		{
 			CSS += `
 			/* 4 BUTTONS */
-			body aside.left-panel:not(.mini) > section.buttons > div.content > ul
+			body aside.left-panel:not(.mini) > section.buttons > div.content > ul:has(li.mikroczat)
 			{
 				display: flex;
 				flex-wrap: wrap;
@@ -1044,7 +1029,6 @@ Widok dyskusji:
 				height: 16px;
 			}`;
 			/* LEFT MENU MIKROCZAT BUTTON - END */
-
 		}
 
 
@@ -1242,7 +1226,7 @@ Widok dyskusji:
 
 		mutations.forEach((mutation) =>
 		{
-			if (dev) 
+			if (dev)
 			{
 				console.log("---------- new mutation -----");
 				console.log(mutation);
@@ -1272,70 +1256,82 @@ Widok dyskusji:
 			}
 
 			// ADDED NODES
-			if (mutation.addedNodes.length > 0 && mutation.addedNodes[0] && mutation.addedNodes[0] instanceof Element)
+			if (mutation.addedNodes.length > 0 && mutation.addedNodes[0] && mutation.addedNodes[0].nodeType === Node.ELEMENT_NODE) // && mutation.addedNodes[0] instanceof Element)
 			{
-				if (mutation.addedNodes[0].matches("section.entry[id]"))
+
+				if (mutation.addedNodes[0].matches("section.entry[id]") && mutation.addedNodes[0].__vue__?.item?.resource != "link_comment")
 				{
 					const sectionEntry = mutation.addedNodes[0];
-
 					if (dev) console.log("mutation 1", sectionEntry);
 
 					processSectionEntry(sectionEntry)
 
 					const sectionCommentsArray = sectionEntry.querySelectorAll("section.entry[id]");
 					if (dev) console.log("mutation 1 - forEach: sectionEntryArray", sectionCommentsArray);
+
 					sectionCommentsArray.forEach((sectionComment) =>
 					{
-						processSectionEntry(sectionComment)
-					})
+						if (sectionComment.__vue__?.item?.resource != "link_comment")
+						{
+							processSectionEntry(sectionComment)
+						}
+					});
+
 				}
 				else if (mutation.addedNodes[0].matches("div.content:has(>section.entry[id])"))
 				{
 					const sectionEntriesArray = mutation.addedNodes[0].querySelectorAll("section.entry[id]");
 					if (dev) console.log("mutation 2 - forEach: sectionEntriesArray", sectionEntriesArray);
+
 					sectionEntriesArray.forEach((sectionEntry) =>
 					{
-						processSectionEntry(sectionEntry)
+						if (sectionEntry.__vue__?.item?.resource != "link_comment")
+						{
+							processSectionEntry(sectionEntry)
+						}
 					})
 				}
 				else if (mutation.target.tagName === "SECTION" && mutation.target.matches("section.entry.detailed[id]"))
 				{
 					const sectionEntry = mutation.target;
+
 					if (dev) console.log("mutation 3", sectionEntry)
 					if (dev) console.log("mutation 3: mutation.target", mutation.target);
 
-					processSectionEntry(sectionEntry);
+					if (sectionEntry.__vue__?.item?.resource != "link_comment")
+					{
+						processSectionEntry(sectionEntry)
+					}
 
 					const sectionCommentsArray = sectionEntry.querySelectorAll("section.entry[id]");
 					if (dev) console.log("mutation 3 - forEach: sectionEntryArray", sectionCommentsArray);
+
 					sectionCommentsArray.forEach((sectionComment) =>
 					{
-						processSectionEntry(sectionComment)
-					})
+						if (sectionComment.__vue__?.item?.resource != "link_comment")
+						{
+							processSectionEntry(sectionComment)
+						}
+					});
 				}
 				else if (settings.showAnimatedAvatars && mutation.addedNodes[0].matches("aside.profile-top"))
 				{
 					animatedAvatar(mutation.addedNodes[0]);
 				}
 				// LEFT SIDE CATEGORY MENU OPENED
-				else if (mutation.addedNodes[0].matches("aside.left-panel"))
+				else if ((settings.mikroczatShowLeftMenuButton || settings.mikroczatShowLeftMenuLink) && mutation.addedNodes[0]?.matches("section.links"))
 				{
-					console.log("MUTATION ASIDE.LEFT-PANEL - mutation.addedNodes[0]", mutation.addedNodes[0]);
-					if (settings.mikroczatShowLeftMenuButton || settings.mikroczatShowLeftMenuLink)
-					{
-						createLeftMenuButtons(mutation.addedNodes[0]);
-					}
-				}
-				else if (mutation.removedNodes[0].matches("aside.left-panel"))
-				{
-					console.log("MUTATION ASIDE.LEFT-PANEL - mutation.removedNodes[0]", mutation.removedNodes[0]);
-					if (settings.mikroczatShowLeftMenuButton || settings.mikroczatShowLeftMenuLink)
-					{
-						createLeftMenuButtons(mutation.removedNodes[0]);
-					}
+					createLeftMenuButtons();
 				}
 			}
-
+			else if (mutation.removedNodes.length > 0 && mutation.removedNodes[0] && mutation.removedNodes[0].nodeType === Node.ELEMENT_NODE)
+			{
+				// LEFT SIDE CATEGORY MENU CLOSED
+				if ((settings.mikroczatShowLeftMenuButton || settings.mikroczatShowLeftMenuLink) && mutation.removedNodes[0]?.nodeType === Node.ELEMENT_NODE && mutation.removedNodes[0]?.matches("section.links"))
+				{
+					createLeftMenuButtons();
+				}
+			}
 
 		});
 	});
@@ -1372,10 +1368,14 @@ Widok dyskusji:
 		if (mainSection)
 		{
 			const sectionEntryArray = mainSection.querySelectorAll("section.entry[id]");
+
 			// if (dev) console.log("sectionEntryArray", sectionEntryArray);
 			sectionEntryArray.forEach((sectionEntry) =>
 			{
-				processSectionEntry(sectionEntry)
+				if (sectionEntry.__vue__?.item?.resource != "link_comment")
+				{
+					processSectionEntry(sectionEntry)
+				}
 			})
 			const config = {
 				childList: true,
@@ -1436,14 +1436,11 @@ Widok dyskusji:
 		const image = sectionEntry.querySelector('a.avatar figure img'); // Replace with your actual selector
 		if (image)
 		{
-			if (dev) console.log("image", image)
 			const currentSrc = image.getAttribute('src');
-			if (dev) console.log("currentSrc", currentSrc)
 			if (currentSrc.endsWith('.gif'))
 			{
 				const modifiedSrc = currentSrc.replace(/,.*?\./, '.');
 				image.setAttribute('src', modifiedSrc);
-				if (dev) console.log("image.src", image.src)
 			}
 		}
 	}
@@ -1460,13 +1457,8 @@ Widok dyskusji:
 
 	async function addVotersList(sectionEntry)
 	{
-		if (dev) console.log(`addVotersList precheck: `, sectionEntry)
-
 		if (!sectionEntry || !sectionEntry.__vue__) return;
-
 		if (sectionEntry.dataset?.votersLoaded == sectionEntry?.__vue__.item.id) return;
-
-		if (dev) console.log(`addVotersList execute: `, sectionEntry)
 
 		if (sectionEntry?.__vue__ && sectionEntry?.__vue__.item.votes.up > 0)
 		{
@@ -1553,12 +1545,7 @@ Widok dyskusji:
 		const divEditWrapperElement = sectionEntry.querySelector('article > div.edit-wrapper');
 		if (!divEditWrapperElement) return;
 
-		if (dev) console.log(`💚 appendVotersToEntry start`, sectionEntry)
-
 		sectionEntry.dataset.votersLoaded = sectionEntry?.__vue__?.item.id;
-
-		if (dev) console.log(`appendVotersToEntry: ${sectionEntry?.__vue__?.item.id}`, voters)
-
 
 		const fiveVoters = voters;
 
@@ -1852,6 +1839,7 @@ Widok dyskusji:
 			const entryId = e.target.dataset.entryId;
 			const commentId = e.target.dataset.commentId;
 			if (dev) console.log(`Wykop XS pobiera listę ${e.target.dataset.votesUp} plusujących`);
+
 			e.target.closest("section.entry-voters").innerHTML = `<span>(Wykop X: wczytywanie ${e.target.dataset.votesUp} plusujących...)</span>`;
 
 			let voters = await fetchAllVotersFromAPI(entryId, commentId);
