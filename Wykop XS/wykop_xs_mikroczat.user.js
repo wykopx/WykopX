@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 // @name:en							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 
-// @version							3.0.65
+// @version							3.0.66
 
 // @description 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -44,7 +44,7 @@
 
 'use strict';
 
-const currentVersion = "3.0.65";
+const currentVersion = "3.0.66";
 let dev = false;
 
 const promoString = " - Wykop XS";
@@ -335,6 +335,7 @@ settings.mikroczatOpenMikroczatOnCTRLMiddleClick = true;
 	const mikroczatDomain = "https://mikroczat.pl";
 	const mikroczatPath = "/"; /* /czat */
 	const mikroczatMainChannelPath = "czat";
+	const mikroczaDefaultChannel = "mikroblog+";
 	// let mikroczatChannel = "/";
 	let mikroczatWindow = null;
 	const mikroczatButtonOpenTitle = `Wykopowy Mikroczat
@@ -438,18 +439,22 @@ EXTRA:
 		let urlPathnameArray = hrefURL;
 		let mikroczatURL = `${mikroczatDomain}`;
 
-		if (hrefURL.startsWith("https://wykop.pl"))
+		if (hrefURL.startsWith("https://mikroczat.pl"))
 		{
-			urlPathnameArray = hrefURL.replace("https://wykop.pl", "");
+			mikroczatURL = hrefURL;
+		}
+		else
+		{
+			if (hrefURL.startsWith("https://wykop.pl"))
+			{
+				urlPathnameArray = hrefURL.replace("https://wykop.pl", "");
+			}
+
 			urlPathnameArray = urlPathnameArray.split("/");
 
 			let channel = ""
 
-			if (typeof urlPathnameArray == "string")
-			{
-
-			}
-			else if (Array.isArray(urlPathnameArray))
+			if (Array.isArray(urlPathnameArray))
 			{
 				// #nazwatagu
 				if (urlPathnameArray[1] == "tag")
@@ -466,7 +471,7 @@ EXTRA:
 					// TODO pathnameArray[2] == "gorace"
 					else
 					{
-						channel = `${mikroczatMainChannelPath}/mikroblog+`; // TODO
+						channel = `${mikroczatMainChannelPath}/${mikroczaDefaultChannel}`; // TODO
 					}
 				}
 				// /obserwowane
@@ -483,15 +488,20 @@ EXTRA:
 				}
 				else if (urlPathnameArray[1] == "wpis")
 				{
-					channel = `${mikroczatMainChannelPath}/mikroblog+/#${urlPathnameArray[2]}`; // id wpisu - discussion view
+					channel = `${mikroczatMainChannelPath}/${mikroczaDefaultChannel}/#${urlPathnameArray[2]}`; // id wpisu - discussion view
+				}
+				else if (urlPathnameArray[1] == "") // ze strony głównej
+				{
+					channel = `${mikroczatMainChannelPath}/observed/#wybierz`;
+				}
+				else // z innych stron
+				{
+					channel = `${mikroczatMainChannelPath}/observed/#wybierz`;
 				}
 			}
 			mikroczatURL += `${mikroczatPath}${channel}`;
 		}
-		else if (hrefURL.startsWith("https://mikroczat.pl"))
-		{
-			mikroczatURL = hrefURL;
-		}
+
 
 		clearKeysDatasetFromBody();
 
