@@ -119,8 +119,6 @@ async function processMap(dataMap)
 		if (!response.ok)
 		{
 			console.error('Failed to delete:', item);
-		} else
-		{
 		}
 		await delay(160);
 	}
