@@ -5,22 +5,23 @@
 	UWAGA! TEN SKRYPT NIE JEST SKRYPTEM DO ViolentMonkey/TamperMonkey
 
 	1. wejdź na dowolną stronę wykop.pl
-	2. otwórz narzędzia dewerloperskie, a wnich konsole (skrót CTRL+SHIFT+C)
+	2. otwórz narzędzia deweloperskie, a w nich konsolę (skrótem CTRL+SHIFT+C lub F12)
 	3. wklej cały poniższy kod i wciśnij ENTER
 
-	Na górnej belce pojawi się nowy przycisk, który podliczy ile dyskusji obserwujesz i da ci możliwość
-	- usunięcia wszystkich obserwowanych dyskusji
-	- anulowanie 
+	Na górnej belce pojawi się nowy przycisk, który
+	- podliczy ile dyskusji obserwujesz 
+	- zaproponuje usunięcie wszystkich obserwowanych dyskusji
+	- da ci możliwość anulowania procesu usuwania
 
-	Usunięcie 100 obserwowanych dyskusji trwa około 10 sekund
+	Usunięcie wszystkich obserwowanych dyskusji trwa około 10 sekund
 
 	Lista dyskusji, które obserwujesz znajduje się tutaj:
 	https://wykop.pl/obserwowane/dyskusje
 
 
-	Chcesz wesprzeć projekt Wykop X? Postaw kawkę:
+	Chcesz wesprzeć projekt Wykop X? Postaw kawę:
 
-	@contributionURL					https://buycoffee.to/wykopx
+	@contributionURL				https://buycoffee.to/wykopx
 
 	@author							Wykop X <wykopx@gmail.com>
 	@License						No License
@@ -87,7 +88,7 @@ async function processMap(dataMap)
 	const progressURL = new URL(window.location.href)
 	const basePathName = `/WykopX.usuwa.obserwowane.dyskusje...(ʘ‿ʘ)...`;
 
-	let i = 1;
+	let i = 0;
 	for (const [id, item] of dataMap)
 	{
 		progressURL.pathname = basePathName + `-${'-'.repeat(i++)}(${i}z${dataMap.size})`;
