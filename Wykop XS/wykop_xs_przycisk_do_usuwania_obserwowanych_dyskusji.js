@@ -31,12 +31,7 @@
 async function fetchData()
 {
 	const token = localStorage.getItem('token');
-	if (!token)
-	{
-		console.error('User not logged');
-		return new Map();
-	}
-
+	if (!token) { return new Map(); }
 	const dataMap = new Map();
 
 	async function getData(page = '')
@@ -48,42 +43,24 @@ async function fetchData()
 			}
 		});
 
-		if (!response.ok)
-		{
-			return null;
-		}
-
+		if (!response.ok) { return null; }
 		const result = await response.json();
-
-		result.data.forEach(item =>
-		{
-			dataMap.set(item.object.id, item);
-		});
-
+		result.data.forEach(item => { dataMap.set(item.object.id, item); });
 		return result.pagination.next;
 	}
 
 	let nextPage = await getData();
 
-	for (let i = 0; i < 3 && nextPage; i++)
-	{
-		nextPage = await getData(nextPage);
-	}
+	for (let i = 0; i < 3 && nextPage; i++) { nextPage = await getData(nextPage); }
 	return dataMap;
 }
 
-function delay(ms)
-{
-	return new Promise(resolve => setTimeout(resolve, ms));
-}
+function delay(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
 async function processMap(dataMap)
 {
 	const token = localStorage.getItem('token');
-	if (!token)
-	{
-		return;
-	}
+	if (!token) { return; }
 
 	const progressURL = new URL(window.location.href)
 	const basePathName = `/WykopX.usuwa.obserwowane.dyskusje...(ʘ‿ʘ)...`;
@@ -93,7 +70,6 @@ async function processMap(dataMap)
 	{
 		progressURL.pathname = basePathName + `-${'-'.repeat(i++)}(${i}z${dataMap.size})`;
 		window.history.pushState({}, '', progressURL);
-
 		let url = '';
 		switch (item.type)
 		{
@@ -117,10 +93,6 @@ async function processMap(dataMap)
 			}
 		});
 
-		if (!response.ok)
-		{
-			console.error('Failed to delete:', item);
-		}
 		await delay(160);
 	}
 }
@@ -146,9 +118,4 @@ const button = document.createElement('button');
 button.setAttribute("style", "position: fixed; top: 5px; left: 50%; z-index: 999; display: flex; color: rgb(255 255 255 / 0.6); border: 1px solid rgb(0 0 0 / 0.3); background-color: rgb(0 0 0 / 0.2); padding: 10px;")
 button.textContent = 'Usuń obserwowane dyskusje';
 document.body.insertBefore(button, document.body.firstChild);
-
-
-button.addEventListener('click', async () =>
-{
-	await wykopx();
-});
+button.addEventListener('click', async () => { await wykopx(); });
