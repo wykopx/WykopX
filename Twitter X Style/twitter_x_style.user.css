@@ -1,0 +1,228 @@
+/* ==UserStyle==
+@name           Twitter X Ads Blocker
+@version        1.0.0
+
+@description    Best AdBlock for X.com / Twitter.com  Blocks and removes all ads, sponsored tweets. You can customise and remove irrelevant panels like Subscribe Premium or Who to Follow. adblock, adsblock. uBlock. Remove ads. Block hide remove advertisements and adverts.
+@description    https://wiki.wykopx.pl
+
+
+Support and buy a small coffee https://buycoffee.to/wykopx
+
+
+---- AUTHOR ----
+
+@author         Wykop X <wykopx@gmail.com> | wiki.wykopx.pl
+@homepageURL    http://wiki.wykopx.pl
+@supportURL     https://buycoffee.to/wykopx
+
+---- AUTHOR ---- 
+
+
+
+@var select       adsRemoval                 `Ads`  {
+                                                "Block & remove ads*":"enabled",
+                                                "Disabled":"disabled",
+                                            }
+
+@var select       sponsoredRemoval           `Sponsored tweets` {
+                                                "Block & remove sponsored tweets*":"enabled",
+                                                "Disabled":"disabled",
+                                            }
+
+@var checkbox     adsStylingOpacity          `Show ads: semi-transparent`   1
+@var checkbox     adsStylingGrayedOut        `Show ads: in grayscale`       1
+@var checkbox     adsStylingBluredOut        `Show ads: blurred`            1
+@var checkbox     adsMarkerShow              `Show marker on Ads`           1
+
+
+var checkbox     removeTimelineCreatorsForYou      `Creators For You`           1
+var checkbox     removeTimelineDiscoverNewCommunities      `Discover new Communities`           1
+
+
+@var checkbox     removeSidebarSubscribePremium     `Hide in sidebar: Subscribe Premium`        1
+@var checkbox     removeSidebarBlockWhoToFollow     `Hide in sidebar: Who to follow`            1
+@var checkbox     removeSidebarBlockTrends          `Hide in sidebar: Trends`                   0
+@var checkbox     removeSidebarTOSFooter            `Hide in sidebar: Footer`                   1
+
+@var checkbox     tweetsShowDateTime            `Show date & time for tweets`                   0
+
+
+@preprocessor   stylus
+@namespace      userstyles.world/user/wykopchanger
+@license        No License (YOU CAN USE THIS CODE ONLY IN STYLUS EXTENSIONS. You are NOT ALLOWED TO copy, share and use any part of this code anywhere else without author's written permission)
+
+
+
+==/UserStyle== */
+
+@-moz-document domain("x.com"), domain("twitter.com")
+{
+    i = !important;
+    
+    div[data-testid="cellInnerDiv"]:has(div.r-1kkk96v span)
+    {
+/*         border: 3px solid red i; */
+    }
+    
+    if(sponsoredRemoval == "enabled")
+    {
+        div[data-testid="cellInnerDiv"]:has(path[d="M19.498 3h-15c-1.381 0-2.5 1.12-2.5 2.5v13c0 1.38 1.119 2.5 2.5 2.5h15c1.381 0 2.5-1.12 2.5-2.5v-13c0-1.38-1.119-2.5-2.5-2.5zm-3.502 12h-2v-3.59l-5.293 5.3-1.414-1.42L12.581 10H8.996V8h7v7z"])
+        {
+            outline: 3px solid red i;
+        }
+/*         div[data-testid="cellInnerDiv"]:has(svg + div > span)
+        {
+            outline: 3px solid white i;
+        } */
+    }
+    
+    
+    
+    
+    if(adsRemoval == "enabled")
+    {
+        div[data-testid="cellInnerDiv"]:has(div.r-1kkk96v span)
+        {
+            display: none i;
+        }
+    }
+    else
+    {
+        div[data-testid="cellInnerDiv"]:has(div.r-1kkk96v span):not(:hover)
+        {
+            transition: all 0.2s;
+            display: flex i;
+            position: absolute i;
+            
+            if(adsStylingOpacity == 1)
+            {
+                opacity: 0.3 i;
+            }
+
+            if(adsStylingGrayedOut == 1)
+            {
+                filter: grayscale(1) i;
+
+                if(adsStylingBluredOut == 1)
+                {
+                    filter: grayscale(1) blur(3px) i;
+                }
+            }
+            else if(adsStylingBluredOut == 1)
+            {
+                filter: blur(3px) i;
+            }
+        }
+        if(adsMarkerShow == 1)
+        {   
+            div[data-testid="cellInnerDiv"] div.r-1kkk96v span
+            {
+                display: none i;
+            }
+            div[data-testid="cellInnerDiv"]:has(div.r-1kkk96v span):before
+            {
+                display: flex;
+                position: fixed;
+                z-index: 999999;
+                right: 0px;
+                top: 150px;
+                width: 20%;
+                content: "Advertisement";
+                font-family: TwitterChirp, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                padding: 13px 13px 13px 20px;
+                font-size: 0.9rem;
+                font-weight: 600;
+                color: rgba(220, 220, 220, 1);
+                background-color: rgba(40, 40, 40, 0.9);
+                border-radius: 6px 0px 0px 6px;
+                border: 1px solid rgba(220, 220, 220, 0.1);
+                border-right: none;
+                box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            }
+        }
+    }
+    
+    
+    if(removeTimelineCreatorsForYou == 1)
+    {
+        div[data-testid="primaryColumn"] div[data-testid="cellInnerDiv"] div.css-175oi2r div div spanf
+        {
+/*             border: 3px solid red i; */
+        }
+    }
+    if(removeTimelineDiscoverNewCommunities == 1)
+    {
+        div[data-testid="primaryColumn"] div[data-testid="cellInnerDiv"]
+        {
+/*             border: 3px solid red i; */
+        }
+    }
+    
+    
+    
+    
+    
+    
+    if(removeSidebarBlockWhoToFollow == 1)
+    {
+        div[data-testid="sidebarColumn"] div.r-1ifxtd0:has(aside > div > h2)
+        {
+            display: none i;
+        }
+    }
+        
+    if(removeSidebarBlockTrends == 1)
+    {
+        div[data-testid="sidebarColumn"] div.r-1ifxtd0:has(div > section)
+        {
+            display: none i;
+        }
+    }
+    if(removeSidebarTOSFooter == 1)
+    {
+        div[data-testid="sidebarColumn"] div.r-1yadl64
+        {
+            display: none i;
+        }
+    }
+    if(removeSidebarSubscribePremium == 1)
+    {
+        div[data-testid="sidebarColumn"] > div > div > div > div > div > div:has(aside > a[href="/i/premium_sign_up"])
+        {
+            display: none i;
+        }
+    }
+    
+    
+    
+    
+    if(tweetsShowDateTime == 1)
+    {
+        
+        div[data-testid="cellInnerDiv"] time
+        {
+            display: block flex;
+            overflow: hidden;
+            width: 171px;
+        }
+        
+        div[data-testid="cellInnerDiv"] time:after
+        {
+            display: block;   
+            content: attr(datetime);
+            font-family: monospace;
+            font-size: 13px;
+            font-weight: 600;
+            opacity: 1;
+            margin-left: 10px;
+            
+            background: -webkit-linear-gradient(360deg, rgb(128, 128, 128) 71px, transparent 71px, transparent 71px, transparent 71px, transparent 78px, rgb(128, 128, 128) 78px, rgb(128, 128, 128) 158px, transparent 156px);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            
+            width: 171px;
+        }
+    }
+}
+
+
