@@ -752,6 +752,7 @@
 
 				listafalszywychrozowych.push('washington');
 				listafalszywychrozowych.push('Obrzydzenie');
+				listafalszywychrozowych.push('Blueweb');
 				listafalszywychrozowych.push('conamirko');
 				listafalszywychrozowych.push('i_took_a_pill_in_remiza');
 				listafalszywychrozowych.push('Riolet');
@@ -7171,6 +7172,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		}
 
 
+
+		// FUNKCJA SKOPIOWANA DO TS W WykopX Drop
 		function isValidURL(string)
 		{
 			try
@@ -7182,7 +7185,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				return false;
 			}
 		}
-
+		// FUNKCJA SKOPIOWANA DO TS W WykopX Drop
 		function isValidImageURL(string)
 		{
 			if (isValidURL(string))
@@ -7195,7 +7198,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			}
 			return false;
 		}
-
+		// FUNKCJA SKOPIOWANA DO TS W WykopX Drop
 		// returns array of valid URL's from a given string
 		// returns ["http://onet.pl", "https://www.wp.pl"]
 		// returns null
@@ -7213,12 +7216,12 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			}
 			return urls;
 		}
-
+		// FUNKCJA SKOPIOWANA DO TS W WykopX Drop
 		function bytesToKB(bytes, decimalDigits = 2)
 		{
 			return (bytes / 1024).toFixed(decimalDigits) + ' KB';
 		}
-
+		// FUNKCJA SKOPIOWANA DO TS W WykopX Drop
 		function bytesToMB(bytes, decimalDigits = 2)
 		{
 			return (bytes / (1024 * 1024)).toFixed(decimalDigits) + ' MB';
@@ -7990,6 +7993,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 							if (dev) console.log("probuje pobrać plik: " + urlFromClipboard);
 
 							let img = new Image();
+							img.src = urlFromClipboard;
 
 							img.onload = function ()
 							{
@@ -8009,7 +8013,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 								}, 'image/png'); */
 							};
 							// img.crossOrigin = 'anonymous'; CORS
-							img.src = urlFromClipboard;
 						});
 
 						// e.preventDefault();
