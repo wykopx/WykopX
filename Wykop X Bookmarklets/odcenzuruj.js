@@ -7,7 +7,7 @@ javascript: (function ()
 		{
 			for (let [key, value] of censoredMap)
 			{
-				text = text.replace(new RegExp(key, 'g'), value);
+				text = text.replace(new RegExp(key, 'gi'), value);
 			}
 			return text;
 		}
@@ -23,7 +23,6 @@ javascript: (function ()
 		censored.set("b---ę", "bombę");
 		censored.set("b---e", "bombe");
 		censored.set("b---y", "bomby");
-		censored.set("b--b*", "bomba");
 		censored.set("b---s", "boobs");
 		censored.set("b--ń", "broń");
 		censored.set("b----l", "burdel");
@@ -171,6 +170,8 @@ javascript: (function ()
     }
 })();
 /* 
+v.1.0.1
+
 1. Skopiuj cały kod tego skryptu
 2. Wciśnij na dowolnej stronie CTRL+D aby otworzyć okno dodawania Ulubionej/Zakładki/Bookmark 
 3. W polu adresu URL usuń adres strony na której jesteś i wklej cały skopiowany powyżej kod
