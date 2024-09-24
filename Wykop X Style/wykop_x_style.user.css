@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style 3
-@version        3.0.61
+@version        3.0.68
 
 @description    Wykop X Style 3 to 900 różnych funkcji zmieniających wykop!
 
@@ -155,7 +155,9 @@ https://skrypt.wykopx.pl
 
 
 
-@var range      HR_MESSAGES_COUNTER                 `LICZNIKI KOMENTARZY I WPISÓW ⭐ Nowe (3.0.51)`                                                                                        [0, 0, 99900, 1, 'mm']
+@var range      HR_MESSAGES_COUNTER                 `(beta) LICZNIKI KOMENTARZY I WPISÓW ⭐ Nowe (3.0.51)`                                                                                        [0, 0, 99900, 1, 'mm']
+@var checkbox   messageCounterEnable                            `Włącz licznik komentarzy i wpisów`                    0
+
 @var select     messageCounterSkin                              `Wygląd licznika ⭐`   {
                                                                             "🥐 Wypiek"        :"wypiek",
                                                                         }
@@ -217,13 +219,43 @@ https://skrypt.wykopx.pl
 
 
 
-TODO:var range      HR_ARCHIWUM_X                       `ARCHIWUM X ⭐ Nowe`                                             [0, 0, 99900, 1, 'mm']
-TODO: var range      SUB_HR_ARCHIVE_REMOVED              `❌ USUNIĘTE WPISY Z ARCHIWUM X`                                 [0, 0, 99999, 1, 'mm']
-TODO: var checkbox   archiveXRemovedEntry404Page                `❎ Na stronie usuniętego wpisu pokazuj info o Archiwum X 📱 ⭐`              0    
-TODO: checkbox   archiveXRemovedEntry                           `❎ Pokazuj treść usuniętych wpisów ⭐`                                          0     
-TODO: checkbox   hideWorkersOn404Page                           `Ukryj robotników na stronie 404 ⭐`                                              0     
+@var range      HR_ARCHIWUM_X                       `ARCHIWUM X ⭐ Nowe (3.0.61)`                                             [0, 0, 99900, 1, 'mm']
+@var range      SUB_HR_ARCHIVE_REMOVED              `❌ USUNIĘTE WPISY Z ARCHIWUM X`                                 [0, 0, 99999, 1, 'mm']
+@var checkbox   archiveXRemovedEntry404Page                `❎ Na stronie usuniętego wpisu pokazuj info o Archiwum X  ⭐`                  1  
+TODO: checkbox   archiveXRemovedEntry                           `❎ Pokazuj treść usuniętych wpisów ⭐`                                    0     
+@var checkbox   hideWorkersOn404Page                           `Ukryj robotników na stronie usunietego wpisu 404 ⭐`                        0     
 
 
+
+@var range      HR_DELETED_COMMENTS                 `❌🗨️ USUNIĘTE KOMENTARZE`                                                          [0, 0, 99900, 1, 'mm']
+
+
+@var select     deletedCommentsOthers                           `❌ Usunięte komentarze` {
+                                                                            "Pokazuj normalnie (domyslnie)"     :   "domyslnie",
+                                                                            "Zwinięte"                          :   "minimized",
+                                                                            "❌ Nie pokazuj"                    :   "niepokazuj",
+                                                                        } 
+
+@var checkbox   deletedCommentsGrayedOut                        `❌ Tekst 'Komentarz usunięty' po najechaniu na niego kursorem nadal wyszarzony`           1
+
+@var select     deletedCommentsOthersHighlight                  `❌ Usunięte komentarze - kolor` {
+                                                                            "Pokazuj wyszarzone (domyślnie)"    :   "domyslnie",
+                                                                            "Pokazuj na czerwono"               :   "czerwone",
+                                                                        } 
+
+
+@var select     deletedCommentsMy                               `❌ Moje usunięte komentarze` {
+                                                                            "Pokazuj normalnie (domyslnie)"     :   "domyslnie", 
+                                                                            "Zwinięte"                          :   "minimized",
+                                                                            "❌ Nie pokazuj"                    :   "niepokazuj",
+                                                                        } 
+@var select     deletedCommentsMyHighlight                      `❌ Moje usunięte komentarze - kolor` {
+                                                                            "Pokazuj wyszarzone (domyślnie)"    :   "domyslnie",
+                                                                            "Pokazuj na czerwono"               :   "czerwone",
+                                                                            "Pokazuj na pomarańczowo"           :   "pomaranczowe",
+                                                                            "Pokazuj na niebiesko*"             :   "niebieskie",
+                                                                        }
+                                                                        
 @var range      HR_ANTI_EMBARRASSMENT_MODE          `ANTI-EMBARRASSMENT MODE`                                                                  [0, 0, 99900, 1, 'mm']
 @var checkbox   presetAntiEmbarrassment                         `[PRESET] Włącz wszystkie funkcje ANTI EMBARRASSMENT MODE ⭐`                     0
 @var checkbox   changeWykoplikeWordsEverywhere                  `Zmień wszędzie słowa 𝘄𝘆𝗸𝗼𝗽 i 𝘄𝘆𝗸𝗼𝗽𝗮𝗹𝗶𝘀𝗸𝗼 na mniej obciachowe`                    0
@@ -316,12 +348,12 @@ TODO range      checkEntryCommentsPerHour_INFO                  `Pokazuje aktual
 
 @var range      plusesMinusesSize                               `➕ Rozmiar plusów i minusów ⭐`         [20, 10, 40, 1, 'rem']
 @var checkbox   plusesMinusesSizeInSidebar                      `➕ Zastosuj ten rozmiar także w plusach w sidebarze ⭐`                      0
-@var checkbox   plusesAndMinusesColorsEnable                    `➕ Włącz zmianę kolorystyki i wyglądu plusów i minusów ⭐`                      0     
+@var checkbox   plusesAndMinusesColorsEnable                    `➕ Włącz zmianę kolorystyki i wyglądu plusów i minusów ⭐`                   1    
 @var select     plusesAndMinusesStyle                           `➕ [PRESET] Styl plusów i minusów ⭐`  {
                                                                             "Styl Wykop 2024 (domyślny)"                            :   "wykop20",
                                                                             "Styl Wykop 2022"                                       :   "wykop10",
                                                                             "Okrągłe"                                               :   "okragle",
-                                                                            "🧇 Moje ustawienia i kolorystyka (wybierz poniżej)*":   "wlasne",
+                                                                            "🧇 Moje ustawienia i kolorystyka (wybierz poniżej)*":"wlasne",
                                                                     } 
                                                                     
 @var select     plusesColor                                     `➕ Zmień kolor plusów 💭⭐`  {
@@ -1618,7 +1650,7 @@ REMOVED select    gradientBorders                               `[Test] Gradient
 @var checkbox   favoriteTagEnable                               `Ulubiony #tag`                                                       0     
 @var checkbox   favoriteTagFirstInNotification                  `Powiadomienia z ulubionego #tagu pierwsze na liście ⭐ `             0     
 @var text       favoriteTag1                                    `Wpisz 1. ulubiony tag: #`                                         `heheszki`
-@var text       favoriteTag2                                    `Wpisz 2. ulubiony tag: #`                                         `wykopwnowymstylu`
+@var text       favoriteTag2                                    `Wpisz 2. ulubiony tag: #`                                         `wykopx`
 var checkbox    topNavFavoriteTagButton                         `TODO: Skrót do ulubionego #tagu w górnej belce`                   0  
 
 
@@ -1701,7 +1733,7 @@ var checkbox    topNavFavoriteTagButton                         `TODO: Skrót do
 @var checkbox   categoryMenuButtonsOnBottom                     `Wyświetl przyciski na dole`                                0                                    
 @var checkbox   categoryMenuHitsButtonHide                      `🚫 Ukryj przycisk 🔥 𝗛𝗶𝘁𝘆`                                  0
 @var checkbox   categoryMenuObservedButtonHide                  `🚫 Ukryj przycisk 👁 𝗢𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲`                          0
-@var checkbox   categoryMenuFavouritesButtonHide                `🚫 Ukryj przycisk ⭐ 𝗨𝗹𝘂𝗯𝗶𝗼𝗻𝗲`                              0
+@var checkbox   categoryMenuFavoritesButtonHide                `🚫 Ukryj przycisk ⭐ 𝗨𝗹𝘂𝗯𝗶𝗼𝗻𝗲`                              0
 
 @var select     categoryMenuNightModeSwitchPosition             `🌘 Przycisk 𝗧𝗿𝘆𝗯 𝗻𝗼𝗰𝗻𝘆/𝗧𝗿𝘆𝗯 𝗱𝘇𝗶𝗲𝗻𝗻𝘆 ⭐` {
                                                                         "Na dole (domyślnie)":"nadole",
@@ -1830,8 +1862,8 @@ TODO checkbox   commentsCountAlignment                          `🗨️ Przenie
                                                                                     "Domyślne hity Wykop 2024 (4 x 3)":"domyslny2024",
                                                                                     "Domyślne hity Wykop 2023 (1 x 5)":"domyslny2023",
                                                                                     "Kafelki 1 (2 x 4)":"kafelki_1",
-                                                                                    "Kafelki 2 (2 x 5)*":"kafelki_2",
-                                                                                    "Kafelki 3 (2 x 6)":"kafelki_3",
+                                                                                    "Kafelki 2 (2 x 5)":"kafelki_2",
+                                                                                    "Kafelki 3 (2 x 6)*":"kafelki_3",
                                                                                     "Kafelki 4 (3 x 4)":"kafelki_4",
                                                                                     "Poziome - średnie (8)":"poziome_1",
                                                                                     "Poziome - małe (6)":"poziome_2",
@@ -1957,7 +1989,7 @@ TODO checkbox   commentsCountAlignment                          `🗨️ Przenie
                                                                     }
 @var select     hideRelatedLinks                                `🔸🔗 Treści powiązane ze znaleziskiem` {
                                                                         "Zawsze wyświetlaj (domyślnie)"                 :   "zawszewyswietlaj",
-                                                                        "Wyświetlaj. Ukryj jeśli brak powiązanych*":"niepokazujjeslipuste",
+                                                                        "Wyświetlaj. Ukryj jeśli brak powiązanych":"niepokazujjeslipuste",
                                                                         "Zwinięte"                                      :   "zwiniete",
                                                                         "🚫 Zwinięte. Ukryj jeśli brak powiązanych"     :   "zwinieteniepokazujjeslipuste",
                                                                         "🚫 Nie pokazuj"                                :   "niepokazuj"
@@ -1990,7 +2022,7 @@ TODO checkbox   commentsCountAlignment                          `🗨️ Przenie
 @var checkbox   linksHideAll                                    `⛔ Ukrywaj znaleziska na wszystkich stronach ⭐`                          0
 @var checkbox   linksHideHomePage                               `🚫 Nie pokazuj znalezisk na głównej ⭐`                                   0
 @var checkbox   linksHideTagPage                                `🚫 Nie pokazuj znalezisk na stronach #tagów ⭐`                           0
-@var checkbox   linksHideFavouritesPage                         `🚫 Nie pokazuj znalezisk w Ulubionych ⭐`                                 0
+@var checkbox   linksHideFavoritesPage                          `🚫 Nie pokazuj znalezisk w Ulubionych ⭐`                                 0
 @var checkbox   linksHideObservedPage                           `🚫 Nie pokazuj znalezisk w Obserwowanych (Mój Wykop) ⭐`                  0
 @var checkbox   linksHideProfilePage                            `🚫 Nie pokazuj znalezisk w profilach użytkowników ⭐`                     0
 @var checkbox   linksHideSearchPage                             `🚫 Nie pokazuj znalezisk przy wyszukiwaniu ⭐`                            0
@@ -2032,7 +2064,7 @@ TODO checkbox   commentsCountAlignment                          `🗨️ Przenie
                                                                         }                                                                       
 @var select     viaAppName                                      `🔹 Opisy 𝘃𝗶𝗮 𝗪𝘆𝗸𝗼𝗽, 𝘃𝗶𝗮 𝗔𝗻𝗱𝗿𝗼𝗶𝗱`  {
                                                                             "Kolor szary (domyślny)"                                :   "color_gray",
-                                                                            "Kolor zielony"                                         :   "color_green",
+                                                                            "Kolor zielony*":"color_green",
                                                                             "Prawie niewidoczne"                                    :   "barely_visible",
                                                                             "Pokaż po najechaniu na komentarz"                      :   "only_on_hover",
                                                                             "🚫 Ukryj opis"                                         :   "niepokazujviaappname"
@@ -2081,8 +2113,8 @@ TODO checkbox   commentsCountAlignment                          `🗨️ Przenie
 
 @var select     tagPageHideAddTagToCategoryButton               `🔷🚫 Ukryj przycisk "Dodaj do Kategorii" 👤` {
                                                                             "Nie ukrywaj (domyślnie)":"nieukrywaj",
-                                                                            "👤 Ukrywaj jeśli niezalogowany*":"ukrywaj_niezalogowany",
-                                                                            "🚫 Ukrywaj zawsze":"ukrywaj_zawsze"
+                                                                            "👤 Ukrywaj jeśli niezalogowany":"ukrywaj_niezalogowany",
+                                                                            "🚫 Ukrywaj zawsze*":"ukrywaj_zawsze"
                                                                         }
 @var checkbox   tagPageFixedCoverImage                          `🔷 Przypięta okładka na wyróżnionych i autorskich tagach`                               0
 
@@ -2166,7 +2198,7 @@ TODO var checkbox   betterPhotosInEntries                       `Lepsze obrazki 
 TODO var range      betterPhotosInEntries_INFO                  `Poprawienie wyświetlania obrazków. Jeśli obrazek jest ma wysoką rozdzielczość próbuje wyświetlić go w jak największych rozmiarach. Poziome obrazki zostaną rozciągnięte do pełnej szerokości strony przy limicie wysokości wybranym poniżej. Obrazki pionowe zostaną wyświetlone do maksymalnej wysokości. Obrazki niewielkie nie bedą rozciągane ani w szerokości, ani w wysokości.`             [0, 0,88800, 1, 'mm']
 TODO var range      betterPhotosInEntriesMaxHeight              `Maksymalna wysokość obrazków ⭐`             [500, 150, 1500, 50, 'px']
 TODO var checkbox   displayImageInFullHeight                    `Wyświetl obrazek w pełnej wysokości i oryginalnych rozmiarach`                                 0
-@var checkbox   hideImageCaptions                               `🚫 Ukryj biały pasek z loginem autora pod obrazkiem`                                                0     
+@var checkbox   hideImageCaptions                               `🚫 Ukryj biały pasek z loginem autora pod obrazkiem`                                          1    
 TODO var checkbox   openImageInNewTabButton                     `Przycisk 𝗢𝘁𝘄𝗼́𝗿𝘇 𝗼𝗯𝗿𝗮𝘇𝗲𝗸 𝘄 𝗻𝗼𝘄𝗲𝗷 𝗸𝗮𝗿𝗰𝗶𝗲`                                                           0
 TODO var checkbox   fixWrongImageRatio                          `✔ Napraw błąd skurczonej wysokości wysokich obrazków we wpisach i komentarzach`                0
 TODO var range      fixWrongImageRatioMinWidth                  `✔ Napraw błąd skurczonej wysokości - minimalna szerokość obrazka`                               [30, 10, 100, 5, '%']
@@ -2346,9 +2378,9 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
                                                                     }
 @var checkbox   rightSidebarHidePopularTags                     `🚫 Ukryj # 𝗣𝗼𝗽𝘂𝗹𝗮𝗿𝗻𝗲 𝘁𝗮𝗴𝗶 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ/ᵐᶦᵏʳᵒᵇˡᵒᵍ/ʷᵖᶦˢ) ⭐`         0
 @var checkbox   rightSidebarHideRelatedTags                     `🚫 Ukryj # 𝗣𝗼𝘄𝗶𝗮̨𝘇𝗮𝗻𝗲 𝘁𝗮𝗴𝗶 (ᵗᵃᵍ/ᵏᵃᵗᵉᵍᵒʳᶦᵉ/ᶻⁿᵃˡᵉᶻᶦˢᵏᵒ) ⭐`                  0
-@var checkbox   rightSidebarFooterHide                          `🚫 Ukryj stopkę 𝗪𝗬𝗞𝗢𝗣 © 𝟮𝟬𝟬𝟱`                                              0     
+@var checkbox   rightSidebarFooterHide                          `🚫 Ukryj stopkę 𝗪𝗬𝗞𝗢𝗣 © 𝟮𝟬𝟬𝟱`                                          1     
 
-@var checkbox   WykopXSpromoDisable                             `🚫 Ukryj baner informacyjny o skrypcie Wykop XS ⭐ (Nowe 3.0.52)`                       0
+@var checkbox   WykopXSpromoDisable                             `🚫 Ukryj baner informacyjny o skrypcie Wykop XS ⭐`                       1
 
 
 
@@ -2457,11 +2489,6 @@ TODO    checkbox hideAdultEntriesAndLinks
 @var checkbox   hideNewCategoryButtonNotLogged                  `🚫👤 Ukryj przycisk "Utwórz kategorię" `                                                        0
 
 
-@var select     tagPageHideAddTagToCategoryButton               `🚫 Ukryj przycisk "Dodaj do Kategorii" na stronie #tagu 👤` {
-                                                                            "Nie ukrywaj (domyślnie)":"nieukrywaj",
-                                                                            "👤 Ukrywaj jeśli niezalogowany*":"ukrywaj_niezalogowany",
-                                                                            "🚫 Ukrywaj zawsze":"ukrywaj_zawsze"
-                                                                        } 
 
 @var select     hideVoteUpButtonOnLinks                         `🚫 Ukryj przyciski "WYKOP" przy znaleziskach 👤` {
                                                                             "Nie ukrywaj (domyślnie)":"nieukrywaj",
@@ -2590,27 +2617,6 @@ TODO    checkbox hideAdultEntriesAndLinks
 
 
 
-@var range      HR_DELETED_COMMENTS                 `📛🗨️ USUNIĘTE KOMENTARZE`                                                          [0, 0, 99900, 1, 'mm']
-@var select     deletedCommentsOthers                           `📛 Usunięte komentarze` {
-                                                                            "Pokazuj normalnie (domyslnie)"     :   "domyslnie",
-                                                                            "Zwinięte"                          :   "minimized",
-                                                                            "📛 Nie pokazuj"                    :   "niepokazuj",
-                                                                        } 
-@var select     deletedCommentsOthersHighlight                  `📛 Usunięte komentarze - kolor` {
-                                                                            "Pokazuj wyszarzone (domyślnie)"    :   "domyslnie",
-                                                                            "Pokazuj na czerwono"               :   "czerwone",
-                                                                        } 
-@var select     deletedCommentsMy                               `📛 Moje usunięte komentarze` {
-                                                                            "Pokazuj normalnie (domyslnie)"     :   "domyslnie", 
-                                                                            "Zwinięte"                          :   "minimized",
-                                                                            "📛 Nie pokazuj"                    :   "niepokazuj",
-                                                                        } 
-@var select     deletedCommentsMyHighlight                      `📛 Moje usunięte komentarze - kolor` {
-                                                                            "Pokazuj wyszarzone (domyślnie)"    :   "domyslnie",
-                                                                            "Pokazuj na czerwono"               :   "czerwone",
-                                                                            "Pokazuj na pomarańczowo"           :   "pomaranczowe",
-                                                                            "Pokazuj na niebiesko*"             :   "niebieskie",
-                                                                        }
 
 @var range      HR_BLOCKED_COMMENTS                 `🚯🗨️ KOMENTARZE BLOKOWANYCH #TAGÓW/@UŻYTKOWNIKÓW`                                                          [0, 0, 99900, 1, 'mm']
 @var checkbox   fixWrongTextOfHiddenCommentWithBlacklistedTag   `🚯🚭✔ Popraw błędny tekst '𝗞𝗼𝗺𝗲𝗻𝘁𝗮𝗿𝘇 𝘂𝘇̇𝘆𝘁𝗸𝗼𝘄𝗻𝗶𝗸𝗮 𝘇 𝗰𝘇𝗮𝗿𝗻𝗲𝗷 𝗹𝗶𝘀𝘁𝘆'`         1
@@ -2801,9 +2807,9 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
 @var range      borderRadius                                    `Stopień zaokrąglenia rogów`                                          [4, 0, 25, 1, 'px']
 @var range      gapWidth                                        `ᛨ Odstępy pomiędzy elementami innymi niż wpisy i znaleziska`         [20, 0, 100, 1, 'px']
 
-@var checkbox   floatingAddButtonHide                           `🚫 Ukryj okrągły, pływający przycisk ➕ ("Dodaj") 🆗`                             0     
-@var checkbox   removeAllTransitions                            `Wyłącz animacje i efekty zanikania`                                             0
-@var checkbox   swapYesNoButtonsPosition                        `Przycisk głównej akcji w komunikatach po lewej zamiast po prawej`                  0       
+@var checkbox   floatingAddButtonHide                           `🚫 Ukryj okrągły, pływający przycisk ➕ ("Dodaj") 🆗`                          1     
+@var checkbox   removeAllTransitions                            `Wyłącz animacje i efekty zanikania`                                              0
+@var checkbox   swapYesNoButtonsPosition                        `Przycisk głównej akcji w komunikatach po lewej zamiast po prawej`                0       
 
 
 
@@ -2906,7 +2912,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         categoryMenuMiniCompact             = 0
         categoryMenuHitsButtonHide          = 0
         categoryMenuObservedButtonHide      = 0
-        categoryMenuFavouritesButtonHide    = 0
+        categoryMenuFavoritesButtonHide     = 0
         categoryMenuButtonsOnBottom         = 0
         categoryMenuButtonsLabelsHide       = 0
         categoryMenuNightModeSwitchPosition = "nadole"
@@ -3080,7 +3086,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         linksHideBucketPage             = 1;
         linksHideCategoryPage           = 1;
         linksHideSearchPage             = 1;
-        linksHideFavouritesPage         = 1;
+        linksHideFavoritesPage          = 1;
         linksHideHomePage               = 1;
         linksHideObservedPage           = 1;
         linksHideProfilePage            = 1;
@@ -3383,11 +3389,11 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         /* WYKOPOWE KOLORY */
         --whitish:                                            rgba(255, 255, 255, 1);
         --steelBluish:                                        rgba(57, 131, 175, 1);
-        --geyser:                                             rgba(43, 43, 45, 1);
+        --geyser:                                             rgba(217, 223, 228, 1);
         --heather:                                            rgba(175, 190, 204, 1);
         
         
-        
+        s
         --blackOpacity1:                                      rgba(0, 0, 0, 1);
         --blackOpacity09:                                     rgba(0, 0, 0, 0.9);
         --blackOpacity08:                                     rgba(0, 0, 0, 0.8);
@@ -6262,7 +6268,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                 display: none!important;
             }
         }
-        if(linksHideFavouritesPage == 1)
+        if(linksHideFavoritesPage == 1)
         {
             main.main > section > div.content > section.favourites-page > section section.stream > div.content > section.link-block
             {
@@ -6464,7 +6470,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         }
 
         // 3 PRZYCISKI "HITY" "OBSERWOWANE" "ULUBIONE"
-        howManyMenuButtonsAreShowing = 3 - categoryMenuHitsButtonHide - categoryMenuObservedButtonHide - categoryMenuFavouritesButtonHide
+        howManyMenuButtonsAreShowing = 3 - categoryMenuHitsButtonHide - categoryMenuObservedButtonHide - categoryMenuFavoritesButtonHide
 
         // UKRYCIE WSZYSTKICH 3 PRZYCISKOW
         if(howManyMenuButtonsAreShowing == 0)
@@ -6478,7 +6484,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             if(categoryMenuHitsButtonHide == 1)              { aside.left-panel section.buttons div.content ul li.hits           { display: none;  }} 
             if(categoryMenuObservedButtonHide == 1)          { aside.left-panel section.buttons div.content ul li.observed       { display: none;  }} 
-            if(categoryMenuFavouritesButtonHide == 1)        { aside.left-panel section.buttons div.content ul li.favourites     { display: none;  }}
+            if(categoryMenuFavoritesButtonHide == 1)        { aside.left-panel section.buttons div.content ul li.favourites     { display: none;  }}
         
             body > section.open-left-panel > div.main-content > aside.left-panel:not(.mini) > section.buttons > div.content > ul
             {
@@ -6597,9 +6603,9 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         
 
         // UKRYCIE PRZYCISKU WYKOP.PL
-        if(hideDefaultHomeLink)
+        if(hideDefaultHomeLink == 1)
         { 
-            aside.left-panel ul:has(li.home)
+            aside.left-panel ul li.home
             {
                 display: none!important;
             } 
@@ -8460,6 +8466,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             border: 10px solid rgb(22, 224, 57)!important;
             opacity: 0.69!important;
+            
             if(blackListTesting == 0) { display: none!important; } 
         }
     } 
@@ -8490,6 +8497,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             border: 10px solid rgb(8, 211, 255)!important;
             opacity: 0.69!important;
+            
             if(blackListTesting == 0) { display: none!important; } 
         } 
     } 
@@ -9369,170 +9377,29 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     
     
     /* LICZNIK WPISÓW NA STRONIE */ 
-    if(messageCounterEntries == 1 || messageCounterEntryComments == 1 || messageCounterLinkComments == 1)
+    if(messageCounterEnable == 1)
     {
-        body > section > div.main-content > main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.reply) > article,
-        section.entry-page .comments > section.stream > div.content > section.entry.reply > article,
-        section.link-page .comments > section.stream > div.content > section.entry > article
+        if(messageCounterEntries == 1 || messageCounterEntryComments == 1 || messageCounterLinkComments == 1)
         {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-content: center;
-        }
-        /* counter-reset */
-        body > section > div.main-content > main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content,
-        section.entry-page .comments > section.stream > div.content
-        {
-            counter-reset: commentIndex 0;             
-        }
-        /* LICZNIK */
-        body > section > div.main-content > main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.reply) > article::before,
-        section.entry-page .comments > section.stream > div.content > section.entry.reply > article::before,
-        section.link-page .comments > section.stream > div.content > section.entry > article::before
-        {
-            z-index: 2!important;
-            box-sizing: border-box!important;
-            align-items: center!important;
-            display: flex!important;
-            left: unset !important;
-            right: unset !important;
-
-            align-content: center!important;
-            align-items: center!important;
-            align-self: center!important;
-            justify-content: center!important;
-            justify-items: center!important;
-        }
-        /* LINIA LICZNIKA */
-        body > section > div.main-content > main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.reply):nth-child({messageCounterEntriesIncrement}n) > article::after,
-        section.entry-page .comments > section.stream > div.content > section.entry.reply:nth-child({messageCounterEntryCommentsIncrement}n) > article::after,
-        section.link-page .comments > section.stream > div.content > section.entry:nth-child({messageCounterLinkCommentsIncrement}n) > article::after
-        {
-            z-index: 1!important;
-            width: 100%!important;
-            position: absolute!important;
-            height: 1px!important;
-            top: 0px!important;
-            height: 1px!important;
-        }
-    }
-    
-    // LICZNIK WPISÓW NA MIKROBLOGU
-    if(messageCounterEntries == 1)
-    {
-        body > section > div.main-content > main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.reply):nth-child({messageCounterEntriesIncrement}n) > article::after
-        {
-            content: ''!important;
-        }
-        body > section > div.main-content > main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.reply):nth-child({messageCounterEntriesIncrement}n) > article::before
-        {
-            counter-increment: commentIndex "%s" % (messageCounterEntriesIncrement);
-            content: "" counter(commentIndex) ""!important;           
-        }
-    }
-    /* LICZNIK KOMENTARZY POD ZNALEZISKIEM */
-    if(messageCounterLinkComments == 1)
-    {
-        /* ustawienie liczników */
-        section.link-page > section.link > section.comments > section.stream > div.content
-        {
-            counter-reset: linkCommentsIndex 0;             
-        }
-        section.link-page > section.link > section.comments > section.stream > div.content > section.entry
-        {
-            counter-reset: subCommentIndex 0;             
-        }
-        /* komentarze pod znaleziskiem +1 */
-        section.link-page > section.link > section.comments > section.stream > div.content > section.entry
-        {
-            counter-increment: linkCommentsIndex 1;
-        }
-        /* subkomentarze pod znaleziskiem +1 */
-        section.link-page > section.link > section.comments > section.stream > div.content > section.entry > div.comments section.entry > article::before
-        {
-            counter-increment: subCommentIndex 1;
-        }
-        
-        if(messageCounterLinkCommentsWithSubcommentsOnly == 1)
-        {
-            section.link-page .comments > section.stream > div.content > section.entry:nth-child({messageCounterLinkCommentsIncrement}n):has(> div.comments) > article::before
+            body > section > div.main-content > main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.reply) > article,
+            section.entry-page .comments > section.stream > div.content > section.entry.reply > article,
+            section.link-page .comments > section.stream > div.content > section.entry > article
             {
-                content: "" counter(linkCommentsIndex) ""!important;           
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-content: center;
             }
-            /* subkomentarze 3.1 3.2 3.3*/
-            if(messageCounterLinkCommentsSubcomments == 1)
+            /* counter-reset */
+            body > section > div.main-content > main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content,
+            section.entry-page .comments > section.stream > div.content
             {
-                section.link-page > section.link > section.comments > section.stream > div.content > section.entry:nth-child({messageCounterLinkCommentsIncrement}n) > div.comments section.entry > article::before
-                {
-                    content: counter(linkCommentsIndex) "." counter(subCommentIndex) ""!important;   
-                }
+                counter-reset: commentIndex 0;             
             }
-           
-            
-        }
-        else
-        {
-            section.link-page > section.link > .comments > section.stream > div.content > section.entry:nth-child({messageCounterLinkCommentsIncrement}n) > article::before
-            {
-                content: "" counter(linkCommentsIndex) ""!important;           
-            }
-            
-            if(messageCounterLinkCommentsSubcomments == 1)
-            {
-                section.link-page > section.link > section.comments > section.stream > div.content > section.entry > div.comments section.entry > article::before
-                {
-                    content: counter(linkCommentsIndex) "." counter(subCommentIndex) ""!important;   
-                }
-            }
-            
-        }
-        
-    
-        section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/2"])  > div.content { counter-reset: linkCommentsIndex 50; }
-        section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/3"])  > div.content { counter-reset: linkCommentsIndex 100; }
-        section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/4"])  > div.content { counter-reset: linkCommentsIndex 150; }
-        section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/5"])  > div.content { counter-reset: linkCommentsIndex 200; }
-        section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/6"])  > div.content { counter-reset: linkCommentsIndex 250; }
-        section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/7"])  > div.content { counter-reset: linkCommentsIndex 300; }
-        section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/8"])  > div.content { counter-reset: linkCommentsIndex 350; }
-        section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/9"])  > div.content { counter-reset: linkCommentsIndex 400; }
-        section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/10"]) > div.content { counter-reset: linkCommentsIndex 450; }
-        section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/11"]) > div.content { counter-reset: linkCommentsIndex 500; }
-        section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/12"]) > div.content { counter-reset: linkCommentsIndex 550; }
-        section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/13"]) > div.content { counter-reset: linkCommentsIndex 600; }
-    }
-    
-    /* LICZNIK KOMENTARZY POD WPISEM */
-    if(messageCounterEntryComments == 1)
-    {
-        section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child({messageCounterEntryCommentsIncrement}n) > article::after
-        {
-            content: ''!important;
-        }
-        section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child({messageCounterEntryCommentsIncrement}n) > article::before
-        {
-            counter-increment: commentIndex "%s" % (messageCounterEntryCommentsIncrement);
-            content: "" counter(commentIndex) ""!important;           
-        }
-        section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/2"]) div.comments > section.stream > div.content { counter-reset: commentIndex 50; }
-        section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/3"]) div.comments > section.stream > div.content { counter-reset: commentIndex 100; }
-        section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/4"]) div.comments > section.stream > div.content { counter-reset: commentIndex 150; }
-        section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/5"]) div.comments > section.stream > div.content { counter-reset: commentIndex 200; }
-        section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/6"]) div.comments > section.stream > div.content { counter-reset: commentIndex 250; }
-        section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/7"]) div.comments > section.stream > div.content { counter-reset: commentIndex 300; }
-        section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/8"]) div.comments > section.stream > div.content { counter-reset: commentIndex 350; }
-        section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/9"]) div.comments > section.stream > div.content { counter-reset: commentIndex 400; }
-        section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/10"]) div.comments > section.stream > div.content { counter-reset: commentIndex 450; }
-        section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/11"]) div.comments > section.stream > div.content { counter-reset: commentIndex 500; }
-        section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/12"]) div.comments > section.stream > div.content { counter-reset: commentIndex 550; }
-        section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/13"]) div.comments > section.stream > div.content { counter-reset: commentIndex 600; }
-        
-        
-        /* ZNACZNIK "Komentarze" ROZPOCZYNAJĄCY SEKCJĘ KOMENTARZY POD WPISEM */
-        if(messageCounterEntryCommentsSectionStart == 1)
-        {
-            section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child(1) > article::before
+            /* LICZNIK */
+            body > section > div.main-content > main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.reply) > article::before,
+            section.entry-page .comments > section.stream > div.content > section.entry.reply > article::before,
+            section.link-page .comments > section.stream > div.content > section.entry > article::before
             {
                 z-index: 2!important;
                 box-sizing: border-box!important;
@@ -9547,72 +9414,181 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                 justify-content: center!important;
                 justify-items: center!important;
             }
-
-            section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child(1) > article::after
+            /* LINIA LICZNIKA */
+            body > section > div.main-content > main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.reply):nth-child({messageCounterEntriesIncrement}n) > article::after,
+            section.entry-page .comments > section.stream > div.content > section.entry.reply:nth-child({messageCounterEntryCommentsIncrement}n) > article::after,
+            section.link-page .comments > section.stream > div.content > section.entry:nth-child({messageCounterLinkCommentsIncrement}n) > article::after
             {
                 z-index: 1!important;
                 width: 100%!important;
                 position: absolute!important;
                 height: 1px!important;
                 top: 0px!important;
+                height: 1px!important;
             }
-            section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child(1) > article::before
-            {
-                content: "Komentarze"!important;           
-            }
-            section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child(1) > article::after
+        }
+
+        // LICZNIK WPISÓW NA MIKROBLOGU
+        if(messageCounterEntries == 1)
+        {
+            body > section > div.main-content > main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.reply):nth-child({messageCounterEntriesIncrement}n) > article::after
             {
                 content: ''!important;
             }
-        }
-    }
-    /* WYGLĄD LICZNIKA */
-    if(messageCounterSkin == "wypiek")
-    {
-        // LICZNIK WPISÓW NA MIKROBLOGU xxxxxxxxxxxxxxx
-        /*
-        if(commentAuthorBorderHide == 0) section.entry.link
-        
-        */
-        body > section > div.main-content > main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.reply):nth-child(n) > article::before,
-        section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child(n) > article::before,
-        section.link-page .comments > section.stream > div.content > section.entry article::before
-        {
-            position: absolute!important; 
-            color: rgba(24, 25, 27, 1)!important;
-            background-color: rgba(151, 154, 159, 1)!important;
-            font-weight: 600!important;
-            border-radius: 13px!important;
-            padding: 10rem 7rem!important;
-            font-size: 13rem!important;
-            top: -9rem!important;
-            height: 0px !important;
-            width: auto!important;
-        }
-        body > section > div.main-content > main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.reply):nth-child(n) > article::before
-        {
-            top: calc(-1* var(--microblogEntriesSpacing) / 2 + -11px) !important;
-        }
-        body > section > div.main-content > main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.reply):nth-child(n) > article::after
-        {
-            top: calc(-1* var(--microblogEntriesSpacing) / 2 - 1px) !important;
-            left: 0px!important;
-        }
-        
-        /* LINIA LICZNIKA */
-        body > section > div.main-content > main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.reply):nth-child(n) > article::after,
-        section.entry-page .comments > section.stream > div.content > section.entry.reply:nth-child(n) > article::after,
-        section.link-page .comments > section.stream > div.content > section.entry article::after
-        {
-            background-color: rgba(83, 84, 86, 1)!important;
-            left: 0px!important;
-        }
-        
-        /* ZNACZNIK "Komentarze" ROZPOCZYNAJĄCY SEKCJĘ KOMENTARZY POD WPISEM */
-        if(messageCounterEntryCommentsSectionStart == 1)
-        {
-            section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child(1) > article::before 
+            body > section > div.main-content > main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.reply):nth-child({messageCounterEntriesIncrement}n) > article::before
             {
+                counter-increment: commentIndex "%s" % (messageCounterEntriesIncrement);
+                content: "" counter(commentIndex) ""!important;           
+            }
+        }
+        /* LICZNIK KOMENTARZY POD ZNALEZISKIEM */
+        if(messageCounterLinkComments == 1)
+        {
+            /* ustawienie liczników */
+            section.link-page > section.link > section.comments > section.stream > div.content
+            {
+                counter-reset: linkCommentsIndex 0;             
+            }
+            section.link-page > section.link > section.comments > section.stream > div.content > section.entry
+            {
+                counter-reset: subCommentIndex 0;             
+            }
+            /* komentarze pod znaleziskiem +1 */
+            section.link-page > section.link > section.comments > section.stream > div.content > section.entry
+            {
+                counter-increment: linkCommentsIndex 1;
+            }
+            /* subkomentarze pod znaleziskiem +1 */
+            section.link-page > section.link > section.comments > section.stream > div.content > section.entry > div.comments section.entry > article::before
+            {
+                counter-increment: subCommentIndex 1;
+            }
+
+            if(messageCounterLinkCommentsWithSubcommentsOnly == 1)
+            {
+                section.link-page .comments > section.stream > div.content > section.entry:nth-child({messageCounterLinkCommentsIncrement}n):has(> div.comments) > article::before
+                {
+                    content: "" counter(linkCommentsIndex) ""!important;           
+                }
+                /* subkomentarze 3.1 3.2 3.3*/
+                if(messageCounterLinkCommentsSubcomments == 1)
+                {
+                    section.link-page > section.link > section.comments > section.stream > div.content > section.entry:nth-child({messageCounterLinkCommentsIncrement}n) > div.comments section.entry > article::before
+                    {
+                        content: counter(linkCommentsIndex) "." counter(subCommentIndex) ""!important;   
+                    }
+                }
+
+
+            }
+            else
+            {
+                section.link-page > section.link > .comments > section.stream > div.content > section.entry:nth-child({messageCounterLinkCommentsIncrement}n) > article::before
+                {
+                    content: "" counter(linkCommentsIndex) ""!important;           
+                }
+
+                if(messageCounterLinkCommentsSubcomments == 1)
+                {
+                    section.link-page > section.link > section.comments > section.stream > div.content > section.entry > div.comments section.entry > article::before
+                    {
+                        content: counter(linkCommentsIndex) "." counter(subCommentIndex) ""!important;   
+                    }
+                }
+
+            }
+
+
+            section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/2"])  > div.content { counter-reset: linkCommentsIndex 50; }
+            section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/3"])  > div.content { counter-reset: linkCommentsIndex 100; }
+            section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/4"])  > div.content { counter-reset: linkCommentsIndex 150; }
+            section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/5"])  > div.content { counter-reset: linkCommentsIndex 200; }
+            section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/6"])  > div.content { counter-reset: linkCommentsIndex 250; }
+            section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/7"])  > div.content { counter-reset: linkCommentsIndex 300; }
+            section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/8"])  > div.content { counter-reset: linkCommentsIndex 350; }
+            section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/9"])  > div.content { counter-reset: linkCommentsIndex 400; }
+            section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/10"]) > div.content { counter-reset: linkCommentsIndex 450; }
+            section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/11"]) > div.content { counter-reset: linkCommentsIndex 500; }
+            section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/12"]) > div.content { counter-reset: linkCommentsIndex 550; }
+            section.link-page > section.link > section.comments > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/13"]) > div.content { counter-reset: linkCommentsIndex 600; }
+        }
+
+        /* LICZNIK KOMENTARZY POD WPISEM */
+        if(messageCounterEntryComments == 1)
+        {
+            section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child({messageCounterEntryCommentsIncrement}n) > article::after
+            {
+                content: ''!important;
+            }
+            section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child({messageCounterEntryCommentsIncrement}n) > article::before
+            {
+                counter-increment: commentIndex "%s" % (messageCounterEntryCommentsIncrement);
+                content: "" counter(commentIndex) ""!important;           
+            }
+            section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/2"]) div.comments > section.stream > div.content { counter-reset: commentIndex 50; }
+            section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/3"]) div.comments > section.stream > div.content { counter-reset: commentIndex 100; }
+            section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/4"]) div.comments > section.stream > div.content { counter-reset: commentIndex 150; }
+            section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/5"]) div.comments > section.stream > div.content { counter-reset: commentIndex 200; }
+            section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/6"]) div.comments > section.stream > div.content { counter-reset: commentIndex 250; }
+            section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/7"]) div.comments > section.stream > div.content { counter-reset: commentIndex 300; }
+            section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/8"]) div.comments > section.stream > div.content { counter-reset: commentIndex 350; }
+            section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/9"]) div.comments > section.stream > div.content { counter-reset: commentIndex 400; }
+            section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/10"]) div.comments > section.stream > div.content { counter-reset: commentIndex 450; }
+            section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/11"]) div.comments > section.stream > div.content { counter-reset: commentIndex 500; }
+            section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/12"]) div.comments > section.stream > div.content { counter-reset: commentIndex 550; }
+            section.entry-page > section.entry > section.stream:has(> footer > nav > ul > li.paging.current.active > a[href$="/strona/13"]) div.comments > section.stream > div.content { counter-reset: commentIndex 600; }
+
+
+            /* ZNACZNIK "Komentarze" ROZPOCZYNAJĄCY SEKCJĘ KOMENTARZY POD WPISEM */
+            if(messageCounterEntryCommentsSectionStart == 1)
+            {
+                section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child(1) > article::before
+                {
+                    z-index: 2!important;
+                    box-sizing: border-box!important;
+                    align-items: center!important;
+                    display: flex!important;
+                    left: unset !important;
+                    right: unset !important;
+
+                    align-content: center!important;
+                    align-items: center!important;
+                    align-self: center!important;
+                    justify-content: center!important;
+                    justify-items: center!important;
+                }
+
+                section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child(1) > article::after
+                {
+                    z-index: 1!important;
+                    width: 100%!important;
+                    position: absolute!important;
+                    height: 1px!important;
+                    top: 0px!important;
+                }
+                section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child(1) > article::before
+                {
+                    content: "Komentarze"!important;           
+                }
+                section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child(1) > article::after
+                {
+                    content: ''!important;
+                }
+            }
+        }
+        /* WYGLĄD LICZNIKA */
+        if(messageCounterSkin == "wypiek")
+        {
+            // LICZNIK WPISÓW NA MIKROBLOGU xxxxxxxxxxxxxxx
+            /*
+            if(commentAuthorBorderHide == 0) section.entry.link
+
+            */
+            body > section > div.main-content > main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.reply):nth-child(n) > article::before,
+            section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child(n) > article::before,
+            section.link-page .comments > section.stream > div.content > section.entry article::before
+            {
+                position: absolute!important; 
                 color: rgba(24, 25, 27, 1)!important;
                 background-color: rgba(151, 154, 159, 1)!important;
                 font-weight: 600!important;
@@ -9620,17 +9596,53 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                 padding: 10rem 7rem!important;
                 font-size: 13rem!important;
                 top: -9rem!important;
+                height: 0px !important;
+                width: auto!important;
             }
-            section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child(1) > article::before
+            body > section > div.main-content > main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.reply):nth-child(n) > article::before
             {
-                font-weight: normal!important;
+                top: calc(-1* var(--microblogEntriesSpacing) / 2 + -11px) !important;
             }
-            section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child(1) > article::after 
+            body > section > div.main-content > main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.reply):nth-child(n) > article::after
+            {
+                top: calc(-1* var(--microblogEntriesSpacing) / 2 - 1px) !important;
+                left: 0px!important;
+            }
+
+            /* LINIA LICZNIKA */
+            body > section > div.main-content > main.main > section > div.content > section:is(.home-page, .profile-page, .bucket-page, .observed-page, .favourites-page, .microblog-page) > section section.stream > div.content > section.entry:not(.reply):nth-child(n) > article::after,
+            section.entry-page .comments > section.stream > div.content > section.entry.reply:nth-child(n) > article::after,
+            section.link-page .comments > section.stream > div.content > section.entry article::after
             {
                 background-color: rgba(83, 84, 86, 1)!important;
+                left: 0px!important;
             }
-        }            
+
+            /* ZNACZNIK "Komentarze" ROZPOCZYNAJĄCY SEKCJĘ KOMENTARZY POD WPISEM */
+            if(messageCounterEntryCommentsSectionStart == 1)
+            {
+                section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child(1) > article::before 
+                {
+                    color: rgba(24, 25, 27, 1)!important;
+                    background-color: rgba(151, 154, 159, 1)!important;
+                    font-weight: 600!important;
+                    border-radius: 13px!important;
+                    padding: 10rem 7rem!important;
+                    font-size: 13rem!important;
+                    top: -9rem!important;
+                }
+                section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child(1) > article::before
+                {
+                    font-weight: normal!important;
+                }
+                section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child(1) > article::after 
+                {
+                    background-color: rgba(83, 84, 86, 1)!important;
+                }
+            }            
+        }
     }
+   
         
     
     
@@ -11371,7 +11383,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             display: none!important;
         } 
-        section.entry > article > header > div.right[data-v-2aacfeb5]
+        section.entry > article > header > div.right[class]
         {
             width: 100%!important;
         } 
@@ -11431,7 +11443,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             min-width: var(--avatarSize)!important;
             max-width: var(--avatarSize)!important;
         } 
-        section.entry > article > header > div.right[data-v-2aacfeb5]
+        section.entry > article > header > div.right[class]
         {
             width: 100%!important;
         } 
@@ -18357,6 +18369,16 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     
     
     /* ⛔ Komentarze usunięte (przez autora lub moderację) */
+    if(deletedCommentsGrayedOut == 1)
+    {
+        /* napis "Komentarz usunięty przez moderatora" */
+        section.entry.deleted > article div.edit-wrapper > div.content > section.alert > p
+        {
+            opacity: 0.4;
+        }
+    }
+    
+    
     /* ZWINIĘTE LUB UKRYTE USUNIĘTE KOMENTARZE INNYCH UŻYTKOWNIKÓW */
     if(deletedCommentsOthers == "minimized")
     {
@@ -19485,10 +19507,10 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     /* STRESZCZENIA WYGENEROWANE PRZEZ AI - BOT @autotldr */
 
     /* UKRYCIE MINUSÓW PRZY KOMENTARZACH OD BOTA */
-    section:is(.link-comments, .link-comment) > div.content > section.entry:has(> article header div.right a[href="/ludzie/autotldr"]) > article header div.right section.rating-box .minus
+    /* section:is(.link-comments, .link-comment) > div.content > section.entry:has(> article header div.right a[href="/ludzie/autotldr"]) > article header div.right section.rating-box .minus
     {
         display: none i;
-    } 
+    }*/
     
     
     section:is(.link-comments, .link-comment) > div.content > section.entry:has(> article header div.right a[href="/ludzie/autotldr"])
@@ -22780,7 +22802,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     /* VARIABLES */
 
     versor = "style"; // "style", "blank", "block"
-    version = "3.0.61";   
+    version = "3.0.68";   
     /* xblocker = "2.49" */
     
     
@@ -23646,7 +23668,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     {
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
         {
-            content: "Zaobserwuj tag #𝘄𝘆𝗸𝗼𝗽𝘄𝗻𝗼𝘄𝘆𝗺𝘀𝘁𝘆𝗹𝘂 ▫ Do funkcji oznaczonych ❎ zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦 Szczegóły na xs.wykopx.pl     ▫  Opis najciekawszych funkcji 𝗪𝘆𝗸𝗼𝗽 𝗫 na stronie ";
+            content: "Zaobserwuj tag #wykopx ▫ Do funkcji oznaczonych emoji: ❎ zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦 Szczegóły na xs.wykopx.pl     ▫  Opis najciekawszych funkcji 𝗪𝘆𝗸𝗼𝗽 𝗫 na stronie ";
             text-decoration: none;
         } 
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:after
