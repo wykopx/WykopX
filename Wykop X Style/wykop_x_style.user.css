@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style 3
-@version        3.0.68
+@version        3.0.72
 
 @description    Wykop X Style 3 to 900 różnych funkcji zmieniających wykop!
 
@@ -81,38 +81,178 @@ https://skrypt.wykopx.pl
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @preprocessor   stylus
 @namespace      userstyles.world/user/wykopchanger
 @license        No License (YOU CAN USE THIS CODE ONLY IN STYLUS EXTENSIONS. You are NOT ALLOWED TO copy, share and use any part of this code anywhere else without author's written permission)
+
+
+
+
+@var range      HR_PHOTO_VIEWER                         `🔷🌆 Wykop X Photo Viewer `                                                                                [0, 0, 99900, 1, 'mm']
+@var checkbox   photoViewerEnable1                               `Włącz 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗣𝗵𝗼𝘁𝗼 𝗩𝗶𝗲𝘄𝗲𝗿 na #tagach`                                               0
+
+
+
+
+
+@var range      HR_FONTS                            `🆎 Tekst i czcionki (⭐ NOWE 3.0.72)`                                                                                    [0, 0, 99900, 1, 'mm']
+@var select     textFontSizeMultipla                            `🆎 Zmień rozmiar elementów / powiększenie` {
+                                                                            "16px - domyślny":"1",
+                                                                            "—————————":"1.0",
+                                                                            "10px - najmniejszy":"0.4",
+                                                                            "11px - bardzo mały":"0.5",
+                                                                            "12px - mały":"0.6",
+                                                                            "13px - mały":"0.7",
+                                                                            "14px - średni (Wykop 2022)":"0.8",
+                                                                            "15px - średni":"0.9",
+                                                                            "16px - normalny":"1.00",
+                                                                            "17px - większy":"1.1",
+                                                                            "18px - większy":"1.2",
+                                                                            "19px - duży":"1.3",
+                                                                            "20px - bardzo duży":"1.4",
+                                                                            "21px - ogromny":"1.5"
+                                                                        }
+@var select     entriesTextFontSize                             `🆎🔹 Rozmiar tekstu we wpisach  ⭐` {
+                                                                            "16px - domyślny":"16.0px",
+                                                                            "—————————":"16.00px",
+                                                                            "10px - najmniejszy":"10px",
+                                                                            "11px - bardzo mały":"11px",
+                                                                            "12px - mały":"12px",
+                                                                            "13px - mały":"13px",
+                                                                            "14px - średni (Wykop 2022)":"14px",
+                                                                            "15px - średni":"15px",
+                                                                            "16px - normalny":"16px",
+                                                                            "17px - większy":"17px",
+                                                                            "18px - większy":"18px",
+                                                                            "19px - duży":"19px",
+                                                                            "20px - bardzo duży":"20px",
+                                                                            "21px - ogromny":"21px",
+                                                                        } 
+                                                                        
+@var select     commentsTextFontSize                            `🆎🗨️ Rozmiar tekstu w komentarzach ⭐` {
+                                                                            "16px - domyślny":"16.0px",
+                                                                            "—————————":"16.00px",
+                                                                            "10px - najmniejszy":"10px",
+                                                                            "11px - bardzo mały":"11px",
+                                                                            "12px - mały":"12px",
+                                                                            "13px - mały":"13px",
+                                                                            "14px - średni (Wykop 2022)":"14px",
+                                                                            "15px - średni":"15px",
+                                                                            "16px - normalny":"16px",
+                                                                            "17px - większy":"17px",
+                                                                            "18px - większy":"18px",
+                                                                            "19px - duży":"19px",
+                                                                            "20px - bardzo duży":"20px",
+                                                                            "21px - ogromny":"21px",
+                                                                        }
+@var select     editorTextFontSize                              `🆎✍ Rozmiar tekstu wpisywanego w edytorze` {
+                                                                            "14px - domyślny":"14.0px",
+                                                                            "—————————":"14.00px",
+                                                                            "10px - najmniejszy":"10px",
+                                                                            "11px - bardzo mały":"11px",
+                                                                            "12px - mały":"12px",
+                                                                            "13px - mały":"13px",
+                                                                            "14px - normalny":"14px",
+                                                                            "15px - średni":"15px",
+                                                                            "16px - średni":"16px",
+                                                                            "17px - większy":"17px",
+                                                                            "18px - większy":"18px",
+                                                                            "19px - duży":"19px",
+                                                                            "20px - duży":"20px",
+                                                                            "21px - duży":"21px",
+                                                                            "22px - bardzo duży":"22px",
+                                                                            "23px - bardzo duży":"23px",
+                                                                            "24px - ogromny":"24px",
+                                                                            "25px - ogromny":"25px",
+                                                                        }
+@var select     entryVotersTextFontSize                         `🆎 Rozmiar tekstu listy plusujących ⭐` {
+                                                                            "12px - domyślny"           :   "12.0px",
+                                                                            "—————————"            :   "12.00px",
+                                                                            "10px - najmniejszy"        :   "10px",
+                                                                            "11px - bardzo mały"        :   "11px",
+                                                                            "12px - mały"               :   "12px",
+                                                                            "13px - mały"               :   "13px",
+                                                                            "14px - domyślny"           :   "14px",
+                                                                            "15px - średni"             :   "15px",
+                                                                            "16px - średni"             :   "16px",
+                                                                            "17px - większy"            :   "17px",
+                                                                            "18px - większy"            :   "18px",
+                                                                            "19px - duży"               :   "19px",
+                                                                            "20px - duży"               :   "20px",
+                                                                            "21px - duży"               :   "21px",
+                                                                            "22px - bardzo duży"        :   "22px",
+                                                                            "23px - bardzo duży"        :   "23px",
+                                                                            "24px - ogromny"            :   "24px",
+                                                                            "25px - ogromny"            :   "25px",
+                                                                        }
+@var select     topNavCustomTextFontSize                        `🆎 Zmień rozmiar tekstu na górnej belce ⭐` {
+                                                                            "14px - domyślny":"14.0px",
+                                                                            "—————————":"14.00px",
+                                                                            "10px - najmniejszy":"10px",
+                                                                            "11px - bardzo mały":"11px",
+                                                                            "12px - mały":"12px",
+                                                                            "13px - mały":"13px",
+                                                                            "14px - średni":"14px",
+                                                                            "15px - średni":"15px",
+                                                                            "16px - średni":"16px",
+                                                                            "17px - większy":"17px",
+                                                                            "18px - większy":"18px",
+                                                                            "19px - duży":"19px",
+                                                                            "20px - bardzo duży":"20px",
+                                                                            "21px - ogromny":"21px",
+                                                                        }
+@var range      plusesMinusesSize                               `➕ Rozmiar plusów i minusów ⭐`         [20, 10, 40, 1, 'px']
+@var checkbox   plusesMinusesSizeInSidebar                      `➕ Zastosuj ten rozmiar także w plusach w sidebarze ⭐`                      0
+                                                                        
+
+var checkbox   fontCustomEnable                                `Włącz zmianę tekstu i czcionek`      0  
+var select     fontFamily                                      `Czcionka` {
+                                                                    "Domyślna czcionka":"default",
+                                                                    " ":"default",
+                                                                    "____ Fᴏɴᴛs ᴡɪᴛʜ Lɪɢᴀᴛᴜʀᴇs ____":"default",
+                                                                    "𝗙𝗶𝗿𝗮 𝗖𝗼𝗱𝗲 / Ligatures / Variable (weight 300..700)":"Fira Code",
+                                                                    " ":"default",
+                                                                    "____ Vᴀʀɪᴀʙʟᴇ ғᴏɴᴛs ____":"default",
+                                                                    "𝗥𝗼𝗯𝗼𝘁𝗼 𝗙𝗹𝗲𝘅 / ":"Roboto Flex",
+                                                                    "Inconsolata / weight 200..900 | width: 50%..200%":"Inconsolata",
+                                                                    "Source Code Pro / weight 200..900":"Source Code Pro",
+                                                                    "  ":"default",
+                                                                    "____ Oᴛʜᴇʀ Mᴏɴᴏsᴘᴀᴄᴇᴅ Fᴏɴᴛs ____":"default",
+                                                                    "𝗥𝗼𝗯𝗼𝘁𝗼 𝗠𝗼𝗻𝗼 / (weight)":"Roboto Mono",
+                                                                    "   ":"default",
+                                                                    "____ Oᴛʜᴇʀ Lᴇss Eʟᴇɢᴀɴᴛ Fᴏɴᴛs ____":"default",
+                                                                    "𝗖𝗿𝗶𝗺𝘀𝗼𝗻 𝗣𝗿𝗼 / (weight 300..700)":"Crimson Pro",
+                                                                    "𝗗𝗲𝗰𝗼𝘃𝗮𝗿 𝗥𝗲𝗴𝘂𝗹𝗮𝗿𝟮𝟰 / (weight 300..700)":"Decovar Regular24",
+                                                                    "𝗠𝗮𝗿𝘁𝗶𝗮𝗻 𝗠𝗼𝗻𝗼 / (weight, width)":"Martian Mono",
+                                                                    "𝗠𝗼𝗻𝘁𝘀𝗲𝗿𝗿𝗮𝘁 / Not monospace / (weight 100..900)":"Montserrat",
+                                                                    "    ":"default",
+                                                                    "____ Dᴇғᴀᴜʟᴛ Fᴏɴᴛs ____":"default",
+                                                                    "Stylus default font":"default",
+                                                                    "monospace (your system default font)":"monospace"
+                                                                }
+
+var range      fontSize                                        `Rozmiar czcionki (font-size)`              [14, 1, 100, 1, 'px']
+var range      fontVariableWght                                `Pogrubienie (wght)`                        [400, 100, 1000, 10, '']
+var range      fontVariableGRAD                                `Grade (GRAD)`                              [0, -200, 150, 10, '']
+var range      fontVariableItal                                `Italic (ital)`                             [0, 0, 1, 0.01, '']
+var range      fontStretch                                     `font-stretch`                              [100, 25, 200, 1, '%']
+var range      fontVariableWdth                                `Szerokość (wdth)`                          [25, 25, 150, 5, '']
+var range      fontVariableOpsz                                `Optical size (opsz)`                       [8, 8, 144, 1, '']
+var range      fontVariableSlnt                                `Slnt`                                      [0, -10, 0, 0.25, '']
+var range      fontVariableXTRA                                `XTRA`                                      [603, 323, 603, 1, '']
+var range      fontVariableXOPQ                                `XOPQ`                                      [175, 27, 175, 1, '']
+var range      fontVariableYOPQ                                `YOPQ`                                      [135, 25, 135, 1, '']
+var range      fontVariableYTLC                                `YTLC`                                      [570, 416, 570, 1, '']
+var range      fontVariableYTUC                                `YTUC`                                      [760, 528, 760, 1, '']
+var range      fontVariableYTAS                                `YTAS`                                      [854, 649, 854, 1, '']
+var range      fontVariableYTDE                                `YTDE`                                      [-98, -305, -98, 1, '']
+var range      fontVariableYTFI                                `YTFI`                                      [788, 560, 788, 1, '']
+
+var range      blockquoteItalicsVariableFontValue             `🆎 blockquoteItalicsVariableFontValue`                                   [0, -10, 0, 0.25, '']
+var checkbox   blockquoteItalicsOff                           `🆎 Cytaty bez kursywy`                0
+
+
+
 
 
 
@@ -324,29 +464,29 @@ var checkbox   checkLinkCommentsPerHour                        `❎🔸 Oszacuj 
 @var range      SUB_HR_PLUSY_I_MINUSY_REALTIME              `➕ PLUSY W CZASIE RZECZYWISTYM`                                 [0, 0, 99999, 1, 'mm']
 
 @var range      checkEntryPlusesEnable_ON                       `Liczby plusów i minusów będą aktualizowane na bieżąco w czasie rzeczywistym`                        [0, 0, 111100, 1, 'mm']
-@var checkbox   checkEntryPlusesEnable                          `❎➕ Plusy w czasie rzeczywistym ⭐`                       0
+@var checkbox   checkEntryPlusesEnable                          `❎➕ Plusy w czasie rzeczywistym`                       0
 @var range      checkEntryPlusesEnable_INFO                     `Włącz funkcję "Plusy w czasie rzeczywistym", aby aktywować poniższe funkcje dotyczące aktualizacji liczby plusów wpisów i komentarzy `             [0, 0,88800, 1, 'mm']
 
-@var checkbox   checkEntryPlusesWhenVoting                      `❎➕ Prawdziwa liczba plusów po zaplusowaniu ⭐`           0
+@var checkbox   checkEntryPlusesWhenVoting                      `❎➕ Prawdziwa liczba plusów po zaplusowaniu`           0
 @var range      checkEntryPlusesWhenVoting_INFO                  `Domyślnie po zaplusowaniu Wykop wcale nie pokazuje prawdziwej liczby plusów tylko zwyczajnie zwiększa obecnie wyświetloną wartość o +1. Od czasu wczytania strony mogły jednak przybyć plusy, więc Twój plus prawdopodobnie wcale nie jest tym plusem, który pokazuje Wykop. Po włączeniu tej funkcji dostajesz prawdziwą informację ile plusów ma wpis/komentarz, który został przez Ciebie zaplusowany.`             [0, 0,88800, 1, 'mm']
 
-@var checkbox   checkEntryPlusesPerHour                         `❎➕ Liczba nowych plusów na godzinę ⭐ `                   0
+@var checkbox   checkEntryPlusesPerHour                         `❎➕ Liczba nowych plusów na godzinę `                   0
 @var range      checkEntryPlusesPerHour_INFO                    `Pokazuje aktualną szybkość przybywania plusów we wpisach i komentarzach. Wyświetlana wartość to bieżąca liczba plusów na godzinę (p/h) obliczana od momentu wczytania strony. Nie jest to wartość "średnia" liczby plusów i minusów od momentu dodania wpisu/komentarza. UWAGA. Komentarze pod znaleziskami można minusować, więc wartość ta uwzględnia również przybywające minusy. Wartość ujemna oznacza, że aktualnie komentarz jest szybciej minusowany niż plusowany.`             [0, 0,88800, 1, 'mm']
 
-@var checkbox   checkEntryPlusesForVotingGame                   `❎➕🔹 Zabawy Mirko "ostatnia cyfra po zaplusowaniu" ⭐`    0
+@var checkbox   checkEntryPlusesForVotingGame                   `❎➕🔹 Zabawy Mirko "ostatnia cyfra po zaplusowaniu"`    0
 @var range      checkEntryPlusesForVotingGame_INFO              `Jeśli trafisz na wpis z popularną zabawą typu "ostatnia cyfra po zaplusowaniu wpisu powie Ci..." to liczba plusów zostanie przed Tobą ukryta, tak aby wzięcie udziału w grze i wynik zaplusowania wpisu było dla Ciebie niespodzianką. Po zaplusowaniu pojawi się prawdziwa, aktualna i odświeżona liczba plusów. Dodatkowo dla urozmaicenia zabawy pokaże się animacja cyfry, która została przez Ciebie wylosowana. Obecnie Wykop nie aktualizuje liczby plusów po zaplusowaniu tylko zawsze zwiększa tę liczbę o +1 co powoduje, że zabawa ta bez włączenia niniejszej funkcji nie ma żadnego sensu. Po pierwsze zawsze wiesz jaka liczba pokaże Ci się po zaplusowaniu, ponieważ po prostu zwiększy się o jeden. Po drugie po zaplusowaniu Wykop nie pokazuje rzeczywistej, odświeżonej liczby plusów.`             [0, 0,88800, 1, 'mm']
 
-TODO checkbox   checkEntryCommentsPerHour                       `❎➕ Liczba nowych komentarzy pod wpisem na godzinę ⭐`     0
+TODO checkbox   checkEntryCommentsPerHour                       `❎➕ Liczba nowych komentarzy pod wpisem na godzinę`     0
 TODO range      checkEntryCommentsPerHour_INFO                  `Pokazuje aktualną szybkość przybywania komentarzy we wpisach i w komentarzach pod znaleziskami. Wyświetlana wartość to bieżąca liczba dodawanych komentarzy na godzinę (k/h) obliczana od momentu wczytania strony. Nie jest to wartość "średnia" liczby komentarzy od momentu dodania wpisu.`             [0, 0,88800, 1, 'mm']
 
 
 @var range      SUB_HR_PLUSY_I_MINUSY_STYLE                      ` Liczba plusów i minusów`                                 [0, 0, 99999, 1, 'mm']
 
-@var checkbox   hidePlusesBeforeVoting                          `🔷 Mikroblog: Ukryj liczbę plusów przed zaplusowaniem ⭐`                0
-@var checkbox   hidePlusesAndMinusesBeforeVoting                `🔸 Znalezisko: Ukryj liczbę plusów i minusów przed zagłosowaniem ⭐`     0
+@var checkbox   hidePlusesBeforeVoting                          `🔷 Mikroblog: Ukryj liczbę plusów przed zaplusowaniem`                0
+@var checkbox   hidePlusesAndMinusesBeforeVoting                `🔸 Znalezisko: Ukryj liczbę plusów i minusów przed zagłosowaniem`     0
 
 
-@var range      plusesMinusesSize                               `➕ Rozmiar plusów i minusów ⭐`         [20, 10, 40, 1, 'rem']
+@var range      plusesMinusesSize                               `➕ Rozmiar plusów i minusów ⭐`         [20, 10, 40, 1, 'px']
 @var checkbox   plusesMinusesSizeInSidebar                      `➕ Zastosuj ten rozmiar także w plusach w sidebarze ⭐`                      0
 @var checkbox   plusesAndMinusesColorsEnable                    `➕ Włącz zmianę kolorystyki i wyglądu plusów i minusów ⭐`                   1    
 @var select     plusesAndMinusesStyle                           `➕ [PRESET] Styl plusów i minusów ⭐`  {
@@ -612,106 +752,9 @@ var range      notatkowatorUpdateInterval                      `📝❎ Odświe�
 
 
 
-var range      HR_FONTS                            `🆎 Tekst i czcionki`                                                                                    [0, 0, 99900, 1, 'mm']
-var checkbox   fontCustomEnable                                `Włącz zmianę tekstu i czcionek`      0  
-var select     fontFamily                                      `Czcionka` {
-                                                                    "Domyślna czcionka":"default",
-                                                                    " ":"default",
-                                                                    "____ Fᴏɴᴛs ᴡɪᴛʜ Lɪɢᴀᴛᴜʀᴇs ____":"default",
-                                                                    "𝗙𝗶𝗿𝗮 𝗖𝗼𝗱𝗲 / Ligatures / Variable (weight 300..700)":"Fira Code",
-                                                                    " ":"default",
-                                                                    "____ Vᴀʀɪᴀʙʟᴇ ғᴏɴᴛs ____":"default",
-                                                                    "𝗥𝗼𝗯𝗼𝘁𝗼 𝗙𝗹𝗲𝘅 / ":"Roboto Flex",
-                                                                    "Inconsolata / weight 200..900 | width: 50%..200%":"Inconsolata",
-                                                                    "Source Code Pro / weight 200..900":"Source Code Pro",
-                                                                    "  ":"default",
-                                                                    "____ Oᴛʜᴇʀ Mᴏɴᴏsᴘᴀᴄᴇᴅ Fᴏɴᴛs ____":"default",
-                                                                    "𝗥𝗼𝗯𝗼𝘁𝗼 𝗠𝗼𝗻𝗼 / (weight)":"Roboto Mono",
-                                                                    "   ":"default",
-                                                                    "____ Oᴛʜᴇʀ Lᴇss Eʟᴇɢᴀɴᴛ Fᴏɴᴛs ____":"default",
-                                                                    "𝗖𝗿𝗶𝗺𝘀𝗼𝗻 𝗣𝗿𝗼 / (weight 300..700)":"Crimson Pro",
-                                                                    "𝗗𝗲𝗰𝗼𝘃𝗮𝗿 𝗥𝗲𝗴𝘂𝗹𝗮𝗿𝟮𝟰 / (weight 300..700)":"Decovar Regular24",
-                                                                    "𝗠𝗮𝗿𝘁𝗶𝗮𝗻 𝗠𝗼𝗻𝗼 / (weight, width)":"Martian Mono",
-                                                                    "𝗠𝗼𝗻𝘁𝘀𝗲𝗿𝗿𝗮𝘁 / Not monospace / (weight 100..900)":"Montserrat",
-                                                                    "    ":"default",
-                                                                    "____ Dᴇғᴀᴜʟᴛ Fᴏɴᴛs ____":"default",
-                                                                    "Stylus default font":"default",
-                                                                    "monospace (your system default font)":"monospace"
-                                                                }
-
-var range      fontSize                                        `Rozmiar czcionki (font-size)`              [14, 1, 100, 1, 'rem']
-var range      fontVariableWght                                `Pogrubienie (wght)`                        [400, 100, 1000, 10, '']
-var range      fontVariableGRAD                                `Grade (GRAD)`                              [0, -200, 150, 10, '']
-var range      fontVariableItal                                `Italic (ital)`                             [0, 0, 1, 0.01, '']
-var range      fontStretch                                     `font-stretch`                              [100, 25, 200, 1, '%']
-var range      fontVariableWdth                                `Szerokość (wdth)`                          [25, 25, 150, 5, '']
-var range      fontVariableOpsz                                `Optical size (opsz)`                       [8, 8, 144, 1, '']
-var range      fontVariableSlnt                                `Slnt`                                      [0, -10, 0, 0.25, '']
-var range      fontVariableXTRA                                `XTRA`                                      [603, 323, 603, 1, '']
-var range      fontVariableXOPQ                                `XOPQ`                                      [175, 27, 175, 1, '']
-var range      fontVariableYOPQ                                `YOPQ`                                      [135, 25, 135, 1, '']
-var range      fontVariableYTLC                                `YTLC`                                      [570, 416, 570, 1, '']
-var range      fontVariableYTUC                                `YTUC`                                      [760, 528, 760, 1, '']
-var range      fontVariableYTAS                                `YTAS`                                      [854, 649, 854, 1, '']
-var range      fontVariableYTDE                                `YTDE`                                      [-98, -305, -98, 1, '']
-var range      fontVariableYTFI                                `YTFI`                                      [788, 560, 788, 1, '']
-
-var range      blockquoteItalicsVariableFontValue             `🆎 blockquoteItalicsVariableFontValue`                                   [0, -10, 0, 0.25, '']
-var checkbox   blockquoteItalicsOff                           `🆎 Cytaty bez kursywy`                0
-
-
-var select     entriesTextFontSize                            `🆎🔹 Rozmiar tekstu we wpisach` {
-                                                                            "16px - domyślny":"16.0rem",
-                                                                            "—————————":"16.00rem",
-                                                                            "10px - najmniejszy":"10rem",
-                                                                            "11px - bardzo mały":"11rem",
-                                                                            "12px - mały":"12rem",
-                                                                            "13px - mały":"13rem",
-                                                                            "14px - średni (Wykop 2022)":"14rem",
-                                                                            "15px - średni":"15rem",
-                                                                            "16px - normalny":"16rem",
-                                                                            "17px - większy":"17rem",
-                                                                            "18px - większy":"18rem",
-                                                                            "19px - duży":"19remx",
-                                                                            "20px - bardzo duży":"20rem",
-                                                                            "21px - ogromny":"21rem",
-                                                                        } 
-                                                                        
-var select     commentsTextFontSize                            `🆎🗨️ Rozmiar tekstu w komentarzach` {
-                                                                            "16px - domyślny":"16.0rem",
-                                                                            "—————————":"16.00rem",
-                                                                            "10px - najmniejszy":"10rem",
-                                                                            "11px - bardzo mały":"11rem",
-                                                                            "12px - mały":"12rem",
-                                                                            "13px - mały":"13rem",
-                                                                            "14px - średni (Wykop 2022)":"14rem",
-                                                                            "15px - średni":"15rem",
-                                                                            "16px - normalny":"16rem",
-                                                                            "17px - większy":"17rem",
-                                                                            "18px - większy":"18rem",
-                                                                            "19px - duży":"19remx",
-                                                                            "20px - bardzo duży":"20rem",
-                                                                            "21px - ogromny":"21rem",
-                                                                        } 
-
 
 @var range      HR_SKINS                             `🌈 SKÓRKI`                                                                                    [0, 0, 99900, 1, 'mm']
-@var select     textFontSize                                    `🆎 Rozmiar elementów / powiększenie` {
-                                                                            "16px - domyślny":"16.0rem",
-                                                                            "—————————":"16.00rem",
-                                                                            "10px - najmniejszy":"10rem",
-                                                                            "11px - bardzo mały":"11rem",
-                                                                            "12px - mały":"12rem",
-                                                                            "13px - mały":"13rem",
-                                                                            "14px - średni (Wykop 2022)":"14rem",
-                                                                            "15px - średni":"15rem",
-                                                                            "16px - normalny":"16rem",
-                                                                            "17px - większy":"17rem",
-                                                                            "18px - większy":"18rem",
-                                                                            "19px - duży":"19remx",
-                                                                            "20px - bardzo duży":"20rem",
-                                                                            "21px - ogromny":"21rem",
-                                                                        } 
+
 @var checkbox   presetLookLikeClassicWykop                      `[PRESET] Włącz stylizacje wyglądu Wykop 2022`                                             0
 
 
@@ -757,26 +800,7 @@ var select     commentsTextFontSize                            `🆎🗨️ Rozm
 
 
 @var range      HR_EDITOR                       `✍️ EDYTOR WPISU I KOMENTARZA`                                                                          [0, 0, 99900, 1, 'mm']
-@var select     editorTextFontSize                              `🆎 Rozmiar tekstu wpisywanego w edytorze ⭐` {
-                                                                            "14px - domyślny":"14.0rem",
-                                                                            "—————————":"14.00rem",
-                                                                            "10px - najmniejszy":"10rem",
-                                                                            "11px - bardzo mały":"11rem",
-                                                                            "12px - mały":"12rem",
-                                                                            "13px - mały":"13rem",
-                                                                            "14px - normalny":"14rem",
-                                                                            "15px - średni":"15rem",
-                                                                            "16px - średni":"16rem",
-                                                                            "17px - większy":"17rem",
-                                                                            "18px - większy":"18rem",
-                                                                            "19px - duży":"19rem",
-                                                                            "20px - duży":"20rem",
-                                                                            "21px - duży":"21rem",
-                                                                            "22px - bardzo duży":"22rem",
-                                                                            "23px - bardzo duży":"23rem",
-                                                                            "24px - ogromny":"24rem",
-                                                                            "25px - ogromny":"25rem",
-                                                                        }
+
 
 
 @var select     editorNewEntries                                `🔹 Edytor dodawania nowych wpisów na mikroblogu`  {
@@ -792,7 +816,7 @@ var select     commentsTextFontSize                            `🆎🗨️ Rozm
                                                                             "🚫 Nie dodaję nowych wpisów na mikroblogu - całkowicie ukryj edytor":"niepokazuj",
                                                                         } 
 
-TODO: var select     editorNewComments                                `🗨️ Edytor dodawania komentarzy`  {
+TODO: var select     editorNewComments                          `🗨️ Edytor dodawania komentarzy`  {
                                                                             "Pokazuj normalnie (domyślnie)":"domyslnie", 
                                                                             "Zwinięty":"minimized",
                                                                             "🚫 Nie dodaję komentarzy - całkowicie ukryj edytor":"niepokazuj",
@@ -816,7 +840,7 @@ TODO var checkbox   imageUploaderEnable                             `❎ CTRL + 
                                                                     
                                                                     
                                                                     
-@var range      SUB_HR_SHOWUSERNAME                     `DODAWANIE NOWEGO WPISU / KOMENTARZA`                          [0, 0, 99999, 1, 'mm']
+@var range      SUB_HR_SHOWUSERNAME                     `✍ DODAWANIE NOWEGO WPISU / KOMENTARZA`                          [0, 0, 99999, 1, 'mm']
 @var checkbox   editorFocusOnDodajURL                           `❎ Aktywuj edytor nowego wpisu na stronie .../mikroblog/#dodaj`                                 0     
 
 @var select     editorSendHotkey                                `❎ Skrót klawiaturowy do wysyłania wpisu / komentarza ⭐` {
@@ -840,7 +864,7 @@ var range      SUB_HR_LENNYFACE                            `( ͡° ͜ʖ ͡°) Ok
 var range      lennyFaceDropdownUpgrade_ON_INFO                `Modyfikacje okienka LennyFace są włączone`                 [0, 0,111100, 1, 'mm']
 var checkbox   lennyFaceDropdownUpgrade                        `Aktywuj modyfikacje okienka LennyFace wybrane poniżej`                             0
 var checkbox   lennyFaceDropdownAbove                          `Okienko wyboru LennyFace nad edytorem`                                                      0
-var range      lennyFaceDropdownFontSize                       `Rozmiar LennyFace`                                                                         [10, 4, 25, 1, 'rem']
+var range      lennyFaceDropdownFontSize                       `Rozmiar LennyFace`                                                                         [10, 4, 25, 1, 'px']
 var range      lennyFaceDropdownHeight                         `Wysokość okienka wyboru LennyFace`                                                         [320, 140, 600, 10, 'px']
 var range      lennyFaceDropdownNumberOfLenniesInRow           `Liczba LennyFace w jednym rzędzie`                                                         [6, 1, 44, 1, '']
 var checkbox   lennyFaceDropdownDontHideEntryContent           `Nie ukrywaj treści w edytorze podczas wybierania LennyFace`                                   0
@@ -1087,24 +1111,24 @@ var select     lennyFaceDropdownSkin                           `Okienko wyboru L
                                                                         "🚫 Nie pokazuj prefixu"                   :   "ukryj"
                                                                     }
 @var select     entryVotersTextFontSize                         `🆎 Rozmiar tekstu listy plusujących ⭐` {
-                                                                            "12px - domyślny"           :   "12.0rem",
-                                                                            "—————————"            :   "12.00rem",
-                                                                            "10px - najmniejszy"        :   "10rem",
-                                                                            "11px - bardzo mały"        :   "11rem",
-                                                                            "12px - mały"               :   "12rem",
-                                                                            "13px - mały"               :   "13rem",
-                                                                            "14px - domyślny"           :   "14rem",
-                                                                            "15px - średni"             :   "15rem",
-                                                                            "16px - średni"             :   "16rem",
-                                                                            "17px - większy"            :   "17rem",
-                                                                            "18px - większy"            :   "18rem",
-                                                                            "19px - duży"               :   "19rem",
-                                                                            "20px - duży"               :   "20rem",
-                                                                            "21px - duży"               :   "21rem",
-                                                                            "22px - bardzo duży"        :   "22rem",
-                                                                            "23px - bardzo duży"        :   "23rem",
-                                                                            "24px - ogromny"            :   "24rem",
-                                                                            "25px - ogromny"            :   "25rem",
+                                                                            "12px - domyślny"           :   "12.0px",
+                                                                            "—————————"            :   "12.00px",
+                                                                            "10px - najmniejszy"        :   "10px",
+                                                                            "11px - bardzo mały"        :   "11px",
+                                                                            "12px - mały"               :   "12px",
+                                                                            "13px - mały"               :   "13px",
+                                                                            "14px - domyślny"           :   "14px",
+                                                                            "15px - średni"             :   "15px",
+                                                                            "16px - średni"             :   "16px",
+                                                                            "17px - większy"            :   "17px",
+                                                                            "18px - większy"            :   "18px",
+                                                                            "19px - duży"               :   "19px",
+                                                                            "20px - duży"               :   "20px",
+                                                                            "21px - duży"               :   "21px",
+                                                                            "22px - bardzo duży"        :   "22px",
+                                                                            "23px - bardzo duży"        :   "23px",
+                                                                            "24px - ogromny"            :   "24px",
+                                                                            "25px - ogromny"            :   "25px",
                                                                         }
 
 @var checkbox   entryVotersListUsersStartWithAt                 `Wyświetl "@" przed loginami użytkowników ⭐`                       0
@@ -1292,20 +1316,20 @@ REMOVED checkbox   entryVotersListEmojiRemovedUserTextHide             `🔹❌ 
 @var range      HR_TOPNAV                           `𝗕𝗘𝗟𝗞𝗔 𝗡𝗔𝗪𝗜𝗚𝗔𝗖𝗬𝗝𝗡𝗔`                                                                                               [0, 0, 99900, 1, 'mm']
 
 @var select     topNavCustomTextFontSize                        `🆎 Zmień rozmiar tekstu na górnej belce ⭐` {
-                                                                            "14px - domyślny":"14.0rem",
-                                                                            "—————————":"14.00rem",
-                                                                            "10px - najmniejszy":"10rem",
-                                                                            "11px - bardzo mały":"11rem",
-                                                                            "12px - mały":"12rem",
-                                                                            "13px - mały":"13rem",
-                                                                            "14px - średni":"14rem",
-                                                                            "15px - średni":"15rem",
-                                                                            "16px - średni":"16rem",
-                                                                            "17px - większy":"17rem",
-                                                                            "18px - większy":"18rem",
-                                                                            "19px - duży":"19rem",
-                                                                            "20px - bardzo duży":"20rem",
-                                                                            "21px - ogromny":"21rem",
+                                                                            "14px - domyślny":"14.0px",
+                                                                            "—————————":"14.00px",
+                                                                            "10px - najmniejszy":"10px",
+                                                                            "11px - bardzo mały":"11px",
+                                                                            "12px - mały":"12px",
+                                                                            "13px - mały":"13px",
+                                                                            "14px - średni":"14px",
+                                                                            "15px - średni":"15px",
+                                                                            "16px - średni":"16px",
+                                                                            "17px - większy":"17px",
+                                                                            "18px - większy":"18px",
+                                                                            "19px - duży":"19px",
+                                                                            "20px - bardzo duży":"20px",
+                                                                            "21px - ogromny":"21px",
                                                                         }
 @var range      topNavHeight                                    `Wysokość górnej belki`                         [48, 20, 100, 1, 'px']
 
@@ -1396,7 +1420,7 @@ REMOVED checkbox   entryVotersListEmojiRemovedUserTextHide             `🔹❌ 
 
 
 @var range      SUB_HR_TOPNAV_LEFT_BUTTONS_STYLE       `WYGLĄD PRZYCISKÓW NA BELCE`                                   [0, 0, 99999, 1, 'mm']
-@var checkbox   topNavBarLooksLikeClassicWykop                  `Styl przycisków Wykop 2022 ⭐`                              0     
+@var checkbox   topNavBarLooksLikeClassicWykop                  `Styl przycisków Wykop 2022 ⭐`                           1     
 @var checkbox   topNavHomeButtonTextBolder                      `Pogrubiony tekst przycisków w stylu Wykopu 2022 ⭐`      0
 @var select     upcomingCount                                   `Styl liczby nowych wykopalisk ⭐` {
                                                                                 "Wykop 2023 (domyślny)"        :    "domyslny",
@@ -1458,7 +1482,7 @@ var checkbox  topNavSnowGirl                                    `❄ Snow Girl` 
 @var range      wxsSwitchesEnable_OFF_INFO                       `Przyciski filtrów na górnej belce są wyłączone`              [0, 0, 100000, 1, 'mm']
 @var range      wxsSwitchesEnable_ON_INFO                        `Przyciski filtrów są włączone`               [0, 0,111100, 1, 'mm']
 @var checkbox   wxsSwitchesEnable                               `❎ Włącz Przyciski filtrów ⭐`                                     0      
-@var checkbox   wxsSwitchPhotoViewer                            `❎ Przycisk filtra PhotoViewer ⭐`                              0       
+@var checkbox   wxsSwitchPhotoViewer                            `❎ Przycisk filtra Photo Viewer ⭐`                              0       
 @var checkbox   wxsSwitchImages                                 `❎ Przycisk filtra Tylko z obrazkami/bez obrazków ⭐`           0       
 @var checkbox   wxsSwitchYouTube                                `❎ Przycisk filtra YouTube ⭐`                                     0       
 @var checkbox   wxsSwitchAdult                                  `❎ Przycisk filtra 18+ ⭐`                                      0       
@@ -1914,7 +1938,7 @@ TODO checkbox   commentsCountAlignment                          `🗨️ Przenie
 @var checkbox   homepagePinnedEntriesHideFifth                  `📌🔹 Ukryj piąty przypięty wpis`                                                    0
 
 @var range      homepagePinnedEntriesHideBelowLimit             `📌🔹❎ Ukrywaj przypięte wpisy, które mają mniej niż X plusów`                         [10, 0, 1000, 5, '']
-@var checkbox   fixDeletedEntriesOnMainpage                     `📌🔹🚫✔ Ukrywaj usunięte wpisy z mikrobloga przypięte na głównej`                      0     
+@var checkbox   fixDeletedEntriesOnMainpage                     `📌🔹🚫✔ Ukrywaj usunięte wpisy z mikrobloga przypięte na głównej` 1     
 
 
 @var range      SUB_HR_LINKS_ANALYZER                   `🔶📊 STATYSTYKI ZNALEZISK ⭐ Nowe`                                   [0, 0, 99999, 1, 'mm']
@@ -1955,16 +1979,16 @@ TODO checkbox   commentsCountAlignment                          `🗨️ Przenie
 @var select     linkOrderFirst                                 `🔸 Wyświetlaj jako pierwsze ⭐` {
                                                                             "🔸 Nagłówek znaleziska (domyślnie)"                                    :   "znalezisko",
                                                                             "🔗 Treści powiązane"                                                   :   "tresci_powiazane",
-                                                                            "🗨️ Komentarze"                                                        :   "komentarze",
-                                                                            "🔼 Lista wykopujących/zakopujących*":"wykopujacy_i_zakopujacy",
+                                                                            "🗨️ Komentarze"                                                         :   "komentarze",
+                                                                            "🔼 Lista wykopujących/zakopujących":"wykopujacy_i_zakopujacy",
                                                                             "✍ Edytor dodawania komentarza"                                         :   "edytor_komentarza",
                                                                     }
 @var select     linkOrderSecond                                  `🔸 Wyświetlaj jako drugie ⭐` {
                                                                             "🔗 Treści powiązane (domyślnie)"                                       :   "tresci_powiazane",
-                                                                            "🔸 Nagłówek znaleziska*":"znalezisko",
+                                                                            "🔸 Nagłówek znaleziska":"znalezisko",
                                                                             "🗨️ Komentarze"                                                        :   "komentarze",
                                                                             "✍ Edytor dodawania komentarza"                                         :   "edytor_komentarza",
-                                                                            "🔼 Lista wykopujących/zakopujących"                                    :   "wykopujacy_i_zakopujacy",
+                                                                            "🔼 Lista wykopujących/zakopujących*"                                    :   "wykopujacy_i_zakopujacy",
                                                                     } 
 @var select     linkOrderThird                                 `🔸 Wyświetlaj jako trzecie ⭐` {
                                                                             "🗨️ Komentarze (domyślnie)"                                            :   "komentarze",
@@ -2000,13 +2024,13 @@ TODO checkbox   commentsCountAlignment                          `🗨️ Przenie
 
 
 @var range      SUB_HR_ZNALEZISKO_POPOVER_MENU          `🔸 MENU NAD ZNALEZISKIEM (POPOVER)`                          [0, 0, 99999, 1, 'mm']
-@var select     popperDisplay                                   `Menu po najechaniu kursorem` {
+@var select     popperDisplay                                  `Menu po najechaniu kursorem` {
                                                                             "Pokazuj tylko ikonki (domyślnie)"          :   "domyslnie",
                                                                             "Pokazuj ikony i napisy*":"kontekstowe"
                                                                         } 
-@var checkbox   poppersHighlight                                `Ładne i czytelne menu`                                                     0
-@var checkbox   poppersHideTag                                  `Nie pokazuj menu nad tagami`                                               0
-@var checkbox   poppersHideDomain                               `Nie pokazuj menu nad domenami w znalezisku`                                0
+@var checkbox   popperHighlight                                `Popraw czytelność menu`                                                       1
+@var checkbox   popperHideTag                                  `🚫 Nie pokazuj menu nad tagami`                                               0
+@var checkbox   popperHideDomain                               `🚫 Nie pokazuj menu nad domenami w znalezisku`                                0
 
 
 
@@ -2187,7 +2211,7 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
                                                                     
 
 @var range      HR_PHOTO_VIEWER                         `🔷🌆 Wykop X Photo Viewer `                                                                                [0, 0, 99900, 1, 'mm']
-@var checkbox   photoViewerEnable                               `Włącz 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗣𝗵𝗼𝘁𝗼 𝗩𝗶𝗲𝘄𝗲𝗿 na #tagach`                                                      0
+@var checkbox   photoViewerEnable2                               `Włącz 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗣𝗵𝗼𝘁𝗼 𝗩𝗶𝗲𝘄𝗲𝗿 na #tagach`                                                      0
 @var checkbox   photoViewerUltraCompact                         `Widok ultra kompaktowy (same zdjęcia) `                                                      0
 @var range      photoViewerColumns                              `Liczba grafik w jednym wierszu`                                                              [3, 1, 7, 1, '']
 
@@ -3159,6 +3183,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
 
 
     wykopMobileBreakpointWidth = 1042px;
+    
     :root
     {
         --wykopMobileBreakpointWidth: wykopMobileBreakpointWidth
@@ -3392,8 +3417,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         --geyser:                                             rgba(217, 223, 228, 1);
         --heather:                                            rgba(175, 190, 204, 1);
         
-        
-        s
+
         --blackOpacity1:                                      rgba(0, 0, 0, 1);
         --blackOpacity09:                                     rgba(0, 0, 0, 0.9);
         --blackOpacity08:                                     rgba(0, 0, 0, 0.8);
@@ -4248,7 +4272,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     section.link-block section.vote-box div.burry:not(.wykopxVotesDownInfo) > span:after
     {
         content: "ZAKOP"!important;
-        font-size: 10rem!important;
+        font-size: 10px!important;
     } 
 
 
@@ -4284,12 +4308,12 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             justify-content: center!important;
             display: flex!important; 
-            margin-top: 5rem!important;
+            margin-top: 5px!important;
         }
         
         div.wxsDownVoteWrapper button.wxsDownVote
         {
-            font-size: 11rem!important;
+            font-size: 11px!important;
         }
     }
     
@@ -4322,8 +4346,8 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         /* BOX ZNALEZISKA - votesMeter */
         section.vote-box[data-v-83d9f12a]
         {
-            padding-left: 10rem;
-            padding-right: 10rem;
+            padding-left: 10px;
+            padding-right: 10px;
         } 
 
         /* Wykres słupkowy proporcji wykopów do zakopów */
@@ -4332,7 +4356,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             progress.wykopx_votesMeter 
             {
                 display: flex;
-                margin-top: 5rem;
+                margin-top: 5px;
                 width: 100%;
                 height: 3px;
                 border-radius: 0!important;
@@ -4673,23 +4697,9 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     
     
     
-    
-    
 
 
-    
 
-
-    
-    
-    
-
-    
-    /* html { font-size: 62.5%; }                                              /* 62.5% -> 10px https://www.freecodecamp.org/news/override-root-font-size-for-a-better-user-experience/ */  */
-    body { font-size: 1.6rem; }                                             /* 10px * 1.6rem = 16 px -- https://nekocalc.com/px-to-rem-converter */
-    body * { font-size: 14rem; }
-    body small { font-size: 0.8em; line-height: 0.9em; }
-    
     section.editor>header>ul>li>i,                   			/* napisy przy ikonkach edytora */
     aside.profile-top>section>header>ul li,         			/* ikonki "Zgłoś", "Zablokuj" */
     aside.profile-top>section>header>ul li a,       			/* ikonka "Napisz do użytkownika"*/
@@ -4697,50 +4707,59 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     aside.tag-top aside ul > li.edit > a,            			/* edycja tagu autorskiego */
     section.popper > section.tooltip > footer > ul.icons > li, 	/* ikonki w menu kontekstowym */
     section.popper > section.tooltip > footer > ul.icons > li > a, /* ikonki w menu kontekstowym */
-    section.link-page > section.link > section.link-block > section > article > section.actions > ul > li > ul > li > a  /* action menu znaleziska nadpisane przez a, span { font-size: 14rem; } */
+    section.link-page > section.link > section.link-block > section > article > section.actions > ul > li > ul > li > a  
+    /* action menu znaleziska nadpisane przez a, span { font-size: 14rem; } */
     {
         font-size: 0;
     }
-        
-    if(textFontSize == "10rem")      {    html { font-size: 3.91%; }} 
-    else if(textFontSize == "11rem") {    html { font-size: 4.30%; }} 
-    else if(textFontSize == "12rem") {    html { font-size: 4.69%; }} 
-    else if(textFontSize == "13rem") {    html { font-size: 5.08%; }} 
-    else if(textFontSize == "14rem") {    html { font-size: 5.47%; }} 
-    else if(textFontSize == "15rem") {    html { font-size: 5.86%; }} 
-    else if(textFontSize == "16rem") {    html { font-size: 6.25%; }} 
-    else if(textFontSize == "16.0rem") {  html { font-size: 6.25%; }} 
-    else if(textFontSize == "16.00rem") { html { font-size: 6.25%; }} 
-    else if(textFontSize == "17rem") {    html { font-size: 6.64%; }} 
-    else if(textFontSize == "18rem") {    html { font-size: 7.03%; }} 
-    else if(textFontSize == "19rem") {    html { font-size: 7.42%; }} 
-    else if(textFontSize == "20rem") {    html { font-size: 7.81%; }} 
-    else if(textFontSize == "21rem") {    html { font-size: 8.20%; }} 
 
+
+
+        
+        
+        
     :root
-    {
-        --textFontSize10: 10rem;
-        --textFontSize11: 11rem;
-        --textFontSize12: 12rem;
-        --textFontSize13: 13rem;
-        --textFontSize14: 14rem;
-        --textFontSize15: 15rem;
-        --textFontSize16: 16rem;
-        --textFontSize17: 17rem;
-        --textFontSize18: 18rem;
-        --textFontSize19: 19rem;
-        --textFontSize20: 20rem;
-        --textFontSize21: 21rem;
-        --textFontSize: var(--textFontSize14);
+    {      
+        --textFontSize22: 'calc(22px * %s)' % textFontSizeMultipla;
+        --textFontSize21: 'calc(21px * %s)' % textFontSizeMultipla;
+        --textFontSize20: 'calc(20px * %s)' % textFontSizeMultipla;
+        --textFontSize19: 'calc(19px * %s)' % textFontSizeMultipla;
+        --textFontSize18: 'calc(18px * %s)' % textFontSizeMultipla;
+        --textFontSize17: 'calc(17px * %s)' % textFontSizeMultipla;
+        --textFontSize16: 'calc(16px * %s)' % textFontSizeMultipla;
+        --textFontSize15: 'calc(15px * %s)' % textFontSizeMultipla;
+        --textFontSize14: 'calc(14px * %s)' % textFontSizeMultipla;
+        --textFontSize13: 'calc(13px * %s)' % textFontSizeMultipla;
+        --textFontSize12: 'calc(12px * %s)' % textFontSizeMultipla;
+        --textFontSize11: 'calc(11px * %s)' % textFontSizeMultipla;
+        --textFontSize10: 'calc(10px * %s)' % textFontSizeMultipla;
+        
+        
         --topNavTextFontSize: topNavCustomTextFontSize;
-        --editorTextFontSize: editorTextFontSize;
         --entryVotersTextFontSize: entryVotersTextFontSize;
     }
     
   
-    aside.profile-top > section > header > div h1 > a.username > span           /* nazwa nicku na profilu */
-    { font-size: 22rem!important; }
+    section.entry div.content section.entry-content div.wrapper                              /* treść wpisu */
+    {
+        --entriesTextFontSize: entriesTextFontSize;
+        font-size: var(--entriesTextFontSize, 16px)!important;
+    }    
+    section.entry div.comments div.content section.entry-content div.wrapper,                 /* treść komentarzy pod wpisami i znaleziskami */
+    section.link-page section.comments div.content section.entry-content div.wrapper
+    {
+        --commentsTextFontSize: commentsTextFontSize;
+        font-size: var(--commentsTextFontSize, 14px)!important;
+    }
+    
 
+        
+    aside.profile-top > section > header > div h1 > a.username > span           /* nazwa nicku na profilu */
+    {
+        font-size: var(--textFontSize22)!important; 
+    }
+
+    
     aside.profile-top > section > header > div h1                               /* nazwa nicku na profilu */
     {
         display: flex;
@@ -4748,27 +4767,32 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     }
     
     section.link-block > section > article > header h1 a                        /* tytuł znaleziska */
-    { font-size: 21rem!important; }
-    
+    { 
+        font-size: var(--textFontSize21)!important; 
+    }
     section.link-block > section > article > header h2 a                        /* tytuł znaleziska */
-    { font-size: 18rem!important; } 
+    { 
+        font-size: var(--textFontSize18)!important; 
+    } 
 
 
     aside.left-panel:not(.mini) > section.links > .content ul li a.hybrid span em          /* kategorie */
-    { font-size: 16rem!important; } 
+    { 
+        font-size: var(--textFontSize16)!important; 
+    } 
     aside.left-panel.mini > section.links > .content ul li a.hybrid span em                 /* kategorie */
     { font-size: 0!important; } 
 
     .night-mode-switch .switch label[for="switch-night-mode"] > span,           /* przycisk zmiany Tryb nocny/dzienny */
     section.sidebar a.username span,                                            /* nazwa uzytkownika z ktorym rozmawiamy - w wiadomosciach */
-    { font-size: 15rem!important; } 
+    { font-size: var(--textFontSize15)!important;  } 
 
     
     
     
     
     
-    div.content section.entry-content div.wrapper,                              /* treść wpisu / komentarza */
+    
     header.header>.right>nav>ul> li,                                            /* panel powiadomień - przycisk z nazwa uzytkownika login */ 
     aside.left-panel>section.links>.content>header h4,                          /* zwijacze kategorii */
     section.add-to-bucket-btn>button,                                           /* przycisk "Utwórz kategorię */
@@ -4798,7 +4822,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     ul.tab-nav > li a,                                                          /* WYKOPUJACY, ZAKOPUJACY */
     nav.new-pagination.hash ul li a,                                            /* paginacja POPRZEDNIA - NASTEPNA */ 
     div.button .target                                                          /* przycisk OBSERWUJ TAG, DODAJ DO KATEGORII */
-    { font-size: 14rem!important; } 
+    { font-size: var(--textFontSize14)!important;  } 
 
     
     section.entry > article > header > div.right > div a.username,              /* nick autora wpisu / komentarza */
@@ -4806,9 +4830,9 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     section.entry > article > header > div.right > div a.username span,         /* wpis - login autora */
     .switch label>span,                                                         /* 18+ w edytorze komentarza */
     section.custom-sidebar>header p                                             /* right sidebar - nazwa filtru */
-    { font-size: 13rem!important; } 
+    { font-size: var(--textFontSize13)!important;  } 
 
-   
+
     time.date,                                                                  /* data dodania wpisu / komentarza */
     section.entry header:has(a.avatar) > div.right > div:has(a.username) span:has(time) i strong, /* via Wykop */
     section.entry>header>.right>div>a,                                          /* right-sidebar nick autora wpisu / komentarza */
@@ -4820,17 +4844,17 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     section.entry-voters ul,                                                    /* lista plusujących */
     section.entry-voters ul li span,
     span.comment-counter, a.comment-counter                                     /* liczba komentarzy znaleziska */
-    { font-size: 12rem!important; } 
+    { font-size: var(--textFontSize12)!important;  } 
 
 
     aside.left-panel>section.buttons>.content ul li a>span,                     /* Lewe Menu > podpisy pod przyciskami Hity,ulubione,Obserwowane */
     section.entry-content .wrapper button                                       /* przycisk Pokaz wiecej w komentarzu */
-    { font-size: 11rem!important; } 
+    { font-size: var(--textFontSize11)!important;  } 
 
 
     section.vote-box .dig button,                                               /* przycisk WYKOP */
     section.vote-box .burry>span                                                /* przycisk zakop */
-    { font-size: 10rem!important; } 
+    { font-size: var(--textFontSize10)!important;  } 
 
 
 
@@ -4843,7 +4867,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     body > div#violationContainer > div#zgloszenie > form > div.view > div.object-row > div.row div.col,
     body > div#violationContainer > div#zgloszenie > form > div.view > div.object-row > p
     {
-        line-height: 20rem;
+        line-height: 20px;
     }
     body > div#violationContainer > div#zgloszenie > form > div.reasonzone > ul.reason-list > li
     {
@@ -4880,7 +4904,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     }
     body > div#violationContainer > div#zgloszenie > form > div.submitzone > div.extraContainer > span
     {
-        font-size: 13rem;
+        font-size: 13px;
         position: relative;
         display: block;
         top: 13px;
@@ -5062,20 +5086,20 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         section.stream section.link-block > section > article > section.info > ul[data-v-441f7cc5]
         {
             margin: unset!important;
-            margin-top: -7rem!important;
+            margin-top: -7px!important;
             height: max-content;
         }
         /* GRID */
         section.stream section.link-block > section > article
         {
-            padding: 12rem!important;
+            padding: 12px!important;
             box-sizing: border-box!important;
             display: grid!important;
 
             justify-items: stretch;
             align-items: stretch;
-            column-gap: 12rem!important;
-            row-gap: 7rem!important;
+            column-gap: 12px!important;
+            row-gap: 7px!important;
         } 
         section.stream section.link-block > section > article > header
         { 
@@ -5131,8 +5155,8 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {            
             section.stream section.link-block > section > article
             {
-                grid-template-columns: 90rem auto 150rem; /* [thumbnail/votebox]  [empty] [comments] ;  */
-                grid-template-rows: max-content max-content 20rem 13rem 50px;    /* [header] [content] [user + date] [tags] [votebox, empty, comments]  */
+                grid-template-columns: 90px auto 150px; /* [thumbnail/votebox]  [empty] [comments] ;  */
+                grid-template-rows: max-content max-content 20px 13px 50px;    /* [header] [content] [user + date] [tags] [votebox, empty, comments]  */
             } 
             /* kolejnosc top to bottom */
             section.stream section.link-block > section > article > div.content > section.info
@@ -5159,8 +5183,8 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             section.stream section.link-block > section > article
             {
-                grid-template-columns: 150rem auto 90rem ; /*   [comments] [empty] [thumbnail/votebox] */
-                grid-template-rows: max-content max-content 20rem 13rem 50px;    /* [header] [content] [user + date] [tags] [votebox, empty, comments]  */
+                grid-template-columns: 150px auto 90px ; /*   [comments] [empty] [thumbnail/votebox] */
+                grid-template-rows: max-content max-content 20px 13px 50px;    /* [header] [content] [user + date] [tags] [votebox, empty, comments]  */
             } 
             section.stream section.link-block > section > article > div.content > section.info
             {
@@ -5184,8 +5208,8 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             {
                 section.stream section.link-block > section > article
                 {
-                    grid-template-columns: 150rem auto 90rem ; /*   [comments] [empty] [thumbnail/votebox] */
-                    grid-template-rows: max-content max-content 20rem 13rem 50px;    /* [header] [content] [user + date] [tags] [votebox, empty, comments]  */
+                    grid-template-columns: 150px auto 90px ; /*   [comments] [empty] [thumbnail/votebox] */
+                    grid-template-rows: max-content max-content 20px 13px 50px;    /* [header] [content] [user + date] [tags] [votebox, empty, comments]  */
                 } 
                 section.stream section.link-block > section > article > div.content > section.info
                 {
@@ -5268,14 +5292,14 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
 
         section.stream section.link-block > section 
         {
-            padding: 12rem!important;
+            padding: 12px!important;
             box-sizing: border-box!important;
             display: grid!important;
 
             justify-items: stretch;
             align-items: stretch;
-            column-gap: 12rem!important;
-            row-gap: 10rem!important;
+            column-gap: 12px!important;
+            row-gap: 10px!important;
             
             min-height: 100%!important;
         } 
@@ -5658,7 +5682,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     */
 
     section.link-block section.info > span  { font-size: 0px!important; }  // ukrycie "z" przed domeną
-    section.link-block section.info > span > :is(div, time)  { font-size: 12rem!important; } 
+    section.link-block section.info > span > :is(div, time)  { font-size: 12px!important; } 
 
     if(linkUserHide == 1 && linkPublishedDateHide == 1 && linkDomainHide == 1)
     {
@@ -5746,7 +5770,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             z-index: 1;
             max-width: 80px;
-            font-size: 12rem;
+            font-size: 12px;
 
             animation-name: fadeIn;
             animation-duration: 0.4s;
@@ -5755,7 +5779,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             animation-timing-function: ease-in-out;
             position: absolute;
             bottom: 10%;
-            padding: 4rem 25rem 4rem 25rem;
+            padding: 4px 25px 4px 25px;
             display: flex;
             border-bottom: 1px solid var(--alto);
             border-radius: 0 var(--borderRadius) var(--borderRadius) 0!important;
@@ -6518,7 +6542,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                     }
                     body > section.open-left-panel > div.main-content > aside.left-panel:not(.mini) > section.buttons > div.content > ul > li:is(.observed, .hits, .favourites) > div > span > span.button > a > span:before    
                     { 
-                        font-size: 11rem;
+                        font-size: 11px;
                         will-change: font-size;
                     }     
                     body > section.open-left-panel > div.main-content > aside.left-panel:not(.mini) > section.buttons > div.content > ul > li.observed > div > span > span.button > a > span:before
@@ -6540,7 +6564,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                     body[data-wxs_category_menu_minimized="true"] > section.open-left-panel > div.main-content > aside.left-panel:not(.mini):not(:hover) > section.buttons > div.content > ul > li:is(.observed, .hits, .favourites) > div > span > span.button > a > span:before  
                     {
                         font-size: 14cqw!important;
-                        font-size: 11rem!important;
+                        font-size: 11px!important;
                         will-change: font-size;
                     }
                 }
@@ -7444,7 +7468,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             main.main > section > div.content > section:not(.entry-page) > section > section.stream:not(.entry-comments):not(.link-comments):not(.links-entries-stream-profile) section.entry:not(.reply):not(:hover):has(> article > header > div.left > a > figure.burgundy-profile) > article > header > div.right a.username:after
             {
-                margin-left: 10rem;
+                margin-left: 10px;
                 content: "(Wykop X zminimalizował wpis użytkownika bordo)" i;
             }
 
@@ -7503,12 +7527,12 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             main.main > section > div.content > section:not(.entry-page) > section > section.stream:not(.entry-comments):not(.link-comments):not(.links-entries-stream-profile) section.entry:not(.reply):not(:hover):has(> article > header > div.left > a > figure.orange-profile)
             {
-                padding: 10rem 16rem i;
+                padding: 10px 16px i;
             } 
 
             main.main > section > div.content > section:not(.entry-page) > section > section.stream:not(.entry-comments):not(.link-comments):not(.links-entries-stream-profile) section.entry:not(.reply):not(:hover):has(> article > header > div.left > a > figure.orange-profile) > article > header > div.right a.username:after
             {
-                margin-left: 10rem;
+                margin-left: 10px;
                 content: "(Wykop X zminimalizował wpis użytkownika z pomarańczowym kolorem)" i;
             } 
     
@@ -7570,12 +7594,12 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             main.main > section > div.content > section:not(.entry-page) > section > section.stream:not(.entry-comments):not(.link-comments):not(.links-entries-stream-profile) section.entry:not(.reply):not(:hover):has(> article > header > div.left > a > figure.male)
             {
-                padding: 10rem 16rem i;
+                padding: 10px 16px i;
             } 
 
             main.main > section > div.content > section:not(.entry-page) > section > section.stream:not(.entry-comments):not(.link-comments):not(.links-entries-stream-profile) section.entry:not(.reply):not(:hover):has(> article > header > div.left > a > figure.male) > article > header > div.right a.username:after
             {
-                margin-left: 10rem;
+                margin-left: 10px;
                 content: "(Wykop X zminimalizował wpis niebieskiego paska)" i;
             } 
 
@@ -7638,12 +7662,12 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             main.main > section > div.content > section:not(.entry-page) > section > section.stream:not(.entry-comments):not(.link-comments):not(.links-entries-stream-profile) section.entry:not(.reply):not(:hover):has(> article > header > div.left > a > figure.female)
             {
-                padding: 10rem 16rem i;
+                padding: 10px 16px i;
             } 
 
             main.main > section > div.content > section:not(.entry-page) > section > section.stream:not(.entry-comments):not(.link-comments):not(.links-entries-stream-profile) section.entry:not(.reply):not(:hover):has(> article > header > div.left > a > figure.female) > article > header > div.right a.username:after
             {
-                margin-left: 10rem;
+                margin-left: 10px;
                 content: "(Wykop X zminimalizował wpis różowego paska)" i;
             }
 
@@ -7704,12 +7728,12 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             main.main > section > div.content > section:not(.entry-page) > section > section.stream:not(.entry-comments):not(.link-comments):not(.links-entries-stream-profile) section.entry:not(.reply):not(:hover):has(> article > header > div.left > a > figure:not(.female):not(.male))
             {
-                padding: 10rem 16rem i;
+                padding: 10px 16px i;
             } 
 
             main.main > section > div.content > section:not(.entry-page) > section > section.stream:not(.entry-comments):not(.link-comments):not(.links-entries-stream-profile) section.entry:not(.reply):not(:hover):has(> article > header > div.left > a > figure:not(.female):not(.male)) > article > header > div.right a.username:after
             {
-                margin-left: 10rem;
+                margin-left: 10px;
                 content: "(Wykop X zminimalizował wpis użytkownika bez płci)" i;
             } 
 
@@ -7777,14 +7801,14 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             section.stream.link-comments section.entry:not(:hover) > article:has(> header > div.left > a > figure.orange-profile),
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has( > header > div.left > a > figure.orange-profile)
             {
-                padding: 3rem 16rem i;
+                padding: 3px 16px i;
                 opacity: 0.4 i;
             } 
 
             section.stream.link-comments section.entry:not(:hover) > article:has(> header > div.left > a > figure.orange-profile) > header > div.right a.username:after,
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has(> header > div.left > a > figure.orange-profile) > header > div.right a.username:after
             {
-                margin-left: 10rem;
+                margin-left: 10px;
                 content: "(Wykop X zminimalizował komentarz użytkownika z pomarańczowym kolorem)" i;
                 color: var(--blackOpacity1);
             } 
@@ -7868,14 +7892,14 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             section.stream.link-comments section.entry:not(:hover) > article:has(> header > div.left > a > figure.burgundy-profile),
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has( > header > div.left > a > figure.burgundy-profile)
             {
-                padding: 3rem 16rem i;
+                padding: 3px 16px i;
                 opacity: 0.4 i;
             } 
 
             section.stream.link-comments section.entry:not(:hover) > article:has(> header > div.left > a > figure.burgundy-profile) > header > div.right a.username:after,
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has(> header > div.left > a > figure.burgundy-profile) > header > div.right a.username:after
             {
-                margin-left: 10rem;
+                margin-left: 10px;
                 content: "(Wykop X zminimalizował komentarz użytkownika bordo)" i;
                 color: var(--blackOpacity1);
             } 
@@ -7886,7 +7910,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has(> header > div.left > a > figure.burgundy-profile) > div.edit-wrapper,
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has(> header > div.left > a > figure.burgundy-profile) > header > div.right > div > span
             {
-              display: none i;
+                display: none i;
             } 
 
             /*
@@ -7899,21 +7923,21 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has(> header > div.left > a > figure.burgundy-profile) > header > div.right > div section.rating-box div.buttons button,
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has(> header > div.left > a > figure.burgundy-profile) > header > div.right > div section.rating-box li
             {
-              filter: grayscale(100%);
+                filter: grayscale(100%);
             } 
             */
 
             section.stream.link-comments section.entry:not(:hover) > article:has(> header > div.left > a > figure.burgundy-profile) > header > div.left > a.avatar,
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has(> header > div.left > a > figure.burgundy-profile) > header > div.left > a.avatar
             {
-              width: 20px!important;
-              height: 20px!important;
+                width: 20px!important;
+                height: 20px!important;
             } 
             section.stream.link-comments section.entry:not(:hover) > article:has(> header > div.left > a > figure.burgundy-profile) > header > div.right,
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has(> header > div.left > a > figure.burgundy-profile) > header > div.right
             {
-              width: calc(100% - 30px)!important;
-              align-items: center i;
+                width: calc(100% - 30px)!important;
+                align-items: center i;
             } 
         } 
     } 
@@ -7947,14 +7971,14 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             section.stream.link-comments section.entry:not(:hover) > article:has(> header > div.left > a > figure.male),
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has( > header > div.left > a > figure.male)
             {
-                padding: 3rem 16rem i;
+                padding: 3px 16px i;
                 opacity: 0.4 i;
             } 
 
             section.stream.link-comments section.entry:not(:hover) > article:has(> header > div.left > a > figure.male) > header > div.right a.username:after,
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has(> header > div.left > a > figure.male) > header > div.right a.username:after
             {
-                margin-left: 10rem;
+                margin-left: 10px;
                 content: "(Wykop X zminimalizował komentarz niebieskiego paska)" i;
                 color: var(--blackOpacity1);
             } 
@@ -7965,7 +7989,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has(> header > div.left > a > figure.male) > div.edit-wrapper,
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has(> header > div.left > a > figure.male) > header > div.right > div > span
             {
-              display: none i;
+                display: none i;
             } 
 
             /*
@@ -8026,14 +8050,14 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             section.stream.link-comments section.entry:not(:hover) > article:has(> header > div.left > a > figure.female),
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has( > header > div.left > a > figure.female)
             {
-                padding: 3rem 16rem i;
+                padding: 3px 16px i;
                 opacity: 0.4 i;
             } 
 
             section.stream.link-comments section.entry:not(:hover) > article:has(> header > div.left > a > figure.female) > header > div.right a.username:after,
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has(> header > div.left > a > figure.female) > header > div.right a.username:after
             {
-                margin-left: 10rem;
+                margin-left: 10px;
                 content: "(Wykop X zminimalizował komentarz różowego paska)" i;
                 color: var(--blackOpacity1);
             } 
@@ -8108,14 +8132,14 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             section.stream.link-comments section.entry:not(:hover) > article:has(> header > div.left > a > figure:not(.female):not(.male)),
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has( > header > div.left > a > figure:not(.female):not(.male))
             {
-                padding: 3rem 16rem i;
+                padding: 3px 16px i;
                 opacity: 0.4 i;
             } 
 
             section.stream.link-comments section.entry:not(:hover) > article:has(> header > div.left > a > figure:not(.female):not(.male)) > header > div.right a.username:after,
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has(> header > div.left > a > figure:not(.female):not(.male)) > header > div.right a.username:after
             {
-                margin-left: 10rem;
+                margin-left: 10px;
                 content: "(Wykop X zminimalizował komentarz użytkownika bez ustawionej płci)" i;
                 color: var(--blackOpacity1);
             } 
@@ -8126,7 +8150,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has(> header > div.left > a > figure:not(.female):not(.male)) > div.edit-wrapper,
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has(> header > div.left > a > figure:not(.female):not(.male)) > header > div.right > div > span
             {
-              display: none i;
+                display: none i;
             } 
 
             /*
@@ -8189,14 +8213,14 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             section.stream.link-comments section.entry:not(:hover) > article:has(> header > div.left > a > figure.green-profile),
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has( > header > div.left > a > figure.green-profile)
             {
-                padding: 3rem 16rem i;
+                padding: 3px 16px i;
                 opacity: 0.4 i;
             } 
 
             section.stream.link-comments section.entry:not(:hover) > article:has(> header > div.left > a > figure.green-profile) > header > div.right a.username:after,
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has(> header > div.left > a > figure.green-profile) > header > div.right a.username:after
             {
-                margin-left: 10rem;
+                margin-left: 10px;
                 content: "(Wykop X zminimalizował komentarz zielonki)" i;
                 color: var(--blackOpacity1);
             } 
@@ -8207,7 +8231,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has(> header > div.left > a > figure.green-profile) > div.edit-wrapper,
             section.stream.entry-subcomments section.entry.reply:not(:hover) > article:has(> header > div.left > a > figure.green-profile) > header > div.right > div > span
             {
-              display: none i;
+                display: none i;
             } 
 
             /*
@@ -8772,12 +8796,12 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             main.main > section > div.content > section:not(.entry-page) > section > section.stream:not(.entry-comments):not(.link-comments):not(.links-entries-stream-profile) section.entry:not(.reply):not(:hover):has(> article > header > div.left > a > figure.green-profile)
             {
-                padding: 10rem 16rem i;
+                padding: 10px 16px i;
             } 
 
             main.main > section > div.content > section:not(.entry-page) > section > section.stream:not(.entry-comments):not(.link-comments):not(.links-entries-stream-profile) section.entry:not(.reply):not(:hover):has(> article > header > div.left > a > figure.green-profile) > article > header > div.right a.username:after
             {
-                margin-left: 10rem;
+                margin-left: 10px;
                 content: "(Wykop X zminimalizował wpis zielonki)" i;
             } 
     
@@ -8966,7 +8990,6 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
   
   
     /* EDYTOR WPISÓW I KOMENTARZY */
-
     section.editor
     {
         box-shadow: var(--boxShadow)!important;
@@ -8978,7 +9001,8 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     }
     section.editor > .content textarea
     {
-        font-size: var(--editorTextFontSize, 14rem)!important;;
+        --editorTextFontSize: editorTextFontSize;
+        font-size: var(--editorTextFontSize, 14px)!important;;
     }
 
     section.editor.expand textarea
@@ -9030,8 +9054,8 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
       color: white;
       font-family: "Arial";
       box-shadow: var(--boxShadow);
-      font-size: 13rem;
-      padding: 13rem 0;
+      font-size: 13px;
+      padding: 13px 0;
     } 
     
     /* PRZYPIETE PRZYCISKI FORMATOWANIA */
@@ -9112,7 +9136,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             position: absolute i;
             z-index: 2 i;
             left: 20px i;
-            top: 13rem i;
+            top: 13px i;
         } 
         div.main-content > main.main > section > div.content > section.microblog-page > section.microblog:has(> section.editor.entry-editor:nth-child(2) > div.content > textarea:focus) > header.stream-top /* "Dodaj wpis z #tag" */
         {
@@ -9123,7 +9147,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             opacity: 0 i;
             padding: 0px i;
             margin: 0px i;
-            height: 17rem i;
+            height: 17px i;
         } 
         div.main-content > main.main > section > div.content > section.microblog-page > section.microblog > section.editor.entry-editor:nth-child(2):not(:has(div.content > textarea:focus)) header, 
         div.main-content > main.main > section > div.content > section.microblog-page > section.microblog > section.editor.entry-editor:nth-child(2):not(:has(div.content > textarea:focus)) footer
@@ -9180,7 +9204,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             position: absolute i;
             z-index: 2 i;
             left: 20px i;
-            top: 7rem i;
+            top: 7px i;
         } 
         div.main-content > main.main > section > div.content > section.tag-page > section.stream > article:has(> section.editor.entry-editor:nth-child(2) > div.content > textarea:focus) > header.stream-top:nth-child(1) /* "Dodaj wpis z #tag" */
         {
@@ -9191,7 +9215,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             opacity: 0 i;
             padding: 0px i;
             margin: 0px i;
-            height: 17rem i;
+            height: 17px i;
         } 
         div.main-content > main.main > section > div.content > section.tag-page > section.stream > article > section.editor.entry-editor:nth-child(2):not(:has(div.content > textarea:focus)) header, 
         div.main-content > main.main > section > div.content > section.tag-page > section.stream > article > section.editor.entry-editor:nth-child(2):not(:has(div.content > textarea:focus)) footer
@@ -9593,9 +9617,9 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                 background-color: rgba(151, 154, 159, 1)!important;
                 font-weight: 600!important;
                 border-radius: 13px!important;
-                padding: 10rem 7rem!important;
-                font-size: 13rem!important;
-                top: -9rem!important;
+                padding: 10px 7px!important;
+                font-size: 13px!important;
+                top: -9px!important;
                 height: 0px !important;
                 width: auto!important;
             }
@@ -9627,9 +9651,9 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                     background-color: rgba(151, 154, 159, 1)!important;
                     font-weight: 600!important;
                     border-radius: 13px!important;
-                    padding: 10rem 7rem!important;
-                    font-size: 13rem!important;
-                    top: -9rem!important;
+                    padding: 10px 7px!important;
+                    font-size: 13px!important;
+                    top: -9px!important;
                 }
                 section.entry-page div.comments > section.stream > div.content > section.entry.reply:nth-child(1) > article::before
                 {
@@ -9639,18 +9663,17 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                 {
                     background-color: rgba(83, 84, 86, 1)!important;
                 }
-            }            
+            }
         }
     }
-   
-        
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
     /* PAGINACJA */
     if(paginationButtonsStyle == 1)
     {
@@ -9673,7 +9696,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
 
         body > section > div.main-content > main.main > section > div.content > section section.stream > footer > nav.new-pagination > ul > li:not(.next, .prev) > *
         {
-            font-size: 13rem;
+            font-size: 13px;
         }
 
         body > section > div.main-content > main.main > section > div.content > section section.stream > footer > nav.new-pagination > ul > li:not(.stats) > a:is(:hover,:focus,:active)
@@ -9715,7 +9738,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         /* przy wąskim ekranie (max-width: 767px) pojawia się "Strona 13 z 23" */
         body > section > div.main-content > main.main > section > div.content > section section.stream > footer > nav.new-pagination > ul > li.stats
         {
-            font-size: 12rem;
+            font-size: 12px;
             padding: 0px 10px;
         }
         body > section > div.main-content > main.main > section > div.content > section section.stream > footer > nav.new-pagination > ul > li.stats > strong
@@ -11055,178 +11078,196 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     if(floatingAddButtonHide == 1)
     {
         div.main-content main.main > section > div.content > div.popper-button { display: none!important; } 
-    } 
+    }
     
     
     
-    if(popperDisplay == "kontekstowe")
+
+    /* Menu popover nad tagami i domenami */
+    if(popperHideDomain == 1 && popperHideTag == 1)
     {
-        body > span > section.popper.tooltip-slot
-        {
-   
-        } 
-
-        body > span > section.popper.tooltip-slot > section.tooltip.actions
-        {
-        } 
-
-        body > span > section.popper.tooltip-slot > section.tooltip.actions > ul
-        {
-            display: flex i;
-            flex-direction: column i;
-            width: 300px i;
-        } 
-
-        body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li
-        {
-            display: flex i;
-            width: 100% i;
-            border-top: 1px solid rgba(255, 255, 255, 0.1) i;
-        } 
-
-
-
-        body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li > button,
-        body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li > a
-        {
-    
-            display: flex i;
-            box-sizing: border-box i;
-            position: relative i;
-            font-size: 13rem i;
-    
-            mask: none i;
-            -webkit-mask: none i;
-    
-            background-color: var(--whiteOpacity04) i;
-            color: var(--blackOpacity07) i;
-    
-            align-items: center i;
-            justify-content: start i;
-
-            padding: 0px i;
-            margin: 0px i;
-            width: 100% i;
-    
-            padding-left: 50px i;
-        } 
-
-        body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li:hover > button,
-        body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li:hover > a
-        {
-            text-decoration: none i;
-            background-color: var(--whiteOpacity01) i;
-            color: var(--blackOpacity09) i;
-        } 
-
-
-        body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li > *:before
-        {
-            position: absolute i;
-            left: 20px i;
-    
-            display: flex i;
-            width: 16px i;
-            height: 16px i;
-            content: "" i;
-            -webkit-mask-size: 16px 16px i;
-            -webkit-mask-repeat: no-repeat i;
-            -webkit-mask-position: 0px 0px i;
-    
-            background: var(--blackOpacity06) i;
-        } 
-
-
-        body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li:hover > *:before
-        {
-            background: var(--blackOpacity1) i;
-        } 
-
-        /* menu kontekstowe nad domeną w znalezisku */
-        body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li.redirect > *:before
-        {
-            //-webkit-mask-image: url(/static/img/svg/redirect.svg);
-            -webkit-mask-image: url(/static/img/svg/redirect.svg) i;
-        } 
-        body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li.search-results > *:before
-        {
-            //-webkit-mask-image: url(/static/img/svg/search-results.svg);
-            -webkit-mask-image: url(/static/img/svg/search-results.svg) i;
-        } 
-        body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li.add-to-blacklist > *:before
-        {
-            /* DOMYŚLNIE JEST: -webkit-mask-image: url(/static/img/svg/block.svg); */
-            -webkit-mask-image: url(/static/img/svg/block.svg) i;
-            background: rgba(255, 0, 0, 0.7) i;
-        } 
-        body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li.add-to-blacklist:hover > *:before
-        {
-            background: rgba(255, 0, 0, 1) i;
-        } 
-
-
-        /* menu kontekstowe nad tagiem */
-        body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li.follow > *:before
-        {
-            -webkit-mask-image: url(/static/img/svg/follow.svg) i;
-        } 
-        body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li.add-to-bucket > *:before
-        {
-            -webkit-mask-image: url(/static/img/svg/add-category.svg) i;
-        } 
-        body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li.toggle-to-blacklist > *:before
-        {
-            -webkit-mask-image: url(/static/img/svg/lock-open.svg) i;
-            background: rgba(255, 0, 0, 0.7) i;
-        } 
-
-        body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li.toggle-to-blacklist:hover > *:before
-        {
-            background: rgba(255, 0, 0, 1) i;
-        } 
-    } 
-    
-    
-    if(popperHideDomain == 1)
-    {
-        body > span > section.popper.domain-actions
+        body > span > section.popper
         {
             display: none i;
-        } 
-    } 
-    if(popperHideTag == 1)
+        }
+    }
+    else
     {
-        body > span > section.popper.tag-actions
+        if(popperHideDomain == 1)
         {
-            display: none i;
+            body > span > section.popper.domain-actions
+            {
+                display: none i;
+            } 
         } 
-    } 
-    
-    
-    
-    if(poppersHighlight == 1)
-    {
-        body > span:has(section.popper.tooltip-slot)
+        
+        if(popperHideTag == 1)
         {
-            border-radius: 3px i;
-        } 
+            body > span > section.popper.tag-actions
+            {
+                display: none i;
+            } 
+        }
 
-        body > span > section.popper.tooltip-slot
+        if(popperHighlight == 1)
         {
-            border: 1px solid var(--blackOpacity01) i;
-            box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 1),1px 1px 18px 5px rgba(0, 0, 0, 0.7),2px 2px 1px 4px rgba(0, 0, 0, 0.1) i;
-            border-radius: 3px i;
-        } 
+            body > span:has(section.popper.tooltip-slot)
+            {
+                border-radius: 3px i;
+            } 
 
-        body > span.fade-leave-active,
-        body > span.fade-enter-active,
-        body > span.fade-enter-to,
-        body > span.fade-leave-to,
-        body > span > section.popper.tooltip-slot > div.popper__arrow
+            body > span > section.popper.tooltip-slot
+            {
+                border: 1px solid var(--blackOpacity01) i;
+                box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 1),1px 1px 18px 5px rgba(0, 0, 0, 0.7),2px 2px 1px 4px rgba(0, 0, 0, 0.1) i;
+                border-radius: 3px i;
+            } 
+
+            body > span.fade-leave-active,
+            body > span.fade-enter-active,
+            body > span.fade-enter-to,
+            body > span.fade-leave-to,
+            body > span > section.popper.tooltip-slot > div.popper__arrow
+            {
+                display: none i;
+            } 
+        }
+
+        if(popperDisplay == "kontekstowe")
         {
-            display: none i;
-        } 
-    } 
+            body > span > section.popper.tooltip-slot
+            {
+
+            } 
+
+            body > span > section.popper.tooltip-slot > section.tooltip.actions
+            {
+            } 
+
+            body > span > section.popper.tooltip-slot > section.tooltip.actions > ul
+            {
+                display: flex i;
+                flex-direction: column i;
+                width: 300px i;
+            } 
+
+            body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li
+            {
+                display: flex i;
+                width: 100% i;
+                border-top: 1px solid rgba(255, 255, 255, 0.1) i;
+            } 
+
+
+
+            body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li > button,
+            body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li > a
+            {
+
+                display: flex i;
+                box-sizing: border-box i;
+                position: relative i;
+                font-size: 13px i;
+
+                mask: none i;
+                -webkit-mask: none i;
+
+                background-color: var(--whiteOpacity04) i;
+                color: var(--blackOpacity07) i;
+
+                align-items: center i;
+                justify-content: start i;
+
+                padding: 0px i;
+                margin: 0px i;
+                width: 100% i;
+
+                padding-left: 50px i;
+            } 
+
+            body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li:hover > button,
+            body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li:hover > a
+            {
+                text-decoration: none i;
+                background-color: var(--whiteOpacity01) i;
+                color: var(--blackOpacity09) i;
+            } 
+
+
+            body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li > *:before
+            {
+                position: absolute i;
+                left: 20px i;
+
+                display: flex i;
+                width: 16px i;
+                height: 16px i;
+                content: "" i;
+                -webkit-mask-size: 16px 16px i;
+                -webkit-mask-repeat: no-repeat i;
+                -webkit-mask-position: 0px 0px i;
+
+                background: var(--blackOpacity06) i;
+            } 
+
+
+            body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li:hover > *:before
+            {
+                background: var(--blackOpacity1) i;
+            } 
+
+            /* menu kontekstowe nad domeną w znalezisku */
+            body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li.redirect > *:before
+            {
+                //-webkit-mask-image: url(/static/img/svg/redirect.svg);
+                -webkit-mask-image: url(/static/img/svg/redirect.svg) i;
+            } 
+            body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li.search-results > *:before
+            {
+                //-webkit-mask-image: url(/static/img/svg/search-results.svg);
+                -webkit-mask-image: url(/static/img/svg/search-results.svg) i;
+            } 
+            body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li.add-to-blacklist > *:before
+            {
+                /* DOMYŚLNIE JEST: -webkit-mask-image: url(/static/img/svg/block.svg); */
+                -webkit-mask-image: url(/static/img/svg/block.svg) i;
+                background: rgba(255, 0, 0, 0.7) i;
+            } 
+            body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li.add-to-blacklist:hover > *:before
+            {
+                background: rgba(255, 0, 0, 1) i;
+            } 
+
+
+            /* menu kontekstowe nad tagiem */
+            body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li.follow > *:before
+            {
+                -webkit-mask-image: url(/static/img/svg/follow.svg) i;
+            } 
+            body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li.add-to-bucket > *:before
+            {
+                -webkit-mask-image: url(/static/img/svg/add-category.svg) i;
+            } 
+            body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li.toggle-to-blacklist > *:before
+            {
+                -webkit-mask-image: url(/static/img/svg/lock-open.svg) i;
+                background: rgba(255, 0, 0, 0.7) i;
+            } 
+
+            body > span > section.popper.tooltip-slot > section.tooltip.actions > ul > li.toggle-to-blacklist:hover > *:before
+            {
+                background: rgba(255, 0, 0, 1) i;
+            }         
+        }
+    }
+
+    
+    
+
+    
+    
+    
+    
     
     
     
@@ -11356,7 +11397,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         height: auto!important;
         min-height: calc(var(--avatarSize) + 2 * var(--sexBarBorderWidth) + 2 * var(--sexBarPadding));
         max-height: 100%!important;
-        column-gap: 10rem; 
+        column-gap: 10px; 
         justify-content: stretch!important; /* calosc grid */
         align-content: stretch!important;
         justify-items: center!important;
@@ -11366,8 +11407,8 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     {
         height: 100%;
     }
- 
-    
+
+
     /* UKRYWANIE AVATARÓW WE WPISACH I KOMENTARZACH ooooooooo */
     if(avatarHidden == 1)
     {
@@ -11403,7 +11444,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     
         section.entry > article > header
         {
-            --avatarSize: avatarSize rem;
+            --avatarSize: avatarSize px;
             --gapAvatarWidth: avatarSize px;
         } 
         section.entry > article > header[data-v-2aacfeb5]
@@ -11452,21 +11493,20 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             // align-items: start!important; // tttttttttt
         } 
 
-        if(avatarSize < 32rem)
+        if(avatarSize < 32px)
         {
             section.entry > article > header[data-v-2aacfeb5]
             {
                 // align-items: center!important; // tttttttttttttt
             } 
         } 
-        if(avatarSize < 29rem)
+        if(avatarSize < 29px)
         {
             section.entry > article > header > div.left
             {
                 // justify-content: start;  // tttttttttt
             } 
         } 
-   
     } 
     
     
@@ -11504,7 +11544,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         display: grid;
         grid-template-rows: repeat(liczba_kolumn_przy_avatarze, 1fr) max-content;
         grid-template-columns: repeat(10, max-content);
-        column-gap: 3rem;
+        column-gap: 3px;
         height: fit-content;
         align-items: end;
         width: 100%;
@@ -11884,7 +11924,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                 {
                     body > section > header.header > div.right > nav > ul > li.account > a > a.avatar figure:after
                     { 
-                        font-size: 16rem;
+                        font-size: 16px;
                         content: "👤";
                     }
                 }
@@ -11892,7 +11932,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                 {
                     body > section > header.header > div.right > nav > ul > li.account > a > a.avatar figure:after
                     {
-                        font-size: 21rem;
+                        font-size: 21px;
                         content: "⚙";
                     }
                 }
@@ -11933,7 +11973,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             {
                 body > section > header.header > div.right > nav > ul > li.account > a > a.avatar > span
                 {
-                    font-size: 0rem!important;
+                    font-size: 0px!important;
                 }
                 body > section > header.header > div.right > nav > ul > li.account > a > a.avatar > span:after
                 {
@@ -11992,12 +12032,12 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             /* username koło avatara */
             body > section header.header > .right > nav > ul > li.account > a > a.avatar span
             {
-                font-size: 14rem;
+                font-size: 14px;
                 color: var(--topNavTextColor) i;
                 display: block!important;
                 line-height: 0px!important;
                 order: 5!important;
-                margin-top: 4rem;
+                margin-top: 4px;
             } 
 
 
@@ -12095,8 +12135,8 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     {
         section.entry > article > header > div.right > div > aside > span.author
         {
-           font-size: 0rem!important;
-           display: flex;
+            font-size: 0px!important;
+            display: flex;
         }
         if(commentAuthorLabelColor != "brak_koloru")
         {
@@ -12131,7 +12171,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         section.entry > article > header > div.right > div > aside > span.author::before
         {
             content: "Autor";
-            font-size: 10rem!important;
+            font-size: 10px!important;
             font-weight: 600;
         } 
             
@@ -12377,7 +12417,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     else if(nicknameColorsBanned == "czarny")       
     {
         a.username.banned:not(.removed, .suspended)                         { --_statusColor: rgb(0, 0, 0)!important; }
-        [data-night-mode] a.username.banned:not(.removed, .suspended)       { background-color: rgba(255, 255, 255, 0.3); padding-left: 5rem; padding-right: 5rem; }
+        [data-night-mode] a.username.banned:not(.removed, .suspended)       { background-color: rgba(255, 255, 255, 0.3); padding-left: 5px; padding-right: 5px; }
     }
     else if(nicknameColorsBanned == "kolor_konta")
     {
@@ -12406,7 +12446,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     else if(nicknameColorsSuspended == "czarny")       
     {
         a.username.suspended:not(.removed)                      { --_statusColor: rgb(0, 0, 0)!important; }
-        [data-night-mode] a.username.suspended:not(.removed)    { background-color: rgba(255, 255, 255, 0.3); padding-left: 5rem; padding-right: 5rem; }
+        [data-night-mode] a.username.suspended:not(.removed)    { background-color: rgba(255, 255, 255, 0.3); padding-left: 5px; padding-right: 5px; }
     }
     else if(nicknameColorsSuspended == "kolor_konta")
     {
@@ -12435,7 +12475,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     else if(nicknameColorsRemoved == "czarny")       
     {
         a.username.removed { --_statusColor: rgb(0, 0, 0)!important; }
-        [data-night-mode] a.username.removed { background-color: rgba(255, 255, 255, 0.3); padding-left: 5rem; padding-right: 5rem;}
+        [data-night-mode] a.username.removed { background-color: rgba(255, 255, 255, 0.3); padding-left: 5px; padding-right: 5px;}
     }
 
     
@@ -12586,8 +12626,8 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     {
         section.entry-voters ul li:not(.raw)[data-v-6e6ed6ee] a.username[href={"\/ludzie\/" + myUsername}] span:before
         { 
-            padding-right: 2rem;
-            font-size: 10rem;
+            padding-right: 2px;
+            font-size: 10px;
             vertical-align: bottom;
                 
             if(nicknameColorsYours      == "kolor_paska")
@@ -12628,7 +12668,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     a.username > span:after
     {
         font-size: 0.8em;
-        margin-left: 3rem;
+        margin-left: 3px;
         text-decoration: none!important;
         display: inline-block!important; // for text-decoration: none
         cursor: auto!important;
@@ -12662,8 +12702,8 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         section.entry-voters ul li:not(.raw)[data-v-6e6ed6ee] a.username:is(.banned, .suspended):not(.removed) span:before
         {
             text-decoration: none!important;
-            padding-right: 2rem;
-            font-size: 12rem;
+            padding-right: 2px;
+            font-size: 12px;
             vertical-align: bottom;
             
             if(emojiBanned == "banan")                          { content: "🍌"!important;  }
@@ -12721,8 +12761,8 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             text-decoration: none!important;
             display: inline-block; // żeby nie było przekreślenia line-through w emoji
-            padding-right: 2rem;
-            font-size: 12rem;
+            padding-right: 2px;
+            font-size: 12px;
             vertical-align: bottom;
             
             if(emojiRemoved == "czerwony_x")                     { content: "❌"!important;  }
@@ -12879,7 +12919,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             {
                 content: "@"!important;
                 margin-right: -3px!important; /* nick użytkownika ma spację na początku */
-                padding-right: 0rem;
+                padding-right: 0px;
                 font-size: inherit;
             }
         }
@@ -13007,7 +13047,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         
         if(entryVotersListSortOrderyYourNicknameFirst == 1)
         {
-            section.entry-voters ul li:has(a.username[href={"\/ludzie\/" + myUsername}])    { order: 7!important; margin-right: 0rem;}
+            section.entry-voters ul li:has(a.username[href={"\/ludzie\/" + myUsername}])    { order: 7!important; margin-right: 0px;}
         }
         
         
@@ -13068,10 +13108,8 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         }
         
         section.entry section.entry-voters > ul > li > a.username           { order: 2; }
-        section.entry section.entry-voters > ul > li > .wxs_user_info       { order: 1; margin-right: 4rem; margin-left: 0px; }
+        section.entry section.entry-voters > ul > li > .wxs_user_info       { order: 1; margin-right: 4px; margin-left: 0px; }
         section.entry section.entry-voters > ul > li:after                  { order: 3; }
-      
-        
     }
 
     
@@ -13791,11 +13829,11 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             display: flex;
             position: relative;
             color: var(--gullGray);
-            font-size: 15rem;
+            font-size: 15px;
             text-transform: initial;
-            margin-top: 15rem;
-            margin-bottom: 15rem;
-            padding-bottom: 15rem;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
             border-bottom: 1px dotted rgba(120, 120, 120, 0.3);
         }
     }
@@ -13808,7 +13846,6 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         
         if(favoriteTag1 != "")
         {
-      
             if(favoriteTagFirstInNotification == 1)
             { 
                 body > section > header > div.right > nav > ul > li.notifications.tags > section.dropdown-body > section.notifications > section.stream > div.content > section.notify:has(div.content > p.notification-content > a[href={"\/tag\/" + favoriteTag1}])
@@ -15388,9 +15425,9 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
       {
           position: relative i;
           top: 0px i;
-          right: 1rem i;
-          width: 26rem i;
-          height: 26rem i;
+          right: 1px i;
+          width: 26px i;
+          height: 26px i;
           border: 1px solid var(--removeNotificationButtonIsBigger-border-color) i;
           background-color: var(--removeNotificationButtonIsBigger-background-color) i;
       } 
@@ -15782,7 +15819,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     section.inline-autocomplete section.inline-autocomplete-stream div.content ul
     {
         display: flex!important;
-        flex-direction: column-reverse!important;
+        flex-direction: column!important;
     } 
     section.inline-autocomplete section.inline-autocomplete-stream div.content ul li
     {
@@ -16118,7 +16155,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         div.wrapper a[href={"\/ludzie\/" + myUsername}]
         {
             border: 10px solid red!important;
-            font-size: 0rem!important;
+            font-size: 0px!important;
         } 
 
         section.entry > article > header.header > div.right > nav ul li.account a.avatar span:before,
@@ -16132,17 +16169,17 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         div.wrapper a[href={"\/ludzie\/" + myUsername}]:not(:has(span)):before  
         {
             border: 10px solid #00ff2f!important;
-            font-size: 16rem!important;
+            font-size: 16px!important;
         } 
         header.header li.account ul.dropdown-body li.profile a:not(:has(span)):after
         {
             border: 10px solid #ccf668!important;
-            font-size: 14rem!important;
+            font-size: 14px!important;
         } 
         section.entry>article>header>div.right>div a.username[href={"\/ludzie\/" + myUsername}] > span:before,
         {
             border: 10px solid #f000d4!important;
-            font-size: 13rem!important;
+            font-size: 13px!important;
         } 
     } 
     
@@ -16226,7 +16263,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             nav.mobile-navbar > ul > li > a > span > i
             {
-                font-size: 10rem!important;
+                font-size: 10px!important;
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 overflow: hidden;
@@ -16500,11 +16537,11 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     {
       main.main > section > div.content > section:not(.entry-page) > section section.stream:not(.links-entries-stream-profile) > div.content > section.entry:has(> article > header > div.left > a.avatar[href="/ludzie/ISSTrackerPL"]):has(> article > header > div.right > div > section.rating-box > div.buttons > button.plus:not(.voted))
       {
-        padding: 10rem 16rem i;
+        padding: 10px 16px i;
       } 
       main.main > section > div.content > section:not(.entry-page) > section section.stream:not(.links-entries-stream-profile) > div.content > section.entry:has(> article > header > div.left > a.avatar[href="/ludzie/ISSTrackerPL"]):has(> article > header > div.right > div > section.rating-box > div.buttons > button.plus:not(.voted)) > article > header > div.right a.username:after
       {
-        margin-left: 10rem;
+        margin-left: 10px;
         content: "(wpis dodany przez bota)" i;
       } 
       main.main > section > div.content > section:not(.entry-page) > section section.stream:not(.links-entries-stream-profile) > div.content > section.entry:has(> article > header > div.left > a.avatar[href="/ludzie/ISSTrackerPL"]):has(> article > header > div.right > div > section.rating-box > div.buttons > button.plus:not(.voted)) > article > div.edit-wrapper,
@@ -16560,11 +16597,11 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             main.main > section > div.content > section:not(.entry-page) > section section.stream:not(.links-entries-stream-profile) > div.content > section.entry:has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href="/ludzie/wykop-gpt"]):has(> article > header > div.right > div > section.rating-box > div.buttons > button.plus:not(.voted))
             {
-                padding: 10rem 16rem i;
+                padding: 10px 16px i;
             } 
             main.main > section > div.content > section:not(.entry-page) > section section.stream:not(.links-entries-stream-profile) > div.content > section.entry:has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href="/ludzie/wykop-gpt"]):has(> article > header > div.right > div > section.rating-box > div.buttons > button.plus:not(.voted)) > article > header > div.right a.username:after
             {
-                margin-left: 10rem;
+                margin-left: 10px;
                 content: "(wpis do bota @wykop-gpt)" i;
             } 
             main.main > section > div.content > section:not(.entry-page) > section section.stream:not(.links-entries-stream-profile) > div.content > section.entry:has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > a[href="/ludzie/wykop-gpt"]):has(> article > header > div.right > div > section.rating-box > div.buttons > button.plus:not(.voted)) > article > div.edit-wrapper,
@@ -16655,11 +16692,11 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     {
       main.main > section > div.content > section:not(.entry-page) > section section.stream:not(.links-entries-stream-profile) > div.content > section.entry:has(> article > header > div.left > a.avatar[href="/ludzie/mirko_anonim"]):has(> article > header > div.right > div > section.rating-box > div.buttons > button.plus:not(.voted))
       {
-        padding: 10rem 16rem i;
+        padding: 10px 16px i;
       } 
       main.main > section > div.content > section:not(.entry-page) > section section.stream:not(.links-entries-stream-profile) > div.content > section.entry:has(> article > header > div.left > a.avatar[href="/ludzie/mirko_anonim"]):has(> article > header > div.right > div > section.rating-box > div.buttons > button.plus:not(.voted)) > article > header > div.right a.username:after
       {
-        margin-left: 10rem;
+        margin-left: 10px;
         content: "(wpis dodany przez bota)" i;
       } 
       main.main > section > div.content > section:not(.entry-page) > section section.stream:not(.links-entries-stream-profile) > div.content > section.entry:has(> article > header > div.left > a.avatar[href="/ludzie/mirko_anonim"]):has(> article > header > div.right > div > section.rating-box > div.buttons > button.plus:not(.voted)) > article > div.edit-wrapper,
@@ -16743,7 +16780,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             padding-right: 1px!important;
             font-weight: bolder!important;
             border-bottom: 1px dashed;
-            font-size: 12rem;
+            font-size: 12px;
             color: rgba(255, 0, 0, 1)!important;
             background-color: var(--whiteOpacity08);
             padding: 0px 5px 0px 5px!important;
@@ -17225,13 +17262,13 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             width: 100%!important;
             text-align: center;
             position: absolute!important;
-            font-size: 11rem!important;
+            font-size: 11px!important;
             color: var(--blackOpacity08); 
             background-color: var(--whiteOpacity1);
             min-width: 200px;
             max-width: 200px;
             border-radius: 4px!important;
-            padding: 5rem;
+            padding: 5px;
             bottom: calc(-1 * (var(--buttonHeight) + 10px));
             left: 0px;
             height: 30px;
@@ -17699,7 +17736,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
       } 
       section.entry article:has(header div.right div section.rating-box div.buttons button.minus.voted)
       {
-        padding: 3rem 16rem i;
+        padding: 3px 16px i;
         opacity: 0.4!important;
         if(removeAllTransitions == 0)
         {
@@ -17708,7 +17745,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
       } 
       section.entry article:has(header div.right div section.rating-box div.buttons button.minus.voted) div.right a.username:after
       {
-        margin-left: 10rem;
+        margin-left: 10px;
         content: "(komentarz zminusowany)" i;
       } 
       section.entry article:has(header div.right div section.rating-box div.buttons button.minus.voted) div.edit-wrapper,
@@ -17806,7 +17843,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     {
         position: absolute;
         border-bottom: 1px solid i;
-        font-size: 9rem;
+        font-size: 9px;
         font-weight: bolder;
 
         bottom: 5px;
@@ -18129,7 +18166,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                 background-color: var(--microblogBackgroundColor);
                 --boxShadowColor: var(--microblogBoxShadowColor);
                 /* box-shadow: 0 0 0 1px var(--microblogBoxShadowColor); */
-                font-size: 11rem;
+                font-size: 11px;
                 top: -29px;
                 right: unset;
                 left: 0px;
@@ -18235,7 +18272,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
 
                 body > section > div.main-content > main > section div.content section.link-block:has(> section > article > header > .heading > a[href*={keywordForLinksTitle} i]):before
                 {
-                    font-size: 11rem;
+                    font-size: 11px;
                     color: rgba(255, 231, 0, .8)!important;
                     background-color: rgba(255, 231, 0, .2)!important;
                     border-bottom-color: rgba(255, 231, 0, .3)!important;
@@ -18244,7 +18281,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                     top: unset;
                     bottom: 5px;
 
-                    left: 10rem;
+                    left: 10px;
                     right: unset;
       
                     z-index: 1; /* zeby bylo nad miniaturka, jesli jest po prawej stronie */
@@ -18307,7 +18344,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             position: absolute;
             top: -15px;
             right: -13px;
-            font-size: 9rem;
+            font-size: 9px;
 
             /* te wartosci sa specyficzne dla :visited) */
             color: var(--visitedLinkBeforeContentColor);
@@ -18384,12 +18421,12 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     {
         section.entry.deleted:not(.own) > article
         {
-          padding: 3rem 16rem i;
+          padding: 3px 16px i;
           opacity: 0.4!important;
         } 
         section.entry.deleted:not(.own) > article div.right a.username:after
         {
-          margin-left: 10rem;
+          margin-left: 10px;
           content: "(komentarz usunięty)" i;
         } 
 
@@ -18452,7 +18489,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
 
         section.entry.deleted:not(.own) > article header div.right a.username:after
         {
-          margin-left: 10rem;
+          margin-left: 10px;
           color: rgba(255, 120, 120, 1) i;
           content: "(komentarz usunięty)" i;
         } 
@@ -18524,13 +18561,13 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     {
         section.entry.deleted.own > article
         {
-          padding: 3rem 16rem i;
+          padding: 3px 16px i;
           opacity: 0.4!important;
         } 
 
         section.entry.deleted.own > article div.right a.username:after
         {
-          margin-left: 10rem;
+          margin-left: 10px;
           content: "(Twój komentarz został usunięty)" i;
         } 
 
@@ -18581,7 +18618,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
      
       section.entry.deleted.own > article header div.right a.username:after
       {
-        margin-left: 10rem;
+        margin-left: 10px;
         content: "(Twój komentarz został usunięty)" i;
       } 
       if(deletedCommentsMyHighlight == "czerwone")
@@ -18689,14 +18726,14 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         section.entry > aside.black-content > p:before
         {
             color: var(--tuna) i;
-            font-size: 12rem;
+            font-size: 12px;
         } 
 
         section.entry > aside.black-content > p:after
         {
             content: "Info dodane przez Wykop X";
             color: var(--tuna) i;
-            font-size: 12rem;
+            font-size: 12px;
             opacity: 0.3;
             position: absolute;
             right: 44px;
@@ -18788,7 +18825,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         } 
         section.entry:not(.own):has(> aside.black-content):not(.deleted):not(:has(div.wrapper button)):not(:has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper a[href^={"\/tag\/"}])) > aside.black-content + article div.right a.username:after
         {
-          margin-left: 0rem;
+          margin-left: 0px;
           padding-left: 3px;
           padding-right: 5px;
           color: rgba(255, 120, 120, 1) i;
@@ -19196,7 +19233,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
       display: flex i;
       flex-direction: column i;
 
-      row-gap: 16rem i; /* odległość pomiędzy komentarzami pod znaleziskiem */
+      row-gap: 16px i; /* odległość pomiędzy komentarzami pod znaleziskiem */
     } 
     
     section.link-comments > div.content > section.entry
@@ -19522,7 +19559,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         color: var(--tuna) i;
         box-sizing: border-box;
         content: "Streszczenie artykułu wygenerowane przez AI:";
-        font-size: 14rem i;
+        font-size: 14px i;
         position: absolute;
         top: -40px;
         left: -1px;
@@ -19611,8 +19648,8 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
       section.link-page section.comments section.link-comments div.content section.entry:has(article header div.right a[href="/ludzie/autotldr"]) div.wrapper blockquote,
       section.link-comment div.content > section.entry:has(article header div.right a[href="/ludzie/autotldr"]) div.wrapper blockquote
       { 
-        font-size: 15rem i;
-        line-height: 20rem i;
+        font-size: 15px i;
+        line-height: 20px i;
         font-style: normal;
         visibility: visible i;
       } 
@@ -19635,12 +19672,12 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     {
         section.link-page section.comments section.link-comments div.content section.entry:has(article > header > div.right a[href="/ludzie/autotldr"]):has(> article > header > div.right > div > section.rating-box > div.buttons > button.plus:not(.voted))
         {
-            padding: 10rem 16rem i;
+            padding: 10px 16px i;
         } 
 
         section.link-page section.comments section.link-comments div.content section.entry:has(article > header > div.right a[href="/ludzie/autotldr"]):has(> article > header > div.right > div > section.rating-box > div.buttons > button.plus:not(.voted)) > article > header > div.right a.username:after
         {
-            margin-left: 10rem;
+            margin-left: 10px;
             content: "(komentarz dodany przez bota)" i;
         } 
 
@@ -19898,7 +19935,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         main.main > aside.tag-top > .content > header > div:before
         {
            content: 'Zainstaluj Wykop XS, aby móc zmieniać tagi';
-           font-size: 13rem!important;
+           font-size: 13px!important;
            text-align: left;
            padding: 4px 6px;
            border-radius: 4px 4px 0px 0px;
@@ -19953,7 +19990,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             main.main > aside.tag-top > .content > header > div:before
             {
                content: 'Zainstaluj Wykop XS, aby móc zmieniać tagi wpisując je w to pole';
-               font-size: 13rem!important;
+               font-size: 13px!important;
                text-align: left;
                padding: 4px 6px;
                border-radius: 4px 4px 0px 0px;
@@ -19979,7 +20016,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         main.main > aside.tag-top > .content > header > div:before
         {
            content: 'Zainstaluj Wykop XS i włącz funkcję "Edytuj nagłówek tagu"';
-           font-size: 11rem!important;
+           font-size: 11px!important;
            text-align: left;
            padding: 4px 6px;
            border-radius: 4px 4px 0px 0px;
@@ -20331,7 +20368,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             min-width: 95px;
             color: var(--topNavTextColor, white);
             font-weight: bolder;
-            font-size: calc(var(--topNavTextFontSize, 14rem) - 4rem);
+            font-size: calc(var(--topNavTextFontSize, 14px) - 4px);
             text-decoration: var(--off-line-through);
             text-shadow: var(--label-shadow);
         }
@@ -20742,7 +20779,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             section.entry[data-status="400"] > section.editor > footer > div.buttons > div.send > button::after
             {
                --myUsernameAs: "Wysyłanie zablokowane"!important;    
-               font-size: 12rem!important;
+               font-size: 12px!important;
             }
             section.entry[data-status="400"] > section.editor > footer > div.buttons > div.send > button::before
             {
@@ -20806,8 +20843,8 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             display: flex!important;
             align-items: baseline!important;
-            gap: 6rem!important;
-            font-size: 11rem!important;
+            gap: 6px!important;
+            font-size: 11px!important;
             cursor: help!important;
             color: var(--userCustomColorText)!important;
         }
@@ -20836,7 +20873,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         section header div.wxs_user_info .wxs_user_online
         {
             order: 1;
-            font-size: 5rem;
+            font-size: 5px;
         }
         
         
@@ -20848,9 +20885,9 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
 
         aside.profile-top > section > header > div > h1 > div.wxs_user_info  
         {
-            margin-left: 8rem;
+            margin-left: 8px;
             position: relative;
-            bottom: 2rem;
+            bottom: 2px;
         }
 
         
@@ -20858,7 +20895,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         .wxs_user_info var
         {
             font-style: normal;
-            font-size: 12rem;
+            font-size: 12px;
             opacity: 1;
         }
         .wxs_user_label
@@ -20873,8 +20910,8 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         .wxs_user_member_since
         {
             border-radius: 4px;
-            padding: 1rem 9rem;
-            font-size: 12rem;
+            padding: 1px 9px;
+            font-size: 12px;
             font-weight: bolder;
             background-color: var(--alto);
         }
@@ -20924,7 +20961,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             order: 4;
             display: flex;
-            gap: 4rem;
+            gap: 4px;
         }
         
         // ban
@@ -20949,8 +20986,8 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             order: 40;
             border-radius: 4px;
-            padding: 1rem 9rem;
-            font-size: 12rem;
+            padding: 1px 9px;
+            font-size: 12px;
             background-color: rgba(196, 183, 123, .2);           
             background-color: var(--alto);
         }
@@ -21004,7 +21041,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             padding: 10px;
             margin-top: 16px;
             margin-bottom: 4px;
-            font-size: 13rem;
+            font-size: 13px;
             color: var(--blackOpacity09);
 
         } 
@@ -21021,7 +21058,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         section.entry[data-wxs_user_online="true"] header > div.left > a.avatar:before
         {
             content: "🟢";
-            font-size: calc(0.13 * var(--avatarSize)); //8rem;
+            font-size: calc(0.13 * var(--avatarSize)); // 8px;
             position: absolute;
             top: calc(-0.09 * var(--avatarSize) + -1 * var(--sexBarPadding));
             left:  calc(-0.09 * var(--avatarSize) + -1 * var(--sexBarPadding));
@@ -21337,7 +21374,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         .wykopxs_textinput_limit_info
         {
             color: var(--whiteOpacity08);
-            font-size: 14rem!important;
+            font-size: 14px!important;
             margin: 10px 0px 10px 0px!important;
         } 
         .wykopxs_textinput_limit_info span
@@ -21394,7 +21431,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
 
             --plusesMinusesSize:                                         plusesMinusesSize;
-            --plusesMinusesGap:                                          calc(var(--plusesMinusesSize) / 2 + 5rem);
+            --plusesMinusesGap:                                          calc(var(--plusesMinusesSize) / 2 + 5px);
 
             --colorNumberZero:                                           var(--gullGray);                  // rgb(149 169 187)
 
@@ -21500,7 +21537,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                 
                 voteButtonBorderRadius = 0%;
                 prefixBeforePlusesCount = "plus"
-                plusesMinusesSize = 20rem;
+                plusesMinusesSize = 20px;
 
             }
             else if(plusesAndMinusesStyle == "wykop20")
@@ -21513,7 +21550,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                 voteButtonBorderRadius = 20%;
                 prefixBeforePlusesCount = "brak";
                 prefixBeforeMinusesCount = "minus";
-                plusesMinusesSize = 24rem;
+                plusesMinusesSize = 24px;
             }
 
             
@@ -21641,7 +21678,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             grid-template-columns: auto;
             grid-template-rows: auto auto;
             grid-template-areas:    "votescount" "votesperhour"; 
-            row-gap: 3rem;
+            row-gap: 3px;
         }
 
         if(voteButtonHide == 0)
@@ -21678,7 +21715,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                 display: flex;
                 position: relative;
                 margin: 0px!important;
-                font-size: calc(var(--plusesMinusesSize) - 5rem)!important;
+                font-size: calc(var(--plusesMinusesSize) - 5px)!important;
                 // transition: none!important;
             }
             
@@ -21693,8 +21730,8 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             {
                 section.entries-sidebar > div.content > section.entries > section.entry > header > div.right > div > span.plus
                 {
-                    font-size: "calc(%s - 7rem)" % plusesMinusesSize !important;
-                    font-size: calc(var(--plusesMinusesSize) - 5rem)!important;
+                    font-size: "calc(%s - 7px)" % plusesMinusesSize !important;
+                    font-size: calc(var(--plusesMinusesSize) - 5px)!important;
                 } 
             }
 
@@ -21747,11 +21784,11 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             
             section:is(.rating-box, .related-rating-box) > ul > li.plus:before         // znak przed liczbą plusów a dla wlaczonego wxs takze sama liczba plusow
             {
-                font-size: calc(var(--plusesMinusesSize) - 5rem)!important;
+                font-size: calc(var(--plusesMinusesSize) - 5px)!important;
             }
             section:is(.rating-box, .related-rating-box) > ul > li.minus:before         // znak przed liczbą minusów a dla wlaczonego wxs takze liczba minusow
             {
-                font-size: calc(var(--plusesMinusesSize) - 5rem)!important;
+                font-size: calc(var(--plusesMinusesSize) - 5px)!important;
                 background: none!important;
             }
 
@@ -21803,11 +21840,11 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
 
                 section.entry[data-wxs_votes_up] section.rating-box > ul > li:not(.zero)
                 {
-                    font-size: 0rem!important;
+                    font-size: 0px!important;
                 }
                 section.entry[data-wxs_votes_up] section.rating-box > ul > li:before
                 {
-                    font-size: calc(var(--plusesMinusesSize) - 5rem)!important;
+                    font-size: calc(var(--plusesMinusesSize) - 5px)!important;
                 }
 
                 section.entry[data-wxs_votes_up] section.rating-box > ul > li.plus:before
@@ -21835,7 +21872,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                     }
                     section.entry > section.stream > div.content > section.entry:has(.plus):before
                     {
-                        font-size: 20rem;
+                        font-size: 20px;
                         position: fixed;
                         top: 50%;
                         left: 50%;
@@ -21900,17 +21937,17 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                         left: 0;
                         transform: translateX(-100%);
                     }
-                    if(prefixBeforeMinusesCount == "emoji_cross_mark")                       {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 14rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "❌"; scale: 0.8;   }}
-                    else if(prefixBeforeMinusesCount == "emoji_backhand_index_pointing_down"){  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 14rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "👇"; scale: 0.9;    }}      
-                    else if(prefixBeforeMinusesCount == "emoji_thumbs_down")                 {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 16rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "👎";     }}
-                    else if(prefixBeforeMinusesCount == "emoji_downwards_button")            {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "🔽"; scale: 0.8;   }} 
-                    else if(prefixBeforeMinusesCount == "emoji_heavy_tick")                  {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "✔";  scale: 0.8;   }} 
-                    else if(prefixBeforeMinusesCount == "emoji_down_arrow")                  {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "⬇";     }}        
-                    else if(prefixBeforeMinusesCount == "emoji_down_right_arrow")            {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "↘";     }}        
-                    else if(prefixBeforeMinusesCount == "emoji_down_left_arrow")             {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "↙";     }}        
-                    else if(prefixBeforeMinusesCount == "emoji_right_arrow_curving_down")    {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "⤵";     }}        
-                    else if(prefixBeforeMinusesCount == "emoji_minus_sign")                  {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 18rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "➖"; scale: 0.8;   }}        
-                    else if(prefixBeforeMinusesCount == "emoji_red_triangle_pointed_down")   {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12rem); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "🔻"; scale: 0.8;   }}
+                    if(prefixBeforeMinusesCount == "emoji_cross_mark")                       {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 14px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "❌"; scale: 0.8;   }}
+                    else if(prefixBeforeMinusesCount == "emoji_backhand_index_pointing_down"){  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 14px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "👇"; scale: 0.9;    }}      
+                    else if(prefixBeforeMinusesCount == "emoji_thumbs_down")                 {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 16px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "👎";     }}
+                    else if(prefixBeforeMinusesCount == "emoji_downwards_button")            {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "🔽"; scale: 0.8;   }} 
+                    else if(prefixBeforeMinusesCount == "emoji_heavy_tick")                  {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "✔";  scale: 0.8;   }} 
+                    else if(prefixBeforeMinusesCount == "emoji_down_arrow")                  {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "⬇";     }}        
+                    else if(prefixBeforeMinusesCount == "emoji_down_right_arrow")            {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "↘";     }}        
+                    else if(prefixBeforeMinusesCount == "emoji_down_left_arrow")             {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "↙";     }}        
+                    else if(prefixBeforeMinusesCount == "emoji_right_arrow_curving_down")    {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "⤵";     }}        
+                    else if(prefixBeforeMinusesCount == "emoji_minus_sign")                  {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 18px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "➖"; scale: 0.8;   }}        
+                    else if(prefixBeforeMinusesCount == "emoji_red_triangle_pointed_down")   {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "🔻"; scale: 0.8;   }}
                 }
             }
             /* Wykop XS wyłączony END */
@@ -22117,7 +22154,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             animation-timing-function: ease-in, linear!important;
             animation-iteration-count: infinite, infinite!important;
 
-            font-size: 14rem;
+            font-size: 14px;
 
             position: absolute;
             right: 0px;
@@ -22161,10 +22198,10 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         }
         @keyframes linkVotesChangedColorAnimation 
         {
-            0%      { font-size: 14rem;     color: var(--orange); }
+            0%      { font-size: 14px;     color: var(--orange); }
             25%     {                          }
-            50%     { font-size: 14.5rem;   color: goldenrod;    }
-            75%     {                           } 100%    { font-size: 14rem;     color: var(--orange); }
+            50%     { font-size: 14.5px;   color: goldenrod;    }
+            75%     {                           } 100%    { font-size: 14px;     color: var(--orange); }
         }
         section[class] section.link-block.plusesAdded > section > aside > section.vote-box > div.dig > p
         {
@@ -22202,7 +22239,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         }
         article > header > div.right > div > section.rating-box:after
         {
-            font-size: 10rem;
+            font-size: 10px;
             animation-duration: 4s;
             position: absolute;
             top: -15px;
@@ -22265,7 +22302,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             grid-area: votesperhour;
             justify-content: end;
 
-            font-size: 10rem;
+            font-size: 10px;
             font-weight: bolder;
             color: var(--colorPlusesCount);
 
@@ -22328,7 +22365,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             {
                 opacity: 0;
                 cursor: pointer;
-                font-size: 12rem;
+                font-size: 12px;
                 font-weight: bolder;
                 position: absolute;
                 top: -10px;
@@ -22348,7 +22385,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
 
             .wykopxs_vote_animation.wykopxs_golden
             {
-                font-size: 35rem;
+                font-size: 35px;
                 color: var(--golden)!important;
                 text-shadow: 0px 0px 5px var(--golden);
             } 
@@ -22433,7 +22470,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     {
         display: flex;
         flex-direction: row;
-        font-size: 12rem;
+        font-size: 12px;
         color: var(--blackOpacity08, rgba(140, 140, 140, 1))
         
         margin-left: auto;
@@ -22443,7 +22480,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     {
         display: flex;
         flex-direction: column;
-        font-size: 11rem;
+        font-size: 11px;
         color: var(--blackOpacity06, rgba(140, 140, 140, 1));
         align-items: end;
         width: fit-content;
@@ -22463,7 +22500,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     #wxs_console > div > span.wxs_console_count
     {
         display: inline-block;
-        min-width: 20rem;
+        min-width: 20px;
         text-align: center;
     }
     #wxs_console > div > span.wxs_console_text
@@ -22620,7 +22657,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     }
     .wykopx_modal button
     {
-        font-size: 11rem;
+        font-size: 11px;
         min-width: 80px;
         border: 1px solid rgb(52, 52, 52);
         background-color: rgb(36, 36, 36);
@@ -22674,7 +22711,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         height: calc(100% - 100px);
         width: calc(100% - 40px);
         position: fixed;
-        font-size: 13rem;
+        font-size: 13px;
     } 
     
     .wykopx_modal .wykopx_modal-content .wykopx_mirkoukrywacz_list_of_hidden_items .wykopx_mirkoukrywacz_hidden_list_is_empty:has(+ div)
@@ -22802,7 +22839,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     /* VARIABLES */
 
     versor = "style"; // "style", "blank", "block"
-    version = "3.0.68";   
+    version = "3.0.72";   
     /* xblocker = "2.49" */
     
     
@@ -23215,7 +23252,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     }
 
     /* WYKOP X PHOTO VIEWER */
-    if(photoViewerEnable == 1)
+    if(photoViewerEnable2 == 1 || photoViewerEnable1 == 1)
     {
         /* PLIK CSS/FEATURES/PHOTO_VIEWER/photo_viewer.css 
 
@@ -23740,11 +23777,11 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             text-align: center;
             text-align: left;
-            padding-left: 30px;
+            padding-left: 10px;
             
             font-weight: 300;
             font-family: system-ui;
-            font-size: 1.2rem;
+            font-size: 15px;
             letter-spacing: 1px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
             text-wrap: pretty;
@@ -23799,7 +23836,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             padding-left: 10px;
             font-weight: 300;
             font-family: system-ui;
-            font-size: 0.9rem;
+            font-size: 14px;
             letter-spacing: 1px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
             text-wrap: pretty;
@@ -23952,7 +23989,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         /* TYTUL SEKCJI */
         #message-box-contents div.config-body label.config-range:has(input[type="range"][max="99900"]) span.config-name
         {
-            font-size: 0.9rem!important;
+            font-size: 15px!important;
         }
         
         #message-box-contents div.config-body label.config-checkbox,
@@ -24035,7 +24072,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         
         #message-box-contents div.config-body label.config-select div.config-value > select > option
         {
-            font-size: 1.2rem;
+            font-size: 1.2px;
             border: 1px solid #f00!important;
         }
         
