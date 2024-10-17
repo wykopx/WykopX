@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3.0
 // @name:en							Wykop XS 3.0
 
-// @version							3.0.72
+// @version							3.0.73
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://styl.wykopx.pl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://styl.wykopx.pl
@@ -25,7 +25,7 @@
 // @match							https://wykop.pl/*
 // @match							https://github.com/wykopx/*
 
-// @supportURL						http://wykop.pl/tag/wykopwnowymstylu
+// @supportURL						http://wykop.pl/tag/wykopx
 // @namespace						Violentmonkey Scripts
 // @compatible						chrome, firefox, opera, safari, edge
 // @license							No License
@@ -47,7 +47,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.0.72";
+	const currentVersion = "3.0.73";
 	let dev = false;
 
 	const promoString = " [Dodane przez Wykop XS]";
@@ -1541,7 +1541,7 @@
 					<h4 data-v-d5500d78>Przejdź na #tag lub @profil</h4>
 				</header>
 				<div class="content wykopx_quick_search_container" data-v-d5500d78>
-					<input type="text" class="wykopx_quick_search" placeholder="#wykopwnowymstylu" title="${promoString}" />
+					<input type="text" class="wykopx_quick_search" placeholder="#wykopx" title="${promoString}" />
 				</div>
 				<header data-v-d5500d78>
 					<h4 data-v-d5500d78>Twoje obserwowane tagi</h4>
@@ -5557,7 +5557,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			consoleX("addExtraButtons()", 1)
 
 			/* Przyciski dodawane tylko na górną belkę nawigacyjną */
-			const wykopx_wykopwnowymstylu_li = `<li class="wykopx_wykopwnowymstylu_li dropdown"><a href="/tag/wykopwnowymstylu" class="wykopx_wykopwnowymstylu_button" title="Przejdź na #wykopwnowymstylu"><span>#</span></a></li>`;
+			const wykopx_wykopwnowymstylu_li = `<li class="wykopx_wykopwnowymstylu_li dropdown"><a href="/tag/wykopx" class="wykopx_wykopwnowymstylu_button" title="Przejdź na #wykopx"><span>#</span></a></li>`;
 			const wykopx_microblog_mobile_li = `<li class="wykopx_microblog_mobile_li dropdown"><a href="/mikroblog" class="wykopx_microblog_mobile_button" title="Mikroblog ${promoString}"><figure> </figure></a></li>`;
 			/* Te przyciski także na belce mobilnej */
 			const wykopx_mywykop_mobile_li = `<li data-v-1adb6cc8 class="wykopx_mywykop_mobile_li dropdown"><a data-v-1adb6cc8 href="/obserwowane" class="wykopx_mywykop_mobile_button" title="Mój Wykop ${promoString}"><span data-v-1adb6cc8><i data-v-1adb6cc8>Mój Wykop</i></span></a></li>`;
