@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter X Ads Blocker
-@version        1.0.0
+@version        1.0.6
 
 @description    Best AdBlock for X.com / Twitter.com  Blocks and removes all ads, sponsored tweets. You can customise and remove irrelevant panels like Subscribe Premium or Who to Follow. adblock, adsblock. uBlock. Remove ads. Block hide remove advertisements and adverts.
 @description    https://wiki.wykopx.pl
@@ -18,33 +18,77 @@ Support and buy a small coffee https://buycoffee.to/wykopx
 ---- AUTHOR ---- 
 
 
+@var range        HR_AD_blocker             `AD BLOCKER`                                                                 [0, 0, 99900, 1, 'mm']
 
-@var select       adsRemoval                 `Ads`  {
+@var select       adsRemoval                 `⛔ Block Ads`  {
+                                                "Show ads":"disabled",
                                                 "Block & remove ads*":"enabled",
-                                                "Disabled":"disabled",
                                             }
-
-@var select       sponsoredRemoval           `Sponsored tweets` {
+                                          
+@var select       sponsoredRemoval           `⛔ Sponsored tweets` {
+                                                "Show sponsored tweets":"disabled",
                                                 "Block & remove sponsored tweets*":"enabled",
-                                                "Disabled":"disabled",
                                             }
-
-@var checkbox     adsStylingOpacity          `Show ads: semi-transparent`   1
-@var checkbox     adsStylingGrayedOut        `Show ads: in grayscale`       1
-@var checkbox     adsStylingBluredOut        `Show ads: blurred`            1
-@var checkbox     adsMarkerShow              `Show marker on Ads`           1
-
-
-var checkbox     removeTimelineCreatorsForYou      `Creators For You`           1
-var checkbox     removeTimelineDiscoverNewCommunities      `Discover new Communities`           1
+                                             
+@var range        HR_SHOW_ADS_PREFERENCES        `SHOWING ADs PREFERENCES`                                                                 [0, 0, 99900, 1, 'mm']
+                                             
+@var checkbox     adsStylingOpacity          `Ads semi-transparent`                   1
+@var checkbox     adsStylingGrayedOut        `Ads in grayscale`                       1
+@var checkbox     adsStylingBluredOut        `Ads blurred`                            1
+@var checkbox     adsMarkerShow              `Show info marker on every ad`           1
 
 
-@var checkbox     removeSidebarSubscribePremium     `Hide in sidebar: Subscribe Premium`        1
-@var checkbox     removeSidebarBlockWhoToFollow     `Hide in sidebar: Who to follow`            1
-@var checkbox     removeSidebarBlockTrends          `Hide in sidebar: Trends`                   0
-@var checkbox     removeSidebarTOSFooter            `Hide in sidebar: Footer`                   1
+@var range        HR_HIDE_STREAM             `HIDE STREAM ELEMENTS`                                                                 [0, 0, 99900, 1, 'mm']
 
-@var checkbox     tweetsShowDateTime            `Show date & time for tweets`                   0
+@var checkbox     removeTimelineSubscribePremium           `⛔ Hide "Subscribe Premium" announcement`      1
+@var checkbox     removeTimelineAnnouncements              `⛔ Hide X announcements on Home stream`        0
+var checkbox     removeTimelineCreatorsForYou              `⛔ Hide "Creators For You"`                    1
+var checkbox     removeTimelineDiscoverNewCommunities      `⛔ Hide "Discover new Communities"`            1
+@var checkbox     removeTimelineWhoToFollow                `⛔ Hide "Who to follow"`                       1
+
+
+@var range        HR_HIDE_LEFT_MENU             `HIDE LEFT MENU ITEMS`                                                                 [0, 0, 99900, 1, 'mm']
+@var checkbox     removeLeftHome                  `⛔ Hide "Home"`                 0
+@var checkbox     removeLeftExplore               `⛔ Hide "Explore"`              0
+@var checkbox     removeLeftNotifications         `⛔ Hide "Notifications"`        0
+@var checkbox     removeLeftMessages              `⛔ Hide "Messages" 🔹`          0
+@var checkbox     removeLeftBookmarks             `⛔ Hide "Bookmarks"`            1
+@var checkbox     removeLeftJobs                  `⛔ Hide "Jobs"`                 1
+@var checkbox     removeLeftCommunities           `⛔ Hide "Communities"`          0
+@var checkbox     removeLeftPremium               `⛔ Hide "Premium"`              1
+@var checkbox     removeLeftVerified              `⛔ Hide "Verified Orgs"`        1
+@var checkbox     removeLeftProfile               `⛔ Hide "Profile"`              0
+@var checkbox     removeLeftMore                  `⛔ Hide "More..."`              0
+@var checkbox     removeReadonlyPostButton        `⛔ Hide "Post" button in left menu 🔸`     0
+
+@var range        HR_HIDE_STREAM             `HIDE SIDEBAR ELEMENTS`                                                                 [0, 0, 99900, 1, 'mm']
+@var checkbox     removeSidebarSubscribePremium    `⛔ Hide "Subscribe Premium"`        1
+@var checkbox     removeSidebarBlockWhoToFollow    `⛔ Hide "Who to follow"`            1
+@var checkbox     removeSidebarBlockTrends         `⛔ Hide "Trends"`                   0
+@var checkbox     removeSidebarTOSFooter           `⛔ Hide sidebar Footer`              1
+
+@var range        HR_HIDE_TWEET_ELEMENTS        `HIDE TWEET ELEMENTS`                                                                 [0, 0, 99900, 1, 'mm']
+@var checkbox     removeReadonlyShareButton       `⛔ Hide share button 🔸`                0
+
+@var range        HR_HIDE_READONLY                `TURN OFF POSTING - READ-ONLY MODE 🔸`                                                                 [0, 0, 99900, 1, 'mm']
+@var checkbox     removeReadonlyPreset            `[PRESET 🔸] Enable read-only mode`         0
+@var checkbox     removeReadonlyNewEntry          `⛔ Hide new entry textbox 🔸`              0
+@var checkbox     removeReadonlyNewCommentTextbox `⛔ Hide new comment textboxes 🔸`          0
+@var checkbox     removeReadonlyNewCommentModal   `⛔ Hide new comment modal 🔸`              0
+
+
+
+@var range        HR_HIDE_OTHER_ELEMENTS        `TURN OFF MESSAGING`                                                                 [0, 0, 99900, 1, 'mm']
+@var checkbox     removeMessagesPreset          `[PRESET 🔹] Turn off Messaging (DMs)`           0
+@var checkbox     removeMessagesBox             `⛔ Hide "Messages" box 🔹`                      0
+@var checkbox     removeMessageButton           `⛔ Hide "Message" button on user profile 🔹`    0
+
+@var range        HR_EXTRA_FEATURES             `EXTRA FEATURES`                                                                 [0, 0, 99900, 1, 'mm']
+@var checkbox     tweetsShowDateTime            `⌚ Date & time in tweets (e.g. 2024-12-31 23:59:59)`                   1
+
+
+@var range        HR_TESTING             `DEBUGGING`                                                                 [0, 0, 99900, 1, 'mm']
+@var checkbox     dev                    `Show and mark blocked/hidden elements`      0
 
 
 @preprocessor   stylus
@@ -59,16 +103,54 @@ var checkbox     removeTimelineDiscoverNewCommunities      `Discover new Communi
 {
     i = !important;
     
+    
+    
+    if(removeReadonlyPreset == 1)
+    {
+        removeReadonlyPostButton = 1;
+        removeReadonlyNewEntry = 1;
+        removeReadonlyNewCommentTextbox = 1;
+        removeReadonlyNewCommentModal = 1;
+        removeReadonlyShareButton = 1;  
+    }
+    
+    if(removeMessagesPreset == 1)
+    {
+        removeLeftMessages = 1;
+        removeMessagesBox = 1;
+        removeMessageButton = 1;
+    }
+    if(removeMessagesBox == 1)
+    {
+        div.r-12vffkv > div > div[data-testid="DMDrawer"]
+        {
+            if(dev) { border: 10px solid #004eff  i; }
+            else    { display: none i; }
+        }
+    }
+    if(removeMessageButton == 1)
+    {
+        div[data-testid="primaryColumn"] div[data-testid^="UserAvatar"] + div > button[data-testid="sendDMFromProfile"]
+        {
+            if(dev) { border: 3px solid #004eff i; }
+            else    { display: none i; }
+        }
+    }
+    
+    
     div[data-testid="cellInnerDiv"]:has(div.r-1kkk96v span)
     {
 /*         border: 3px solid red i; */
     }
     
+    
+    
     if(sponsoredRemoval == "enabled")
     {
         div[data-testid="cellInnerDiv"]:has(path[d="M19.498 3h-15c-1.381 0-2.5 1.12-2.5 2.5v13c0 1.38 1.119 2.5 2.5 2.5h15c1.381 0 2.5-1.12 2.5-2.5v-13c0-1.38-1.119-2.5-2.5-2.5zm-3.502 12h-2v-3.59l-5.293 5.3-1.414-1.42L12.581 10H8.996V8h7v7z"])
         {
-            outline: 3px solid red i;
+            if(dev) { border: 10px solid #d1e123 i; }
+            else    { display: none i; }
         }
 /*         div[data-testid="cellInnerDiv"]:has(svg + div > span)
         {
@@ -81,9 +163,11 @@ var checkbox     removeTimelineDiscoverNewCommunities      `Discover new Communi
     
     if(adsRemoval == "enabled")
     {
-        div[data-testid="cellInnerDiv"]:has(div.r-1kkk96v span)
+        /* div.r-1kkk96v - right aligned top post */
+        div[data-testid="cellInnerDiv"]:has(div.r-1kkk96v > div > div > span)
         {
-            display: none i;
+            if(dev) { border: 10px solid #1ed940 i; }
+            else    { display: none i; }
         }
     }
     else
@@ -105,7 +189,7 @@ var checkbox     removeTimelineDiscoverNewCommunities      `Discover new Communi
 
                 if(adsStylingBluredOut == 1)
                 {
-                    filter: grayscale(1) blur(3px) i;
+                     filter: grayscale(1) blur(3px) i;
                 }
             }
             else if(adsStylingBluredOut == 1)
@@ -142,10 +226,28 @@ var checkbox     removeTimelineDiscoverNewCommunities      `Discover new Communi
         }
     }
     
+    if(removeTimelineSubscribePremium == 1)
+    {
+        div[data-testid="primaryColumn"] div[data-testid="cellInnerDiv"]:has(a[href^="/i/premium_sign_up"])
+        {
+            if(dev) { border: 10px solid #6dfd68 i; }
+            else    { display: none i; }
+        }
+    }
+    if(removeTimelineAnnouncements == 1)
+    {
+        div[data-testid="primaryColumn"] div[data-testid="cellInnerDiv"]:has(h1[role="heading"]):has(a[href])
+        {
+            if(dev) { border: 10px solid #f00 i; }
+            else    { display: none i; }
+        }
+    }
+    
+    
     
     if(removeTimelineCreatorsForYou == 1)
     {
-        div[data-testid="primaryColumn"] div[data-testid="cellInnerDiv"] div.css-175oi2r div div spanf
+        div[data-testid="primaryColumn"] div[data-testid="cellInnerDiv"] div.css-175oi2r div div span
         {
 /*             border: 3px solid red i; */
         }
@@ -158,7 +260,18 @@ var checkbox     removeTimelineDiscoverNewCommunities      `Discover new Communi
         }
     }
     
-    
+    if(removeTimelineWhoToFollow == 1)
+    {
+        main[role="main"] > div.css-175oi2r.r-150rngu.r-16y2uox.r-1wbh5a2.r-113js5t > div.css-175oi2r.r-aqfbo4.r-16y2uox > div.css-175oi2r.r-1oszu61.r-1niwhzg.r-18u37iz.r-16y2uox.r-2llsf.r-13qz1uu.r-1wtj0ep > div.css-175oi2r.r-yfoy6g.r-18bvks7.r-1ua6aaf.r-th6na.r-1phboty.r-16y2uox.r-184en5c.r-1c4cdxw.r-1t251xo.r-f8sm7e.r-13qz1uu.r-1ye8kvj[data-testid="primaryColumn"] > div.css-175oi2r > div.css-175oi2r > div.css-175oi2r.r-16y2uox div[data-testid="cellInnerDiv"]:has(> div.css-175oi2r.r-1adg3ll.r-1ny4l3l > div.css-175oi2r > div.css-175oi2r.r-1wtj0ep.r-1mmae3n.r-3pj75a.r-1ny4l3l > h2.css-175oi2r.r-18u37iz.r-7cikom > div.css-175oi2r.r-1kihuf0.r-18u37iz.r-16y2uox.r-17s6mgv.r-1ez5h0i),
+        main[role="main"] > div.css-175oi2r.r-150rngu.r-16y2uox.r-1wbh5a2.r-113js5t > div.css-175oi2r.r-aqfbo4.r-16y2uox > div.css-175oi2r.r-1oszu61.r-1niwhzg.r-18u37iz.r-16y2uox.r-2llsf.r-13qz1uu.r-1wtj0ep > div.css-175oi2r.r-yfoy6g.r-18bvks7.r-1ua6aaf.r-th6na.r-1phboty.r-16y2uox.r-184en5c.r-1c4cdxw.r-1t251xo.r-f8sm7e.r-13qz1uu.r-1ye8kvj[data-testid="primaryColumn"] > div.css-175oi2r > div.css-175oi2r > div.css-175oi2r.r-16y2uox div[data-testid="cellInnerDiv"]:has(> div.css-175oi2r.r-1adg3ll.r-1ny4l3l > div.css-175oi2r > div.css-175oi2r.r-1wtj0ep.r-1mmae3n.r-3pj75a.r-1ny4l3l > h2.css-175oi2r.r-18u37iz.r-7cikom > div.css-175oi2r.r-1kihuf0.r-18u37iz.r-16y2uox.r-17s6mgv.r-1ez5h0i) + div,
+        main[role="main"] > div.css-175oi2r.r-150rngu.r-16y2uox.r-1wbh5a2.r-113js5t > div.css-175oi2r.r-aqfbo4.r-16y2uox > div.css-175oi2r.r-1oszu61.r-1niwhzg.r-18u37iz.r-16y2uox.r-2llsf.r-13qz1uu.r-1wtj0ep > div.css-175oi2r.r-yfoy6g.r-18bvks7.r-1ua6aaf.r-th6na.r-1phboty.r-16y2uox.r-184en5c.r-1c4cdxw.r-1t251xo.r-f8sm7e.r-13qz1uu.r-1ye8kvj[data-testid="primaryColumn"] > div.css-175oi2r > div.css-175oi2r > div.css-175oi2r.r-16y2uox div[data-testid="cellInnerDiv"]:has(> div.css-175oi2r.r-1adg3ll.r-1ny4l3l > div.css-175oi2r > div.css-175oi2r.r-1wtj0ep.r-1mmae3n.r-3pj75a.r-1ny4l3l > h2.css-175oi2r.r-18u37iz.r-7cikom > div.css-175oi2r.r-1kihuf0.r-18u37iz.r-16y2uox.r-17s6mgv.r-1ez5h0i) + div + div,
+        main[role="main"] > div.css-175oi2r.r-150rngu.r-16y2uox.r-1wbh5a2.r-113js5t > div.css-175oi2r.r-aqfbo4.r-16y2uox > div.css-175oi2r.r-1oszu61.r-1niwhzg.r-18u37iz.r-16y2uox.r-2llsf.r-13qz1uu.r-1wtj0ep > div.css-175oi2r.r-yfoy6g.r-18bvks7.r-1ua6aaf.r-th6na.r-1phboty.r-16y2uox.r-184en5c.r-1c4cdxw.r-1t251xo.r-f8sm7e.r-13qz1uu.r-1ye8kvj[data-testid="primaryColumn"] > div.css-175oi2r > div.css-175oi2r > div.css-175oi2r.r-16y2uox div[data-testid="cellInnerDiv"]:has(> div.css-175oi2r.r-1adg3ll.r-1ny4l3l > div.css-175oi2r > div.css-175oi2r.r-1wtj0ep.r-1mmae3n.r-3pj75a.r-1ny4l3l > h2.css-175oi2r.r-18u37iz.r-7cikom > div.css-175oi2r.r-1kihuf0.r-18u37iz.r-16y2uox.r-17s6mgv.r-1ez5h0i) + div + div + div,
+        main[role="main"] > div.css-175oi2r.r-150rngu.r-16y2uox.r-1wbh5a2.r-113js5t > div.css-175oi2r.r-aqfbo4.r-16y2uox > div.css-175oi2r.r-1oszu61.r-1niwhzg.r-18u37iz.r-16y2uox.r-2llsf.r-13qz1uu.r-1wtj0ep > div.css-175oi2r.r-yfoy6g.r-18bvks7.r-1ua6aaf.r-th6na.r-1phboty.r-16y2uox.r-184en5c.r-1c4cdxw.r-1t251xo.r-f8sm7e.r-13qz1uu.r-1ye8kvj[data-testid="primaryColumn"] > div.css-175oi2r > div.css-175oi2r > div.css-175oi2r.r-16y2uox div[data-testid="cellInnerDiv"]:has(> div.css-175oi2r.r-1adg3ll.r-1ny4l3l > div.css-175oi2r > div.css-175oi2r.r-1wtj0ep.r-1mmae3n.r-3pj75a.r-1ny4l3l > h2.css-175oi2r.r-18u37iz.r-7cikom > div.css-175oi2r.r-1kihuf0.r-18u37iz.r-16y2uox.r-17s6mgv.r-1ez5h0i) + div + div + div + div,
+        {
+            if(dev) { border: 10px solid #252bee i; }
+            else    { display: none i; }
+        }
+    }
     
     
     
@@ -167,7 +280,8 @@ var checkbox     removeTimelineDiscoverNewCommunities      `Discover new Communi
     {
         div[data-testid="sidebarColumn"] div.r-1ifxtd0:has(aside > div > h2)
         {
-            display: none i;
+            if(dev) { border: 10px solid #5cdf8c i; }
+            else    { display: none i; }
         }
     }
         
@@ -175,23 +289,75 @@ var checkbox     removeTimelineDiscoverNewCommunities      `Discover new Communi
     {
         div[data-testid="sidebarColumn"] div.r-1ifxtd0:has(div > section)
         {
-            display: none i;
+            if(dev) { border: 10px solid #3c5123 i; }
+            else    { display: none i; }
         }
     }
     if(removeSidebarTOSFooter == 1)
     {
         div[data-testid="sidebarColumn"] div.r-1yadl64
         {
-            display: none i;
+            if(dev) { border: 10px solid #5c3030 i; }
+            else    { display: none i; }
         }
     }
     if(removeSidebarSubscribePremium == 1)
     {
-        div[data-testid="sidebarColumn"] > div > div > div > div > div > div:has(aside > a[href="/i/premium_sign_up"])
+        div[data-testid="sidebarColumn"] > div > div > div > div > div > div:has(aside > a[href^="/i/premium_sign_up"]),
+        div[data-testid="sidebarColumn"] > div.css-175oi2r:has(> div.css-175oi2r.r-yfoy6g.r-18bvks7.r-1867qdf.r-1phboty.r-rs99b7.r-1ifxtd0.r-1udh08x a[href^="/i/premium_sign_up"])
         {
-            display: none i;
+            if(dev) { border: 10px solid #6a00ff i; }
+            else    { display: none i; }
         }
     }
+
+    
+ 
+    if(removeReadonlyShareButton == 1)
+    {
+        article[data-testid="tweet"] div.css-175oi2r div.css-175oi2r[role="group"] > div.css-175oi2r:not(.r-18u37iz)
+        {
+            if(dev) { border: 2px solid #c70 i; }
+            else    { display: none i; }
+        }
+    }
+    if(removeReadonlyPostButton == 1)
+    {
+        header[role="banner"] div.css-175oi2r.r-e7q0ms.r-12kyg2d:has(a[href="/compose/post"])
+        {
+            if(dev) { border: 10px solid #c70 i; }
+            else    { display: none i; }
+        }
+    }
+    if(removeReadonlyNewEntry == 1)
+    {
+        main[role="main"] div[data-testid="primaryColumn"] > div > div.css-175oi2r.r-yfoy6g.r-184en5c       
+        {
+            if(dev) { border: 10px solid #c70 i; }
+            else    { display: none i; }
+        }
+    }
+    if(removeReadonlyNewCommentTextbox == 1)
+    {
+        div[data-testid="cellInnerDiv"] div[data-testid="inline_reply_offscreen"]
+        {
+            if(dev) { border: 10px solid #c70 i; }
+            else    { display: none i; }
+        }
+    }
+/*     if(removeReadonlyNewCommentModal == 1)
+    {
+        div#react-root div#layers > div.r-12vffkv:has(div[data-testid="tweetTextarea_0_label"])
+        {
+            if(dev) { border: 10px solid #c70 i; }
+            else    { display: none i; }
+        }
+    } */
+    
+    
+    
+    
+    
     
     
     
@@ -223,6 +389,807 @@ var checkbox     removeTimelineDiscoverNewCommunities      `Discover new Communi
             width: 171px;
         }
     }
+    
+    
+    
+
+    
+    
+    
+    
+    if(removeLeftHome == 1)
+    {
+        nav[role="navigation"] a[href="/home"]
+        {
+            if(dev) { border: 4px solid #ff0008 i; }
+            else    { display: none i; }
+        }
+    }
+    if(removeLeftExplore == 1)
+    {
+        nav[role="navigation"] a[href="/explore"]
+        {
+            if(dev) { border: 4px solid #ff0008 i; }
+            else    { display: none i; }
+        }
+    }
+    if(removeLeftNotifications == 1)
+    {
+        nav[role="navigation"] a[href="/notifications"]
+        {
+            if(dev) { border: 4px solid #ff0008 i; }
+            else    { display: none i; }
+        }
+    }
+    if(removeLeftMessages == 1)
+    {
+        nav[role="navigation"] a[href^="/messages"]
+        {
+            if(dev) { border: 4px solid blue i; }
+            else    { display: none i; }
+        }
+    }
+    if(removeLeftBookmarks == 1)
+    {
+        nav[role="navigation"] a[href="/i/bookmarks"]
+        {
+            if(dev) { border: 4px solid #ff0008 i; }
+            else    { display: none i; }
+        }
+    }
+    if(removeLeftJobs == 1)
+    {
+        nav[role="navigation"] a[href="/jobs"]
+        {
+            if(dev) { border: 4px solid #ff0008 i; }
+            else    { display: none i; }
+        }
+    }
+    if(removeLeftCommunities == 1)
+    {
+        nav[role="navigation"] a[href$="/communities"]
+        {
+            if(dev) { border: 4px solid #ff0008 i; }
+            else    { display: none i; }
+        }
+    }
+    if(removeLeftPremium == 1)
+    {
+        nav[role="navigation"] a[href="/i/premium_sign_up"]
+        {
+            if(dev) { border: 4px solid #ff0008 i; }
+            else    { display: none i; }
+        }
+    }
+    if(removeLeftVerified == 1)
+    {
+        nav[role="navigation"] a[href="/i/verified-orgs-signup"]
+        {
+            if(dev) { border: 4px solid #ff0008 i; }
+            else    { display: none i; }
+        }
+    }
+    if(removeLeftMore == 1)
+    {
+        nav[role="navigation"] button[aria-haspopup="menu"]
+        {
+            if(dev) { border: 4px solid #ff0008 i; }
+            else    { display: none i; }
+        }
+    }
 }
+
+
+@-moz-document url-prefix("moz-extension://"), url-prefix("chrome-extension://")
+{
+    body#stylus-manage
+    {
+        display: grid!important;
+    }
+    
+    body#stylus-manage > div#message-box 
+    {
+        justify-self: center !important;
+        
+        border: 1px solid var(--accent-2);
+	    box-shadow: 1px 0px 10px 13px rgba(0, 0, 0, 0.3);
+        //margin: 10px;
+        
+        left: unset!important;
+        right: unset!important;
+        top: 20px;
+        bottom: 20px;
+        
+        width: 30%;
+        min-width: 800px;
+        max-width: 2000px;
+        
+        position: fixed;
+    }
+    
+    @media screen and (max-width: 840px)
+    {
+        body#stylus-manage > div#message-box 
+        {
+            left: 5px!important;
+            right: 5px!important;
+            top: 5px!important;
+            bottom: 5px!important;
+                    
+            width: calc(100% - 10px);
+            min-width: unset;
+            max-width: unset;
+        }
+    }
+    body#stylus-manage > div#message-box > div
+    {
+        left: unset!important;
+        right: 0px!important;
+        position: sticky!important;
+        width: 100%!important;
+    }
+    
+    /* for screenshot */
+    /*  
+    body#stylus-manage
+    {
+        background-color: rgb(13, 17, 23);
+    }
+    body#stylus-manage > div#message-box
+    {
+            position: relative!important;
+        width: 100%;
+        min-width: 700px;
+        max-width: 2000px;
+        margin: 60px!important;
+    } 
+    body#stylus-manage > div#message-box > div
+    {
+        position: sticky!important;
+        width: 100%!important;
+    }
+    */
+
+    
+    
+    
+    body#stylus-manage > div#installed > div.entry:has(> h2 > a[href*="wykopx.pl"])
+    {
+        order: -888;
+    }
+    body#stylus-manage > div#installed > div.entry.disabled:has(> h2 > a[href*="wykopx.pl"]) > h2.style-name > a.style-name-link
+    {
+        color: var(--accent-2)!important;
+    }
+    body#stylus-manage > div#installed > div.entry.enabled:has(> h2 > a[href*="wykopx.pl"])
+    {
+        order: -999;
+        background-color: var(--accent-3)!important;
+    }
+    body#stylus-manage > div#installed > div.entry:has(> h2 > a[href*="wykopx.pl"]) > p > a.configure-usercss > i::after      
+    {
+        color: var(--c00);
+        font-size: 22px;
+    }
+    body#stylus-manage > div#installed > div.entry:has(> h2 > a[href*="wykopx.pl"]) > p > a.configure-usercss > i:hover::after     
+    {
+        color: var(--accent-1);
+    }
+    body#stylus-manage
+    {
+        height: max-content!important;
+    }
+
+
+
+    #message-box > div > #message-box-contents::-webkit-scrollbar
+    {
+      width: 24px!important;
+    }
+    #message-box > div > #message-box-contents::-webkit-scrollbar-button
+    {
+        display: none!important;
+    }
+
+    #message-box > div > #message-box-contents::-webkit-scrollbar-thumb
+    {
+        height: 100px!important;
+        background: #111!important;
+        background: linear-gradient(#1b1b1b, #111)!important;
+        border: 1px solid #000!important;
+        box-shadow: inset 0 0 0 1px #272727!important;
+        border-radius: 6px!important;
+        transition: background 0.3s linear;
+    }
+    #message-box > div > #message-box-contents::-webkit-scrollbar-thumb:hover
+    {
+        background: linear-gradient(rgba(32, 44, 34, 1), #111)!important;
+        background: linear-gradient(rgba(56, 148, 148, 0.21) 0%, #111 60%)!important;
+    }
+    #message-box > div > #message-box-contents::-webkit-scrollbar-thumb:active
+    {
+        background: linear-gradient(rgba(32, 44, 34, 1), #111)!important;
+        background: linear-gradient(rgba(56, 148, 148, 0.61) 25%, #111 75%)!important;
+    }
+    #message-box > div > #message-box-contents::-webkit-scrollbar-track-piece
+    {
+        background-color: var(--bg)!important;
+    }
+
+    /*
+        ::-webkit-scrollbar — the entire scrollbar.
+        ::-webkit-scrollbar-button — the buttons on the scrollbar (arrows pointing upwards and downwards that scroll one line at a time).
+        ::-webkit-scrollbar:horizontal{} — the horizontal scrollbar.
+        ::-webkit-scrollbar-thumb — the draggable scrolling handle.
+        ::-webkit-scrollbar-track — the track (progress bar) of the scrollbar, where there is a gray bar on top of a white bar.
+        ::-webkit-scrollbar-track-piece — the part of the track (progress bar) not covered by the handle.
+        ::-webkit-scrollbar:vertical{} — the vertical scrollbar.
+        ::-webkit-scrollbar-corner — the bottom corner of the scrollbar, where both horizontal and vertical scrollbars meet. This is often the bottom-right corner of the browser window.
+        ::-webkit-resizer — the draggable resizing handle that appears at the bottom corner of some elements.
+    */
+
+    
+    
+    
+    #message-box > div
+    {
+        max-width: 100%!important;
+        max-height: 100%!important;
+        top: 0px!important;
+    } 
+
+    /* Closing setting box */
+    #message-box > div > #message-box-close-icon
+    {
+        position: absolute;
+        right: 11px;
+        top: 10px;
+        transition: all 0.1s ease-in-out; 
+
+    } 
+    #message-box > div > #message-box-close-icon i
+    {
+        display: none;
+    } 
+    #message-box > div > #message-box-close-icon:before
+    {
+        width: 20px; height: 20px;
+        content: "❌";
+        font-size: 16px;
+    } 
+    #message-box > div > #message-box-close-icon:hover
+    {
+        scale: 1.4;
+    } 
+    
+    
+    
+    
+    .config-body .select-wrapper
+    {
+        max-width: 100%;
+    }
+    #message-box.config-dialog .config-body
+    {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+    #message-box.config-dialog .config-body input[type="text"], 
+    #message-box.config-dialog .config-body .select-resizer, 
+    #message-box.config-dialog .config-body select,
+    #message-box.config-dialog .config-body input[type="range"],
+    #message-box.config-dialog .config-body label.config-select > div
+    {
+        min-width: 210px;
+    } 
+    
+        
+    #message-box-contents div.config-heading a[href$="wykopx.pl"]
+    {
+        font-size: 0;
+        text-decoration: none;
+    } 
+    #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
+    #message-box-contents div.config-heading a[href$="wykopx.pl"]:after
+    {
+        font-size: 13px;
+    } 
+
+
+    #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
+    {
+        text-decoration: underline;
+    } 
+
+
+    #message-box-contents div.config-heading 
+    {
+        text-align: center;
+
+        a[href$="wykopx.pl"]
+        {
+        } 
+        a[href$="wykopx.pl"]:before,
+        a[href$="wykopx.pl"]:after
+        {
+                font-size: 16px
+                display: block;
+                cursor: default
+                color: rgba(255, 255, 255, 0.6);
+        } 
+        a[href$="wykopx.pl"]:before,
+        {
+            margin-top: 30px!important
+        } 
+        a[href$="wykopx.pl"]:hover
+        {
+            
+        } 
+    } 
+
+    [data-ui-theme="light"] #message-box-contents div.config-heading  a[href$="wykopx.pl"]:after,
+    [data-ui-theme="light"] #message-box-contents div.config-heading  a[href$="wykopx.pl"]:before
+    {
+        color: rgba(0, 0, 0, 0.6);
+    } 
+
+    /* tylko komputer przy wąskim okienku Stylusa */
+    @media (pointer: fine) and (max-width: 519px)
+    {
+        #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
+        {
+            color: #df2c2c;
+            content: "Go into Stylus Settings '⚙' and in section 'Popup' in field 'Popup width (in pixels)' set value between 𝟲𝟬𝟬 and 𝟴𝟬𝟬 "!important;
+        } 
+    } 
+    /* telefon lub komputer z rozszerzonym okienkiem Stylusa */
+    @media (pointer: none), (min-width: 520px)
+    {
+        #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
+        {
+            content: "Zaobserwuj tag #wykopx ▫ Do funkcji oznaczonych emoji: ❎ zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦 Szczegóły na xs.wykopx.pl     ▫  Opis najciekawszych funkcji 𝗪𝘆𝗸𝗼𝗽 𝗫 na stronie ";
+            text-decoration: none;
+        } 
+        #message-box-contents div.config-heading a[href$="wykopx.pl"]:after
+        {
+            content: "wiki.wykopx.pl"
+        }
+        #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
+        {
+            cursor: pointer;
+            color: rgba(255, 255, 255, 1);
+        } 
+        [data-ui-theme="light"] #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
+        {
+            color: rgba(0, 0, 0, 1);
+        } 
+    } 
+    
+    
+    .config-body > label
+    {
+        padding: 7px 0px 7px 15px;
+        font-size: 13px;
+        display: flex;
+    }
+
+    [data-ui-theme="light"] .config-body > label{color: rgba(0, 0, 0, 1); } 
+    [data-ui-theme="dark"] .config-body > label{color: rgba(255, 255, 255, 1); } 
+
+    [data-ui-theme="light"] .config-body > label:has(.onoffswitch)                 { color: rgba(0, 0, 0, 0.5); } 
+    [data-ui-theme="light"] .config-body > label:has(.onoffswitch input:checked)   { color: rgba(0, 0, 0, 1); } 
+    [data-ui-theme="dark"] .config-body > label:has(.onoffswitch)                  { color: rgba(255, 255, 255, 0.5); } 
+    [data-ui-theme="dark"] .config-body > label:has(.onoffswitch input:checked)    { color: rgba(255, 255, 255, 1); } 
+
+
+
+    /* NAZWA SEKCJI */
+    [data-ui-theme="light"] label.config-range:has(input[type="range"][max="99900"])
+    {
+        border-top: 1px solid rgba(128,128,128,1);
+        background: #cfcfcf;
+        background: linear-gradient(#ffffff, #dfdfdf);
+        border: 1px solid #fff;
+        box-shadow: inset 0 0 0 1px #c7c7c7;
+    }
+    [data-ui-theme="dark"] label.config-range:has(input[type="range"][max="99900"])
+    {
+        border-top: 1px solid rgba(128,128,128,1);
+        background: #111;
+        background: linear-gradient(#1b1b1b, #111);
+        border: 1px solid #000;
+        box-shadow: inset 0 0 0 1px #272727;
+    }
+    label.config-range:has(input[type="range"][max="99900"])
+    {
+        display: flex!important;
+        padding: 10px!important;
+
+        margin-top: 40px;
+        
+        margin-bottom: 10px;
+        border-radius: 5px;
+        z-index: 1;
+
+        & + label
+        {
+            border-top: none;
+        } 
+        span.config-name
+        {
+            text-align: center;
+            text-align: left;
+            padding-left: 10px;
+            
+            font-weight: 300;
+            font-family: system-ui;
+            font-size: 15px;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            text-wrap: pretty;
+        } 
+
+        input[type="range"][max="99900"], span.current-value, a.config-reset-icon
+        {
+            display: none!important;
+        } 
+    }
+    
+    /* NAZWA PODSEKCJI */
+    [data-ui-theme="light"] label.config-range:has(input[type="range"][max="99999"])
+    {
+        border-top: 1px solid rgba(128,128,128,1);
+        background: #cfcfcf;
+        //background: linear-gradient(#ffffff, #dfdfdf);
+        border: 1px solid #fff;
+        box-shadow: inset 0 0 0 1px #c7c7c7;
+        
+        align-self: center;
+    }
+    [data-ui-theme="dark"] label.config-range:has(input[type="range"][max="99999"])
+    {
+        border-top: 1px solid rgba(128,128,128,1);
+        background: #111;
+        //background: linear-gradient(#1b1b1b, #111);
+        border: 1px solid #000;
+        box-shadow: inset 0 0 0 1px #272727;
+    }
+    label.config-range:has(input[type="range"][max="99999"])
+    {
+        display: flex!important;
+	    align-self: center;        
+	    //align-self: start;        
+        margin-top: 15px;   //
+        padding: 4px!important; //
+        margin-bottom: 10px;
+        border-radius: 5px;
+        z-index: 1;
+        
+        width: 70%; //
+
+        & + label
+        {
+            border-top: none;
+        } 
+        span.config-name
+        {
+            text-align: center;
+            //text-align: left;
+            padding-left: 10px;
+            font-weight: 300;
+            font-family: system-ui;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            text-wrap: pretty;
+        } 
+
+        input[type="range"][max="99999"], span.current-value, a.config-reset-icon
+        {
+            display: none!important;
+        } 
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    /* border NAD elementem opcji */
+    .config-body label:not(:first-child)
+    {
+        border-top: 1px dotted var(--c80);
+    }
+    
+    // WŁĄCZONY/WYŁĄCZONY CHECKBOX PONIŻEJ
+    label.config-range:has(input[type="range"][max="111100"]),
+    label.config-range:has(input[type="range"][max="100000"])
+    {
+        display: none;
+        border-top: none!important;
+        
+        input[type="range"][max="111100"], 
+        input[type="range"][max="100000"], 
+        span.current-value,
+        a.config-reset-icon
+        {
+            display: none!important;
+        }
+    }
+    
+    // INFO WŁĄCZONY
+    label.config-range:has(input[type="range"][max="111100"]):has(+ label.config-checkbox input.slider:checked)
+    {
+        display: block;
+        background-color: rgba(0, 128, 30, .09);
+        color: #7ab37a;
+    }
+    label.config-range:has(input[type="range"][max="100000"]):has(+ label.config-range + label.config-checkbox input.slider:not(:checked)),
+    label.config-range:has(input[type="range"][max="100000"]):has(+ label.config-checkbox input.slider:not(:checked))
+    {
+        display: block;
+        background-color: rgba(128, 0, 30, .09);
+        color: #b37a7e;
+    }
+    label.config-range:has(input[type="range"][max="111100"]) + label.config-checkbox:has(input.slider:checked),
+    label.config-range:has(input[type="range"][max="100000"]) + label.config-range + label.config-checkbox:has(input.slider:not(:checked))
+    {
+        border-top: none!important;
+    }
+    
+    
+    
+    
+    
+    // OPIS INFO DLA POPRZEDNIEJ FUNKCJI
+    div.config-body label:has(+ label.config-range input[type="range"][max="88800"]):before
+    {
+        content: "🛈"; //❔ 
+        position: absolute;
+        font-size: 14px;
+        width: 20px;
+        translate: -10px -8px;
+    }
+    label.config-range:has(input[type="range"][max="88800"])
+    {
+        transition-property: border-bottom, opacity, display, height, font-size;
+        transition-duration: 1s, 1s, 1s, 0.1s, 1s;
+        transition-behavior: allow-discrete;
+        
+        @starting-style
+        {
+            opacity: 0;
+            font-size: 0px;
+            height: 0px;
+        }
+
+        opacity: 1;
+        display: block;
+        font-size: 0px;
+        height: 0px;
+        padding: 0px;
+        border: transparent;
+        padding: 0px 0px 2px 15px;
+
+        color: var(--c60);
+        
+        input[type="range"][max="88800"], span.current-value, a.config-reset-icon
+        {
+            display: none!important;
+        }
+    }
+    div.config-body label:hover + label.config-range:has(input[type="range"][max="88800"])
+    {
+        transition-property: border-bottom, opacity, display, height, font-size;
+        transition-duration: 0.2s, 0.2s, 0.2s, 0.1s, 0.2s;
+        transition-behavior: allow-discrete;
+        transition-delay: 1.2s;
+        
+        @starting-style
+        {
+            opacity: 1;
+            display: block;
+            height: 20px;
+            font-size: 11px;
+        }
+        
+        opacity: 1;
+        display: block;
+        height: max-content;
+        min-height: max-content;
+        max-height: max-content;
+        font-size: 11px;
+        
+        border-bottom: 1px solid var(--accent-3);
+                
+        border-top: 0px dashed var(--c90);
+    }
+    
+    /* Ikonka resetowania do wartosci domyslnej przy Checkboxie na wąskim ekranie */
+    #message-box-contents div.config-body label a.config-reset-icon
+    {           
+        translate: 22px;
+    }
+    #message-box-contents div.config-body label a.config-reset-icon:hover i
+    {           
+        color: var(--accent-1);
+    }
+    
+    @media (max-width: 600px)
+    {   
+        #message-box-contents div.config-body label
+        {
+            margin-bottom: 10px;
+        }
+        #message-box-contents div.config-body label > span.config-name 
+        {
+            line-height: 21px;
+        }
+        
+        /* TYTUL SEKCJI */
+        #message-box-contents div.config-body label.config-range:has(input[type="range"][max="99900"]) span.config-name
+        {
+            font-size:  15px!important;
+        }
+        
+        #message-box-contents div.config-body label.config-checkbox,
+        #message-box-contents div.config-body label.config-select,
+        #message-box-contents div.config-body label.config-range,
+        #message-box-contents div.config-body label.config-text
+        {
+            display: grid;
+            row-gap: 10px;
+        }
+        
+        // CHECKBOX
+        #message-box-contents div.config-body label.config-checkbox,
+        {
+            grid-template-columns: 1fr 30px 30px;
+            grid-template-rows: 1fr;
+            width: 100%;
+            row-gap: 0px;
+        }
+        #message-box-contents div.config-body label.config-checkbox span.config-name,
+        {
+            display: flex;
+            grid-column-start: 1;
+            grid-column-end: 2;
+            
+            text-wrap: pretty;
+        }
+        #message-box-contents div.config-body label.config-checkbox input.config-value,
+        {
+            display: flex;
+            grid-column-start: 2;
+            grid-column-end: 3;
+            
+            align-self: start;
+        }
+        
+        /* Ikonka resetowania do wartosci domyslnej przy Checkboxie na wąskim ekranie */
+        #message-box-contents div.config-body label.config-checkbox a.config-reset-icon
+        {           
+            display: flex;
+            grid-column-start: 3;
+            grid-column-end: 4;
+            
+            align-self: start;
+        }
+        // SELECT
+        #message-box-contents div.config-body label.config-select,
+        #message-box-contents div.config-body label.config-text
+        {
+            grid-template-columns: auto 10px;
+            grid-template-rows: 1fr 1fr;
+            width: 100%;
+        }
+        #message-box-contents div.config-body label.config-select span.config-name,
+        #message-box-contents div.config-body label.config-text span.config-name
+        {
+            display: flex;
+            grid-column-start: 1;
+            grid-column-end: 3;
+            grid-row-start: 1;
+            grid-row-end: 2;
+        }
+        #message-box-contents div.config-body label.config-select div.config-value,
+        #message-box-contents div.config-body label.config-text input.config-value
+        {
+            display: flex;
+            grid-column-start: 1;
+            grid-column-end: 2;
+            grid-row-start: 2;
+            grid-row-end: 3;
+            
+            margin-top: 2px;
+        }
+        #message-box-contents div.config-body label.config-select div.config-value > select,
+        #message-box-contents div.config-body label.config-text input.config-value
+        {
+            min-width: 90%;
+            height: 27px;
+        }
+        
+        #message-box-contents div.config-body label.config-select div.config-value > select > option
+        {
+            font-size: 12px;
+            border: 1px solid #f00!important;
+        }
+        
+        #message-box-contents div.config-body label.config-select div.config-value::after
+        {
+            position: relative;
+            left: 4px;
+        }
+        #message-box-contents div.config-body label.config-select a.config-reset-icon,
+        #message-box-contents div.config-body label.config-text a.config-reset-icon
+        {
+            display: flex;
+            grid-column-start: 2;
+            grid-column-end: 3;
+            grid-row-start: 2;
+            grid-row-end: 3;
+            position: relative;
+            top: 0px;
+        }
+        
+        
+        // RANGE
+        #message-box-contents div.config-body label.config-range
+        {
+            grid-template-columns: auto auto 0px;
+            grid-template-rows: 1fr 1fr;
+            width: 100%;
+        }
+
+        
+        #message-box-contents div.config-body label.config-range span.config-name
+        {
+            display: flex;
+            grid-column-start: 1;
+            grid-column-end: 2;
+            grid-row-start: 1;
+            grid-row-end: 2;
+        }
+        #message-box-contents div.config-body label.config-range span.current-value
+        {
+            display: flex;
+            grid-column-start: 3;
+            grid-column-end: 4;
+            grid-row-start: 1;
+            grid-row-end: 2;
+            position: relative;
+            top: 0px;
+            left: -100px;
+            width: 20px;
+            justify-content: end;
+        }
+        #message-box-contents div.config-body label.config-range a.config-reset-icon
+        {
+            display: flex;
+            grid-column-start: 3;
+            grid-column-end: 4;
+            grid-row-start: 2;
+            grid-row-end: 3;
+            position: relative;
+            top: 0px;
+            left: -20px;
+            width: 20px;
+        }
+        #message-box-contents div.config-body label.config-range input.config-value 
+        {
+            display: flex;
+            width: 90%;
+            grid-column-start: 1;
+            grid-column-end: 3;
+            grid-row-start: 2;
+            grid-row-end: 3;
+        }
+    }
+} 
+
 
 
