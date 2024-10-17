@@ -1,4 +1,3 @@
-// v.1.0.1
 javascript: (function ()
 {
     var url = new URL(location.href);
@@ -27,6 +26,8 @@ javascript: (function ()
     }
 })();
 /* 
+v.1.0.1
+
 1. Skopiuj cały kod tego skryptu
 2. Wciśnij na dowolnej stronie CTRL+D aby otworzyć okno dodawania Ulubionej/Zakładki/Bookmark 
 3. W polu adresu URL usuń adres strony na której jesteś i wklej skopiowany powyżej kod
