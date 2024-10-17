@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3.0
 // @name:en							Wykop XS 3.0
 
-// @version							3.0.61
+// @version							3.0.72
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://styl.wykopx.pl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://styl.wykopx.pl
@@ -47,7 +47,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.0.61";
+	const currentVersion = "3.0.72";
 	let dev = false;
 
 	const promoString = " [Dodane przez Wykop XS]";
@@ -356,7 +356,7 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        font-size: 11rem;
+        font-size: 11px;
         z-index: 1;
         opacity: 1!important;
         transition: opacity 0.5s linear!important;
@@ -543,7 +543,7 @@
     section.entry article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > button.wxs_filter_on_replies > span
     {
         display: none;
-        font-size: 11rem;
+        font-size: 11px;
         margin: 0px 4px;
     }
     section.entry article > div.edit-wrapper > div.content > section.entry-content > div.wrapper > button.wxs_filter_on_replies:hover > span
@@ -790,7 +790,8 @@
 				listafalszywychrozowych.push('Bpnn');
 				listafalszywychrozowych.push('AndrzejBabinicz');
 				listafalszywychrozowych.push('bruhmomentow');
-
+				listafalszywychrozowych.push('iforgotmypass_');
+				listafalszywychrozowych.push('kwiat_pustyni626');
 
 				// LISTA FAŁSZYWYCH NIEBIESKICH PASKÓW fałszywe niebieskie
 				const listafalszywychniebieskich = [];
@@ -2553,7 +2554,7 @@
 				animation-timing-function: ease-in-out;
 				position: absolute;
 				bottom: 10%;
-				padding: 4rem 25rem 4rem 25rem;
+				padding: 4px 25px 4px 25px;
 				display: flex;
 				border-bottom: 1px solid var(--alto);
 				border-radius: 0 var(--borderRadius) var(--borderRadius) 0!important;
@@ -8676,9 +8677,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		/* CSS STYLES */
 		CSS += `
-	html { font-size: 6.25%; }
-    body { font-size: 1.6rem; }                                             /* 10px * 1.6rem = 16 px -- https://nekocalc.com/px-to-rem-converter */
-	body * { font-size: 14rem;  }
+	
 	body small { font-size: 0.8em; line-height: 0.9em; }
 	
 	.hidden { display: none!important; }
@@ -8690,19 +8689,13 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
     aside.tag-top aside ul > li.edit > a,            			/* edycja tagu autorskiego */
     section.popper > section.tooltip > footer > ul.icons > li, 	/* ikonki w menu kontekstowym */
     section.popper > section.tooltip > footer > ul.icons > li > a, /* ikonki w menu kontekstowym */
-    section.link-page > section.link > section.link-block > section > article > section.actions > ul > li > ul > li > a  /* action menu znaleziska nadpisane przez a, span { font-size: 14rem; } */
+    section.link-page > section.link > section.link-block > section > article > section.actions > ul > li > ul > li > a  /* action menu znaleziska nadpisane przez a, span { font-size: 14px; } */
     {
         font-size: 0;
     }
 
-	section.link-block > section > article > header h1 a                        /* tytuł znaleziska */
-    { font-size: 21rem!important; }
-    section.link-block > section > article > header h2 a                        /* tytuł znaleziska */
-    { font-size: 18rem!important; } 
-	aside.left-panel > section.links > .content ul li a.hybrid span em          /* kategorie */
-    { font-size: 16rem!important; }
-	aside.profile-top > section > header > div h1 > a.username > span           /* nazwa nicku na profilu */
-    { font-size: 22rem!important; }
+
+
     aside.profile-top > section > header > div h1                               /* nazwa nicku na profilu */
     {
         display: flex;
@@ -8720,7 +8713,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				display: flex;
 				flex-wrap: nowrap;
 				flex-direction: row;
-				column-gap: 4rem;
+				column-gap: 4px;
 				text-transform: capitalize;
 			}
 			section.editor > footer > div.buttons > div.button.send > button.target::before
@@ -8728,7 +8721,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				content: var(--editorSendHotkey);
 				text-transform: initial;
 				border-right: 1px solid var(--gullGray);
-				padding-right: 4rem;
+				padding-right: 4px;
 			}`;
 			}
 		}
@@ -8745,13 +8738,13 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		section.editor div.wxs_uploader_caption > span
 		{
 			display: none;
-			font-size: 15rem;
+			font-size: 15px;
 			color: var(--gullGray);
 			text-transform: initial;
 			position: relative;
-			margin-top: 15rem;
-			padding-top: 15rem;
-			margin-bottom: 15rem;
+			margin-top: 15px;
+			padding-top: 15px;
+			margin-bottom: 15px;
 			border-top: 1px dotted rgba(120, 120, 120, 0.3);
 		}
 		section.editor:has(aside li.photo) div.wxs_uploader_caption > span.wxs_upload_and_replace_current_image,
@@ -8805,7 +8798,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		/* lista wgranych plików wraz z nazwami */
 		section.editor > aside > ul > li.photo > span
 		{
-			line-height: 24rem;
+			line-height: 24px;
 		}
 
 		section.editor > aside > ul > li.photo::before
@@ -8871,11 +8864,11 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				display: flex;
 				position: relative;
 				color: var(--gullGray);
-				font-size: 15rem;
+				font-size: 15px;
 				text-transform: initial;
-				margin-top: 15rem;
-				margin-bottom: 15rem;
-				padding-bottom: 15rem;
+				margin-top: 15px;
+				margin-bottom: 15px;
+				padding-bottom: 15px;
 				border-bottom: 1px dotted rgba(120, 120, 120, 0.3);
 			}
 			`;
@@ -8886,7 +8879,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			CSS += `
 			header.stream-top:has(+ section.editor) > h1::after
 			{
-				margin-left: 5rem;
+				margin-left: 5px;
 				content: var(--myUsernameAS);
 				text-transform: initial; 
 			}
@@ -8896,11 +8889,11 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				display: flex;
 				position: relative;
 				color: var(--gullGray);
-				font-size: 15rem;
+				font-size: 15px;
 				text-transform: initial;
-				margin-top: 15rem;
-				margin-bottom: 15rem;
-				padding-bottom: 15rem;
+				margin-top: 15px;
+				margin-bottom: 15px;
+				padding-bottom: 15px;
 				border-bottom: 1px dotted rgba(120, 120, 120, 0.3);
 			}
 			`;
@@ -8913,7 +8906,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 					display: flex;
 					flex-wrap: nowrap;
 					flex-direction: row;
-					column-gap: 4rem;
+					column-gap: 4px;
 					text-transform: capitalize;
 				}
 				section.editor > footer > div.buttons > div.button.send > button.target::after
@@ -8957,8 +8950,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		{
 			box-sizing: border-box;
 			width: 100%;
-			height: 25px; /*25rem;*/
-			font-size: 15px; /* 15rem; */
+			height: 25px; /*25px;*/
+			font-size: 15px; /* 15px; */
 			padding: 17px 10px 17px 34px;
 			opacity: 0.5;
 
@@ -8978,7 +8971,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		section.wykopx_your_observed_tags .wykopx_quick_search_container::before
 		{
 			content: "🔍";
-			font-size: 16px; /*16rem;*/
+			font-size: 16px;
 			display: block;
 			position: absolute;
 			left: 8px;
