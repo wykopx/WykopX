@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style 3
-@version        3.0.72
+@version        3.0.74
 
 @description    Wykop X Style 3 to 900 różnych funkcji zmieniających wykop!
 
@@ -85,13 +85,26 @@ https://skrypt.wykopx.pl
 @namespace      userstyles.world/user/wykopchanger
 @license        No License (YOU CAN USE THIS CODE ONLY IN STYLUS EXTENSIONS. You are NOT ALLOWED TO copy, share and use any part of this code anywhere else without author's written permission)
 
+ 
+ 
+
+@var range      HR_TAG_PHOTO_GALLERY                      `🔷🌆 Wykopowy widok galerii na tagach`                                                                                [0, 0, 99900, 1, 'mm']
+
+@var range      photoGalleryColumns                              `(⭐ NOWE 3.0.74) Liczba grafik w jednym wierszu`                                                              [3, 1, 7, 1, '']
+@var checkbox   photoGalleryAdjustAspectRatio                    `(⭐ NOWE 3.0.74) Dopasuj wielkość obrazków`                                                                   0
+@var checkbox   photoGalleryRemoveSidebar                        `(⭐ NOWE 3.0.74) 🚫 W widoku galerii ukryj sidebar po prawej`                                                0
+
+@var checkbox   userCustomColorBodyBackgroundOnCDNImagesEnable   `(⭐ NOWE 3.0.73) Zmień kolor białego tła otwartego obrazka w nowej karcie `                                  0 
+@var color      userCustomColorBodyBackgroundOnCDNImages         `(⭐ NOWE 3.0.73) Kolor tła obrazków w nowej karcie`                                                          rgb(11, 11, 11)
 
 
 
 @var range      HR_PHOTO_VIEWER                         `🔷🌆 Wykop X Photo Viewer `                                                                                [0, 0, 99900, 1, 'mm']
 @var checkbox   photoViewerEnable1                               `Włącz 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗣𝗵𝗼𝘁𝗼 𝗩𝗶𝗲𝘄𝗲𝗿 na #tagach`                                               0
 
-
+var checkbox   photoViewerEnable2                               `Włącz 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗣𝗵𝗼𝘁𝗼 𝗩𝗶𝗲𝘄𝗲𝗿 na #tagach`                                                      0
+@var checkbox   photoViewerUltraCompact                         `Widok ultra kompaktowy (same zdjęcia) `                                                      0
+@var range      photoViewerColumns                              `Liczba grafik w jednym wierszu`                                                              [3, 1, 7, 1, '']
 
 
 
@@ -851,7 +864,7 @@ TODO var checkbox   imageUploaderEnable                             `❎ CTRL + 
                                                                         }
 @var checkbox   editorSendHotkeyShowOnSendButton                `❎ Pokaż skrót klawiaturowy na przycisku 𝗪𝗬𝗦́𝗟𝗜𝗝 ⭐`                         1     
 @var checkbox   editorShowMyUsername                            `❎ Pokaż login przy dodawaniu wpisu/komentarza   ⭐ `                        1     
-@var checkbox   editorShowMyUsernameOnSendButton                `❎ Pokaż login także na przycisku 𝗪𝗬𝗦́𝗟𝗜𝗝 ⭐`                                1     
+@var checkbox   editorShowMyUsernameOnSendButton                `❎ Na przycisku 𝗪𝗬𝗦́𝗟𝗜𝗝 pokaż nazwę konta ⭐`                                1     
 
 
 @var checkbox   editorSendButtonDontDeactivate                  `✔ Zablokuj mruganie przycisku 𝗪𝗬𝗦́𝗟𝗜𝗝 w czasie pisania`                       1     
@@ -2131,7 +2144,7 @@ TODO checkbox   commentsCountAlignment                          `🗨️ Przenie
                                                                         "🔹Tylko wpisy":"tylko_wpisy"
                                                                     } 
 
-@var checkbox   tagHeaderEditable                               `🔷❎ Edytuj nagłówek #tagu, aby przejść na inny #tag lub wyszukać @użytkownika`           0     
+@var checkbox   tagHeaderEditable                               `🔷❎ Edytuj nagłówek #tagu, aby przejść na inny #tag lub wyszukać @użytkownika`          1     
 
 @var checkbox   tagPageFollowTagButton                          `🔷 Ładniejszy przycisk "Obserwuj tag" / "Obserwujesz tag"`                                0     
 
@@ -2210,10 +2223,6 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
                                                                    
                                                                     
 
-@var range      HR_PHOTO_VIEWER                         `🔷🌆 Wykop X Photo Viewer `                                                                                [0, 0, 99900, 1, 'mm']
-@var checkbox   photoViewerEnable2                               `Włącz 𝗪𝘆𝗸𝗼𝗽 𝗫 𝗣𝗵𝗼𝘁𝗼 𝗩𝗶𝗲𝘄𝗲𝗿 na #tagach`                                                      0
-@var checkbox   photoViewerUltraCompact                         `Widok ultra kompaktowy (same zdjęcia) `                                                      0
-@var range      photoViewerColumns                              `Liczba grafik w jednym wierszu`                                                              [3, 1, 7, 1, '']
 
 
 
@@ -6374,10 +6383,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             --categoriesRowGap: 5px;
             --minimizedMenuWidth: 48px;
             
-            
-            container-type: inline-size;
-            container-name: menuKategorii;  // container: menuKategorii / inline-size;
-        
+                    
             // overflow: overlay; // deprecated
             scrollbar-gutter: both-edges;
             
@@ -22839,7 +22845,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     /* VARIABLES */
 
     versor = "style"; // "style", "blank", "block"
-    version = "3.0.72";   
+    version = "3.0.74";   
     /* xblocker = "2.49" */
     
     
@@ -23377,6 +23383,59 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     }
     /* WYKOP X PHOTO VIEWER - END */
 
+    
+
+    /* WYKOPOWE PRZEGLĄDANIE GALERII TAGÓW */
+    
+    if(photoGalleryColumns != 3)
+    {
+        section.stream.multimedia > .content
+        {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;  
+        }
+        section.stream.multimedia > .content > section.entry-multimedia[class]:not(.no-items)
+        {
+            --photoGalleryColumns: photoGalleryColumns;
+            width: calc((100% /var(--photoGalleryColumns)) - 8px / var(--photoGalleryColumns));
+
+            width: unset!important;
+            flex: 1 1 calc(100% / var(--photoGalleryColumns) - 10px);
+            box-sizing: border-box;          
+            padding: 5px;                   
+            background-color: transparent;         
+        }
+    }
+    
+    if(photoGalleryRemoveSidebar == 1)
+    {
+        main.main[class] > section div.content:has(> section.tag-page section.stream.multimedia)
+        {
+           width: unset!important;
+        }
+        main.main[class] > section:has(div.content > section.tag-page section.stream.multimedia) > section.sidebar
+        {
+            display: none!important;
+        }
+    }
+   
+    if(photoGalleryAdjustAspectRatio == 1)
+    {
+        
+        section.stream.multimedia > .content > section.entry-multimedia[class]:not(.no-items) > figure
+        {
+            align-content: center;
+        }
+        section.stream.multimedia > .content > section.entry-multimedia[class]:not(.no-items) > figure > img
+        {
+            aspect-ratio: unset!important;
+        }
+    }
+
+        
+
+
 
     /* FONT FAMILY / VARIABLE FONTS / ROBOTO FLEX */
 /*
@@ -23436,6 +23495,21 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         }
     }
 */
+}
+
+
+
+
+
+@-moz-document url-prefix("https://wykop.pl/cdn/")
+{
+    if(userCustomColorBodyBackgroundOnCDNImagesEnable == 1)
+    {
+        body
+        {
+            background-color: userCustomColorBodyBackgroundOnCDNImages !important;
+        }
+    }
 }
 @-moz-document url-prefix("moz-extension://"), url-prefix("chrome-extension://")
 {
