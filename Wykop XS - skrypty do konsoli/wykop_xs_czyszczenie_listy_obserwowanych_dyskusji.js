@@ -1,4 +1,6 @@
 /* 
+	----- Zapraszam na tag #wykopx -----
+
 	TEN SKRYPT SŁUŻY DO WYCZYSZCZENIA LISTY OBSERWOWANYCH DYSKUSJI
 	Jeśli nie wiesz jak z niego skorzystać, przeczytaj instrukcję poniżej.
 
@@ -13,7 +15,6 @@
 	3. wpisz w konsoli `allow-pasting` (razem z cudzysłowami ` `) i wciśnij [ENTER]
 
 	4. wklej CAŁY poniższy kod i wciśnij [ENTER]
-
 
 	5. Na górnej belce Wykopu pojawi się nowy przycisk, który po kliknięciu:
 
@@ -33,6 +34,11 @@
 	Lista dyskusji, które obserwujesz znajduje się tutaj:
 	https://wykop.pl/obserwowane/dyskusje
 
+	Wersja zminimalizowana tego skryptu gotowa do wklejenia= w konsoli:
+	https://raw.githubusercontent.com/wykopx/WykopX/refs/heads/main/Wykop%20XS%20-%20skrypty%20do%20konsoli/wykop_xs_czyszczenie_listy_obserwowanych_dyskusji.min.js
+
+	Pełna wersja tego skryptu tutaj:
+	https://github.com/wykopx/WykopX/blob/main/Wykop%20XS%20-%20skrypty%20do%20konsoli/wykop_xs_czyszczenie_listy_obserwowanych_dyskusji.js
 
 	Chcesz wesprzeć projekt Wykop X? Postaw kawę:
 
@@ -41,6 +47,8 @@
 	@author							Wykop X <wykopx@gmail.com>
 	@License						No License
 	@version						1.0.2
+
+	----- Zapraszam na tag #wykopx -----
 
 */
 
