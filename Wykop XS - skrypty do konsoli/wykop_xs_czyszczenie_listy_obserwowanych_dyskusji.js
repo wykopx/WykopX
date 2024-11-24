@@ -18,17 +18,14 @@
 
 	5. Na górnej belce Wykopu pojawi się nowy przycisk, który po kliknięciu:
 
-	- sprawdzi ile dyskusji obserwujesz
-	
-	- w kilku krokach pozwoli ci wybrać czy chcesz usunąć obserwowane wpisy/znaleziska/komentarze
-	
-	- zdecydujesz czy chcesz również usuwać dyskusje, które dodałeś do Ulubionych
-	(jeśli chcesz, aby niektóre obserwowane dyskusje nie były usunięte - dodaj je wcześniej do ulubionych)
+		- sprawdzi ile dyskusji obserwujesz
+		- w kilku krokach pozwoli ci wybrać czy chcesz usunąć obserwowane wpisy/znaleziska/komentarze
+		- zdecydujesz czy chcesz również usuwać dyskusje, które dodałeś do Ulubionych
+		(jeśli chcesz, aby niektóre obserwowane dyskusje nie były usunięte - dodaj je wcześniej do ulubionych)
+		- w ostatnim kroku masz możliwość rezygnacji - nic nie zostanie wtedy usunięte
 
-	- w ostatnim kroku masz możliwość rezygnacji - nic nie zostanie wtedy usunięte
-
-	- w trakcie usuwania pasek postępu pokazywany jest w adresie URL na przykład:
-	https://wykop.pl/tag/wykopx/#--usunięto: 178/180 (99%)
+		- w trakcie usuwania pasek postępu pokazywany jest w adresie URL na przykład:
+		https://wykop.pl/tag/wykopx/#--usunięto: 178/180 (99%)
 
 
 	Lista dyskusji, które obserwujesz znajduje się tutaj:
@@ -49,7 +46,6 @@
 	@version						1.0.2
 
 	----- Zapraszam na tag #wykopx -----
-
 */
 
 let observedLinks = 0;

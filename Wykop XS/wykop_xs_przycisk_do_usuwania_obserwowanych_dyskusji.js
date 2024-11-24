@@ -19,5 +19,4 @@
 	@author							Wykop X <wykopx@gmail.com>
 
 	----- Zapraszam na tag #wykopx -----
-
 */
