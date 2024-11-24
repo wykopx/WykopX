@@ -1,12 +1,12 @@
 // ==UserScript==
-// @name						Wykop XS - Multikonta
-// @name:pl						Wykop XS - Multikonta
-// @name:en						Wykop XS - Multikonta
+// @name						Wykop XS - Multikonta (beta)
+// @name:pl						Wykop XS - Multikonta (beta)
+// @name:en						Wykop XS - Multikonta (beta)
 
 // @version						3.0.72
 
-// @description 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
-// @description:en 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
+// @description 					Wykop XS - Multikonta (beta)
+// @description:en 					Wykop XS - Multikonta (beta)
 
 
 // Chcesz wesprzeć projekt Wykop X? Postaw kawkę:
