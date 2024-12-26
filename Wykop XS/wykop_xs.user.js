@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3.0
 // @name:en							Wykop XS 3.0
 
-// @version							3.0.77
+// @version							3.0.78
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://styl.wykopx.pl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://styl.wykopx.pl
@@ -47,7 +47,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.0.77";
+	const currentVersion = "3.0.78";
 	let dev = false;
 
 	const promoString = " [Dodane przez Wykop XS]";
@@ -709,7 +709,7 @@
 
 		}
 
-		setSettingsValueFromCSSProperty("notatkowatorEnable", false);
+		setSettingsValueFromCSSProperty("notatkowatorEnable", true);
 
 
 		if (settings.notatkowatorEnable)
@@ -732,18 +732,19 @@
 		let falszyweNiebieskieArray = null;
 		let mapaTrolli = null;
 
-		setSettingsValueFromCSSProperty("wxsUserLabelsEnable", false);
+		setSettingsValueFromCSSProperty("wxsUserLabelsEnable", true);
 
 		if (settings.wxsUserLabelsEnable)
 		{
+
 			IntersectionObserverEnabled = true;
 			localStorageUserLabels = localforage.createInstance({
 				driver: localforage.LOCALSTORAGE,
 				name: "wykopx",
 				storeName: "userlabels",
 			});
-			setSettingsValueFromCSSProperty("wxsUserLabelsFakeFemales");
-			setSettingsValueFromCSSProperty("wxsUserLabelsTrolls");
+			setSettingsValueFromCSSProperty("wxsUserLabelsFakeFemales", true);
+			setSettingsValueFromCSSProperty("wxsUserLabelsTrolls", true);
 
 			if (settings.wxsUserLabelsFakeFemales)
 			{
@@ -795,6 +796,9 @@
 				listafalszywychrozowych.push('powodzenia');
 				listafalszywychrozowych.push('simsakPL');
 				listafalszywychrozowych.push('ramotka');
+
+
+
 
 				// LISTA FAŁSZYWYCH NIEBIESKICH PASKÓW fałszywe niebieskie
 				const listafalszywychniebieskich = [];
@@ -2663,7 +2667,7 @@
 
 				// ----- ANY INTERSECTION CHANGED 
 				let sectionObjectElement = IntersectionObserverEntry.target;														// element <section class="entry"> 
-				let resource = null;		// resource = "link", "entry", "entry_comment"
+				let resource = null;		// resource="link", "entry", "entry_comment"
 				// if(dev) console.log(`intersectingObject: `, sectionObjectElement)
 				if (!sectionObjectElement?.__vue__?.item) return false;
 
@@ -3187,12 +3191,6 @@
 			let changeSexTo = false;
 			if (userDataObject.changeSexTo) changeSexTo = userDataObject.changeSexTo;
 
-			// const a_usernameAll = document.querySelectorAll(`section:is(.entry, .link-block):has(> article > header > div.right > div > div a.username[href="/ludzie/${username}"])`);
-			// const a_usernameAll = document.querySelectorAll(`section[data-wxs_username="${username}"]`);
-			// const a_usernameAll = document.querySelectorAll(`section.entry-voters > ul > li > a.username[href="/ludzie/${username}"]`);
-			// if(dev) console.log(`--- username ${username}`);
-			// if(dev) console.log(`--- a_usernameAll`);
-			// if(dev) console.log(a_usernameAll);
 
 			// informacja o użytkowniku pobrana z __vue__ lub fetch z API
 			// DIV Z INFOBOXEM i NOTATKAMI
@@ -3730,13 +3728,13 @@
 								{
 									userNoteObject.changeSexTo = "female";
 									userNoteObject.gender = "f";
-									//userDataObject.gender = "f";
+									//userDataObject.gender="f";
 								}
 								else if (isMale.length >= 1) 				// niebieski pasek // +m
 								{
 									userNoteObject.changeSexTo = "male";
 									userNoteObject.gender = "m";
-									//userDataObject.gender = "m";
+									//userDataObject.gender="m";
 								}
 							}
 
@@ -3931,7 +3929,7 @@
 				{
 					if (!section.dataset.wxs_note || section.dataset.wxs_username != username)
 					{
-						section.dataset.wxs_note = "true"; // <section data-wxs-note="true" wxs_username="NadiaFrance">
+						section.dataset.wxs_note="true"; // <section data-wxs-note="true" wxs_username="NadiaFrance">
 						// if(dev) console.log(`Notatkowator — dodaje notatkę: ${ username } / ${usernote}`);
 						let resource = section.__vue__.item.resource;
 			
@@ -7440,8 +7438,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 					if (val !== null)
 					{
 						firstInDayID[objectData.resource] = new Map(Object.entries(val));
-						// if(dev) console.log("znaleziono w localstorage val = ", val);
-						// if(dev) console.log("znaleziono w localstorage firstInDayID[objectData.resource] = ", firstInDayID[objectData.resource]);
+						// if(dev) console.log("znaleziono w localstorage val=", val);
+						// if(dev) console.log("znaleziono w localstorage firstInDayID[objectData.resource]=", firstInDayID[objectData.resource]);
 					}
 					else
 					{
@@ -9146,16 +9144,16 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			align-items: center;
 			justify-content: center;
 		}
-		header.header > div.left:has(a[href = "/"]:hover) > #wxs_quick_links > nav.home,
-		header.header > div.left:has(> nav.main > ul > li:hover a[href = "/"]) > #wxs_quick_links > nav.home,
-		header.header > div.left:has(> nav.main > ul > li a[href = "/"]:hover) > #wxs_quick_links > nav.home,
-		header.header > div.left:has(> nav.main > ul > li:hover a[href = "/wykopalisko"]) > #wxs_quick_links > nav.upcoming,
-		header.header > div.left:has(> nav.main > ul > li:hover a[href = "/mikroblog"]) > #wxs_quick_links > nav.microblog,
-		header.header > div.left:has(> nav.main > ul > li:hover a[href = "/obserwowane"]) > #wxs_quick_links > nav.mywykop,
-		header.header > div.left:has(> nav.main > ul > li:hover a[href = "/hity"]) > #wxs_quick_links > nav.hits,
-		header.header > div.left:has(> nav.main > ul > li:hover a[href = "/ulubione"]) > #wxs_quick_links > nav.favorites,
-		header.header > div.left:has(> nav.main > ul > li:hover a[href = "/dodaj-link"]) > #wxs_quick_links > nav.add_new,
-		header.header > div.left:has(> nav.main > ul > li:hover a[href = "/mikroblog/#dodaj"]) > #wxs_quick_links > nav.add_new
+		header.header > div.left:has(a[href="/"]:hover) > #wxs_quick_links > nav.home,
+		header.header > div.left:has(> nav.main > ul > li:hover a[href="/"]) > #wxs_quick_links > nav.home,
+		header.header > div.left:has(> nav.main > ul > li a[href="/"]:hover) > #wxs_quick_links > nav.home,
+		header.header > div.left:has(> nav.main > ul > li:hover a[href="/wykopalisko"]) > #wxs_quick_links > nav.upcoming,
+		header.header > div.left:has(> nav.main > ul > li:hover a[href="/mikroblog"]) > #wxs_quick_links > nav.microblog,
+		header.header > div.left:has(> nav.main > ul > li:hover a[href="/obserwowane"]) > #wxs_quick_links > nav.mywykop,
+		header.header > div.left:has(> nav.main > ul > li:hover a[href="/hity"]) > #wxs_quick_links > nav.hits,
+		header.header > div.left:has(> nav.main > ul > li:hover a[href="/ulubione"]) > #wxs_quick_links > nav.favorites,
+		header.header > div.left:has(> nav.main > ul > li:hover a[href="/dodaj-link"]) > #wxs_quick_links > nav.add_new,
+		header.header > div.left:has(> nav.main > ul > li:hover a[href="/mikroblog/#dodaj"]) > #wxs_quick_links > nav.add_new
 		{
 			z-index: 999;
 			display: flex!important;
@@ -9383,7 +9381,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		let wxDomain = "https://wykopx.pl";
 		const mikroczatDomain = "https://mikroczat.pl";
 		const mikroczatPath = "/"; /* /czat */
-		// let mikroczatChannel = "/";
+		// let mikroczatChannel="/";
 		let mikroczatWindow = null;
 		const mikroczatButtonOpenTitle = "Otwórz wykopowy MikroCzat";
 		const mikroczatButtonOpenLabel = "Czat";
@@ -10748,6 +10746,198 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		`;
 		}
 
+
+		/* ------------- NOTATKOWATOR + INFOBOX + USER LABELS ----------------- */
+		if (settings.infoboxEnable || settings.notatkowatorEnable || settings.wxsUserLabelsEnable)
+		{
+			CSS += `
+				/* infobox wrapper */
+				.wxs_user_info
+				{
+					display: flex!important;
+					align-items: baseline!important;
+					gap: 6px!important;
+					font-size: 11px!important;
+					cursor: help!important;
+				}
+
+
+				/*  wpisy  {} */
+				section.entry > article.wxs_user_info
+				{
+				}
+				/*  znaleziska {} */
+				section.link-block article.wxs_user_info
+				{
+					margin-right: 5px;
+				}
+
+				/* kropka online w naglowku profilu uzytkownika */
+				aside.profile-top > section > header > div > h1 > a.online > span > i
+				{
+					display: block;
+					top: 0px;
+					left: -18px;
+				}
+				/* 🟢 zielona ikonka statusu online */
+				section header div.wxs_user_info.wxs_user_online
+				{
+					order: 1;
+					font-size: 5px;
+				}
+
+				/* notatka na profilu użytkownika  */
+				aside.profile-top > section > header > div > h1
+				{
+					align-items: baseline!important;
+				}
+				aside.profile-top > section > header > div > h1 > div.wxs_user_info
+				{
+					margin-left: 8px;
+					position: relative;
+					bottom: 2px;
+				}
+				.wxs_user_info var
+				{
+					font-style: normal;
+					font-size: 12px;
+					opacity: 1;
+				}
+				.wxs_user_label
+				{
+					border-radius: 4px;
+				}
+				.wxs_user_label: hover
+				{
+					filter: brightness(1.2);
+				}
+				.wxs_user_label > *,
+				.wxs_user_member_since
+				{
+					border-radius: 4px;
+					padding: 1px 9px;
+					font-size: 12px;
+					font-weight: bolder;
+					background-color: var(--alto);
+				}
+				.wxs_user_label
+				{
+					order: 10;
+				}
+				.wxs_user_label_fake_gender
+				{
+					order: 1;
+				}
+				.wxs_user_label_fake_female
+				{
+					color: var(--rozowyPasek1, rgba(192, 72, 167, 1));
+				}
+				.wxs_user_label_fake_male
+				{
+					color: var(--niebieskiPasek1, rgba(67, 131, 175, 1));
+				}
+				/* XLabel troll/bot */
+				.wxs_user_label_name
+				{
+					order: 2;
+					color: var(--persianRed);
+				}
+
+				/* LINKI-adresy URL w notatce */
+				.wxs_user_label_url,
+				.wxs_user_info_usernote_url
+				{
+					order: 3;
+				}
+				.wxs_user_label_url > a
+				{
+					background-color: var(--alto);
+					color: var(--userCustomColorLinkExternal, rgb(52, 125, 219));
+				}
+				.wxs_user_info_usernote_url > a
+				{
+					background-color: var(--alto);
+					color: var(--userCustomColorLinkInternal, rgb(23, 71, 140));
+				}
+				.wxs_user_info_usernote_url
+				{
+					order: 4;
+					display: flex;
+					gap: 4px;
+				}
+
+				/* ban */
+				.wxs_user_banned
+				{
+					order: 9;
+				}
+				/* 🔔 obserwujesz użytkownika */
+				.wxs_user_follow,
+				.wxs_user_blacklist
+				{
+					order: 10;
+				}
+				.wxs_user_member_since
+				{
+					order: 20;
+					background-color: var(--alto);
+				}
+				.wxs_user_info_usernote
+				{
+					order: 40;
+					border-radius: 4px;
+					padding: 1px 9px;
+					font-size: 12px;
+					background-color: rgba(196, 183, 123, .2);
+					background-color: var(--alto);
+				}
+
+				/* ukrycie dodanego roku oraz notatki do nazwy uzytkownika na liście plusujących */
+				section.entry-voters > ul > li > div.wxs_user_info > .wxs_user_info_usernote,
+				section.entry-voters > ul > li > div.wxs_user_info > .wxs_user_member_since
+				{
+					display: none!important;
+				}
+
+				/* NOTATKA DO UŻYTKOWNIKA */
+				.wxs_user_info
+				{
+					--notatkowator_color_red: rgb(255, 0, 0);
+					--notatkowator_color_green: rgb(14, 137, 39);
+					--notatkowator_color_blue: rgb(66, 141, 255);
+					--notatkowator_color_orange: rgb(179, 89, 30);
+					--notatkowator_color_pink: rgb(219, 14, 191);
+					--notatkowator_color_yellow: rgb(253, 246, 50);
+				}
+
+				.wxs_user_info_usernote.wxs_notatkowator_c  { color: var(--notatkowator_color_red); }
+				.wxs_user_info_usernote.wxs_notatkowator_z  { color: var(--notatkowator_color_green); }
+				.wxs_user_info_usernote.wxs_notatkowator_n  { color: var(--notatkowator_color_blue); }
+				.wxs_user_info_usernote.wxs_notatkowator_p  { color: var(--notatkowator_color_orange); }
+				.wxs_user_info_usernote.wxs_notatkowator_r  { color: var(--notatkowator_color_pink); }
+				.wxs_user_info_usernote.wxs_notatkowator_ż  { color: var(--notatkowator_color_yellow); }
+
+				/* notatka pod avatarem */
+				section.entry > article > header + .wxs_user_info_usernote
+				{
+					display: flex!important;
+					border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+					background-color: var(--whiteOpacity06);
+					border-radius: 4px;
+					padding: 10px;
+					margin-top: 16px;
+					margin-bottom: 4px;
+					font-size: 13px;
+					color: var(--blackOpacity09, rgba(255, 255, 255, 1));
+				}
+
+				section.entry > article > header + .wxs_user_info_usernote
+				{
+					color: var(--blackOpacity07, rgba(255, 255, 255, 1));
+				}`;
+		}
+
+
 		/* HIDE ADS ALWAYS */
 		if (settings.hideAds) { CSS += `.pub-slot-wrapper { display: none!important; }`; }
 
@@ -10781,7 +10971,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
  *
  * @example
  * waitForKeyElements("div.comments", (element) => {
- *   element.innerHTML = "This text inserted by waitForKeyElements().";
+ *   element.innerHTML ="This text inserted by waitForKeyElements().";
  * });
  *
  * waitForKeyElements(() => {
