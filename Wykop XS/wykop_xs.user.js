@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3.0
 // @name:en							Wykop XS 3.0
 
-// @version							3.0.73
+// @version							3.0.77
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://styl.wykopx.pl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://styl.wykopx.pl
@@ -47,7 +47,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.0.73";
+	const currentVersion = "3.0.77";
 	let dev = false;
 
 	const promoString = " [Dodane przez Wykop XS]";
@@ -792,6 +792,9 @@
 				listafalszywychrozowych.push('bruhmomentow');
 				listafalszywychrozowych.push('iforgotmypass_');
 				listafalszywychrozowych.push('kwiat_pustyni626');
+				listafalszywychrozowych.push('powodzenia');
+				listafalszywychrozowych.push('simsakPL');
+				listafalszywychrozowych.push('ramotka');
 
 				// LISTA FAŁSZYWYCH NIEBIESKICH PASKÓW fałszywe niebieskie
 				const listafalszywychniebieskich = [];
@@ -829,6 +832,70 @@
 				trollsMap.set("ISSTrackerPL", { "label": "Bot", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Boty-na-Wykopie#iss-tracker" });
 				trollsMap.set("januszowybot", { "label": "Bot", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Boty-na-Wykopie#januszowy-bot" });
 				trollsMap.set("mirko_anonim", { "label": "Anonim", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Aplikacje#mirkoanonim" });
+
+
+				trollsMap.set("Barneyeos", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("zzbkk", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("ZarejestrowanyMimoWoli", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("idainadenshigijutsusha", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("birus", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("anthonysoprano", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("ferigone", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("DerMirker", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("viciu03", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("kriss2005r", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("Kalinke01", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("maestroPijanyRolnik", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("Davidvia0", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("Nefree", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("Architekt_Chaosu", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("kogut_20", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("mkeeey", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("Mirkosoft", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("WodkaGrejfrut", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("notavailable", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("spoko_spoko_na_chillku", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("Repcakos", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("3dnow", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("ToChybaJakisZart", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("vrraaaz", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("Skura_tak_przezU", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("Lutekcjusz", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("ile-prawdy-jest-w-jednym-slowie", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("kutmen2", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("michal_misiek", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("kartofel322", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("ten_co_uciekl", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("NaczelnyHejterWykopu", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("wykopowa_ona", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("s-o-s", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("Samowski", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("CynicznySkurczybyk", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("qmox", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("pawel_je", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("PrawdziwyRealista", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("beniu89", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("cranberry250", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("bimbadil", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("PanKajak", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("Qontrol", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("RobaUrs", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("PAST", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("Szychasekk", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("Szatanski_werset", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("matess", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("SSKW", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("silver1", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("CioseK", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("wojt4ss", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("Ponta", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("kspr", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("korporacion", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("ogrod87", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("Tomek3322", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("dgjkasgr8yl3q", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+				trollsMap.set("dese", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
+
 
 				trollsMap.set("ChwilowaPomaranczka", { "label": "Wykopowy Troll" });
 				localStorageUserLabels.setItem('mapaTrolli', Object.fromEntries(trollsMap)).then(() => { });
