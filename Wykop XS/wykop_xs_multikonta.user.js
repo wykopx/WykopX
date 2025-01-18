@@ -5,8 +5,8 @@
 
 // @version						3.0.80
 
-// @description 					Wykop XS - Multikonta (beta)
-// @description:en 					Wykop XS - Multikonta (beta)
+// @description 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
+// @description:en 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
 
 
 // Chcesz wesprzeć projekt Wykop X? Postaw kawkę:
