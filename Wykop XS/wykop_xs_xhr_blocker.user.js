@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - XHR blocker
 // @name:en							Wykop XS - XHR blocker
 
-// @version							3.0.50
+// @version							3.0.80
 
 // @description 					Wykop XS - XHR Blocker | Wykop X Style znajdziesz na: http://style.wykopx.pl
 // @description:en 					Wykop XS - XHR Blocker | Check out also: http://style.wykopx.pl
@@ -23,7 +23,7 @@
 
 
 // @match							https://wykop.pl/*
-// @supportURL						http://wykop.pl/tag/wykopwnowymstylu
+// @supportURL						http://wykop.pl/tag/wykopx
 // @namespace						Violentmonkey Scripts
 // @compatible						chrome, firefox, opera, safari, edge
 // @license							No License
@@ -43,16 +43,16 @@
 {
 	'use strict';
 
-	const currentVersion = "3.0.50";
+	const currentVersion = "3.0.80";
 	let dev = false;
 
-	const promoString = " [Dodane przez Wykop X #wykopwnowymstylu]";
+	const promoString = " - Wykop XHR Blocker / #wykopx";
 
 	const root = document.documentElement;
 	const head = document.head;
 	const body = document.body;
 	const bodySection = body.querySelector("section");
-	const wykopxSettings = getComputedStyle(head); // getComputedStyle(document.documentElement) -- nie działa, nie wczytuje właściwości z :root
+	const wykopxSettings = getComputedStyle(head);
 	const settings = {};
 
 	const styleElement = document.createElement('style');

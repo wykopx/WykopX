@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3.0
 // @name:en							Wykop XS 3.0
 
-// @version							3.0.78
+// @version							3.0.80
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://styl.wykopx.pl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://styl.wykopx.pl
@@ -47,10 +47,10 @@
 	'use strict';
 
 
-	const currentVersion = "3.0.78";
+	const currentVersion = "3.0.80";
 	let dev = false;
 
-	const promoString = " [Dodane przez Wykop XS]";
+	const promoString = " - Wykop XS / #wykopx";
 
 	const root = document.documentElement;
 	const head = document.head;
@@ -118,7 +118,7 @@
 		// wykop_xs_mikroczat.user.js -MIKROCZAT/LISTA PLUSUJĄCYCH - settings
 		setSettingsValueFromCSSProperty("entryVotersListEnable");				// włącza pokazywanie listy plusujących z Wykop X Style
 		setSettingsValueFromCSSProperty("entryVotersListExpandIfLessThan", 50, true);
-		setSettingsValueFromCSSProperty("fixNotificationBadgeBug");				// naprawia wykopowy błąd - ukrywa liczbę nieprzeczytanych powiadomien, gdy wszystkie powiadomienia sa juz przeczytane
+		// setSettingsValueFromCSSProperty("fixNotificationBadgeBug");				// naprawia wykopowy błąd - ukrywa liczbę nieprzeczytanych powiadomien, gdy wszystkie powiadomienia sa juz przeczytane
 		setSettingsValueFromCSSProperty("hideAds");								// blokuje wszystkie reklamy na wykopie
 
 		if (settings.entryVotersListEnable)
@@ -796,6 +796,7 @@
 				listafalszywychrozowych.push('powodzenia');
 				listafalszywychrozowych.push('simsakPL');
 				listafalszywychrozowych.push('ramotka');
+				listafalszywychrozowych.push('bruhmomentow');
 
 
 
@@ -836,8 +837,7 @@
 				trollsMap.set("ISSTrackerPL", { "label": "Bot", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Boty-na-Wykopie#iss-tracker" });
 				trollsMap.set("januszowybot", { "label": "Bot", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Boty-na-Wykopie#januszowy-bot" });
 				trollsMap.set("mirko_anonim", { "label": "Anonim", "url": "https://github.com/wykopx/Aplikacje-wykopowe/wiki/Aplikacje#mirkoanonim" });
-
-
+				// #wykopaka sciana wstydu
 				trollsMap.set("Barneyeos", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
 				trollsMap.set("zzbkk", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });
 				trollsMap.set("ZarejestrowanyMimoWoli", { "label": "🤬 #wykopaka", "url": "https://wykopaka.pl/wall-of-shame" });

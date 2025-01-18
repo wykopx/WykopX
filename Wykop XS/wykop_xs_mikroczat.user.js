@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name							Wykop XS - Lista plusujących, animowane awatary, mikroczat
-// @name:pl							Wykop XS - Lista plusujących, animowane awatary, mikroczat
-// @name:en							Wykop XS - Lista plusujących, animowane awatary, mikroczat
+// @name						Wykop XS - Lista plusujących, animowane awatary, mikroczat
+// @name:pl						Wykop XS - Lista plusujących, animowane awatary, mikroczat
+// @name:en						Wykop XS - Lista plusujących, animowane awatary, mikroczat
 
-// @version							3.0.66
+// @version						3.0.80
 
 // @description 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -12,7 +12,7 @@
 // Chcesz wesprzeć projekt Wykop X? Postaw kawkę:
 // @contributionURL					https://buycoffee.to/wykopx
 
-// @author							Wykop X <wykopx@gmail.com>
+// @author						Wykop X <wykopx@gmail.com>
 
 
 
@@ -22,17 +22,17 @@
 
 
 
-// @match							https://wykop.pl/*
-// @supportURL						http://wykop.pl/tag/wykopwnowymstylu
+// @match						https://wykop.pl/*
+// @supportURL						http://wykop.pl/tag/wykopx
 // @namespace						Violentmonkey Scripts
 // @compatible						chrome, firefox, opera, safari, edge
-// @license							No License
+// @license						No License
 
 
 // @require 						https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
-// @require							https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
-// @require							https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/pl.js
-// @require							https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js
+// @require						https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
+// @require						https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/pl.js
+// @require						https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js
 
 
 
@@ -44,10 +44,10 @@
 
 'use strict';
 
-const currentVersion = "3.0.66";
-let dev = false;
+const currentVersion = "3.0.80";
+let dev = true;
 
-const promoString = " - Wykop XS";
+const promoString = " - Wykop XS / #wykopx";
 
 
 const root = document.documentElement;
@@ -58,7 +58,7 @@ const bodySection = body.querySelector("section");
 dayjs.locale("pl");
 dayjs.extend(window.dayjs_plugin_relativeTime); 		//dayjs.extend(relativeTime); // https://day.js.org/docs/en/plugin/relative-time // https://www.jsdelivr.com/package/npm/dayjs?tab=files&path=plugin
 
-const wykopxSettings = getComputedStyle(head); // getComputedStyle(document.documentElement) -- nie działa, nie wczytuje właściwości z :root
+const wykopxSettings = getComputedStyle(head);
 const settings = {};
 
 const styleElement = document.createElement('style');
@@ -107,9 +107,6 @@ Domyślne wartości wyglądają przykładowo tak:
 
 setSettingsValueFromCSSProperty("entryVotersListEnable");				// włącza pokazywanie listy plusujących z Wykop X Style
 setSettingsValueFromCSSProperty("entryVotersListExpandIfLessThan", 50, true);
-
-
-setSettingsValueFromCSSProperty("fixNotificationBadgeBug");				// naprawia wykopowy błąd - ukrywa liczbę nieprzeczytanych powiadomien, gdy wszystkie powiadomienia sa juz przeczytane
 setSettingsValueFromCSSProperty("hideAds");								// blokuje wszystkie reklamy na wykopie
 
 
@@ -1287,13 +1284,13 @@ Widok dyskusji:
 
 	const throttledAddVotersList = throttle(addVotersList, 200);
 
-	let observer = new MutationObserver((mutations) =>
+	let observer = new MutationObserver((mutations) => 
 	{
-		// console.log(`--- ${mutations.length} mutations`, mutations);
+		console.log(`--- ${mutations.length} mutations`, mutations);
 
 		mutations.forEach((mutation) =>
 		{
-			if (dev)
+			if (dev || true)
 			{
 				console.log("---------- new mutation -----");
 				console.log(mutation);
@@ -1427,6 +1424,9 @@ Widok dyskusji:
 
 	// CONTENT LOADED
 	let mainSection;
+
+
+
 	document.addEventListener('readystatechange', (event) => 
 	{
 		if (dev) console.log('readyState:' + document.readyState);
@@ -1958,7 +1958,7 @@ Widok dyskusji:
 		div[data-modal="entryVoters"] section.entry-voters::after {content: none!important;} /* Wykop X Style PROMO */
 	`;
 
-	/* LISTA PLUSUJĄCYCH CSS, PRZYCISK DODAJ DO ULUBIONYCH, fixNotificationBadgeBug*/
+	/* LISTA PLUSUJĄCYCH CSS, PRZYCISK DODAJ DO ULUBIONYCH */
 	if (settings?.entryVotersListEnable)
 	{
 		CSS += `
@@ -2101,66 +2101,6 @@ Widok dyskusji:
 		}
 	`;
 
-	/* fixNotificationBadgeBug */
-	if (settings.fixNotificationBadgeBug)
-	{
-		CSS += `
-			:root
-			{
-				/* brak nowych powiadomień */
-				--notificationIconWithoutUnreadNotificationsColor:                 rgba(255, 255, 255, 0.2);   /* ikonka powiadomienia ✉ 🕭 #, jesli nie ma nowych powiadomien  */
-				--notificationIconWithoutUnreadNotificationsBackgroundColor:       rgba(0, 0, 0, 0);           /* tło powiadomienia ✉ 🕭 #, jesli nie ma nowych powiadomien     */
-				--notificationIconWithoutUnreadNotificationsHoverColor:            rgba(255, 255, 255, 0.8);
-				--notificationIconWithoutUnreadNotificationsHoverBackgroundColor:  rgba(255, 255, 255, 0.3);
-				--notificationIconWithoutUnreadNotificationsActiveColor:           rgba(255, 255, 255, 0.4);
-				--notificationIconWithoutUnreadNotificationsActiveBackgroundColor: rgba(255, 255, 255, 0.2);
-			}
-
-    		/* naprawienie błędu: Wykop wyswietla w badge liczbe nieprzeczytanych powiadomien, gdy wszystkie powiadomienia sa juz przeczytane */
-			
-			/* ukrycie badge z liczbą powiadomien jeśli wszystkie powiadomienia w okienku są przeczytane */
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications 	> section.stream > div.content > section.notify:not(.read))) > a:after,
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications 	> section.stream > div.content > section.notify:not(.read))) > a:before,
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 						    > section.stream > div.content > section.item.unread))       > a.new:after,
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a.new:before
-			{ 
-				display: none!important;
-			}
-			/* naprawienie kolorów ikonek - brak nieprzeczytanych */
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications    > section.stream > div.content > section.notify:not(.read))) > a > div.svg-inline > svg,
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a > div.svg-inline > svg
-			{
-				fill: var(--notificationIconWithoutUnreadNotificationsColor) !important;
-			} 
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications    > section.stream > div.content > section.notify:not(.read))) > a,
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a
-			{
-				background-color: var(--notificationIconWithoutUnreadNotificationsBackgroundColor) !important;
-			} 
-			/* :hover */
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications    > section.stream > div.content > section.notify:not(.read))) > a:hover > div.svg-inline > svg,
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a:hover > div.svg-inline > svg
-			{
-				fill: var(--notificationIconWithoutUnreadNotificationsHoverColor) !important;
-			} 
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications    > section.stream > div.content > section.notify:not(.read))) > a:hover,
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a:hover
-			{
-				background-color: var(--notificationIconWithoutUnreadNotificationsHoverBackgroundColor) !important;
-			} 
-			/* otwarte menu */
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications.dropdown.active:not(:has( > section.dropdown-body > section.notifications > section.stream > div.content > section.notify:not(.read))) > a > div.svg-inline > svg,
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm.dropdown.active:not(:has(            > section.dropdown-body                         > section.stream > div.content > section.item.unread))       > a > div.svg-inline > svg
-			{
-				fill: var(--notificationIconWithoutUnreadNotificationsActiveColor) !important;
-			} 
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications.dropdown.active:not(:has( > section.dropdown-body > section.notifications > section.stream > div.content > section.notify:not(.read))) > a,
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm.dropdown.active:not(:has(            > section.dropdown-body                         > section.stream > div.content > section.item.unread))       > a
-			{
-				background-color: var(--notificationIconWithoutUnreadNotificationsActiveBackgroundColor) !important;
-			} 
-		`;
-	}
 
 	/* HIDE ADS ALWAYS */
 	if (settings.hideAds) { CSS += `.pub-slot-wrapper { display: none!important; }`; }
@@ -2171,7 +2111,4 @@ Widok dyskusji:
 	styleElement.textContent = CSS;
 	document.head.appendChild(styleElement);
 })();
-
-
-
 

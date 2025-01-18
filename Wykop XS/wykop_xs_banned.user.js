@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Ban Info - Informacje o banach
 // @name:en							Wykop XS - Ban Info
 
-// @version							3.0.58
+// @version							3.0.80
 
 // @description 					Wykop XS - Informacje o banach na profilach zbanowanych użytkowników. Wykop X Style znajdziesz na: http://styl.wykopx.pl
 // @description:en 					Wykop XS - Shows precise info about banned users on Wykop.pl. Check out Wykop X Style here: http://styl.wykopx.pl
@@ -23,7 +23,7 @@
 
 
 // @match							https://wykop.pl/*
-// @supportURL						http://wykop.pl/tag/wykopwnowymstylu
+// @supportURL						http://wykop.pl/tag/wykopx
 // @namespace						Violentmonkey Scripts
 // @compatible						chrome, firefox, opera, safari, edge
 // @license							No License
@@ -43,16 +43,16 @@
 {
 	'use strict';
 
-	const currentVersion = "3.0.58";
+	const currentVersion = "3.0.80";
 	let dev = false;
 
-	const promoString = " [Dodane przez Wykop X #wykopwnowymstylu]";
+	const promoString = " - Wykop XS / #wykopx";
 
 	const root = document.documentElement;
 	const head = document.head;
 	const body = document.body;
 	const bodySection = body.querySelector("section");
-	const wykopxSettings = getComputedStyle(head); // getComputedStyle(document.documentElement) -- nie działa, nie wczytuje właściwości z :root
+	const wykopxSettings = getComputedStyle(head);
 	const settings = {};
 
 	const styleElement = document.createElement('style');
