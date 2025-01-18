@@ -118,7 +118,6 @@
 		// wykop_xs_mikroczat.user.js -MIKROCZAT/LISTA PLUSUJĄCYCH - settings
 		setSettingsValueFromCSSProperty("entryVotersListEnable");				// włącza pokazywanie listy plusujących z Wykop X Style
 		setSettingsValueFromCSSProperty("entryVotersListExpandIfLessThan", 50, true);
-		// setSettingsValueFromCSSProperty("fixNotificationBadgeBug");				// naprawia wykopowy błąd - ukrywa liczbę nieprzeczytanych powiadomien, gdy wszystkie powiadomienia sa juz przeczytane
 		setSettingsValueFromCSSProperty("hideAds");								// blokuje wszystkie reklamy na wykopie
 
 		if (settings.entryVotersListEnable)
@@ -10540,7 +10539,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		div[data-modal="entryVoters"] section.entry-voters::after {content: none!important;} /* Wykop X Style PROMO */
 	`;
 
-		/* LISTA PLUSUJĄCYCH CSS, PRZYCISK DODAJ DO ULUBIONYCH, fixNotificationBadgeBug*/
+		/* LISTA PLUSUJĄCYCH CSS, PRZYCISK DODAJ DO ULUBIONYCH */
 		if (settings?.entryVotersListEnable)
 		{
 			CSS += `
@@ -10686,65 +10685,23 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	`;
 
 		/* fixNotificationBadgeBug */
-		if (settings.fixNotificationBadgeBug)
-		{
-			CSS += `
-			:root
-			{
-				/* brak nowych powiadomień */
-				--notificationIconWithoutUnreadNotificationsColor:                 rgba(255, 255, 255, 0.2);   /* ikonka powiadomienia ✉ 🕭 #, jesli nie ma nowych powiadomien  */
-				--notificationIconWithoutUnreadNotificationsBackgroundColor:       rgba(0, 0, 0, 0);           /* tło powiadomienia ✉ 🕭 #, jesli nie ma nowych powiadomien     */
-				--notificationIconWithoutUnreadNotificationsHoverColor:            rgba(255, 255, 255, 0.8);
-				--notificationIconWithoutUnreadNotificationsHoverBackgroundColor:  rgba(255, 255, 255, 0.3);
-				--notificationIconWithoutUnreadNotificationsActiveColor:           rgba(255, 255, 255, 0.4);
-				--notificationIconWithoutUnreadNotificationsActiveBackgroundColor: rgba(255, 255, 255, 0.2);
-			}
+		// if (settings.fixNotificationBadgeBug)
+		// {
+		// 	CSS += `
+		// 	:root
+		// 	{
+		// 		/* brak nowych powiadomień */
+		// 		--notificationIconWithoutUnreadNotificationsColor:                 rgba(255, 255, 255, 0.2);   /* ikonka powiadomienia ✉ 🕭 #, jesli nie ma nowych powiadomien  */
+		// 		--notificationIconWithoutUnreadNotificationsBackgroundColor:       rgba(0, 0, 0, 0);           /* tło powiadomienia ✉ 🕭 #, jesli nie ma nowych powiadomien     */
+		// 		--notificationIconWithoutUnreadNotificationsHoverColor:            rgba(255, 255, 255, 0.8);
+		// 		--notificationIconWithoutUnreadNotificationsHoverBackgroundColor:  rgba(255, 255, 255, 0.3);
+		// 		--notificationIconWithoutUnreadNotificationsActiveColor:           rgba(255, 255, 255, 0.4);
+		// 		--notificationIconWithoutUnreadNotificationsActiveBackgroundColor: rgba(255, 255, 255, 0.2);
+		// 	}
+		// `;
+		// }
 
-    		/* naprawienie błędu: Wykop wyswietla w badge liczbe nieprzeczytanych powiadomien, gdy wszystkie powiadomienia sa juz przeczytane */
-			
-			/* ukrycie badge z liczbą powiadomien jeśli wszystkie powiadomienia w okienku są przeczytane */
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications 	> section.stream > div.content > section.notify:not(.read))) > a:after,
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications 	> section.stream > div.content > section.notify:not(.read))) > a:before,
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 						    > section.stream > div.content > section.item.unread))       > a.new:after,
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a.new:before
-			{ 
-				display: none!important;
-			}
-			/* naprawienie kolorów ikonek - brak nieprzeczytanych */
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications    > section.stream > div.content > section.notify:not(.read))) > a > div.svg-inline > svg,
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a > div.svg-inline > svg
-			{
-				fill: var(--notificationIconWithoutUnreadNotificationsColor) !important;
-			} 
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications    > section.stream > div.content > section.notify:not(.read))) > a,
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a
-			{
-				background-color: var(--notificationIconWithoutUnreadNotificationsBackgroundColor) !important;
-			} 
-			/* :hover */
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications    > section.stream > div.content > section.notify:not(.read))) > a:hover > div.svg-inline > svg,
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a:hover > div.svg-inline > svg
-			{
-				fill: var(--notificationIconWithoutUnreadNotificationsHoverColor) !important;
-			} 
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications    > section.stream > div.content > section.notify:not(.read))) > a:hover,
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a:hover
-			{
-				background-color: var(--notificationIconWithoutUnreadNotificationsHoverBackgroundColor) !important;
-			} 
-			/* otwarte menu */
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications.dropdown.active:not(:has( > section.dropdown-body > section.notifications > section.stream > div.content > section.notify:not(.read))) > a > div.svg-inline > svg,
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm.dropdown.active:not(:has(            > section.dropdown-body                         > section.stream > div.content > section.item.unread))       > a > div.svg-inline > svg
-			{
-				fill: var(--notificationIconWithoutUnreadNotificationsActiveColor) !important;
-			} 
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications.dropdown.active:not(:has( > section.dropdown-body > section.notifications > section.stream > div.content > section.notify:not(.read))) > a,
-			body > section:not(.is-mobile) > header.header div.right > nav ul li.pm.dropdown.active:not(:has(            > section.dropdown-body                         > section.stream > div.content > section.item.unread))       > a
-			{
-				background-color: var(--notificationIconWithoutUnreadNotificationsActiveBackgroundColor) !important;
-			} 
-		`;
-		}
+
 
 
 		/* ------------- NOTATKOWATOR + INFOBOX + USER LABELS ----------------- */
