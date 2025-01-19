@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Obrazki+
 // @name:en							Wykop XS - Images+
 
-// @version							3.1.0
+// @version							3.0.99
 
 // @description 					Otwiera obrazki z wykopu poprzez www.wykopx.pl - z dodatkowymi funkcjami. Otwórz dowolny obrazek na wykopie i zamień w adresie URL 'wykop.pl' na 'wykopx.pl'. Obrazek możesz obrócić, odbić lustrzanie, udostępnić, skopiować, zapisać, włączyć pełny ekran. Oprócz przycisków masz też wygodne skróty klawiaturowe do każdej z tych akcji.  | Wejdź na Mikroczat: https://mikroczat.pl Projekt Wykop X: https://wykopx.pl Wiki projektu Wykop X: https://wiki.wykopx.pl
 
@@ -16,6 +16,7 @@
 // @author							Wykop X <wykopx@gmail.com>
 
 
+// @run-at document-start
 
 // @match							https://wykop.pl/cdn/*
 // @supportURL						http://wykop.pl/tag/wykopx
@@ -23,20 +24,24 @@
 // @compatible						chrome, firefox, opera, safari, edge
 // @license							No License
 
+// @inject-into page
 // ==/UserScript==
+document.documentElement.style.backgroundColor = "rgb(18, 18, 20)";
+document.documentElement.style.borderTop = "48px solid rgb(60, 60, 60)";
 
-
-(async function ()
+const body = document.querySelector("body");
+if (body)
 {
-	'use strict';
-	function redirect()
-	{
-		let currentUrl = window.location.href;
-		let newUrl = currentUrl.replace("https://wykop.pl", "https://wykopx.pl");
-		window.location.replace(newUrl);
-	}
-	if (window.location.href.startsWith("https://wykop.pl/cdn/")) redirect();
+	const img = body.querySelector("img");
+	img.style.display = "none";
+	img.style.opacity = "0";
+	body.style.backgroundColor = "rgb(18, 18, 20)";
+	body.style.overflow = "hidden";
+}
+if (unsafeWindow.location.href.startsWith("https://wykop.pl/cdn/"))
+{
+	unsafeWindow.location.replace(unsafeWindow.location.href.replace("https://wykop.pl", "https://wykopx.pl"));
+}
 
-})();
 
 
