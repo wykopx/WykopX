@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - XHR blocker
 // @name:en							Wykop XS - XHR blocker
 
-// @version							3.0.80
+// @version							3.0.81
 
 // @description 					Wykop XS - XHR Blocker | Wykop X Style znajdziesz na: http://style.wykopx.pl
 // @description:en 					Wykop XS - XHR Blocker | Check out also: http://style.wykopx.pl
@@ -27,6 +27,7 @@
 // @namespace						Violentmonkey Scripts
 // @compatible						chrome, firefox, opera, safari, edge
 // @license							No License
+// @icon							https://www.google.com/s2/favicons?sz=64&domain=wykop.pl
 
 
 

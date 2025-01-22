@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name						Wykop XS - Multikonta (beta)
-// @name:pl						Wykop XS - Multikonta (beta)
-// @name:en						Wykop XS - Multikonta (beta)
+// @name							Wykop XS - Multikonta (beta)
+// @name:pl							Wykop XS - Multikonta (beta)
+// @name:en							Wykop XS - Multikonta (beta)
 
-// @version						3.0.80
+// @version							3.0.81
 
 // @description 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
 // @description:en 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
@@ -12,7 +12,7 @@
 // Chcesz wesprzeć projekt Wykop X? Postaw kawkę:
 // @contributionURL					https://buycoffee.to/wykopx
 
-// @author						Wykop X <wykopx@gmail.com>
+// @author							Wykop X <wykopx@gmail.com>
 
 
 
@@ -22,17 +22,17 @@
 
 
 
-// @match						https://wykop.pl/*
+// @match							https://wykop.pl/*
 // @supportURL						http://wykop.pl/tag/wykopx
 // @namespace						Violentmonkey Scripts
 // @compatible						chrome, firefox, opera, safari, edge
-// @license						No License
+// @license							No License
 
 
 // @require 						https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
-// @require						https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
-// @require						https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/pl.js
-// @require						https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js
+// @require							https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
+// @require							https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/pl.js
+// @require							https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js
 
 
 

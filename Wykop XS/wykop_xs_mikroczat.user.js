@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name						Wykop XS - Lista plusujących, animowane awatary, mikroczat
-// @name:pl						Wykop XS - Lista plusujących, animowane awatary, mikroczat
-// @name:en						Wykop XS - Lista plusujących, animowane awatary, mikroczat
+// @name							Wykop XS - Lista plusujących, animowane awatary, mikroczat
+// @name:pl							Wykop XS - Lista plusujących, animowane awatary, mikroczat
+// @name:en							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 
-// @version						3.0.80
+// @version							3.0.81
 
 // @description 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -12,7 +12,7 @@
 // Chcesz wesprzeć projekt Wykop X? Postaw kawkę:
 // @contributionURL					https://buycoffee.to/wykopx
 
-// @author						Wykop X <wykopx@gmail.com>
+// @author							Wykop X <wykopx@gmail.com>
 
 
 
@@ -22,17 +22,18 @@
 
 
 
-// @match						https://wykop.pl/*
+// @match							https://wykop.pl/*
 // @supportURL						http://wykop.pl/tag/wykopx
 // @namespace						Violentmonkey Scripts
 // @compatible						chrome, firefox, opera, safari, edge
-// @license						No License
+// @license							No License
+// @icon							https://www.google.com/s2/favicons?sz=64&domain=wykop.pl
 
 
 // @require 						https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
-// @require						https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
-// @require						https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/pl.js
-// @require						https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js
+// @require							https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
+// @require							https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/pl.js
+// @require							https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js
 
 
 

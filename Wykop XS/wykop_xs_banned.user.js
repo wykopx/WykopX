@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Ban Info - Informacje o banach
 // @name:en							Wykop XS - Ban Info
 
-// @version							3.0.80
+// @version							3.0.81
 
 // @description 					Wykop XS - Informacje o banach na profilach zbanowanych użytkowników. Wykop X Style znajdziesz na: http://styl.wykopx.pl
 // @description:en 					Wykop XS - Shows precise info about banned users on Wykop.pl. Check out Wykop X Style here: http://styl.wykopx.pl
@@ -27,6 +27,7 @@
 // @namespace						Violentmonkey Scripts
 // @compatible						chrome, firefox, opera, safari, edge
 // @license							No License
+// @icon							https://www.google.com/s2/favicons?sz=64&domain=wykop.pl
 
 
 // @require							https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js

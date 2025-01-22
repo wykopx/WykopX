@@ -3,10 +3,9 @@
 // @name:pl							Wykop XS - Obrazki+
 // @name:en							Wykop XS - Images+
 
-// @version							3.0.99
+// @version							3.0.81
 
 // @description 					Otwiera obrazki z wykopu poprzez www.wykopx.pl - z dodatkowymi funkcjami. Otwórz dowolny obrazek na wykopie i zamień w adresie URL 'wykop.pl' na 'wykopx.pl'. Obrazek możesz obrócić, odbić lustrzanie, udostępnić, skopiować, zapisać, włączyć pełny ekran. Oprócz przycisków masz też wygodne skróty klawiaturowe do każdej z tych akcji.  | Wejdź na Mikroczat: https://mikroczat.pl Projekt Wykop X: https://wykopx.pl Wiki projektu Wykop X: https://wiki.wykopx.pl
-
 // @description:en 					Otwiera obrazki z wykopu poprzez www.wykopx.pl - z dodatkowymi funkcjami. Otwórz dowolny obrazek na wykopie i zamień w adresie URL 'wykop.pl' na 'wykopx.pl'. Obrazek możesz obrócić, odbić lustrzanie, udostępnić, skopiować, zapisać, włączyć pełny ekran. Oprócz przycisków masz też wygodne skróty klawiaturowe do każdej z tych akcji.  | Wykop Live Chat: https://mikroczat.pl | Wykop X Project: https://wykopx.pl | Wiki: https://wiki.wykopx.pl
 
 
@@ -16,6 +15,10 @@
 // @author							Wykop X <wykopx@gmail.com>
 
 
+
+
+
+
 // @run-at document-start
 
 // @match							https://wykop.pl/cdn/*
@@ -23,6 +26,8 @@
 // @namespace						Violentmonkey Scripts
 // @compatible						chrome, firefox, opera, safari, edge
 // @license							No License
+// @icon							https://www.google.com/s2/favicons?sz=64&domain=wykop.pl
+
 
 // @inject-into page
 // ==/UserScript==
