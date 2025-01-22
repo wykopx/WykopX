@@ -27,6 +27,7 @@
 // @namespace						Violentmonkey Scripts
 // @compatible						chrome, firefox, opera, safari, edge
 // @license							No License
+// @icon							https://www.google.com/s2/favicons?sz=64&domain=wykop.pl
 
 
 // @require 						https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
