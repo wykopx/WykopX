@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style 3
-@version        3.0.78
+@version        3.0.81
 
 @description    Wykop X Style 3 to 900 różnych funkcji zmieniających wykop!
 
@@ -61,6 +61,9 @@ https://skrypt.wykopx.pl
 @license        No License (YOU CAN USE THIS CODE ONLY IN STYLUS EXTENSIONS. You are NOT ALLOWED TO copy, share and use any part of this code anywhere else without author's written permission)
 
 
+@var range      HR_TAG_YEAR_SUMMARY                      `WYKOPOWE PODSUMOWANIE ROKU 2024 (⭐ NOWE 3.0.79)`                                                                                [0, 0, 99900, 1, 'mm']
+@var checkbox   yearSummaryHomePageHide                          `⭐ Ukryj baner "Twoje podsumowanie roku" na stronie głównej`         0
+@var checkbox   yearSummaryProfilePaeHide                        `⭐ Ukryj baner "Twoje podsumowanie roku" na Twoim profilu`           0
 
 
 @var range      HR_TAG_PHOTO_GALLERY                      `🔷🌆 Wykopowy widok galerii na tagach (⭐ NOWE 3.0.74)`                                                                                [0, 0, 99900, 1, 'mm']
@@ -421,11 +424,11 @@ var checkbox   mikroczatDummy                                  `Mikroczat`      
 @var checkbox   paginationButtonsStyle                          `◀ | ▶ Wygodniejsza paginacja`                                                   1     
 @var checkbox   paginationButtonsFloating                       `◀ | ▶ Pływające przyciski paginacji`                                            1      
 
-@var checkbox   infiniteScrollEntriesEnabled                    `❎🔹 Wszystkie komentarze pod wpisem (tymczasowo nie działa) `                   0
+@var checkbox   infiniteScrollEntriesEnabled                    `❎🔹 Usuń paginację (komentarze pod wpisem na 1 stronie)` 1
 @var range      infiniteScrollEntriesEnabled_INFO               `Jeśli pod wpisem jest ponad 50 komentarzy Wykop dzieli je na podstrony dodając przyciski paginacji. Włącz tę funkcję, aby wszystkie komentarze były wczytane na jednej stronie bez tworzenia kolejnych podstron tak samo jak w aplikacji na smartfonie.`             [0, 0,88800, 1, 'mm']
 
-@var checkbox   infiniteScrollLinksEnabled                      `❎🔶 Wszystkie komentarze pod znaleziskiem (tymczasowo nie działa)`              0
-@var range      infiniteScrollLinksEnabled_INFO                 `Jeśli pod znaleziskiem jest ponad 50 komentarzy Wykop dzieli je na podstrony dodając przyciski paginacji. Włącz tę funkcję, aby wszystkie komentarze były wczytane na jednej stronie bez tworzenia kolejnych podstron tak samo jak w aplikacji na smartfonie.`             [0, 0,88800, 1, 'mm']
+var checkbox   infiniteScrollLinksEnabled                      `❎🔶 Wszystkie komentarze pod znaleziskiem (tymczasowo nie działa)`              0
+var range      infiniteScrollLinksEnabled_INFO                 `Jeśli pod znaleziskiem jest ponad 50 komentarzy Wykop dzieli je na podstrony dodając przyciski paginacji. Włącz tę funkcję, aby wszystkie komentarze były wczytane na jednej stronie bez tworzenia kolejnych podstron tak samo jak w aplikacji na smartfonie.`             [0, 0,88800, 1, 'mm']
 
 
 
@@ -1285,10 +1288,10 @@ REMOVED checkbox   entryVotersListEmojiRemovedUserTextHide             `🔹❌ 
 
 @var range      SUB_HR_LOGOTYPE                     `LOGOTYP`                                      [0, 0, 99999, 1, 'mm']
 @var select     topNavLogotype                                  `Zmień logotyp 𝘄𝘆𝗸𝗼𝗽.𝗽𝗹` {
-                                                                            "𝘄𝘆𝗸𝗼𝗽.𝗽𝗹 (domyślny)"    :   "wykoppl",
-                                                                            "𝘄𝘆𝗸𝗼𝗽*":   "wykop",
-                                                                            "wykopx.pl": "wykopx",
-                                                                            "YouTube"               :   "youtube"
+                                                                            "𝘄𝘆𝗸𝗼𝗽.𝗽𝗹 (domyślny)"             :   "wykoppl",
+                                                                            "𝘄𝘆𝗸𝗼𝗽*":"wykop",
+                                                                            "wykopx.pl"                       :   "wykopx",
+                                                                            "YouTube"                         :   "youtube"
                                                                         }
 @var checkbox   topNavLogotypeHide                              `🚫 Ukryj logotyp 𝘄𝘆𝗸𝗼𝗽.𝗽𝗹`       0
 
@@ -1346,7 +1349,7 @@ REMOVED checkbox   entryVotersListEmojiRemovedUserTextHide             `🔹❌ 
 
 @var select     topNavWallpaper                                 `🎨 Tapeta górnej belki nawigacyjnej` {
                                                                             "Brak tapety w tle (domyślnie)":              "domyslne",
-                                                                            "🟦 Belka Wykop 2022 *":                  "'https://wykopx.pl/img/background-wykop-2022.png'",
+                                                                            "🟦 Belka Wykop 2022 *":"'https://wykopx.pl/img/background-wykop-2022.png'",
                                                                             "🟦 Belka Wykop 2022 (nocna)":            "'https://wykopx.pl/img/background-wykop-2022-dark'",
                                                                             "🟦 Belka Wykop 2018":                    "'https://wykopx.pl/img/background-wykop-2018.png'",
                                                                             "🟦 Belka Wykop 2015":                    "'https://wykopx.pl/img/background-wykop-2015.png'",
@@ -1412,7 +1415,7 @@ REMOVED checkbox   entryVotersListEmojiRemovedUserTextHide             `🔹❌ 
 @var checkbox   topNavHomeButtonTextBolder                      `Pogrubiony tekst przycisków w stylu Wykopu 2022`      0
 @var select     upcomingCount                                   `Styl liczby nowych wykopalisk` {
                                                                                 "Wykop 2023 (domyślny)"        :    "domyslny",
-                                                                                "Wykop 2022*":    "stylwykop2022",
+                                                                                "Wykop 2022*":"stylwykop2022",
                                                                                 "Styl powiadomień"             :    "stylpowiadomien",
                                                                                 "🚫 Nie pokazuj"               :    "niepokazujliczby"
                                                                             } 
@@ -1448,7 +1451,7 @@ var checkbox  topNavSnowGirl                                    `❄ Snow Girl` 
 @var range      SUB_HR_TOPNAV_SEARCH                    `🔎 WYSZUKIWARKA`                                   [0, 0, 99999, 1, 'mm']
 @var select     hideSearchbox                                   `🔎 Wyszukiwarka` {
                                                                             "🔎 Pole wyszukiwania (domyślnie na PC)"    :   "wyszukiwarka_domyslna",
-                                                                            "🔎 Krótkie pole wyszukiwania*":   "wyszukiwarka_short",
+                                                                            "🔎 Krótkie pole wyszukiwania*":"wyszukiwarka_short",
                                                                             "🔎 Tylko ikonka lupy (domyślnie na 📱)"    :   "wyszukiwarka_pokazikonke",
                                                                             "🚫 Nie pokazuj wyszukiwarki"               :   "wyszukiwarka_niepokazuj"
                                                                         } 
@@ -1969,43 +1972,43 @@ TODO checkbox   commentsCountAlignment                          `🗨️ Przenie
                                                                             "🔸 Nagłówek znaleziska (domyślnie)"                                    :   "znalezisko",
                                                                             "🔗 Treści powiązane"                                                   :   "tresci_powiazane",
                                                                             "🗨️ Komentarze"                                                         :   "komentarze",
-                                                                            "🔼 Lista wykopujących/zakopujących":"wykopujacy_i_zakopujacy",
-                                                                            "✍ Edytor dodawania komentarza"                                         :   "edytor_komentarza",
+                                                                            "🔼 Lista wykopujących/zakopujących"                                    :   "wykopujacy_i_zakopujacy",
+                                                                            "✍ Edytor dodawania komentarza"                                        :   "edytor_komentarza",
                                                                     }
 @var select     linkOrderSecond                                  `🔸 Wyświetlaj jako drugie` {
-                                                                            "🔗 Treści powiązane (domyślnie)"                                       :   "tresci_powiazane",
-                                                                            "🔸 Nagłówek znaleziska":"znalezisko",
+                                                                            "🔗 Treści powiązane (domyślnie)"                                      :   "tresci_powiazane",
+                                                                            "🔸 Nagłówek znaleziska"                                               :   "znalezisko",
                                                                             "🗨️ Komentarze"                                                        :   "komentarze",
-                                                                            "✍ Edytor dodawania komentarza"                                         :   "edytor_komentarza",
-                                                                            "🔼 Lista wykopujących/zakopujących*"                                    :   "wykopujacy_i_zakopujacy",
+                                                                            "✍ Edytor dodawania komentarza"                                       :   "edytor_komentarza",
+                                                                            "🔼 Lista wykopujących/zakopujących*":"wykopujacy_i_zakopujacy",
                                                                     } 
 @var select     linkOrderThird                                 `🔸 Wyświetlaj jako trzecie` {
                                                                             "🗨️ Komentarze (domyślnie)"                                            :   "komentarze",
                                                                             "🔸 Nagłówek znaleziska"                                                :   "znalezisko",
                                                                             "🔗 Treści powiązane*":"tresci_powiazane",
-                                                                            "✍ Edytor dodawania komentarza"                                         :   "edytor_komentarza",
+                                                                            "✍ Edytor dodawania komentarza"                                        :   "edytor_komentarza",
                                                                             "🔼 Lista wykopujących/zakopujących"                                    :   "wykopujacy_i_zakopujacy",
                                                                     }
 @var select     linkOrderFourth                                 `🔸 Wyświetlaj jako czwarte` {
                                                                             "✍ Edytor dodawania komentarza (domyślnie)"                             :   "edytor_komentarza",
-                                                                            "🔸 Nagłówek znaleziska"                                                :   "znalezisko",
+                                                                            "🔸 Nagłówek znaleziska"                                                 :   "znalezisko",
                                                                             "🔗 Treści powiązane"                                                   :   "tresci_powiazane",
                                                                             "🗨️ Komentarze*":"komentarze",
                                                                             "🔼 Lista wykopujących/zakopujących"                                    :   "wykopujacy_i_zakopujacy",
                                                                     }
 @var select     linkOrderFifth                                  `🔸 Wyświetlaj jako ostatnie` {
                                                                             "🔼 Lista wykopujących/zakopujących (domyślnie)"                        :   "wykopujacy_i_zakopujacy",
-                                                                            "🔸 Nagłówek znaleziska"                                                :   "znalezisko",
+                                                                            "🔸 Nagłówek znaleziska"                                                 :   "znalezisko",
                                                                             "🔗 Treści powiązane"                                                   :   "tresci_powiazane",
-                                                                            "🗨️ Komentarze"                                                        :   "komentarze",
+                                                                            "🗨️ Komentarze"                                                         :   "komentarze",
                                                                             "✍ Edytor dodawania komentarza*":"edytor_komentarza",
                                                                     }
 @var select     hideRelatedLinks                                `🔸🔗 Treści powiązane ze znaleziskiem` {
-                                                                        "Zawsze wyświetlaj (domyślnie)"                 :   "zawszewyswietlaj",
-                                                                        "Wyświetlaj. Ukryj jeśli brak powiązanych":"niepokazujjeslipuste",
-                                                                        "Zwinięte"                                      :   "zwiniete",
-                                                                        "🚫 Zwinięte. Ukryj jeśli brak powiązanych"     :   "zwinieteniepokazujjeslipuste",
-                                                                        "🚫 Nie pokazuj"                                :   "niepokazuj"
+                                                                        "Zawsze wyświetlaj (domyślnie)"                                               :   "zawszewyswietlaj",
+                                                                        "Wyświetlaj. Ukryj jeśli brak powiązanych"                                    :   "niepokazujjeslipuste",
+                                                                        "Zwinięte"                                                                    :   "zwiniete",
+                                                                        "🚫 Zwinięte. Ukryj jeśli brak powiązanych"                                   :   "zwinieteniepokazujjeslipuste",
+                                                                        "🚫 Nie pokazuj"                                                              :   "niepokazuj"
                                                                     }
 
 @var checkbox   hideLinkComments                               `🗨️🔸🚫 Nie pokazuj komentarzy w znaleziskach`                               0
@@ -2342,50 +2345,50 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
 
 
 @var select     rightSidebarOrderFirst                          ` Wyświetlaj jako pierwsze` {
-                                                                            "Domyślnie": `domyslnie`,
-                                                                            "🔸 Hity": `hity`,
-                                                                            "🔹 Wpisy (gorące/aktywne/popularne w kategorii)": `wpisy`,
-                                                                            "🔸 Znaleziska (wykopalisko/najnowsze/aktywne/popularne w kategorii)": `znaleziska`,
-                                                                            "# Popularne tagi/Powiązane tagi": `tagi`,
-                                                                            "# Twoje obserwowane tagi ❎*": `wykopx_your_observed_tags`
+                                                                            "Domyślnie"                                                                    : "domyslnie",
+                                                                            "🔸 Hity"                                                                      : "hity",
+                                                                            "🔹 Wpisy (gorące/aktywne/popularne w kategorii)"                              : "wpisy",
+                                                                            "🔸 Znaleziska (wykopalisko/najnowsze/aktywne/popularne w kategorii)"          : "znaleziska",
+                                                                            "# Popularne tagi/Powiązane tagi"                                              : "tagi",
+                                                                            "# Twoje obserwowane tagi ❎*"                                                 : "wykopx_your_observed_tags"
                                                                     } 
 @var select     rightSidebarOrderSecond                         `Wyświetlaj jako drugie` {
-                                                                            "Domyślnie": `domyslnie`,
-                                                                            "🔸 Hity": `hity`,
-                                                                            "🔹 Wpisy (gorące/aktywne/popularne w kategorii)*": `wpisy`,
-                                                                            "🔸 Znaleziska (wykopalisko/najnowsze/aktywne/popularne w kategorii)": `znaleziska`,
-                                                                            "# Popularne tagi/Powiązane tagi": `tagi`,
-                                                                            "# Twoje obserwowane tagi ❎": `wykopx_your_observed_tags`
+                                                                            "Domyślnie"                                                                     : "domyslnie",
+                                                                            "🔸 Hity"                                                                       : "hity",
+                                                                            "🔹 Wpisy (gorące/aktywne/popularne w kategorii)*"                              : "wpisy",
+                                                                            "🔸 Znaleziska (wykopalisko/najnowsze/aktywne/popularne w kategorii)"           : "znaleziska",
+                                                                            "# Popularne tagi/Powiązane tagi"                                               : "tagi",
+                                                                            "# Twoje obserwowane tagi ❎"                                                   : "wykopx_your_observed_tags"
                                                                     } 
 @var select     rightSidebarOrderThird                          `Wyświetlaj jako trzecie` {
-                                                                            "Domyślnie": `domyslnie`,
-                                                                            "🔸 Hity": `hity`,
-                                                                            "🔹 Wpisy (gorące/aktywne/popularne w kategorii)": `wpisy`,
-                                                                            "🔸 Znaleziska (wykopalisko/najnowsze/aktywne/popularne w kategorii)": `znaleziska`,
-                                                                            "# Popularne tagi/Powiązane tagi": `tagi`,
-                                                                            "# Twoje obserwowane tagi ❎": `wykopx_your_observed_tags`
+                                                                            "Domyślnie"                                                                     : "domyslnie",
+                                                                            "🔸 Hity"                                                                       : "hity",
+                                                                            "🔹 Wpisy (gorące/aktywne/popularne w kategorii)"                               : "wpisy",
+                                                                            "🔸 Znaleziska (wykopalisko/najnowsze/aktywne/popularne w kategorii)"           : "znaleziska",
+                                                                            "# Popularne tagi/Powiązane tagi"                                               : "tagi",
+                                                                            "# Twoje obserwowane tagi ❎"                                                   : "wykopx_your_observed_tags"
                                                                     } 
 @var select     rightSidebarOrderFourth                         `Wyświetlaj jako czwarte` {
-                                                                            "Domyślnie": `domyslnie`,
-                                                                            "🔸 Hity": `hity`,
-                                                                            "🔹 Wpisy (gorące/aktywne/popularne w kategorii)": `wpisy`,
-                                                                            "🔸 Znaleziska (wykopalisko/najnowsze/aktywne/popularne w kategorii)": `znaleziska`,
-                                                                            "# Popularne tagi/Powiązane tagi": `tagi`,
-                                                                            "# Twoje obserwowane tagi ❎": `wykopx_your_observed_tags`
+                                                                            "Domyślnie"                                                                      : "domyslnie",
+                                                                            "🔸 Hity"                                                                        : "hity",
+                                                                            "🔹 Wpisy (gorące/aktywne/popularne w kategorii)"                                : "wpisy",
+                                                                            "🔸 Znaleziska (wykopalisko/najnowsze/aktywne/popularne w kategorii)"            : "znaleziska",
+                                                                            "# Popularne tagi/Powiązane tagi"                                                : "tagi",
+                                                                            "# Twoje obserwowane tagi ❎"                                                   : "wykopx_your_observed_tags"
                                                                     } 
 @var select     rightSidebarOrderFifth                          `Wyświetlaj jako piąte` {
-                                                                            "Domyślnie": `domyslnie`,
-                                                                            "🔸 Hity": `hity`,
-                                                                            "🔹 Wpisy (gorące/aktywne/popularne w kategorii)": `wpisy`,
-                                                                            "🔸 Znaleziska (wykopalisko/najnowsze/aktywne/popularne w kategorii)": `znaleziska`,
-                                                                            "# Popularne tagi/Powiązane tagi": `tagi`,
-                                                                            "# Twoje obserwowane tagi ❎": `wykopx_your_observed_tags`
+                                                                            "Domyślnie"                                                                         : "domyslnie",
+                                                                            "🔸 Hity"                                                                           : "hity",
+                                                                            "🔹 Wpisy (gorące/aktywne/popularne w kategorii)"                                   : "wpisy",
+                                                                            "🔸 Znaleziska (wykopalisko/najnowsze/aktywne/popularne w kategorii)"               : "znaleziska",
+                                                                            "# Popularne tagi/Powiązane tagi"                                                   : "tagi",
+                                                                            "# Twoje obserwowane tagi ❎"                                                       : "wykopx_your_observed_tags"
                                                                     }
-@var checkbox   rightSidebarHidePopularTags                     `🚫 Ukryj # 𝗣𝗼𝗽𝘂𝗹𝗮𝗿𝗻𝗲 𝘁𝗮𝗴𝗶 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ/ᵐᶦᵏʳᵒᵇˡᵒᵍ/ʷᵖᶦˢ)`         0
-@var checkbox   rightSidebarHideRelatedTags                     `🚫 Ukryj # 𝗣𝗼𝘄𝗶𝗮̨𝘇𝗮𝗻𝗲 𝘁𝗮𝗴𝗶 (ᵗᵃᵍ/ᵏᵃᵗᵉᵍᵒʳᶦᵉ/ᶻⁿᵃˡᵉᶻᶦˢᵏᵒ)`                  0
-@var checkbox   rightSidebarFooterHide                          `🚫 Ukryj stopkę 𝗪𝗬𝗞𝗢𝗣 © 𝟮𝟬𝟬𝟱`                                                              1     
+@var checkbox   rightSidebarHidePopularTags                     `🚫 Ukryj # 𝗣𝗼𝗽𝘂𝗹𝗮𝗿𝗻𝗲 𝘁𝗮𝗴𝗶 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ/ᵐᶦᵏʳᵒᵇˡᵒᵍ/ʷᵖᶦˢ)`                                0
+@var checkbox   rightSidebarHideRelatedTags                     `🚫 Ukryj # 𝗣𝗼𝘄𝗶𝗮̨𝘇𝗮𝗻𝗲 𝘁𝗮𝗴𝗶 (ᵗᵃᵍ/ᵏᵃᵗᵉᵍᵒʳᶦᵉ/ᶻⁿᵃˡᵉᶻᶦˢᵏᵒ)`                                         0
+@var checkbox   rightSidebarFooterHide                          `🚫 Ukryj stopkę 𝗪𝗬𝗞𝗢𝗣 © 𝟮𝟬𝟬𝟱`                                                              1
 
-@var checkbox   WykopXSpromoDisable                             `🚫 Ukryj baner informacyjny o skrypcie Wykop XS`                                           1
+@var checkbox   WykopXSpromoDisable                             `🚫 Ukryj baner informacyjny o skrypcie Wykop XS`                                             1
 
 
 
@@ -10954,13 +10957,27 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         } 
     } 
     
-
-
+    /* WYKOPOWE PODSUMOWANIE ROKU 2024 */
+    if(yearSummaryHomePageHide == 1)
+    {
+        section.home-page section.year-summary-alert
+        {
+            display: none!important;
+        }
+    }
+    if(yearSummaryProfilePaeHide == 1)
+    {
+        aside.profile-top section.year-summary-alert
+        {
+            display: none!important;
+        } 
+    }
 
 
 
     
-   
+    
+    
 
     
     
@@ -22651,7 +22668,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     /* VARIABLES */
 
     versor = "style"; // "style", "blank", "block"
-    version = "3.0.78";   
+    version = "3.0.81";   
     /* xblocker = "2.49" */
     
     
