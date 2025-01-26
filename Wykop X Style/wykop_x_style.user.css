@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style 3
-@version        3.0.81
+@version        3.0.83
 
 @description    Wykop X Style 3 to 900 różnych funkcji zmieniających wykop!
 
@@ -61,9 +61,19 @@ https://skrypt.wykopx.pl
 @license        No License (YOU CAN USE THIS CODE ONLY IN STYLUS EXTENSIONS. You are NOT ALLOWED TO copy, share and use any part of this code anywhere else without author's written permission)
 
 
-@var range      HR_TAG_YEAR_SUMMARY                      `WYKOPOWE PODSUMOWANIE ROKU 2024 (⭐ NOWE 3.0.79)`                                                                                [0, 0, 99900, 1, 'mm']
-@var checkbox   yearSummaryHomePageHide                          `⭐ Ukryj baner "Twoje podsumowanie roku" na stronie głównej`         0
-@var checkbox   yearSummaryProfilePaeHide                        `⭐ Ukryj baner "Twoje podsumowanie roku" na Twoim profilu`           0
+
+
+@var range      HR_WOSP                                 `💖 WIELKA ORKIESTRA śWIĄTECZNEJ POMOCY`                                                                                [0, 0, 99900, 1, 'mm']
+
+@var checkbox hideTopNavDoodle                                  ` Ukryj logo WOŚP z belki`                                                                          0
+@var checkbox homepagePinnedEntriesWOSP                         ` Ukryj na Głównej wpisy WOŚP przypięte przez moderację`                                            0
+
+
+
+var range      HR_TAG_YEAR_SUMMARY                      `WYKOPOWE PODSUMOWANIE ROKU 2024 (⭐ NOWE 3.0.79)`                                                                                [0, 0, 99900, 1, 'mm']
+var checkbox   yearSummaryHomePageHide                          `⭐ Ukryj baner "Twoje podsumowanie roku" na stronie głównej`         0
+var checkbox   yearSummaryProfilePaeHide                        `⭐ Ukryj baner "Twoje podsumowanie roku" na Twoim profilu`           0
+
 
 
 @var range      HR_TAG_PHOTO_GALLERY                      `🔷🌆 Wykopowy widok galerii na tagach (⭐ NOWE 3.0.74)`                                                                                [0, 0, 99900, 1, 'mm']
@@ -1126,21 +1136,21 @@ var select     lennyFaceDropdownSkin                           `Okienko wyboru L
 @var checkbox   entryVotersListNoUnderline                      `Bez podkreślenia po najechaniu na profil`                       0
 
 @var select     entryVotersListUsersSeparator                   `Znak oddzielający profile` {
-                                                                        " , Przecinek (domyślny na Wykopie)" :   "przecinek",
-                                                                        " • Punktor (domyślny w Wykop XS)  *":   "punktor",
-                                                                        " ◦ Biały punktor"                   :   "bialy_punktor",
-                                                                        " [ ] Spacja"                        :   "spacja",
-                                                                        " ‣ Punktor trójkątny"               :   "punktor_trojkatny",
-                                                                        " ∙ Kropka środkowa"                 :   "kropka_srodkowa",
-                                                                        " ; Średnik"                         :   "srednik",
-                                                                        " . Kropka"                          :   "kropka",
-                                                                        " / Ukośnik"                         :   "ukosnik",
-                                                                        " | Pionowa kreska"                  :   "pionowa_kreska",
-                                                                        " ¦ Pionowa, przerwana kreska"       :   "pionowa_przerwana_kreska",
-                                                                        " ◼️ Emoji"                           :   "emoji_1",
-                                                                        " ◻️ Emoji"                           :   "emoji_2",
-                                                                        " ✖️ Emoji"                          :   "emoji_3",
-                                                                        " Własny (wpisz poniżej)"             :   "wlasny",
+                                                                        " , Przecinek (domyślny na Wykopie)"            :   "przecinek",
+                                                                        " • Punktor (domyślny w Wykop XS)  *"           :   "punktor",
+                                                                        " ◦ Biały punktor"                              :   "bialy_punktor",
+                                                                        " [ ] Spacja"                                  :   "spacja",
+                                                                        " ‣ Punktor trójkątny"                         :   "punktor_trojkatny",
+                                                                        " ∙ Kropka środkowa"                           :   "kropka_srodkowa",
+                                                                        " ; Średnik"                                   :   "srednik",
+                                                                        " . Kropka"                                    :   "kropka",
+                                                                        " / Ukośnik"                                   :   "ukosnik",
+                                                                        " | Pionowa kreska"                            :   "pionowa_kreska",
+                                                                        " ¦ Pionowa, przerwana kreska"                 :   "pionowa_przerwana_kreska",
+                                                                        " ◼️ Emoji"                                     :   "emoji_1",
+                                                                        " ◻️ Emoji"                                     :   "emoji_2",
+                                                                        " ✖️ Emoji"                                    :   "emoji_3",
+                                                                        " Własny (wpisz poniżej)"                       :   "wlasny",
                                                                     }
 @var text       entryVotersListUsersSeparatorCustom             `Własny separator profili na liście:` `' / '`
 
@@ -1439,8 +1449,8 @@ REMOVED checkbox   entryVotersListEmojiRemovedUserTextHide             `🔹❌ 
 
 
 
-@var range    SUB_HR_TOP_NAV_DOODLE                     `OKAZJONALNE OBRAZKI 'DOODLE' `                                                    [0, 0, 99999, 1, 'mm']
-@var checkbox hideTopNavDoodle                                  ` Ukryj obrazek "Doodle" z belki`                                                                    0
+var range    SUB_HR_TOP_NAV_DOODLE                     `OKAZJONALNE OBRAZKI 'DOODLE' `                                                    [0, 0, 99999, 1, 'mm']
+var checkbox hideTopNavDoodle                                  ` Ukryj obrazek "Doodle" z belki`                                                                    0
 var checkbox  topNavSnowMan                                     `⛄ Bałwan w sejmie`                                                                                    0
 var checkbox  topNavSnowMan2                                    `⛄ Bałwan w sejmie 2`                                                                                  0
 var checkbox  topNavSanta                                       `🎅 Wolnorynkowy Mikołaj `                                                                              0
@@ -18197,6 +18207,9 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     
         } 
 
+        
+        
+        
 
         /* ukrywanie tylko wybranych wpisow: pierwszego drugiego lub trzeciego */
         if(homepagePinnedEntriesHideFirst == 1)     {main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section:nth-child(1 of .entry){display: none!important;}} 
@@ -18229,9 +18242,19 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                order: 3151600620!important;
             } 
         } 
-    } 
-
+    }
     
+    if(homepagePinnedEntriesWOSP == 1)
+    {
+        /* Ukryj na Głównej wpisy 💖 WOŚP przypięte przez moderację */
+        main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.entry:has(a.avatar[href="/ludzie/fundacjawosp"])
+        {
+            display: none!important;
+        } 
+    
+    }
+    
+
     
     
     
@@ -22668,7 +22691,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     /* VARIABLES */
 
     versor = "style"; // "style", "blank", "block"
-    version = "3.0.81";   
+    version = "3.0.83";   
     /* xblocker = "2.49" */
     
     
