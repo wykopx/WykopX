@@ -30,7 +30,7 @@
 (async function ()
 {
 	'use strict';
-	const currentVersion = "3.0.80";
+	const currentVersion = "3.0.82";
 	let dev = false;
 	const promoString = " - Wykop XS / #wykopx";
 

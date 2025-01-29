@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - All Comments Together
 // @name:en							Wykop XS - All Comments Together
 
-// @version							3.0.81
+// @version							3.0.82
 
 // @description 					Wykop XS - All Comments Together | Wejdź na Mikroczat: https://mikroczat.pl Projekt Wykop X: https://wykopx.pl Wiki projektu Wykop X: https://wiki.wykopx.pl
 // @description:en 					Wykop XS - All Comments Together | Wykop Live Chat: https://mikroczat.pl | Wykop X Project: https://wykopx.pl | Wiki: https://wiki.wykopx.pl
@@ -29,7 +29,7 @@
 // ==/UserScript==
 (async function ()
 {
-	const currentVersion = "3.0.80";
+	const currentVersion = "3.0.82";
 	let dev = false;
 	const promoString = " - Wykop XS / #wykopx";
 
