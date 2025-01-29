@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Rozgrupuj powiadomienia
 // @name:en							Wykop XS - Ungroup notifications
 
-// @version							3.0.81
+// @version							3.0.82
 
 // @description 					Wykop XS - Rozgrupuj powiadomienia | Wejdź na Mikroczat: https://mikroczat.pl Projekt Wykop X: https://wykopx.pl Wiki projektu Wykop X: https://wiki.wykopx.pl
 // @description:en 					Wykop XS - Ungroup notiications | Wykop Live Chat: https://mikroczat.pl | Wykop X Project: https://wykopx.pl | Wiki: https://wiki.wykopx.pl
