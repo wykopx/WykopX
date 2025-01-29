@@ -35,13 +35,14 @@
 
 	const AWAIT_MILLISECONDS = 1000;
 
+	let show_all_comments_in_one_page = true;
+	let MAXIMUM_COMMENTS_IN_ONE_PAGE = 1000; 			// ZABEZPIECZENIE PRZED WPISAMI TAKIMI JAK https://wykop.pl/wpis/57976055/wpis
+
 	// wyliczamy backend limit jako mniejszą liczbę z obecnego limitu 50 albo mniejszą wybraną przez użytkownika
-	const BACKEND_LIMIT = 50; 		// limit backendu do faktycznego pobierania 1-50
-	let local_limit = 110; 			// 1 | 10 | 20 | 100 - tyle ile użytkownik chce, żeby się wyświetlało
+	const BACKEND_LIMIT = 50; 									// limit backendu do faktycznego pobierania 1-50
+	let local_limit = 110; 							// 1 | 10 | 20 | 100 - tyle ile użytkownik chce, żeby się wyświetlało
 
 
-	let show_all_comments_in_one_page = false;
-	let MAXIMUM_COMMENTS_IN_ONE_PAGE = 1000; // ZABEZPIECZENIE PRZED WPISAMI TAKIMI JAK https://wykop.pl/wpis/57976055/wpis
 
 
 	let per_page_entries = BACKEND_LIMIT;
