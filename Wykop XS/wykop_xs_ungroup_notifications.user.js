@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name							Wykop XS - Rozgrupuj powiadomienia
-// @name:pl							Wykop XS - Rozgrupuj powiadomienia
-// @name:en							Wykop XS - Ungroup notifications
+// @name						Wykop XS - Rozgrupuj powiadomienia
+// @name:pl						Wykop XS - Rozgrupuj powiadomienia
+// @name:en						Wykop XS - Ungroup notifications
 
-// @version							3.0.82
+// @version						3.0.82
 
 // @description 					Wykop XS - Rozgrupuj powiadomienia | Wejdź na Mikroczat: https://mikroczat.pl Projekt Wykop X: https://wykopx.pl Wiki projektu Wykop X: https://wiki.wykopx.pl
 // @description:en 					Wykop XS - Ungroup notiications | Wykop Live Chat: https://mikroczat.pl | Wykop X Project: https://wykopx.pl | Wiki: https://wiki.wykopx.pl
@@ -12,16 +12,16 @@
 // Chcesz wesprzeć projekt Wykop X? Postaw kawkę:
 // @contributionURL					https://buycoffee.to/wykopx
 
-// @author							Wykop X <wykopx@gmail.com>
+// @author						Wykop X <wykopx@gmail.com>
 
 
 
-// @match							https://wykop.pl/*
+// @match						https://wykop.pl/*
 // @supportURL						http://wykop.pl/tag/wykopx
 // @namespace						Violentmonkey Scripts
 // @compatible						chrome, firefox, opera, safari, edge
-// @license							No License
-// @icon							https://www.google.com/s2/favicons?sz=64&domain=wykop.pl
+// @license						No License
+// @icon						https://www.google.com/s2/favicons?sz=64&domain=wykop.pl
 
 
 
