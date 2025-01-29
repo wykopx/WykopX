@@ -1,7 +1,7 @@
-
-// @name						Wykop XS - Rozgrupuj powiadomienia
-// @name:pl						Wykop XS - Rozgrupuj powiadomienia
-// @name:en						Wykop XS - Ungroup notifications
+// ==UserScript==
+// @name						Wykop XS - All Comments Together
+// @name:pl						Wykop XS - All Comments Together
+// @name:en						Wykop XS - All Comments Together
 
 // @version						3.0.82
 
