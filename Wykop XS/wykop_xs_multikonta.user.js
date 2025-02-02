@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Multikonta (beta)
 // @name:en							Wykop XS - Multikonta (beta)
 
-// @version							3.0.81
+// @version							3.0.82
 
 // @description 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
 // @description:en 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
@@ -45,7 +45,7 @@
 
 'use strict';
 
-const currentVersion = "3.0.80";
+const currentVersion = "3.0.82";
 let dev = false;
 
 const promoString = " - Wykop XS / #wykopx";
@@ -345,7 +345,7 @@ settings.mikroczatOpenMikroczatOnCTRLMiddleClick = true;
 	const mikroczatDomain = "https://mikroczat.pl";
 	const mikroczatPath = "/"; /* /czat */
 	const mikroczatMainChannelPath = "czat";
-	const mikroczaDefaultChannel = "mikroblog+";
+	const mikroczatDefaultChannel = "mikroblog+";
 	// let mikroczatChannel = "/";
 	let mikroczatWindow = null;
 	const mikroczatButtonOpenTitle = `Wykopowy Mikroczat
@@ -481,7 +481,7 @@ Otwieranie czatu w 𝗡𝗢𝗪𝗬𝗠 𝗢𝗞𝗡𝗜𝗘:
 					// TODO pathnameArray[2] == "gorace"
 					else
 					{
-						channel = `${mikroczatMainChannelPath}/${mikroczaDefaultChannel}`; // TODO
+						channel = `${mikroczatMainChannelPath}/${mikroczatDefaultChannel}`; // TODO
 					}
 				}
 				// /obserwowane
@@ -498,7 +498,7 @@ Otwieranie czatu w 𝗡𝗢𝗪𝗬𝗠 𝗢𝗞𝗡𝗜𝗘:
 				}
 				else if (urlPathnameArray[1] == "wpis")
 				{
-					channel = `${mikroczatMainChannelPath}/${mikroczaDefaultChannel}/#${urlPathnameArray[2]}`; // id wpisu - discussion view
+					channel = `${mikroczatMainChannelPath}/${mikroczatDefaultChannel}/#${urlPathnameArray[2]}`; // id wpisu - discussion view
 				}
 				else if (urlPathnameArray[1] == "") // ze strony głównej
 				{
@@ -2226,7 +2226,7 @@ async function appendMultiAccounts()
 			else 
 			{
 				const urlParams = new URLSearchParams(window.location.search);
-				console.log("urlParams: ", urlParams);
+				if (dev) console.log("urlParams: ", urlParams);
 
 				// OPERACJA "NOWE MULTI KONTO" - DETECT ?rtoken= FROM LOGING TO NEW_ACCOUNT
 				if (urlParams.size > 0 && urlParams.has('token') && urlParams.has('rtoken'))
@@ -2257,7 +2257,7 @@ async function appendMultiAccounts()
 
 
 				let multiUsersArray = getMultiUsersArray();
-				console.log("multiUsersArray", multiUsersArray);
+				if (dev) console.log("multiUsersArray", multiUsersArray);
 
 
 				// TWORZENIE LISTY <SELECT>
@@ -2372,8 +2372,7 @@ async function appendMultiAccounts()
 						window.localStorage.removeItem("token")
 						window.localStorage.removeItem("userKeep");
 						window.localStorage.removeItem("username");
-						window.location.href = "https://wykopx.pl/(－‸ლ)";
-						// window.location.reload();
+						window.location.href = `https://wykopx.pl/(－‸ლ)/?&ch=${window.location.href}`;
 					}
 				});
 
@@ -2421,9 +2420,9 @@ async function appendMultiAccounts()
 
 				function newMultiUser(username, token, rtoken)
 				{
-					console.log("newMultiUser", username, rtoken);
+					if (dev) console.log("newMultiUser", username, rtoken);
 					const array = getMultiUsersArray();
-					console.log("newMultiUser, array: ", array);
+					if (dev) console.log("newMultiUser, array: ", array);
 					const uniqueUsers = new Set(array);
 					uniqueUsers.add(username);  // Set automatically ignores duplicates
 					setMultiUsersFromArray(Array.from(uniqueUsers));
