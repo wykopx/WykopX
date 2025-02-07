@@ -1,12 +1,12 @@
 // ==UserScript==
-// @name						Wykop XS - All Comments Together
-// @name:pl						Wykop XS - All Comments Together
-// @name:en						Wykop XS - All Comments Together
+// @name						Wykop XS - OnePage Komentarze i Notatki
+// @name:pl						Wykop XS - OnePage Komentarze i Notatki
+// @name:en						Wykop XS - OnePage Komentarze i Notatki
 
-// @version						3.0.82
+// @version						3.0.83
 
-// @description 					Wykop XS - All Comments Together | Wejdź na Mikroczat: https://mikroczat.pl Projekt Wykop X: https://wykopx.pl Wiki projektu Wykop X: https://wiki.wykopx.pl
-// @description:en 					Wykop XS - All Comments Together | Wykop Live Chat: https://mikroczat.pl | Wykop X Project: https://wykopx.pl | Wiki: https://wiki.wykopx.pl
+// @description 					Wykop XS - OnePage Komentarze i Notatki | Wejdź na Mikroczat: https://mikroczat.pl Projekt Wykop X: https://wykopx.pl Wiki projektu Wykop X: https://wiki.wykopx.pl
+// @description:en 					Wykop XS - OnePage Komentarze i Notatki | Wykop Live Chat: https://mikroczat.pl | Wykop X Project: https://wykopx.pl | Wiki: https://wiki.wykopx.pl
 
 
 // Chcesz wesprzeć projekt Wykop X? Postaw kawkę:
@@ -29,27 +29,60 @@
 // ==/UserScript==
 (async function ()
 {
-	const currentVersion = "3.0.82";
-	let dev = false;
-	const promoString = " - Wykop XS / #wykopx";
+	/* USTAWIENIA START */
+	// -
+	// - poniższe ustawienia można zmieniać według uznania
+	// -
 
-	const AWAIT_MILLISECONDS = 1000;
+	// USTAWIENIE LICZBY KOMENTARZY WYŚWIETLANYCH NA JEDNEJ STRONIE
+	let SHOW_ALL_COMMENTS_IN_ONE_PAGE_WITHOUT_ANY_LIMIT = true;			// czy chcemy wyświetlać wszystkie komentarze na jednej stronie
+	let LIMIT_MAXIMUM_COMMENTS_IN_ONE_PAGE = 5000; 						// ZABEZPIECZENIE PRZED WPISAMI Z BARDZO DUŻĄ LICZBĄ KOMENTARZY https://wykop.pl/wpis/57976055/wpis
+	// LIMIT KOMENTARZY NA STRONĘ jeśli SHOW_ALL_COMMENTS_IN_ONE_PAGE_WITHOUT_ANY_LIMIT = false
+	// 1 | 10 | 20 | 100 - tyle ile użytkownik chce, żeby się wyświetlało - dowolna liczba (domyślnie wykop wyświetla 50 komentarzy dla użytkownika zalogowanego i 25 dla niezalogowanego)
+	let LOCAL_LIMIT_COMMENTS = 500;
 
-	let show_all_comments_in_one_page = true;
-	let MAXIMUM_COMMENTS_IN_ONE_PAGE = 1000; 			// ZABEZPIECZENIE PRZED WPISAMI TAKIMI JAK https://wykop.pl/wpis/57976055/wpis
 
+	// STRONA TWOJEGO PROFILU
+	// https://wykop.pl/ludzie/TwojLogin
+	// ile najnowszych notatek wyświetlać na stronie profilu:
+	// Domyślnie na stronie profilu pokazują się 3 najnowsze notatki, a w jednym requeście może być 50, a jeśli chcemy, to więcej requestów np. dla 100 czy 200
+	let LIMIT_NOTES_ON_PROFILE_PAGES = 50;
+
+
+
+	// STRONA NOTATEK NA TWOIM PROFILU
+	// https://wykop.pl/ludzie/TwojLogin/notatki
+	let SHOW_ALL_NOTES_IN_ONE_PAGE_WITHOUT_ANY_LIMIT = true;			// czy chcemy wyświetlić wszystkie notatki
+	let LIMIT_MAXIMUM_NOTES_IN_ONE_PAGE = 10000;						// ZABEZPIECZENIE PRZED OGROMNĄ LICZBĄ NOTATEK
+
+	// LIMIT NOTATEK NA STRONĘ jeśli SHOW_ALL_NOTES_IN_ONE_PAGE_WITHOUT_ANY_LIMIT = false
+	// 1 | 10 | 20 | 100 - tyle ile użytkownik chce, żeby się wyświetlało, dowolna liczba (domyślnie wykop wyświetla 50 notatek)
+	let LOCAL_LIMIT_NOTES = 500;
+	// -
+	// -
+	/* USTAWIENIA END */
+
+
+
+
+
+
+
+	const currentVersion = "3.0.83";
+	let dev = true;
+
+	const AWAIT_MILLISECONDS = 400;
+	const BACKEND_LIMIT_COMMENTS = 50; 									// limit backendu do faktycznego pobierania 1-50
+	const BACKEND_LIMIT_NOTES = 50; 											// limit backendu do faktycznego pobierania 1-50, wykop wysyła /notes?limit=100 ale i tak pobierane jest 50
+	let per_page_comments = BACKEND_LIMIT_COMMENTS;
+	let per_page_notes = BACKEND_LIMIT_NOTES;
 	// wyliczamy backend limit jako mniejszą liczbę z obecnego limitu 50 albo mniejszą wybraną przez użytkownika
-	const BACKEND_LIMIT = 50; 									// limit backendu do faktycznego pobierania 1-50
-	let local_limit = 110; 							// 1 | 10 | 20 | 100 - tyle ile użytkownik chce, żeby się wyświetlało
+	// np. gdy uzytkownik chce miec 20 komentarzy/notatek na stronie zamiast domyslnych 50
+	if (!SHOW_ALL_COMMENTS_IN_ONE_PAGE_WITHOUT_ANY_LIMIT) per_page_comments = Math.min(BACKEND_LIMIT_COMMENTS, LOCAL_LIMIT_COMMENTS);
+	if (!SHOW_ALL_NOTES_IN_ONE_PAGE_WITHOUT_ANY_LIMIT) per_page_notes = Math.min(BACKEND_LIMIT_NOTES, LOCAL_LIMIT_NOTES);
 
 
-
-
-	let per_page_entries = BACKEND_LIMIT;
-	if (!show_all_comments_in_one_page) per_page_entries = Math.min(BACKEND_LIMIT, local_limit);
-
-
-
+	// unused yet
 	function getLocalFromPage(pageNumber)
 	{
 		const local =
@@ -58,8 +91,8 @@
 
 			item:
 			{
-				first: ((pageNumber - 1) * local_limit) + 1,
-				last: ((pageNumber - 1) * local_limit) + local_limit + 1,
+				first: ((pageNumber - 1) * LOCAL_LIMIT_COMMENTS) + 1,
+				last: ((pageNumber - 1) * LOCAL_LIMIT_COMMENTS) + LOCAL_LIMIT_COMMENTS + 1,
 			}
 		}
 
@@ -76,12 +109,20 @@
 
 			item:
 			{
-				first: ((pageStart - 1) * BACKEND_LIMIT) + 1,
-				last: ((pageStart - 1) * BACKEND_LIMIT) + BACKEND_LIMIT + 1,
+				first: ((pageStart - 1) * BACKEND_LIMIT_COMMENTS) + 1,
+				last: ((pageStart - 1) * BACKEND_LIMIT_COMMENTS) + BACKEND_LIMIT_COMMENTS + 1,
 			}
 		}
 
 		return backend;
+	}
+
+	function getPageParam(urlString)
+	{
+		const params = new URL(urlString).searchParams;
+		const pageValue = params.get('page'); 	// Returns `null` if missing
+		const pageNumber = parseInt(pageValue || 1); 	// Default to `1` if missing/invalid
+		return isNaN(pageNumber) ? 1 : pageNumber; 				// Force `1` for non-integer values
 	}
 
 
@@ -99,22 +140,22 @@
 	function getBackendPagesFromLocal(local)
 	{
 
-		console.log(`getFirstBackendPageFromLocal() local.page: [${local.page}] | local_limit: [${local_limit}] | backend_limit: [${BACKEND_LIMIT}]`);
+		if (dev) console.log(`getFirstBackendPageFromLocal() local.page: [${local.page}] | local_limit: [${LOCAL_LIMIT_COMMENTS}] | backend_limit: [${BACKEND_LIMIT_COMMENTS}]`);
 
 		let backend =
 		{
 			//  f(x) = ax - (a - 1)
 			//  f(x) = a(x-1) + 1
-			pageStart: (Math.floor(local_limit / BACKEND_LIMIT) * (local.page - 1) + 1),
+			pageStart: (Math.floor(LOCAL_LIMIT_COMMENTS / BACKEND_LIMIT_COMMENTS) * (local.page - 1) + 1),
 			// pageEnd: 
 
 		};
 
 		backend = getBackendFromBackendPage(backend.pageStart, backend.pageEnd);
 
-		console.log("getFirstBackendPageFromLocal() local: ", local);
-		console.log("getFirstBackendPageFromLocal() backend: ", backend);
-		console.log(`getFirstBackendPageFromLocal() local.page: ${local.page} | backend.pageStart: ${backend.pageStart}`)
+		if (dev) console.log("getFirstBackendPageFromLocal() local: ", local);
+		if (dev) console.log("getFirstBackendPageFromLocal() backend: ", backend);
+		if (dev) console.log(`getFirstBackendPageFromLocal() local.page: ${local.page} | backend.pageStart: ${backend.pageStart}`)
 
 		return backend;
 	}
@@ -132,8 +173,8 @@
 	{
 		/* ADBLOCK XHR START */
 		const prohibitedUrls = [
-			"btloader.com",
-			"btmessage.com",
+			// "btloader.com",
+			// "btmessage.com",
 			// "4dex.io",
 			// "a-mo.net",
 			// "adform.net",
@@ -150,63 +191,130 @@
 			// "spolecznosci.net/",
 			// "teads.tv",
 			"https://ssp.wp.pl",
+			"std.wpcdn.pl",
 			"https://wykop.pl/api/v3/ads",
 		];
+
+
+		// if (dev) console.log(request.url);
 		if (prohibitedUrls.some((url) => request.url.includes(url))) return;
 		/* ADBLOCK XHR END */
 
 
+		let PAGETYPE = null;
 
-		if (request.url.includes("comments")
-			&& request.url.includes("page=")
-			&& (request.url.includes("links") || request.url.includes("entries")))
+		if ((request.url.includes("links") || request.url.includes("entries")) && request.url.includes("comments") && request.url.includes("page="))
 		{
-			console.log(request);
-			console.log(request.url);
+			PAGETYPE = "comments";
+		}
+		else if (request.url.startsWith("https://wykop.pl/api/v3/notes?") && window.location.href.includes("https://wykop.pl/ludzie/"))
+		{
+			// 'https://wykop.pl/api/v3/notes/username' - unikaj PUT i GET pobierania pojedynczego użytkownika / zapisywania edycji notatki
+			if (!request.url.includes("page=")) request.url += "&page=1";
+
+			if (window.location.href.includes("/notatki"))
+			{
+				// strona wyświetlania notatek na profilu np. https://wykop.pl/ludzie/TwojLogin/notatki
+				PAGETYPE = "notes";
+			}
+			else
+			{
+				// strona własnego profilu np. https://wykop.pl/ludzie/TwojLogin
+				if (request.url.includes("limit=3"))
+				{
+					// domyślnie na stronie profilu pobierane są 3 notatki w 1 requeście. Możemy pobrać w jednym requeście maksymalnie 50
+					request.url = request.url.replace("limit=3", `limit=${Math.min(LIMIT_NOTES_ON_PROFILE_PAGES, BACKEND_LIMIT_NOTES)}`);
+				}
+
+				if (LIMIT_NOTES_ON_PROFILE_PAGES > BACKEND_LIMIT_NOTES)
+				{
+					// jeśli chcemy na stronie profilu więcej notatek niż 5-, to będziemy pobierać je w pętli przez xhook.after()
+					PAGETYPE = "notes";
+				}
+
+				if (request.url.includes("limit=100")) request.url = request.url.replace("limit=100", `limit=${BACKEND_LIMIT_NOTES}`);
+			}
+		}
 
 
-			console.log(`BEFORE - request o URL komentarzy: request.url - ${request.url}`);
+		if (PAGETYPE != null)
+		{
+			if (dev) console.log(`xhook.before, PAGETYPE: ${PAGETYPE} | request.url: ${request.url}`);
+
+			if (dev) console.log(request);
+			if (dev) console.log(request.url);
+
+			if (dev) console.log(`BEFORE - request o URL: request.url - ${request.url}`);
 
 			const local = {};
-
-			[, local.page] = request.url.match(/page=(\d+)/) || [null, 1];
 			local.item = { first: {} }
 
-			// WSZYSTKIE KOMENTARZE NA JEDNEJ STRONIE - START
-			if (show_all_comments_in_one_page == true)
+			if (request.url.includes("page="))
 			{
-				// ZA DUŻO KOMENTARZY, PONAD LIMITEM 500, WIĘC JEDNAK BĘDZIEMY DZIELIĆ NA STRONY PO 500, ale działa tylko gdy przechodzi się na ?page=12 a nie na ?page=1
-				if (local.page * 50 > MAXIMUM_COMMENTS_IN_ONE_PAGE)
+				[, local.page] = request.url.match(/page=(\d+)/) || [null, 1];
+			}
+			else
+			{
+				local.page = 1; // na wszelki wypadek przy pobieraniu pierwszej strony https://wykop.pl/ludzie/uzytkownik/notatki  URL do API nie ma ?page=1
+			}
+
+
+			// WSZYSTKIE KOMENTARZE NA JEDNEJ STRONIE - START
+			if (PAGETYPE == "comments" && SHOW_ALL_COMMENTS_IN_ONE_PAGE_WITHOUT_ANY_LIMIT == true)
+			{
+				// ZA DUŻO KOMENTARZY, PONAD LIMITEM 5000, WIĘC JEDNAK I TAK BĘDZIEMY DZIELIĆ NA STRONY PO 500, ale działa tylko gdy przechodzi się na ?page=12 a nie na ?page=1
+				if (local.page * 50 > LIMIT_MAXIMUM_COMMENTS_IN_ONE_PAGE)
 				{
-					console.log(`BEFORE - chcialismy wyswietlic wszystkie komentarze na jednej stronie, ale jest ich za dużo, więc dzielimy je na podstrony`);
-					show_all_comments_in_one_page = false;
-					local_limit = MAXIMUM_COMMENTS_IN_ONE_PAGE;
+					if (dev) console.log(`BEFORE - chcialismy wyswietlic wszystkie komentarze na jednej stronie, ale jest ich za dużo, więc dzielimy je na podstrony po ${LIMIT_MAXIMUM_COMMENTS_IN_ONE_PAGE} sztuk`);
+					SHOW_ALL_COMMENTS_IN_ONE_PAGE_WITHOUT_ANY_LIMIT = false;
+					LOCAL_LIMIT_COMMENTS = LIMIT_MAXIMUM_COMMENTS_IN_ONE_PAGE;
 				}
 				else
 				{
-					// jeśli chcemy wszystkie komentarze na jednej stronie, kazdy request page=8 (wejście fizycznie na stronę 8) zamieniamy na page=1 a potem obslugujemy wszystkie page=1 -> page=8 w xhook.after();
+					// jeśli chcemy wszystkie komentarze na jednej stronie nawet gdy jest ich bardzo dużo, kazdy request ?page=8 (wejście fizycznie na stronę 8) zamieniamy na page=1 a potem obslugujemy wszystkie page=1 -> page=8 w xhook.after();
+					request.url = request.url.replace(/page=\d+/, 'page=1');
+				}
+			}
+
+			// WSZYSTKIE NOTATKI NA JEDNEJ STRONIE - START
+			if (PAGETYPE == "notes" && SHOW_ALL_NOTES_IN_ONE_PAGE_WITHOUT_ANY_LIMIT == true)
+			{
+				// ZA DUŻO NOTATEK, PONAD LIMITEM 5000, WIĘC JEDNAK I TAK BĘDZIEMY DZIELIĆ NA STRONY PO 500, ale działa tylko gdy przechodzi się na ?page=12 a nie na ?page=1
+				if (local.page * 50 > LIMIT_MAXIMUM_NOTES_IN_ONE_PAGE)
+				{
+					if (dev) console.log(`BEFORE - chcialismy wyswietlic wszystkie komentarze na jednej stronie, ale jest ich za dużo, więc dzielimy je na podstrony po ${LIMIT_MAXIMUM_COMMENTS_IN_ONE_PAGE} sztuk`);
+					SHOW_ALL_COMMENTS_IN_ONE_PAGE_WITHOUT_ANY_LIMIT = false;
+					LOCAL_LIMIT_NOTES = LIMIT_MAXIMUM_NOTES_IN_ONE_PAGE;
+				}
+				else
+				{
+					// jeśli chcemy wszystkie notatki na jednej stronie nawet gdy jest ich bardzo dużo, kazdy request ?page=8 (wejście fizycznie na stronę 8) zamieniamy na page=1 a potem obslugujemy wszystkie page=1 -> page=8 w xhook.after();
 					request.url = request.url.replace(/page=\d+/, 'page=1');
 				}
 			}
 
 
 
+
+
 			// ZMIENIAMY LICZBĘ KOMENTARZY NA PODSTRONACH z 50 na użytkownika
-			if (show_all_comments_in_one_page == false)
+			if (PAGETYPE == "comments" && SHOW_ALL_COMMENTS_IN_ONE_PAGE_WITHOUT_ANY_LIMIT == false
+				|| PAGETYPE == "notest" && SHOW_ALL_NOTES_IN_ONE_PAGE_WITHOUT_ANY_LIMIT == false)
 			{
-
-
 				// jeśli chcemy mieć paginację Z INNĄ LICZBĄ NIŻ 50 KOMENTARZAMI, musimy obliczyć, którą stronę (backend.pageStart) faktycznie chcemy dostać na podstawie strony, którą użytkownik zażądał (local.page)
-				if (local_limit < BACKEND_LIMIT)
+				if (PAGETYPE == "comments" && LOCAL_LIMIT_COMMENTS < BACKEND_LIMIT_COMMENTS
+					|| PAGETYPE == "notes" && LOCAL_LIMIT_NOTES < BACKEND_LIMIT_NOTES)
 				{
 					// chcemy mieć na stronie mniej niż 50 komentarzy więc zwyczajnie wybieramy 
 					// page= mniejszą niż 50 i ustawiamy limit dla backendu API odpowiedni do local_limit
 					request.url = request.url.replace(/page=\d+/, `page=${local.page}`);
 				}
-				else if (local_limit > BACKEND_LIMIT)
+				else if (PAGETYPE == "comments" && LOCAL_LIMIT_COMMENTS > BACKEND_LIMIT_COMMENTS
+					|| PAGETYPE == "notes" && LOCAL_LIMIT_NOTES > BACKEND_LIMIT_NOTES)
 				{
 
-					console.log(`local_limie > BACKEND_LIMIT -> ${local_limit} > ${BACKEND_LIMIT}`);
+					if (dev && PAGETYPE == "comments") console.log(`local_limit > BACKEND_LIMIT -> ${LOCAL_LIMIT_COMMENTS} > ${BACKEND_LIMIT_COMMENTS}`);
+					if (dev && PAGETYPE == "notest") console.log(`local_limit > BACKEND_LIMIT -> ${LOCAL_LIMIT_NOTES} > ${BACKEND_LIMIT_NOTES}`);
 					// chcemy mieć na stronie więcej niż 50 komentarzy, więc otwieramy w backendzie
 					// pierwszą stronę, która zawiera aktualne wpisy
 					// czyli np. gdy local_limit wynosi 70, a chcemy 2 stronę, czyli wpisy 71-140
@@ -218,13 +326,12 @@
 					request.url = request.url.replace(/page=\d+/, `page=${backend.pageStart}`);
 				}
 
-
 				// ILE KOMENTARZY NA STRONIE ma być pobranych z backendu (max 50)
-				if (request.url.includes("limit=")) request.url = request.url.replace(/limit=\d+/, `limit=${per_page_entries}`); 	// min(x, 50) limit => per_page
-				else { request.url += `&limit=${per_page_entries}`; }
+				if (request.url.includes("limit=")) request.url = request.url.replace(/limit=\d+/, `limit=${per_page_comments}`); 	// min(x, 50) limit => per_page
+				else { request.url += `&limit=${per_page_comments}`; }
 			}
 
-			console.log("REQUEST WYSŁANY: ", request.url);
+			if (dev) console.log("REQUEST WYSŁANY: ", request.url);
 		}
 
 		callback();
@@ -236,11 +343,63 @@
 	xhook.after((request, response) =>
 	{
 
+		let PAGETYPE = null;
 		if (response.status !== 200 || !response.finalUrl) return;
 
-		if (!response.finalUrl.includes("comments")) return;
-		if (!response.finalUrl.includes("page=")) return;
-		if (!response.finalUrl.startsWith("https://wykop.pl/api/v3/entries/") && !response.finalUrl.startsWith("https://wykop.pl/api/v3/links/"));
+		// https://wykop.pl/api/v3/entries/80073681/comments?page=1
+
+		// https://wykop.pl/api/v3/notes?limit=100
+		// https://wykop.pl/api/v3/notes?page=3&limit=100
+		if (!response.finalUrl.includes("comments") && !response.finalUrl.includes("notes")) return;
+
+
+		// if ((response.finalUrl.includes("links") || response.finalUrl.includes("entries")) && response.finalUrl.includes("comments") && response.finalUrl.includes("page="))
+		if (response.finalUrl.includes("comments"))
+		{
+			PAGETYPE = "comments";
+		}
+		else if (request.url.startsWith("https://wykop.pl/api/v3/notes?") && window.location.href.includes("https://wykop.pl/ludzie/"))
+		{
+			// 'https://wykop.pl/api/v3/notes/username' - unikaj PUT i GET pobierania pojedynczego użytkownika / zapisywania edycji notatki
+
+			if (!request.url.includes("page=")) request.url += "&page=1";
+
+			if (window.location.href.includes("/notatki"))
+			{
+				// strona wyświetlania notatek na profilu np. https://wykop.pl/ludzie/TwojLogin/notatki
+				PAGETYPE = "notes";
+			}
+			else
+			{
+				// strona własnego profilu np. https://wykop.pl/ludzie/TwojLogin
+				if (request.url.includes("limit=3"))
+				{
+					// domyślnie na stronie profilu pobierane są 3 notatki w 1 requeście. Możemy pobrać w jednym requeście maksymalnie 50
+					request.url = request.url.replace("limit=3", `limit=${Math.min(LIMIT_NOTES_ON_PROFILE_PAGES, BACKEND_LIMIT_NOTES)}`);
+				}
+
+				if (LIMIT_NOTES_ON_PROFILE_PAGES > BACKEND_LIMIT_NOTES)
+				{
+					// jeśli chcemy na stronie profilu więcej notatek niż 5-, to będziemy pobierać je w pętli przez xhook.after()
+					PAGETYPE = "notes";
+				}
+
+				if (request.url.includes("limit=100")) request.url = request.url.replace("limit=100", `limit=${BACKEND_LIMIT_NOTES}`);
+			}
+		}
+
+		if (dev) console.log("PAGETYPE", PAGETYPE);
+		if (dev) console.log("xhook.after: ", response.finalUrl)
+
+
+
+
+		if (PAGETYPE == "comments")
+		{
+			if (!response.finalUrl.startsWith("https://wykop.pl/api/v3/entries/") && !response.finalUrl.startsWith("https://wykop.pl/api/v3/links/")) return;
+			if (!response.finalUrl.includes("page=")) return; 									// dla notatek domyslnie nie ma page= na pierwszej stronie :/ :/ 
+		}
+
 
 		if (dev) console.log(`AFTER - response.finalUrl - ${response.finalUrl}`);
 		if (dev) console.log("AFTER: response: ", response);
@@ -252,22 +411,35 @@
 
 
 		// WSZYSTKIE KOMENTARZE NA JEDNEJ STRONIE - START
-		if (show_all_comments_in_one_page == true)
+		if ((PAGETYPE == "comments" && SHOW_ALL_COMMENTS_IN_ONE_PAGE_WITHOUT_ANY_LIMIT == false))
 		{
-			// ZA DUŻO KOMENTARZY, PONAD LIMITEM 500, WIĘC JEDNAK BĘDZIEMY DZIELIĆ NA STRONY PO 500
-			if (json.pagination.total > MAXIMUM_COMMENTS_IN_ONE_PAGE)
+			// ZA DUŻO KOMENTARZY, PONAD LIMITEM np. 500, WIĘC JEDNAK BĘDZIEMY DZIELIĆ NA STRONY PO 500
+			if (json.pagination.total > LIMIT_MAXIMUM_COMMENTS_IN_ONE_PAGE)
 			{
-				console.log(`AFTER - chcielismy wyswietlic wszystkie komentarze na jednej stronie, ale jest ich za dużo, więc JEDNAK dzielimy je na podstrony`);
-				show_all_comments_in_one_page = false;
-				local_limit = MAXIMUM_COMMENTS_IN_ONE_PAGE;
+				if (dev) console.log(`AFTER - chcielismy wyswietlic wszystkie komentarze na jednej stronie, ale jest ich za dużo, więc JEDNAK dzielimy je na podstrony`);
+				SHOW_ALL_COMMENTS_IN_ONE_PAGE_WITHOUT_ANY_LIMIT = false;
+				LOCAL_LIMIT_COMMENTS = LIMIT_MAXIMUM_COMMENTS_IN_ONE_PAGE;
 			}
 		}
+		if ((PAGETYPE == "notes" && SHOW_ALL_NOTES_IN_ONE_PAGE_WITHOUT_ANY_LIMIT == false))
+		{
+			// ZA DUŻO NOTATEK, PONAD LIMITEM np. 500, WIĘC JEDNAK BĘDZIEMY DZIELIĆ NA STRONY PO 500
+			if (json.pagination.total > LIMIT_MAXIMUM_NOTES_IN_ONE_PAGE)
+			{
+				if (dev) console.log(`AFTER - chcielismy wyswietlic wszystkie komentarze na jednej stronie, ale jest ich za dużo, więc JEDNAK dzielimy je na podstrony`);
+				SHOW_ALL_COMMENTS_IN_ONE_PAGE_WITHOUT_ANY_LIMIT = false;
+				LOCAL_LIMIT_COMMENTS = LIMIT_MAXIMUM_COMMENTS_IN_ONE_PAGE;
+			}
+		}
+
 		// NIE MODYFIKUJEMY PODCZAS POBIERANIA KOLEJNYCH STRON page=2 ... DLA SHOW_ALL_COMMENTS_IN_ONE_PAGE, obsługujemy tylko page=1
-		if (show_all_comments_in_one_page == true && !response.finalUrl.includes("page=1")) return;
+		if (PAGETYPE == "comments" && SHOW_ALL_COMMENTS_IN_ONE_PAGE_WITHOUT_ANY_LIMIT == true && getPageParam(response.finalUrl) != 1) return;
+		if (PAGETYPE == "notes" && SHOW_ALL_NOTES_IN_ONE_PAGE_WITHOUT_ANY_LIMIT == true && getPageParam(response.finalUrl) != 1) return;
 
 
 		// https://wykop.pl/api/v3/entries/79760717/comments?page=1
 		// https://wykop.pl/api/v3/links/7627183/comments?page=1&sort=best&ama=true
+		// https://wykop.pl/api/v3/notes?limit=100&page=1
 
 
 		const url = new URL(response.finalUrl);
@@ -280,37 +452,52 @@
 		if (dev) console.log("AFTER: url.searchParams: ");
 		if (dev) console.log(`AFTER: pageRequested = searchParams.get('page'): `, requestPage)
 
-		const id = (response.finalUrl.match(/\/links\/(\d+)|\/entries\/(\d+)/) || []).slice(1).find(Boolean);
-		if (dev) console.log("AFTER: ID from URL: ", id);
+		// id wpisu/znaleziska
+		let id = null;
+		if (PAGETYPE == "comments")
+		{
+			id = (response.finalUrl.match(/\/links\/(\d+)|\/entries\/(\d+)/) || []).slice(1).find(Boolean);
+			if (dev) console.log("AFTER: ID from URL: ", id);
+		}
 
-		console.log("local_limit", local_limit)
-		console.log("json.data.length", json.data.length)
-		console.log("json.pagination.per_page", json.pagination.per_page)
-		console.log("json.pagination.total", json.pagination.total)
+		if (dev) console.log("local_limit", LOCAL_LIMIT_COMMENTS)
+		if (dev) console.log("json.data.length", json.data.length)
+		if (dev) console.log("json.pagination.per_page", json.pagination.per_page)
+		if (dev) console.log("json.pagination.total", json.pagination.total)
+
+
+
 
 		// chcemy wyświetlić wszystkie na jednej stronie
-		if (show_all_comments_in_one_page)
+		if (PAGETYPE == "comments" && SHOW_ALL_COMMENTS_IN_ONE_PAGE_WITHOUT_ANY_LIMIT
+			|| PAGETYPE == "notes" && SHOW_ALL_NOTES_IN_ONE_PAGE_WITHOUT_ANY_LIMIT)
 		{
 			const totalPages = Math.ceil(json.pagination.total / json.pagination.per_page);
 
-			console.log("for loop start ---------- SHOW_ALL_COMMENTS_IN_ONE_PAGE");
+			if (dev) console.log("for loop start ---------- SHOW ALL IN ONE PAGE");
+			if (dev) console.log("totalPages: ", totalPages);
+			if (dev) console.log("urlPath: ", url.pathname)
 
-			console.log("totalPages: ", totalPages);
-			console.log("urlPath: ", url.pathname)
 
-
+			// POBIERAMY ELEMENTY Z WYBRANYCH STRON
 			for (let page = 2; page <= totalPages; ++page)
 			{
 				// 429 too many requests fix
-				// await new Promise(resolve => setTimeout(resolve, AWAIT_MILLISECONDS));
+
+				if (page % 5 === 0)
+				{
+					const start = Date.now();
+					while (Date.now() - start < AWAIT_MILLISECONDS)
+					{
+						// Busy-wait loop to create delay
+					}
+				}
 
 				searchParams.set('page', `${page}`);
 
-				if (dev)
-				{
-					console.log("url.pathname", url.pathname);
-					console.log("✔ xhook url.searchParams: ", searchParams);
-				}
+
+				if (dev) console.log("url.pathname", url.pathname);
+				if (dev) console.log("✔ xhook url.searchParams: ", searchParams);
 
 				/* REQUEST */
 				const req = new XMLHttpRequest();
@@ -330,21 +517,73 @@
 				/* REQUEST END */
 
 				let data = JSON.parse(req.responseText).data;
-
-				console.log("for loop - data: ", data)
-				console.log("for loop - json: ", json)
-
+				if (dev) console.log("for loop - data: ", data)
+				if (dev) console.log("for loop - json: ", json)
 				if (data.length === 0) break;
-
 				json.data = json.data.concat(data);
-
-				console.log("for loop - json2: ", json)
-
+				if (dev) console.log("for loop - json2: ", json)
 			}
-			if (json.data.length > BACKEND_LIMIT)
+
+
+
+
+			// zamiast "234" wyświetlamy 1.234 żeby nie wyświetlała się paginacja
+			if (PAGETYPE == "comments" && json.data.length > BACKEND_LIMIT_COMMENTS
+				|| PAGETYPE == "notes" && json.data.length > BACKEND_LIMIT_NOTES)
 			{
-				json.pagination.total = parseFloat(`1.${json.data.length}`); // zamiast "234" wyświetlamy 1.234 żeby nie wyświetlała się paginacja
+				json.pagination.total = parseFloat(`1.${json.data.length}`);
 			}
+
+
+			if (PAGETYPE == "notes")
+			{
+				// kod z mikroczat.pl  /  webworker.ts
+				// sortowanie notatek od uzytkownikow
+				if (json.data.length > 0)
+				{
+					json.data.sort((a, b) =>
+					{
+						if (a.user.username && b.user.username) return a.user.username.localeCompare(b.user.username);
+						return 0;
+					});
+
+					// separate users and group them
+					const regularUsers = [];
+					const removedUsers = [];
+					const bannedUsers = [];
+
+					const removedUsernameIncludes = ".....";
+
+					json.data.forEach(u =>
+					{
+						// u = { content: "Treść notatki", user: UserObject }
+						if (u.user.username.includes(removedUsernameIncludes))
+						{
+							removedUsers.push(u);
+						}
+						else if (u.user.status === "banned")
+						{
+							bannedUsers.push(u);
+						}
+						else
+						{
+							regularUsers.push(u);
+						}
+					});
+
+					json.data = [...regularUsers, ...bannedUsers, ...removedUsers];
+				}
+			}
+
+
+
+
+			if (dev) console.log("json.data: ", json.data);
+
+
+
+
+
 			response.text = JSON.stringify(json);
 
 			return;
@@ -352,14 +591,16 @@
 
 
 		// uzytkownik chce wyswietlic wiecej niż 50 elementów, a jest więcej niż 50 elementów
-		if (local_limit > json.data.length && local_limit > json.pagination.per_page)
+		if (PAGETYPE == "comments" && (LOCAL_LIMIT_COMMENTS > json.data.length && LOCAL_LIMIT_COMMENTS > json.pagination.per_page)
+			|| PAGETYPE == "notes" && (LOCAL_LIMIT_NOTES > json.data.length && LOCAL_LIMIT_NOTES > json.pagination.per_page))
 		{
-			console.log(`AFTER: local_limit [${local_limit}] > json.data.length [${json.data.length}] && local_limit > json.pagination.per_page [${json.pagination.per_page}]`);
+			if (dev && PAGETYPE == "comments") console.log(`AFTER: local_limit [${LOCAL_LIMIT_COMMENTS}] > json.data.length [${json.data.length}] && local_limit > json.pagination.per_page [${json.pagination.per_page}]`);
+			if (dev && PAGETYPE == "notes") console.log(`AFTER: local_limit [${LOCAL_LIMIT_NOTES}] > json.data.length [${json.data.length}] && local_limit > json.pagination.per_page [${json.pagination.per_page}]`);
 
 
-			console.log("window.location.href", window.location.href)
+			if (dev) console.log("window.location.href", window.location.href)
 			const openedCurrentPageNumber = extractPageNumber(window.location.href);
-			console.log(`NUMER STRONY OTWARTER Z URL:`, openedCurrentPageNumber);
+			if (dev) console.log(`NUMER STRONY OTWARTEJ Z URL:`, openedCurrentPageNumber);
 
 
 			// TODO zrobic sprawdzenie czy obecna strona to np. strona/2  strona/3 i pobierac odpowiednio dalsze grupy
@@ -374,25 +615,30 @@
 				// sprawdzić nextPage czy jest z local/backend, ale chyba jest ok z requestu
 
 
-				let commentsFetchedInFirstRequest = json.data.length;							// ile pobralismy w pierwszym requeście
+				let itemsFetchedInFirstRequest = json.data.length;							// ile pobralismy w pierwszym requeście
 				// let remainingComments = json.pagination.total - json.data.length;  				// local_limit - BACKEND_LIMIT;
-				let remainingCommentsToFetch = local_limit - commentsFetchedInFirstRequest;		// ile jeszcze do pobrania
-				const totalPagesToFetch = Math.ceil(remainingCommentsToFetch / json.pagination.per_page);
+				let remainingItemsToFetch = null;
+				if (PAGETYPE == "comments") remainingItemsToFetch = LOCAL_LIMIT_COMMENTS - itemsFetchedInFirstRequest;		// ile jeszcze do pobrania
+				else if (PAGETYPE == "notes") remainingItemsToFetch = LOCAL_LIMIT_NOTES - itemsFetchedInFirstRequest;		// ile jeszcze do pobrania
 
-				console.log("requestPage", requestPage)
-				console.log("nextPage", nextPage)
-				console.log("commentsFetchedInFirstRequest", commentsFetchedInFirstRequest)
-				console.log("remainingCommentsToFetch", remainingCommentsToFetch)
-				console.log("totalPagesToFetch", totalPagesToFetch)
+				const totalPagesToFetch = Math.ceil(remainingItemsToFetch / json.pagination.per_page);
+
+				if (dev) console.log("requestPage", requestPage)
+				if (dev) console.log("nextPage", nextPage)
+				if (dev) console.log("itemsFetchedInFirstRequest", itemsFetchedInFirstRequest)
+				if (dev) console.log("remainingItemsToFetch", remainingItemsToFetch)
+				if (dev) console.log("totalPagesToFetch", totalPagesToFetch)
 
 				let i = 1;
+
+				if (dev) console.log(`--- while START: `);
 
 				while (i <= totalPagesToFetch)
 				{
 					// 429 too many requests fix
 					// await new Promise(resolve => setTimeout(resolve, AWAIT_MILLISECONDS));
 
-					console.log(`--- while --- page:   ${nextPage} START | i: ${i}`);
+					if (dev) console.log(`--- while --- page:   ${nextPage} START | i: ${i}`);
 
 					searchParams.set('page', `${nextPage}`);
 
@@ -414,38 +660,51 @@
 
 					json.data = json.data.concat(data);
 
-					commentsFetchedInFirstRequest += data.length;
-					remainingCommentsToFetch -= commentsFetchedInFirstRequest;
+					itemsFetchedInFirstRequest += data.length;
+					remainingItemsToFetch -= itemsFetchedInFirstRequest;
 					nextPage++;
 					i++;
-					console.log("while - page: ", nextPage)
-					console.log("while - i: ", nextPage)
+					if (dev) console.log("while - i: ", i)
+					if (dev) console.log("while - nextPage: ", nextPage)
+					if (dev) console.log("while - itemsFetchedInFirstRequest: ", itemsFetchedInFirstRequest)
+					if (dev) console.log("while - remainingItemsToFetch: ", remainingItemsToFetch)
+					if (dev) console.log(`while - Fetched [${data.length}] comments on page [${nextPage - 1}] and got JSON `, data);
 
-					console.log(`while - Fetched [${data.length}] comments on page [${nextPage - 1}] and got JSON `, data);
-				} // end while
-
-				if (commentsFetchedInFirstRequest > local_limit)
-				{
-					console.log(`Successfully fetched [${commentsFetchedInFirstRequest}] comments. Slicing to [${local_limit}]`);
-					json.data = json.data.slice(0, local_limit); // dla pewnosci
-				}
-				else
-				{
-					console.log(`Only [${commentsFetchedInFirstRequest}] comments available in total.`);
 				}
 
-				console.log("json.data: ", json.data);
-				json.pagination.total = local_limit;	// tu zmienić wyswietlanie na 1.123
+				if (PAGETYPE == "comments")
+				{
+					if (itemsFetchedInFirstRequest > LOCAL_LIMIT_COMMENTS)
+					{
+						if (dev) console.log(`Successfully fetched [${itemsFetchedInFirstRequest}] comments. Slicing to [${LOCAL_LIMIT_COMMENTS}]`);
+						json.data = json.data.slice(0, LOCAL_LIMIT_COMMENTS); // dla pewnosci
+					}
+					else
+					{
+						if (dev) console.log(`Only [${itemsFetchedInFirstRequest}] comments available in total.`);
+					}
+
+					json.pagination.total = LOCAL_LIMIT_COMMENTS;	// tu zmienić wyswietlanie na 1.123
+				}
+
+
+				else if (PAGETYPE == "notes")
+				{
+					if (itemsFetchedInFirstRequest > LOCAL_LIMIT_NOTES)
+					{
+						if (dev) console.log(`Successfully fetched [${itemsFetchedInFirstRequest}] notes. Slicing to [${LOCAL_LIMIT_NOTES}]`);
+						json.data = json.data.slice(0, LOCAL_LIMIT_NOTES); // dla pewnosci
+					}
+					else
+					{
+						if (dev) console.log(`Only [${itemsFetchedInFirstRequest}] notes available in total.`);
+					}
+					json.pagination.total = LOCAL_LIMIT_NOTES;	// tu zmienić wyswietlanie na 1.123
+				}
 
 				response.text = JSON.stringify(json);
 			}
 
 		}
-
-
-
 	});
-
-
-
 })();
