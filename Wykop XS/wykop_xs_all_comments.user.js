@@ -69,7 +69,7 @@
 
 
 	const currentVersion = "3.0.83";
-	let dev = true;
+	let dev = false;
 
 	const AWAIT_MILLISECONDS = 400;
 	const BACKEND_LIMIT_COMMENTS = 50; 									// limit backendu do faktycznego pobierania 1-50
