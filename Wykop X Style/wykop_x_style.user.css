@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style 3
-@version        3.0.83
+@version        3.0.85
 
 @description    Wykop X Style 3 to 900 różnych funkcji zmieniających wykop!
 
@@ -47,36 +47,44 @@ https://skrypt.wykopx.pl
 
 
 
-
-
-
-
-
-
-
-
-
 @preprocessor   stylus
 @namespace      userstyles.world/user/wykopchanger
 @license        No License (YOU CAN USE THIS CODE ONLY IN STYLUS EXTENSIONS. You are NOT ALLOWED TO copy, share and use any part of this code anywhere else without author's written permission)
 
 
-
-
-@var range      HR_WOSP                                 `💖 WIELKA ORKIESTRA śWIĄTECZNEJ POMOCY`                                                                                [0, 0, 99900, 1, 'mm']
-
-@var checkbox hideTopNavDoodle                                  ` Ukryj logo WOŚP z belki`                                                                          0
-@var checkbox homepagePinnedEntriesWOSP                         ` Ukryj na Głównej wpisy WOŚP przypięte przez moderację`                                            0
+@var range      HR_TAG_JUDYTA_PAPP                    `COPYRIGHT TROLLING - JUDYTA PAPP (⭐ NOWE 3.0.85)`                                                                                [0, 0, 99900, 1, 'mm']
+@var checkbox   hideJudytaPappOnHomepage                `⭐ Ukryj przeprosiny na stronie głównej`         1
 
 
 
-var range      HR_TAG_YEAR_SUMMARY                      `WYKOPOWE PODSUMOWANIE ROKU 2024 (⭐ NOWE 3.0.79)`                                                                                [0, 0, 99900, 1, 'mm']
+@var range      HR_BANNED_USERS                  `🍌 DLA ZBANOWANYCH`                                                                  [0, 0, 99900, 1, 'mm']
+
+@var select     haveBanRightSidebarBanAlert                            `🍌 Panel "Twoje konto zostało zbanowane"` {
+                                                                            "🍌 Wyświetl jako pierwszy (domyślnie)": "domyslnie_na_gorze",
+                                                                            "🍌 Wyświetl na dole sidebara":"ban_alert_na_koncu",
+                                                                            "🚫 Ukryj panel z informacją o banie":"ukryj_ban_alert",
+                                                                        }
+
+@var checkbox   haveBanHidePlusButtons                                 `🍌🚫 Ukryj przyciski do plusowania i minusowania gdy masz bana`                 1
+
+@var checkbox   haveBanDisableTextarea                                 `🍌 Pokaż informację o banie w edytorze nowego wpisu/komentarza`                  1 
+@var checkbox   haveBanHideEditorNewEntries                            `🍌🚫🔹 Ukryj Edytor dodawania nowego wpisu na mikroblogu ⭐`                    0
+@var checkbox   haveBanHideEditorNewComments                           `🍌🚫🗨️ Ukryj Edytor dodawania komentarzy ⭐`                                    0
+@var checkbox   haveBanActionMenuEntriesHideReplyButton                `🍌🚫🔹 Ukryj przycisk "Odpowiedz" pod wpisami gdy masz bana`                     1 
+@var checkbox   haveBanActionMenuLinkHideReplyButton                   `🍌🚫🔸 Ukryj przycisk "Odpowiedz" pod znaleziskami gdy masz bana`                1 
+
+                                                                        
+                                                                       
+
+
+
+var range      HR_TAG_YEAR_SUMMARY                      `WYKOPOWE PODSUMOWANIE ROKU 2024`                                                                                [0, 0, 99900, 1, 'mm']
 var checkbox   yearSummaryHomePageHide                          `⭐ Ukryj baner "Twoje podsumowanie roku" na stronie głównej`         0
 var checkbox   yearSummaryProfilePaeHide                        `⭐ Ukryj baner "Twoje podsumowanie roku" na Twoim profilu`           0
 
 
 
-@var range      HR_TAG_PHOTO_GALLERY                      `🔷🌆 Wykopowy widok galerii na tagach (⭐ NOWE 3.0.74)`                                                                                [0, 0, 99900, 1, 'mm']
+@var range      HR_TAG_PHOTO_GALLERY                      `🔷🌆 Wykopowy widok galerii na tagach`                                                                                [0, 0, 99900, 1, 'mm']
 
 @var range      photoGalleryColumns                              `⭐ Liczba grafik w jednym wierszu`                                                              [3, 1, 7, 1, '']
 @var checkbox   photoGalleryAdjustAspectRatio                    `⭐ Dopasuj wielkość pionowych obrazków`                                                                            1
@@ -96,7 +104,7 @@ var checkbox   photoViewerEnable2                               `Włącz 𝗪�
 
 
 
-@var range      HR_FONTS                            `🆎 Tekst i czcionki (⭐ NOWE 3.0.72)`                                                                                    [0, 0, 99900, 1, 'mm']
+@var range      HR_FONTS                            `🆎 Tekst i czcionki`                                                                                    [0, 0, 99900, 1, 'mm']
 @var select     textFontSizeMultipla                            `🆎 Zmień rozmiar elementów / powiększenie` {
                                                                             "16px - domyślny":"1",
                                                                             "—————————":"1.0",
@@ -817,15 +825,15 @@ var range      notatkowatorUpdateInterval                      `📝❎ Odświe�
                                                                             "🚫 Nie dodaję nowych wpisów na mikroblogu - całkowicie ukryj edytor":"niepokazuj",
                                                                         } 
 
-TODO: var select     editorNewComments                          `🗨️ Edytor dodawania komentarzy`  {
+@var select     editorNewComments                          `🗨️ Edytor dodawania komentarzy (⭐ NOWE 3.0.84)`  {
                                                                             "Pokazuj normalnie (domyślnie)":"domyslnie", 
                                                                             "Zwinięty":"minimized",
                                                                             "🚫 Nie dodaję komentarzy - całkowicie ukryj edytor":"niepokazuj",
                                                                         } 
 
-TODO: var checkbox   replyEditorShowTagsFollowers               `❎ Wyświetl liczbę obserwujących tagi podczas wpisywania #tagu`                           0
-@var checkbox   editorStickyHeader                              `Pasek z przyciskami formatowania zawsze widoczny podczas edycji `                           0     
-@var checkbox   editorShowAllFormattingButtons                  `📱 Wszystkie przyciski formatowania w widoku mobilnym`                                     0
+TODO: var checkbox   replyEditorShowTagsFollowers               `❎ Wyświetl liczbę obserwujących tagi podczas wpisywania #tagu`                 0
+@var checkbox   editorStickyHeader                              `Pasek z przyciskami formatowania zawsze widoczny podczas edycji `               0     
+@var checkbox   editorShowAllFormattingButtons                  `📱 Wszystkie przyciski formatowania w widoku mobilnym`                           0
 @var select     editorClearReplyButtonAlignment                 `Przycisk 𝗪𝗬𝗖𝗭𝗬𝗦́𝗖́` {
                                                                         "default:Po prawej (domyślnie)"             :   "domyslna",
                                                                         "left:Po lewej"                             :   "polewej",
@@ -1316,6 +1324,9 @@ REMOVED checkbox   entryVotersListEmojiRemovedUserTextHide             `🔹❌ 
 
 @var range      HR_TOPNAV                           `𝗕𝗘𝗟𝗞𝗔 𝗡𝗔𝗪𝗜𝗚𝗔𝗖𝗬𝗝𝗡𝗔`                                                                                               [0, 0, 99900, 1, 'mm']
 
+
+
+
 @var select     topNavCustomTextFontSize                        `🆎 Zmień rozmiar tekstu na górnej belce` {
                                                                             "14px - domyślny":"14.0px",
                                                                             "—————————":"14.00px",
@@ -1449,14 +1460,19 @@ REMOVED checkbox   entryVotersListEmojiRemovedUserTextHide             `🔹❌ 
 
 
 
-var range    SUB_HR_TOP_NAV_DOODLE                     `OKAZJONALNE OBRAZKI 'DOODLE' `                                                    [0, 0, 99999, 1, 'mm']
-var checkbox hideTopNavDoodle                                  ` Ukryj obrazek "Doodle" z belki`                                                                    0
-var checkbox  topNavSnowMan                                     `⛄ Bałwan w sejmie`                                                                                    0
-var checkbox  topNavSnowMan2                                    `⛄ Bałwan w sejmie 2`                                                                                  0
-var checkbox  topNavSanta                                       `🎅 Wolnorynkowy Mikołaj `                                                                              0
-var checkbox  topNavSnowGirl                                    `❄ Snow Girl`                                                                                           0
+@var range    SUB_HR_TOP_NAV_DOODLE                     `OKAZJONALNE OBRAZKI 'DOODLE' `                                                    [0, 0, 99999, 1, 'mm']
+@var checkbox hideTopNavDoodle                                  ` Ukryj obrazek "Doodle" z belki`                                                                    0
+@var checkbox  topNavSnowMan                                     `⛄ Bałwan w sejmie`                                                                                    0
+@var checkbox  topNavSnowMan2                                    `⛄ Bałwan w sejmie 2`                                                                                  0
+@var checkbox  topNavSanta                                       `🎅 Wolnorynkowy Mikołaj `                                                                              0
+@var checkbox  topNavSnowGirl                                    `❄ Snow Girl`                                                                                           0
 
+@var range    SUB_HR_WOSP                                 `💖 WIELKA ORKIESTRA śWIĄTECZNEJ POMOCY`                                [0, 0, 99999, 1, 'mm']
 
+@var checkbox hideTopNavDoodle2                                  ` Ukryj logo WOŚP z belki`                                                                          0
+@var checkbox homepagePinnedEntriesWOSP                         ` Ukryj na Głównej wpisy WOŚP przypięte przez moderację`                                            0
+
+ 
 
 @var range      SUB_HR_TOPNAV_SEARCH                    `🔎 WYSZUKIWARKA`                                   [0, 0, 99999, 1, 'mm']
 @var select     hideSearchbox                                   `🔎 Wyszukiwarka` {
@@ -2730,21 +2746,7 @@ TODO   checkbox hideAdultEntriesAndLinks
 @var checkbox   voteButtonHideNotLogged                                  `🚫 Nie pokazuj przycisków do plusowania/minusowania ⭐`                                                         1
 @var checkbox   hideVoteUpButtonOnLinksNotLogged                         `🚫 Ukryj przyciski "WYKOP" przy znaleziskach`                                                                   1
 
-                                                                        
-@var range      HR_BANNED_USERS                  `🍌 DLA ZBANOWANYCH`                                                                  [0, 0, 99900, 1, 'mm']
-
-
-@var checkbox   haveBanHidePlusButtons                                 `🍌🚫 Ukryj przyciski do plusowania i minusowania gdy masz bana`                 0
-@var checkbox   haveBanActionMenuEntriesHideReplyButton                `🍌🚫 Ukryj przycisk "Odpowiedz" pod wpisami gdy masz bana`                      0 
-@var checkbox   haveBanActionMenuLinkHideReplyButton                   `🍌🚫 Ukryj przycisk "Odpowiedz" pod znaleziskami gdy masz bana`                 0 
-@var checkbox   haveBanDisableTextarea                                 `🍌 Pokaż informację o banie w edytorze nowego wpisu/komentarza`                0
-@var select     haveBanRightSidebarBanAlert                            `🍌 Panel "Twoje konto zostało zbanowane"` {
-                                                                            "🍌 Wyświetl jako pierwszy (domyślnie)": "domyslnie_na_gorze",
-                                                                            "🍌 Wyświetl na dole sidebara":"ban_alert_na_koncu",
-                                                                            "🚫 Ukryj panel z informacją o banie":"ukryj_ban_alert",
-                                                                        } 
-                                                                        
-                                                                        
+ 
 @var range      HR_ANTY_RUMUN                       `🚫 BLOKOWANIE SPAMU, PORNOGRAFII I ZIELONEK`            [0, 0, 99900, 1, 'mm']
 @var checkbox   userGreenEntriesWithPhotos                      `🟢🚯🔷 AntyRumun: Blokuj wpisy zielonek ze zdjęciami`                                               0
 @var checkbox   userGreenEntriesWithVideos                      `🟢🚯🔷 AntyRumun: Blokuj wpisy zielonek z filmikami`                                                0
@@ -4916,7 +4918,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
 
 
 
-
+    
 
 
     // TYKO DLA NIEZALOGOWANYCH
@@ -6167,6 +6169,15 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         .pub-slot-wrapper { display: none!important; } 
         .pub-slot-wrapper:has(section.premium-pub.link-block) { display: flex!important; } 
     } 
+    if(hideJudytaPappOnHomepage == 1)
+    {
+        .main-content > main.main > section#banner_top_1
+        {
+            display: none!important;
+        }
+    }
+    
+    
     // 🆗
     if(hideSponsoredLinks == 1)
     {
@@ -9218,9 +9229,9 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     /* MIKROBLOG - STRONY TAGÓW - Edytor dodawania NOWYCH WPISÓW na stronach #tagów */
     if(editorNewEntriesInTags == "niepokazuj")
     {
-        div.main-content > main.main > section > div.content > section.tag-page > section.stream > article > header:has(+ section.editor), /* "Dodaj nowy wpis" */
+        div.main-content > main.main > section > div.content > section.tag-page > section.stream > article > header:has(+ section.editor),             /* "Dodaj nowy wpis" */
         div.main-content > main.main > section > div.content > section.tag-page > section.stream > article > section.editor.entry-editor:nth-child(2), /* edytor na górze */
-        div.main-content > main.main > section > div.content > section.tag-page > section.stream > article > section.editor.entry-editor:last-child /* edytor na dole */
+        div.main-content > main.main > section > div.content > section.tag-page > section.stream > article > section.editor.entry-editor:last-child    /* edytor na dole */
         {
             display: none i;
         } 
@@ -9228,7 +9239,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     else if(editorNewEntriesInTags == "onlybottom")
     {
         div.main-content > main.main > section > div.content > section.tag-page > section.stream > article > header:nth-child(1):has(+ section.editor), /* "Dodaj nowy wpis" na górze strony */
-        div.main-content > main.main > section > div.content > section.tag-page > section.stream > article > section.editor.entry-editor:nth-child(2) /* edytor na górze */
+        div.main-content > main.main > section > div.content > section.tag-page > section.stream > article > section.editor.entry-editor:nth-child(2)   /* edytor na górze */
         {
             display: none i;
         } 
@@ -9274,14 +9285,37 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     /* Edytor dodawania KOMENTARZY  */
     if(editorNewComments == "niepokazuj")
     {
-
-    } 
+        section.editor.entry-comment-editor
+        {
+            display: none !important;
+        }
+    }
     else if(editorNewComments == "minimized")
     {
 
+        section.editor.entry-comment-editor:not(:has(textarea:focus)) header,
+        section.editor.entry-comment-editor:not(:has(textarea:focus)) footer
+        {
+            display: none!important;
+        }
+        section.editor.entry-comment-editor textarea
+        {
+            transition: none!important;
+        }
+        section.editor.entry-comment-editor textarea:not(:focus)
+        {
+            height: 13px !important;
+            min-height: unset !important;
+            font-size: 13px !important;
+            padding: 0px !important;
+            margin: 0px !important;
+        }
     } 
 
-    if(editorSendButtonDontDeactivate)
+    
+    
+    
+    if(editorSendButtonDontDeactivate == 1)
     {
         div.button.inactive .target
         {
@@ -10874,14 +10908,18 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     } 
     
     
-    
-    
+
     
     
     /* ------- DOODLE ------*/
     header.header aside.doodle
     {
          z-index: -1!important; // pod topnav buttons
+    }
+    
+    if(hideTopNavDoodle2 == 1)
+    {
+        hideTopNavDoodle = 1;
     }
     
     if(hideTopNavDoodle == 1)
@@ -13849,27 +13887,51 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     if(haveBanActionMenuLinkHideReplyButton == 1)           {  body > section > div.main-content > main.main:has(> section > section.sidebar > aside.ban-alert) section.link-block section.actions li.reply { display: none!important; } }
 
 
-    if(haveBanDisableTextarea == 1)
+    
+    if(haveBanHideEditorNewComments == 1 && editorNewComments != "niepokazuj")
     {
-        body > section:has(> div.main-content > main.main > section > section.sidebar > aside.ban-alert)
-        {  
-            --myUsernameAddingAs: "🍌 Masz bana. Nie możesz dodawać wpisów i komentarzy.";
-        }
-        
-        body > section > div.main-content > main.main:has(> section > section.sidebar > aside.ban-alert) section.editor > div.content::before
-        {  
-            content: var(--myUsernameAddingAs);
-            display: flex;
-            position: relative;
-            color: var(--gullGray);
-            font-size: 15px;
-            text-transform: initial;
-            margin-top: 15px;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px dotted rgba(120, 120, 120, 0.3);
+        body > section > div.main-content > main.main:has(> section > section.sidebar > aside.ban-alert) section.editor.entry-comment-editor
+        {
+            display: none !important;
         }
     }
+    
+    if(haveBanHideEditorNewEntries == 1 && editorNewEntries != "niepokazuj")
+    {
+        body > section > div.main-content > main.main:has(> section > section.sidebar > aside.ban-alert) > section > div.content > section.microblog-page > section.microblog > header.stream-top, /* "Dodaj nowy wpis" na mikroblogu */
+        body > section > div.main-content > main.main:has(> section > section.sidebar > aside.ban-alert) > section > div.content > section.tag-page > section.stream > article > header.stream-top, /* "Dodaj nowy wpis" na stronach tagow */
+        body > section > div.main-content > main.main:has(> section > section.sidebar > aside.ban-alert) section.editor.entry-editor
+        {
+           display: none !important;
+        }
+    }
+    else
+    {
+        if(haveBanDisableTextarea == 1)
+        {
+            body > section:has(> div.main-content > main.main > section > section.sidebar > aside.ban-alert)
+            {  
+                --myUsernameAddingAs: "🍌 Masz bana. Nie możesz dodawać wpisów i komentarzy.";
+            }
+
+            body > section > div.main-content > main.main:has(> section > section.sidebar > aside.ban-alert) section.editor > div.content::before
+            {  
+                content: var(--myUsernameAddingAs);
+                display: flex;
+                position: relative;
+                color: var(--gullGray);
+                font-size: 15px;
+                text-transform: initial;
+                margin-top: 15px;
+                margin-bottom: 15px;
+                padding-bottom: 15px;
+                border-bottom: 1px dotted rgba(120, 120, 120, 0.3);
+            }
+        }
+    }
+
+    
+    
 
     
     /* ULUBIONY TAG */
@@ -22691,7 +22753,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     /* VARIABLES */
 
     versor = "style"; // "style", "blank", "block"
-    version = "3.0.83";   
+    version = "3.0.85";   
     /* xblocker = "2.49" */
     
     
