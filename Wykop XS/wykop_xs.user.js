@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name							Wykop XS 3.0
-// @name:pl							Wykop XS 3.0
-// @name:en							Wykop XS 3.0
+// @name							Wykop XS 3
+// @name:pl							Wykop XS 3
+// @name:en							Wykop XS 3
 
-// @version							3.0.81
+// @version							3.1.0
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://styl.wykopx.pl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://styl.wykopx.pl
@@ -48,7 +48,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.0.80";
+	const currentVersion = "3.1.0";
 	let dev = false;
 
 	const promoString = " - Wykop XS / #wykopx";
@@ -168,12 +168,10 @@
 
 
 		setSettingsValueFromCSSProperty("WykopXStyleEnabled", false);
-		setSettingsValueFromCSSProperty("hitsInTopNavJS");
 		setSettingsValueFromCSSProperty("quickLinksEnable");
 		setSettingsValueFromCSSProperty("myWykopInTopNavJS");
 		setSettingsValueFromCSSProperty("favoritesInTopNavJS");
 		setSettingsValueFromCSSProperty("imageUploaderEnable", false); // https://github.com/wykopx/WykopX/wiki/X-Wklejanie-obrazkow-ze-schowka
-		setSettingsValueFromCSSProperty("addNewLinkInTopNavJS");
 		setSettingsValueFromCSSProperty("disableNewLinkEditorPastedTextLimit");
 		setSettingsValueFromCSSProperty("autoOpenMoreContentEverywhere");
 		setSettingsValueFromCSSProperty("autoOpenSpoilersEverywhere");
@@ -796,7 +794,7 @@
 				listafalszywychrozowych.push('powodzenia');
 				listafalszywychrozowych.push('simsakPL');
 				listafalszywychrozowych.push('ramotka');
-				listafalszywychrozowych.push('bruhmomentow');
+				listafalszywychrozowych.push('2plus1');
 
 
 
@@ -1009,10 +1007,8 @@
 
 
 		// boolean — domyslnie WŁĄCZONE bez Wykop X Style
-		setSettingsValueFromCSSProperty("hitsInTopNavJS");
 		setSettingsValueFromCSSProperty("myWykopInTopNavJS");
 		setSettingsValueFromCSSProperty("favoritesInTopNavJS");
-		setSettingsValueFromCSSProperty("addNewLinkInTopNavJS");
 		setSettingsValueFromCSSProperty("addNewEntryInTopNavJS");
 		setSettingsValueFromCSSProperty("disableNewLinkEditorPastedTextLimit");
 
@@ -5009,19 +5005,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		{
 			consoleX("addWykopXButtonsToNavBar()", 1)
 
-			// createNewNavBarButton({
-			// 	position: "left",
-			// 	text: "Czat",
-			// 	title: `Otwórz mikroczat.pl ${promoString}`,
-			// 	class: "open_mikroczat", // wykopx_open_mikroczat_li
-			// 	hideWithoutXStyle: false,
-			// 	url: mikroczatDomain,
-			// 	target: "mikroczat",
-			// 	icon: "https://i.imgur.com/9PvHlaA.png",
-			// 	number: null,
-			// })
-
-
 			if (settings.myWykopInTopNavJS)
 			{
 				createNewNavBarButton({
@@ -5030,28 +5013,14 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 					title: `Mój Wykop ${promoString}`,
 					class: "mywykop", // wykopx_mywykop_li
 					hideWithoutXStyle: false,
-					url: "/obserwowane",
+					url: "/moj/obserwowane",
 					target: "_self",
 					icon: null,
 					number: null,
 					data: "data-v-5182b5f6",
 				})
 			}
-			if (settings.hitsInTopNavJS)
-			{
-				createNewNavBarButton({
-					position: "left",
-					text: "Hity",
-					title: `Hity ${promoString}`,
-					class: "hits",
-					hideWithoutXStyle: false,
-					url: "/hity",
-					target: "_self",
-					icon: null,
-					number: null,
-					data: "data-v-5182b5f6",
-				})
-			}
+
 			if (settings.favoritesInTopNavJS)
 			{
 				createNewNavBarButton({
@@ -5067,22 +5036,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 					data: "data-v-5182b5f6",
 				})
 			}
-			if (settings.addNewLinkInTopNavJS)
-			{
-				createNewNavBarButton({
-					position: "left",
-					text: "+",
-					title: `Dodaj nowe Znalezisko ${promoString}`,
-					class: ["add_new_link", "plus"], // wykopx_add_new_link_li wykopx_plus_li // a > wykopx_add_new_link wykopx_plus_button
-					hideWithoutXStyle: false,
-					url: "/dodaj-link",
-					target: "_self",
-					icon: null,
-					number: null,
-					data: "data-v-5182b5f6",
-					insertAfter: `li:has(a[href="/wykopalisko"])`
-				})
-			}
+	
 
 			if (settings.addNewEntryInTopNavJS)
 			{
@@ -9862,7 +9816,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		createLeftPanelButton();
 
-		createNewNavBarButton({
+		// MIKROCZAT BUTTON
+		/* createNewNavBarButton({
 			position: "left",
 			// text: "Mikro<strong>czat</strong>",
 			text: mikroczatButtonOpenLabel,
@@ -9873,7 +9828,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			target: "_mikroczat",
 			number: null,
 		});
-
+		*/
 
 
 		function throttle(func, delay)
