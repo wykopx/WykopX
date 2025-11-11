@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3
 // @name:en							Wykop XS 3
 
-// @version							3.1.0
+// @version							3.1.1
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://styl.wykopx.pl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://styl.wykopx.pl
@@ -5036,7 +5036,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 					data: "data-v-5182b5f6",
 				})
 			}
-	
 
 			if (settings.addNewEntryInTopNavJS)
 			{
@@ -10640,22 +10639,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		}
 	`;
 
-		/* fixNotificationBadgeBug */
-		// if (settings.fixNotificationBadgeBug)
-		// {
-		// 	CSS += `
-		// 	:root
-		// 	{
-		// 		/* brak nowych powiadomień */
-		// 		--notificationIconWithoutUnreadNotificationsColor:                 rgba(255, 255, 255, 0.2);   /* ikonka powiadomienia ✉ 🕭 #, jesli nie ma nowych powiadomien  */
-		// 		--notificationIconWithoutUnreadNotificationsBackgroundColor:       rgba(0, 0, 0, 0);           /* tło powiadomienia ✉ 🕭 #, jesli nie ma nowych powiadomien     */
-		// 		--notificationIconWithoutUnreadNotificationsHoverColor:            rgba(255, 255, 255, 0.8);
-		// 		--notificationIconWithoutUnreadNotificationsHoverBackgroundColor:  rgba(255, 255, 255, 0.3);
-		// 		--notificationIconWithoutUnreadNotificationsActiveColor:           rgba(255, 255, 255, 0.4);
-		// 		--notificationIconWithoutUnreadNotificationsActiveBackgroundColor: rgba(255, 255, 255, 0.2);
-		// 	}
-		// `;
-		// }
+
 
 
 
