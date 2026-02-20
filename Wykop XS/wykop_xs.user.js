@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3
 // @name:en							Wykop XS 3
 
-// @version							3.1.5
+// @version							3.1.6
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://styl.wykopx.pl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://styl.wykopx.pl
@@ -48,7 +48,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.1.5";
+	const currentVersion = "3.1.6";
 	let dev = false;
 
 	const promoString = " - Wykop XS / #wykopx";
@@ -9223,10 +9223,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		/* HIDE ADS ALWAYS */
 		CSS += `
-			.pub-slot-wrapper
-			{
-				display: none!important;
-			}
+			.pub-slot-wrapper, .lisek-app, aside:has(.pub-slot-wrapper) { display: none!important; }
+
 			.pub-slot-wrapper:has(section.premium-pub.link-block)
 			{
 				display: flex!important;

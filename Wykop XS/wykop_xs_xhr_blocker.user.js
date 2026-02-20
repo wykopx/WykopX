@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - XHR blocker
 // @name:en							Wykop XS - XHR blocker
 
-// @version							3.0.81
+// @version							3.1.6
 
 // @description 					Wykop XS - XHR Blocker | Wykop X Style znajdziesz na: http://style.wykopx.pl
 // @description:en 					Wykop XS - XHR Blocker | Check out also: http://style.wykopx.pl
@@ -44,7 +44,7 @@
 {
 	'use strict';
 
-	const currentVersion = "3.0.80";
+	const currentVersion = "3.1.6";
 	let dev = false;
 
 	const promoString = " - Wykop XHR Blocker / #wykopx";
@@ -155,7 +155,7 @@
 
 
 	/* HIDE ADS ALWAYS */
-	if (settings.hideAds) { CSS += `.pub-slot-wrapper { display: none!important; }`; }
+	if (settings.hideAds) { CSS += `.pub-slot-wrapper, .lisek-app, aside:has(.pub-slot-wrapper) { display: none!important; }`; }
 
 	/* HIDE WYKOP XS PROMO FROM STYLUS */
 	CSS += `.wykopxs, body div.main-content[class] section > section.sidebar::after  { display: none!important; }`;
