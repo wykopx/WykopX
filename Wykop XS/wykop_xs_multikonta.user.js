@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Multikonta (beta)
 // @name:en							Wykop XS - Multikonta (beta)
 
-// @version							3.1.6
+// @version							3.1.7
 
 // @description 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
 // @description:en 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
@@ -45,7 +45,7 @@
 
 'use strict';
 
-const currentVersion = "3.1.6";
+const currentVersion = "3.1.7";
 let dev = false;
 
 const promoString = " - Wykop XS / #wykopx";
@@ -2156,7 +2156,18 @@ Widok dyskusji:
 
 
 	/* HIDE ADS ALWAYS */
-	if (settings.hideAds) { CSS += `.pub-slot-wrapper, .lisek-app, aside:has(.pub-slot-wrapper) { display: none!important; }`; }
+	if (settings.hideAds)
+	{
+		CSS += `
+		.pub-slot-wrapper,
+        aside:has(.pub-slot-wrapper),
+        /* reklama lidl tylko na wykop.pl/moj/ */
+        .sidebar > aside > section:not([id]),
+        section.stream > div.content > section:not([id]),
+        section.stream > section > div.content > section:not([id])
+        { display: none!important; } 
+		`;
+	}
 
 	/* HIDE WYKOP XS PROMO FROM STYLUS */
 	CSS += `.wykopxs, body div.main-content[class] section > section.sidebar::after  { display: none!important; }`;

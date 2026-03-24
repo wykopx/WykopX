@@ -155,7 +155,17 @@
 
 
 	/* HIDE ADS ALWAYS */
-	if (settings.hideAds) { CSS += `.pub-slot-wrapper, .lisek-app, aside:has(.pub-slot-wrapper) { display: none!important; }`; }
+	if (settings.hideAds)
+	{
+		CSS += `
+		.pub-slot-wrapper,
+        aside:has(.pub-slot-wrapper),
+        /* reklama lidl tylko na wykop.pl/moj/ */
+        .sidebar > aside > section:not([id]),
+        section.stream > div.content > section:not([id]),
+        section.stream > section > div.content > section:not([id])
+        { display: none!important; }`;
+	}
 
 	/* HIDE WYKOP XS PROMO FROM STYLUS */
 	CSS += `.wykopxs, body div.main-content[class] section > section.sidebar::after  { display: none!important; }`;

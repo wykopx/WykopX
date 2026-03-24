@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3
 // @name:en							Wykop XS 3
 
-// @version							3.1.6
+// @version							3.1.7
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://styl.wykopx.pl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://styl.wykopx.pl
@@ -48,7 +48,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.1.6";
+	const currentVersion = "3.1.7";
 	let dev = false;
 
 	const promoString = " - Wykop XS / #wykopx";
@@ -2246,6 +2246,7 @@
 	body > section > div.main-content > main.main > section > div.content > section:is(.bucket-page, .search-page, .category-page, .favourites-page, .home-page, .observed-page, .profile-page, .tag-page, .hits-page, .upcoming-page) > section section.stream > div.content > section.link-block:not(:has(article > div.content > section.info a.username[href="/ludzie/${filterUsername}"])),
 
 	/* strona główna - znaleziska autora, odfiltrowwanie znalezisk innych użytkowników a takze wpisow przypietych przez moderacje */
+	
 	.pub-slot-wrapper:has(section.premium-pub.link-block),
 	body > section > div.main-content > main.main > section > div.content > section.home-page > section section.stream > div.content > section:is(.link-block:not(:has(article > div.content > section.info a.username[href="/ludzie/${filterUsername}"])), 
 	.entry:not(:has(> article > header > div.right > div > div.tooltip-slot > span > a.username[href="/ludzie/${filterUsername}"]))),
@@ -9223,7 +9224,13 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		/* HIDE ADS ALWAYS */
 		CSS += `
-			.pub-slot-wrapper, .lisek-app, aside:has(.pub-slot-wrapper) { display: none!important; }
+			.pub-slot-wrapper,
+			aside:has(.pub-slot-wrapper),
+			/* reklama lidl tylko na wykop.pl/moj/ */
+			.sidebar > aside > section:not([id]),
+			section.stream > div.content > section:not([id]),
+			section.stream > section > div.content > section:not([id])
+			{ display: none!important; } 
 
 			.pub-slot-wrapper:has(section.premium-pub.link-block)
 			{
@@ -10832,7 +10839,16 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 		/* HIDE ADS ALWAYS */
-		if (settings.hideAds) { CSS += `.pub-slot-wrapper { display: none!important; }`; }
+		if (settings.hideAds)
+		{
+			CSS += `.pub-slot-wrapper,
+        aside:has(.pub-slot-wrapper),
+        /* reklama lidl tylko na wykop.pl/moj/ */
+        .sidebar > aside > section:not([id]),
+        section.stream > div.content > section:not([id]),
+        section.stream > section > div.content > section:not([id])
+        { display: none!important; }`;
+		}
 
 
 
