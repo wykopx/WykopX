@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Multikonta (beta)
 // @name:en							Wykop XS - Multikonta (beta)
 
-// @version							3.1.7
+// @version							3.2.2
 
 // @description 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
 // @description:en 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
@@ -45,7 +45,7 @@
 
 'use strict';
 
-const currentVersion = "3.1.7";
+const currentVersion = "3.2.2";
 let dev = false;
 
 const promoString = " - Wykop XS / #wykopx";
@@ -2163,9 +2163,9 @@ Widok dyskusji:
         aside:has(.pub-slot-wrapper),
         /* reklama lidl tylko na wykop.pl/moj/ */
         .sidebar > aside > section:not([id]),
-        section.stream > div.content > section:not([id]),
+        section.stream > div.content > section:not([id],.related-link),
         section.stream > section > div.content > section:not([id])
-        { display: none!important; } 
+        { display: none!important; }
 		`;
 	}
 

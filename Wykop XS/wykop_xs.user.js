@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3
 // @name:en							Wykop XS 3
 
-// @version							3.1.7
+// @version							3.2.2
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://styl.wykopx.pl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://styl.wykopx.pl
@@ -48,7 +48,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.1.7";
+	const currentVersion = "3.2.2";
 	let dev = false;
 
 	const promoString = " - Wykop XS / #wykopx";
@@ -9228,9 +9228,9 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			aside:has(.pub-slot-wrapper),
 			/* reklama lidl tylko na wykop.pl/moj/ */
 			.sidebar > aside > section:not([id]),
-			section.stream > div.content > section:not([id]),
+			section.stream > div.content > section:not([id],.related-link),
 			section.stream > section > div.content > section:not([id])
-			{ display: none!important; } 
+			{ display: none!important; }
 
 			.pub-slot-wrapper:has(section.premium-pub.link-block)
 			{
@@ -10841,13 +10841,15 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		/* HIDE ADS ALWAYS */
 		if (settings.hideAds)
 		{
-			CSS += `.pub-slot-wrapper,
-        aside:has(.pub-slot-wrapper),
-        /* reklama lidl tylko na wykop.pl/moj/ */
-        .sidebar > aside > section:not([id]),
-        section.stream > div.content > section:not([id]),
-        section.stream > section > div.content > section:not([id])
-        { display: none!important; }`;
+			CSS += `
+			.pub-slot-wrapper,
+			aside:has(.pub-slot-wrapper),
+			/* reklama lidl tylko na wykop.pl/moj/ */
+			.sidebar > aside > section:not([id]),
+			section.stream > div.content > section:not([id],.related-link),
+			section.stream > section > div.content > section:not([id])
+			{ display: none!important; }
+		 `;
 		}
 
 
