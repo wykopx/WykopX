@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style 3
-@version        3.2.2
+@version        3.2.3
 
 @description    Wykop X Style 3 to 900 różnych funkcji zmieniających wykop!
 
@@ -6058,18 +6058,15 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         aside:has(.pub-slot-wrapper),
         /* reklama lidl tylko na wykop.pl/moj/ */
         .sidebar > aside > section:not([id]),
-        section.stream > div.content > section:not([id],.related-link),
+        section.stream > div.content > section:not([id],.related-link,.item),       
         section.stream > section > div.content > section:not([id])
-        { display: none!important; } 
-
-        .pub-slot-wrapper:has(section.premium-pub.link-block) { display: flex!important; } 
-    } 
+        { display: none!important; }
+        
+        .pub-slot-wrapper:has(section.premium-pub.link-block) { display: flex!important; }
+    }
     
     
 
- 
- 
-    
     
     // 🆗
     if(adsSponsoredLinksHide == 1)
@@ -21736,7 +21733,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     /* VARIABLES */
 
     versor = "style"; // "style", "blank", "block"
-    version = "3.2.2";   
+    version = "3.2.3";   
     /* xblocker = "2.49" */
     
     
