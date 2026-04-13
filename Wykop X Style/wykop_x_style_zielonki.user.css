@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style - zielonki
-@version        3.0.80
+@version        3.2.3
 
 
 @description    Wykop X Style
@@ -91,22 +91,30 @@ description     https://styl.wykopx.pl
 
 @-moz-document url-prefix("https://wykop.pl")
 {
-    hideAds = 1;
-    hideSponsoredLinks = 1;
+    adsHide = 1;
+    adsSponsoredLinksHide = 1;
     
-    if(hideAds == 1)
+    // 🆗 + XS
+    if(adsHide == 1)
     {
-        .pub-slot-wrapper { display: none!important; } 
-        .pub-slot-wrapper:has(section.premium-pub.link-block) { display: flex!important; } 
-    } 
-    if(hideSponsoredLinks == 1)
+        .pub-slot-wrapper,
+        aside:has(.pub-slot-wrapper),
+        .sidebar > aside > section:not([id]),
+        section.stream > div.content > section:not([id],.related-link,.item),       
+        section.stream > section > div.content > section:not([id])
+        { display: none!important; }
+        
+        .pub-slot-wrapper:has(section.premium-pub.link-block) { display: flex!important; }
+    }   
+    // 🆗
+    if(adsSponsoredLinksHide == 1)
     {
         .pub-slot-wrapper:has(section.premium-pub.link-block) { display: none!important; } 
     }
     
     
     
-        // :not(:has(> article > div.edit-wrapper > section)  >> section.entry-photo lub filmik lub twitter
+    // :not(:has(> article > div.edit-wrapper > section)  >> section.entry-photo lub filmik lub twitter
     if(hideEntriesWithoutAnyContent != "nie_ukrywaj_wpisow_z_samym_tagiem")
     {
         // a[href^="\/tag\/"]:first-child:last-child) - tutaj mamy problem, zaznaczane sa tez wpisy ktore maja jeden tag na poczatku lub na koncu tekstu, w ktorym nie ma <br/>
