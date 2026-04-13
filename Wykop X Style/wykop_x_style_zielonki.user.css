@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style - zielonki
-@version        3.0.54
+@version        3.0.80
 
 
 @description    Wykop X Style
@@ -71,6 +71,8 @@ description     https://styl.wykopx.pl
 @var checkbox   userGreenCommentsHighlight                      `Komentarze zielonek wyróżniaj na zielono`                                                       0
 
 
+@var range      HR_TESTOWANIE                     `TESTOWANIE`                                                                                                                [0, 0, 99900, 1, 'mm']
+@var checkbox   blackListTesting                                `Testowanie jaki spam został zablokowany (kolorowe ramki)`                             0
 
 
 
@@ -659,7 +661,7 @@ description     https://styl.wykopx.pl
     {
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
         {
-            content: "Zaobserwuj tag #𝘄𝘆𝗸𝗼𝗽𝘄𝗻𝗼𝘄𝘆𝗺𝘀𝘁𝘆𝗹𝘂     ▫  Opis najciekawszych funkcji 𝗪𝘆𝗸𝗼𝗽 𝗫: ";
+            content: "Zaobserwuj tag #𝘄𝘆𝗸𝗼𝗽𝘅     ▫  Opis najciekawszych funkcji 𝗪𝘆𝗸𝗼𝗽 𝗫: ";
             text-decoration: none;
         } 
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:after
