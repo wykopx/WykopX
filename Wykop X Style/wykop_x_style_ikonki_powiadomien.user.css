@@ -1,21 +1,24 @@
 /* ==UserStyle==
-@name           Wykop X Style - ikonki powiadomień na wykopie
-@version        3.0.54
+@name           Wykop X Style - Powiadomienia
+@version        3.0.90
 
 
 @description    Wykop X Style
-@description    Ten styl to 900 różnych funkcji zmieniających wykop
+@description    Ten styl pozwala zmieniać powiadomienia na wykopie oraz dodaje dodatkowe opcje dla stylów Wykop XS - All comments together oraz Wykop XS - Grupuj powiadomienia
 description     https://styl.wykopx.pl
 
+@description    MikroCzat
+@description    Wejdź na Wykopowy Czat
+@description    https://mikroczat.pl
 
 @description	Wykop X Style Blank
 @description	W wersji BLANK wszystkie opcje są wyłączone
 @description	https://blank.wykopx.pl
 
-
 @description    Wykop XS
-@description    Pomocniczy skrypt Wykop XS z dodatkowymi funkcjami
-@description    https://skrypt.wykopx.pl
+@description    Skrypty z dodatkowymi funkcjami znajdziesz na
+@description    https://skrypty.wykopx.pl
+
 
 @description    ---- WYKOP X ----
 @description    http://wiki.wykopx.pl
@@ -29,23 +32,17 @@ description     https://styl.wykopx.pl
 @homepageURL    http://wiki.wykopx.pl
 @supportURL     http://wiki.wykopx.pl
 
----- AUTOR WYKOP X ---- 
+---- AUTOR WYKOP X ----  
+
+
+@var range      HR_NOTIFICATIONS_GROUPING                    `❎ GRUPOWANIE POWIADOMIEŃ xx(Wykop XS Odgrupuj powiadomienia)`                           [0, 0, 99900, 1, 'mm']
+@var checkbox   disableNotificationsGroupingTags             `❌ Nie grupuj powiadomień z #tagów`                         1
+@var checkbox   disableNotificationsGroupingEntries          `❌ Nie grupuj powiadomień z komentarzami`                   1
+@var checkbox   disableNotificationsGroupingObserved         `❌ Nie grupuj powiadomień z obserwowanych dyskusji`         1
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+@var range      HR_NOTIFICATIONS_GROUPING                    `🉑 GRUPOWANIE POWIADOMIEŃ (Wykop XS `                           [0, 0, 99900, 1, 'mm']
 
 
 
@@ -109,56 +106,717 @@ description     https://styl.wykopx.pl
         --notificationIconWithoutUnreadNotificationsActiveColor:           rgba(255, 255, 255, 0.6);     
         --notificationIconWithoutUnreadNotificationsActiveBackgroundColor: rgba(255, 255, 255, 0.3);   
     }
+}
+
+
+
+@-moz-document url-prefix("moz-extension://"), url-prefix("chrome-extension://")
+{
+    body#stylus-manage
+    {
+        display: grid!important;
+    }
     
+    body#stylus-manage > div#message-box 
+    {
+        justify-self: center !important;
+        
+        border: 1px solid var(--accent-2);
+	    box-shadow: 1px 0px 10px 13px rgba(0, 0, 0, 0.3);
+        //margin: 10px;
+        
+        left: unset!important;
+        right: unset!important;
+        top: 20px;
+        bottom: 20px;
+        
+        width: 30%;
+        min-width: 800px;
+        max-width: 2000px;
+        
+        position: fixed;
+    }
     
-    if(fixNotificationBadgeBug == 1)
-    {  
-        /* ukrycie badge z liczbą powiadomien jeśli wszystkie powiadomienia w okienku są przeczytane */
-        body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications 	> section.stream > div.content > section.notify:not(.read))) > a:after,
-        body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications 	> section.stream > div.content > section.notify:not(.read))) > a:before,
-        body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 						    > section.stream > div.content > section.item.unread))       > a.new:after,
-        body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a.new:before
-        { 
-            display: none!important;
+    @media screen and (max-width: 840px)
+    {
+        body#stylus-manage > div#message-box 
+        {
+            left: 5px!important;
+            right: 5px!important;
+            top: 5px!important;
+            bottom: 5px!important;
+                    
+            width: calc(100% - 10px);
+            min-width: unset;
+            max-width: unset;
         }
-        /* naprawienie kolorów ikonek - brak nieprzeczytanych */
-        body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications    > section.stream > div.content > section.notify:not(.read))) > a > div.svg-inline > svg,
-        body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a > div.svg-inline > svg
+    }
+    body#stylus-manage > div#message-box > div
+    {
+        left: unset!important;
+        right: 0px!important;
+        position: sticky!important;
+        width: 100%!important;
+    }
+    
+    /* for screenshot */
+    /*  
+    body#stylus-manage
+    {
+        background-color: rgb(13, 17, 23);
+    }
+    body#stylus-manage > div#message-box
+    {
+            position: relative!important;
+        width: 100%;
+        min-width: 700px;
+        max-width: 2000px;
+        margin: 60px!important;
+    } 
+    body#stylus-manage > div#message-box > div
+    {
+        position: sticky!important;
+        width: 100%!important;
+    }
+    */
+
+    
+    
+    
+    body#stylus-manage > div#installed > div.entry:has(> h2 > a[href*="wykopx.pl"])
+    {
+        order: -888;
+    }
+    body#stylus-manage > div#installed > div.entry.disabled:has(> h2 > a[href*="wykopx.pl"]) > h2.style-name > a.style-name-link
+    {
+        color: var(--accent-2)!important;
+    }
+    body#stylus-manage > div#installed > div.entry.enabled:has(> h2 > a[href*="wykopx.pl"])
+    {
+        order: -999;
+        background-color: var(--accent-3)!important;
+    }
+    body#stylus-manage > div#installed > div.entry:has(> h2 > a[href*="wykopx.pl"]) > p > a.configure-usercss > i::after      
+    {
+        color: var(--c00);
+        font-size: 22px;
+    }
+    body#stylus-manage > div#installed > div.entry:has(> h2 > a[href*="wykopx.pl"]) > p > a.configure-usercss > i:hover::after     
+    {
+        color: var(--accent-1);
+    }
+    body#stylus-manage
+    {
+        height: max-content!important;
+    }
+
+
+
+    #message-box > div > #message-box-contents::-webkit-scrollbar
+    {
+      width: 24px!important;
+    }
+    #message-box > div > #message-box-contents::-webkit-scrollbar-button
+    {
+        display: none!important;
+    }
+
+    #message-box > div > #message-box-contents::-webkit-scrollbar-thumb
+    {
+        height: 100px!important;
+        background: #111!important;
+        background: linear-gradient(#1b1b1b, #111)!important;
+        border: 1px solid #000!important;
+        box-shadow: inset 0 0 0 1px #272727!important;
+        border-radius: 6px!important;
+        transition: background 0.3s linear;
+    }
+    #message-box > div > #message-box-contents::-webkit-scrollbar-thumb:hover
+    {
+        background: linear-gradient(rgba(32, 44, 34, 1), #111)!important;
+        background: linear-gradient(rgba(56, 148, 148, 0.21) 0%, #111 60%)!important;
+    }
+    #message-box > div > #message-box-contents::-webkit-scrollbar-thumb:active
+    {
+        background: linear-gradient(rgba(32, 44, 34, 1), #111)!important;
+        background: linear-gradient(rgba(56, 148, 148, 0.61) 25%, #111 75%)!important;
+    }
+    #message-box > div > #message-box-contents::-webkit-scrollbar-track-piece
+    {
+        background-color: var(--bg)!important;
+    }
+
+    /*
+        ::-webkit-scrollbar — the entire scrollbar.
+        ::-webkit-scrollbar-button — the buttons on the scrollbar (arrows pointing upwards and downwards that scroll one line at a time).
+        ::-webkit-scrollbar:horizontal{} — the horizontal scrollbar.
+        ::-webkit-scrollbar-thumb — the draggable scrolling handle.
+        ::-webkit-scrollbar-track — the track (progress bar) of the scrollbar, where there is a gray bar on top of a white bar.
+        ::-webkit-scrollbar-track-piece — the part of the track (progress bar) not covered by the handle.
+        ::-webkit-scrollbar:vertical{} — the vertical scrollbar.
+        ::-webkit-scrollbar-corner — the bottom corner of the scrollbar, where both horizontal and vertical scrollbars meet. This is often the bottom-right corner of the browser window.
+        ::-webkit-resizer — the draggable resizing handle that appears at the bottom corner of some elements.
+    */
+
+    
+    
+    
+    #message-box > div
+    {
+        max-width: 100%!important;
+        max-height: 100%!important;
+        top: 0px!important;
+    } 
+
+    /* Closing setting box */
+    #message-box > div > #message-box-close-icon
+    {
+        position: absolute;
+        right: 11px;
+        top: 10px;
+        transition: all 0.1s ease-in-out; 
+
+    } 
+    #message-box > div > #message-box-close-icon i
+    {
+        display: none;
+    } 
+    #message-box > div > #message-box-close-icon:before
+    {
+        width: 20px; height: 20px;
+        content: "❌";
+        font-size: 16px;
+    } 
+    #message-box > div > #message-box-close-icon:hover
+    {
+        scale: 1.4;
+    } 
+    
+    
+    
+    
+    .config-body .select-wrapper
+    {
+        max-width: 100%;
+    }
+    #message-box.config-dialog .config-body
+    {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+    #message-box.config-dialog .config-body input[type="text"], 
+    #message-box.config-dialog .config-body .select-resizer, 
+    #message-box.config-dialog .config-body select,
+    #message-box.config-dialog .config-body input[type="range"],
+    #message-box.config-dialog .config-body label.config-select > div
+    {
+        min-width: 210px;
+    } 
+    
+        
+    #message-box-contents div.config-heading a[href$="wykopx.pl"]
+    {
+        font-size: 0;
+        text-decoration: none;
+    } 
+    #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
+    #message-box-contents div.config-heading a[href$="wykopx.pl"]:after
+    {
+        font-size: 13px;
+    } 
+
+
+    #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
+    {
+        text-decoration: underline;
+    } 
+
+
+    #message-box-contents div.config-heading 
+    {
+        text-align: center;
+
+        a[href$="wykopx.pl"]
         {
-            fill: var(--notificationIconWithoutUnreadNotificationsColor) !important;
         } 
-        body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications    > section.stream > div.content > section.notify:not(.read))) > a,
-        body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a
+        a[href$="wykopx.pl"]:before,
+        a[href$="wykopx.pl"]:after
         {
-            background-color: var(--notificationIconWithoutUnreadNotificationsBackgroundColor) !important;
+                font-size: 16px
+                display: block;
+                cursor: default
+                color: rgba(255, 255, 255, 0.6);
         } 
-        /* :hover */
-        body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications    > section.stream > div.content > section.notify:not(.read))) > a:hover > div.svg-inline > svg,
-        body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a:hover > div.svg-inline > svg
+        a[href$="wykopx.pl"]:before,
         {
-            fill: var(--notificationIconWithoutUnreadNotificationsHoverColor) !important;
+            margin-top: 30px!important
         } 
-        body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications:not(:has( > section.dropdown-body > section.notifications    > section.stream > div.content > section.notify:not(.read))) > a:hover,
-        body > section:not(.is-mobile) > header.header div.right > nav ul li.pm:not(:has(            > section.dropdown-body 							> section.stream > div.content > section.item.unread))       > a:hover
+        a[href$="wykopx.pl"]:hover
         {
-            background-color: var(--notificationIconWithoutUnreadNotificationsHoverBackgroundColor) !important;
+            
         } 
-        /* otwarte menu */
-        body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications.dropdown.active:not(:has( > section.dropdown-body > section.notifications > section.stream > div.content > section.notify:not(.read))) > a > div.svg-inline > svg,
-        body > section:not(.is-mobile) > header.header div.right > nav ul li.pm.dropdown.active:not(:has(            > section.dropdown-body                         > section.stream > div.content > section.item.unread))       > a > div.svg-inline > svg
+    } 
+
+    [data-ui-theme="light"] #message-box-contents div.config-heading  a[href$="wykopx.pl"]:after,
+    [data-ui-theme="light"] #message-box-contents div.config-heading  a[href$="wykopx.pl"]:before
+    {
+        color: rgba(0, 0, 0, 0.6);
+    } 
+
+    /* tylko komputer przy wąskim okienku Stylusa */
+    @media (pointer: fine) and (max-width: 519px)
+    {
+        #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
         {
-            fill: var(--notificationIconWithoutUnreadNotificationsActiveColor) !important;
+            color: #df2c2c;
+            content: "Wejdź w  Ustawienia Stylusa '⚙' i w sekcji '𝗢𝗸𝗻𝗼 𝗽𝗼𝗱𝗿𝗲𝗰𝘇𝗻𝗲' wpisz w polu '𝗦𝘇𝗲𝗿𝗼𝗸𝗼𝘀𝗰 𝗼𝗸𝗻𝗮 (𝘄 𝗽𝗶𝗸𝘀𝗲𝗹𝗮𝗰𝗵)' wartość między 𝟲𝟬𝟬 a 𝟴𝟬𝟬 pikseli. "!important;
         } 
-        body > section:not(.is-mobile) > header.header div.right > nav ul li.notifications.dropdown.active:not(:has( > section.dropdown-body > section.notifications > section.stream > div.content > section.notify:not(.read))) > a,
-        body > section:not(.is-mobile) > header.header div.right > nav ul li.pm.dropdown.active:not(:has(            > section.dropdown-body                         > section.stream > div.content > section.item.unread))       > a
+    } 
+    /* telefon lub komputer z rozszerzonym okienkiem Stylusa */
+    @media (pointer: none), (min-width: 520px)
+    {
+        #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
         {
-            background-color: var(--notificationIconWithoutUnreadNotificationsActiveBackgroundColor) !important;
+            content: "Zaobserwuj tag #wykopx ▫ Do funkcji oznaczonych emoji: ❎ zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦 Szczegóły na xs.wykopx.pl     ▫  Opis najciekawszych funkcji 𝗪𝘆𝗸𝗼𝗽 𝗫 na stronie ";
+            text-decoration: none;
+        } 
+        #message-box-contents div.config-heading a[href$="wykopx.pl"]:after
+        {
+            content: "wiki.wykopx.pl"
+        }
+        #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
+        {
+            cursor: pointer;
+            color: rgba(255, 255, 255, 1);
+        } 
+        [data-ui-theme="light"] #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
+        {
+            color: rgba(0, 0, 0, 1);
         } 
     } 
     
     
+    .config-body > label
+    {
+        padding: 7px 0px 7px 15px;
+        font-size: 13px;
+        display: flex;
+    }
+
+    [data-ui-theme="light"] .config-body > label{color: rgba(0, 0, 0, 1); } 
+    [data-ui-theme="dark"] .config-body > label{color: rgba(255, 255, 255, 1); } 
+
+    [data-ui-theme="light"] .config-body > label:has(.onoffswitch)                 { color: rgba(0, 0, 0, 0.5); } 
+    [data-ui-theme="light"] .config-body > label:has(.onoffswitch input:checked)   { color: rgba(0, 0, 0, 1); } 
+    [data-ui-theme="dark"] .config-body > label:has(.onoffswitch)                  { color: rgba(255, 255, 255, 0.5); } 
+    [data-ui-theme="dark"] .config-body > label:has(.onoffswitch input:checked)    { color: rgba(255, 255, 255, 1); } 
 
 
+
+    /* NAZWA SEKCJI */
+    [data-ui-theme="light"] label.config-range:has(input[type="range"][max="99900"])
+    {
+        border-top: 1px solid rgba(128,128,128,1);
+        background: #cfcfcf;
+        background: linear-gradient(#ffffff, #dfdfdf);
+        border: 1px solid #fff;
+        box-shadow: inset 0 0 0 1px #c7c7c7;
+    }
+    [data-ui-theme="dark"] label.config-range:has(input[type="range"][max="99900"])
+    {
+        border-top: 1px solid rgba(128,128,128,1);
+        background: #111;
+        background: linear-gradient(#1b1b1b, #111);
+        border: 1px solid #000;
+        box-shadow: inset 0 0 0 1px #272727;
+    }
+    label.config-range:has(input[type="range"][max="99900"])
+    {
+        display: flex!important;
+        padding: 10px!important;
+
+        margin-top: 40px;
+        
+        margin-bottom: 10px;
+        border-radius: 5px;
+        z-index: 1;
+
+        & + label
+        {
+            border-top: none;
+        } 
+        span.config-name
+        {
+            text-align: center;
+            text-align: left;
+            padding-left: 10px;
+            
+            font-weight: 300;
+            font-family: system-ui;
+            font-size: 15px;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            text-wrap: pretty;
+        } 
+
+        input[type="range"][max="99900"], span.current-value, a.config-reset-icon
+        {
+            display: none!important;
+        } 
+    }
     
+    /* NAZWA PODSEKCJI */
+    [data-ui-theme="light"] label.config-range:has(input[type="range"][max="99999"])
+    {
+        border-top: 1px solid rgba(128,128,128,1);
+        background: #cfcfcf;
+        //background: linear-gradient(#ffffff, #dfdfdf);
+        border: 1px solid #fff;
+        box-shadow: inset 0 0 0 1px #c7c7c7;
+        
+        align-self: center;
+    }
+    [data-ui-theme="dark"] label.config-range:has(input[type="range"][max="99999"])
+    {
+        border-top: 1px solid rgba(128,128,128,1);
+        background: #111;
+        //background: linear-gradient(#1b1b1b, #111);
+        border: 1px solid #000;
+        box-shadow: inset 0 0 0 1px #272727;
+    }
+    label.config-range:has(input[type="range"][max="99999"])
+    {
+        display: flex!important;
+	    align-self: center;        
+	    //align-self: start;        
+        margin-top: 15px;   //
+        padding: 4px!important; //
+        margin-bottom: 10px;
+        border-radius: 5px;
+        z-index: 1;
+        
+        width: 70%; //
 
-}
+        & + label
+        {
+            border-top: none;
+        } 
+        span.config-name
+        {
+            text-align: center;
+            //text-align: left;
+            padding-left: 10px;
+            font-weight: 300;
+            font-family: system-ui;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            text-wrap: pretty;
+        } 
+
+        input[type="range"][max="99999"], span.current-value, a.config-reset-icon
+        {
+            display: none!important;
+        } 
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    /* border NAD elementem opcji */
+    .config-body label:not(:first-child)
+    {
+        border-top: 1px dotted var(--c80);
+    }
+    
+    // WŁĄCZONY/WYŁĄCZONY CHECKBOX PONIŻEJ
+    label.config-range:has(input[type="range"][max="111100"]),
+    label.config-range:has(input[type="range"][max="100000"])
+    {
+        display: none;
+        border-top: none!important;
+        
+        input[type="range"][max="111100"], 
+        input[type="range"][max="100000"], 
+        span.current-value,
+        a.config-reset-icon
+        {
+            display: none!important;
+        }
+    }
+    
+    // INFO WŁĄCZONY
+    label.config-range:has(input[type="range"][max="111100"]):has(+ label.config-checkbox input.slider:checked)
+    {
+        display: block;
+        background-color: rgba(0, 128, 30, .09);
+        color: #7ab37a;
+    }
+    label.config-range:has(input[type="range"][max="100000"]):has(+ label.config-range + label.config-checkbox input.slider:not(:checked)),
+    label.config-range:has(input[type="range"][max="100000"]):has(+ label.config-checkbox input.slider:not(:checked))
+    {
+        display: block;
+        background-color: rgba(128, 0, 30, .09);
+        color: #b37a7e;
+    }
+    label.config-range:has(input[type="range"][max="111100"]) + label.config-checkbox:has(input.slider:checked),
+    label.config-range:has(input[type="range"][max="100000"]) + label.config-range + label.config-checkbox:has(input.slider:not(:checked))
+    {
+        border-top: none!important;
+    }
+    
+    
+    
+    
+    
+    // OPIS INFO DLA POPRZEDNIEJ FUNKCJI
+    div.config-body label:has(+ label.config-range input[type="range"][max="88800"]):before
+    {
+        content: "🛈"; //❔ 
+        position: absolute;
+        font-size: 14px;
+        width: 20px;
+        translate: -10px -8px;
+    }
+    label.config-range:has(input[type="range"][max="88800"])
+    {
+        transition-property: border-bottom, opacity, display, height, font-size;
+        transition-duration: 1s, 1s, 1s, 0.1s, 1s;
+        transition-behavior: allow-discrete;
+        
+        @starting-style
+        {
+            opacity: 0;
+            font-size: 0px;
+            height: 0px;
+        }
+
+        opacity: 1;
+        display: block;
+        font-size: 0px;
+        height: 0px;
+        padding: 0px;
+        border: transparent;
+        padding: 0px 0px 2px 15px;
+
+        color: var(--c60);
+        
+        input[type="range"][max="88800"], span.current-value, a.config-reset-icon
+        {
+            display: none!important;
+        }
+    }
+    div.config-body label:hover + label.config-range:has(input[type="range"][max="88800"])
+    {
+        transition-property: border-bottom, opacity, display, height, font-size;
+        transition-duration: 0.2s, 0.2s, 0.2s, 0.1s, 0.2s;
+        transition-behavior: allow-discrete;
+        transition-delay: 1.2s;
+        
+        @starting-style
+        {
+            opacity: 1;
+            display: block;
+            height: 20px;
+            font-size: 11px;
+        }
+        
+        opacity: 1;
+        display: block;
+        height: max-content;
+        min-height: max-content;
+        max-height: max-content;
+        font-size: 11px;
+        
+        border-bottom: 1px solid var(--accent-3);
+                
+        border-top: 0px dashed var(--c90);
+    }
+    
+    /* Ikonka resetowania do wartosci domyslnej przy Checkboxie na wąskim ekranie */
+    #message-box-contents div.config-body label a.config-reset-icon
+    {           
+        translate: 22px;
+    }
+    #message-box-contents div.config-body label a.config-reset-icon:hover i
+    {           
+        color: var(--accent-1);
+    }
+    
+    @media (max-width: 600px)
+    {   
+        #message-box-contents div.config-body label
+        {
+            margin-bottom: 10px;
+        }
+        #message-box-contents div.config-body label > span.config-name 
+        {
+            line-height: 21px;
+        }
+        
+        /* TYTUL SEKCJI */
+        #message-box-contents div.config-body label.config-range:has(input[type="range"][max="99900"]) span.config-name
+        {
+            font-size: 15px!important;
+        }
+        
+        #message-box-contents div.config-body label.config-checkbox,
+        #message-box-contents div.config-body label.config-select,
+        #message-box-contents div.config-body label.config-range,
+        #message-box-contents div.config-body label.config-text
+        {
+            display: grid;
+            row-gap: 10px;
+        }
+        
+        // CHECKBOX
+        #message-box-contents div.config-body label.config-checkbox,
+        {
+            grid-template-columns: 1fr 30px 30px;
+            grid-template-rows: 1fr;
+            width: 100%;
+            row-gap: 0px;
+        }
+        #message-box-contents div.config-body label.config-checkbox span.config-name,
+        {
+            display: flex;
+            grid-column-start: 1;
+            grid-column-end: 2;
+            
+            text-wrap: pretty;
+        }
+        #message-box-contents div.config-body label.config-checkbox input.config-value,
+        {
+            display: flex;
+            grid-column-start: 2;
+            grid-column-end: 3;
+            
+            align-self: start;
+        }
+        
+        /* Ikonka resetowania do wartosci domyslnej przy Checkboxie na wąskim ekranie */
+        #message-box-contents div.config-body label.config-checkbox a.config-reset-icon
+        {           
+            display: flex;
+            grid-column-start: 3;
+            grid-column-end: 4;
+            
+            align-self: start;
+        }
+        // SELECT
+        #message-box-contents div.config-body label.config-select,
+        #message-box-contents div.config-body label.config-text
+        {
+            grid-template-columns: auto 10px;
+            grid-template-rows: 1fr 1fr;
+            width: 100%;
+        }
+        #message-box-contents div.config-body label.config-select span.config-name,
+        #message-box-contents div.config-body label.config-text span.config-name
+        {
+            display: flex;
+            grid-column-start: 1;
+            grid-column-end: 3;
+            grid-row-start: 1;
+            grid-row-end: 2;
+        }
+        #message-box-contents div.config-body label.config-select div.config-value,
+        #message-box-contents div.config-body label.config-text input.config-value
+        {
+            display: flex;
+            grid-column-start: 1;
+            grid-column-end: 2;
+            grid-row-start: 2;
+            grid-row-end: 3;
+            
+            margin-top: 2px;
+        }
+        #message-box-contents div.config-body label.config-select div.config-value > select,
+        #message-box-contents div.config-body label.config-text input.config-value
+        {
+            min-width: 90%;
+            height: 27px;
+        }
+        
+        #message-box-contents div.config-body label.config-select div.config-value > select > option
+        {
+            font-size: 1.2px;
+            border: 1px solid #f00!important;
+        }
+        
+        #message-box-contents div.config-body label.config-select div.config-value::after
+        {
+            position: relative;
+            left: 4px;
+        }
+        #message-box-contents div.config-body label.config-select a.config-reset-icon,
+        #message-box-contents div.config-body label.config-text a.config-reset-icon
+        {
+            display: flex;
+            grid-column-start: 2;
+            grid-column-end: 3;
+            grid-row-start: 2;
+            grid-row-end: 3;
+            position: relative;
+            top: 0px;
+        }
+        
+        
+        // RANGE
+        #message-box-contents div.config-body label.config-range
+        {
+            grid-template-columns: auto auto 0px;
+            grid-template-rows: 1fr 1fr;
+            width: 100%;
+        }
+
+        
+        #message-box-contents div.config-body label.config-range span.config-name
+        {
+            display: flex;
+            grid-column-start: 1;
+            grid-column-end: 2;
+            grid-row-start: 1;
+            grid-row-end: 2;
+        }
+        #message-box-contents div.config-body label.config-range span.current-value
+        {
+            display: flex;
+            grid-column-start: 3;
+            grid-column-end: 4;
+            grid-row-start: 1;
+            grid-row-end: 2;
+            position: relative;
+            top: 0px;
+            left: -100px;
+            width: 20px;
+            justify-content: end;
+        }
+        #message-box-contents div.config-body label.config-range a.config-reset-icon
+        {
+            display: flex;
+            grid-column-start: 3;
+            grid-column-end: 4;
+            grid-row-start: 2;
+            grid-row-end: 3;
+            position: relative;
+            top: 0px;
+            left: -20px;
+            width: 20px;
+        }
+        #message-box-contents div.config-body label.config-range input.config-value 
+        {
+            display: flex;
+            width: 90%;
+            grid-column-start: 1;
+            grid-column-end: 3;
+            grid-row-start: 2;
+            grid-row-end: 3;
+        }
+    }
+} 
