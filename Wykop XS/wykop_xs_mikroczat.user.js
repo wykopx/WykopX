@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 // @name:en							Wykop XS - Lista plusujących, animowane awatary, mikroczat
 
-// @version							3.2.2
+// @version							3.2.3
 
 // @description 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Darmowy dostęp do Mikroczatu. Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -45,7 +45,7 @@
 
 'use strict';
 
-const currentVersion = "3.2.2";
+const currentVersion = "3.2.3";
 let dev = true;
 
 const promoString = " - Wykop XS / #wykopx";
@@ -2106,9 +2106,8 @@ Widok dyskusji:
 		CSS += `
 			.pub-slot-wrapper,
 			aside:has(.pub-slot-wrapper),
-			/* reklama lidl tylko na wykop.pl/moj/ */
 			.sidebar > aside > section:not([id]),
-			section.stream > div.content > section:not([id],.related-link),
+			section.stream > div.content > section:not([id],.related-link,.item),
 			section.stream > section > div.content > section:not([id])
 			{ display: none!important; }
 		`;

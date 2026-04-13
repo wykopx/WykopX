@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - XHR blocker
 // @name:en							Wykop XS - XHR blocker
 
-// @version							3.2.2
+// @version							3.2.3
 
 // @description 					Wykop XS - XHR Blocker | Wykop X Style znajdziesz na: http://style.wykopx.pl
 // @description:en 					Wykop XS - XHR Blocker | Check out also: http://style.wykopx.pl
@@ -44,7 +44,7 @@
 {
 	'use strict';
 
-	const currentVersion = "3.2.2";
+	const currentVersion = "3.2.3";
 	let dev = false;
 
 	const promoString = " - Wykop XHR Blocker / #wykopx";
@@ -160,9 +160,8 @@
 		CSS += `
 			.pub-slot-wrapper,
 			aside:has(.pub-slot-wrapper),
-			/* reklama lidl tylko na wykop.pl/moj/ */
 			.sidebar > aside > section:not([id]),
-			section.stream > div.content > section:not([id],.related-link),
+			section.stream > div.content > section:not([id],.related-link,.item),
 			section.stream > section > div.content > section:not([id])
 			{ display: none!important; }
 		`;

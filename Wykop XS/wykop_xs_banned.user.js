@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Ban Info - Informacje o banach
 // @name:en							Wykop XS - Ban Info
 
-// @version							3.2.2
+// @version							3.2.3
 
 // @description 					Wykop XS - Informacje o banach na profilach zbanowanych użytkowników. Wykop X Style znajdziesz na: http://styl.wykopx.pl
 // @description:en 					Wykop XS - Shows precise info about banned users on Wykop.pl. Check out Wykop X Style here: http://styl.wykopx.pl
@@ -44,7 +44,7 @@
 {
 	'use strict';
 
-	const currentVersion = "3.2.2";
+	const currentVersion = "3.2.3";
 	let dev = false;
 
 	const promoString = " - Wykop XS / #wykopx";
@@ -160,9 +160,8 @@
 		CSS += `
 			.pub-slot-wrapper,
 			aside:has(.pub-slot-wrapper),
-			/* reklama lidl tylko na wykop.pl/moj/ */
 			.sidebar > aside > section:not([id]),
-			section.stream > div.content > section:not([id],.related-link),
+			section.stream > div.content > section:not([id],.related-link,.item),
 			section.stream > section > div.content > section:not([id])
 			{ display: none!important; }
 		`;

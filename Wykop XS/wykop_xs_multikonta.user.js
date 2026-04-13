@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name							Wykop XS - Multikonta (beta)
-// @name:pl							Wykop XS - Multikonta (beta)
-// @name:en							Wykop XS - Multikonta (beta)
+// @name							Wykop XS - Multikonta
+// @name:pl							Wykop XS - Multikonta
+// @name:en							Wykop XS - Multikonta
 
-// @version							3.2.2
+// @version							3.2.3
 
 // @description 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
 // @description:en 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
@@ -45,7 +45,7 @@
 
 'use strict';
 
-const currentVersion = "3.2.2";
+const currentVersion = "3.2.3";
 let dev = false;
 
 const promoString = " - Wykop XS / #wykopx";
@@ -2159,13 +2159,12 @@ Widok dyskusji:
 	if (settings.hideAds)
 	{
 		CSS += `
-		.pub-slot-wrapper,
-        aside:has(.pub-slot-wrapper),
-        /* reklama lidl tylko na wykop.pl/moj/ */
-        .sidebar > aside > section:not([id]),
-        section.stream > div.content > section:not([id],.related-link),
-        section.stream > section > div.content > section:not([id])
-        { display: none!important; }
+			.pub-slot-wrapper,
+			aside:has(.pub-slot-wrapper),
+			.sidebar > aside > section:not([id]),
+			section.stream > div.content > section:not([id],.related-link,.item),
+			section.stream > section > div.content > section:not([id])
+			{ display: none!important; }
 		`;
 	}
 
