@@ -1,46 +1,52 @@
 /* ==UserStyle==
 @name           Wykop X Style 3 Blank
-@version        3.1.0
+@version        3.3.0
 
 @description    Niniejsza wersja to wersja BLANK, w której wszystkie funkcje są wyłączone.
-@description    https://styl.wykopx.pl
+@description    https://wykopx.pl/style
+
+
+
+--  WEJDŹ NA NOWĄ, ALTERNATYWNĄ WERSJĘ WYKOPU --
+
+        Bez reklam
+        Bez spamu
+        Bez cenzury
+
+🧡  🧡 www.wykopx.pl 🧡 🧡 🧡
+
 
 
 Chcesz zostać patronem projektu Wykop X?
 Doborowolne wsparcie na stronie: https://buycoffee.to/wykopx
 
 
---- Wykop X Style ---
 
+
+
+--- Wykop X Style ---
 Jeśli nie chcesz poświęcać czasu na konfigurowanie, skorzystaj z wersji głównej Wykop X Style
 
->>> https://styl.wykopx.pl
+    https://wykopx.pl/styl
 
 
 
 
---- Wykop X XS ---
-
+--- Skrypt Wykop XS ---
 Zainstaluj teź pomocniczy skrypt Wykop XS, który 
 dodaje ponad 100 nowych funkcji oznaczonych jako ❎
 
->>> https://skrypt.wykopx.pl
-
-
-
+    https://wykopx.pl/skrypt
 
 
 
 @description    ---- WYKOP X ----
-@description    http://wiki.wykopx.pl
+@description    http://wykopx.pl/wiki
 @description    https://userstyles.world/style/8174/wykop-x-style-3
 
 
-
----- AUTOR ----
-
+                ---- AUTOR ----
 @author         Wykop X <wykopx@gmail.com> | wiki.wykopx.pl
-@homepageURL    http://wiki.wykopx.pl
-@supportURL     http://wiki.wykopx.pl
-
----- AUTOR ---- 
+@homepageURL    http://wykopx.pl
+@supportURL     http://wykopx.pl
+                ---- AUTOR ---- 

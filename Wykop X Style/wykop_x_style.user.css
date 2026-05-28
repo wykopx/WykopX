@@ -1,34 +1,50 @@
 /* ==UserStyle==
 @name           Wykop X Style 3
-@version        3.2.3
+@version        3.3.0
 
 @description    Wykop X Style 3 to 900 różnych funkcji zmieniających wykop!
 
+--  WEJDŹ NA NOWĄ, ALTERNATYWNĄ WERSJĘ WYKOPU --
 
---- Wykop X Style Blank ---
+            --  Bez reklam
+            --  Bez spamu
+            --  Bez cenzury
+
+--- 🧡  🧡 www.wykopx.pl 🧡 🧡 🧡--- 
+
+
+Chcesz zostać patronem projektu Wykop X?
+Doborowolne wsparcie na stronie: https://buycoffee.to/wykopx
+
+
+
+
+
+
+--- Wykop X Blank ---
 
 Jeśli liczba funkcji w Wykop X Style cię przytłacza, zachęcam do wybrania 
 wersji BLANK, w której wszystkie opcje są wyłączone:
 
-https://blank.wykopx.pl
+https://wykopx.pl/blank
 
 --- Wykop X XS ---
 
 Zainstaluj teź pomocniczy skrypt Wykop XS, który 
 dodaje ponad 100 nowych funkcji oznaczonych jako ❎
 
-https://skrypt.wykopx.pl
+https://wykopx.pl/skrypty
 
 @description    ---- WYKOP X ----
-@description    http://wiki.wykopx.pl
+@description    http://wykopx.pl/wiki
 @description    https://userstyles.world/style/8174/wykop-x-style-3
 
 
 ---- AUTOR ----
 
 @author         Wykop X <wykopx@gmail.com> | wiki.wykopx.pl
-@homepageURL    http://wiki.wykopx.pl
-@supportURL     http://wiki.wykopx.pl
+@homepageURL    http://wykopx.pl
+@supportURL     http://wykopx.pl
 
 ---- AUTOR ---- 
 
@@ -37,6 +53,54 @@ https://skrypt.wykopx.pl
 @preprocessor   stylus
 @namespace      userstyles.world/user/wykopchanger
 @license        No License (YOU CAN USE THIS CODE ONLY IN STYLUS EXTENSIONS. You are NOT ALLOWED TO copy, share and use any part of this code anywhere else without author's written permission)
+
+
+@var range      SUB_HR_LINKS_COLUMNS                    `🔶 GŁÓWNA - LISTA ZNALEZISK NOWE (3.2.4) ⭐ `                                      [0, 0, 99999, 1, 'mm']A
+
+@var checkbox   homepageSelectedForYouHide                      `Ukryj "Wybrane dla Ciebie" na głównej  ⭐`                                  0
+@var checkbox   linksVisitedGrayedOut                           `Oznaczaj ✔ 𝗣𝗥𝗭𝗘𝗖𝗭𝗬𝗧𝗔𝗡𝗘 znaleziska 🆗`                                        1     
+@var select     linkThumbnail                                   `Miniaturki obrazków znalezisk` {
+                                                                        "Po prawej (domyślnie)"                 :   "poprawej",
+                                                                        "Po lewej (Wykop 2022)*":"polewej",
+                                                                        "Nie pokazuj"                           :   "niepokazuj"
+                                                                    } 
+
+@var checkbox   linkToWykopEntry                                `🔹 Oznaczaj znaleziska kierujące na wpisy z Mikrobloga`                                1     
+@var checkbox   linkToWykopArticle                              `🔸 Oznaczaj znaleziska kierujące do Wykopowych Artykułów`                              1     
+@var checkbox   linkToWykopAMA                                  `🔸 Oznaczaj znaleziska AMA`                                                          1     
+@var checkbox   linkVideoPlayerBlackBackground                  `▶ Widok teatralny podczas odtwarzanego wideo `                                       0     
+@var checkbox   linkToVideoDuration                             `▶❎ Pokaż czas trwania filmików na miniaturce`                                        1     
+
+@var checkbox   linkVoteDownButton                              `🔸❎ Przycisk "ZAKOP" przy znaleziskach na głównej`              0     
+
+// TOCHECK checkbox   hotLinksShowFirst              `check: 🔸🔥 Gorące Znaleziska wyświetlaj jako pierwsze`                 0
+
+@var select     linksDescriptionJustify                         `☰ Justowanie opisu znaleziska` {
+                                                                            "Brak justowania (domyślnie)"               :   "domyslnie",
+                                                                            "Wyjustowany (text-align: justify)"         :   "tekst_justify",
+                                                                            "Zbalansowany (text-wrap: balance) "     :   "tekst_balance",
+                                                                            "text-wrap: pretty*":"tekst_pretty",
+                                                                        } 
+
+
+@var checkbox   linkDescriptionShowFull                         `☰ Nie ucinaj długich opisów znalezisk 🆗`           1
+@var checkbox   linkShowRealNicknameColorOrange                 `🟠 Login autora pomarańczki w kolorze `              0     
+@var checkbox   linkShowRealNicknameColorBurgundy               `🔴 Login autora bordo w kolorze`                     0     
+@var checkbox   linkShowRealNicknameColorGreen                  `🟢 Login autora zielonki w kolorze`                  0     
+@var checkbox   linkShowRealNicknameColorOther                  `⚪ Login kont specjalnych w kolorze`                 0     
+@var checkbox   linkUserHide                                    `🚫 Ukryj login autora`                              0
+@var checkbox   linkDomainHide                                  `🚫 Ukryj źródło (domenę)`                           0
+@var checkbox   linkTagsHide                                    `🚫 Ukryj tagi znaleziska`                               0
+@var checkbox   linkPublishedDateHide                           `🚫 Ukryj czas umieszczenia znaleziska na głównej`       0
+@var checkbox   hideVoteUpButtonOnLinks                         `🚫 Ukryj przyciski "WYKOP" przy znaleziskach`           0
+TODO checkbox   commentsCountAlignment                          `🗨️ Przenieś liczbę komentarzy pod liczbę wykopów`       0
+@var checkbox   actionMenuLinkHideCommentsCountOnHomepage       `🗨️🚫 Ukryj liczbę komentarzy w znalezisku`          0
+
+@var range      linksSpacing                                    `Odstępy pomiędzy znaleziskami`       [10, 0, 69, 1, 'px']
+
+
+
+
 
 
 @var range      HR_NOTIFICATIONS_GENERAL            `🉑 POWIADOMIENIA`                                                                                  [0, 0, 99900, 1, 'mm']
@@ -1467,42 +1531,42 @@ REMOVED checkbox   entryVotersListEmojiRemovedUserTextHide             `🔹❌ 
 
 @var select     topNavWallpaper                                 `🎨 Tapeta górnej belki nawigacyjnej` {
                                                                             "Brak tapety w tle (domyślnie)":           "domyslne",
-                                                                            "🟦 Belka Wykop 2022":                    "'https://wykopx.pl/img/background-wykop-2022.png'",
-                                                                            "🟦 Belka Wykop 2022 (nocna)":            "'https://wykopx.pl/img/background-wykop-2022-dark'",
-                                                                            "🟦 Belka Wykop 2018":                    "'https://wykopx.pl/img/background-wykop-2018.png'",
-                                                                            "🟦 Belka Wykop 2015":                    "'https://wykopx.pl/img/background-wykop-2015.png'",
-                                                                            "🟦 Belka Wykop 2011":                    "'https://wykopx.pl/img/background-wykop-2011.png'",
-                                                                            "🟦 Belka Wykop 2007":                    "'https://wykopx.pl/img/background-wykop-2007.png'",
-                                                                            "🟦 Belka Wykop 2006":                    "'https://wykopx.pl/img/background-wykop-2006.png'",
-                                                                            "🟦 Firefox Blue":                       "'https://wykopx.pl/img/background-blue.jpg'",
-                                                                            "🦊 Firefox":                            "'https://wykopx.pl/img/background-firefox-blue.jpg'",
-                                                                            "❄ Snow 1":                                 "'https://wykopx.pl/img/background-snow-1.jpg'",
-                                                                            "❄ Snow 2":                                 "'https://wykopx.pl/img/background-snow-2.jpg'",
-                                                                            "🏔 Snowy Mountain 1":                       "'https://wykopx.pl/img/background-snowy-mountain-1.jpg'",
-                                                                            "🏔 Snowy Mountain 2":                       "'https://wykopx.pl/img/background-snowy-mountain-2.jpg'",
-                                                                            "🎄 Christmas Trees (Blue)":                 "'https://wykopx.pl/img/background-christmas-trees-1.png'",
-                                                                            "🎄 Christmas Trees (Gray)":                 "'https://wykopx.pl/img/background-christmas-trees-2.png'",
-                                                                            "🎄 Christmas Trees (Black)":                "'https://wykopx.pl/img/background-christmas-trees-3.png'",
-                                                                            "🔮 Cave":                                  "'https://wykopx.pl/img/background-cave-1.jpg'",
-                                                                            "🏙 City":                                  "'https://wykopx.pl/img/background-city-1.jpg'",
-                                                                            "🏙 Cyberpunk":                             "'https://wykopx.pl/img/background-cyberpunk-1.jpg'",
-                                                                            "🏀 Dragonball":                            "'https://wykopx.pl/img/background-songoku-1.jpg'",
-                                                                            "🌍 Earth":                                 "'https://wykopx.pl/img/background-earth-1.jpg'",
-                                                                            "🌿 Marijuana":                             "'https://wykopx.pl/img/background-marijuana-1.jpg'",
-                                                                            "👨‍💻 Matrix":                                 "'https://wykopx.pl/img/background-matrix-1.jpg'",
-                                                                            "🌙 Moon":                                  "'https://wykopx.pl/img/background-moon-1.jpg'",
-                                                                            "🗻 Mountains 1":                           "'https://wykopx.pl/img/background-mountains-1.jpg'",
-                                                                            "🗻 Mountains 2":                           "'https://wykopx.pl/img/background-mountains-2.jpg'",
-                                                                            "🔡 Text Einstein":                         "'https://wykopx.pl/img/background-einstein-1.jpg'",
-                                                                            "🔡 Text Hahahahah":                        "'https://wykopx.pl/img/background-hahahah-1.jpg'",
-                                                                            "🔡 Text Never Give Up":                   "'https://wykopx.pl/img/background-never-give-up-1.jpg'",
-                                                                            "✨ Stars 1":                            "'https://wykopx.pl/img/background-stars-1.png'",
-                                                                            "✨ Stars 2":                            "'https://wykopx.pl/img/background-stars-2.jpg'",
-                                                                            "✨ Stars 3":                            "'https://wykopx.pl/img/background-stars-3.jpg'",
-                                                                            "✨ Stars 4":                            "'https://wykopx.pl/img/background-stars-4.jpg'",
-                                                                            "✨ Stars 5":                            "'https://wykopx.pl/img/background-stars-5.jpg'",
-                                                                            "✨ Stars 6":                            "'https://wykopx.pl/img/background-stars-6.jpg'",
-                                                                            "✨ Stars 7":                            "'https://wykopx.pl/img/background-stars-7.jpg'",
+                                                                            "🟦 Belka Wykop 2022":                    "'https://wykopx.pl/_images/wykop_x_style/background-wykop-2022.png'",
+                                                                            "🟦 Belka Wykop 2022 (nocna)":            "'https://wykopx.pl/_images/wykop_x_style/background-wykop-2022-dark'",
+                                                                            "🟦 Belka Wykop 2018":                    "'https://wykopx.pl/_images/wykop_x_style/background-wykop-2018.png'",
+                                                                            "🟦 Belka Wykop 2015":                    "'https://wykopx.pl/_images/wykop_x_style/background-wykop-2015.png'",
+                                                                            "🟦 Belka Wykop 2011":                    "'https://wykopx.pl/_images/wykop_x_style/background-wykop-2011.png'",
+                                                                            "🟦 Belka Wykop 2007":                    "'https://wykopx.pl/_images/wykop_x_style/background-wykop-2007.png'",
+                                                                            "🟦 Belka Wykop 2006":                    "'https://wykopx.pl/_images/wykop_x_style/background-wykop-2006.png'",
+                                                                            "🟦 Firefox Blue":                       "'https://wykopx.pl/_images/wykop_x_style/background-blue.jpg'",
+                                                                            "🦊 Firefox":                            "'https://wykopx.pl/_images/wykop_x_style/background-firefox-blue.jpg'",
+                                                                            "❄ Snow 1":                                 "'https://wykopx.pl/_images/wykop_x_style/background-snow-1.jpg'",
+                                                                            "❄ Snow 2":                                 "'https://wykopx.pl/_images/wykop_x_style/background-snow-2.jpg'",
+                                                                            "🏔 Snowy Mountain 1":                       "'https://wykopx.pl/_images/wykop_x_style/background-snowy-mountain-1.jpg'",
+                                                                            "🏔 Snowy Mountain 2":                       "'https://wykopx.pl/_images/wykop_x_style/background-snowy-mountain-2.jpg'",
+                                                                            "🎄 Christmas Trees (Blue)":                 "'https://wykopx.pl/_images/wykop_x_style/background-christmas-trees-1.png'",
+                                                                            "🎄 Christmas Trees (Gray)":                 "'https://wykopx.pl/_images/wykop_x_style/background-christmas-trees-2.png'",
+                                                                            "🎄 Christmas Trees (Black)":                "'https://wykopx.pl/_images/wykop_x_style/background-christmas-trees-3.png'",
+                                                                            "🔮 Cave":                                  "'https://wykopx.pl/_images/wykop_x_style/background-cave-1.jpg'",
+                                                                            "🏙 City":                                  "'https://wykopx.pl/_images/wykop_x_style/background-city-1.jpg'",
+                                                                            "🏙 Cyberpunk":                             "'https://wykopx.pl/_images/wykop_x_style/background-cyberpunk-1.jpg'",
+                                                                            "🏀 Dragonball":                            "'https://wykopx.pl/_images/wykop_x_style/background-songoku-1.jpg'",
+                                                                            "🌍 Earth":                                 "'https://wykopx.pl/_images/wykop_x_style/background-earth-1.jpg'",
+                                                                            "🌿 Marijuana":                             "'https://wykopx.pl/_images/wykop_x_style/background-marijuana-1.jpg'",
+                                                                            "👨‍💻 Matrix":                                 "'https://wykopx.pl/_images/wykop_x_style/background-matrix-1.jpg'",
+                                                                            "🌙 Moon":                                  "'https://wykopx.pl/_images/wykop_x_style/background-moon-1.jpg'",
+                                                                            "🗻 Mountains 1":                           "'https://wykopx.pl/_images/wykop_x_style/background-mountains-1.jpg'",
+                                                                            "🗻 Mountains 2":                           "'https://wykopx.pl/_images/wykop_x_style/background-mountains-2.jpg'",
+                                                                            "🔡 Text Einstein":                         "'https://wykopx.pl/_images/wykop_x_style/background-einstein-1.jpg'",
+                                                                            "🔡 Text Hahahahah":                        "'https://wykopx.pl/_images/wykop_x_style/background-hahahah-1.jpg'",
+                                                                            "🔡 Text Never Give Up":                   "'https://wykopx.pl/_images/wykop_x_style/background-never-give-up-1.jpg'",
+                                                                            "✨ Stars 1":                            "'https://wykopx.pl/_images/wykop_x_style/background-stars-1.png'",
+                                                                            "✨ Stars 2":                            "'https://wykopx.pl/_images/wykop_x_style/background-stars-2.jpg'",
+                                                                            "✨ Stars 3":                            "'https://wykopx.pl/_images/wykop_x_style/background-stars-3.jpg'",
+                                                                            "✨ Stars 4":                            "'https://wykopx.pl/_images/wykop_x_style/background-stars-4.jpg'",
+                                                                            "✨ Stars 5":                            "'https://wykopx.pl/_images/wykop_x_style/background-stars-5.jpg'",
+                                                                            "✨ Stars 6":                            "'https://wykopx.pl/_images/wykop_x_style/background-stars-6.jpg'",
+                                                                            "✨ Stars 7":                            "'https://wykopx.pl/_images/wykop_x_style/background-stars-7.jpg'",
                                                                         } 
 
 
@@ -1567,8 +1631,8 @@ REMOVED checkbox   entryVotersListEmojiRemovedUserTextHide             `🔹❌ 
 @var checkbox  topNavSnowGirl                                    `❄ Snow Girl`                                                                                       0
 
 
-@var range      HR_JUDYTA_PAPP                     `📷 JUDYTA PAPP ⭐ NOWE (3.1.5)`                                                                              [0, 0, 99900, 1, 'mm']
-@var checkbox   JudytaPappHide                          `🚫 Ukryj PRZEROSINY dla Judyty Papp ⭐`                  0 
+@var range      HR_JUDYTA_PAPP                     `📷 JUDYTA PAPP`                                                                              [0, 0, 99900, 1, 'mm']
+@var checkbox   JudytaPappHide                          `🚫 Ukryj PRZEROSINY dla Judyty Papp`                  0 
 
 
 
@@ -1797,48 +1861,6 @@ TODO range      mainContentWidthValue                           `⟺ Domyślna s
 @var range      linksColumns                                    `Maks. liczba kolumn ze znaleziskami`                 [1, 1, 4, 1, '']
 @var range      linksColumnsEnable_INFO                         `Wybierz maksymalną liczbę kolumn ze znaleziskami. Faktyczna liczba kolumn będzie dostosowana automatycznie - przy zbyt wąskim oknie nawet przy ustaleniu 3 lub 4 kolumn znaleziska wyświetlą się w 2 kolumnach lub jednej. 2 kolumny włączają się od 1170px, 3 kolumny od 1880px, 4 kolumny od 2525px. Brana jest pod uwagę szerokość nie całego okna, lecz bloku w którym znajdują się znaleziska. Lewe menu kategorii, sidebar po prawej stronie, boczne panele powiadomień wpływają na szerokość tego bloku. Domyślnie blok znalezisk jest zbyt wąski, więc włącz chowanie panelu po prawej stronie (SIDEBAR PO PRAWEJ > Chowaj Sidebar) lub zmień szerokość (OPCJE LAYOUTU > ⟺ Szerokość strony)`             [0, 0,88800, 1, 'mm']
 
-
-@var range      SUB_HR_LINKS_COLUMNS                    `🔶 WYŚWIETLANIE LISTY ZNALEZISK`                                      [0, 0, 99999, 1, 'mm']
-
-@var checkbox   linksVisitedGrayedOut                           `Oznaczaj ✔ 𝗣𝗥𝗭𝗘𝗖𝗭𝗬𝗧𝗔𝗡𝗘 znaleziska 🆗`                                      1     
-@var select     linkThumbnail                                   `Miniaturki obrazków znalezisk` {
-                                                                        "Po prawej (domyślnie)"                 :   "poprawej",
-                                                                        "Po lewej (Wykop 2022)*":"polewej",
-                                                                        "Nie pokazuj"                           :   "niepokazuj"
-                                                                    } 
-
-@var checkbox   linkToWykopEntry                                `🔹 Oznaczaj znaleziska kierujące na wpisy z Mikrobloga`                                1     
-@var checkbox   linkToWykopArticle                              `🔸 Oznaczaj znaleziska kierujące do Wykopowych Artykułów`                              1     
-@var checkbox   linkToWykopAMA                                  `🔸 Oznaczaj znaleziska AMA`                                                          1     
-@var checkbox   linkVideoPlayerBlackBackground                  `▶ Widok teatralny podczas odtwarzanego wideo `                                       0     
-@var checkbox   linkToVideoDuration                             `▶❎ Pokaż czas trwania filmików na miniaturce`                                        1     
-
-@var checkbox   linkVoteDownButton                              `🔸❎ Przycisk "ZAKOP" przy znaleziskach na głównej`              0     
-
-// TOCHECK checkbox   hotLinksShowFirst              `check: 🔸🔥 Gorące Znaleziska wyświetlaj jako pierwsze`                 0
-
-@var select     linksDescriptionJustify                         `☰ Justowanie opisu znaleziska` {
-                                                                            "Brak justowania (domyślnie)"               :   "domyslnie",
-                                                                            "Wyjustowany (text-align: justify)"         :   "tekst_justify",
-                                                                            "Zbalansowany (text-wrap: balance) "     :   "tekst_balance",
-                                                                            "text-wrap: pretty*":"tekst_pretty",
-                                                                        } 
-
-
-@var checkbox   linkDescriptionShowFull                         `☰ Nie ucinaj długich opisów znalezisk 🆗`           1
-@var checkbox   linkShowRealNicknameColorOrange                 `🟠 Login autora pomarańczki w kolorze `              0     
-@var checkbox   linkShowRealNicknameColorBurgundy               `🔴 Login autora bordo w kolorze`                     0     
-@var checkbox   linkShowRealNicknameColorGreen                  `🟢 Login autora zielonki w kolorze`                  0     
-@var checkbox   linkShowRealNicknameColorOther                  `⚪ Login kont specjalnych w kolorze`                 0     
-@var checkbox   linkUserHide                                    `🚫 Ukryj login autora`                              0
-@var checkbox   linkDomainHide                                  `🚫 Ukryj źródło (domenę)`                           0
-@var checkbox   linkTagsHide                                    `🚫 Ukryj tagi znaleziska`                               0
-@var checkbox   linkPublishedDateHide                           `🚫 Ukryj czas umieszczenia znaleziska na głównej`       0
-@var checkbox   hideVoteUpButtonOnLinks                         `🚫 Ukryj przyciski "WYKOP" przy znaleziskach`           0
-TODO checkbox   commentsCountAlignment                          `🗨️ Przenieś liczbę komentarzy pod liczbę wykopów`       0
-@var checkbox   actionMenuLinkHideCommentsCountOnHomepage       `🗨️🚫 Ukryj liczbę komentarzy w znalezisku`          0
-
-@var range      linksSpacing                                    `Odstępy pomiędzy znaleziskami`       [10, 0, 69, 1, 'px']
 
 
 
@@ -2367,7 +2389,7 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
 
 
 @var checkbox   rightSidebarFooterHide                          `🚫 Ukryj stopkę 𝗪𝗬𝗞𝗢𝗣 © 𝟮𝟬𝟬𝟱 🆗`                                                        1
-@var checkbox   WykopXSpromoDisable                             `🚫 Ukryj baner informacyjny o skrypcie Wykop XS` 1
+@var checkbox   WykopXSpromoDisable                             `🚫 Ukryj baner informacyjny o skrypcie Wykop XS`                                           1
 
 
 
@@ -2691,7 +2713,7 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
 @var range      HR_ANTY_RUMUN                       `🚫 BLOKOWANIE SPAMU, PORNOGRAFII I ZIELONEK`            [0, 0, 99900, 1, 'mm']
 @var checkbox   userGreenEntriesWithPhotos                      `🟢🚯🔷 AntyRumun: Blokuj wpisy zielonek ze zdjęciami`                                               0
 @var checkbox   userGreenEntriesWithVideos                      `🟢🚯🔷 AntyRumun: Blokuj wpisy zielonek z filmikami`                                                0
-@var checkbox   userGreenEntriesWithURLS                        `🟢🚯🔷 AntySpam: Blokuj wpisy zielonek z linkami UR`                                               0
+@var checkbox   userGreenEntriesWithURLS                        `🟢🚯🔷 AntySpam: Blokuj wpisy zielonek z linkami URL`                                               0
 @var select     userGreenEntries                                `🟢🚯🔷 AntySpam: Pozostałe wpisy zielonek na mikroblogu` {
                                                                             "Pokazuj normalnie (domyślnie)":"domyslnie", 
                                                                             "Zwinięte":"minimized",
@@ -2862,7 +2884,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     
     if(presetTopNavWykop2022 == 1)
     {
-        topNavWallpaper = "https://wykopx.pl/img/background-wykop-2022.png";
+        topNavWallpaper = "https://wykopx.pl/_images/wykop_x_style/background-wykop-2022.png";
         topNavButtonsBackground = 0;
         topNavNotificationsBackground = 0;
         topNavBarLooksLikeClassicWykop = 1;
@@ -3385,7 +3407,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         --niebieskiPasek001:                                  rgba(67, 131, 175, 0.01);
         --niebieskiPasekBackground:                           rgba(67, 131, 175, 0.05); 
 
-        --rozowyPasek1:                                       rgba(192, 72, 167, 1);
+            --rozowyPasek1:                                       rgba(192, 72, 167, 1);
         --rozowyPasek09:                                      rgba(192, 72, 167, 0.9);
         --rozowyPasek08:                                      rgba(192, 72, 167, 0.8);
         --rozowyPasek07:                                      rgba(192, 72, 167, 0.7);
@@ -3400,7 +3422,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         --rozowyPasek001:                                     rgba(192, 72, 167, 0.01);
         --rozowyPasekBackground:                              rgba(192, 72, 167, 0.05);
 
-        --bezplciowyPasek1:                                   rgba(106, 106, 108, 1) /* var(--gullGray); */
+        --bezplciowyPasek1:                                   rgba(106, 106, 108, 1); /* var(--gullGray); */
         --bezplciowyPasek09:                                  rgba(106, 106, 108, 0.9);
         --bezplciowyPasek08:                                  rgba(106, 106, 108, 0.8);
         --bezplciowyPasek07:                                  rgba(106, 106, 108, 0.7);
@@ -4979,6 +5001,8 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     
     
 
+    
+    
 
 
 
@@ -6056,13 +6080,76 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     {
         .pub-slot-wrapper,
         aside:has(.pub-slot-wrapper),
+        /* reklama lidl tylko na wykop.pl/moj/ */
         .sidebar > aside > section:not([id]),
-        section.stream > div.content > section:not([id],.related-link,.item),       
+        section.stream > div.content > section:not([id], .related-link, .item, .selected),       
         section.stream > section > div.content > section:not([id])
         { display: none!important; }
         
-        .pub-slot-wrapper:has(section.premium-pub.link-block) { display: flex!important; }
-    }   
+        .pub-slot-wrapper:has(section.premium-pub.link-block)
+        { 
+            display: flex!important;
+        }
+    }
+    
+    /* 
+       .selected
+       UKRYWANIE NOWEJ SEKCJI "WYBRANE DLA CIEBIE" (2026-05-05) 
+       <section class="selected"><header></header><div class="content"><section class="stream selected-stream"><div class="content"><section id="link-123456" class="link-block">
+    */
+    if(homepageSelectedForYouHide == 1)
+    {
+        section.stream section.selected
+        { 
+            display: none!important;
+        }        
+    }
+    else
+    {
+        section.stream > div.content > section.selected
+        {
+            display: flex;
+            flex-direction: column;
+            
+            
+            opacity: 0.7;
+            
+            &:hover
+            {
+                opacity: 1;
+            }
+        }
+        section.selected > div.content > section.stream > div.content > section > section > article > section.selected
+        {
+            width: max-content;   
+        }
+        section.selected>header h3[data-v-8fbeeecc]:before
+        {
+            margin: none;
+        }
+        section.stream section.selected header h3
+        {
+            flex-wrap: wrap;
+        }
+       
+        section.stream section.selected header h3::after
+        {
+            content: 'Możesz wyłączyć tę sekcję w ustawieniach "Wykop X Style"';
+            
+            font-weight: 400;
+            color: var(--tuna);
+            font-size: 11px;
+            text-transform: none;
+
+            flex-basis: 100%;
+            width: 100%;
+        }
+    }
+    
+    
+    
+
+    
     // 🆗
     if(adsSponsoredLinksHide == 1)
     {
@@ -9673,7 +9760,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             {
                 header.header > .left > a.logotype
                 {
-                    background-image: url("https://raw.githubusercontent.com/wykopx/wykopx-png/main/logo/youtube-white.png")!important;
+                    background-image: url("https://wykopx.pl/_images/wykop_x_style/youtube-white.png")!important;
                     width: 93px!important;
                     /* height: 72%!important; */
                     margin-right: 0px!important;
@@ -9693,7 +9780,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     
     if(topNavBarLooksLikeClassicWykop == 1)
     {
-        // topNavWallpaper = "https://wykopx.pl/img/background-wykop-2022.png";
+        // topNavWallpaper = "https://wykopx.pl/_images/wykop_x_style/background-wykop-2022.png";
         topNavButtonsBackground = 0;    
 
         body > section > header.header > div.left > nav.main > ul > li[class]
@@ -21728,7 +21815,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     /* VARIABLES */
 
     versor = "style"; // "style", "blank", "block"
-    version = "3.2.3";   
+    version = "3.3.0";   
     /* xblocker = "2.49" */
     
     
@@ -21990,23 +22077,23 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     /* Wykop X Style version IN FOOTER */                                               
     body > section:not(.is-mobile)::after
     {       
-        content: "Wykop X " var(--versor) " " var(--version);
-        background-image: url("https://update.wykopx.pl/wykopx" + versor + "." + version + ".png");
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 1px;
-        text-transform: capitalize;
-        position: relative i;
-        opacity: 1 i;
-        z-index: unset;
-        font-size: 14px;
-        color: rgba(220,220,220,0.2);
-        display: flex;
-        justify-content: center;
+        // content: "Wykop X " var(--versor) " " var(--version);
+        // background-image: url("https://update.wykopx.pl/wykopx" + versor + "." + version + ".png");
+        // background-repeat: no-repeat;
+        // background-position: center;
+        // background-size: 1px;
+        // text-transform: capitalize;
+        // position: relative i;
+        // opacity: 1 i;
+        // z-index: unset;
+        // font-size: 14px;
+        // color: rgba(220,220,220,0.2);
+        // display: flex;
+        // justify-content: center;
         
-        padding-bottom: 30px;
-        margin-top: 70px;
-        width: auto;
+        // padding-bottom: 30px;
+        // margin-top: 70px;
+        // width: auto;
     }
 
 
@@ -22718,12 +22805,13 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     {
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
         {
-            content: "Zaobserwuj tag #wykopx ▫ Do funkcji oznaczonych emoji: ❎ zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦 Szczegóły na xs.wykopx.pl     ▫  Opis najciekawszych funkcji 𝗪𝘆𝗸𝗼𝗽 𝗫 na stronie ";
+            // content: "Zaobserwuj tag #wykopx ▫ Do funkcji oznaczonych emoji: ❎ zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦 Szczegóły na xs.wykopx.pl     ▫  Opis najciekawszych funkcji 𝗪𝘆𝗸𝗼𝗽 𝗫 na stronie ";
+            content: "Jako użytkownik Wykop X Style jesteś wśród grona osób, które jako pierwsze dostają dostęp do NOWEJ WERSJI ALTERNATYWNEGO WYKOPU";
             text-decoration: none;
         } 
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:after
         {
-            content: "wiki.wykopx.pl"
+            content: "⭐ Wejdź na: wykopx.pl ⭐"
         }
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
         {
