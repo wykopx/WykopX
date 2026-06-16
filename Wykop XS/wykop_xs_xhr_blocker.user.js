@@ -3,10 +3,10 @@
 // @name:pl							Wykop XS - XHR blocker
 // @name:en							Wykop XS - XHR blocker
 
-// @version							3.2.3
+// @version							3.3.3
 
-// @description 					Wykop XS - XHR Blocker | Wykop X Style znajdziesz na: http://style.wykopx.pl
-// @description:en 					Wykop XS - XHR Blocker | Check out also: http://style.wykopx.pl
+// @description 					Wykop XS - XHR Blocker | Wykop X Style znajdziesz na: http://wykopx.pl/style
+// @description:en 					Wykop XS - XHR Blocker | Check out also: http://wykopx.pl/style
 
 
 // Chcesz wesprzeć projekt Wykop X? Postaw kawkę:
@@ -23,11 +23,11 @@
 
 
 // @match							https://wykop.pl/*
-// @supportURL						http://wykop.pl/tag/wykopx
+// @supportURL						http://wykopx.pl/tag/wykopx
 // @namespace						Violentmonkey Scripts
 // @compatible						chrome, firefox, opera, safari, edge
 // @license							No License
-// @icon							https://www.google.com/s2/favicons?sz=64&domain=wykop.pl
+// @icon							https://www.google.com/s2/favicons?sz=64&domain=wykopx.pl
 
 
 
@@ -44,7 +44,7 @@
 {
 	'use strict';
 
-	const currentVersion = "3.2.3";
+	const currentVersion = "3.3.3";
 	let dev = false;
 
 	const promoString = " - Wykop XHR Blocker / #wykopx";
@@ -158,10 +158,12 @@
 	if (settings.hideAds)
 	{
 		CSS += `
+			.mgid-platform,
 			.pub-slot-wrapper,
 			aside:has(.pub-slot-wrapper),
+			/* reklama lidl tylko na wykop.pl/moj/ */
 			.sidebar > aside > section:not([id]),
-			section.stream > div.content > section:not([id],.related-link,.item),
+			section.stream > div.content > section:not([id], .related-link, .item, .selected),
 			section.stream > section > div.content > section:not([id])
 			{ display: none!important; }
 		`;

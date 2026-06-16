@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Multikonta
 // @name:en							Wykop XS - Multikonta
 
-// @version							3.2.3
+// @version							3.3.3
 
 // @description 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
 // @description:en 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
@@ -23,11 +23,11 @@
 
 
 // @match							https://wykop.pl/*
-// @supportURL						http://wykop.pl/tag/wykopx
+// @supportURL						http://wykopx.pl/tag/wykopx
 // @namespace						Violentmonkey Scripts
 // @compatible						chrome, firefox, opera, safari, edge
 // @license							No License
-// @icon							https://www.google.com/s2/favicons?sz=64&domain=wykop.pl
+// @icon							https://www.google.com/s2/favicons?sz=64&domain=wykopx.pl
 
 
 // @require 						https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
@@ -45,7 +45,7 @@
 
 'use strict';
 
-const currentVersion = "3.2.3";
+const currentVersion = "3.3.3";
 let dev = false;
 
 const promoString = " - Wykop XS / #wykopx";
@@ -342,7 +342,7 @@ settings.mikroczatOpenMikroczatOnCTRLMiddleClick = true;
 	// XS MIKROCZAT  -- START
 	let wykopDomain = "https://wykop.pl";
 	let wxDomain = "https://wykopx.pl";
-	const mikroczatDomain = "https://mikroczat.pl";
+	const mikroczatDomain = "https://wykopx.pl/czat";
 	const mikroczatPath = "/"; /* /czat */
 	const mikroczatMainChannelPath = "czat";
 	const mikroczatDefaultChannel = "mikroblog+";
@@ -416,11 +416,11 @@ Otwieranie czatu w 𝗡𝗢𝗪𝗬𝗠 𝗢𝗞𝗡𝗜𝗘:
 		{
 			if (e.target.matches("a.wykopx_open_mikroczat"))
 			{
-				e.target.href = "https://mikroczat.pl";
+				e.target.href = "https://wykopx.pl/czat";
 			}
 			if (e.target.matches("a.wykopx_open_mikroczat > span"))
 			{
-				e.target.closest("a").href = "https://mikroczat.pl";
+				e.target.closest("a").href = "https://wykopx.pl/czat";
 			}
 		});
 	}
@@ -449,7 +449,7 @@ Otwieranie czatu w 𝗡𝗢𝗪𝗬𝗠 𝗢𝗞𝗡𝗜𝗘:
 		let urlPathnameArray = hrefURL;
 		let mikroczatURL = `${mikroczatDomain}`;
 
-		if (hrefURL.startsWith("https://mikroczat.pl"))
+		if (hrefURL.startsWith("https://wykopx.pl/czat"))
 		{
 			mikroczatURL = hrefURL;
 		}
@@ -612,7 +612,7 @@ Otwieranie czatu w 𝗡𝗢𝗪𝗬𝗠 𝗢𝗞𝗡𝗜𝗘:
 
 	document.addEventListener("mouseover", (e) =>
 	{
-		if (!e.target.matches(`a[href^="https://mikroczat.pl"]`)) return;
+		if (!e.target.matches(`a[href^="https://wykopx.pl/czat"]`)) return;
 
 		e.target.title = `Otwórz wykopowy Mikroczat`;
 
@@ -623,7 +623,7 @@ Otwieranie czatu w 𝗡𝗢𝗪𝗬𝗠 𝗢𝗞𝗡𝗜𝗘:
 
 	document.addEventListener("mouseout", (e) =>
 	{
-		if (!e.target.matches(`a[href^="https://mikroczat.pl"]`)) return;
+		if (!e.target.matches(`a[href^="https://wykopx.pl/czat"]`)) return;
 		removeEventListenersFromMikroczatHref(e.target);
 	});
 
@@ -1149,7 +1149,7 @@ Widok dyskusji:
 				transition: none!important;
 			}
 
-			section:is(.entry-content, .link-block) a[href^="https://mikroczat.pl/"]
+			section:is(.entry-content, .link-block) a[href^="https://wykopx.pl/czat/"]
 			{
 				padding-right: 2px!important;
 				padding-left: 2px!important;
@@ -1164,7 +1164,7 @@ Widok dyskusji:
 			section.entry-content a[href^="/ludzie/"],
 			section.entry div.right a.username[href^="/ludzie/"],
 			section.link-block a.username[href^="/ludzie/"],
-			section.entry-content .wrapper a[href^="https://mikroczat.pl/"]
+			section.entry-content .wrapper a[href^="https://wykopx.pl/czat/"]
 			{
 				border: 1px solid transparent!important;
 				position: relative!important;
@@ -1179,15 +1179,15 @@ Widok dyskusji:
 			body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
 			body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
 			body > section[data-key_ctrl="true"] 	section.entry div.right a[href^="/wpis/"] *,
-			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *
+			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"],
+			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"] *
 			{
 				color: var(--tagChannelColor)!important;
 			}
 			body > section[data-key_ctrl="true"] 	section.sidebar a[href^="/tag/"],
 			body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
 			body > section[data-key_ctrl="true"] 	section.entry div.right a[href^="/wpis/"],
-			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]
+			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"]
 			{
 				border-color: var(--tagChannelColor)!important;
 				background-color: color-mix(in srgb, var(--whitish) 90%, var(--tagChannelColor))!important;
@@ -1196,7 +1196,7 @@ Widok dyskusji:
 			body > section[data-key_ctrl="true"] 	section.sidebar a[href^="/tag/"]:hover,
 			body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
 			body > section[data-key_ctrl="true"] 	section.entry div.right a[href^="/wpis/"]:hover,
-			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover
+			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"]:hover
 			{
 				background-color: color-mix(in srgb, var(--whitish) 60%, var(--tagChannelColor))!important;
 			}
@@ -1227,8 +1227,8 @@ Widok dyskusji:
 			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="/ludzie/"],
 			body > section[data-key_ctrl="true"] 	section.entry div.right a.username[href^="/ludzie/"],
 			body > section[data-key_ctrl="true"] 	section.link-block a.username[href^="/ludzie/"],
-			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/pm/"],
-			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/room/"]
+			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/pm/"],
+			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/room/"]
 			{
 				color: var(--pmChannelColor)!important;
 				border-color: var(--pmChannelColor)!important;
@@ -1239,8 +1239,8 @@ Widok dyskusji:
 			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="/ludzie/"]:hover,
 			body > section[data-key_ctrl="true"] 	section.entry div.right a.username[href^="/ludzie/"]:hover,
 			body > section[data-key_ctrl="true"] 	section.link-block a.username[href^="/ludzie/"]:hover,
-			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/pm/"]:hover,
-			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/room/"]:hover
+			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/pm/"]:hover,
+			body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/room/"]:hover
 			{
 				background-color: color-mix(in srgb, var(--whitish) 60%, var(--pmChannelColor))!important;
 			}
@@ -2159,10 +2159,12 @@ Widok dyskusji:
 	if (settings.hideAds)
 	{
 		CSS += `
+			.mgid-platform,
 			.pub-slot-wrapper,
 			aside:has(.pub-slot-wrapper),
+			/* reklama lidl tylko na wykop.pl/moj/ */
 			.sidebar > aside > section:not([id]),
-			section.stream > div.content > section:not([id],.related-link,.item),
+			section.stream > div.content > section:not([id], .related-link, .item, .selected),
 			section.stream > section > div.content > section:not([id])
 			{ display: none!important; }
 		`;
