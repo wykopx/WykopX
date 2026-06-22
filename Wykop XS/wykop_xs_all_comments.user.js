@@ -3,10 +3,10 @@
 // @name:pl						Wykop XS - OnePage Komentarze i Notatki
 // @name:en						Wykop XS - OnePage Komentarze i Notatki
 
-// @version						3.0.83
+// @version						3.3.5
 
-// @description 					Wykop XS - OnePage Komentarze i Notatki | Wejdź na Mikroczat: https://mikroczat.pl Projekt Wykop X: https://wykopx.pl Wiki projektu Wykop X: https://wiki.wykopx.pl
-// @description:en 					Wykop XS - OnePage Komentarze i Notatki | Wykop Live Chat: https://mikroczat.pl | Wykop X Project: https://wykopx.pl | Wiki: https://wiki.wykopx.pl
+// @description 					Wykop XS - OnePage Komentarze i Notatki | Wejdź na Wykop X: https://wykopx.pl | Wiki projektu Wykop X: https://wykopx.pl/wiki
+// @description:en 					Wykop XS - OnePage Komentarze i Notatki | Wykop X Project: https://wykopx.pl | Wiki: https://wykopx.pl/wiki
 
 
 // Chcesz wesprzeć projekt Wykop X? Postaw kawkę:
@@ -17,11 +17,11 @@
 
 
 // @match						https://wykop.pl/*
-// @supportURL						http://wykop.pl/tag/wykopx
-// @namespace						Violentmonkey Scripts
-// @compatible						chrome, firefox, opera, safari, edge
+// @supportURL					http://wykopx.pl/tag/wykopx
+// @namespace					Violentmonkey Scripts
+// @compatible					chrome, firefox, opera, safari, edge
 // @license						No License
-// @icon						https://www.google.com/s2/favicons?sz=64&domain=wykop.pl
+// @icon						https://www.google.com/s2/favicons?sz=64&domain=wykopx.pl
 
 
 
@@ -68,7 +68,7 @@
 
 
 
-	const currentVersion = "3.0.83";
+	const currentVersion = "3.3.5";
 	let dev = false;
 
 	const AWAIT_MILLISECONDS = 400;

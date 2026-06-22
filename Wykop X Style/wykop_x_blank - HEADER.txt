@@ -46,7 +46,7 @@ dodaje ponad 100 nowych funkcji oznaczonych jako ❎
 
 
                 ---- AUTOR ----
-@author         Wykop X <wykopx@gmail.com> | wiki.wykopx.pl
+@author         Wykop X <wykopx@gmail.com> | wykopx.pl/wiki
 @homepageURL    http://wykopx.pl
 @supportURL     http://wykopx.pl
                 ---- AUTOR ---- 

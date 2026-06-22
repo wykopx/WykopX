@@ -3,7 +3,7 @@
 @version        1.0.6
 
 @description    Best AdBlock for X.com / Twitter.com  Blocks and removes all ads, sponsored tweets. You can customise and remove irrelevant panels like Subscribe Premium or Who to Follow. adblock, adsblock. uBlock. Remove ads. Block hide remove advertisements and adverts.
-@description    https://wiki.wykopx.pl
+@description    https://wykopx.pl/wiki
 
 
 Support and buy a small coffee https://buycoffee.to/wykopx
@@ -11,8 +11,8 @@ Support and buy a small coffee https://buycoffee.to/wykopx
 
 ---- AUTHOR ----
 
-@author         Wykop X <wykopx@gmail.com> | wiki.wykopx.pl
-@homepageURL    http://wiki.wykopx.pl
+@author         Wykop X <wykopx@gmail.com> | wykopx.pl/wiki
+@homepageURL    http://wykopx.pl/wiki
 @supportURL     https://buycoffee.to/wykopx
 
 ---- AUTHOR ---- 
@@ -748,12 +748,12 @@ var checkbox     removeTimelineDiscoverNewCommunities      `⛔ Hide "Discover n
     {
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
         {
-            content: "Zaobserwuj tag #wykopx ▫ Do funkcji oznaczonych emoji: ❎ zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦 Szczegóły na xs.wykopx.pl     ▫  Opis najciekawszych funkcji 𝗪𝘆𝗸𝗼𝗽 𝗫 na stronie ";
+            content: "Zaobserwuj tag #wykopx ▫ Do funkcji oznaczonych emoji: ❎ zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦 Szczegóły na wykopx.pl/skrypty     ▫  Opis najciekawszych funkcji 𝗪𝘆𝗸𝗼𝗽 𝗫 na stronie ";
             text-decoration: none;
         } 
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:after
         {
-            content: "wiki.wykopx.pl"
+            content: "wykopx.pl/wiki"
         }
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
         {

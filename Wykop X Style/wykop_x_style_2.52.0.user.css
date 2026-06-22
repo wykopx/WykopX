@@ -7,15 +7,15 @@
 
 @description    ---- Wykop X Style BLANK ----
 @description    Wersja BLANK z wyłączonymi wszystkimi ustawieniami znajduje się tutaj:
-@description    http://blank.wykopx.pl
+@description    http://wykopx.pl/blank
 @description    https://userstyles.world/style/8419/wykop-x-blank
 
 
 ---- AUTOR WYKOP X ----
 
-@author         Wykop X <wykopx@gmail.com> | wiki.wykopx.pl
-@homepageURL    http://wiki.wykopx.pl
-@supportURL     http://changelog.wykopx.pl
+@author         Wykop X <wykopx@gmail.com> | wykopx.pl/wiki
+@homepageURL    http://wykopx.pl/wiki
+@supportURL     http://wykopx.pl/changelog
 
 ---- AUTOR WYKOP X ----
 
@@ -17004,7 +17004,7 @@ https://wykop.pl/moje/
         } 
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:after
         {
-            content: "changelog.wykopx.pl"
+            content: "wykopx.pl/changelog"
         }
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
         {

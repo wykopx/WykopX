@@ -3,10 +3,10 @@
 // @name:pl							Wykop XS 3
 // @name:en							Wykop XS 3
 
-// @version							3.2.3
+// @version							3.3.5
 
-// @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://styl.wykopx.pl
-// @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://styl.wykopx.pl
+// @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://wykopx.pl/styl
+// @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://wykopx.pl/styl
 
 
 // Chcesz wesprzeć projekt Wykop X? Postaw kawkę:
@@ -25,11 +25,11 @@
 // @match							https://wykop.pl/*
 // @match							https://github.com/wykopx/*
 
-// @supportURL						http://wykop.pl/tag/wykopx
+// @supportURL						http://wykopx.pl/tag/wykopx
 // @namespace						Violentmonkey Scripts
 // @compatible						chrome, firefox, opera, safari, edge
 // @license							No License
-// @icon							https://www.google.com/s2/favicons?sz=64&domain=wykop.pl
+// @icon							https://www.google.com/s2/favicons?sz=64&domain=wykopx.pl
 
 
 // @require							https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
@@ -48,7 +48,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.2.3";
+	const currentVersion = "3.3.5";
 	let dev = false;
 
 	const promoString = " - Wykop XS / #wykopx";
@@ -1243,7 +1243,7 @@
 
 		function redirectToTag(tag)
 		{
-			window.location.replace(`https://go.wykopx.pl/#${tag}`);
+			window.location.replace(`https://wykopx.pl/#${tag}`);
 		}
 
 		function redirectToUser(user)
@@ -1629,7 +1629,7 @@
 					{
 						section_html += `
 						<li data-v-7befdafc data-v-d5500d78 title="Przejdź na tag #${tag}  ${promoString}">
-							<span data-v-7befdafc data-v-d5500d78>#</span><a data-v-7befdafc href="https://go.wykopx.pl/#${tag}" class="hybrid" data-v-d5500d78>${tag}</a>
+							<span data-v-7befdafc data-v-d5500d78>#</span><a data-v-7befdafc href="https://wykopx.pl/#${tag}" class="hybrid" data-v-d5500d78>${tag}</a>
 						</li>`;
 					});
 					section_html += `</ul></section></div></section>`;
@@ -1756,10 +1756,10 @@
 
 			if (Object.keys(dataPOST).length >= 2)
 			{
-				if (dev) console.log(" 🍌🍌🍌🍌 Sending this data to api.wykopx.pl: ", dataPOST)
+				if (dev) console.log(" 🍌🍌🍌🍌 Sending this data to wykopx.pl: ", dataPOST)
 
 				// TODO
-				// fetch('https://api.wykopx.pl/api/v3/', { 
+				// fetch('https://wykopx.pl/api/v3/', { 
 				// 	method: 'POST',
 				// 	headers: {
 				// 		'Content-Type': 'application/json'
@@ -1771,7 +1771,7 @@
 				// 	{
 				// 		localStorageObserved.setItem(`settings_list_update`, loadTime);
 
-				// 		if(dev) console.log(" 🍌🍌🍌🍌 response from api.wykopx.pl: ")
+				// 		if(dev) console.log(" 🍌🍌🍌🍌 response from wykopx.pl: ")
 				// 		if(dev) console.log(data)
 				// 	})
 				// 	.catch(error => console.error('Error:', error));
@@ -4279,7 +4279,7 @@
 			<div class="wykopxs wykopx_modal" id="wxs_modal">
 				<div class="wykopx_modal-content">
 					<aside class="wykopxs_info_bar wykopx_hide_this_if_stylus_is_installed">
-						Masz już działający skrypt Wykop XS. Aby Mirkoukrywacz działał, musisz zainstalować i włączyć w Stylusie <a href="http://wiki.wykopx.pl" target="_blank">Wykop X</a>
+						Masz już działający skrypt Wykop XS. Aby Mirkoukrywacz działał, musisz zainstalować i włączyć w Stylusie <a href="http://wykopx.pl/wiki" target="_blank">Wykop X</a>
 					</aside>
 	
 					<aside class="wxs_modal_is_turned_off wykopx_hide_this_if_mirkoukrywanie_is_turned_on">
@@ -4758,7 +4758,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			{
 				const wykopxpromo = document.createElement('section');
 				const wykopxpromolink = document.createElement('a');
-				wykopxpromolink.href = "http://xstyle.wykopx.pl/"
+				wykopxpromolink.href = "http://xwykopx.pl/style/"
 				wykopxpromolink.target = "wykopx"
 				wykopxpromo.appendChild(wykopxpromolink);
 				wykopxpromo.classList.add("wykopx_promo", "wykopx_promo_banner");
@@ -8229,7 +8229,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 						title: "Otwórz stronę Wiki z informacjami o dodatku Wykop X",
 						className: `wykopx_wiki`,
 						id: undefined,
-						url: "http://wiki.wykopx.pl/",
+						url: "http://wykopx.pl/wiki/",
 						target: "wykopx",
 						icon: null,
 						number: null
@@ -9224,14 +9224,48 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		/* HIDE ADS ALWAYS */
 		CSS += `
-			.pub-slot-wrapper,
-			aside:has(.pub-slot-wrapper),
-			.sidebar > aside > section:not([id]),
-			section.stream > div.content > section:not([id],.related-link,.item),
-			section.stream > section > div.content > section:not([id])
-			{ display: none!important; }
+		.mgid-platform,
+        .pub-slot-wrapper,
+        aside:has(.pub-slot-wrapper),
+        .sidebar > aside > section:not([id]),
 
-			.pub-slot-wrapper:has(section.premium-pub.link-block)
+        section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),
+
+        section.stream > section > div.content > section:not([id]),
+
+        .sidebar > *:not(.custom-sidebar),
+
+        section.stream > nav,
+        section.stream > span,
+        section.stream > section,
+        section.stream > aside,
+        section.stream > header:not(.stream-top),
+
+        section.stream > article:has(nav),
+
+        section.stream > div:not(.content),
+        section.stream section.stream > article,
+
+        .stream section.stream > div.content > div:not(.content),
+        .stream section.stream > div.content > nav,
+        .stream section.stream > div.content > span,
+        .stream section.stream > div.content > article,
+        .stream section.stream > div.content > header:not(.stream-top),
+
+
+        section > section.stream > div.content > div:not(.content),
+        section > section.stream > div.content > nav,
+        section > section.stream > div.content > span
+        section > section.stream > div.content > article,
+        section > section.stream > div.content > header:not(.stream-top)
+        {
+            display: none!important;
+        }
+		`;
+
+
+		CSS += `
+		    .pub-slot-wrapper:has(section.premium-pub.link-block)
 			{
 				display: flex!important;
 				border: 1px solid rgba(255, 0, 0, 0.3)!important;
@@ -9336,7 +9370,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		// XS MIKROCZAT  -- START
 		let wykopDomain = "https://wykop.pl";
 		let wxDomain = "https://wykopx.pl";
-		const mikroczatDomain = "https://mikroczat.pl";
+		const mikroczatDomain = "https://wykopx.pl/czat";
 		const mikroczatPath = "/"; /* /czat */
 		// let mikroczatChannel="/";
 		let mikroczatWindow = null;
@@ -9712,13 +9746,13 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			margin-right: 1px;
 			transition: none!important;
 		}
-		section:is(.entry-content, .link-block) a[href^="https://mikroczat.pl/"]
+		section:is(.entry-content, .link-block) a[href^="https://wykopx.pl/czat/"]
 		{
 			padding-right: 2px!important;
 			padding-left: 2px!important;
 		}
 		section:is(.entry-content, .link-block) a[href^="/tag/"],
-		section.entry-content .wrapper a[href^="https://mikroczat.pl/"]
+		section.entry-content .wrapper a[href^="https://wykopx.pl/czat/"]
 		{
 			border: 1px solid transparent!important;
 			position: relative!important;
@@ -9730,12 +9764,12 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
 		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
 		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"] *,
-		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *,
-		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *,
-		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"] *
+		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"],
+		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"],
+		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"],
+		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"] *,
+		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"] *,
+		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"] *
 		{
 			color: var(--tagChannelColor)!important;
 		}
@@ -9743,9 +9777,9 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
 		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
 		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"],
-		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"],
-		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]
+		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"],
+		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"],
+		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"]
 		{
 			border-color: var(--tagChannelColor)!important;
 			background-color: color-mix(in srgb, var(--whitish) 90%, var(--tagChannelColor))!important;
@@ -9754,9 +9788,9 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		body > section[data-key_shift="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
 		body > section[data-key_alt="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
 		body > section[data-key_ctrl="true"] 	section:is(.entry-content, .link-block) a[href^="/tag/"]:hover,
-		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover,
-		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover,
-		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]:hover
+		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"]:hover,
+		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"]:hover,
+		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"]:hover
 		{
 			background-color: color-mix(in srgb, var(--whitish) 60%, var(--tagChannelColor))!important;
 		}
@@ -9785,9 +9819,9 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		body > section[data-key_shift="true"] 	section.entry-content a[href^="/tag/"]::after,
 		body > section[data-key_alt="true"] 	section.entry-content a[href^="/tag/"]::after,
 		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="/tag/"]::after,
-		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after,
-		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after,
-		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://mikroczat.pl/"]::after
+		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"]::after,
+		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"]::after,
+		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"]::after
 		{
 			color: white;
 			content: "🗯";
@@ -10195,7 +10229,18 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			else
 			{
 				const editWrapper = sectionEntry.querySelector(".edit-wrapper");
-				if (editWrapper) editWrapper.appendChild(sectionEntryVoters);
+				if (editWrapper)
+				{
+					const footer = editWrapper.querySelector("footer");
+					if (footer)
+					{
+						footer.appendChild(sectionEntryVoters);
+					}
+					else
+					{
+						editWrapper.appendChild(sectionEntryVoters);
+					}
+				}
 			}
 		}
 
@@ -10841,16 +10886,47 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		if (settings.hideAds)
 		{
 			CSS += `
+			.mgid-platform,
 			.pub-slot-wrapper,
 			aside:has(.pub-slot-wrapper),
+			/* reklama lidl tylko na wykop.pl/moj/ */
 			.sidebar > aside > section:not([id]),
-			section.stream > div.content > section:not([id],.related-link,.item),
-			section.stream > section > div.content > section:not([id])
+
+			section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),
+
+			section.stream > section > div.content > section:not([id]),
+
+
+			/* 2026-06-22 nowe natrętne reklamy */
+			.sidebar > *:not(.custom-sidebar),
+
+			section.stream > nav,
+			section.stream > span,
+			section.stream > section,
+			section.stream > aside,
+			section.stream > header:not(.stream-top),
+
+			section.stream > article:has(nav),
+
+			section.stream > div:not(.content),
+			section.stream section.stream > article,
+
+
+			.stream section.stream > div.content > div:not(.content),
+			.stream section.stream > div.content > nav,
+			.stream section.stream > div.content > span,
+			.stream section.stream > div.content > article,
+			.stream section.stream > div.content > header:not(.stream-top),
+
+
+			section > section.stream > div.content > div:not(.content),
+			section > section.stream > div.content > nav,
+			section > section.stream > div.content > span
+			section > section.stream > div.content > article,
+			section > section.stream > div.content > header:not(.stream-top)
 			{ display: none!important; }
-		 `;
+		`;
 		}
-
-
 
 
 		styleElement.textContent = CSS;

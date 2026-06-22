@@ -46,7 +46,7 @@ dodaje ponad 100 nowych funkcji oznaczonych jako ❎
 
 
                 ---- AUTOR ----
-@author         Wykop X <wykopx@gmail.com> | wiki.wykopx.pl
+@author         Wykop X <wykopx@gmail.com> | wykopx.pl/wiki
 @homepageURL    http://wykopx.pl
 @supportURL     http://wykopx.pl
                 ---- AUTOR ---- 
@@ -22808,7 +22808,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     {
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
         {
-            // content: "Zaobserwuj tag #wykopx ▫ Do funkcji oznaczonych emoji: ❎ zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦 Szczegóły na xs.wykopx.pl     ▫  Opis najciekawszych funkcji 𝗪𝘆𝗸𝗼𝗽 𝗫 na stronie ";
+            // content: "Zaobserwuj tag #wykopx ▫ Do funkcji oznaczonych emoji: ❎ zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦 Szczegóły na wykopx.pl/skrypty     ▫  Opis najciekawszych funkcji 𝗪𝘆𝗸𝗼𝗽 𝗫 na stronie ";
             content: "Jako użytkownik Wykop X Style jesteś wśród grona osób, które jako pierwsze dostają dostęp do NOWEJ WERSJI ALTERNATYWNEGO WYKOPU";
             text-decoration: none;
         } 

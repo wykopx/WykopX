@@ -7,16 +7,16 @@
 
 
 @description    Wykop X Style - główna wersja z włączonymi niektórymi funkcjami znajduje się tutaj:
-@description    http://styl.wykopx.pl
+@description    http://wykopx.pl/styl
 @description    https://userstyles.world/style/8174/wykop-x
 
 
 
 ---- AUTOR WYKOP X ----
 
-@author         Wykop X <wykopx@gmail.com> | wiki.wykopx.pl
-@homepageURL    http://wiki.wykopx.pl
-@supportURL     http://wiki.wykopx.pl
+@author         Wykop X <wykopx@gmail.com> | wykopx.pl/wiki
+@homepageURL    http://wykopx.pl/wiki
+@supportURL     http://wykopx.pl/wiki
 
 ---- AUTOR WYKOP X ----
 
@@ -17005,7 +17005,7 @@ https://wykop.pl/moje/
         } 
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:after
         {
-            content: "changelog.wykopx.pl"
+            content: "wykopx.pl/changelog"
         }
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
         {

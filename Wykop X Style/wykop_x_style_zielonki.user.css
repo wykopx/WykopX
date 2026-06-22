@@ -1,33 +1,33 @@
 /* ==UserStyle==
 @name           Wykop X Style - zielonki
-@version        3.2.3
+@version        3.3.3
 
 
 @description    Wykop X Style
 @description    Ten styl to 900 różnych funkcji zmieniających wykop
-description     https://styl.wykopx.pl
+description     https://wykopx.pl/styl
 
 
 @description	Wykop X Style Blank
 @description	W wersji BLANK wszystkie opcje są wyłączone
-@description	https://blank.wykopx.pl
+@description	https://wykopx.pl/blank
 
 
 @description    Wykop XS
 @description    Pomocniczy skrypt Wykop XS z dodatkowymi funkcjami
-@description    https://skrypt.wykopx.pl
+@description    https://wykopx.pl/skrypt
 
 @description    ---- WYKOP X ----
-@description    http://wiki.wykopx.pl
+@description    http://wykopx.pl/wiki
 @description    https://userstyles.world/style/8174/wykop-x-style-3
 
 
 
 ---- AUTOR WYKOP X ----
 
-@author         Wykop X <wykopx@gmail.com> | wiki.wykopx.pl
-@homepageURL    http://wiki.wykopx.pl
-@supportURL     http://wiki.wykopx.pl
+@author         Wykop X <wykopx@gmail.com> | wykopx.pl/wiki
+@homepageURL    http://wykopx.pl/wiki
+@supportURL     http://wykopx.pl/wiki
 
 ---- AUTOR WYKOP X ---- 
 
@@ -674,7 +674,7 @@ description     https://styl.wykopx.pl
         } 
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:after
         {
-            content: "wiki.wykopx.pl"
+            content: "wykopx.pl/wiki"
         }
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
         {

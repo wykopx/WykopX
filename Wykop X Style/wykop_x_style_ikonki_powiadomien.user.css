@@ -1,36 +1,36 @@
 /* ==UserStyle==
 @name           Wykop X Style - Powiadomienia
-@version        3.2.3
+@version        3.3.3
 
 
 @description    Wykop X Style
 @description    Ten styl pozwala zmieniać powiadomienia na wykopie oraz dodaje dodatkowe opcje dla stylów Wykop XS - All comments together oraz Wykop XS - Grupuj powiadomienia
-description     https://styl.wykopx.pl
+description     https://wykopx.pl/styl
 
 @description    MikroCzat
 @description    Wejdź na Wykopowy Czat
-@description    https://mikroczat.pl
+@description    https://wykopx.pl/czat
 
 @description	Wykop X Style Blank
 @description	W wersji BLANK wszystkie opcje są wyłączone
-@description	https://blank.wykopx.pl
+@description	https://wykopx.pl/blank
 
 @description    Wykop XS
 @description    Skrypty z dodatkowymi funkcjami znajdziesz na
-@description    https://skrypty.wykopx.pl
+@description    https://wykopx.pl/skrypty
 
 
 @description    ---- WYKOP X ----
-@description    http://wiki.wykopx.pl
+@description    http://wykopx.pl/wiki
 @description    https://userstyles.world/style/8174/wykop-x-style-3
 
 
 
 ---- AUTOR WYKOP X ----
 
-@author         Wykop X <wykopx@gmail.com> | wiki.wykopx.pl
-@homepageURL    http://wiki.wykopx.pl
-@supportURL     http://wiki.wykopx.pl
+@author         Wykop X <wykopx@gmail.com> | wykopx.pl/wiki
+@homepageURL    http://wykopx.pl/wiki
+@supportURL     http://wykopx.pl/wiki
 
 ---- AUTOR WYKOP X ----  
 
@@ -386,12 +386,12 @@ description     https://styl.wykopx.pl
     {
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
         {
-            content: "Zaobserwuj tag #wykopx ▫ Do funkcji oznaczonych emoji: ❎ zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦 Szczegóły na xs.wykopx.pl     ▫  Opis najciekawszych funkcji 𝗪𝘆𝗸𝗼𝗽 𝗫 na stronie ";
+            content: "Zaobserwuj tag #wykopx ▫ Do funkcji oznaczonych emoji: ❎ zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦 Szczegóły na wykopx.pl/skrypty     ▫  Opis najciekawszych funkcji 𝗪𝘆𝗸𝗼𝗽 𝗫 na stronie ";
             text-decoration: none;
         } 
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:after
         {
-            content: "wiki.wykopx.pl"
+            content: "wykopx.pl/wiki"
         }
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
         {

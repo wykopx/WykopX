@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Judasz
 // @name:en							Wykop XS - Judasz
 
-// @version							3.0.81
+// @version							3.3.5
 
 // @description 					Wykop XS Judasz
 // @description:en 					Wykop XS Judasz
@@ -25,11 +25,11 @@
 // @match							https://wykop.pl/*
 // @match							https://github.com/wykopx/*
 
-// @supportURL						http://wykop.pl/tag/wykopx
+// @supportURL						http://wykopx.pl/tag/wykopx
 // @namespace						Violentmonkey Scripts
 // @compatible						chrome, firefox, opera, safari, edge
 // @license							No License
-// @icon							https://www.google.com/s2/favicons?sz=64&domain=wykop.pl
+// @icon							https://www.google.com/s2/favicons?sz=64&domain=wykopx.pl
 
 
 // @require							https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
@@ -48,7 +48,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.0.81";
+	const currentVersion = "3.3.5";
 	let dev = true;
 
 

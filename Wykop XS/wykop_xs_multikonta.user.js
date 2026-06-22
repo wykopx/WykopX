@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Multikonta
 // @name:en							Wykop XS - Multikonta
 
-// @version							3.3.3
+// @version							3.3.5
 
 // @description 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
 // @description:en 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
@@ -45,7 +45,7 @@
 
 'use strict';
 
-const currentVersion = "3.3.3";
+const currentVersion = "3.3.5";
 let dev = false;
 
 const promoString = " - Wykop XS / #wykopx";
@@ -2159,14 +2159,43 @@ Widok dyskusji:
 	if (settings.hideAds)
 	{
 		CSS += `
-			.mgid-platform,
-			.pub-slot-wrapper,
-			aside:has(.pub-slot-wrapper),
-			/* reklama lidl tylko na wykop.pl/moj/ */
-			.sidebar > aside > section:not([id]),
-			section.stream > div.content > section:not([id], .related-link, .item, .selected),
-			section.stream > section > div.content > section:not([id])
-			{ display: none!important; }
+		.mgid-platform,
+        .pub-slot-wrapper,
+        aside:has(.pub-slot-wrapper),
+        .sidebar > aside > section:not([id]),
+
+        section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),
+
+        section.stream > section > div.content > section:not([id]),
+
+        .sidebar > *:not(.custom-sidebar),
+
+        section.stream > nav,
+        section.stream > span,
+        section.stream > section,
+        section.stream > aside,
+        section.stream > header:not(.stream-top),
+
+        section.stream > article:has(nav),
+
+        section.stream > div:not(.content),
+        section.stream section.stream > article,
+
+        .stream section.stream > div.content > div:not(.content),
+        .stream section.stream > div.content > nav,
+        .stream section.stream > div.content > span,
+        .stream section.stream > div.content > article,
+        .stream section.stream > div.content > header:not(.stream-top),
+
+
+        section > section.stream > div.content > div:not(.content),
+        section > section.stream > div.content > nav,
+        section > section.stream > div.content > span
+        section > section.stream > div.content > article,
+        section > section.stream > div.content > header:not(.stream-top)
+        {
+            display: none!important;
+        }
 		`;
 	}
 

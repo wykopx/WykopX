@@ -9,11 +9,11 @@ javascript: (function ()
 		}
 		else if (url.pathname.startsWith("/tag/"))
 		{
-			window.open("https://mikroczat.pl/czat/" + url.pathname.split("/tag/")[1]);
+			window.open("https://wykopx.pl/czat/czat/" + url.pathname.split("/tag/")[1]);
 		}
 		else if (url.pathname.startsWith("/ludzie/") && url.pathname.length > 8)
 		{
-			window.open("https://mikroczat.pl/pm/@" + url.pathname.split("/ludzie/")[1]);
+			window.open("https://wykopx.pl/czat/pm/@" + url.pathname.split("/ludzie/")[1]);
 		}
 	}
 	else if (url.hostname === "mikroczat.pl")
