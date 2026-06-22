@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style 3
-@version        3.3.0
+@version        3.3.5
 
 @description    Wykop X Style 3 to 900 różnych funkcji zmieniających wykop!
 
@@ -42,7 +42,7 @@ https://wykopx.pl/skrypty
 
 ---- AUTOR ----
 
-@author         Wykop X <wykopx@gmail.com> | wykopx.pl/wiki
+@author         Wykop X <wykopx@gmail.com> | wiki.wykopx.pl
 @homepageURL    http://wykopx.pl
 @supportURL     http://wykopx.pl
 
@@ -57,7 +57,7 @@ https://wykopx.pl/skrypty
 
 @var range      SUB_HR_LINKS_COLUMNS                    `🔶 GŁÓWNA - LISTA ZNALEZISK NOWE (3.2.4) ⭐ `                                      [0, 0, 99999, 1, 'mm']A
 
-@var checkbox   homepageSelectedForYouHide                      `Ukryj "Wybrane dla Ciebie" na głównej  ⭐`                                  0
+@var checkbox   homepageSelectedForYouHide                      `Ukryj "Wybrane dla Ciebie" na głównej  ⭐`                                    1
 @var checkbox   linksVisitedGrayedOut                           `Oznaczaj ✔ 𝗣𝗥𝗭𝗘𝗖𝗭𝗬𝗧𝗔𝗡𝗘 znaleziska 🆗`                                        1     
 @var select     linkThumbnail                                   `Miniaturki obrazków znalezisk` {
                                                                         "Po prawej (domyślnie)"                 :   "poprawej",
@@ -4051,6 +4051,10 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     } 
 
     /* GENERAL */
+    
+
+    
+    
     body,
     body *,
     .switch label,
@@ -6075,22 +6079,94 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             margin-right: 10px!important;
         } 
     }
-    // 🆗 + XS
+    
+    
+    
+    /* 🆗 + XS */
     if(adsHide == 1)
     {
+        .mgid-platform,
         .pub-slot-wrapper,
         aside:has(.pub-slot-wrapper),
         /* reklama lidl tylko na wykop.pl/moj/ */
         .sidebar > aside > section:not([id]),
-        section.stream > div.content > section:not([id], .related-link, .item, .selected),       
-        section.stream > section > div.content > section:not([id])
-        { display: none!important; }
+        
+        section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),   
+        
+        section.stream > section > div.content > section:not([id]),
+        
+        
+        /* 2026-06-22 nowe natrętne reklamy */
+        .sidebar > *:not(.custom-sidebar),
+         
+        section.stream > nav,
+        section.stream > span,
+        section.stream > section,
+        section.stream > aside,
+        section.stream > header:not(.stream-top),
+        
+        section.stream > article:has(nav),
+        
+        section.stream > div:not(.content),
+        section.stream section.stream > article,
+            
+        
+        .stream section.stream > div.content > div:not(.content),
+        .stream section.stream > div.content > nav,
+        .stream section.stream > div.content > span,
+        .stream section.stream > div.content > article,
+        .stream section.stream > div.content > header:not(.stream-top),
+        
+        
+        section > section.stream > div.content > div:not(.content),
+        section > section.stream > div.content > nav,
+        section > section.stream > div.content > span 
+        section > section.stream > div.content > article,
+        section > section.stream > div.content > header:not(.stream-top)
+        {
+            if(dev) { border: 3px solid red!important; }
+            else { display: none!important; }
+        }
+        
+        
+        
         
         .pub-slot-wrapper:has(section.premium-pub.link-block)
         { 
             display: flex!important;
         }
     }
+    
+    /* 🆗 + XS */
+    if(adsSponsoredLinksHide == 1)
+    {
+        .pub-slot-wrapper:has(section.premium-pub.link-block) 
+        {
+            if(dev) { border: 3px solid goldenrod!important; }
+            else { display: none!important; }
+        }
+    }
+
+
+
+
+    if(adsRecommendedLinksHide == "niepokazuj")
+    {
+        section.stream section.link-block:has(li.recommend-label) 
+        {
+            if(dev) { border: 3px solid lime!important; }
+            else { display: none!important; }
+        }
+    } 
+    else if(adsRecommendedLinksHide == "wyszarzone")
+    {
+        section.stream section.link-block:has(li.recommend-label) { opacity: 0.3!important; } 
+        section.stream section.link-block:has(li.recommend-label):hover { opacity: 1!important; } 
+    }
+
+
+
+
     
     /* 
        .selected
@@ -6149,23 +6225,6 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     
     
 
-    
-    // 🆗
-    if(adsSponsoredLinksHide == 1)
-    {
-        .pub-slot-wrapper:has(section.premium-pub.link-block) { display: none!important; } 
-    }
-
-
-    if(adsRecommendedLinksHide == "niepokazuj")
-    {
-        section.stream section.link-block:has(li.recommend-label) { display: none!important; } 
-    } 
-    else if(adsRecommendedLinksHide == "wyszarzone")
-    {
-        section.stream section.link-block:has(li.recommend-label) { opacity: 0.3!important; } 
-        section.stream section.link-block:has(li.recommend-label):hover { opacity: 1!important; } 
-    }
 
 
 
@@ -20375,1049 +20434,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     
     
     
-    
-    
-    
-    /* -------- PLUSY I MINUSY ---- */
-    if(minusesHide == 1 && plusesHide == 1 && voteButtonHide == 1)
-    {
-        plusesAndMinusesTransition = 0
-        votingExplosionEnable = 0
-        checkEntryPlusesWhenVoting = 0
-        checkEntryPlusesEnable = 0
-        checkEntryPlusesPerHour = 0
-        checkEntryCommentsPerHour = 0
-        checkEntryPlusesForVotingGame = 0
-        plusesAndMinusesColorsEnable = 0
-
-        
-        section.rating-box,
-        section.related-rating-box
-        {
-            display: none!important;
-        }
-    }
-    else
-    {
-        
-        section.stream:has(> div.content > section.entry),  /* section.rating-box */
-        section.related-rating-box,
-        section.entries-sidebar
-        {
-
-            --plusesMinusesSize:                                         plusesMinusesSize;
-            --plusesMinusesGap:                                          calc(var(--plusesMinusesSize) / 2 + 5px);
-
-            --colorNumberZero:                                           var(--gullGray);                  // rgb(149 169 187)
-
-            --colorPlusesCount:                                          var(--apple);                     // rgb(51 153 51)     
-            --colorPlusesCountHover:                                     var(--colorPlusesCount);        
-            --colorPlusesCountVoted:                                     var(--colorPlusesCountHover);
-            --colorPlusesCountTransition:                                var(--colorPlusesCount);
-            --colorPlusesCountVotedHover:                                var(--colorPlusesCountVoted); 
-            
-            --colorPlusesButton:                                         var(--colorPlusesCount);          // rgb(130 202 156)
-            --colorPlusesButtonHover:                                    var(--colorPlusesCountHover);     // default: var(--apple);    
-            --colorPlusesButtonVoted:                                    var(--colorPlusesButton);      
-            --colorPlusesButtonVotedHover:                               var(--colorPlusesCountVotedHover);  
-
-            --colorMinusesCount:                                         var(--valencia);                   // rgb(237 28 36)
-            --colorMinusesCountHover:                                    var(--colorMinusesCount);         
-            --colorMinusesCountVoted:                                    var(--colorMinusesCountHover);     
-            --colorMinusesCountVotedTransition:                          var(--colorMinusesCount);
-            --colorMinusesCountVotedHover:                               var(--colorMinusesCountVoted);  
-            
-            --colorMinusesButton:                                        var(--colorMinusesCount);    
-            --colorMinusesButtonHover:                                   var(--colorMinusesCountHover);           
-            --colorMinusesButtonVoted:                                   var(--colorMinusesButton);     
-            --colorMinusesButtonVotedHover:                              var(--colorMinusesCountVotedHover);     
-            
-            --colorVotedPlusSign:                                        var(--whitish);                    // kolor plusa na tle zaplusowanego przycisku
-            --colorVotedMinusSign:                                       var(--colorVotedPlusSign);
-        }
-
-
-
-        /* zmiana kolorystyki plusów i przycisków do plusowania */
-        if(plusesAndMinusesColorsEnable == 1)
-        {
-            /* plusy w sidebarze */
-            section.entries-sidebar > div.content > section.entries > section.entry > header > div.right > div > span.plus
-            {
-                color: var(--colorPlusesCount);
-            } 
-            
-            section[class]:is(.rating-box, .related-rating-box) > ul > li[class].plus,
-            section[class]:is(.dummyClass, .rating-box, .related-rating-box) > ul > li[class].plus:before
-            {
-                color: var(--colorPlusesCount);
-            }
-            section[class]:is(.rating-box, .related-rating-box):hover > ul > li[class].plus,
-            section[class]:is(.dummyClass, .rating-box, .related-rating-box):hover > ul > li[class].plus:before
-            {
-                color: var(--colorPlusesCountHover);
-            }
-            
-            section[class]:is(.rating-box, .related-rating-box):has(> div.buttons > button.plus.voted) > ul > li[class].plus,
-            section[class]:is(.dummyClass, .rating-box, .related-rating-box):has(> div.buttons > button.plus.voted) > ul > li[class].plus:before
-            {
-                color: var(--colorPlusesCountVoted);
-            }
-            section[class]:is(.rating-box, .related-rating-box):has(> div.buttons > button.plus.voted):hover > ul > li[class].plus,
-            section[class]:is(.dummyClass, .rating-box, .related-rating-box):has(> div.buttons > button.plus.voted):hover > ul > li[class].plus:before
-            {
-                color: var(--colorPlusesCountVotedHover);
-            }
-            
-            section[class]:is(.rating-box, .related-rating-box) > ul > li[class].minus,
-            section[class]:is(.dummyClass, .rating-box, .related-rating-box) > ul > li[class].minus:before
-            {
-                color: var(--colorMinusesCount);
-            }
-            
-            section[class]:is(.rating-box, .related-rating-box):hover > ul > li[class].minus,
-            section[class]:is(.dummyClass, .rating-box, .related-rating-box):hover > ul > li[class].minus:before
-            {
-                color: var(--colorMinusesCountHover);
-            }
-            section[class]:is(.rating-box, .related-rating-box):has(> div.buttons > button.minus.voted) > ul > li[class].minus,
-            section[class]:is(.dummyClass, .rating-box, .related-rating-box):has(> div.buttons > button.minus.voted) > ul > li[class].minus:before
-            {
-                color: var(--colorMinusesCountVoted);
-            }
-            section[class]:is(.rating-box, .related-rating-box):has(> div.buttons > button.minus.voted):hover > ul > li[class].minus,
-            section[class]:is(.dummyClass, .rating-box, .related-rating-box):has(> div.buttons > button.minus.voted):hover > ul > li[class].minus:before
-            {
-                color: var(--colorMinusesCountVotedHover);
-            }
-            
-            
-
-            
-            
-
-
-            /* PRESET SKÓRKI PLUSÓW */
-            if(plusesAndMinusesStyle == "okragle")
-            {
-                voteButtonBorderRadius = 100%;
-            }
-            else if(plusesAndMinusesStyle == "wykop10")
-            {
-                if(plusesColor == "domyslny")
-                {
-                    plusesColor = "wykop10";
-                    minusesColor = "wykop10"; 
-                }
-                
-                voteButtonBorderRadius = 0%;
-                prefixBeforePlusesCount = "plus"
-                plusesMinusesSize = 20px;
-
-            }
-            else if(plusesAndMinusesStyle == "wykop20")
-            {
-                if(plusesColor == "domyslny")
-                {
-                    plusesColor = "wykop20";
-                    minusesColor = "wykop20";
-                }
-                voteButtonBorderRadius = 20%;
-                prefixBeforePlusesCount = "brak";
-                prefixBeforeMinusesCount = "minus";
-                plusesMinusesSize = 24px;
-            }
-
-            
-            
-            
-            /* PRESET KOLORYSTYKI PLUSÓW */
-            if(plusesColor == "wykop20")
-            {
-                section.stream:has(> div.content > section.entry),  /* section.rating-box, */
-                section.related-rating-box,
-                section.entries-sidebar
-                {       
-                    --colorPlusesCount:                                          var(--apple);        
-                }
-                [data-night-mode] section.rating-box,
-                [data-night-mode] section.related-rating-box,
-                [data-night-mode] section.entries-sidebar
-                {       
-                    --colorPlusesCount:                                          #71be71;   // #39a684;         
-                    --colorVotedPlusSign:                                        #222225;
-                }
-            }
-            else if(plusesColor == "wykop10")
-            {
-                section.stream:has(> div.content > section.entry),  /* section.rating-box, */
-                section.related-rating-box,
-                section.entries-sidebar
-                {
-                    --colorPlusesCount:                                          rgb(59, 145, 95);
-                }
-                /* TRYB NOCNY */
-                [data-night-mode] section.stream:has(> div.content > section.entry),  /* section.rating-box, */
-                [data-night-mode] section.related-rating-box,
-                [data-night-mode] section.entries-sidebar
-                {       
-                    --colorPlusesCount:                                         rgb(57, 166, 132);
-                }
-            }
-            else if(plusesColor == "pomaranczowy")
-            {
-                section.stream:has(> div.content > section.entry),  /* section.rating-box, */
-                section.related-rating-box,
-                section.entries-sidebar
-                {
-                    --colorPlusesCount:                                         orange;
-                }
-            }
-            else if(plusesColor == "zloty")
-            {
-                section.stream:has(> div.content > section.entry),  /* section.rating-box, */
-                section.related-rating-box,
-                section.entries-sidebar
-                {
-                    --colorPlusesCount:                                         goldenrod;
-                }
-            }
-            
-            
-            /* KOLORYSTYKA MINUSÓW */
-            if(minusesColor == "wykop20")
-            {
-                section.stream:has(> div.content > section.entry),  /* section.rating-box, */
-                section.related-rating-box,
-                section.entries-sidebar
-                {       
-                    --colorMinusesCount:                                        var(--valencia);         
-                }
-                [data-night-mode] section.rating-box,
-                [data-night-mode] section.related-rating-box,
-                [data-night-mode] section.entries-sidebar
-                {       
-                    --colorMinusesCount:                                         #e86860; // #ff4136;
-                    --colorVotedPlusSign:                                        #222225;
-                }
-            }
-            else if(minusesColor == "wykop10")
-            {
-                section.stream:has(> div.content > section.entry),  /* section.rating-box, */
-                section.related-rating-box,
-                section.entries-sidebar
-                {
-                    --colorMinusesCount:                                         rgb(192, 57, 43);
-                }
-                /* TRYB NOCNY */
-                [data-night-mode] section.stream:has(> div.content > section.entry),  /* section.rating-box, */
-                [data-night-mode] section.related-rating-box,
-                [data-night-mode] section.entries-sidebar
-                {       
-                    --colorMinusesCount:                                         rgb(255, 65, 54);
-                }
-            }
-            else if(minusesColor == "pomaranczowy")
-            {
-                section.stream:has(> div.content > section.entry),  /* section.rating-box, */
-                section.related-rating-box,
-                section.entries-sidebar
-                {
-                    --colorMinusesCount:                                         orange;
-                }
-            }
-            else if(minusesColor == "szary")
-            {
-                section.stream:has(> div.content > section.entry),  /* section.rating-box, */
-                section.related-rating-box,
-                section.entries-sidebar
-                {
-                    --colorMinusesCount:                                         gray;
-                }
-            }
-            
-        }
-        
-        
-        
-        
-        section.related-rating-box
-        {
-            display: flex!important;
-            width: max-content!important;
-            flex-wrap: nowrap;
-        }
-        section.rating-box
-        {
-            display: grid!important;
-            grid-template-columns: auto;
-            grid-template-rows: auto auto;
-            grid-template-areas:    "votescount" "votesperhour"; 
-            row-gap: 3px;
-        }
-
-        /* UKRYWANIE PRZYCISKOW DO PLUSOWANIA I MINUSOWANIA */
-        if(voteButtonHide == 0)
-        {
-            section.rating-box:has(> div.buttons)
-            {
-                grid-template-columns: auto auto;
-                grid-template-areas:    "votescount votesbuttons" "votesperhour votesperhour"; 
-            }
-        }
-        
-
-
-        /* LICZBY PLUSÓW I MINUSÓW */
-        if(minusesHide == 1 && plusesHide == 1)
-        {
-            section:is(.rating-box, .related-rating-box) > ul
-            {
-                display: none!important;
-            }
-        }
-        else
-        {
-            section:is(.rating-box, .related-rating-box) > ul
-            {
-                display: flex;
-                grid-area: votescount;
-                justify-content: end;
-                gap: var(--plusesMinusesGap);
-            }
-
-            section:is(.rating-box, .related-rating-box) > ul > li
-            {
-                display: flex;
-                position: relative;
-                margin: 0px!important;
-                font-size: calc(var(--plusesMinusesSize) - 5px)!important;
-                // transition: none!important;
-            }
-            
-            // remove wrapping number pluses when long author nickname
-            section.entries-sidebar > div.content > section.entries > section.entry > header > div.right > div > span.plus
-            {
-                min-width: max-content!important;
-            } 
-                
-            // liczba plusów w sidebarze
-            if(plusesMinusesSizeInSidebar == 1)
-            {
-                section.entries-sidebar > div.content > section.entries > section.entry > header > div.right > div > span.plus
-                {
-                    font-size: "calc(%s - 7px)" % plusesMinusesSize !important;
-                    font-size: calc(var(--plusesMinusesSize) - 5px)!important;
-                } 
-            }
-
-
-            if(plusesAndMinusesTransition == 1)
-            {
-                section.rating-box > ul li,
-                section.related-rating-box > ul li
-                {
-                    transition: all 0.5s ease-in-out 0.1s!important;
-                } 
-                section.rating-box div.buttons button,
-                section.related-rating-box div.buttons button
-                {
-                    transition: all 0.4s ease-in-out 0.1s!important;
-                } 
-                section.rating-box .buttons button:hover,
-                section.related-rating-box .buttons button:hover
-                {
-                    transition: all 0.2s ease-in-out 0s!important;
-                }
-            }
-    
-    
-                    
-            if(plusesHide == 1)
-            {
-                section:is(.rating-box, .related-rating-box) > ul > li.plus
-                {
-                    display: none!important;
-                }
-            }
-            if(minusesHide == 1)
-            {
-                section:is(.rating-box, .related-rating-box) > ul > li.minus
-                {
-                    display: none!important;
-                }
-            }
-            
-            if(plusesZeroHide == 1)
-            {
-                section:is(.rating-box, .related-rating-box) > ul > li.zero
-                {
-                    display: none!important;
-                }
-            }
-
-            
-            
-            section:is(.rating-box, .related-rating-box) > ul > li.plus:before         // znak przed liczbą plusów a dla wlaczonego wxs takze sama liczba plusow
-            {
-                font-size: calc(var(--plusesMinusesSize) - 5px)!important;
-            }
-            section:is(.rating-box, .related-rating-box) > ul > li.minus:before         // znak przed liczbą minusów a dla wlaczonego wxs takze liczba minusow
-            {
-                font-size: calc(var(--plusesMinusesSize) - 5px)!important;
-                background: none!important;
-            }
-
-
-            
-            
-            if(voteButtonHide == 0 && (plusesHide == 0 || minusesHide == 0))
-            {
-                /* ZNALEZISKO - UKRYWANIE PLUSÓW I MINUSÓW PRZED ZAGŁOSOWANIEM */
-                if (hidePlusesAndMinusesBeforeVoting == 1)
-                {
-                    div.main-content > main.main > section > div.content > section.link-page > section.link > section.comments > section.stream.link-comments > div.content section.entry > article > header > div.right > div > section.rating-box > ul:has(+ div.buttons button:not(.voted))
-                    {
-                        if (removeAllTransitions == 0) { transition: visibility 0s linear 4s, opacity 1s linear 1.3s; }
-                        visibility: hidden;
-                        opacity: 0;
-                    }
-                    div.main-content > main.main > section > div.content > section.link-page > section.link > section.comments > section.stream.link-comments > div.content section.entry > article > header > div.right > div > section.rating-box > ul:has(+ div.buttons button.voted)
-                    {
-                        if (removeAllTransitions == 0) { transition: visibility 0s linear 4s, opacity 1s linear 1.3s; }
-                        visibility: visible;
-                        opacity: 1;
-                    }
-                }
-
-                /* MIKROBLOG: UKRYWANIE PLUSÓW PRZED ZAGŁOSOWANIEM */
-                if(hidePlusesBeforeVoting == 1)
-                {
-                    div.main-content > main.main > section > div.content > section:not(.link-page) section.entry > article > header > div.right > div > section.rating-box > ul:has(+ div.buttons button:not(.voted))
-                    {   
-                        if(removeAllTransitions == 0) { transition: visibility 0s linear 4s, opacity 1s linear 1.3s; } 
-                        visibility: hidden;
-                        opacity: 0;
-                    } 
-                    div.main-content > main.main > section > div.content > section:not(.link-page) section.entry > article > header > div.right > div > section.rating-box > ul:has(+ div.buttons button.voted)
-                    {
-                        if(removeAllTransitions == 0) { transition: visibility 0s linear 4s, opacity 1s linear 1.3s; } 
-                        visibility: visible;
-                        opacity: 1;
-                    }
-                }
-            }
-            
-            
-
-            /* plusy i minusy dodawane przez Wykop XS */
-            if(1 == 0 && WykopXSEnabled == 1 && checkEntryPlusesEnable == 1)
-            {
-
-                section.entry[data-wxs_votes_up] section.rating-box > ul > li:not(.zero)
-                {
-                    font-size: 0px!important;
-                }
-                section.entry[data-wxs_votes_up] section.rating-box > ul > li:before
-                {
-                    font-size: calc(var(--plusesMinusesSize) - 5px)!important;
-                }
-
-                section.entry[data-wxs_votes_up] section.rating-box > ul > li.plus:before
-                {
-                    content: var(--votesUp);
-                    /* content: attr(data-wxs_votes_up); */
-                }
-                section.entry[data-wxs_votes_up] section.rating-box > ul > li.minus:before
-                {
-                    content: var(--votesDown);
-                    /* content: attr(data-wxs_votes_down); */
-                }
-
-                if(checkEntryPlusesForVotingGame == 1)
-                {
-                    section.entry[data-wxs_voting_game]:not(.reply) > article > header > div.right > div > section.rating-box > ul > li.plus:before
-                    {
-                        content: var(--votesUpHidden);
-                    }
-                    section.entry[data-wxs_voting_game]:not(.reply) > article > header > div.right > div > section.rating-box:has(div.buttons > button.voted) > ul > li.plus:before
-                    {
-                        content: var(--votesUp);
-                        /* counter-reset: votesUp var(--votesUp); */
-                        /* ntent: counter(votesUp); */
-                    }
-                    section.entry > section.stream > div.content > section.entry:has(.plus):before
-                    {
-                        font-size: 20px;
-                        position: fixed;
-                        top: 50%;
-                        left: 50%;
-                        /* content: attr(data-wxs_votes_up); */
-                        content: var(--votingGameLastDigit);
-                        z-index: 999!important;
-                        transition: 3s all linear 0s;
-                        scale: 1;
-                        opacity: 0;
-                    }
-                    section.entry > section.stream > div.content > section.entry:has(.plus.voted):before
-                    {
-                        scale: 32;
-                        opacity: 0.4;
-                    }
-                    @starting-style
-                    {
-                        section.entry > section.stream > div.content > section.entry:has(.plus):before
-                        {
-                            scale: 1;
-                            opacity: 1;
-                        }
-                    }
-                }
-            }
-            /* Wykop XS wyłączony START */
-            else
-            {
-                if(prefixBeforePlusesCount != "brak")           
-                {
-                    if(prefixBeforePlusesCount == "plus")                                   {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "+"!important;     }}        
-                    else if(prefixBeforePlusesCount == "emoji_up_arrow")                    {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "⬆"!important;     }}        
-                    else if(prefixBeforePlusesCount == "emoji_up_right_arrow")              {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "↗"!important;     }}        
-                    else if(prefixBeforePlusesCount == "emoji_up_left_arrow")               {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "↖"!important;     }}        
-                    else if(prefixBeforePlusesCount == "emoji_right_arrow_curving_up")      {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "⤴"!important;    }}        
-                    else if(prefixBeforePlusesCount == "emoji_heavy_tick")                  {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "✔"!important;  scale: 0.8;   }} 
-                    else if(prefixBeforePlusesCount == "emoji_serce")                       {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "💚"!important; scale: 0.8;   }}        
-                    else if(prefixBeforePlusesCount == "emoji_index_pointing_up")           {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "☝"!important;  scale: 0.8;   }}        
-                    else if(prefixBeforePlusesCount == "emoji_thumbs_up")                   {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "👍"!important;    }}        
-                    else if(prefixBeforePlusesCount == "emoji_backhand_index_pointing_up")  {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "👆"!important;  scale: 0.9;  }}        
-                    else if(prefixBeforePlusesCount == "emoji_upwards_button")              {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "🔼"!important; scale: 0.8;   }}        
-                    else if(prefixBeforePlusesCount == "emoji_plus_sign")                   {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "➕"!important; scale: 0.8;  }}        
-                    else if(prefixBeforePlusesCount == "emoji_red_triangle_pointed_up")     {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "🔺"!important; scale: 0.8;  }}        
-                }
-                if(prefixBeforeMinusesCount != "minus")           
-                {
-                    section:is(.rating-box, .related-rating-box) > ul li.minus
-                    {
-                        display: block!important;
-                        opacity: 1!important;
-                    }
-                    section:is(.rating-box, .related-rating-box) > ul li.minus:first-letter
-                    { 
-                        opacity: 0!important;
-                        visibility: hidden!important;
-                    }
-                    section:is(.rating-box, .related-rating-box) > ul li.minus:after
-                    {
-                        display: flex!important;
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        transform: translateX(-100%);
-                    }
-                    if(prefixBeforeMinusesCount == "emoji_cross_mark")                       {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 14px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "❌"; scale: 0.8;   }}
-                    else if(prefixBeforeMinusesCount == "emoji_backhand_index_pointing_down"){  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 14px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "👇"; scale: 0.9;    }}      
-                    else if(prefixBeforeMinusesCount == "emoji_thumbs_down")                 {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 16px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "👎";     }}
-                    else if(prefixBeforeMinusesCount == "emoji_downwards_button")            {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "🔽"; scale: 0.8;   }} 
-                    else if(prefixBeforeMinusesCount == "emoji_heavy_tick")                  {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "✔";  scale: 0.8;   }} 
-                    else if(prefixBeforeMinusesCount == "emoji_down_arrow")                  {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "⬇";     }}        
-                    else if(prefixBeforeMinusesCount == "emoji_down_right_arrow")            {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "↘";     }}        
-                    else if(prefixBeforeMinusesCount == "emoji_down_left_arrow")             {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "↙";     }}        
-                    else if(prefixBeforeMinusesCount == "emoji_right_arrow_curving_down")    {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "⤵";     }}        
-                    else if(prefixBeforeMinusesCount == "emoji_minus_sign")                  {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 18px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "➖"; scale: 0.8;   }}        
-                    else if(prefixBeforeMinusesCount == "emoji_red_triangle_pointed_down")   {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "🔻"; scale: 0.8;   }}
-                }
-            }
-            /* Wykop XS wyłączony END */
-        }
-        
-
-        if(voteButtonHide == 1)
-        {
-            section:is(.rating-box, .related-rating-box) div.buttons button
-            {
-                display: none!important;
-            }
-        }
-        else
-        {
-            /* przyciski plusowania i minusowania */
-            section:is(.rating-box, .related-rating-box) div.buttons button
-            {
-                display: flex!important;
-                grid-area: votesbuttons;
-                width: var(--plusesMinusesSize)!important;
-                height: var(--plusesMinusesSize)!important;
-                voteButtonBorderRadius = voteButtonBorderRadius / 2; /* tylko po to, żeby w ustawieniach było od 0% do 100%, a nie do 50% */
-                border-radius: voteButtonBorderRadius !important;
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button:after
-            {
-                content: none!important;
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button[class]:before
-            {
-                font-size: var(--plusesMinusesSize);
-                width: 100%;
-                height: 100%;
-                font-weight: bolder;
-                position: initial!important;
-                position: relative!important;
-                justify-content: center;
-                align-items: center;
-                top: 0; /* -1rem; */
-                left: 0;
-                opacity: 1;
-                display: flex;
-
-            }
-            /* plus button */
-            section[class]:is(.rating-box, .related-rating-box) div.buttons button.plus[class]
-            {
-                border-color: var(--colorPlusesButton);
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before
-            {
-                content: "+";
-                color: var(--colorPlusesButton);
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:hover
-            {
-                color: var(--colorPlusesButtonHover);
-                border-color: var(--colorPlusesButtonHover);
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:hover:before
-            {
-                color: var(--colorPlusesButtonHover);
-            }
-            /* plus button zaplusowany */
-            section[class]:is(.rating-box, .related-rating-box) div.buttons button.plus.voted[class]
-            {
-                border-color: var(--colorPlusesButtonVoted);
-                background-color: var(--colorPlusesButtonVoted);
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button.plus.voted[class]:before
-            {
-                color: var(--colorVotedPlusSign);
-            }
-            section[class]:is(.rating-box, .related-rating-box) div.buttons button.plus.voted[class]:hover
-            {
-                border-color: var(--colorPlusesButtonVotedHover);
-                background-color: var(--colorPlusesButtonVotedHover);
-            }
-            /*section:is(.rating-box, .related-rating-box) div.buttons button.plus.voted[class]:hover:before
-            {
-                color: var(--colorVotedPlusSign);
-            }*/
-            
-            
-            /* minus button */
-            section[class]:is(.rating-box, .related-rating-box) div.buttons button.minus[class]
-            {
-                border-color: var(--colorMinusesButton);
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before
-            {
-                content: "−";
-                color: var(--colorMinusesButton);
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:hover
-            {
-                color: var(--colorMinusesButtonHover);
-                border-color: var(--colorMinusesButtonHover);
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:hover:before
-            {
-                color: var(--colorMinusesButtonHover);
-            }
-            
-            /* minus button zminusowany */
-            section[class]:is(.rating-box, .related-rating-box) div.buttons button.minus.voted[class]
-            {
-                border-color: var(--colorMinusesButtonVoted);
-                background-color: var(--colorMinusesButtonVoted);
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button.minus.voted[class]:before
-            {
-                color: var(--colorVotedMinusSign);
-            }
-            section[class]:is(.rating-box, .related-rating-box) div.buttons button.minus.voted[class]:hover
-            {
-                border-color: var(--colorMinusesButtonVotedHover);
-                background-color: var(--colorMinusesButtonVotedHover);
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button.minus.voted[class]:hover:before
-            {
-                color: var(--colorVotedMinusSign);
-            }
-            
-            
-            
-            if(voteButtonPlusEmoji != "plus")                        
-            {
-                if(voteButtonPlusEmoji == "emoji_up_arrow")                         {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "⬆"; scale: 0.8;  }}        
-                else if(voteButtonPlusEmoji == "emoji_up_right_arrow")              {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "↗"; scale: 0.8;   }}        
-                else if(voteButtonPlusEmoji == "emoji_up_left_arrow")               {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "↖"; scale: 0.8;   }}        
-                else if(voteButtonPlusEmoji == "emoji_right_arrow_curving_up")      {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "⤴"; scale: 0.8;  }}        
-                else if(voteButtonPlusEmoji == "emoji_heavy_tick")                  {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "✔"; scale: 0.9;  }}  
-                else if(voteButtonPlusEmoji == "emoji_serce")                       {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "💚"; scale: 0.7;   }}        
-                else if(voteButtonPlusEmoji == "emoji_index_pointing_up")           {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "☝"; scale: 0.7;   }}        
-                else if(voteButtonPlusEmoji == "emoji_thumbs_up")                   {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "👍"; scale: 0.7;    }}        
-                else if(voteButtonPlusEmoji == "emoji_backhand_index_pointing_up")  {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "👆"; scale: 0.7;   }}        
-                else if(voteButtonPlusEmoji == "emoji_upwards_button")              {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "🔼"; scale: 0.9;    }}         
-                else if(voteButtonPlusEmoji == "emoji_plus_sign")                   {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "➕"; scale: 0.6;  }}        
-                else if(voteButtonPlusEmoji == "emoji_red_triangle_pointed_up")     {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "🔺"; scale: 0.7;   }}        
-            }
-            if(voteButtonPlusNoBorder == 1)
-            {
-                section:is(.rating-box, .related-rating-box) div.buttons button.plus
-                {
-                    border-width: 0px!important;
-                }
-            }
-            if(voteButtonMinusEmoji != "minus")                        
-            {
-                if(voteButtonMinusEmoji == "emoji_down_arrow")                         {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "⬇";  scale: 0.8;  }}        
-                else if(voteButtonMinusEmoji == "emoji_down_right_arrow")              {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "↘";  scale: 0.8;   }}        
-                else if(voteButtonMinusEmoji == "emoji_down_left_arrow")               {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "↙";  scale: 0.8;   }}        
-                else if(voteButtonMinusEmoji == "emoji_right_arrow_curving_down")      {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "⤵";  scale: 0.8;  }}        
-                else if(voteButtonMinusEmoji == "emoji_heavy_tick")                    {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "✔";  scale: 0.9;  }}  
-                else if(voteButtonMinusEmoji == "emoji_cross_mark")                    {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "❌"; scale: 0.6;   }}      
-                else if(voteButtonMinusEmoji == "emoji_backhand_index_pointing_down")  {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "👇"; scale: 0.7;   }}      
-                else if(voteButtonMinusEmoji == "emoji_thumbs_down")                   {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "👎"; scale: 0.7;   }}      
-                else if(voteButtonMinusEmoji == "emoji_downwards_button")              {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "🔽"; scale: 0.9;    }}         
-                else if(voteButtonMinusEmoji == "emoji_minus_sign")                    {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "➖"; scale: 0.6;  }}        
-                else if(voteButtonMinusEmoji == "emoji_red_triangle_pointed_down")     {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "🔻"; scale: 0.7;   }}        
-            }
-            if(voteButtonMinusNoBorder == 1)
-            {
-                section:is(.rating-box, .related-rating-box) div.buttons button.minus
-                {
-                    border-width: 0px!important;
-                }
-            }
-        }
-
-        
-
-
-
-
-
-
-
-        /* RATING BOX INTERSECTING */
-        .notIntersecting
-        {
-        }
-
-        .isIntersecting
-        {    
-        }
-        section.link-block > section
-        {
-            position: relative;
-        }
-        /* 🍤💠🔄🔷🔶 */
-        /*
-        section.link-block.isIntersecting > section::after,
-        section.entry.isIntersecting::after
-        {
-            content: "🔷"; 
-            rotate: var(--angle);
-            transform: scaleX(-1);
-
-            animation-name: isIntersectingAnimation, rotatingAnimation!important;
-            animation-duration: 6s, 1s!important;
-            animation-timing-function: ease-in, linear!important;
-            animation-iteration-count: infinite, infinite!important;
-
-            font-size: 14px;
-
-            position: absolute;
-            right: 0px;
-            top: 0px;
-        }
-        */
-
-        @keyframes isIntersectingAnimation
-        {
-            0%      { opacity: 0; scale: 0.3; }
-            50%     { opacity: 1; scale: 0.5; } 100%    { opacity: 0; scale: 0.3}
-        }
-        @keyframes fadeOutAnimation
-        {
-            0%      { scale: 1.0; opacity: 0.8; } 10%     { scale: 1.3; opacity: 1;   }
-            70%     { scale: 1;   opacity: 1;   }
-            90%     { scale: 0.8; opacity: 0.6; } 100%    { scale: 0.8; opacity: 0;   }
-        } 
-        @keyframes slideUpAnimation
-        {
-            0%      { translate: 0px 10px; }
-            20%     { translate: 0px 0px; }
-            70%     { translate: 0px 0px; } 100%    { translate: 0px -10px; }
-        } 
-        @keyframes slideDownAnimation
-        {
-            0%      { translate: 0px -10px; }
-            20%     { translate: 0px 0px; }
-            70%     { translate: 0px 0px; } 100%    { translate: 0px 10px; }
-        } 
-
-        
-        
-        /* ANIMACJA WYKOPYWANYCH ZNALEZISK */
-        @keyframes linkVotesChangedBackgroundAnimation 
-        {
-            0%      { background: var(--steelBluish); }
-            25%     { background: var(--orange);      }
-            50%     { background: goldenrod;         }
-            75%     { background: var(--orange);      } 100%    { background: var(--steelBluish); }
-        }
-        @keyframes linkVotesChangedColorAnimation 
-        {
-            0%      { font-size: 14px;     color: var(--orange); }
-            25%     {                          }
-            50%     { font-size: 14.5px;   color: goldenrod;    }
-            75%     {                           } 100%    { font-size: 14px;     color: var(--orange); }
-        }
-        section[class] section.link-block.plusesAdded > section > aside > section.vote-box > div.dig > p
-        {
-            animation-delay: 0s;
-            animation-direction: normal;
-            animation-duration: 1.4s;
-            animation-fill-mode: both;
-            animation-iteration-count: 1;
-            animation-name: linkVotesChangedBackgroundAnimation;
-            animation-play-state: running;
-            animation-timeline: auto;
-            animation-timing-function: ease-in-out;
-        }
-        section[class] section.link-block.plusesAdded > section > aside > section.vote-box > div.dig > p > span
-        {
-            animation-delay: 0s;
-            animation-direction: normal;
-            animation-duration: 1.4s;
-            animation-fill-mode: both;
-            animation-iteration-count: 1;
-            animation-name: linkVotesChangedColorAnimation;
-            animation-play-state: running;
-            animation-timeline: auto;
-            animation-timing-function: ease-in-out;
-        }
-        
-        
-        
-        /* ANIMACJA PLUSOWANYCH WPISÓW I KOMENTARZY */
-        @keyframes plusesAddedAnimation 
-        {
-            0%      { opacity: 0.3;  color: var(--colorPlusesCount);                }
-            20%     { opacity: 1;    color: var(--colorPlusesCountTransition);      }
-            70%     { opacity: 0.3;  color: var(--colorPlusesCountTransition);      } 100%    { opacity: 0.1;  color: var(--colorPlusesCountVoted);           }
-        }
-        article > header > div.right > div > section.rating-box:after
-        {
-            font-size: 10px;
-            animation-duration: 4s;
-            position: absolute;
-            top: -15px;
-            right: 32px;
-            animation-fill-mode: forwards;
-        }
-        
-        section[class] section.entry.plusesAdded > article > header > div.right > div > section.rating-box > ul > li.plus[class]
-        {
-            color: white;
-            animation-delay: 0s;
-            animation-direction: normal;
-            animation-duration: 2s;
-            animation-fill-mode: both;
-            animation-iteration-count: infinite;
-            animation-name: plusesAddedAnimation;
-            animation-play-state: running;
-            animation-timeline: auto;
-            animation-timing-function: ease-in-out;
-        }
-
-        section[class] section.entry.plusesAdded > article > header > div.right > div > section.rating-box:after
-        {
-            animation-name: fadeOutAnimation, slideUpAnimation;
-            color: ; var(--colorPlusesCountVoted)
-            content: var(--plusesAdded);
-        }
-        section[class] section.entry.plusesRemoved > article > header > div.right > div > section.rating-box:after
-        {
-            animation-name: fadeOutAnimation, slideDownAnimation;
-            color: var(--colorMinusesCountVoted)
-            content: var(--plusesRemoved);
-        }
-        section[class] section.entry.minusesAdded > article > header > div.right > div > section.rating-box:after
-        {
-            color: var(--colorMinusesCountVoted)
-            content: var(--minusesAdded);
-        }
-        section[class] section.entry.minusesRemoved > article > header > div.right > div > section.rating-box:after
-        {
-            color: var(--colorNumberZero)
-            content: var(--minusesRemoved);
-        }
-
-        
-        
-        
-        /* VOTES PER MINUTE WE WPISACH I KOMENTARZACH */
-        section:is(.vote-box, .rating-box) .wxs_votes_per_hour
-        {
-           display: none;
-        }
-        
-        
-            
-        section.rating-box .wxs_votes_per_hour[data-wxs_votes_per_hour],
-        section:is(.vote-box, .rating-box) .wxs_votes_per_hour[data-wxs_votes_per_hour]
-        {
-            display: flex;
-            grid-area: votesperhour;
-            justify-content: end;
-
-            font-size: 10px;
-            font-weight: bolder;
-            color: var(--colorPlusesCount);
-
-            background-color: rgba(0, 0, 0, 0.2);
-            padding: 3px 5px;
-            width: 100%;
-        }
-        
-        section.vote-box .wxs_votes_per_hour
-        {
-            color: white!important;
-            justify-content: center!important;
-            font-weight: normal!important;
-            margin-top: 3px;
-        }
-
-        section.wxs_minimized .wxs_votes_per_hour
-        {
-            display: none!important;
-        }
-
-        section:is(.vote-box, .rating-box) .wxs_votes_per_hour[data-wxs_votes_per_hour^="+0"],
-        section:is(.dummyClass, .vote-box, .rating-box) .wxs_votes_per_hour[data-wxs_votes_per_hour^="0"]
-        {
-            display: none;
-        }
-
-        section:is(.vote-box, .rating-box) .wxs_votes_per_hour[data-wxs_votes_per_hour]::before
-        {
-            content: attr(data-wxs_votes_per_hour);
-        }
-
-
-        
-        /* VOTINGEXPLOSION : animacja plusowania Wykop XS */
-        section.entry article > header 
-        {
-            position: relative;
-        }
-        section.rating-box
-        {
-            position: relative;
-            z-index: 1; /* rating box zindex */
-        }
-        section.rating-box > div.buttons > button.minus
-        {
-            margin-left: 14px;
-        }
-
-        if(votingExplosionEnable == 1)
-        {
-            section.rating-box
-            {
-                --explosionDelay: 0s;
-                --explosionDuration: 1300ms;
-                --explosionTiming: linear;
-            }
-
-            .wykopxs_vote_animation
-            {
-                opacity: 0;
-                cursor: pointer;
-                font-size: 12px;
-                font-weight: bolder;
-                position: absolute;
-                top: -10px;
-                animation-name: explodePluses;
-                animation-delay: var(--explosionDelay);
-                animation-duration: var(--explosionDuration);
-                animation-timing-function: var(--explosionTiming);
-            }
-
-
-            /* plusy */
-            .wykopxs_vote_animation.wykopxs_green
-            {
-                color: var(--colorPlusesCountVoted)!important;
-            /*  text-shadow: 0px 0px 2px var(--colorPlusesButtonVoted); */
-            }
-
-            .wykopxs_vote_animation.wykopxs_golden
-            {
-                font-size: 35px;
-                color: var(--golden)!important;
-                text-shadow: 0px 0px 5px var(--golden);
-            } 
-
-            /* minusy */
-            .wykopxs_vote_animation.wykopxs_red
-            {
-                color: var(--colorMinusesCountVoted)!important;
-            }
-
-
-
-            @keyframes explodePluses
-            {
-                0%      { transform: translate3d(0, 0, 0); opacity: 0; } 12%     { opacity: 0.2; } 13%     { opacity: 1; } 
-                70%     { opacity: 1; } 
-                90%     { opacity: 0.4; } 100%    { transform: translate3d(var(--position_x), var(--position_y), var(--position_z)); opacity: 0; } 
-            } 
-
-            if(votingExplosionAnimation == "animacja2")
-            {
-                .wykopxs_vote_animation 
-                {
-                    animation-name: explodePluses, ;
-                }
-
-                @eyframes explodePlusesAnimacja2
-                {
-                    0%      { scale: 60%;   } 12%     { scale: 60%;   } 13%     { scale: 60%;   } 
-                    70%     { scale: 60%;   } 
-                    90%     { scale: 120%;  } 100%    { scale: 400%;  } 
-                }
-            } 
-            else if(votingExplosionAnimation == "animacja3")
-            {
-                .wykopxs_vote_animation 
-                {
-                    animation-name: explodePluses, explodePlusesAnimacja3;
-                }
-                @keyframes explodePlusesAnimacja3
-                {
-                    0%      { scale: 60%;   } 12%     { scale: 60%;   } 13%     { scale: 60%;   } 
-                    70%     { scale: 60%;   } 
-                    90%     { scale: 120%;  } 100%    { scale: 400%;  } 
-                }
-            }
-        }        
-        
-        
-    }
-
-    
-    
-
-    
-    
+  
     
     
 
@@ -21815,7 +20832,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     /* VARIABLES */
 
     versor = "style"; // "style", "blank", "block"
-    version = "3.3.0";   
+    version = "3.3.5";   
     /* xblocker = "2.49" */
     
     
@@ -22791,38 +21808,27 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         color: rgba(0, 0, 0, 0.6);
     } 
 
-    /* tylko komputer przy wąskim okienku Stylusa */
-    @media (pointer: fine) and (max-width: 519px)
+
+    #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
     {
-        #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
-        {
-            color: #df2c2c;
-            content: "Wejdź w  Ustawienia Stylusa '⚙' i w sekcji '𝗢𝗸𝗻𝗼 𝗽𝗼𝗱𝗿𝗲𝗰𝘇𝗻𝗲' wpisz w polu '𝗦𝘇𝗲𝗿𝗼𝗸𝗼𝘀𝗰 𝗼𝗸𝗻𝗮 (𝘄 𝗽𝗶𝗸𝘀𝗲𝗹𝗮𝗰𝗵)' wartość między 𝟲𝟬𝟬 a 𝟴𝟬𝟬 pikseli. "!important;
-        } 
+        content: "Nowość - Aplikacja WykopX. Jako użytkownik Wykop X Style jesteś wśród grona osób, które pierwsze dostają dostęp do WERSJI BETA NOWEGO WYKOPU: ";
+        line-height: 1.6rem;
+        text-decoration: none;
     } 
-    /* telefon lub komputer z rozszerzonym okienkiem Stylusa */
-    @media (pointer: none), (min-width: 520px)
+    #message-box-contents div.config-heading a[href$="wykopx.pl"]:after
     {
-        #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
-        {
-            // content: "Zaobserwuj tag #wykopx ▫ Do funkcji oznaczonych emoji: ❎ zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦 Szczegóły na wykopx.pl/skrypty     ▫  Opis najciekawszych funkcji 𝗪𝘆𝗸𝗼𝗽 𝗫 na stronie ";
-            content: "Jako użytkownik Wykop X Style jesteś wśród grona osób, które jako pierwsze dostają dostęp do NOWEJ WERSJI ALTERNATYWNEGO WYKOPU";
-            text-decoration: none;
-        } 
-        #message-box-contents div.config-heading a[href$="wykopx.pl"]:after
-        {
-            content: "⭐ Wejdź na: wykopx.pl ⭐"
-        }
-        #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
-        {
-            cursor: pointer;
-            color: rgba(255, 255, 255, 1);
-        } 
-        [data-ui-theme="light"] #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
-        {
-            color: rgba(0, 0, 0, 1);
-        } 
+        content: "⭐ Wejdź na: www.wykopx.pl ⭐"
+    }
+    #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
+    {
+        cursor: pointer;
+        color: rgba(255, 255, 255, 1);
     } 
+    [data-ui-theme="light"] #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
+    {
+        color: rgba(0, 0, 0, 1);
+    } 
+
     
     
     .config-body > label
@@ -22840,6 +21846,12 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     [data-ui-theme="dark"] .config-body > label:has(.onoffswitch)                  { color: rgba(255, 255, 255, 0.5); } 
     [data-ui-theme="dark"] .config-body > label:has(.onoffswitch input:checked)    { color: rgba(255, 255, 255, 1); } 
 
+
+    label.config-range
+    {
+        width: 90%; 
+        box-sizing: border-box;
+    }
 
 
     /* NAZWA SEKCJI */
@@ -22924,7 +21936,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         border-radius: 5px;
         z-index: 1;
         
-        width: 70%; //
+
 
         & + label
         {
@@ -23142,8 +22154,13 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             grid-template-columns: auto 10px;
             grid-template-rows: 1fr 1fr;
-            width: 100%;
+            width: 20%;
+            
         }
+        
+        
+
+        
         #message-box-contents div.config-body label.config-select span.config-name,
         #message-box-contents div.config-body label.config-text span.config-name
         {
@@ -23173,7 +22190,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         
         #message-box-contents div.config-body label.config-select div.config-value > select > option
         {
-            font-size: 1.2px;
+            font-size: 12px;
             border: 1px solid #f00!important;
         }
         

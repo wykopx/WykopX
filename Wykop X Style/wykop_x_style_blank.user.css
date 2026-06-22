@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style 3 Blank
-@version        3.3.0
+@version        3.3.5
 
 @description    Niniejsza wersja to wersja BLANK, w której wszystkie funkcje są wyłączone.
 @description    https://wykopx.pl/style
@@ -46,7 +46,7 @@ dodaje ponad 100 nowych funkcji oznaczonych jako ❎
 
 
                 ---- AUTOR ----
-@author         Wykop X <wykopx@gmail.com> | wykopx.pl/wiki
+@author         Wykop X <wykopx@gmail.com> | wiki.wykopx.pl
 @homepageURL    http://wykopx.pl
 @supportURL     http://wykopx.pl
                 ---- AUTOR ---- 
@@ -6078,22 +6078,95 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             margin-right: 10px!important;
         } 
     }
-    // 🆗 + XS
+    
+    
+    
+    
+        /* 🆗 + XS */
     if(adsHide == 1)
     {
+        .mgid-platform,
         .pub-slot-wrapper,
         aside:has(.pub-slot-wrapper),
         /* reklama lidl tylko na wykop.pl/moj/ */
         .sidebar > aside > section:not([id]),
-        section.stream > div.content > section:not([id], .related-link, .item, .selected),       
-        section.stream > section > div.content > section:not([id])
-        { display: none!important; }
+        
+        section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),   
+        
+        section.stream > section > div.content > section:not([id]),
+        
+        
+        /* 2026-06-22 nowe natrętne reklamy */
+        .sidebar > *:not(.custom-sidebar),
+         
+        section.stream > nav,
+        section.stream > span,
+        section.stream > section,
+        section.stream > aside,
+        section.stream > header:not(.stream-top),
+        
+        section.stream > article:has(nav),
+        
+        section.stream > div:not(.content),
+        section.stream section.stream > article,
+            
+        
+        .stream section.stream > div.content > div:not(.content),
+        .stream section.stream > div.content > nav,
+        .stream section.stream > div.content > span,
+        .stream section.stream > div.content > article,
+        .stream section.stream > div.content > header:not(.stream-top),
+        
+        
+        section > section.stream > div.content > div:not(.content),
+        section > section.stream > div.content > nav,
+        section > section.stream > div.content > span 
+        section > section.stream > div.content > article,
+        section > section.stream > div.content > header:not(.stream-top)
+        {
+            if(dev) { border: 3px solid red!important; }
+            else { display: none!important; }
+        }
+        
+        
+        
         
         .pub-slot-wrapper:has(section.premium-pub.link-block)
         { 
             display: flex!important;
         }
     }
+    
+    /* 🆗 + XS */
+    if(adsSponsoredLinksHide == 1)
+    {
+        .pub-slot-wrapper:has(section.premium-pub.link-block) 
+        {
+            if(dev) { border: 3px solid goldenrod!important; }
+            else { display: none!important; }
+        }
+    }
+
+
+
+
+    if(adsRecommendedLinksHide == "niepokazuj")
+    {
+        section.stream section.link-block:has(li.recommend-label) 
+        {
+            if(dev) { border: 3px solid lime!important; }
+            else { display: none!important; }
+        }
+    } 
+    else if(adsRecommendedLinksHide == "wyszarzone")
+    {
+        section.stream section.link-block:has(li.recommend-label) { opacity: 0.3!important; } 
+        section.stream section.link-block:has(li.recommend-label):hover { opacity: 1!important; } 
+    }
+
+
+ 
+    
     
     /* 
        .selected
@@ -6153,23 +6226,6 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     
 
     
-    // 🆗
-    if(adsSponsoredLinksHide == 1)
-    {
-        .pub-slot-wrapper:has(section.premium-pub.link-block) { display: none!important; } 
-    }
-
-
-    if(adsRecommendedLinksHide == "niepokazuj")
-    {
-        section.stream section.link-block:has(li.recommend-label) { display: none!important; } 
-    } 
-    else if(adsRecommendedLinksHide == "wyszarzone")
-    {
-        section.stream section.link-block:has(li.recommend-label) { opacity: 0.3!important; } 
-        section.stream section.link-block:has(li.recommend-label):hover { opacity: 1!important; } 
-    }
-
 
 
 
@@ -21818,7 +21874,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     /* VARIABLES */
 
     versor = "blank"; // "style", "blank", "block"
-    version = "3.3.0";   
+    version = "3.3.5";   
     /* xblocker = "2.49" */
     
     
@@ -22794,37 +22850,27 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         color: rgba(0, 0, 0, 0.6);
     } 
 
-    /* tylko komputer przy wąskim okienku Stylusa */
-    @media (pointer: fine) and (max-width: 519px)
+
+
+
+    #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
     {
-        #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
-        {
-            color: #df2c2c;
-            content: "Wejdź w  Ustawienia Stylusa '⚙' i w sekcji '𝗢𝗸𝗻𝗼 𝗽𝗼𝗱𝗿𝗲𝗰𝘇𝗻𝗲' wpisz w polu '𝗦𝘇𝗲𝗿𝗼𝗸𝗼𝘀𝗰 𝗼𝗸𝗻𝗮 (𝘄 𝗽𝗶𝗸𝘀𝗲𝗹𝗮𝗰𝗵)' wartość między 𝟲𝟬𝟬 a 𝟴𝟬𝟬 pikseli. "!important;
-        } 
+        content: "Nowość - Aplikacja WykopX. Jako użytkownik Wykop X Style jesteś wśród grona osób, które pierwsze dostają dostęp do WERSJI BETA NOWEGO WYKOPU: ";
+        line-height: 1.6rem;
+        text-decoration: none;
     } 
-    /* telefon lub komputer z rozszerzonym okienkiem Stylusa */
-    @media (pointer: none), (min-width: 520px)
+    #message-box-contents div.config-heading a[href$="wykopx.pl"]:after
     {
-        #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
-        {
-            // content: "Zaobserwuj tag #wykopx ▫ Do funkcji oznaczonych emoji: ❎ zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦 Szczegóły na wykopx.pl/skrypty     ▫  Opis najciekawszych funkcji 𝗪𝘆𝗸𝗼𝗽 𝗫 na stronie ";
-            content: "Jako użytkownik Wykop X Style jesteś wśród grona osób, które jako pierwsze dostają dostęp do NOWEJ WERSJI ALTERNATYWNEGO WYKOPU";
-            text-decoration: none;
-        } 
-        #message-box-contents div.config-heading a[href$="wykopx.pl"]:after
-        {
-            content: "⭐ Wejdź na: wykopx.pl ⭐"
-        }
-        #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
-        {
-            cursor: pointer;
-            color: rgba(255, 255, 255, 1);
-        } 
-        [data-ui-theme="light"] #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
-        {
-            color: rgba(0, 0, 0, 1);
-        } 
+        content: "⭐ Wejdź na: www.wykopx.pl ⭐"
+    }
+    #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
+    {
+        cursor: pointer;
+        color: rgba(255, 255, 255, 1);
+    } 
+    [data-ui-theme="light"] #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
+    {
+        color: rgba(0, 0, 0, 1);
     } 
     
     
@@ -22834,6 +22880,14 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         font-size: 13px;
         display: flex;
     }
+    
+    
+    label.config-range
+    {
+        width: 90%; 
+        box-sizing: border-box;
+    }
+    
 
     [data-ui-theme="light"] .config-body > label{color: rgba(0, 0, 0, 1); } 
     [data-ui-theme="dark"] .config-body > label{color: rgba(255, 255, 255, 1); } 
@@ -23176,7 +23230,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         
         #message-box-contents div.config-body label.config-select div.config-value > select > option
         {
-            font-size: 1.2px;
+            font-size: 12px;
             border: 1px solid #f00!important;
         }
         

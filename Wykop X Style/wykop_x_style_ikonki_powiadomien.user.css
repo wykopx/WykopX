@@ -1,41 +1,41 @@
 /* ==UserStyle==
 @name           Wykop X Style - Powiadomienia
-@version        3.3.3
+@version        3.3.5
 
 
 @description    Wykop X Style
 @description    Ten styl pozwala zmieniać powiadomienia na wykopie oraz dodaje dodatkowe opcje dla stylów Wykop XS - All comments together oraz Wykop XS - Grupuj powiadomienia
-description     https://wykopx.pl/styl
+description     https://styl.wykopx.pl
 
 @description    MikroCzat
 @description    Wejdź na Wykopowy Czat
-@description    https://wykopx.pl/czat
+@description    https://mikroczat.pl
 
 @description	Wykop X Style Blank
 @description	W wersji BLANK wszystkie opcje są wyłączone
-@description	https://wykopx.pl/blank
+@description	https://blank.wykopx.pl
 
 @description    Wykop XS
 @description    Skrypty z dodatkowymi funkcjami znajdziesz na
-@description    https://wykopx.pl/skrypty
+@description    https://skrypty.wykopx.pl
 
 
 @description    ---- WYKOP X ----
-@description    http://wykopx.pl/wiki
+@description    http://wiki.wykopx.pl
 @description    https://userstyles.world/style/8174/wykop-x-style-3
 
 
 
 ---- AUTOR WYKOP X ----
 
-@author         Wykop X <wykopx@gmail.com> | wykopx.pl/wiki
-@homepageURL    http://wykopx.pl/wiki
-@supportURL     http://wykopx.pl/wiki
+@author         Wykop X <wykopx@gmail.com> | wiki.wykopx.pl
+@homepageURL    http://wiki.wykopx.pl
+@supportURL     http://wiki.wykopx.pl
 
 ---- AUTOR WYKOP X ----  
 
 
-@var range      HR_NOTIFICATIONS_GROUPING                    `❎ GRUPOWANIE POWIADOMIEŃ xx(Wykop XS Odgrupuj powiadomienia)`                           [0, 0, 99900, 1, 'mm']
+@var range      HR_NOTIFICATIONS_GROUPING                    `❎ GRUPOWANIE POWIADOMIEŃ (Wykop XS Odgrupuj powiadomienia)`                           [0, 0, 99900, 1, 'mm']
 @var checkbox   disableNotificationsGroupingTags             `❌ Nie grupuj powiadomień z #tagów`                         1
 @var checkbox   disableNotificationsGroupingEntries          `❌ Nie grupuj powiadomień z komentarzami`                   1
 @var checkbox   disableNotificationsGroupingObserved         `❌ Nie grupuj powiadomień z obserwowanych dyskusji`         1
@@ -46,6 +46,7 @@ description     https://wykopx.pl/styl
 
 
 
+@var checkbox   dev                                         `Tryb developerski do testowania`                                 0
 
 
 
@@ -71,22 +72,85 @@ description     https://wykopx.pl/styl
     adsHide = 1;
     adsSponsoredLinksHide = 1;
     
-    // 🆗 + XS
     if(adsHide == 1)
     {
+        .mgid-platform,
         .pub-slot-wrapper,
         aside:has(.pub-slot-wrapper),
+        /* reklama lidl tylko na wykop.pl/moj/ */
         .sidebar > aside > section:not([id]),
-        section.stream > div.content > section:not([id],.related-link,.item),       
-        section.stream > section > div.content > section:not([id])
-        { display: none!important; }
         
-        .pub-slot-wrapper:has(section.premium-pub.link-block) { display: flex!important; }
-    }   
-    // 🆗
+        section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),   
+        
+        section.stream > section > div.content > section:not([id]),
+        
+        
+        /* 2026-06-22 nowe natrętne reklamy */
+        .sidebar > *:not(.custom-sidebar),
+         
+        section.stream > nav,
+        section.stream > span,
+        section.stream > section,
+        section.stream > aside,
+        section.stream > header:not(.stream-top),
+        
+        section.stream > article:has(nav),
+        
+        section.stream > div:not(.content),
+        section.stream section.stream > article,
+            
+        
+        .stream section.stream > div.content > div:not(.content),
+        .stream section.stream > div.content > nav,
+        .stream section.stream > div.content > span,
+        .stream section.stream > div.content > article,
+        .stream section.stream > div.content > header:not(.stream-top),
+        
+        
+        section > section.stream > div.content > div:not(.content),
+        section > section.stream > div.content > nav,
+        section > section.stream > div.content > span 
+        section > section.stream > div.content > article,
+        section > section.stream > div.content > header:not(.stream-top)
+        {
+            if(dev) { border: 3px solid red!important; }
+            else { display: none!important; }
+        }
+        
+
+        
+        .pub-slot-wrapper:has(section.premium-pub.link-block)
+        { 
+            display: flex!important;
+        }
+    }
+
     if(adsSponsoredLinksHide == 1)
     {
-        .pub-slot-wrapper:has(section.premium-pub.link-block) { display: none!important; } 
+        .pub-slot-wrapper:has(section.premium-pub.link-block) 
+        {
+            if(dev) { border: 3px solid goldenrod!important; }
+            else { display: none!important; }
+        }
+    }
+    
+    
+    if(adsRecommendedLinksHide)
+    {
+        section.stream section.link-block:has(li.recommend-label) 
+        {
+            if(dev) { border: 3px solid lime!important; }
+            else { display: none!important; }
+        }
+    }
+    
+    body
+    {
+        overflow: initial!important;
+    } 
+    body > div[class^="app_gdpr"] 
+    {
+        display: none!important;
     }
     
     :root
@@ -386,12 +450,12 @@ description     https://wykopx.pl/styl
     {
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
         {
-            content: "Zaobserwuj tag #wykopx ▫ Do funkcji oznaczonych emoji: ❎ zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦 Szczegóły na wykopx.pl/skrypty     ▫  Opis najciekawszych funkcji 𝗪𝘆𝗸𝗼𝗽 𝗫 na stronie ";
+            content: "Zaobserwuj tag #wykopx ▫ Do funkcji oznaczonych emoji: ❎ zainstaluj 𝗪𝘆𝗸𝗼𝗽 𝗫𝗦 Szczegóły na xs.wykopx.pl     ▫  Opis najciekawszych funkcji 𝗪𝘆𝗸𝗼𝗽 𝗫 na stronie ";
             text-decoration: none;
         } 
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:after
         {
-            content: "wykopx.pl/wiki"
+            content: "wiki.wykopx.pl"
         }
         #message-box-contents div.config-heading a[href$="wykopx.pl"]:hover:after
         {

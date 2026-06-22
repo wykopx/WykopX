@@ -1,12 +1,12 @@
 /* ==UserStyle==
 @name           Wykop X - blokowanie reklam
-@version        3.3.3
+@version        3.3.5
 @description    Blokowanie reklam i znalezisk Sponsorowanych na wykop.pl
 
 @author         Wykop X <wykopx@gmail.com> | www.wykopx.pl
 
 @homepageURL    http://www.wykopx.pl
-@supportURL     http://wykopx.pl/issues
+@supportURL     http://issues.wykopx.pl
 
 @preprocessor   stylus
 @namespace      userstyles.world/user/wykopchanger
@@ -20,6 +20,15 @@
 
 
 Changelog
+3.3.5 [2026-06-22]
+- nowe natrętne reklamy, których nie blokuje uBlock
+- dynamicznie zmieniające typy w DOM
+- udające linki do wykop.pl/tag/... wykop.pl/category/...
++ dodaliśmy tryb deweloperski, który pokazuje co jest blokowane po włączeniu blokowania reklam i znalezisk
+
+3.3.3 [2026-06-15]
+- nowe reklamy wyglądające jak miniaturki znalezisk
+
 3.2.2 [2026-04-11]
 - blokowanie nowego rodzaju reklam na stronie głównej i w sidebarze
 https://github.com/wykopx/WykopX/wiki/Changelog#322-blokowanie-reklam
@@ -39,30 +48,96 @@ https://github.com/wykopx/WykopX/wiki/Changelog#322-blokowanie-reklam
 @var checkbox  adsHide                                      ` Usuń reklamy`                                                 1
 @var checkbox  adsRecommendedLinksHide                      ` Ukryj znaleziska "Wykop Poleca"`                               1
 @var checkbox  adsSponsoredLinksHide                        ` Ukryj znaleziska "Wykop Sponsorowany"`                          1
+
+@var checkbox   dev                                         `Tryb developerski do testowania`                                 0
+
+
 ==/UserStyle== */
 
 @-moz-document domain("wykop.pl")
 {
+
     if(adsHide == 1)
     {
+        .mgid-platform,
         .pub-slot-wrapper,
         aside:has(.pub-slot-wrapper),
         /* reklama lidl tylko na wykop.pl/moj/ */
         .sidebar > aside > section:not([id]),
-        section.stream > div.content > section:not([id],.related-link,.item),       
-        section.stream > section > div.content > section:not([id])
-        { display: none!important; }
         
-        .pub-slot-wrapper:has(section.premium-pub.link-block) { display: flex!important; }
+        section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),   
+        
+        section.stream > section > div.content > section:not([id]),
+        
+        
+        /* 2026-06-22 nowe natrętne reklamy */
+        .sidebar > *:not(.custom-sidebar),
+         
+        section.stream > nav,
+        section.stream > span,
+        section.stream > section,
+        section.stream > aside,
+        section.stream > header:not(.stream-top),
+        
+        section.stream > article:has(nav),
+        
+        section.stream > div:not(.content),
+        section.stream section.stream > article,
+            
+        
+        .stream section.stream > div.content > div:not(.content),
+        .stream section.stream > div.content > nav,
+        .stream section.stream > div.content > span,
+        .stream section.stream > div.content > article,
+        .stream section.stream > div.content > header:not(.stream-top),
+        
+        
+        section > section.stream > div.content > div:not(.content),
+        section > section.stream > div.content > nav,
+        section > section.stream > div.content > span 
+        section > section.stream > div.content > article,
+        section > section.stream > div.content > header:not(.stream-top)
+        {
+            if(dev) { border: 3px solid red!important; }
+            else { display: none!important; }
+        }
+        
+
+        
+        .pub-slot-wrapper:has(section.premium-pub.link-block)
+        { 
+            display: flex!important;
+        }
     }
+
     if(adsSponsoredLinksHide == 1)
     {
-        .pub-slot-wrapper:has(section.premium-pub.link-block) { display: none!important; }
+        .pub-slot-wrapper:has(section.premium-pub.link-block) 
+        {
+            if(dev) { border: 3px solid goldenrod!important; }
+            else { display: none!important; }
+        }
     }
+    
+    
     if(adsRecommendedLinksHide)
     {
-        section.stream section.link-block:has(li.recommend-label) { display: none!important; }
+        section.stream section.link-block:has(li.recommend-label) 
+        {
+            if(dev) { border: 3px solid lime!important; }
+            else { display: none!important; }
+        }
     }
+    
+    body
+    {
+        overflow: initial!important;
+    } 
+    body > div[class^="app_gdpr"] 
+    {
+        display: none!important;
+    }
+        
 }
 
 
