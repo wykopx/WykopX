@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Obrazki+
 // @name:en							Wykop XS - Images+
 
-// @version							3.3.5
+// @version							3.3.6
 
 // @description 					Otwiera obrazki z wykopu poprzez www.wykopx.pl - z dodatkowymi funkcjami. Otwórz dowolny obrazek na wykopie i zamień w adresie URL 'wykop.pl' na 'wykopx.pl'. Obrazek możesz obrócić, odbić lustrzanie, udostępnić, skopiować, zapisać, włączyć pełny ekran. Oprócz przycisków masz też wygodne skróty klawiaturowe do każdej z tych akcji.  | Wejdź na Mikroczat: https://wykopx.pl/czat Projekt Wykop X: https://wykopx.pl Wiki projektu Wykop X: https://wykopx.pl/wiki
 // @description:en 					Otwiera obrazki z wykopu poprzez www.wykopx.pl - z dodatkowymi funkcjami. Otwórz dowolny obrazek na wykopie i zamień w adresie URL 'wykop.pl' na 'wykopx.pl'. Obrazek możesz obrócić, odbić lustrzanie, udostępnić, skopiować, zapisać, włączyć pełny ekran. Oprócz przycisków masz też wygodne skróty klawiaturowe do każdej z tych akcji.  | Wykop Live Chat: https://wykopx.pl/czat | Wykop X Project: https://wykopx.pl | Wiki: https://wykopx.pl/wiki

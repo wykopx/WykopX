@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3
 // @name:en							Wykop XS 3
 
-// @version							3.3.5
+// @version							3.3.6
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://wykopx.pl/styl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://wykopx.pl/styl
@@ -48,7 +48,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.3.5";
+	const currentVersion = "3.3.6";
 	let dev = false;
 
 	const promoString = " - Wykop XS / #wykopx";
@@ -9229,6 +9229,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
         aside:has(.pub-slot-wrapper),
         .sidebar > aside > section:not([id]),
 
+        section[data-label="ad: top"],
         section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),
 
         section.stream > section > div.content > section:not([id]),
@@ -9237,23 +9238,24 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
         section.stream > nav,
         section.stream > span,
-        section.stream > section,
+        section.stream > section:not(.display-btns),
         section.stream > aside,
         section.stream > header:not(.stream-top),
 
         section.stream > article:has(nav),
 
-        section.stream > div:not(.content),
-        section.stream section.stream > article,
+        section.stream > article,
 
-        .stream section.stream > div.content > div:not(.content),
+        section.stream > div:not(.content),
+        section.stream > div.content > div:not(.notification-wrapper),
+
+
         .stream section.stream > div.content > nav,
         .stream section.stream > div.content > span,
         .stream section.stream > div.content > article,
         .stream section.stream > div.content > header:not(.stream-top),
 
 
-        section > section.stream > div.content > div:not(.content),
         section > section.stream > div.content > nav,
         section > section.stream > div.content > span
         section > section.stream > div.content > article,
@@ -10886,45 +10888,45 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		if (settings.hideAds)
 		{
 			CSS += `
-			.mgid-platform,
-			.pub-slot-wrapper,
-			aside:has(.pub-slot-wrapper),
-			/* reklama lidl tylko na wykop.pl/moj/ */
-			.sidebar > aside > section:not([id]),
+		.mgid-platform,
+        .pub-slot-wrapper,
+        aside:has(.pub-slot-wrapper),
+        .sidebar > aside > section:not([id]),
 
-			section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),
+        section[data-label="ad: top"],
+        section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),
 
-			section.stream > section > div.content > section:not([id]),
+        section.stream > section > div.content > section:not([id]),
 
+        .sidebar > *:not(.custom-sidebar),
 
-			/* 2026-06-22 nowe natrętne reklamy */
-			.sidebar > *:not(.custom-sidebar),
+        section.stream > nav,
+        section.stream > span,
+        section.stream > section:not(.display-btns),
+        section.stream > aside,
+        section.stream > header:not(.stream-top),
 
-			section.stream > nav,
-			section.stream > span,
-			section.stream > section,
-			section.stream > aside,
-			section.stream > header:not(.stream-top),
+        section.stream > article:has(nav),
 
-			section.stream > article:has(nav),
+        section.stream > article,
 
-			section.stream > div:not(.content),
-			section.stream section.stream > article,
-
-
-			.stream section.stream > div.content > div:not(.content),
-			.stream section.stream > div.content > nav,
-			.stream section.stream > div.content > span,
-			.stream section.stream > div.content > article,
-			.stream section.stream > div.content > header:not(.stream-top),
+        section.stream > div:not(.content),
+        section.stream > div.content > div:not(.notification-wrapper),
 
 
-			section > section.stream > div.content > div:not(.content),
-			section > section.stream > div.content > nav,
-			section > section.stream > div.content > span
-			section > section.stream > div.content > article,
-			section > section.stream > div.content > header:not(.stream-top)
-			{ display: none!important; }
+        .stream section.stream > div.content > nav,
+        .stream section.stream > div.content > span,
+        .stream section.stream > div.content > article,
+        .stream section.stream > div.content > header:not(.stream-top),
+
+
+        section > section.stream > div.content > nav,
+        section > section.stream > div.content > span
+        section > section.stream > div.content > article,
+        section > section.stream > div.content > header:not(.stream-top)
+        {
+            display: none!important;
+        }
 		`;
 		}
 

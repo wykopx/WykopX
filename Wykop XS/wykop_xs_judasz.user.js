@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Judasz
 // @name:en							Wykop XS - Judasz
 
-// @version							3.3.5
+// @version							3.3.6
 
 // @description 					Wykop XS Judasz
 // @description:en 					Wykop XS Judasz
@@ -48,7 +48,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.3.5";
+	const currentVersion = "3.3.6";
 	let dev = true;
 
 

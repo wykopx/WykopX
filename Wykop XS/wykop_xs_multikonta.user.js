@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Multikonta
 // @name:en							Wykop XS - Multikonta
 
-// @version							3.3.5
+// @version							3.3.6
 
 // @description 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
 // @description:en 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
@@ -45,7 +45,7 @@
 
 'use strict';
 
-const currentVersion = "3.3.5";
+const currentVersion = "3.3.6";
 let dev = false;
 
 const promoString = " - Wykop XS / #wykopx";
@@ -2164,6 +2164,7 @@ Widok dyskusji:
         aside:has(.pub-slot-wrapper),
         .sidebar > aside > section:not([id]),
 
+        section[data-label="ad: top"],
         section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),
 
         section.stream > section > div.content > section:not([id]),
@@ -2172,23 +2173,24 @@ Widok dyskusji:
 
         section.stream > nav,
         section.stream > span,
-        section.stream > section,
+        section.stream > section:not(.display-btns),
         section.stream > aside,
         section.stream > header:not(.stream-top),
 
         section.stream > article:has(nav),
 
-        section.stream > div:not(.content),
-        section.stream section.stream > article,
+        section.stream > article,
 
-        .stream section.stream > div.content > div:not(.content),
+        section.stream > div:not(.content),
+        section.stream > div.content > div:not(.notification-wrapper),
+
+
         .stream section.stream > div.content > nav,
         .stream section.stream > div.content > span,
         .stream section.stream > div.content > article,
         .stream section.stream > div.content > header:not(.stream-top),
 
 
-        section > section.stream > div.content > div:not(.content),
         section > section.stream > div.content > nav,
         section > section.stream > div.content > span
         section > section.stream > div.content > article,

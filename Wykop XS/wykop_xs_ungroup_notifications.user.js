@@ -3,7 +3,7 @@
 // @name:pl						Wykop XS - Rozgrupuj powiadomienia
 // @name:en						Wykop XS - Ungroup notifications
 
-// @version						3.3.5
+// @version						3.3.6
 
 // @description 					Wykop XS - Rozgrupuj powiadomienia | Wejdź na  Wykop X: https://wykopx.pl | Wiki projektu Wykop X: https://wykopx.pl/wiki
 // @description:en 					Wykop XS - Ungroup notiications | Wykop X Project: https://wykopx.pl | Wiki: https://wykopx.pl/wiki
@@ -30,7 +30,7 @@
 (async function ()
 {
 	'use strict';
-	const currentVersion = "3.3.5";
+	const currentVersion = "3.3.6";
 	let dev = false;
 	const promoString = " - Wykop XS / #wykopx";
 

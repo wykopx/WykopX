@@ -3,7 +3,7 @@
 // @name:pl						Wykop XS - OnePage Komentarze i Notatki
 // @name:en						Wykop XS - OnePage Komentarze i Notatki
 
-// @version						3.3.5
+// @version						3.3.6
 
 // @description 					Wykop XS - OnePage Komentarze i Notatki | Wejdź na Wykop X: https://wykopx.pl | Wiki projektu Wykop X: https://wykopx.pl/wiki
 // @description:en 					Wykop XS - OnePage Komentarze i Notatki | Wykop X Project: https://wykopx.pl | Wiki: https://wykopx.pl/wiki
@@ -68,7 +68,7 @@
 
 
 
-	const currentVersion = "3.3.5";
+	const currentVersion = "3.3.6";
 	let dev = false;
 
 	const AWAIT_MILLISECONDS = 400;
