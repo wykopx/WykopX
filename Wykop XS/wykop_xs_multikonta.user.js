@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Multikonta
 // @name:en							Wykop XS - Multikonta
 
-// @version							3.4.0
+// @version							3.4.1
 
 // @description 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
 // @description:en 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
@@ -45,7 +45,7 @@
 
 'use strict';
 
-const currentVersion = "3.4.0";
+const currentVersion = "3.4.1";
 let dev = false;
 
 const promoString = " - Wykop XS / #wykopx";
@@ -2222,6 +2222,60 @@ Widok dyskusji:
 
 	/* HIDE WYKOP XS PROMO FROM STYLUS */
 	CSS += `.wykopxs, body div.main-content[class] section > section.sidebar::after  { display: none!important; }`;
+
+
+	CSS += `
+	/* PANEL CENZUROWANYCH TREŚCI ZMUSZAJĄCY DO ZALOGOWANIA */
+    section:is(.tag-page, .link-page) .force-login-access-skeleton .info-box,
+    .modal.login .info-box p
+    {
+        font-size: 0;
+    }
+    .tag-page .force-login-access-skeleton .info-box a
+    {
+        display: none;
+    }
+    .modal.login .info-box p::before,
+    .modal.login .info-box p::after,
+    .force-login-access-skeleton .info-box p::before,
+    .force-login-access-skeleton .info-box p::after
+    {
+        font-size: 0.8rem;
+    }
+    .modal.login .info-box p::after,
+    .force-login-access-skeleton .info-box p::after
+    {
+        font-weight: bolder;
+    }
+    .tag-page .force-login-access-skeleton .info-box p::before
+    {
+        content: ' Wykop cenzuruje ten #tag. Na Wykopie musisz się zalogować by go otworzyć. Wszystkie ocenzurowane i ukryte #tagi są jednak dostępne dla niezalogowanych na stronie wykopx.pl. ';
+    }
+    .tag-page .force-login-access-skeleton .info-box p::after
+    {
+        content: ' Dodaj w adresie "wykop.pl" literę "x" aby przejść na wykopx.pl/tag/... i wejdź na tag bez cenzury i bez reklam.';
+    }
+    .link-page .force-login-access-skeleton .info-box p::before
+    {
+        content: ' Wykop cenzuruje ponad 30% znalezisk. Wszystkie ocenzurowane i ukryte znaleziska są jednak dostępne dla niezalogowanych na stronie wykopx.pl. ';
+    }
+    .link-page .force-login-access-skeleton .info-box p::after
+    {
+        content: ' Dodaj w adresie "wykop.pl" literę "x" aby przejść na wykopx.pl/link/... i otwórz znalezisko bez cenzury i bez reklam';
+    }
+
+    .modal.login .info-box p::before
+    {
+       content: ' Ta strona jest ocenzurowana przez Wykop. Możesz jednak otworzyć ją na stronie Wykop X. ';
+    }
+    .modal.login .info-box p::after
+    {
+        content: ' Wejdź na "wykopx.pl" i zobacz to bez cenzury.';
+        font-weight: bolder;
+    }
+	`;
+
+
 
 	styleElement.textContent = CSS;
 	document.head.appendChild(styleElement);

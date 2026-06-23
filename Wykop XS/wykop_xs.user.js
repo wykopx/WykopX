@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3
 // @name:en							Wykop XS 3
 
-// @version							3.4.0
+// @version							3.4.1
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://wykopx.pl/styl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://wykopx.pl/styl
@@ -48,7 +48,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.4.0";
+	const currentVersion = "3.4.1";
 	let dev = false;
 
 	const promoString = " - Wykop XS / #wykopx";
@@ -9302,8 +9302,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			}`;
 
 
-		/* HIDE WYKOP XS PROMO FROM STYLUS */
-		CSS += `body div.main-content[class] section > section.sidebar::after  { display: none!important; }`;
 
 
 		/* ----- Wykop X Style promo banners ON */
@@ -9346,10 +9344,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			font-size: 14px;
 		}
 
-
-		
-
-
 		section.editor.expand section.inline-autocomplete section.inline-autocomplete-stream div.content::after,
 		header.header div.right section.search-input section.inline-autocomplete section.inline-autocomplete-stream div.content::after
 		{ display: none!important; }
@@ -9374,6 +9368,59 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			body > section > aside.wykopxs_info_bar span.wykopxs_new_version_second,
 			body > section > aside.wykopxs_info_bar > footer { display: none; }
 		}
+	`;
+
+
+
+		CSS += `
+	/* PANEL CENZUROWANYCH TREŚCI ZMUSZAJĄCY DO ZALOGOWANIA */
+    section:is(.tag-page, .link-page) .force-login-access-skeleton .info-box,
+    .modal.login .info-box p
+    {
+        font-size: 0;
+    }
+    .tag-page .force-login-access-skeleton .info-box a
+    {
+        display: none;
+    }
+    .modal.login .info-box p::before,
+    .modal.login .info-box p::after,
+    .force-login-access-skeleton .info-box p::before,
+    .force-login-access-skeleton .info-box p::after
+    {
+        font-size: 0.8rem;
+    }
+    .modal.login .info-box p::after,
+    .force-login-access-skeleton .info-box p::after
+    {
+        font-weight: bolder;
+    }
+    .tag-page .force-login-access-skeleton .info-box p::before
+    {
+        content: ' Wykop cenzuruje ten #tag. Na Wykopie musisz się zalogować by go otworzyć. Wszystkie ocenzurowane i ukryte #tagi są jednak dostępne dla niezalogowanych na stronie wykopx.pl. ';
+    }
+    .tag-page .force-login-access-skeleton .info-box p::after
+    {
+        content: ' Dodaj w adresie "wykop.pl" literę "x" aby przejść na wykopx.pl/tag/... i wejdź na tag bez cenzury i bez reklam.';
+    }
+    .link-page .force-login-access-skeleton .info-box p::before
+    {
+        content: ' Wykop cenzuruje ponad 30% znalezisk. Wszystkie ocenzurowane i ukryte znaleziska są jednak dostępne dla niezalogowanych na stronie wykopx.pl. ';
+    }
+    .link-page .force-login-access-skeleton .info-box p::after
+    {
+        content: ' Dodaj w adresie "wykop.pl" literę "x" aby przejść na wykopx.pl/link/... i otwórz znalezisko bez cenzury i bez reklam';
+    }
+
+    .modal.login .info-box p::before
+    {
+       content: ' Ta strona jest ocenzurowana przez Wykop. Możesz jednak otworzyć ją na stronie Wykop X. ';
+    }
+    .modal.login .info-box p::after
+    {
+        content: ' Wejdź na "wykopx.pl" i zobacz to bez cenzury.';
+        font-weight: bolder;
+    }
 	`;
 
 
