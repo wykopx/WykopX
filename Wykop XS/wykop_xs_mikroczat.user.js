@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Lista plusujących, animowane awatary
 // @name:en							Wykop XS - Lista plusujących, animowane awatary
 
-// @version							3.3.6
+// @version							3.4.0
 
 // @description 					Wykop XS - Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -45,7 +45,7 @@
 
 'use strict';
 
-const currentVersion = "3.3.6";
+const currentVersion = "3.4.0";
 let dev = false;
 
 const promoString = " - Wykop XS / #wykopx";
@@ -2472,44 +2472,63 @@ Widok dyskusji:
 	if (settings.hideAds)
 	{
 		CSS += `
-		.mgid-platform,
-        .pub-slot-wrapper,
-        aside:has(.pub-slot-wrapper),
-        .sidebar > aside > section:not([id]),
+		article:has(+ header),
 
-        section[data-label="ad: top"],
         section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),
-
-        section.stream > section > div.content > section:not([id]),
-
-        .sidebar > *:not(.custom-sidebar),
 
         section.stream > nav,
         section.stream > span,
-        section.stream > section:not(.display-btns),
         section.stream > aside,
-        section.stream > header:not(.stream-top),
-
-        section.stream > article:has(nav),
-
-        section.stream > article,
-
         section.stream > div:not(.content),
         section.stream > div.content > div:not(.notification-wrapper),
+        section.stream > section:not(.display-btns),
+        section.stream > header:not(.stream-top),
+        section.stream > section > div.content > section:not([id]),
 
+        section.stream.tags-stream > article,
+        section.stream.microblog > article,
+
+        section > section.stream > div.content > nav,
+        section > section.stream > div.content > span
+        section > section.stream > div.content > article,
+        section > section.stream > div.content > header:not(.stream-top),
 
         .stream section.stream > div.content > nav,
         .stream section.stream > div.content > span,
         .stream section.stream > div.content > article,
         .stream section.stream > div.content > header:not(.stream-top),
 
-
-        section > section.stream > div.content > nav,
-        section > section.stream > div.content > span
-        section > section.stream > div.content > article,
-        section > section.stream > div.content > header:not(.stream-top)
+        .sidebar > *:not(.custom-sidebar, .conversation-list, .ban-alert),
+        .sidebar > aside > section:not([id])
         {
-            display: none!important;
+            display: block!important;
+            height: 0px!important;
+            max-height: 0px!important;
+            overflow: hidden!important;
+            opacity: 0.01!important;
+            user-select: none!important;
+            pointer-events: none!important;
+        }
+
+        section.block-alert
+        {
+            border: 20px solid red!important;
+        }
+
+        .mgid-platform,
+        .pub-slot-wrapper,
+        div.content + nav,
+        aside:has(.pub-slot-wrapper),
+        section[data-label="ad: top"],
+        div.main-content > main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.register.observer.active,
+        div.main-content > main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.content.observer.active
+        {
+            display: none!important; min-height: 0px!important;
+        }
+
+        .pub-slot-wrapper:has(section.premium-pub.link-block)
+        {
+            display: flex!important;
         }
 		`;
 	}

@@ -1,12 +1,12 @@
 // ==UserScript==
-// @name							Wykop XS - XHR blocker
-// @name:pl							Wykop XS - XHR blocker
-// @name:en							Wykop XS - XHR blocker
+// @name							[Wykop XHR Blocker]
+// @name:pl							[Wykop XHR Blocker]
+// @name:en							[Wykop XHR Blocker]
 
-// @version							3.3.6
+// @version							3.4.0
 
-// @description 					Wykop XS - XHR Blocker | Wykop X Style znajdziesz na: http://wykopx.pl/style
-// @description:en 					Wykop XS - XHR Blocker | Check out also: http://wykopx.pl/style
+// @description 					[Wykop XHR Blocker] | Wykop X Style znajdziesz na: http://wykopx.pl/style
+// @description:en 					[Wykop XHR Blocker] | Check out also: http://wykopx.pl/style
 
 
 // Chcesz wesprzeć projekt Wykop X? Postaw kawkę:
@@ -44,7 +44,7 @@
 {
 	'use strict';
 
-	const currentVersion = "3.3.6";
+	const currentVersion = "3.4.0";
 	let dev = false;
 
 	const promoString = " - Wykop XHR Blocker / #wykopx";
@@ -77,7 +77,7 @@
 	setSettingsValueFromCSSProperty("infiniteScrollEntriesEnabled");
 	setSettingsValueFromCSSProperty("infiniteScrollLinksEnabled");
 
-	// Wykop XS - XHR Blocker
+	// [Wykop XHR Blocker]
 	// https://greasyfork.org/en/scripts/486722-wykop-xs-xhr-blocker
 	setSettingsValueFromCSSProperty("wxsBlockXHREnable");
 	if (settings.wxsBlockXHREnable)
@@ -138,17 +138,23 @@
 		// prohibited.push("https://wykop.pl/api/v3/notifications/entries?page=1");
 		// prohibited.push("https://wykop.pl/api/v3/pm/conversations");
 
+		console.log("[Wykop XHR Blocker] prohibited:", prohibited);
+		console.log("[Wykop XHR Blocker] dev:", dev);
+
+
 		xhook.before((request, callback) =>
 		{
+			console.log("[Wykop XHR Blocker] xhook.before:", request, callback);
+
 
 			if (allowed.some(str => request.url.includes(str)) && !prohibited.some(str => request.url.includes(str)))
 			{
-				if (dev) console.log("Wykop XS - XHR Blocker | XHR: 🌍 " + request.url + " (ALLOWED)");
+				console.log("[Wykop XHR Blocker] | XHR: 🌍 " + request.url + " (ALLOWED)");
 				callback();
 			}
 			else
 			{
-				if (dev) console.log("Wykop XS - XHR Blocker | XHR: ⛔ " + request.url + " (BLOCKED)");
+				console.log("[Wykop XHR Blocker] | XHR: ⛔ " + request.url + " (BLOCKED)");
 			}
 		});
 	}
@@ -158,44 +164,63 @@
 	if (settings.hideAds)
 	{
 		CSS += `
-		.mgid-platform,
-        .pub-slot-wrapper,
-        aside:has(.pub-slot-wrapper),
-        .sidebar > aside > section:not([id]),
+		article:has(+ header),
 
-        section[data-label="ad: top"],
         section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),
-
-        section.stream > section > div.content > section:not([id]),
-
-        .sidebar > *:not(.custom-sidebar),
 
         section.stream > nav,
         section.stream > span,
-        section.stream > section:not(.display-btns),
         section.stream > aside,
-        section.stream > header:not(.stream-top),
-
-        section.stream > article:has(nav),
-
-        section.stream > article,
-
         section.stream > div:not(.content),
         section.stream > div.content > div:not(.notification-wrapper),
+        section.stream > section:not(.display-btns),
+        section.stream > header:not(.stream-top),
+        section.stream > section > div.content > section:not([id]),
 
+        section.stream.tags-stream > article,
+        section.stream.microblog > article,
+
+        section > section.stream > div.content > nav,
+        section > section.stream > div.content > span
+        section > section.stream > div.content > article,
+        section > section.stream > div.content > header:not(.stream-top),
 
         .stream section.stream > div.content > nav,
         .stream section.stream > div.content > span,
         .stream section.stream > div.content > article,
         .stream section.stream > div.content > header:not(.stream-top),
 
-
-        section > section.stream > div.content > nav,
-        section > section.stream > div.content > span
-        section > section.stream > div.content > article,
-        section > section.stream > div.content > header:not(.stream-top)
+        .sidebar > *:not(.custom-sidebar, .conversation-list, .ban-alert),
+        .sidebar > aside > section:not([id])
         {
-            display: none!important;
+            display: block!important;
+            height: 0px!important;
+            max-height: 0px!important;
+            overflow: hidden!important;
+            opacity: 0.01!important;
+            user-select: none!important;
+            pointer-events: none!important;
+        }
+
+        section.block-alert
+        {
+            border: 20px solid red!important;
+        }
+
+        .mgid-platform,
+        .pub-slot-wrapper,
+        div.content + nav,
+        aside:has(.pub-slot-wrapper),
+        section[data-label="ad: top"],
+        div.main-content > main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.register.observer.active,
+        div.main-content > main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.content.observer.active
+        {
+            display: none!important; min-height: 0px!important;
+        }
+
+        .pub-slot-wrapper:has(section.premium-pub.link-block)
+        {
+            display: flex!important;
         }
 		`;
 	}
