@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Ban Info - Informacje o banach
 // @name:en							Wykop XS - Ban Info
 
-// @version							3.4.1
+// @version							3.5.0
 
 // @description 					Wykop XS - Informacje o banach na profilach zbanowanych użytkowników. Wykop X Style znajdziesz na: http://wykopx.pl/styl
 // @description:en 					Wykop XS - Shows precise info about banned users on Wykop.pl. Check out Wykop X Style here: http://wykopx.pl/styl
@@ -44,7 +44,7 @@
 {
 	'use strict';
 
-	const currentVersion = "3.4.1";
+	const currentVersion = "3.5.0";
 	let dev = false;
 
 	const promoString = " - Wykop XS / #wykopx";
@@ -144,6 +144,8 @@
 					// "Ban trwa do 2024-12-12 23:59:59"
 					bannedRedBoxInnerHTML += `Ban trwa do ${bannedUserObject.banned.wxs_ban_end_date_string}<span style="cursor: help; padding: 0px 7px">ℹ</span></small>`;
 				}
+
+				bannedRedBoxInnerHTML += `<br/><br/><ruby style="font-size: 0.6em; background-color: #ffb900; border-radius: 6px; corner-shape: squircle; border-color: #ffed26ff; color: black; padding: 0.2em 0.4em;">NOWOŚĆ</ruby> <br/>Szczegóły bana + historia banów użytkownika dostępne są teraz na: <a href="https://wykopx.pl/ludzie/${bannedUserObject.username}" target="wykopx" style="text-decoration: underline;"><strong>wykopx.pl</strong>/ludzie/${bannedUserObject.username}</a> `
 
 				bannedRedBox.innerHTML = bannedRedBoxInnerHTML;
 			}
