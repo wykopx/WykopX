@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style 3 Blank
-@version        3.3.5
+@version        3.5.0
 
 @description    Niniejsza wersja to wersja BLANK, w której wszystkie funkcje są wyłączone.
 @description    https://wykopx.pl/style
@@ -58,21 +58,84 @@ dodaje ponad 100 nowych funkcji oznaczonych jako ❎
 @license        No License (YOU CAN USE THIS CODE ONLY IN STYLUS EXTENSIONS. You are NOT ALLOWED TO copy, share and use any part of this code anywhere else without author's written permission)
 
 
-@var range      SUB_HR_LINKS_COLUMNS                    `🔶 GŁÓWNA - LISTA ZNALEZISK NOWE (3.2.4) ⭐ `                                      [0, 0, 99999, 1, 'mm']A
 
-@var checkbox   homepageSelectedForYouHide                      `Ukryj "Wybrane dla Ciebie" na głównej  ⭐`                                    0
-@var checkbox   linksVisitedGrayedOut                           `Oznaczaj ✔ 𝗣𝗥𝗭𝗘𝗖𝗭𝗬𝗧𝗔𝗡𝗘 znaleziska 🆗`                                        0     
+
+
+          
+
+@var range      HR_MICROBLOG_2026_09_24                       `🔹 NOWY MIKROBLOG I WPISY`                             [0, 0, 99900, 1, 'mm']
+@var checkbox   collapseEntryButtonHide                           `Ukryj przycisk zwijający cały wpis `                         0        
+@var checkbox   collapseCommentsButtonHide                        `Ukryj przycisk zwijający drzewo komentarzy `                 0        
+
+
+@var range      SUB_HR_PLUSY_I_MINUSY_STYLE                    ` Plusy i minusy ➕`                                 [0, 0, 99999, 1, 'mm']
+@var checkbox   plusesInTopRightCorner                          `Plusy w górnym prawym rogu `                 0        
+
+
+@var select     plusesColor                                     `➕ Zmień kolor plusów`  {
+                                                                            "Szary (Wykop 2026) - domyślny"                 :   "wykop2026",
+                                                                            "Zielony (Wykop 2024)"                          :   "wykop2024",
+                                                                            "Zielony (Wykop 2022)":"wykop2022",
+                                                                            "pomarańczowy"                                  :   "pomaranczowy",
+                                                                            "złoty"                                         :   "zloty",
+                                                                            "Domyślny kolor plusów wybranego PRESETU"       :   "preset",
+                                                                    }
+@var select     minusesColor                                    `➖ Zmień kolor minusów`  {
+                                                                            "Szary (Wykop 2026) - domyślny"             :   "wykop2026",
+                                                                            "Czerwony (Wykop 2024)"                     :   "wykop2024",
+                                                                            "Czerwony (Wykop 2022)":"wykop2022",
+                                                                            "pomarańczowy"                              :   "pomaranczowy",
+                                                                            "szary"                                     :   "szary",
+                                                                            "Domyślny kolor minusów wybranego PRESETU"  :   "preset",
+                                                                    }
+
+var checkbox   hidePlusesBeforeVoting                          `🔷 Mikroblog: Ukryj liczbę plusów przed zaplusowaniem`                0
+var checkbox   hidePlusesAndMinusesBeforeVoting                `🔸 Znalezisko: Ukryj liczbę plusów i minusów przed zagłosowaniem`     0
+var range      plusesMinusesSize                               `➕ Rozmiar plusów i minusów `         [20, 10, 40, 1, 'px']
+var checkbox   plusesMinusesSizeInSidebar                      `➕ Zastosuj ten rozmiar także w plusach w sidebarze `                      0
+
+
+
+
+
+@var range      HR_ANTY_RUMUN                       `🚫 BLOKOWANIE SPAMU`            [0, 0, 99900, 1, 'mm']
+@var checkbox   wordzielHide                                    `🔷 Blokuj spam z wordziel.pl i flagle.io  (NOWE ⭐)`                                           0
+
+@var checkbox   userGreenEntriesWithPhotos                      `🟢🚯🔷 Blokuj wpisy zielonek ze zdjęciami`                                               0
+@var checkbox   userGreenEntriesWithVideos                      `🟢🚯🔷 Blokuj wpisy zielonek z filmikami`                                                0
+@var checkbox   userGreenEntriesWithURLS                        `🟢🚯🔷 Blokuj wpisy zielonek z linkami URL`                                               0
+@var select     userGreenEntries                                `🟢🚯🔷 Wszystkie wpisy zielonek na mikroblogu` {
+                                                                            "Pokazuj normalnie (domyślnie)":"domyslnie", 
+                                                                            "Zwinięte":"minimized",
+                                                                            "🚯 Blokuj wszystkie wpisy zielonek":"niepokazuj",
+                                                                        } 
+@var checkbox   userGreenEntriesNotificationsHide               `🟢🔷🉑🚯 Blokuj powiadomienia o nowych wpisach zielonek`                               0
+@var checkbox   userGreenLinksNotificationsHide                 `🟢🔶🉑🚯 Blokuj powiadominia o nowych znaleziskach zielonek`                          0
+@var select     userGreenLinks                                  `🟢🔶🚯 Blokuj znaleziska zielonek` {
+                                                                            "Pokazuj normalnie (domyślnie)":"domyslnie", 
+                                                                            "🚯 Blokuj znaleziska zielonek tylko w Wykopalisku":"niepokazuj_w_wykopalisku",
+                                                                            "🚯 Blokuj wszystkie znaleziska zielonek":"niepokazuj",
+                                                                        }
+@var checkbox   blockEntriesWithURLSDiscord                     `🔷📵 Blokuj wpisy spamujące linkami na Discordy: https://discord.gg`                    0
+@var checkbox   blockLinksWithURLSDiscord                       `🔶📵 Blokuj znaleziska spamujące linkami na Discordy: https://discord.gg`               0
+
+
+
+@var range      SUB_HR_LINKS_COLUMNS                    `🔶 GŁÓWNA - LISTA ZNALEZISK `                                      [0, 0, 99999, 1, 'mm']A
+
+@var checkbox   homepageSelectedForYouHide                      `Ukryj "Wybrane dla Ciebie" na głównej  - NOWE ⭐`                                         0
+@var checkbox   linksVisitedGrayedOut                           `Oznaczaj ✔ 𝗣𝗥𝗭𝗘𝗖𝗭𝗬𝗧𝗔𝗡𝗘 znaleziska 🆗`                                             0     
 @var select     linkThumbnail                                   `Miniaturki obrazków znalezisk` {
                                                                         "Po prawej (domyślnie)"                 :   "poprawej",
                                                                         "Po lewej (Wykop 2022)":"polewej",
                                                                         "Nie pokazuj"                           :   "niepokazuj"
                                                                     } 
 
-@var checkbox   linkToWykopEntry                                `🔹 Oznaczaj znaleziska kierujące na wpisy z Mikrobloga`                                0     
-@var checkbox   linkToWykopArticle                              `🔸 Oznaczaj znaleziska kierujące do Wykopowych Artykułów`                              0     
-@var checkbox   linkToWykopAMA                                  `🔸 Oznaczaj znaleziska AMA`                                                          0     
+@var checkbox   linkToWykopEntry                                `🔹 Oznaczaj znaleziska kierujące na wpisy z Mikrobloga`                                     0     
+@var checkbox   linkToWykopArticle                              `🔸 Oznaczaj znaleziska kierujące do Wykopowych Artykułów`                                   0     
+@var checkbox   linkToWykopAMA                                  `🔸 Oznaczaj znaleziska AMA`                                                               0     
 @var checkbox   linkVideoPlayerBlackBackground                  `▶ Widok teatralny podczas odtwarzanego wideo `                                       0     
-@var checkbox   linkToVideoDuration                             `▶❎ Pokaż czas trwania filmików na miniaturce`                                        0     
+@var checkbox   linkToVideoDuration                             `▶❎ Pokaż czas trwania filmików na miniaturce`                                             0     
 
 @var checkbox   linkVoteDownButton                              `🔸❎ Przycisk "ZAKOP" przy znaleziskach na głównej`              0     
 
@@ -86,7 +149,7 @@ dodaje ponad 100 nowych funkcji oznaczonych jako ❎
                                                                         } 
 
 
-@var checkbox   linkDescriptionShowFull                         `☰ Nie ucinaj długich opisów znalezisk 🆗`           1
+@var checkbox   linkDescriptionShowFull                         `☰ Nie ucinaj długich opisów znalezisk 🆗`                0
 @var checkbox   linkShowRealNicknameColorOrange                 `🟠 Login autora pomarańczki w kolorze `              0     
 @var checkbox   linkShowRealNicknameColorBurgundy               `🔴 Login autora bordo w kolorze`                     0     
 @var checkbox   linkShowRealNicknameColorGreen                  `🟢 Login autora zielonki w kolorze`                  0     
@@ -108,7 +171,7 @@ TODO checkbox   commentsCountAlignment                          `🗨️ Przenie
 
 @var range      HR_NOTIFICATIONS_GENERAL            `🉑 POWIADOMIENIA`                                                                                  [0, 0, 99900, 1, 'mm']
 
-@var checkbox   topNavAddButtonHide                     `🚫 Ukryj przycisk 𝐃𝐎𝐃𝐀𝐉+ (Dodaj znalezisko) z górnej belki 🆗`                     0 
+@var checkbox   topNavAddButtonHide                     `🚫 Ukryj przycisk 𝐃𝐎𝐃𝐀𝐉+ (Dodaj znalezisko) z górnej belki 🆗`                          0 
 
 
 @var range      SUB_HR_TOPNAV_NOTIFIACTIONS             `🉑 IKONKI POWIADOMIEŃ NA BELCE`                                   [0, 0, 99999, 1, 'mm']
@@ -137,7 +200,7 @@ TODO checkbox   commentsCountAlignment                          `🗨️ Przenie
                                                                     } 
 
 
-REMOVED var checkbox   fixNotificationBadgeBug                  `✔ Napraw błąd nieznikających ikonek z liczbą gdy brak nieprzeczytanych powiadomień`                               0
+REMOVED var checkbox   fixNotificationBadgeBug                  `✔ Napraw błąd nieznikających ikonek z liczbą gdy brak nieprzeczytanych powiadomień`                                    0
 
 
 REMOVED select     iconsAlignment                               `Położenie panelu z ikonkami` {
@@ -152,7 +215,7 @@ REMOVED checkbox   notificationsShowUnreadNumber                `❎ Pokaż licz
 @var range      HR_CATEGORY_MENU                    `MENU BOCZNE`                [0, 0, 99900, 1, 'mm']
 
 
-@var checkbox   categoryMenuSmall                               `Wysokość dostosowana do przycisków`                1
+@var checkbox   categoryMenuSmall                               `Wysokość dostosowana do przycisków`                     0
 
 @var select     categoryMenuPosition                            `Zachowanie menu bocznego` {
                                                                         "sticky":"sticky",
@@ -191,9 +254,9 @@ var range      categoryMenuAlignedToSide                       `Odległość men
 @var checkbox   categoryMenuObservedTagsHide                    `🚫 Ukryj sekcję 𝐎𝐛𝐬𝐞𝐫𝐰𝐨𝐰𝐚𝐧𝐞 𝐭𝐚𝐠𝐢 🆗`                     0
 @var checkbox   categoryMenuSavedSearchesHide                   `🚫 Ukryj sekcję 𝐙𝐚𝐩𝐢𝐬𝐚𝐧𝐞 𝐰𝐲𝐬𝐳𝐮𝐤𝐢𝐰𝐚𝐧𝐢𝐚 🆗`                 0
 
-@var checkbox   categoryMenuRankingHide                         `🚫 Ukryj przycisk 𝐑𝐚𝐧𝐤𝐢𝐧𝐠 🆗`                              0
-@var checkbox   categoryMenuBadgesHide                          `🚫 Ukryj przycisk 𝐎𝐬𝐢𝐚̨𝐠𝐧𝐢𝐞̨𝐜𝐢𝐚 🆗`                           0
-@var checkbox   categoryMenuFAQHide                             `🚫 Ukryj przycisk 𝐅𝐀𝐐 🆗`                                 0
+@var checkbox   categoryMenuRankingHide                         `🚫 Ukryj przycisk 𝐑𝐚𝐧𝐤𝐢𝐧𝐠 🆗`                                   0
+@var checkbox   categoryMenuBadgesHide                          `🚫 Ukryj przycisk 𝐎𝐬𝐢𝐚̨𝐠𝐧𝐢𝐞̨𝐜𝐢𝐚 🆗`                                0
+@var checkbox   categoryMenuFAQHide                             `🚫 Ukryj przycisk 𝐅𝐀𝐐 🆗`                                      0
 @var checkbox   categoryMenuNightModeSwitchHide                 `🚫 Ukryj przycisk 𝗧𝗿𝘆𝗯 𝗻𝗼𝗰𝗻𝘆/𝗧𝗿𝘆𝗯 𝗱𝘇𝗶𝗲𝗻𝗻𝘆🆗`                   0
 
 
@@ -202,7 +265,7 @@ var range      categoryMenuAlignedToSide                       `Odległość men
 @var range      SUB_HR_CATEGORY_MENU_BUTTONS                    `MINIMALIZOWANIE MENU`                [0, 0, 99999, 1, 'mm']
 
 @var checkbox   topNavHamburgerButtonHide                       `🚫 Ukryj przycisk minimalizowania menu "☰" 🆗 `                  0
-@var checkbox   categoryMenuMiniCompact                         `☰ Minimalistyczne Menu po zminimalizowaniu `                       0
+@var checkbox   categoryMenuMiniCompact                         `☰ Minimalistyczne Menu po zminimalizowaniu `                            0
 @var select     categoryMenuMiniCompactVerticalAlign            `☰ Minimalistyczne Menu - położenie ` {
                                                                         "Na górze"              :   "gora",
                                                                         "Na środku"            :   "srodek",
@@ -212,8 +275,8 @@ var range      categoryMenuAlignedToSide                       `Odległość men
 @var range      SUB_HR_MENU_MINIMIZE_WYKOPX                     `DYNAMICZNE MENU KATEGORII WykopX`                        [0, 0, 99999, 1, 'mm']
 @var range      topNavHamburgerHoverMinimize_ON_INFO            `Zwężanie menu bocznego jest włączone`                   [0, 0,111100, 1, 'mm']
 
-@var checkbox   topNavHamburgerHoverMinimize                    `❎ Dynamiczne zwężanie menu bocznego Wykop X`                                   0
-@var checkbox   categoryMenuMaximizeOnHover                     `❎ Przywróć domyślne menu po najechaniu na przycisk ☰`                          0
+@var checkbox   topNavHamburgerHoverMinimize                    `❎ Dynamiczne zwężanie menu bocznego Wykop X`                                        0
+@var checkbox   categoryMenuMaximizeOnHover                     `❎ Przywróć domyślne menu po najechaniu na przycisk ☰`                               0
 
 
 
@@ -233,13 +296,13 @@ var range      categoryMenuAlignedToSide                       `Odległość men
                                                                             "🚫 Ukryj panel z informacją o banie":"ukryj_ban_alert",
                                                                         }
 
-@var checkbox   haveBanPlusMinusButtonsHide                                 `🍌🚫 Ukryj przyciski do plusowania i minusowania gdy masz bana 🆗`                 0
+@var checkbox   haveBanPlusMinusButtonsHide                                 `🍌🚫 Ukryj przyciski do plusowania i minusowania gdy masz bana 🆗`                      0
 
-@var checkbox   haveBanDisableTextarea                                 `🍌 Pokaż informację o banie w edytorze nowego wpisu/komentarza 🆗`                  0 
+@var checkbox   haveBanDisableTextarea                                 `🍌 Pokaż informację o banie w edytorze nowego wpisu/komentarza 🆗`                       0 
 @var checkbox   haveBanHideEditorNewEntries                            `🍌🚫🔹 Ukryj Edytor dodawania nowego wpisu na mikroblogu 🆗`                    0
 @var checkbox   haveBanHideEditorNewComments                           `🍌🚫🗨️ Ukryj Edytor dodawania komentarzy 🆗`                                    0
-@var checkbox   haveBanActionMenuEntriesHideReplyButton                `🍌🚫🔹 Ukryj przycisk "Odpowiedz" pod wpisami gdy masz bana 🆗`                     0 
-@var checkbox   haveBanActionMenuLinkHideReplyButton                   `🍌🚫🔸 Ukryj przycisk "Odpowiedz" pod znaleziskami gdy masz bana 🆗`                1 
+@var checkbox   haveBanActionMenuEntriesHideReplyButton                `🍌🚫🔹 Ukryj przycisk "Odpowiedz" pod wpisami gdy masz bana 🆗`                          0 
+@var checkbox   haveBanActionMenuLinkHideReplyButton                   `🍌🚫🔸 Ukryj przycisk "Odpowiedz" pod znaleziskami gdy masz bana 🆗`                     0 
 
                                                                         
                                                                        
@@ -255,10 +318,10 @@ var checkbox   yearSummaryProfilePaeHide                        `⭐ Ukryj baner
 @var range      HR_TAG_PHOTO_GALLERY                      `🔷🌆 Wykopowy widok galerii na tagach`                                                                                [0, 0, 99900, 1, 'mm']
 
 @var range      photoGalleryColumns                              `⭐ Liczba grafik w jednym wierszu`                                                              [3, 1, 7, 1, '']
-@var checkbox   photoGalleryAdjustAspectRatio                    `⭐ Dopasuj wielkość pionowych obrazków`                                                                            0
-@var checkbox   photoGalleryRemoveSidebar                        `⭐🚫 W widoku galerii ukryj sidebar po prawej`                                                                    0
+@var checkbox   photoGalleryAdjustAspectRatio                    `⭐ Dopasuj wielkość pionowych obrazków`                                                                                 0
+@var checkbox   photoGalleryRemoveSidebar                        `⭐🚫 W widoku galerii ukryj sidebar po prawej`                                                                         0
 
-@var checkbox   userCustomColorBodyBackgroundOnCDNImagesEnable   `⭐ Zmień kolor białego tła otwartego obrazka w nowej karcie `                                                       0
+@var checkbox   userCustomColorBodyBackgroundOnCDNImagesEnable   `⭐ Zmień kolor białego tła otwartego obrazka w nowej karcie `                                                            0
 @var color      userCustomColorBodyBackgroundOnCDNImages         `⭐ Kolor tła obrazków w nowej karcie`                                                          rgb(11, 11, 11)
 
 
@@ -426,7 +489,7 @@ var range      fontVariableYTDE                                `YTDE`           
 var range      fontVariableYTFI                                `YTFI`                                      [788, 560, 788, 1, '']
 
 var range      blockquoteItalicsVariableFontValue             `🆎 blockquoteItalicsVariableFontValue`                                   [0, -10, 0, 0.25, '']
-@var checkbox   blockquoteItalicsOff                           `🆎 Cytaty bez kursywy`             1
+@var checkbox   blockquoteItalicsOff                           `🆎 Cytaty bez kursywy`                  0
 
 
 
@@ -461,13 +524,13 @@ var range      blockquoteItalicsVariableFontValue             `🆎 blockquoteIt
 
 @var range      HR_AUTHOR_BLOCKS_YOU                `🔹🗨️ BLOCK DETECTOR - SPRAWDŹ KTO CIĘ BLOKUJE `                                                                                   [0, 0, 99900, 1, 'mm']
 @var range      blockDetectorEnable_ON_INFO                   `Block Detector jest włączony`               [0, 0,111100, 1, 'mm']
-@var checkbox   blockDetectorEnable                           `Włącz Block Detector - sprawdzanie kto Cię zablokował`                                        0
+@var checkbox   blockDetectorEnable                           `Włącz Block Detector - sprawdzanie kto Cię zablokował`                                             0
 @var range      blockDetectorEnable_INFO                      `Block Detector wykrywa i zapisuje użytkowników, którzy dodali Cię na czarną listę. Uwaga, jeśli masz na Wykopie bana, nie jest możliwe sprawdzenie, kto dodał Cię na czarną listę nawet jeśli włączysz ją tutaj w ustawieniach. Dopóki masz bana, Wykop XS nie będzie w stanie wykryć, kto Cię zczarnolistował.`             [0, 0,88800, 1, 'mm']
 
 
-@var checkbox   blockDetectorShowInfoOnProfilePage            `Przy wejściu na profil użytkownika sprawdź czy Cię blokuje`                                    0
-@var checkbox   blockDetectorShowInfo                         `Pokaż przy wpisie, że autor Cię zablokował`                                                    0
-@var checkbox   blockDetectorDisableTextarea                  `Zablokuj pole nowego komentarza, gdy nie możesz odpowiedzieć`                                  0
+@var checkbox   blockDetectorShowInfoOnProfilePage            `Przy wejściu na profil użytkownika sprawdź czy Cię blokuje`                                         0
+@var checkbox   blockDetectorShowInfo                         `Pokaż przy wpisie, że autor Cię zablokował`                                                         0
+@var checkbox   blockDetectorDisableTextarea                  `Zablokuj pole nowego komentarza, gdy nie możesz odpowiedzieć`                                       0
 
 
 
@@ -485,7 +548,7 @@ var range      blockquoteItalicsVariableFontValue             `🆎 blockquoteIt
                                                                             " 1 "        :"1",
                                                                             " 2 "        :"2",
                                                                             " 5 "        :"5",
-                                                                            " 10 "      :"10",
+                                                                            " 10 *"      :"10",
                                                                             " 15 "       :"15",
                                                                             " 25 "       :"25",
                                                                             " 30 "       :"30"
@@ -496,7 +559,7 @@ var range      blockquoteItalicsVariableFontValue             `🆎 blockquoteIt
 @var select     messageCounterEntryCommentsIncrement            `🔹🗨️ Pokazuj numerację co X komentarzy`   {
                                                                             " 1 "        :"1",
                                                                             " 2 "        :"2",
-                                                                            " 5 "        :"5",
+                                                                            " 5 *"        :"5",
                                                                             " 10 "       :"10",
                                                                             " 15 "       :"15",
                                                                             " 25 "       :"25",
@@ -516,7 +579,7 @@ var range      blockquoteItalicsVariableFontValue             `🆎 blockquoteIt
                                                                             " 1 "       :"1",
                                                                             " 2 "        :"2",
                                                                             " 5 "        :"5",
-                                                                            " 10 "       :"10",
+                                                                            " 10 *"       :"10",
                                                                             " 15 "       :"15",
                                                                             " 25 "       :"25",
                                                                             " 30 "       :"30",
@@ -538,7 +601,7 @@ var range      blockquoteItalicsVariableFontValue             `🆎 blockquoteIt
 
 @var range      HR_ARCHIWUM_X                       `ARCHIWUM X`                                             [0, 0, 99900, 1, 'mm']
 @var range      SUB_HR_ARCHIVE_REMOVED              `❌ USUNIĘTE WPISY Z ARCHIWUM X`                                 [0, 0, 99999, 1, 'mm']
-@var checkbox   archiveXRemovedEntry404Page          `👽 Na stronie usuniętego wpisu pokazuj info o Archiwum X  `          1  
+@var checkbox   archiveXRemovedEntry404Page          `👽 Na stronie usuniętego wpisu pokazuj info o Archiwum X  `               0  
 TODO: checkbox   archiveXRemovedEntry                `❎ Pokazuj treść usuniętych wpisów`                                  0     
 @var checkbox   hideWorkersOn404Page                 `👽 Ukryj robotników na stronie usunietego wpisu 404`                 0     
 
@@ -553,7 +616,7 @@ TODO: checkbox   archiveXRemovedEntry                `❎ Pokazuj treść usuni�
                                                                             "❌ Nie pokazuj"                    :   "niepokazuj",
                                                                         } 
 
-@var checkbox   deletedCommentsGrayedOut                        `❌ Tekst 'Komentarz usunięty' po najechaniu na niego kursorem nadal wyszarzony`                               0
+@var checkbox   deletedCommentsGrayedOut                        `❌ Tekst 'Komentarz usunięty' po najechaniu na niego kursorem nadal wyszarzony`                                    0
 
 @var select     deletedCommentsOthersHighlight                  `❌ Usunięte komentarze - kolor` {
                                                                             "Pokazuj wyszarzone (domyślnie)"    :   "domyslnie",
@@ -570,7 +633,7 @@ TODO: checkbox   archiveXRemovedEntry                `❎ Pokazuj treść usuni�
                                                                             "Pokazuj wyszarzone (domyślnie)"    :   "domyslnie",
                                                                             "Pokazuj na czerwono"               :   "czerwone",
                                                                             "Pokazuj na pomarańczowo"           :   "pomaranczowe",
-                                                                            "Pokazuj na niebiesko"             :   "niebieskie",
+                                                                            "Pokazuj na niebiesko*"             :   "niebieskie",
                                                                         }
                                                                         
 @var range      HR_ANTI_EMBARRASSMENT_MODE          `ANTI-EMBARRASSMENT MODE`                                                                  [0, 0, 99900, 1, 'mm']
@@ -584,7 +647,7 @@ TODO: checkbox   archiveXRemovedEntry                `❎ Pokazuj treść usuni�
 @var checkbox   wxsArchiveXNewestEntryDailyCount               `❎ Liczba dodanych dzisiaj wpisów (od północy)` 1    
 @var select     wxsArchiveXNewestEntrySkin                     `❎ Animacja powiadomienia`   {
                                                                             "Bez animacji"                          :   "brak_animacji",
-                                                                            "Delikatna "                           :"delikatna",
+                                                                            "Delikatna *"                           :"delikatna",
                                                                             "Pełnokolorowa"                          :   "pelnokolorowa",
                                                                         }
 @var checkbox   wxsArchiveXNewestEntrySkinBlurFilter           `❎ Dodatkowe tło animacji`                                                 0
@@ -593,7 +656,7 @@ TODO: checkbox   archiveXRemovedEntry                `❎ Pokazuj treść usuni�
                                                                             "10s"       :"10",
                                                                             "15s"       :"15",
                                                                             "30s"       :"30",
-                                                                            "45s"      :"45",
+                                                                            "45s*"      :"45",
                                                                             "60s"       :"60",
                                                                         }
 @var checkbox   wxsArchiveXNewestEntryRefreshCounter           `❎ Odliczanie czasu odświeżania` 1     
@@ -604,7 +667,7 @@ TODO: checkbox   archiveXRemovedEntry                `❎ Pokazuj treść usuni�
 
 @var range      HR_INFINITE_SCROLL                  ` PAGINACJA I INFINITE SCROLL`                                                       [0, 0, 99900, 1, 'mm']
 @var checkbox   paginationButtonsStyle                          `Wygodniejsza paginacja`                                                    0     
-@var checkbox   paginationButtonsFloating                       `Pływające przyciski paginacji ◀ POPRZEDNIA | NASTĘPNA ▶ 🆗`                  0      
+@var checkbox   paginationButtonsFloating                       `Pływające przyciski paginacji ◀ POPRZEDNIA | NASTĘPNA ▶ 🆗`                       0      
 
 @var checkbox   infiniteScrollEntriesEnabled                    `❎🔹 Usuń paginację (komentarze pod wpisem na 1 stronie)` 1
 @var range      infiniteScrollEntriesEnabled_INFO               `Jeśli pod wpisem jest ponad 50 komentarzy Wykop dzieli je na podstrony dodając przyciski paginacji. Włącz tę funkcję, aby wszystkie komentarze były wczytane na jednej stronie bez tworzenia kolejnych podstron tak samo jak w aplikacji na smartfonie.`             [0, 0,88800, 1, 'mm']
@@ -624,13 +687,13 @@ var checkbox   checkLinkCommentsPerHour                        `❎🔸 Oszacuj 
 
 
 @var range      HR_PLUSY_I_MINUSY                   `➕ PLUSY I MINUSY`                                                                                 [0, 0, 99900, 1, 'mm']
-@var checkbox   votingExplosionEnable                           `❎➕🎇 Eksplozja plusów`                                                                            0     
+@var checkbox   votingExplosionEnable                           `❎➕🎇 Eksplozja plusów`                                                                                 0     
 @var select     votingExplosionAnimation                        `❎➕🎆 Eksplozja - animacja` {
                                                                             "Animacja 1"                :   "animacja1",
                                                                             "Animacja 2"                :   "animacja2",
                                                                             "Animacja 3"                :   "animacja3"
                                                                     } 
-@var checkbox   plusesAndMinusesTransition                      `➕ Delikatna animacja plusowania (Wykop 2022)`                                                       0    
+@var checkbox   plusesAndMinusesTransition                      `➕ Delikatna animacja plusowania (Wykop 2022)`                                                            0    
 @var checkbox   minimizedMinusedCommentInLinks                  `🔸 Zwiń zminusowane przez Ciebie komentarze pod znaleziskami`                    0 
 
 
@@ -653,36 +716,6 @@ TODO checkbox   checkEntryCommentsPerHour                       `❎➕ Liczba n
 TODO range      checkEntryCommentsPerHour_INFO                  `Pokazuje aktualną szybkość przybywania komentarzy we wpisach i w komentarzach pod znaleziskami. Wyświetlana wartość to bieżąca liczba dodawanych komentarzy na godzinę (k/h) obliczana od momentu wczytania strony. Nie jest to wartość "średnia" liczby komentarzy od momentu dodania wpisu.`             [0, 0,88800, 1, 'mm']
 
 
-@var range      SUB_HR_PLUSY_I_MINUSY_STYLE                      ` Liczba plusów i minusów`                                 [0, 0, 99999, 1, 'mm']
-
-@var checkbox   hidePlusesBeforeVoting                          `🔷 Mikroblog: Ukryj liczbę plusów przed zaplusowaniem`                0
-@var checkbox   hidePlusesAndMinusesBeforeVoting                `🔸 Znalezisko: Ukryj liczbę plusów i minusów przed zagłosowaniem`     0
-
-
-@var range      plusesMinusesSize                               `➕ Rozmiar plusów i minusów `         [20, 10, 40, 1, 'px']
-@var checkbox   plusesMinusesSizeInSidebar                      `➕ Zastosuj ten rozmiar także w plusach w sidebarze `                      0
-@var checkbox   plusesAndMinusesColorsEnable                    `➕ Włącz zmianę kolorystyki i wyglądu plusów i minusów `                                       0    
-@var select     plusesAndMinusesStyle                           `➕ [PRESET] Styl plusów i minusów `  {
-                                                                            "Styl Wykop 2024 (domyślny)"                            :   "wykop20",
-                                                                            "Styl Wykop 2022"                                       :   "wykop10",
-                                                                            "Okrągłe"                                               :   "okragle",
-                                                                            "🧇 Moje ustawienia i kolorystyka (wybierz poniżej)":"wlasne",
-                                                                    } 
-                                                                    
-@var select     plusesColor                                     `➕ Zmień kolor plusów 💭`  {
-                                                                            "Zielony (Wykop 2024, domyślny)"                :   "wykop20",
-                                                                            "Zielony (Wykop 2022)":"wykop10",
-                                                                            "pomarańczowy"                                  :   "pomaranczowy",
-                                                                            "złoty"                                         :   "zloty",
-                                                                            "Domyślny kolor plusów wybranego PRESETU"       :   "domyslny",
-                                                                    }
-@var select     minusesColor                                    `➖ Zmień kolor minusów`  {
-                                                                            "Czerwony (Wykop 2024, domyślny)"                     :   "wykop20",
-                                                                            "Czerwony (Wykop 2022)":"wykop10",
-                                                                            "pomarańczowy"                              :   "pomaranczowy",
-                                                                            "szary"                                     :   "szary",
-                                                                            "Domyślny kolor minusów wybranego PRESETU"  :   "domyslny",
-                                                                    }
                                                                     
 
 @var select     prefixBeforePlusesCount                         `➕ Znak przed liczbą plusów 💭` {
@@ -701,6 +734,8 @@ TODO range      checkEntryCommentsPerHour_INFO                  `Pokazuje aktual
                                                                         "➕"                                 :   "emoji_plus_sign",
                                                                         "🔺"                                :   "emoji_red_triangle_pointed_up",
                                                                     }
+                                                                    
+                                                                    
 
 @var checkbox   minusesHide                                     `🚫🔸 Nie pokazuj liczby minusów `                                        0
 @var checkbox   plusesHide                                      `🚫🔷🔸 Nie pokazuj liczby plusów 💭`                                       0
@@ -773,7 +808,7 @@ TODO range      checkEntryCommentsPerHour_INFO                  `Pokazuje aktual
 @var range      actionBoxEnable_ON_INFO                         `ActionBox jest włączony`               [0, 0,111100, 1, 'mm']
 @var range      actionBoxEnable_OFF_INFO                        `ActionBox jest wyłączony. Przyciski filtrowania i ukrywania nie będą dostępne`              [0, 0, 100000, 1, 'mm']
 
-@var checkbox   actionBoxEnable                                 `❎ Włącz ActionBoX`                                                                  0      
+@var checkbox   actionBoxEnable                                 `❎ Włącz ActionBoX`                                                                       0      
 
 @var range      SUB_HR_MIRKOUKRYWACZ_USER                       ` Filtrowanie aktywności użytkowników`                                 [0, 0, 99999, 1, 'mm']
 
@@ -798,7 +833,7 @@ TODO range      checkEntryCommentsPerHour_INFO                  `Pokazuje aktual
 
 @var range      HR_INFOBOX                          `ℹ INFO BOX`                              [0, 0, 99900, 1, 'mm']
 @var range      infoboxEnable_ON_INFO                           `InfoboX jest włączony`               [0, 0,111100, 1, 'mm']
-@var checkbox   infoboxEnable                                   `📝❎ Włącz InfoBoX`                                                                      0     
+@var checkbox   infoboxEnable                                   `📝❎ Włącz InfoBoX`                                                                           0     
 @var range      infoboxEnable_INFO                              `InfoboX pokazuje przy użytkownikach dodatkowe informacje takie jak na przykład rok założenia konta, ikonki pokazujące czy blokujesz lub obserwujesz tego użytkownika, czy użytkownik jest teraz online na wykopie, czy ma on bana, a jeśli tak tokiedy ten ban się kończy. Informacje pojawiają się bezpośrednio przy nicku użytkownika - przy jego avatarze a także na liście plusujących`             [0, 0,88800, 1, 'mm']
 @var range      SUB_HR_INFOBOX_USER                            ` ℹ Informacje o użytkownikach`                                 [0, 0, 99999, 1, 'mm']
 @var checkbox   infoboxUserMemberSince                          ` ℹ ❎ Czas założenia konta` 1     
@@ -823,7 +858,7 @@ TODO range      checkEntryCommentsPerHour_INFO                  `Pokazuje aktual
 
 @var range      HR_NOTATKOWATOR                     `📝 NOTATKOWATOR`                                                                                           [0, 0, 99900, 1, 'mm']
 @var range      notatkowatorEnable_ON_INFO                      `Notatkowator jest włączony`               [0, 0,111100, 1, 'mm']
-@var checkbox   notatkowatorEnable                              `📝❎ Wyświetlaj notatki o użytkownikach`                                                                                 0     
+@var checkbox   notatkowatorEnable                              `📝❎ Wyświetlaj notatki o użytkownikach`                                                                                      0     
 @var range      notatkowatorEnable_INFO                         `Notatkowator dodaje do nicków notatki, które zapisałeś do poszczególnych użytkowników`             [0, 0,88800, 1, 'mm']
 
 
@@ -841,7 +876,7 @@ var range      notatkowatorUpdateInterval                      `📝❎ Odświe�
                                                                     }
 @var select     notatkowatorIcon                                `📝❎ Ikonka/separator notatki` {
                                                                         " Brak"                                     :   "brak",
-                                                                        " 📝 Notatnik"                              :   "notatnik",
+                                                                        " 📝 Notatnik*"                              :   "notatnik",
                                                                         " 💡 Żarówka"                               :   "zarowka",
                                                                         " 🤍 Serce"                                 :   "serce",
                                                                         " | Pionowa kreska"                         :   "pionowa_kreska", 
@@ -856,9 +891,9 @@ var range      notatkowatorUpdateInterval                      `📝❎ Odświe�
 
 @var range      HR_XLABELS                          `SOCIAL INFO`                                                                                 [0, 0, 99900, 1, 'mm']
 @var range      wxsUserLabelsEnable_ON_INFO                     `Usługa Social Info jest włączona`               [0, 0,111100, 1, 'mm']
-@var checkbox   wxsUserLabelsEnable                             `❎ Włącz usługę Social Info`                                        0    
-@var checkbox   wxsUserLabelsFakeFemales                        `❎ Wykrywaj fałszywe różowe paski i zamieniaj na niebieskie`       1     
-@var checkbox   wxsUserLabelsTrolls                             `❎ Etykietuj boty, trolli, hejterów i ścianę wstydu #wykopaka`     1     
+@var checkbox   wxsUserLabelsEnable                             `❎ Włącz usługę Social Info`                                             0    
+@var checkbox   wxsUserLabelsFakeFemales                        `❎ Wykrywaj fałszywe różowe paski i zamieniaj na niebieskie`            0     
+@var checkbox   wxsUserLabelsTrolls                             `❎ Etykietuj boty, trolli, hejterów i ścianę wstydu #wykopaka`          0     
 
 
 @var range      HR_WYKOP_TAB                        `📏 KARTA Z WYKOPEM`                                                              [0, 0, 99900, 1, 'mm']
@@ -869,7 +904,7 @@ var range      notatkowatorUpdateInterval                      `📝❎ Odświe�
 @var checkbox   tabChangeFaviconEnabled                         `❎ Zmień ikonkę karty z Wykopem` 1
 @var select     tabChangeFaviconSelect                          `❎ Wybierz Favicon` {
                                                                                 "Wykop (domyślna)"         :"wykop",
-                                                                                "Wykop (biala)"           :"wykop_white",
+                                                                                "Wykop (biala)*"           :"wykop_white",
                                                                                 "Wykop (szara)"            :"wykop_gray",
                                                                                 "Google"                    :"google",
                                                                                 "Interia"                   :"interia",
@@ -1022,12 +1057,12 @@ TODO var checkbox   imageUploaderEnable                             `❎ CTRL + 
                                                                             "CTRL + ENTER":"ctrl_enter",
                                                                             "CTRL + S"                                :   "ctrl_s"
                                                                         }
-@var checkbox   editorSendHotkeyShowOnSendButton                `❎ Pokaż skrót klawiaturowy na przycisku 𝗪𝗬𝗦́𝗟𝗜𝗝`                                             0     
-@var checkbox   editorShowMyUsername                            `❎ Pokaż login przy dodawaniu wpisu/komentarza   `                                            0     
-@var checkbox   editorShowMyUsernameOnSendButton                `❎ Na przycisku 𝗪𝗬𝗦́𝗟𝗜𝗝 pokaż nazwę konta`                                                    0     
+@var checkbox   editorSendHotkeyShowOnSendButton                `❎ Pokaż skrót klawiaturowy na przycisku 𝗪𝗬𝗦́𝗟𝗜𝗝`                                                  0     
+@var checkbox   editorShowMyUsername                            `❎ Pokaż login przy dodawaniu wpisu/komentarza   `                                                 0     
+@var checkbox   editorShowMyUsernameOnSendButton                `❎ Na przycisku 𝗪𝗬𝗦́𝗟𝗜𝗝 pokaż nazwę konta`                                                         0     
 
 
-@var checkbox   editorSendButtonDontDeactivate                  `✔ Zablokuj mruganie przycisku 𝗪𝗬𝗦́𝗟𝗜𝗝 w czasie pisania`                                           0     
+@var checkbox   editorSendButtonDontDeactivate                  `✔ Zablokuj mruganie przycisku 𝗪𝗬𝗦́𝗟𝗜𝗝 w czasie pisania`                                                0     
 @var checkbox   editorEnterSendsSwitchHide                      `🚫 Ukryj przycisk "Wysyłaj klawiszem ENTER"`                             0
 
 
@@ -1103,7 +1138,7 @@ var select     lennyFaceDropdownSkin                           `Okienko wyboru L
 
 @var range      HR_NICKNAME_COLORS                  `🔴🟠🟢 KOLORY LOGINÓW`                                                                                [0, 0, 99900, 1, 'mm']
 
-@var checkbox   fixBlackNicknames                               `✔ Napraw błąd czarnych loginów na Wykopie`                               0    
+@var checkbox   fixBlackNicknames                               `✔ Napraw błąd czarnych loginów na Wykopie`                                    0    
 
 @var select     nicknameColorsGreen                             `🟢 Kolory loginów: zielonki 💭` {
                                                                             "🟢 Zielonka (domyślny)":"zielony", 
@@ -1196,7 +1231,7 @@ var select     lennyFaceDropdownSkin                           `Okienko wyboru L
                                                                             "⚫ Czarny":"czarny",
                                                                             "💙/💜 Kolor paska ":"kolor_paska"
                                                                     }
-@var checkbox   nicknameEmojiBanned                             `🍌 Emoji przy loginach zbanowanych użytkowników 💭`                            0     
+@var checkbox   nicknameEmojiBanned                             `🍌 Emoji przy loginach zbanowanych użytkowników 💭`                                 0     
 @var select     emojiBanned                                     `🍌 Emoji do oznaczania użytkowników z banem 💭`  {
                                                                                 "🍌 Banan":"banan",
                                                                                 "❌ Czerwony X":"czerwony_x",
@@ -1224,7 +1259,7 @@ var select     lennyFaceDropdownSkin                           `Okienko wyboru L
                                                                             "⚫ Czarny":"czarny",
                                                                             "💙/💜 Kolor paska":"kolor_paska"
                                                                     }
-@var checkbox   nicknameEmojiSuspended                            `✖ Pokaż emoji przy nickach usuwanych kont`                                    0
+@var checkbox   nicknameEmojiSuspended                            `✖ Pokaż emoji przy nickach usuwanych kont`                                         0
 @var select     emojiSuspended                                    `✖ Emoji do oznaczania kont w trakcie usuwania` {
                                                                                 "✖ W kolorze nicka"  :  "szary_x",
                                                                                 "❌ Czerwony X"  :  "czerwony_x",
@@ -1250,7 +1285,7 @@ var select     lennyFaceDropdownSkin                           `Okienko wyboru L
                                                                             "🔴 Czerwony":"czerwony",
                                                                             "⚫ Czarny":"czarny"
                                                                     }
-@var checkbox   nicknameEmojiRemoved                            `❌ Pokaż emoji przy nickach k̶o̶n̶t̶ ̶u̶s̶u̶n̶i̶ę̶t̶y̶c̶h`                                   0
+@var checkbox   nicknameEmojiRemoved                            `❌ Pokaż emoji przy nickach k̶o̶n̶t̶ ̶u̶s̶u̶n̶i̶ę̶t̶y̶c̶h`                                        0
 @var select     emojiRemoved                                    `❌ Emoji do oznaczania k̶o̶n̶t̶ ̶u̶s̶u̶n̶i̶ę̶t̶y̶c̶h` {
                                                                                 "❌ Czerwony X"  :  "czerwony_x",
                                                                                 "✖ W kolorze nicka"  :  "szary_x",
@@ -1266,7 +1301,7 @@ var select     lennyFaceDropdownSkin                           `Okienko wyboru L
                                                                                 "🚷 Zakaz ruchu pieszych"  :  "zakaz_ruchu_pieszych",
                                                                                 "🚫 Zakaz postoju"  :  "zakaz_postoju",
                                                                     }
-@var checkbox   nicknameColorsRemovedNoStrikethrough            `❌ Nazwa 'k̶o̶n̶t̶o̶ ̶u̶s̶u̶n̶i̶ę̶t̶e' bez przekreślenia`                                   0
+@var checkbox   nicknameColorsRemovedNoStrikethrough            `❌ Nazwa 'k̶o̶n̶t̶o̶ ̶u̶s̶u̶n̶i̶ę̶t̶e' bez przekreślenia`                                        0
 
 
 @var range      HR_ENTRY_VOTERS                     `❎➕ LISTA PLUSUJĄCYCH`        [0, 0, 99900, 1, 'mm']
@@ -1309,7 +1344,7 @@ var select     lennyFaceDropdownSkin                           `Okienko wyboru L
 
 @var select     entryVotersListUsersSeparator                   `Znak oddzielający profile` {
                                                                         " , Przecinek (domyślny na Wykopie)"            :   "przecinek",
-                                                                        " • Punktor (domyślny w Wykop XS)  "           :   "punktor",
+                                                                        " • Punktor (domyślny w Wykop XS)  *"           :   "punktor",
                                                                         " ◦ Biały punktor"                              :   "bialy_punktor",
                                                                         " [ ] Spacja"                                  :   "spacja",
                                                                         " ‣ Punktor trójkątny"                         :   "punktor_trojkatny",
@@ -1340,15 +1375,15 @@ var select     lennyFaceDropdownSkin                           `Okienko wyboru L
 @var checkbox   entryVotersListShowRealNicknameColorsGreen      `🟢 Zastosuj kolory zielonek`                                   0
 @var checkbox   entryVotersListShowRealNicknameColorsOrange     `🟠 Zastosuj kolory pomarańczek`                                0
 @var checkbox   entryVotersListShowRealNicknameColorsBurgundy   `🔴 Zastosuj kolory bordo`                                      0     
-@var checkbox   entryVotersListShowRealNicknameColorsBlack      `⚪ Zastosuj kolory administracji wykopu`                                           0     
+@var checkbox   entryVotersListShowRealNicknameColorsBlack      `⚪ Zastosuj kolory administracji wykopu`                                                0     
 
 @var checkbox   entryVotersListShowRealNicknameColorsNiebiescy  `💙 Zastosuj kolory niebieskich`                                0
 @var checkbox   entryVotersListShowRealNicknameColorsRozowe     `💜 Zastosuj kolory różowych`                                   0
 @var checkbox   entryVotersListShowRealNicknameColorsBezPaskow  `🖤 Zastosuj kolory bez pasków`                                 0
 
-@var checkbox   entryVotersListShowRealNicknameColorsBanned     `🍌 Kolory nicków: użytkownicy z banem`                                              0    
-@var checkbox   entryVotersListShowRealNicknameColorsRemoved    `❌ Kolory nicków: k̶o̶n̶t̶ ̶u̶s̶u̶n̶i̶ę̶t̶y̶c̶h̶ `                                                 0     
-@var checkbox   entryVotersListShowRealNicknameColorsSuspended  `✖ Kolory nicków: konta w trakcie usuwania `                                         0     
+@var checkbox   entryVotersListShowRealNicknameColorsBanned     `🍌 Kolory nicków: użytkownicy z banem`                                                   0    
+@var checkbox   entryVotersListShowRealNicknameColorsRemoved    `❌ Kolory nicków: k̶o̶n̶t̶ ̶u̶s̶u̶n̶i̶ę̶t̶y̶c̶h̶ `                                                      0     
+@var checkbox   entryVotersListShowRealNicknameColorsSuspended  `✖ Kolory nicków: konta w trakcie usuwania `                                              0     
 
 @var checkbox   entryVotersListColorsOnHover                    `Pokaż kolor po najechaniu kursorem `                               0     
 
@@ -1369,7 +1404,7 @@ REMOVED checkbox   entryVotersListEmojiRemovedUserTextHide             `🔹❌ 
 
 
 @var checkbox   entryVotersListEmojiYourProfile                 `🔹 Emoji 🟠 przy Twoim nicku`                                   0
-@var checkbox   entryVotersListShowRealNicknameColorsYours      `🔹 Twój nick w kolorze`                                                             0 
+@var checkbox   entryVotersListShowRealNicknameColorsYours      `🔹 Twój nick w kolorze`                                                                  0 
 @var checkbox   entryVotersListSortOrderyYourNicknameFirst      `🔹 Twój nick zawsze pierwszy na liście`                         0
 
 
@@ -1381,7 +1416,7 @@ REMOVED checkbox   entryVotersListEmojiRemovedUserTextHide             `🔹❌ 
 @var checkbox   entryVotersListSortByColor                      `🔹 Sortuj listę według kolorów nicków`                             0
 @var select     entryVotersListSortOrder                        `🔹 Schemat sortowania według kolorów` {
                                                                             "🟢 zielonki ➜ 🟠 pomarańczki ➜ 🔴 bordo  " : "zpb",
-                                                                            "🟢 zielonki ➜ 🔴 bordo ➜ 🟠 pomarańczki " : "zbp",
+                                                                            "🟢 zielonki ➜ 🔴 bordo ➜ 🟠 pomarańczki *" : "zbp",
                                                                             "🔴 bordo ➜ 🟢 zielonki ➜ 🟠 pomarańczki  " : "bzp",
                                                                             "🔴 bordo ➜ 🟠 pomarańczki ➜ 🟢 zielonki  " : "bpz",
                                                                             "🟠 pomarańczki ➜ 🔴 bordo ➜ 🟢 zielonki  " : "pbz",
@@ -1475,7 +1510,7 @@ REMOVED checkbox   entryVotersListEmojiRemovedUserTextHide             `🔹❌ 
                                                                             "wykopx.pl"                       :   "wykopx",
                                                                             "YouTube"                         :   "youtube"
                                                                         }
-@var checkbox   topNavLogotypeHide                              `🚫 Ukryj logotyp 𝘄𝘆𝗸𝗼𝗽.𝗽𝗹`                 0
+@var checkbox   topNavLogotypeHide                              `🚫 Ukryj logotyp 𝘄𝘆𝗸𝗼𝗽.𝗽𝗹`                      0
 
 
 
@@ -1597,32 +1632,32 @@ REMOVED checkbox   entryVotersListEmojiRemovedUserTextHide             `🔹❌ 
 
 
 @var range      SUB_HR_TOPNAV_LEFT_BUTTONS_STYLE       `WYGLĄD PRZYCISKÓW NA BELCE`                                   [0, 0, 99999, 1, 'mm']
-@var checkbox   topNavBarLooksLikeClassicWykop                  `Styl przycisków Wykop 2022`                               0     
-@var checkbox   topNavButtonsTextBolder                         `Pogrubiony tekst przycisków w stylu Wykopu 2022 🆗`       1
+@var checkbox   topNavBarLooksLikeClassicWykop                  `Styl przycisków Wykop 2022`                                    0     
+@var checkbox   topNavButtonsTextBolder                         `Pogrubiony tekst przycisków w stylu Wykopu 2022 🆗`            0
 
 @var select     topNavUpcomingCountStyle                        `Liczba nowych znalezisk (Wykopalisko) 🆗` {
                                                                     "Domyślnie (Wykop 2023)"        :    "default",
                                                                     "Wykop 2022":"stylwykop2022",
                                                                     "Styl powiadomień (pomarańczowy)"             :    "stylpowiadomien",
-                                                                    "🚫 Nie pokazuj"           :    "ukryj"
+                                                                    "🚫 Nie pokazuj":"ukryj"
                                                                 } 
-@var checkbox   topNavButtonsTextTransform                      `Tekst na przyciskach małymi literami 🆗`              1
+@var checkbox   topNavButtonsTextTransform                      `Tekst na przyciskach małymi literami 🆗`                   0
 
 @var range      SUB_HR_TOPNAV_LEFT_BUTTONS              `PRZYCISKI PO LEWEJ`                                   [0, 0, 99999, 1, 'mm']
 
 @var checkbox   topNavHomeButtonClickRefreshOrRedirect          `❎🐁 Kliknięcie w przycisk "Główna" odświeża Główną`               0
 @var checkbox   topNavMicroblogButtonClickRefreshOrRedirect     `❎🐁 Kliknięcie w przycisk "Mikroblog" przeładowuje Mikroblog`     0
 @var checkbox   topNavHomeButtonRemoveL                         `Ukryj "ł" w przycisku "Główna" 🆗`                           0
-@var checkbox   topNavHomeButtonHide                            `🚫 Ukryj przycisk "Główna" 🆗`                           0
+@var checkbox   topNavHomeButtonHide                            `🚫 Ukryj przycisk "Główna" 🆗`                                0
 @var checkbox   topNavUpcomingButtonHide                        `🚫 Ukryj przycisk "Wykopalisko" 🆗`                     0
 @var checkbox   topNavHitsButtonHide                            `🚫 Ukryj przycisk "Hity" 🆗 ⭐`                         0
 @var checkbox   topNavMicroblogButtonHide                       `🚫 Ukryj przycisk "Mikroblog" 🆗`                        0
 @var checkbox   addNewEntryInTopNavJS                           `❎ Pokaż przycisk + (Dodaj wpis na Mirko)`               0
 @var checkbox   favoritesInTopNavJS                             `❎ Pokaż przycisk '𝗨𝗹𝘂𝗯𝗶𝗼𝗻𝗲' `                            0
-@var checkbox   myWykopInTopNavJS                               `❎ Pokaż przycisk '𝗠𝗼𝗷 𝘄𝘆𝗸𝗼𝗽' `                           0     
+@var checkbox   myWykopInTopNavJS                               `❎ Pokaż przycisk '𝗠𝗼𝗷 𝘄𝘆𝗸𝗼𝗽' `                                0     
 @var checkbox   myWykopInTopNavJSObserwowane                    `❎ Zmień nazwę '𝗠𝗼𝗷 𝘄𝘆𝗸𝗼𝗽' na '𝗢𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲' `            0
 
-@var checkbox   topNavMikroczatHide                             `❎🚫 Ukryj przycisk '𝗖𝘇𝗮𝘁'`                                0
+@var checkbox   topNavMikroczatHide                             `❎🚫 Ukryj przycisk '𝗖𝘇𝗮𝘁'`                                     0
 
 
 
@@ -1724,23 +1759,23 @@ REMOVED checkbox   entryVotersListEmojiRemovedUserTextHide             `🔹❌ 
 @var checkbox   notificationsPointerEventsToLinks               `Klikalne linki (autor, tag, wpis, komentarz) wewnątrz powiadomienia`       0
 
 
-@var checkbox   notificationsStreamColorizeLinksAndEntries      `Włącz kolorowe powiadomienia ze 🔸znalezisk i z 🔹mikrobloga`                                      0    
+@var checkbox   notificationsStreamColorizeLinksAndEntries      `Włącz kolorowe powiadomienia ze 🔸znalezisk i z 🔹mikrobloga`                                           0    
 @var color      notificationsStreamColorLinks                   `Kolor powiadomień ze 🔸znalezisk`                                              rgba(222, 120, 12, 1)
 @var color      notificationsStreamColorEntries                 `Kolor powiadomień z 🔹mikrobloga`                                              rgba(22, 69, 155, 1)
 
 
-@var checkbox   notificationsStreamColorizeMentionsInEntries    `Włącz kolor powiadomień 🔹wpisów, w których ktoś o Tobie napisał`                               0    
+@var checkbox   notificationsStreamColorizeMentionsInEntries    `Włącz kolor powiadomień 🔹wpisów, w których ktoś o Tobie napisał`                                    0    
 @var color      notificationsStreamColorizeMentionsInEntriesColor  `Kolor powiadomień z 🔹wpisów o Tobie`                                rgba(0, 176, 255, 1)
 
-@var checkbox   notificationsStreamColorizeFollowingYou         `Włącz kolor powiadomień gdy ktoś zacznie Cię obserwować`                                        0    
+@var checkbox   notificationsStreamColorizeFollowingYou         `Włącz kolor powiadomień gdy ktoś zacznie Cię obserwować`                                             0    
 @var color      notificationsStreamColorizeFollowingYouColor    `Kolor powiadomień o nowym obserwującym`                                    rgba(255, 255, 255, 1)
 
 
 @var checkbox   notificationsStreamHideScrollbar                `Ukryj pasek przewijania przy dużej liczbie powiadomień`                           0     
 
-@var checkbox   removeNotificationButtonIsBigger                `Przycisk ☒ do usuwania powiadomień - powiększony`                                                    0    
-@var checkbox   removeNotificationButtonIsAlwaysVisible         `Przycisk ☒ do usuwania powiadomień - zawsze widoczny`                                                0     
-@var checkbox   removingNotificationsMoreResponsive             `Natychmiastowe ukrywanie przeczytanych/usuniętych powiadomień`                                        0     
+@var checkbox   removeNotificationButtonIsBigger                `Przycisk ☒ do usuwania powiadomień - powiększony`                                                         0    
+@var checkbox   removeNotificationButtonIsAlwaysVisible         `Przycisk ☒ do usuwania powiadomień - zawsze widoczny`                                                     0     
+@var checkbox   removingNotificationsMoreResponsive             `Natychmiastowe ukrywanie przeczytanych/usuniętych powiadomień`                                             0     
 
 REMOVED checkbox  middleClickOpensNotificationsInNewTab         `❎🐁 Środkowy przycisk myszy otwiera powiadomienie w nowej karcie`               0
 REMOVED checkbox  notificationOpenStraightToComment             `❎🐁🗨️ Przenieś do komentarza po kliknięciu w powiadomienie o wołaniu`          0
@@ -1790,7 +1825,7 @@ REMOVED select    gradientBorders                               `[Test] Gradient
 
 
 @var range      SUB_HR_NOTIFICATIONS_DROPDOWNS_TAGS      `#️⃣ LISTA POWIADOMIEŃ Z #TAGÓW`                        [0, 0, 99999, 1, 'mm']
-@var checkbox   notificationsStreamTagsOrderLastRead            `#tagi - Przenieś powiadomienie na koniec listy od razu po odczytaniu`                                 0    
+@var checkbox   notificationsStreamTagsOrderLastRead            `#tagi - Przenieś powiadomienie na koniec listy od razu po odczytaniu`                                      0    
 @var checkbox   notificationsStreamTagsHideRead                 `#tagi - Ukryj przeczytane powiadomienia z listy`                                      0
 
 @var checkbox   notificationsStreamTagsHideIfNoUnread           `#tagi - Ukryj listę jeśli brak nowych powiadomień z #tagów`                       0     
@@ -1807,7 +1842,7 @@ REMOVED select    gradientBorders                               `[Test] Gradient
 @var checkbox   notificationsStreamTagsHideButtonMakeAllRead              `🚫 #tagi - Ukryj przycisk 𝗢𝗱𝗰𝘇𝘆𝘁𝗮𝗷 𝘄𝘀𝘇𝘆𝘀𝘁𝗸𝗶𝗲`                                0 
 
 @var range      SUB_HR_NOTIFICATIONS_DROPDOWNS_ENTRIES   `🔔 LISTA POWIADOMIEŃ Z @WOŁAŃ`                          [0, 0, 99999, 1, 'mm']
-@var checkbox   notificationsStreamEntriesOrderLastRead         `@wołania - Przenieś powiadomienie na koniec listy od razu po odczytaniu`                               0     
+@var checkbox   notificationsStreamEntriesOrderLastRead         `@wołania - Przenieś powiadomienie na koniec listy od razu po odczytaniu`                                    0     
 @var checkbox   notificationsStreamEntriesHideRead              `@wołania - Ukryj przeczytane powiadomienia z listy`                                   0
 
 
@@ -1902,8 +1937,8 @@ TODO range      mainContentWidthValue                           `⟺ Domyślna s
 @var range      hitsWidth                                       `🔶 2.A) Szerokość miniaturek`                                        [200, 100, 400, 25, ''] 
 
 @var checkbox   hitsThumbnailImageHide                          `🔶 Ukryj obrazki w miniaturkach `                                0
-@var checkbox   hitsMoreHide                                    `🚫 Ukryj nagłówek "HITY WYKOPU Zobacz więcej >" `                                    0     
-@var checkbox   hitsGoToHitsButton                              `🚫 Ukryj przycisk "PRZEJDŹ DO HITÓW"`                                                0     
+@var checkbox   hitsMoreHide                                    `🚫 Ukryj nagłówek "HITY WYKOPU Zobacz więcej >" `                                         0     
+@var checkbox   hitsGoToHitsButton                              `🚫 Ukryj przycisk "PRZEJDŹ DO HITÓW"`                                                     0     
 @var checkbox   hitsHide                                        `🚫 Ukryj "Hity wykopu"`                                          0
 
 
@@ -1932,7 +1967,7 @@ TODO range      mainContentWidthValue                           `⟺ Domyślna s
 @var range      SUB_HR_LINKS_ANALYZER                   `🔶📊 STATYSTYKI ZNALEZISK`                                   [0, 0, 99999, 1, 'mm']
 @var range      linksAnalyzerEnable_ON_INFO                     `Statystyki znalezisk są włączone`               [0, 0,111100, 1, 'mm']
 
-@var checkbox   linksAnalyzerEnable                             `🔸❎ Włącz Statystyki znalezisk`                                                          0     
+@var checkbox   linksAnalyzerEnable                             `🔸❎ Włącz Statystyki znalezisk`                                                               0     
 @var checkbox   linksAnalyzerVotesDownCount                     `🔸❎ Liczba ZAKOPÓW` 1     
 @var checkbox   linksAnalyzerVotesDownPercent                   `🔸❎ Procent liczby zakopów` 1     
 @var checkbox   linksAnalyzerVotesMeter                         `🔸❎ Wykres słupkowy proporcji wykopów do zakopów` 1     
@@ -2016,7 +2051,7 @@ TODO range      mainContentWidthValue                           `⟺ Domyślna s
                                                                             "Pokazuj tylko ikonki (domyślnie)"          :   "domyslnie",
                                                                             "Pokazuj ikony i napisy":"kontekstowe"
                                                                         } 
-@var checkbox   popperHighlight                                `Popraw czytelność menu`                                                                           0
+@var checkbox   popperHighlight                                `Popraw czytelność menu`                                                                                0
 @var checkbox   popperHideTag                                  `🚫 Nie pokazuj menu nad tagami`                                               0
 @var checkbox   popperHideDomain                               `🚫 Nie pokazuj menu nad domenami w znalezisku`                                0
 
@@ -2146,9 +2181,9 @@ TODO range      mainContentWidthValue                           `⟺ Domyślna s
 
 
 
-@var select     microblogEntriesWithoutAnyContent           `🚫🔷 Ukrywaj wpisy z samym #tagiem (bez treści, dodane przez pomyłkę) 🆗` {
+@var select     microblogEntriesWithoutAnyContent           `🚫🔷 Ukrywaj wpisy bez treści z samym #tagiem (dodane przez pomyłkę) 🆗` {
                                                                         "Nie ukrywaj (domyślnie)"                    :   "default",
-                                                                        "🚫🔷 Ukrywaj każdy wpis z samym #tagiem"   :   "ukrywaj_wszystkie_wpisy_z_samym_tagiem",
+                                                                        "🚫🔷 Ukrywaj każdy wpis z samym #tagiem":"ukrywaj_wszystkie_wpisy_z_samym_tagiem",
                                                                         "🚫🔷🟢 Ukrywaj tylko wpisy zielonek"       :   "ukrywaj_wpisy_zielonek_z_samym_tagiem",
                                                                     }
 
@@ -2180,9 +2215,9 @@ var checkbox   hideEntriesWithURLS                             `🚫🔷🔗 TOD
 
 
 
-@var checkbox   userGreenEntriesWithPhotos                      `🟢🔷🌆🚯 Blokuj wpisy zielonek ze zdjęciami (AntyRumun)`                                      0
-@var checkbox   userGreenEntriesWithVideos                      `🟢🔷🎬🚯 Blokuj wpisy zielonek z filmikami (AntyRumun)`                                       0
-@var checkbox   userGreenEntriesWithURLS                        `🟢🔷🔗🚯 Blokuj wpisy zielonek z linkami URL (AntySpam)`                                      0
+@var checkbox   userGreenEntriesWithPhotos                      `🟢🔷🌆🚯 Blokuj wpisy zielonek ze zdjęciami`                                      0
+@var checkbox   userGreenEntriesWithVideos                      `🟢🔷🎬🚯 Blokuj wpisy zielonek z filmikami`                                       0
+@var checkbox   userGreenEntriesWithURLS                        `🟢🔷🔗🚯 Blokuj wpisy zielonek z linkami URL`                                      0
 @var select     userGreenEntries                                `🟢🔷🚯 Pozostałe wpisy zielonek na mikroblogu` {
                                                                             "Pokazuj normalnie (domyślnie)":"domyslnie", 
                                                                             "Zwinięte":"minimized",
@@ -2198,7 +2233,7 @@ TODO var checkbox   betterPhotosInEntries                       `Lepsze obrazki 
 TODO var range      betterPhotosInEntries_INFO                  `Poprawienie wyświetlania obrazków. Jeśli obrazek jest ma wysoką rozdzielczość próbuje wyświetlić go w jak największych rozmiarach. Poziome obrazki zostaną rozciągnięte do pełnej szerokości strony przy limicie wysokości wybranym poniżej. Obrazki pionowe zostaną wyświetlone do maksymalnej wysokości. Obrazki niewielkie nie bedą rozciągane ani w szerokości, ani w wysokości.`             [0, 0,88800, 1, 'mm']
 TODO var range      betterPhotosInEntriesMaxHeight              `Maksymalna wysokość obrazków`             [500, 150, 1500, 50, 'px']
 TODO var checkbox   displayImageInFullHeight                    `Wyświetl obrazek w pełnej wysokości i oryginalnych rozmiarach`                                 0
-@var checkbox   hideImageCaptions                               `🚫 Ukryj biały pasek z loginem autora pod obrazkiem`                                           0   
+@var checkbox   hideImageCaptions                               `🚫 Ukryj biały pasek z loginem autora pod obrazkiem`                                                0   
 TODO var checkbox   openImageInNewTabButton                     `Przycisk 𝗢𝘁𝘄𝗼́𝗿𝘇 𝗼𝗯𝗿𝗮𝘇𝗲𝗸 𝘄 𝗻𝗼𝘄𝗲𝗷 𝗸𝗮𝗿𝗰𝗶𝗲`                                                           0
 TODO var checkbox   fixWrongImageRatio                          `✔ Napraw błąd skurczonej wysokości wysokich obrazków we wpisach i komentarzach`                0
 TODO var range      fixWrongImageRatioMinWidth                  `✔ Napraw błąd skurczonej wysokości - minimalna szerokość obrazka`                               [30, 10, 100, 5, '%']
@@ -2342,12 +2377,12 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
                                                                             "🔹 Wpisy (gorące/aktywne/popularne w kategorii)"                              : "wpisy",
                                                                             "🔸 Znaleziska (wykopalisko/najnowsze/aktywne/popularne w kategorii)"          : "znaleziska",
                                                                             "# Popularne tagi/Powiązane tagi"                                              : "tagi",
-                                                                            "# Twoje obserwowane tagi ❎"                                                 : "wykopx_your_observed_tags"
+                                                                            "# Twoje obserwowane tagi ❎*":"wykopx_your_observed_tags"
                                                                     } 
 @var select     rightSidebarOrderSecond                         `Wyświetlaj jako drugie` {
                                                                             "Domyślnie"                                                                     : "domyslnie",
                                                                             "🔸 Hity"                                                                       : "hity",
-                                                                            "🔹 Wpisy (gorące/aktywne/popularne w kategorii)"                              : "wpisy",
+                                                                            "🔹 Wpisy (gorące/aktywne/popularne w kategorii)*":"wpisy",
                                                                             "🔸 Znaleziska (wykopalisko/najnowsze/aktywne/popularne w kategorii)"           : "znaleziska",
                                                                             "# Popularne tagi/Powiązane tagi"                                               : "tagi",
                                                                             "# Twoje obserwowane tagi ❎"                                                   : "wykopx_your_observed_tags"
@@ -2379,7 +2414,7 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
                                                                     
 @var range      SUB_HR_HIDE_SIDEBAR_SECTIONS           `Ukrywanie sekcji sidebara`                             [0, 0, 99999, 1, 'mm']
 
-@var checkbox   rightSidebarPopularTagsHide                     `🚫 Ukryj sekcj # 𝗣𝗼𝗽𝘂𝗹𝗮𝗿𝗻𝗲 𝘁𝗮𝗴𝗶 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ/ᵐᶦᵏʳᵒᵇˡᵒᵍ/ʷᵖᶦˢ) 🆗`                      0
+@var checkbox   rightSidebarPopularTagsHide                     `🚫 Ukryj sekcj # 𝗣𝗼𝗽𝘂𝗹𝗮𝗿𝗻𝗲 𝘁𝗮𝗴𝗶 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ/ᵐᶦᵏʳᵒᵇˡᵒᵍ/ʷᵖᶦˢ) 🆗`                           0
 @var checkbox   rightSidebarRelatedTagsHide                     `🚫 Ukryj sekcj # 𝗣𝗼𝘄𝗶𝗮̨𝘇𝗮𝗻𝗲 𝘁𝗮𝗴𝗶 (ᵗᵃᵍ/ᵏᵃᵗᵉᵍᵒʳᶦᵉ/ᶻⁿᵃˡᵉᶻᶦˢᵏᵒ) 🆗`                               0
 @var checkbox   rightSidebarHideEntriesHot                      `🚫 Ukryj sekcję 🔹 𝗚𝗼𝗿𝗮𝗰𝗲 𝘄𝗽𝗶𝘀𝘆 (ᵍˡᵒʷⁿᵃ/ʷʸᵏᵒᵖᵃˡᶦˢᵏᵒ) 🆗`                                        0
 @var checkbox   rightSidebarHideEntriesActive                   `🚫 Ukryj sekcję 🔹 𝗔𝗸𝘁𝘆𝘄𝗻𝗲 𝘄𝗽𝗶𝘀𝘆 (ᵐᶦᵏʳᵒᵇˡᵒᵍ/ʷᵖᶦˢ) 🆗`                                           0
@@ -2391,8 +2426,8 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
 
 
 
-@var checkbox   rightSidebarFooterHide                          `🚫 Ukryj stopkę 𝗪𝗬𝗞𝗢𝗣 © 𝟮𝟬𝟬𝟱 🆗`                                                        0
-@var checkbox   WykopXSpromoDisable                             `🚫 Ukryj baner informacyjny o skrypcie Wykop XS`                                           0
+@var checkbox   rightSidebarFooterHide                          `🚫 Ukryj stopkę 𝗪𝗬𝗞𝗢𝗣 © 𝟮𝟬𝟬𝟱 🆗`                                                             0
+@var checkbox   WykopXSpromoDisable                             `🚫 Ukryj baner informacyjny o skrypcie Wykop XS`                                                0
 
 
 
@@ -2454,12 +2489,12 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
 @var checkbox   readingProgressBar                              `Włącz pasek postępu czytania 📱`                                               0
 @var select     readingProgressBarAlignment                     `Położenie paska 📱` {
                                                                         "Na górze"      :   "nadbelka",
-                                                                        "Na dole"      :   "nadolestrony"
+                                                                        "Na dole*"      :   "nadolestrony"
                                                                     } 
 @var range      readingProgressBarHeight                        `Grubość paska 📱`          [2, 1, 15, 1, 'px']
 @var select     readingProgressBarTheme                         `Kolorystyka 📱` {
                                                                         "Wykop X"                   :   "progressbar_theme_wykopx",
-                                                                        "Instagram / Firefox"      :   "progressbar_theme_instagram",
+                                                                        "Instagram / Firefox*"      :   "progressbar_theme_instagram",
                                                                         "YouTube"                   :   "progressbar_theme_youtube",
                                                                         "Wykop - Bordo"             :   "progressbar_theme_burgundy",
                                                                         "Wykop - Pomarańczka"       :   "progressbar_theme_orange",
@@ -2704,50 +2739,83 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
 
 
 
+
+
+
+
+
+
+
+@var range      HR_GENERAL                          `OPCJE OGÓLNE`                                                                   [0, 0, 99900, 1, 'mm']
+@var select     scrollbarsStyle                             `Paski przewijania` {
+                                                                            "Nowe (domyślne)"       :   "domyslne",
+                                                                            "Klasyczne"             :   "klasyczne",
+                                                                            "Dzienne/nocne"         :   "dziennoc",
+                                                                            "Nie pokazuj"           :   "niepokazuj"
+                                                                        } 
+@var checkbox   borderRadiusOff                                 `Brak zaokrąglonych rogów 🆗`                                            0
+@var range      borderRadius                                    `Stopień zaokrąglenia rogów 🆗`                                          [4, 0, 25, 1, 'px']
+@var range      gapWidth                                        `ᛨ Odstępy pomiędzy elementami innymi niż wpisy i znaleziska`         [20, 0, 100, 1, 'px']
+
+@var checkbox   removeAllTransitions                            `Wyłącz animacje i efekty zanikania`                                              0
+@var checkbox   swapYesNoButtonsPosition                        `Przycisk głównej akcji w komunikatach po lewej zamiast po prawej`                0       
+
+@var range      HR_FIXWYKOPBUGS                     `✔ NAPRAW BŁĘDY WYKOPU`                                                                                   [0, 0, 99900, 1, 'mm']
+@var checkbox   fixMultipleErrorAlerts                          `✔ Ukrywaj zwielokrotnione alerty (np. '𝗪𝘆𝘀𝘁𝗮̨𝗽𝗶𝗹 𝗯𝗹𝗮̨𝗱') 🆗`                                    0   
+@var checkbox   fixCaseSensitiveTagsRedirection                 `✔🔹❎ Napraw przekierowania tagów z wielkimi literami (np. #Heheszki albo #WYKOP)`           0     
+
+
+
+
+
 @var range      HR_NEW_NOTLOGGED                    `👤 DLA NIEZALOGOWANYCH`                                                    [0, 0, 99900, 1, 'mm']
-@var checkbox   notLoggedLoginButtonHide                                 `🚫 Ukryj przycisk "Zaloguj się" 🆗`                                                            0
-@var checkbox   notLoggedRegisterButtonHide                              `🚫 Ukryj przycisk "Zarejestruj się" 🆗`                                                        0
-@var checkbox   notLoggedHomepagePromoYouCannotSeeHide                   `🚫 Ukryj bloki "Nie widzisz nawet 30% treści" na głównej 🆗`                                   0
-@var checkbox   notLoggedHomepagePromoToRegisterHide                     `🚫 Ukryj blok "Znalazłeś ciekawe treści? Podziel się nimi. Załóż konto" na głównej 🆗`         1
-@var checkbox   notLoggedPlusMinusButtonsHide                            `🚫 Nie pokazuj przycisków do plusowania/minusowania 🆗`                                        0
-@var checkbox   notLoggedVoteUpOnLinksHide                               `🚫 Ukryj przyciski "WYKOP" przy znaleziskach 🆗`                                               0
+@var checkbox   notLoggedLoginButtonHide                         `🚫 Ukryj przycisk "Zaloguj się" (górna belka) (NOWE ⭐) 🆗`                                         0
+@var checkbox   notLoggedLeftMenuLoginButtonHide                 `🚫 Ukryj przycisk "Zaloguj się" (menu po lewej) (NOWE ⭐)`                                     0
+@var checkbox   notLoggedRegisterButtonHide                      `🚫 Ukryj przycisk "Zarejestruj się" (górna belka, na PC) 🆗`                                        0
+@var checkbox   notLoggedHomepagePromoYouCannotSeeHide           `🚫 Ukryj bloki "Nie widzisz nawet 30% treści" na głównej 🆗`                                        0
+@var checkbox   notLoggedHomepagePromoToRegisterHide             `🚫 Ukryj blok "Znalazłeś ciekawe treści? Podziel się nimi. Załóż konto" na głównej 🆗`              0
+@var checkbox   notLoggedPlusMinusButtonsHide                    `🚫 Nie pokazuj przycisków do plusowania/minusowania 🆗`                                             0
+@var checkbox   notLoggedVoteUpOnLinksHide                       `🚫 Ukryj przyciski "WYKOP" przy znaleziskach 🆗`                                                    0
+@var checkbox   notLoggedMobileNavBarAddNewLinkButtonHide        `📱🚫 Ukryj przycisk "Dodaj znalezisko" (+) (belka mobilna na dole) (NOWE ⭐)`                                  0
 
  
-@var range      HR_ANTY_RUMUN                       `🚫 BLOKOWANIE SPAMU, PORNOGRAFII I ZIELONEK`            [0, 0, 99900, 1, 'mm']
-@var checkbox   userGreenEntriesWithPhotos                      `🟢🚯🔷 AntyRumun: Blokuj wpisy zielonek ze zdjęciami`                                               0
-@var checkbox   userGreenEntriesWithVideos                      `🟢🚯🔷 AntyRumun: Blokuj wpisy zielonek z filmikami`                                                0
-@var checkbox   userGreenEntriesWithURLS                        `🟢🚯🔷 AntySpam: Blokuj wpisy zielonek z linkami URL`                                               0
-@var select     userGreenEntries                                `🟢🚯🔷 AntySpam: Pozostałe wpisy zielonek na mikroblogu` {
-                                                                            "Pokazuj normalnie (domyślnie)":"domyslnie", 
-                                                                            "Zwinięte":"minimized",
-                                                                            "🚯 Blokuj wszystkie wpisy zielonek":"niepokazuj",
-                                                                        } 
-@var checkbox   userGreenEntriesNotificationsHide               `🟢🔷🉑🚯 AntySpam: Blokuj powiadomienia o nowych wpisach zielonek`                               0
-@var checkbox   userGreenLinksNotificationsHide                 `🟢🔶🉑🚯 AntySpam: Blokuj powiadomienia o nowych znaleziskach zielonek`                          0
-@var select     userGreenLinks                                  `🟢🔶🚯 AntySpam: Blokuj znaleziska zielonek` {
-                                                                            "Pokazuj normalnie (domyślnie)":"domyslnie", 
-                                                                            "🚯 Blokuj znaleziska zielonek tylko w Wykopalisku":"niepokazuj_w_wykopalisku",
-                                                                            "🚯 Blokuj wszystkie znaleziska zielonek":"niepokazuj",
+
+
+
+@var range      HR_MOBILE_VERSION                  `📱 STRONA MOBILNA `                                                          [0, 0, 99900, 1, 'mm']
+@var checkbox   mobileFooterHide                                `📱🚫 Ukryj stopkę 𝗪𝗬𝗞𝗢𝗣 © 𝟮𝟬𝟬𝟱 na dole strony mobilnej`                       0     
+
+@var range      SUB_HR_MOBILENAV                            `📱 BELKA MOBILNA NA DOLE`                                                      [0, 0, 99999, 1, 'mm']
+@var checkbox   mobileNavBarHideWhileTypingEditor               `📱🗨️ Schowaj belkę podczas pisania komentarzy/wpisów ✍️`                      0     
+@var checkbox   mobileNavBarHideWhileTypingPM                   `📱✉ Schowaj belkę podczas pisania wiadomości prywatnych ✍️`                0     
+@var checkbox   mobileNavBarHideOnMessagePage                   `📱✉ Schowaj belkę na stronie wiadomości`                                0
+@var checkbox   mobileNavBarHide                                `📱🚫 Ukryj belkę`                                                            0
+
+@var range      SUB_HR_MOBILENAV_BUTTONS                    `📱 PRZYCISKI NA BELCE MOBILNEJ`                                                      [0, 0, 99999, 1, 'mm']
+
+@var select     mobileNavBarButtonsStyle                        `📱 Wygląd przycisków na belce` {
+                                                                            "Ikonka + napis (domyślnie)":"domyslne",
+                                                                            "Tylko ikonka":"ikonka",
+                                                                            "Tylko napis":"napis",
                                                                         }
-@var checkbox   blockEntriesWithURLSDiscord                     `🔷📵 AntySpam: Blokuj wpisy spamujące linkami na Discordy: https://discord.gg`                    0
-@var checkbox   blockLinksWithURLSDiscord                       `🔶📵 AntySpam: Blokuj znaleziska spamujące linkami na Discordy: https://discord.gg`               0
+                                                                        
+@var checkbox   mobileNavBarHomeButtonHide                      `📱🚫 Ukryj przycisk Główna (𝗪)`                                         0
+@var checkbox   mobileNavBarUpcomingButtonHide                  `📱🚫 Ukryj przycisk Znalezisko`                                          0
+@var checkbox   mobileNavBarUpcomingCountHide                   `📱🚫 Ukryj liczbę nowych znalezisk`                                           0   
+@var checkbox   mobileNavBarHitsButtonHide                      `📱🚫 Ukryj przycisk Hity (🔥)  (NOWE ⭐)`                                            0
+@var checkbox   mobileNavBarMicroblogButtonHide                 `📱🚫 Ukryj przycisk Mikroblog (𝗠)`                                       0
+
+@var checkbox   mobileNavBarAddNewLinkButtonHide                `📱🚫 Ukryj przycisk "Dodaj znalezisko" (+) (NOWE ⭐)`                              0
+
+
+@var checkbox   mobileNavBarMyWykopButton                       `📱❎ Pokaż przycisk Mój Wykop (𝗠𝗪)`                                           0     
+@var checkbox   mobileNavBarNotificationsButton                 `📱❎ Pokaż przycisk Powiadomienia (🔔) `                                    0     
+@var checkbox   mobileNavBarMessagesButton                      `📱❎ Pokaż przycisk Wiadomości (✉) `                                          0     
+@var checkbox   mobileNavBarProfileButton                       `📱❎ Pokaż przycisk Profil (👤)`                                            0
 
 
 
-@var checkbox   blockRumun                                      `🔶🚫 AntyRumun: Blokuj znaleziska z pornografią`                                                  0
 
-
-@var range     HR_HIDEADS                           `⛔ BLOKOWANIE REKLAM`                                                                                             [0, 0, 99900, 1, 'mm']
-@var checkbox  adsHide                                          `⛔ Ukryj reklamy 🆗` 1    
-@var checkbox  adsSponsoredLinksHide                            `⛔ Ukryj znaleziska 𝗪𝘆𝗸𝗼𝗽 𝘀𝗽𝗼𝗻𝘀𝗼𝗿𝗼𝘄𝗮𝗻𝘆 🆗` 1     
-@var select    adsRecommendedLinksHide                          `⛔ Ukryj znaleziska 𝗪𝘆𝗸𝗼𝗽 𝗣𝗼𝗹𝗲𝗰𝗮 🆗` {
-                                                                            "Wyświetl (domyślnie)"          :   "domyslnie",
-                                                                            "Wyszarzone":"wyszarzone",
-                                                                            "⛔ Nie pokazuj"                :   "niepokazuj"
-                                                                        }  
-
-@var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`                                                      [0, 0, 99900, 1, 'mm']
-@var checkbox   adsGDPRAlertHide                                 `🚫🕵️‍ Ukryj okno akceptowania ciasteczek "Dbamy o Twoją prywatność" 🆗`                            0
 @var range      SUB_HR_XS_REMOVE_ANNOYANCES         `🕵️‍ USUWANIE SZPIEGÓW`                                               [0, 0, 99999, 1, 'mm']
 @var range      removeAnnoyancesEnable_ON_INFO                  `Usuwanie szpiegujących elementów jest aktywne`                 [0, 0,111100, 1, 'mm']
 @var checkbox   removeAnnoyancesEnable                          `❎🕵️‍♂️ Włącz usuwanie szpiegów`                                              0
@@ -2767,59 +2835,17 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
 @var checkbox   wxsBlockXHRConsoleLogAllowed                    `❎ Loguj niezablokowane XHR w konsoli (CTRL+SHIFT+J)`                                                    0
 
 
+var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`                                                      [0, 0, 99900, 1, 'mm']
+@var checkbox   adsGDPRAlertHide                                 `🚫🕵️‍ Ukryj okno akceptowania ciasteczek "Dbamy o Twoją prywatność" 🆗`                                 0
 
-
-
-
-@var range      HR_FIXWYKOPBUGS                     `✔ NAPRAW BŁĘDY WYKOPU`                                                                                   [0, 0, 99900, 1, 'mm']
-@var checkbox   fixMultipleErrorAlerts                          `✔ Ukrywaj zwielokrotnione alerty (np. '𝗪𝘆𝘀𝘁𝗮̨𝗽𝗶𝗹 𝗯𝗹𝗮̨𝗱') 🆗`                                    0   
-@var checkbox   fixScrollingIssueWithAdBlock                    `✔ Napraw błąd zablokowanego przewijania strony przez AdBlocka 🆗`                            0   
-@var checkbox   fixCaseSensitiveTagsRedirection                 `✔🔹❎ Napraw przekierowania tagów z wielkimi literami (np. #Heheszki albo #WYKOP)`           0     
-
-
-
-@var range      HR_GENERAL                          `OPCJE OGÓLNE`                                                                   [0, 0, 99900, 1, 'mm']
-TODO var select     scrollbarsStyle                             `Paski przewijania` {
-                                                                            "Nowe (domyślne)"       :   "domyslne",
-                                                                            "Klasyczne"             :   "klasyczne",
-                                                                            "Dzienne/nocne"         :   "dziennoc",
-                                                                            "Nie pokazuj"           :   "niepokazuj"
-                                                                        } 
-@var checkbox   borderRadiusOff                                 `Brak zaokrąglonych rogów 🆗`                                            0
-@var range      borderRadius                                    `Stopień zaokrąglenia rogów 🆗`                                          [4, 0, 25, 1, 'px']
-@var range      gapWidth                                        `ᛨ Odstępy pomiędzy elementami innymi niż wpisy i znaleziska`         [20, 0, 100, 1, 'px']
-
-@var checkbox   removeAllTransitions                            `Wyłącz animacje i efekty zanikania`                                              0
-@var checkbox   swapYesNoButtonsPosition                        `Przycisk głównej akcji w komunikatach po lewej zamiast po prawej`                0       
-
-
-
-@var range      HR_MOBILE_VERSION                           `📱 STRONA MOBILNA `                                                          [0, 0, 99900, 1, 'mm']
-@var checkbox   mobileFooterHide                                `📱🚫 Ukryj stopkę 𝗪𝗬𝗞𝗢𝗣 © 𝟮𝟬𝟬𝟱 na dole strony mobilnej`                  0     
-
-@var range      SUB_HR_MOBILENAV                            `📱 BELKA MOBILNA NA DOLE`                                                      [0, 0, 99999, 1, 'mm']
-@var checkbox   mobileNavBarHideWhileTypingEditor               `📱🗨️ Schowaj belkę podczas pisania komentarzy/wpisów ✍️`                      0     
-@var checkbox   mobileNavBarHideWhileTypingPM                   `📱✉ Schowaj belkę podczas pisania wiadomości prywatnych ✍️`                0     
-@var checkbox   mobileNavBarHideOnMessagePage                   `📱✉ Schowaj belkę na stronie wiadomości`                                0
-@var checkbox   mobileNavBarHide                                `📱🚫 Ukryj belkę`                                                            0
-
-@var range      SUB_HR_MOBILENAV_BUTTONS                    `📱 PRZYCISKI NA BELCE MOBILNEJ`                                                      [0, 0, 99999, 1, 'mm']
-
-@var select     mobileNavBarButtonsStyle                        `📱 Wygląd przycisków na belce` {
-                                                                            "Ikonka + napis (domyślnie)":"domyslne",
-                                                                            "Tylko ikonka":"ikonka",
-                                                                            "Tylko napis":"napis",
-                                                                        }
-                                                                        
-@var checkbox   mobileNavBarMyWykopButton                       `📱❎ Pokaż przycisk Mój Wykop (𝗠𝗪)`                                           0     
-@var checkbox   mobileNavBarNotificationsButton                 `📱❎ Pokaż przycisk Powiadomienia (🔔) `                                    0     
-@var checkbox   mobileNavBarMessagesButton                      `📱❎ Pokaż przycisk Wiadomości (✉) `                                          0     
-@var checkbox   mobileNavBarProfileButton                       `📱❎ Pokaż przycisk Profil (👤)`                                            0
-@var checkbox   mobileNavBarHomeButtonHide                      `📱🚫 Ukryj przycisk Główna (𝗪)`                                         0
-@var checkbox   mobileNavBarUpcomingButtonHide                  `📱🚫 Ukryj przycisk Znalezisko`                                          0
-@var checkbox   mobileNavBarUpcomingCountHide                   `📱🚫 Ukryj liczbę nowych znalezisk`                                      0   
-@var checkbox   mobileNavBarMicroblogButtonHide                 `📱🚫 Ukryj przycisk Mikroblog (𝗠)`                                       0
-
+@var range     HR_HIDEADS                           `⛔ BLOKOWANIE REKLAM`                                                                                             [0, 0, 99900, 1, 'mm']
+@var checkbox  adsHide                                          `⛔ Blokuj reklamy 🆗` 1    
+@var checkbox  adsSponsoredLinksHide                            `⛔ Ukryj znaleziska 𝗪𝘆𝗸𝗼𝗽 𝘀𝗽𝗼𝗻𝘀𝗼𝗿𝗼𝘄𝗮𝗻𝘆 🆗` 1     
+@var select    adsRecommendedLinksHide                          `⛔ Ukryj znaleziska 𝗪𝘆𝗸𝗼𝗽 𝗣𝗼𝗹𝗲𝗰𝗮 🆗` {
+                                                                        "Wyświetl (domyślnie)"          :   "domyslnie",
+                                                                        "Wyszarzone":"wyszarzone",
+                                                                        "⛔ Nie pokazuj"                :   "niepokazuj"
+                                                                    }
 
 
 
@@ -2875,8 +2901,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         topNavHomeButtonHide            = 1;
         borderRadiusOff                 = 1;
         selectLogoCustomIcon            = "domyslny_sygnet";
-        plusesAndMinusesColorsEnable    = 1;
-        plusesAndMinusesStyle           = "wykop10";
+        plusesAndMinusesStyle           = "wykop2022";
         scrollbarsStyle                 = "klasyczne";
         notificationsFromTags           = "showTagsNotificationNumbers";
         /* borderRadiusOff         = 0; borderRadius         = "3px"; */
@@ -3009,7 +3034,6 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         userGreenLinksHighlight         = 0;      
         
         blockLinksWithURLSDiscord       = 0;
-        blockRumun                      = 0;
         adsSponsoredLinksHide           = 1;
         hideRecommendedLinks            = 1;
 
@@ -4054,6 +4078,10 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     } 
 
     /* GENERAL */
+    
+
+    
+    
     body,
     body *,
     .switch label,
@@ -4852,15 +4880,19 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     
 
 
-    // TYKO DLA NIEZALOGOWANYCH
+
     body > section:not(:has(> header > div.right > nav > ul > li.account))
     {
         if(notLoggedLoginButtonHide == 1)
         {
-            header.header > div.right > nav > ul > li.text:has(a[href="/logowanie"]),
-            div.main-content > aside.left-panel > section.login
-            { display: none!important; } 
-        } 
+            header.header > div.right > nav > ul > li.text:has(a[href="/logowanie"]) { display: none!important; }
+        }
+        
+        if(notLoggedLeftMenuLoginButtonHide == 1)
+        {
+            div.main-content > aside.left-panel > section.login { display: none!important; }
+        }
+        
         if(notLoggedRegisterButtonHide == 1)
         {
             header.header > div.right > nav > ul > li.text:has(a[href="/rejestracja"])
@@ -4903,14 +4935,32 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
                 display: none!important;
             }
         }
+        /* UKRYCIE PRZYCISKU + (Dodaj nowe znalezisko) na belce mobilnej na dole */
+        if(notLoggedMobileNavBarAddNewLinkButtonHide == 1)
+        {
+            nav.mobile-navbar[class] > ul > li.add { display: none!important; } 
+        }
     } 
-    
 
-   
-    
-    
-    
-   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     
     if(showTargetIconOnLinks == 1)
@@ -6081,56 +6131,99 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     
     
     
-    
-        /* 🆗 + XS */
+    /* 🆗 + XS */
     if(adsHide == 1)
     {
-        .mgid-platform,
-        .pub-slot-wrapper,
-        aside:has(.pub-slot-wrapper),
-        /* reklama lidl tylko na wykop.pl/moj/ */
-        .sidebar > aside > section:not([id]),
-        
-        section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),   
-        
-        section.stream > section > div.content > section:not([id]),
-        
-        
         /* 2026-06-22 nowe natrętne reklamy */
-        .sidebar > *:not(.custom-sidebar),
-         
+        article:has(+ header),
+        
+        /* 2026-09-24 aktualizacja nowych reklam */
+
+        
+        nav > section::before,
+        nav > span::before,
+        nav > nav::before,
+        nav > header::before,
+        nav > article::before,
+        article > span::before,
+        article > nav::before,
+        article > section::before,
+        article > header::before,
+        article > article::before,
+        section[data-label="ad: top"] + section,
+        section[data-label="ad: top"] + aside,
+        section[data-label="ad: top"] + div,
+        a[href^="https://wykop.pl/comments/"][target="_blank"],
+        a[href^="https://wykop.pl/category/"][target="_blank"],
+        a[href^="https://wykop.pl/tag/"][target="_blank"],
+        a[href^="https://wykop.pl/article/"][target="_blank"],
+
+
         section.stream > nav,
         section.stream > span,
-        section.stream > section,
         section.stream > aside,
+        section.stream > div:not(.content), 
+        section.stream > div.content > div:not(.notification-wrapper),
+
+        section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),  
+
         section.stream > header:not(.stream-top),
+        section.stream > section > div.content > section:not([id]),
         
-        section.stream > article:has(nav),
+        section.stream.tags-stream > article,
+        section.stream.microblog > article,
+
+        section > section.stream > div.content > nav,
+        section > section.stream > div.content > span 
+        section > section.stream > div.content > article,
+        section > section.stream > div.content > header:not(.stream-top),
         
-        section.stream > div:not(.content),
-        section.stream section.stream > article,
-            
-        
-        .stream section.stream > div.content > div:not(.content),
         .stream section.stream > div.content > nav,
         .stream section.stream > div.content > span,
         .stream section.stream > div.content > article,
         .stream section.stream > div.content > header:not(.stream-top),
         
-        
-        section > section.stream > div.content > div:not(.content),
-        section > section.stream > div.content > nav,
-        section > section.stream > div.content > span 
-        section > section.stream > div.content > article,
-        section > section.stream > div.content > header:not(.stream-top)
+        .sidebar > *:not(.custom-sidebar, .conversation-list, .ban-alert),
+        .sidebar > aside > section:not([id])
         {
-            if(dev) { border: 3px solid red!important; }
-            else { display: none!important; }
+            display: block!important;
+            height: 0px!important;
+            max-height: 0px!important;
+            overflow: hidden!important;
+            opacity: 0.01!important;
+            user-select: none!important;
+            pointer-events: none!important;
         }
         
+        section.block-alert
+        {
+            display: none;
+            border: 20px solid red!important;
+        }
+        
+        /* NIEKTÓRYCH NAPISÓW "REKLAMA" NIE DA SIĘ USUNĄĆ */
+        [data-v-2d139c94]:before,
+        [data-v-30e10813]:before
+        {
+            content: "Wykop bez reklam - wejdź na www.wykopx.pl";
+            text-transform: none;
+        }
+    
         
         
-        
+        .mgid-platform,
+        .pub-slot-wrapper,
+        div.content + nav,
+        aside:has(.pub-slot-wrapper),
+        /* reklama lidl tylko na wykop.pl/moj/ */
+        section[data-label="ad: top"],
+        div.main-content > main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.register.observer.active,
+        div.main-content > main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.content.observer.active
+        {
+            if(dev) { border: 3px solid darkviolet!important; }
+            else { display: none!important; min-height: 0px!important; }
+        }
+
         .pub-slot-wrapper:has(section.premium-pub.link-block)
         { 
             display: flex!important;
@@ -6165,8 +6258,8 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     }
 
 
- 
-    
+
+
     
     /* 
        .selected
@@ -6175,10 +6268,11 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     */
     if(homepageSelectedForYouHide == 1)
     {
-        section.stream section.selected
-        { 
+        section.stream section.selected,
+        aside.left-panel ul li.selected
+        {
             display: none!important;
-        }        
+        }
     }
     else
     {
@@ -6225,7 +6319,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     
     
 
-    
+
 
 
 
@@ -7672,17 +7766,21 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
  
     
     
+        
+    /* UKRYWAJ WPISY ZE SPAMEM Z WORDZIEL.PL */
+    if(wordzielHide == 1)
+    {
+        main.main > section > div.content > section:is(.microblog-page) > section section.stream > div.content > section.entry:not(.own):not(.reply):has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper a:is( [href^="/tag/35"], [href^="/tag/36"], [href^="/tag/37"], [href^="/tag/38"], [href^="/tag/39"], [href="https:\/\/wordziel.pl\/"], [href="https:\/\/www.flagle.io\/"]))
+        {
+            display: none!important;
+        }
+    }
     
     
     
     
     
-    
-    
-    
-    
-    
-    
+
     
     
     
@@ -7874,9 +7972,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     }
     
     
-    
-    
-    
+
     
     
     
@@ -10664,17 +10760,12 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         
         // domyślnie włączone także w Wykop XS
     */
-    if(fixScrollingIssueWithAdBlock == 1 || adsGDPRAlertHide == 1)
+    if(adsGDPRAlertHide == 1)
     {
-        body
-        {
-            overflow: initial!important;
-        } 
-        body > div[class^="app_gdpr"] 
-        {
-            display: none!important;;
-        }
-    } 
+        body > div[class^="app_gdpr"] { display: none!important; }
+    }
+    body { overflow: initial!important; } 
+    
     
     
     
@@ -10739,7 +10830,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     {
         display: grid;
         
-        grid-template-columns: calc(var(--avatarSize) + 2 * var(--sexBarBorderWidth) + 2 * var(--sexBarPadding)) auto;
+        grid-template-columns: auto 1fr;
         grid-template-rows: 1fr;
         grid-template-areas: "divleft  divright";
         
@@ -10747,9 +10838,9 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         min-height: calc(var(--avatarSize) + 2 * var(--sexBarBorderWidth) + 2 * var(--sexBarPadding));
         max-height: 100%!important;
         column-gap: 10px; 
-        justify-content: stretch!important; /* calosc grid */
+        justify-content: start!important; /* calosc grid */
         align-content: stretch!important;
-        justify-items: center!important;
+        justify-items: start!important;
         align-items: center!important;
     }
     *:not(.entries) > section.entry header:has(a.avatar) > *
@@ -15700,12 +15791,27 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             }  
         }
         
+        // UKRYCIE PRZYCISKU Hity
+        if(mobileNavBarHitsButtonHide == 1)
+        {
+            section.is-mobile nav.mobile-navbar[class] > ul > li.hits { display: none!important; } 
+        }
+        
         // UKRYCIE PRZYCISKU Mikroblog
         if(mobileNavBarMicroblogButtonHide == 1)
         {
             section.is-mobile nav.mobile-navbar[class] > ul > li.microblog { display: none!important; } 
         }
-
+        // UKRYCIE PRZYCISKU "dodaj nowe znalezisko"
+        if(mobileNavBarAddNewLinkButtonHide == 1)
+        {
+            section.is-mobile nav.mobile-navbar[class] > ul > li.add { display: none!important; } 
+        }
+        
+        
+        
+        
+        
         
         
         
@@ -18449,54 +18555,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     } 
     
     
-    if(blockRumun == 1) /* anty rumun */
-    {
-        section.link-block:has(a[href$="c20m1"]),
-        section.link-block:has(a[href$="skanmalamute"]),
-        section.link-block:has(a[href$="erouskoala"]),
-        section.link-block:has(a[href$="rashjaguar"]),
-        section.link-block:has(a[href$="djackrabbit"]),
-        section.link-block:has(a[href$="antkangaroo"]),
-        section.link-block:has(a[href$="fiddlercrab"]),
-        section.link-block:has(a[href$="nrhinoceros"]),
-        section.link-block:has(a[href$="neralhogget"]),
-        section.link-block:has(a[href$="yblackrhino"]),
-        section.link-block:has(a[href$="americanratsnake"]),
-        section.link-block:has(a[href$="siveflawedcanine"]),
-        section.link-block:has(a[href$="edlabradorretriever"]),
-        section.link-block:has(a[href$="nfithoneybadger"]),
-        section.link-block:has(a[href$="fensivegadwall"]),
-        section.link-block:has(a[href$="ighornsheep"]),
-        section.link-block:has(a[href$="ntialangelfish"]),
-        section.link-block:has(a[href$="yhamadryad"]),
-        section.link-block:has(a[href$="motegrizzlybear"]),
-        section.link-block:has(a[href$="flyinglemur"]),
-        section.link-block:has(a[href$="mireddoe"]),
-        section.link-block:has(a[href$="iticallark"]),
-        section.link-block:has(a[href$="likelyboar"]),
-        section.link-block:has(a[href$="ticallark"]),
-        section.link-block:has(a[href$="rownslimcalf"]),
-        section.link-block:has(a[href$="igidcrocodile"]),
-        section.link-block:has(a[href$="tjapanesebeetle"]),
-        section.link-block:has(a[href$="branthorsefly"]),
-        section.link-block:has(a[href$="antrumpetfish"]),
-        section.link-block:has(a[href$="americantoad"]),
-        section.link-block:has(a[href$="ilingkawala"]),
-        section.link-block:has(a[href$="ticblackbuck"]),
-        section.link-block:has(a[href$="ricanbobtail"]),
-        section.link-block:has(a[href$="leflycatcher"]),
-        section.link-block:has(a[href$="dorretriever"])
-        section.link-block:has(a[href*="ibledisastrous"])
-        section.link-block:has(a[href*="ndheartedablela"])
-        {   
-            box-sizing: content-box;
-            overflow: hidden;
-            border: 10px solid rgb(208, 110, 24);
-            animation: hideBlockedLink 3s linear 2s 1 normal forwards;
-            opacity: 0.69!important;
-            if(blackListTesting == 0) { display: none!important; } 
-        } 
-    } 
+
     
   
  
@@ -20434,1049 +20493,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     
     
     
-    
-    
-    
-    /* -------- PLUSY I MINUSY ---- */
-    if(minusesHide == 1 && plusesHide == 1 && voteButtonHide == 1)
-    {
-        plusesAndMinusesTransition = 0
-        votingExplosionEnable = 0
-        checkEntryPlusesWhenVoting = 0
-        checkEntryPlusesEnable = 0
-        checkEntryPlusesPerHour = 0
-        checkEntryCommentsPerHour = 0
-        checkEntryPlusesForVotingGame = 0
-        plusesAndMinusesColorsEnable = 0
-
-        
-        section.rating-box,
-        section.related-rating-box
-        {
-            display: none!important;
-        }
-    }
-    else
-    {
-        
-        section.stream:has(> div.content > section.entry),  /* section.rating-box */
-        section.related-rating-box,
-        section.entries-sidebar
-        {
-
-            --plusesMinusesSize:                                         plusesMinusesSize;
-            --plusesMinusesGap:                                          calc(var(--plusesMinusesSize) / 2 + 5px);
-
-            --colorNumberZero:                                           var(--gullGray);                  // rgb(149 169 187)
-
-            --colorPlusesCount:                                          var(--apple);                     // rgb(51 153 51)     
-            --colorPlusesCountHover:                                     var(--colorPlusesCount);        
-            --colorPlusesCountVoted:                                     var(--colorPlusesCountHover);
-            --colorPlusesCountTransition:                                var(--colorPlusesCount);
-            --colorPlusesCountVotedHover:                                var(--colorPlusesCountVoted); 
-            
-            --colorPlusesButton:                                         var(--colorPlusesCount);          // rgb(130 202 156)
-            --colorPlusesButtonHover:                                    var(--colorPlusesCountHover);     // default: var(--apple);    
-            --colorPlusesButtonVoted:                                    var(--colorPlusesButton);      
-            --colorPlusesButtonVotedHover:                               var(--colorPlusesCountVotedHover);  
-
-            --colorMinusesCount:                                         var(--valencia);                   // rgb(237 28 36)
-            --colorMinusesCountHover:                                    var(--colorMinusesCount);         
-            --colorMinusesCountVoted:                                    var(--colorMinusesCountHover);     
-            --colorMinusesCountVotedTransition:                          var(--colorMinusesCount);
-            --colorMinusesCountVotedHover:                               var(--colorMinusesCountVoted);  
-            
-            --colorMinusesButton:                                        var(--colorMinusesCount);    
-            --colorMinusesButtonHover:                                   var(--colorMinusesCountHover);           
-            --colorMinusesButtonVoted:                                   var(--colorMinusesButton);     
-            --colorMinusesButtonVotedHover:                              var(--colorMinusesCountVotedHover);     
-            
-            --colorVotedPlusSign:                                        var(--whitish);                    // kolor plusa na tle zaplusowanego przycisku
-            --colorVotedMinusSign:                                       var(--colorVotedPlusSign);
-        }
-
-
-
-        /* zmiana kolorystyki plusów i przycisków do plusowania */
-        if(plusesAndMinusesColorsEnable == 1)
-        {
-            /* plusy w sidebarze */
-            section.entries-sidebar > div.content > section.entries > section.entry > header > div.right > div > span.plus
-            {
-                color: var(--colorPlusesCount);
-            } 
-            
-            section[class]:is(.rating-box, .related-rating-box) > ul > li[class].plus,
-            section[class]:is(.dummyClass, .rating-box, .related-rating-box) > ul > li[class].plus:before
-            {
-                color: var(--colorPlusesCount);
-            }
-            section[class]:is(.rating-box, .related-rating-box):hover > ul > li[class].plus,
-            section[class]:is(.dummyClass, .rating-box, .related-rating-box):hover > ul > li[class].plus:before
-            {
-                color: var(--colorPlusesCountHover);
-            }
-            
-            section[class]:is(.rating-box, .related-rating-box):has(> div.buttons > button.plus.voted) > ul > li[class].plus,
-            section[class]:is(.dummyClass, .rating-box, .related-rating-box):has(> div.buttons > button.plus.voted) > ul > li[class].plus:before
-            {
-                color: var(--colorPlusesCountVoted);
-            }
-            section[class]:is(.rating-box, .related-rating-box):has(> div.buttons > button.plus.voted):hover > ul > li[class].plus,
-            section[class]:is(.dummyClass, .rating-box, .related-rating-box):has(> div.buttons > button.plus.voted):hover > ul > li[class].plus:before
-            {
-                color: var(--colorPlusesCountVotedHover);
-            }
-            
-            section[class]:is(.rating-box, .related-rating-box) > ul > li[class].minus,
-            section[class]:is(.dummyClass, .rating-box, .related-rating-box) > ul > li[class].minus:before
-            {
-                color: var(--colorMinusesCount);
-            }
-            
-            section[class]:is(.rating-box, .related-rating-box):hover > ul > li[class].minus,
-            section[class]:is(.dummyClass, .rating-box, .related-rating-box):hover > ul > li[class].minus:before
-            {
-                color: var(--colorMinusesCountHover);
-            }
-            section[class]:is(.rating-box, .related-rating-box):has(> div.buttons > button.minus.voted) > ul > li[class].minus,
-            section[class]:is(.dummyClass, .rating-box, .related-rating-box):has(> div.buttons > button.minus.voted) > ul > li[class].minus:before
-            {
-                color: var(--colorMinusesCountVoted);
-            }
-            section[class]:is(.rating-box, .related-rating-box):has(> div.buttons > button.minus.voted):hover > ul > li[class].minus,
-            section[class]:is(.dummyClass, .rating-box, .related-rating-box):has(> div.buttons > button.minus.voted):hover > ul > li[class].minus:before
-            {
-                color: var(--colorMinusesCountVotedHover);
-            }
-            
-            
-
-            
-            
-
-
-            /* PRESET SKÓRKI PLUSÓW */
-            if(plusesAndMinusesStyle == "okragle")
-            {
-                voteButtonBorderRadius = 100%;
-            }
-            else if(plusesAndMinusesStyle == "wykop10")
-            {
-                if(plusesColor == "domyslny")
-                {
-                    plusesColor = "wykop10";
-                    minusesColor = "wykop10"; 
-                }
-                
-                voteButtonBorderRadius = 0%;
-                prefixBeforePlusesCount = "plus"
-                plusesMinusesSize = 20px;
-
-            }
-            else if(plusesAndMinusesStyle == "wykop20")
-            {
-                if(plusesColor == "domyslny")
-                {
-                    plusesColor = "wykop20";
-                    minusesColor = "wykop20";
-                }
-                voteButtonBorderRadius = 20%;
-                prefixBeforePlusesCount = "brak";
-                prefixBeforeMinusesCount = "minus";
-                plusesMinusesSize = 24px;
-            }
-
-            
-            
-            
-            /* PRESET KOLORYSTYKI PLUSÓW */
-            if(plusesColor == "wykop20")
-            {
-                section.stream:has(> div.content > section.entry),  /* section.rating-box, */
-                section.related-rating-box,
-                section.entries-sidebar
-                {       
-                    --colorPlusesCount:                                          var(--apple);        
-                }
-                [data-night-mode] section.rating-box,
-                [data-night-mode] section.related-rating-box,
-                [data-night-mode] section.entries-sidebar
-                {       
-                    --colorPlusesCount:                                          #71be71;   // #39a684;         
-                    --colorVotedPlusSign:                                        #222225;
-                }
-            }
-            else if(plusesColor == "wykop10")
-            {
-                section.stream:has(> div.content > section.entry),  /* section.rating-box, */
-                section.related-rating-box,
-                section.entries-sidebar
-                {
-                    --colorPlusesCount:                                          rgb(59, 145, 95);
-                }
-                /* TRYB NOCNY */
-                [data-night-mode] section.stream:has(> div.content > section.entry),  /* section.rating-box, */
-                [data-night-mode] section.related-rating-box,
-                [data-night-mode] section.entries-sidebar
-                {       
-                    --colorPlusesCount:                                         rgb(57, 166, 132);
-                }
-            }
-            else if(plusesColor == "pomaranczowy")
-            {
-                section.stream:has(> div.content > section.entry),  /* section.rating-box, */
-                section.related-rating-box,
-                section.entries-sidebar
-                {
-                    --colorPlusesCount:                                         orange;
-                }
-            }
-            else if(plusesColor == "zloty")
-            {
-                section.stream:has(> div.content > section.entry),  /* section.rating-box, */
-                section.related-rating-box,
-                section.entries-sidebar
-                {
-                    --colorPlusesCount:                                         goldenrod;
-                }
-            }
-            
-            
-            /* KOLORYSTYKA MINUSÓW */
-            if(minusesColor == "wykop20")
-            {
-                section.stream:has(> div.content > section.entry),  /* section.rating-box, */
-                section.related-rating-box,
-                section.entries-sidebar
-                {       
-                    --colorMinusesCount:                                        var(--valencia);         
-                }
-                [data-night-mode] section.rating-box,
-                [data-night-mode] section.related-rating-box,
-                [data-night-mode] section.entries-sidebar
-                {       
-                    --colorMinusesCount:                                         #e86860; // #ff4136;
-                    --colorVotedPlusSign:                                        #222225;
-                }
-            }
-            else if(minusesColor == "wykop10")
-            {
-                section.stream:has(> div.content > section.entry),  /* section.rating-box, */
-                section.related-rating-box,
-                section.entries-sidebar
-                {
-                    --colorMinusesCount:                                         rgb(192, 57, 43);
-                }
-                /* TRYB NOCNY */
-                [data-night-mode] section.stream:has(> div.content > section.entry),  /* section.rating-box, */
-                [data-night-mode] section.related-rating-box,
-                [data-night-mode] section.entries-sidebar
-                {       
-                    --colorMinusesCount:                                         rgb(255, 65, 54);
-                }
-            }
-            else if(minusesColor == "pomaranczowy")
-            {
-                section.stream:has(> div.content > section.entry),  /* section.rating-box, */
-                section.related-rating-box,
-                section.entries-sidebar
-                {
-                    --colorMinusesCount:                                         orange;
-                }
-            }
-            else if(minusesColor == "szary")
-            {
-                section.stream:has(> div.content > section.entry),  /* section.rating-box, */
-                section.related-rating-box,
-                section.entries-sidebar
-                {
-                    --colorMinusesCount:                                         gray;
-                }
-            }
-            
-        }
-        
-        
-        
-        
-        section.related-rating-box
-        {
-            display: flex!important;
-            width: max-content!important;
-            flex-wrap: nowrap;
-        }
-        section.rating-box
-        {
-            display: grid!important;
-            grid-template-columns: auto;
-            grid-template-rows: auto auto;
-            grid-template-areas:    "votescount" "votesperhour"; 
-            row-gap: 3px;
-        }
-
-        /* UKRYWANIE PRZYCISKOW DO PLUSOWANIA I MINUSOWANIA */
-        if(voteButtonHide == 0)
-        {
-            section.rating-box:has(> div.buttons)
-            {
-                grid-template-columns: auto auto;
-                grid-template-areas:    "votescount votesbuttons" "votesperhour votesperhour"; 
-            }
-        }
-        
-
-
-        /* LICZBY PLUSÓW I MINUSÓW */
-        if(minusesHide == 1 && plusesHide == 1)
-        {
-            section:is(.rating-box, .related-rating-box) > ul
-            {
-                display: none!important;
-            }
-        }
-        else
-        {
-            section:is(.rating-box, .related-rating-box) > ul
-            {
-                display: flex;
-                grid-area: votescount;
-                justify-content: end;
-                gap: var(--plusesMinusesGap);
-            }
-
-            section:is(.rating-box, .related-rating-box) > ul > li
-            {
-                display: flex;
-                position: relative;
-                margin: 0px!important;
-                font-size: calc(var(--plusesMinusesSize) - 5px)!important;
-                // transition: none!important;
-            }
-            
-            // remove wrapping number pluses when long author nickname
-            section.entries-sidebar > div.content > section.entries > section.entry > header > div.right > div > span.plus
-            {
-                min-width: max-content!important;
-            } 
-                
-            // liczba plusów w sidebarze
-            if(plusesMinusesSizeInSidebar == 1)
-            {
-                section.entries-sidebar > div.content > section.entries > section.entry > header > div.right > div > span.plus
-                {
-                    font-size: "calc(%s - 7px)" % plusesMinusesSize !important;
-                    font-size: calc(var(--plusesMinusesSize) - 5px)!important;
-                } 
-            }
-
-
-            if(plusesAndMinusesTransition == 1)
-            {
-                section.rating-box > ul li,
-                section.related-rating-box > ul li
-                {
-                    transition: all 0.5s ease-in-out 0.1s!important;
-                } 
-                section.rating-box div.buttons button,
-                section.related-rating-box div.buttons button
-                {
-                    transition: all 0.4s ease-in-out 0.1s!important;
-                } 
-                section.rating-box .buttons button:hover,
-                section.related-rating-box .buttons button:hover
-                {
-                    transition: all 0.2s ease-in-out 0s!important;
-                }
-            }
-    
-    
-                    
-            if(plusesHide == 1)
-            {
-                section:is(.rating-box, .related-rating-box) > ul > li.plus
-                {
-                    display: none!important;
-                }
-            }
-            if(minusesHide == 1)
-            {
-                section:is(.rating-box, .related-rating-box) > ul > li.minus
-                {
-                    display: none!important;
-                }
-            }
-            
-            if(plusesZeroHide == 1)
-            {
-                section:is(.rating-box, .related-rating-box) > ul > li.zero
-                {
-                    display: none!important;
-                }
-            }
-
-            
-            
-            section:is(.rating-box, .related-rating-box) > ul > li.plus:before         // znak przed liczbą plusów a dla wlaczonego wxs takze sama liczba plusow
-            {
-                font-size: calc(var(--plusesMinusesSize) - 5px)!important;
-            }
-            section:is(.rating-box, .related-rating-box) > ul > li.minus:before         // znak przed liczbą minusów a dla wlaczonego wxs takze liczba minusow
-            {
-                font-size: calc(var(--plusesMinusesSize) - 5px)!important;
-                background: none!important;
-            }
-
-
-            
-            
-            if(voteButtonHide == 0 && (plusesHide == 0 || minusesHide == 0))
-            {
-                /* ZNALEZISKO - UKRYWANIE PLUSÓW I MINUSÓW PRZED ZAGŁOSOWANIEM */
-                if (hidePlusesAndMinusesBeforeVoting == 1)
-                {
-                    div.main-content > main.main > section > div.content > section.link-page > section.link > section.comments > section.stream.link-comments > div.content section.entry > article > header > div.right > div > section.rating-box > ul:has(+ div.buttons button:not(.voted))
-                    {
-                        if (removeAllTransitions == 0) { transition: visibility 0s linear 4s, opacity 1s linear 1.3s; }
-                        visibility: hidden;
-                        opacity: 0;
-                    }
-                    div.main-content > main.main > section > div.content > section.link-page > section.link > section.comments > section.stream.link-comments > div.content section.entry > article > header > div.right > div > section.rating-box > ul:has(+ div.buttons button.voted)
-                    {
-                        if (removeAllTransitions == 0) { transition: visibility 0s linear 4s, opacity 1s linear 1.3s; }
-                        visibility: visible;
-                        opacity: 1;
-                    }
-                }
-
-                /* MIKROBLOG: UKRYWANIE PLUSÓW PRZED ZAGŁOSOWANIEM */
-                if(hidePlusesBeforeVoting == 1)
-                {
-                    div.main-content > main.main > section > div.content > section:not(.link-page) section.entry > article > header > div.right > div > section.rating-box > ul:has(+ div.buttons button:not(.voted))
-                    {   
-                        if(removeAllTransitions == 0) { transition: visibility 0s linear 4s, opacity 1s linear 1.3s; } 
-                        visibility: hidden;
-                        opacity: 0;
-                    } 
-                    div.main-content > main.main > section > div.content > section:not(.link-page) section.entry > article > header > div.right > div > section.rating-box > ul:has(+ div.buttons button.voted)
-                    {
-                        if(removeAllTransitions == 0) { transition: visibility 0s linear 4s, opacity 1s linear 1.3s; } 
-                        visibility: visible;
-                        opacity: 1;
-                    }
-                }
-            }
-            
-            
-
-            /* plusy i minusy dodawane przez Wykop XS */
-            if(1 == 0 && WykopXSEnabled == 1 && checkEntryPlusesEnable == 1)
-            {
-
-                section.entry[data-wxs_votes_up] section.rating-box > ul > li:not(.zero)
-                {
-                    font-size: 0px!important;
-                }
-                section.entry[data-wxs_votes_up] section.rating-box > ul > li:before
-                {
-                    font-size: calc(var(--plusesMinusesSize) - 5px)!important;
-                }
-
-                section.entry[data-wxs_votes_up] section.rating-box > ul > li.plus:before
-                {
-                    content: var(--votesUp);
-                    /* content: attr(data-wxs_votes_up); */
-                }
-                section.entry[data-wxs_votes_up] section.rating-box > ul > li.minus:before
-                {
-                    content: var(--votesDown);
-                    /* content: attr(data-wxs_votes_down); */
-                }
-
-                if(checkEntryPlusesForVotingGame == 1)
-                {
-                    section.entry[data-wxs_voting_game]:not(.reply) > article > header > div.right > div > section.rating-box > ul > li.plus:before
-                    {
-                        content: var(--votesUpHidden);
-                    }
-                    section.entry[data-wxs_voting_game]:not(.reply) > article > header > div.right > div > section.rating-box:has(div.buttons > button.voted) > ul > li.plus:before
-                    {
-                        content: var(--votesUp);
-                        /* counter-reset: votesUp var(--votesUp); */
-                        /* ntent: counter(votesUp); */
-                    }
-                    section.entry > section.stream > div.content > section.entry:has(.plus):before
-                    {
-                        font-size: 20px;
-                        position: fixed;
-                        top: 50%;
-                        left: 50%;
-                        /* content: attr(data-wxs_votes_up); */
-                        content: var(--votingGameLastDigit);
-                        z-index: 999!important;
-                        transition: 3s all linear 0s;
-                        scale: 1;
-                        opacity: 0;
-                    }
-                    section.entry > section.stream > div.content > section.entry:has(.plus.voted):before
-                    {
-                        scale: 32;
-                        opacity: 0.4;
-                    }
-                    @starting-style
-                    {
-                        section.entry > section.stream > div.content > section.entry:has(.plus):before
-                        {
-                            scale: 1;
-                            opacity: 1;
-                        }
-                    }
-                }
-            }
-            /* Wykop XS wyłączony START */
-            else
-            {
-                if(prefixBeforePlusesCount != "brak")           
-                {
-                    if(prefixBeforePlusesCount == "plus")                                   {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "+"!important;     }}        
-                    else if(prefixBeforePlusesCount == "emoji_up_arrow")                    {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "⬆"!important;     }}        
-                    else if(prefixBeforePlusesCount == "emoji_up_right_arrow")              {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "↗"!important;     }}        
-                    else if(prefixBeforePlusesCount == "emoji_up_left_arrow")               {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "↖"!important;     }}        
-                    else if(prefixBeforePlusesCount == "emoji_right_arrow_curving_up")      {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "⤴"!important;    }}        
-                    else if(prefixBeforePlusesCount == "emoji_heavy_tick")                  {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "✔"!important;  scale: 0.8;   }} 
-                    else if(prefixBeforePlusesCount == "emoji_serce")                       {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "💚"!important; scale: 0.8;   }}        
-                    else if(prefixBeforePlusesCount == "emoji_index_pointing_up")           {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "☝"!important;  scale: 0.8;   }}        
-                    else if(prefixBeforePlusesCount == "emoji_thumbs_up")                   {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "👍"!important;    }}        
-                    else if(prefixBeforePlusesCount == "emoji_backhand_index_pointing_up")  {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "👆"!important;  scale: 0.9;  }}        
-                    else if(prefixBeforePlusesCount == "emoji_upwards_button")              {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "🔼"!important; scale: 0.8;   }}        
-                    else if(prefixBeforePlusesCount == "emoji_plus_sign")                   {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "➕"!important; scale: 0.8;  }}        
-                    else if(prefixBeforePlusesCount == "emoji_red_triangle_pointed_up")     {   section:is(.rating-box, .related-rating-box) > ul li.plus:before  { content: "🔺"!important; scale: 0.8;  }}        
-                }
-                if(prefixBeforeMinusesCount != "minus")           
-                {
-                    section:is(.rating-box, .related-rating-box) > ul li.minus
-                    {
-                        display: block!important;
-                        opacity: 1!important;
-                    }
-                    section:is(.rating-box, .related-rating-box) > ul li.minus:first-letter
-                    { 
-                        opacity: 0!important;
-                        visibility: hidden!important;
-                    }
-                    section:is(.rating-box, .related-rating-box) > ul li.minus:after
-                    {
-                        display: flex!important;
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        transform: translateX(-100%);
-                    }
-                    if(prefixBeforeMinusesCount == "emoji_cross_mark")                       {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 14px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "❌"; scale: 0.8;   }}
-                    else if(prefixBeforeMinusesCount == "emoji_backhand_index_pointing_down"){  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 14px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "👇"; scale: 0.9;    }}      
-                    else if(prefixBeforeMinusesCount == "emoji_thumbs_down")                 {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 16px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "👎";     }}
-                    else if(prefixBeforeMinusesCount == "emoji_downwards_button")            {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "🔽"; scale: 0.8;   }} 
-                    else if(prefixBeforeMinusesCount == "emoji_heavy_tick")                  {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "✔";  scale: 0.8;   }} 
-                    else if(prefixBeforeMinusesCount == "emoji_down_arrow")                  {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "⬇";     }}        
-                    else if(prefixBeforeMinusesCount == "emoji_down_right_arrow")            {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "↘";     }}        
-                    else if(prefixBeforeMinusesCount == "emoji_down_left_arrow")             {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "↙";     }}        
-                    else if(prefixBeforeMinusesCount == "emoji_right_arrow_curving_down")    {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "⤵";     }}        
-                    else if(prefixBeforeMinusesCount == "emoji_minus_sign")                  {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 18px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "➖"; scale: 0.8;   }}        
-                    else if(prefixBeforeMinusesCount == "emoji_red_triangle_pointed_down")   {  section.rating-box { --plusesMinusesGap: calc(var(--plusesMinusesSize) / 2 + 12px); } section:is(.rating-box, .related-rating-box) > ul li.minus:after  { content: "🔻"; scale: 0.8;   }}
-                }
-            }
-            /* Wykop XS wyłączony END */
-        }
-        
-
-        if(voteButtonHide == 1)
-        {
-            section:is(.rating-box, .related-rating-box) div.buttons button
-            {
-                display: none!important;
-            }
-        }
-        else
-        {
-            /* przyciski plusowania i minusowania */
-            section:is(.rating-box, .related-rating-box) div.buttons button
-            {
-                display: flex!important;
-                grid-area: votesbuttons;
-                width: var(--plusesMinusesSize)!important;
-                height: var(--plusesMinusesSize)!important;
-                voteButtonBorderRadius = voteButtonBorderRadius / 2; /* tylko po to, żeby w ustawieniach było od 0% do 100%, a nie do 50% */
-                border-radius: voteButtonBorderRadius !important;
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button:after
-            {
-                content: none!important;
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button[class]:before
-            {
-                font-size: var(--plusesMinusesSize);
-                width: 100%;
-                height: 100%;
-                font-weight: bolder;
-                position: initial!important;
-                position: relative!important;
-                justify-content: center;
-                align-items: center;
-                top: 0; /* -1rem; */
-                left: 0;
-                opacity: 1;
-                display: flex;
-
-            }
-            /* plus button */
-            section[class]:is(.rating-box, .related-rating-box) div.buttons button.plus[class]
-            {
-                border-color: var(--colorPlusesButton);
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before
-            {
-                content: "+";
-                color: var(--colorPlusesButton);
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:hover
-            {
-                color: var(--colorPlusesButtonHover);
-                border-color: var(--colorPlusesButtonHover);
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:hover:before
-            {
-                color: var(--colorPlusesButtonHover);
-            }
-            /* plus button zaplusowany */
-            section[class]:is(.rating-box, .related-rating-box) div.buttons button.plus.voted[class]
-            {
-                border-color: var(--colorPlusesButtonVoted);
-                background-color: var(--colorPlusesButtonVoted);
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button.plus.voted[class]:before
-            {
-                color: var(--colorVotedPlusSign);
-            }
-            section[class]:is(.rating-box, .related-rating-box) div.buttons button.plus.voted[class]:hover
-            {
-                border-color: var(--colorPlusesButtonVotedHover);
-                background-color: var(--colorPlusesButtonVotedHover);
-            }
-            /*section:is(.rating-box, .related-rating-box) div.buttons button.plus.voted[class]:hover:before
-            {
-                color: var(--colorVotedPlusSign);
-            }*/
-            
-            
-            /* minus button */
-            section[class]:is(.rating-box, .related-rating-box) div.buttons button.minus[class]
-            {
-                border-color: var(--colorMinusesButton);
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before
-            {
-                content: "−";
-                color: var(--colorMinusesButton);
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:hover
-            {
-                color: var(--colorMinusesButtonHover);
-                border-color: var(--colorMinusesButtonHover);
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:hover:before
-            {
-                color: var(--colorMinusesButtonHover);
-            }
-            
-            /* minus button zminusowany */
-            section[class]:is(.rating-box, .related-rating-box) div.buttons button.minus.voted[class]
-            {
-                border-color: var(--colorMinusesButtonVoted);
-                background-color: var(--colorMinusesButtonVoted);
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button.minus.voted[class]:before
-            {
-                color: var(--colorVotedMinusSign);
-            }
-            section[class]:is(.rating-box, .related-rating-box) div.buttons button.minus.voted[class]:hover
-            {
-                border-color: var(--colorMinusesButtonVotedHover);
-                background-color: var(--colorMinusesButtonVotedHover);
-            }
-            section:is(.rating-box, .related-rating-box) div.buttons button.minus.voted[class]:hover:before
-            {
-                color: var(--colorVotedMinusSign);
-            }
-            
-            
-            
-            if(voteButtonPlusEmoji != "plus")                        
-            {
-                if(voteButtonPlusEmoji == "emoji_up_arrow")                         {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "⬆"; scale: 0.8;  }}        
-                else if(voteButtonPlusEmoji == "emoji_up_right_arrow")              {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "↗"; scale: 0.8;   }}        
-                else if(voteButtonPlusEmoji == "emoji_up_left_arrow")               {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "↖"; scale: 0.8;   }}        
-                else if(voteButtonPlusEmoji == "emoji_right_arrow_curving_up")      {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "⤴"; scale: 0.8;  }}        
-                else if(voteButtonPlusEmoji == "emoji_heavy_tick")                  {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "✔"; scale: 0.9;  }}  
-                else if(voteButtonPlusEmoji == "emoji_serce")                       {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "💚"; scale: 0.7;   }}        
-                else if(voteButtonPlusEmoji == "emoji_index_pointing_up")           {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "☝"; scale: 0.7;   }}        
-                else if(voteButtonPlusEmoji == "emoji_thumbs_up")                   {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "👍"; scale: 0.7;    }}        
-                else if(voteButtonPlusEmoji == "emoji_backhand_index_pointing_up")  {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "👆"; scale: 0.7;   }}        
-                else if(voteButtonPlusEmoji == "emoji_upwards_button")              {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "🔼"; scale: 0.9;    }}         
-                else if(voteButtonPlusEmoji == "emoji_plus_sign")                   {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "➕"; scale: 0.6;  }}        
-                else if(voteButtonPlusEmoji == "emoji_red_triangle_pointed_up")     {   section:is(.rating-box, .related-rating-box) div.buttons button.plus[class]:before  { content: "🔺"; scale: 0.7;   }}        
-            }
-            if(voteButtonPlusNoBorder == 1)
-            {
-                section:is(.rating-box, .related-rating-box) div.buttons button.plus
-                {
-                    border-width: 0px!important;
-                }
-            }
-            if(voteButtonMinusEmoji != "minus")                        
-            {
-                if(voteButtonMinusEmoji == "emoji_down_arrow")                         {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "⬇";  scale: 0.8;  }}        
-                else if(voteButtonMinusEmoji == "emoji_down_right_arrow")              {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "↘";  scale: 0.8;   }}        
-                else if(voteButtonMinusEmoji == "emoji_down_left_arrow")               {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "↙";  scale: 0.8;   }}        
-                else if(voteButtonMinusEmoji == "emoji_right_arrow_curving_down")      {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "⤵";  scale: 0.8;  }}        
-                else if(voteButtonMinusEmoji == "emoji_heavy_tick")                    {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "✔";  scale: 0.9;  }}  
-                else if(voteButtonMinusEmoji == "emoji_cross_mark")                    {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "❌"; scale: 0.6;   }}      
-                else if(voteButtonMinusEmoji == "emoji_backhand_index_pointing_down")  {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "👇"; scale: 0.7;   }}      
-                else if(voteButtonMinusEmoji == "emoji_thumbs_down")                   {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "👎"; scale: 0.7;   }}      
-                else if(voteButtonMinusEmoji == "emoji_downwards_button")              {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "🔽"; scale: 0.9;    }}         
-                else if(voteButtonMinusEmoji == "emoji_minus_sign")                    {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "➖"; scale: 0.6;  }}        
-                else if(voteButtonMinusEmoji == "emoji_red_triangle_pointed_down")     {   section:is(.rating-box, .related-rating-box) div.buttons button.minus[class]:before  { content: "🔻"; scale: 0.7;   }}        
-            }
-            if(voteButtonMinusNoBorder == 1)
-            {
-                section:is(.rating-box, .related-rating-box) div.buttons button.minus
-                {
-                    border-width: 0px!important;
-                }
-            }
-        }
-
-        
-
-
-
-
-
-
-
-        /* RATING BOX INTERSECTING */
-        .notIntersecting
-        {
-        }
-
-        .isIntersecting
-        {    
-        }
-        section.link-block > section
-        {
-            position: relative;
-        }
-        /* 🍤💠🔄🔷🔶 */
-        /*
-        section.link-block.isIntersecting > section::after,
-        section.entry.isIntersecting::after
-        {
-            content: "🔷"; 
-            rotate: var(--angle);
-            transform: scaleX(-1);
-
-            animation-name: isIntersectingAnimation, rotatingAnimation!important;
-            animation-duration: 6s, 1s!important;
-            animation-timing-function: ease-in, linear!important;
-            animation-iteration-count: infinite, infinite!important;
-
-            font-size: 14px;
-
-            position: absolute;
-            right: 0px;
-            top: 0px;
-        }
-        */
-
-        @keyframes isIntersectingAnimation
-        {
-            0%      { opacity: 0; scale: 0.3; }
-            50%     { opacity: 1; scale: 0.5; } 100%    { opacity: 0; scale: 0.3}
-        }
-        @keyframes fadeOutAnimation
-        {
-            0%      { scale: 1.0; opacity: 0.8; } 10%     { scale: 1.3; opacity: 1;   }
-            70%     { scale: 1;   opacity: 1;   }
-            90%     { scale: 0.8; opacity: 0.6; } 100%    { scale: 0.8; opacity: 0;   }
-        } 
-        @keyframes slideUpAnimation
-        {
-            0%      { translate: 0px 10px; }
-            20%     { translate: 0px 0px; }
-            70%     { translate: 0px 0px; } 100%    { translate: 0px -10px; }
-        } 
-        @keyframes slideDownAnimation
-        {
-            0%      { translate: 0px -10px; }
-            20%     { translate: 0px 0px; }
-            70%     { translate: 0px 0px; } 100%    { translate: 0px 10px; }
-        } 
-
-        
-        
-        /* ANIMACJA WYKOPYWANYCH ZNALEZISK */
-        @keyframes linkVotesChangedBackgroundAnimation 
-        {
-            0%      { background: var(--steelBluish); }
-            25%     { background: var(--orange);      }
-            50%     { background: goldenrod;         }
-            75%     { background: var(--orange);      } 100%    { background: var(--steelBluish); }
-        }
-        @keyframes linkVotesChangedColorAnimation 
-        {
-            0%      { font-size: 14px;     color: var(--orange); }
-            25%     {                          }
-            50%     { font-size: 14.5px;   color: goldenrod;    }
-            75%     {                           } 100%    { font-size: 14px;     color: var(--orange); }
-        }
-        section[class] section.link-block.plusesAdded > section > aside > section.vote-box > div.dig > p
-        {
-            animation-delay: 0s;
-            animation-direction: normal;
-            animation-duration: 1.4s;
-            animation-fill-mode: both;
-            animation-iteration-count: 1;
-            animation-name: linkVotesChangedBackgroundAnimation;
-            animation-play-state: running;
-            animation-timeline: auto;
-            animation-timing-function: ease-in-out;
-        }
-        section[class] section.link-block.plusesAdded > section > aside > section.vote-box > div.dig > p > span
-        {
-            animation-delay: 0s;
-            animation-direction: normal;
-            animation-duration: 1.4s;
-            animation-fill-mode: both;
-            animation-iteration-count: 1;
-            animation-name: linkVotesChangedColorAnimation;
-            animation-play-state: running;
-            animation-timeline: auto;
-            animation-timing-function: ease-in-out;
-        }
-        
-        
-        
-        /* ANIMACJA PLUSOWANYCH WPISÓW I KOMENTARZY */
-        @keyframes plusesAddedAnimation 
-        {
-            0%      { opacity: 0.3;  color: var(--colorPlusesCount);                }
-            20%     { opacity: 1;    color: var(--colorPlusesCountTransition);      }
-            70%     { opacity: 0.3;  color: var(--colorPlusesCountTransition);      } 100%    { opacity: 0.1;  color: var(--colorPlusesCountVoted);           }
-        }
-        article > header > div.right > div > section.rating-box:after
-        {
-            font-size: 10px;
-            animation-duration: 4s;
-            position: absolute;
-            top: -15px;
-            right: 32px;
-            animation-fill-mode: forwards;
-        }
-        
-        section[class] section.entry.plusesAdded > article > header > div.right > div > section.rating-box > ul > li.plus[class]
-        {
-            color: white;
-            animation-delay: 0s;
-            animation-direction: normal;
-            animation-duration: 2s;
-            animation-fill-mode: both;
-            animation-iteration-count: infinite;
-            animation-name: plusesAddedAnimation;
-            animation-play-state: running;
-            animation-timeline: auto;
-            animation-timing-function: ease-in-out;
-        }
-
-        section[class] section.entry.plusesAdded > article > header > div.right > div > section.rating-box:after
-        {
-            animation-name: fadeOutAnimation, slideUpAnimation;
-            color: ; var(--colorPlusesCountVoted)
-            content: var(--plusesAdded);
-        }
-        section[class] section.entry.plusesRemoved > article > header > div.right > div > section.rating-box:after
-        {
-            animation-name: fadeOutAnimation, slideDownAnimation;
-            color: var(--colorMinusesCountVoted)
-            content: var(--plusesRemoved);
-        }
-        section[class] section.entry.minusesAdded > article > header > div.right > div > section.rating-box:after
-        {
-            color: var(--colorMinusesCountVoted)
-            content: var(--minusesAdded);
-        }
-        section[class] section.entry.minusesRemoved > article > header > div.right > div > section.rating-box:after
-        {
-            color: var(--colorNumberZero)
-            content: var(--minusesRemoved);
-        }
-
-        
-        
-        
-        /* VOTES PER MINUTE WE WPISACH I KOMENTARZACH */
-        section:is(.vote-box, .rating-box) .wxs_votes_per_hour
-        {
-           display: none;
-        }
-        
-        
-            
-        section.rating-box .wxs_votes_per_hour[data-wxs_votes_per_hour],
-        section:is(.vote-box, .rating-box) .wxs_votes_per_hour[data-wxs_votes_per_hour]
-        {
-            display: flex;
-            grid-area: votesperhour;
-            justify-content: end;
-
-            font-size: 10px;
-            font-weight: bolder;
-            color: var(--colorPlusesCount);
-
-            background-color: rgba(0, 0, 0, 0.2);
-            padding: 3px 5px;
-            width: 100%;
-        }
-        
-        section.vote-box .wxs_votes_per_hour
-        {
-            color: white!important;
-            justify-content: center!important;
-            font-weight: normal!important;
-            margin-top: 3px;
-        }
-
-        section.wxs_minimized .wxs_votes_per_hour
-        {
-            display: none!important;
-        }
-
-        section:is(.vote-box, .rating-box) .wxs_votes_per_hour[data-wxs_votes_per_hour^="+0"],
-        section:is(.dummyClass, .vote-box, .rating-box) .wxs_votes_per_hour[data-wxs_votes_per_hour^="0"]
-        {
-            display: none;
-        }
-
-        section:is(.vote-box, .rating-box) .wxs_votes_per_hour[data-wxs_votes_per_hour]::before
-        {
-            content: attr(data-wxs_votes_per_hour);
-        }
-
-
-        
-        /* VOTINGEXPLOSION : animacja plusowania Wykop XS */
-        section.entry article > header 
-        {
-            position: relative;
-        }
-        section.rating-box
-        {
-            position: relative;
-            z-index: 1; /* rating box zindex */
-        }
-        section.rating-box > div.buttons > button.minus
-        {
-            margin-left: 14px;
-        }
-
-        if(votingExplosionEnable == 1)
-        {
-            section.rating-box
-            {
-                --explosionDelay: 0s;
-                --explosionDuration: 1300ms;
-                --explosionTiming: linear;
-            }
-
-            .wykopxs_vote_animation
-            {
-                opacity: 0;
-                cursor: pointer;
-                font-size: 12px;
-                font-weight: bolder;
-                position: absolute;
-                top: -10px;
-                animation-name: explodePluses;
-                animation-delay: var(--explosionDelay);
-                animation-duration: var(--explosionDuration);
-                animation-timing-function: var(--explosionTiming);
-            }
-
-
-            /* plusy */
-            .wykopxs_vote_animation.wykopxs_green
-            {
-                color: var(--colorPlusesCountVoted)!important;
-            /*  text-shadow: 0px 0px 2px var(--colorPlusesButtonVoted); */
-            }
-
-            .wykopxs_vote_animation.wykopxs_golden
-            {
-                font-size: 35px;
-                color: var(--golden)!important;
-                text-shadow: 0px 0px 5px var(--golden);
-            } 
-
-            /* minusy */
-            .wykopxs_vote_animation.wykopxs_red
-            {
-                color: var(--colorMinusesCountVoted)!important;
-            }
-
-
-
-            @keyframes explodePluses
-            {
-                0%      { transform: translate3d(0, 0, 0); opacity: 0; } 12%     { opacity: 0.2; } 13%     { opacity: 1; } 
-                70%     { opacity: 1; } 
-                90%     { opacity: 0.4; } 100%    { transform: translate3d(var(--position_x), var(--position_y), var(--position_z)); opacity: 0; } 
-            } 
-
-            if(votingExplosionAnimation == "animacja2")
-            {
-                .wykopxs_vote_animation 
-                {
-                    animation-name: explodePluses, ;
-                }
-
-                @eyframes explodePlusesAnimacja2
-                {
-                    0%      { scale: 60%;   } 12%     { scale: 60%;   } 13%     { scale: 60%;   } 
-                    70%     { scale: 60%;   } 
-                    90%     { scale: 120%;  } 100%    { scale: 400%;  } 
-                }
-            } 
-            else if(votingExplosionAnimation == "animacja3")
-            {
-                .wykopxs_vote_animation 
-                {
-                    animation-name: explodePluses, explodePlusesAnimacja3;
-                }
-                @keyframes explodePlusesAnimacja3
-                {
-                    0%      { scale: 60%;   } 12%     { scale: 60%;   } 13%     { scale: 60%;   } 
-                    70%     { scale: 60%;   } 
-                    90%     { scale: 120%;  } 100%    { scale: 400%;  } 
-                }
-            }
-        }        
-        
-        
-    }
-
-    
-    
-
-    
-    
+  
     
     
 
@@ -21874,7 +20891,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     /* VARIABLES */
 
     versor = "blank"; // "style", "blank", "block"
-    version = "3.3.5";   
+    version = "3.5.0";   
     /* xblocker = "2.49" */
     
     
@@ -21889,8 +20906,6 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         if(WykopXSEnabled == 1)
         {
             --wxsDev                                        : wxsDev;
-            
-            
             
             --editorShowMyUsernameOnSendButton              : editorShowMyUsernameOnSendButton
             --editorShowMyUsername                          : editorShowMyUsername
@@ -22455,67 +21470,138 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     }
 
         
-
-
-
-/* FONT FAMILY / VARIABLE FONTS / ROBOTO FLEX */
-/*
-    if(fontCustomEnable == 1)
+    /* PANEL CENZUROWANYCH TREŚCI ZMUSZAJĄCY DO ZALOGOWANIA */
+    section:is(.tag-page, .link-page) .force-login-access-skeleton .info-box,
+    .modal.login .info-box p
     {
-        if(fontFamily != "default")
+        font-size: 0;
+    }
+    .tag-page .force-login-access-skeleton .info-box a
+    {
+        display: none;
+    }
+    .modal.login .info-box p::before,
+    .modal.login .info-box p::after,
+    .force-login-access-skeleton .info-box p::before,
+    .force-login-access-skeleton .info-box p::after
+    {
+        font-size: 0.8rem;
+    }
+    .modal.login .info-box p::after,
+    .force-login-access-skeleton .info-box p::after
+    {
+        font-weight: bolder;
+    }
+    .tag-page .force-login-access-skeleton .info-box p::before
+    {
+        content: ' Wykop cenzuruje ten #tag. Na Wykopie musisz się zalogować by go otworzyć. Wszystkie ocenzurowane i ukryte #tagi są jednak dostępne dla niezalogowanych na stronie wykopx.pl. ';
+    }
+    .tag-page .force-login-access-skeleton .info-box p::after
+    {
+        content: ' Dodaj w adresie "wykop.pl" literę "x" aby przejść na wykopx.pl/tag/... i wejdź na tag bez cenzury i bez reklam.';
+    }
+    .link-page .force-login-access-skeleton .info-box p::before
+    {
+        content: ' Wykop cenzuruje ponad 30% znalezisk. Wszystkie ocenzurowane i ukryte znaleziska są jednak dostępne dla niezalogowanych na stronie wykopx.pl. ';
+    }
+    .link-page .force-login-access-skeleton .info-box p::after
+    {
+        content: ' Dodaj w adresie "wykop.pl" literę "x" aby przejść na wykopx.pl/link/... i otwórz znalezisko bez cenzury i bez reklam';
+    }
+    
+    .modal.login .info-box p::before
+    {
+       content: ' Ta strona jest ocenzurowana przez Wykop. Możesz jednak otworzyć ją na stronie Wykop X. ';
+    }
+    .modal.login .info-box p::after
+    {
+        content: ' Wejdź na "wykopx.pl" i zobacz to bez cenzury.';
+        font-weight: bolder;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* 
+        NOWY MIKROBLOG 2026-09-24 
+        
+        - drzewo komentarzy
+        - 4 zdjęcia do wpisu
+        - plusy przesunięte na dół pod wpisem
+        
+    */
+    if(plusesInTopRightCorner == 1)
+    {
+
+        /* PLUSY W PRAWYM GÓRNYM ROGU */
+        section.thread section.item>footer
         {
-            //@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100..800&display=swap");
-            //@import url('https://github.com/googlefonts/roboto-flex/raw/main/fonts/RobotoFlex%5BGRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght%5D.ttf');
-            //:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-            if(fontFamily == "Roboto Flex")
+            position: static!important;
+            
+            section.voting
             {
-                @font-face
-                {
-                    // RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght
-                    //font-family: 'Roboto Flex'; 
-                    //src: local("Roboto Flex"), url('https://wykopx.pl/fonts/RobotoFlex.ttf') format('ttf-variations');
-                    //src:url('https://github.com/googlefonts/roboto-flex/raw/main/fonts/RobotoFlex%5BGRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght%5D.ttf');
-                    //src: url('https://wykopx.pl/fonts/RobotoFlex.ttf') format('ttf-variations');
-                    //font-style: normal;
-                }
-            }
-
-            section.entry div.content section.entry-content > div.wrapper
-            {
-                // https://fonts.google.com/knowledge/using_type/loading_variable_fonts_on_the_web
-                //font-family: 'Roboto Flex' !important;
-                //font-variation-settings: "opsz" 44.8333, "wght" 231.25, "GRAD" -66.3196, "wdth" 101.125, "slnt" -7.98611, "XOPQ" 96, "YOPQ" 79, "XTRA" 468, "YTUC" 712, "YTLC" 514, "YTAS" 750, "YTDE" -203, "YTFI" 738;
-                //font-family: "%s" % (fontFamily);
-                //font-family: fontFamily !important;
-                //font-size: fontSize!important;
-                //font-weight: unset;
-                //line-height: fontSize!important;
-                //font-weight: fontVariableWght!important;
-                //font-stretch: fontVariableWdth!important;
-                //font-variation-settings: "wght" fontVariableWght !important;    // , "wdth" fontStretch, "opsz" fontVariableOpsz!important;
-                //font-variation-settings: 'wght' 350, 'slnt' , ;   
-                
-                            'slnt' fontVariableSlnt,    
-                            'GRAD' fontVariableGRAD,
-                            'XTRA' fontVariableXTRA,
-                            'XOPQ' fontVariableXOPQ,
-                            'YOPQ' fontVariableYOPQ,
-                            'YTLC' fontVariableYTLC,
-                            'YTUC' fontVariableYTUC,
-                            'YTAS' fontVariableYTAS,
-                            'YTDE' fontVariableYTDE,
-                            'YTFI' fontVariableYTFI !important; 
-                //font-stretch: fontStretch!important;
-                //font-style: italic;
-                //slnt - font-style: oblique + 40deg (angle) 
-                //font-variation-settings: "ital" fontVariableItal;  // ital (0...1) 
-                //font-synthesis: none;
-                // font-optical-sizing: auto;  // auto / none 
+                z-index: 5;
+                position: absolute;
+                top: 0px;
+                right: 0px;
             }
         }
     }
-*/
+    
+                 
+    if(plusesColor == "wykop2024")             { body { --plusesColor: #71be71; } body[data-night-mode] { --plusesColor: #71be71; } }
+    else if(plusesColor == "wykop2022")        { body { --plusesColor: rgb(59, 145, 95); } body[data-night-mode] { --plusesColor: rgb(57, 166, 132); } }  /* TODO */
+    else if(plusesColor == "pomaranczowy")     { body { --plusesColor: orange; }  body[data-night-mode] { --plusesColor: orange; } }
+    else if(plusesColor == "zloty")            { body { --plusesColor: goldenrod; }  body[data-night-mode] { --plusesColor: goldenrod; } }
+    else if(plusesColor == "wykop2026")        { body { --plusesColor: #363640; }  body[data-night-mode] { --plusesColor: #c1c1c3; } }
+
+    if(plusesColor !="wykop2026")
+    { 
+        body { --apple: var(--plusesColor)!important; }
+        section.rating-box[class] ul[class] li[class].plus                 { color: var(--plusesColor);}
+        section.voting:not(:has(>.down))>div.up>span[data-v-049e7a74]     { color: var(--plusesColor);}
+        section.rating-box[class] div[class].buttons > button[class].plus  { border-color: var(--plusesColor);  }
+        section.rating-box[class] div[class].buttons > button[class].plus::after {    background-color: var(--plusesColor);  }
+    }
+    
+
+    if(minusesColor == "wykop2024")             { body { --minusesColor: #d67b75; } body[data-night-mode] { --minusesColor: #e86860; } }
+    else if(minusesColor == "wykop2022")        { body { --minusesColor: rgb(192, 57, 43); } body[data-night-mode] { --minusesColor: rgb(255, 65, 54); } } /* TODO */
+    else if(minusesColor == "pomaranczowy")     { body { --minusesColor: orange; }  body[data-night-mode] { --minusesColor: orange; } }
+    else if(minusesColor == "zloty")            { body { --minusesColor: goldenrod; }  body[data-night-mode] { --minusesColor: goldenrod; } }
+    else if(minusesColor == "wykop2026")        { body { --minusesColor: #363640; }  body[data-night-mode] { --minusesColor: #c1c1c3;; } }
+    
+    if(minusesColor !="wykop2026")
+    { 
+        section.rating-box[class] ul[class] li[class].minus                 { color: var(--minusesColor);}
+        section.voting:not(:has(>.down))>div.down>span[data-v-049e7a74]     { color: var(--minusesColor);}
+        section.rating-box[class] div[class].buttons > button[class].minus::after {    background-color: var(--minusesColor);  }
+        section.rating-box[class] div[class].buttons > button[class].minus  { border-color: var(--minusesColor);  }
+    }
+    
+    
+    
+    if(collapseEntryButtonHide == 1)
+    {
+       section.listing > div.content > section.thread > section.item > button.toggle, 
+       section.entry > section.thread > section.item > button.toggle 
+       { display: none!important; }
+    }
+    
+    if(collapseCommentsButtonHide == 1)
+    {
+        section.comments > section.thread > section.item > button.toggle { display: none!important; }
+    } 
+
 }
 
 
@@ -22530,8 +21616,6 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
             padding: 0px;
             background-image: url('https://i.imgur.com/zXf4Dly.png'); /* the alien */
             background-repeat: no-repeat;
-            //background-position: bottom;
-            //background-size: 100vw auto;
             background-size: 30vw auto;
             background-position: bottom left;
         }
@@ -22851,8 +21935,6 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     } 
 
 
-
-
     #message-box-contents div.config-heading a[href$="wykopx.pl"]:before
     {
         content: "Nowość - Aplikacja WykopX. Jako użytkownik Wykop X Style jesteś wśród grona osób, które pierwsze dostają dostęp do WERSJI BETA NOWEGO WYKOPU: ";
@@ -22872,6 +21954,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     {
         color: rgba(0, 0, 0, 1);
     } 
+
     
     
     .config-body > label
@@ -22880,14 +21963,6 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         font-size: 13px;
         display: flex;
     }
-    
-    
-    label.config-range
-    {
-        width: 90%; 
-        box-sizing: border-box;
-    }
-    
 
     [data-ui-theme="light"] .config-body > label{color: rgba(0, 0, 0, 1); } 
     [data-ui-theme="dark"] .config-body > label{color: rgba(255, 255, 255, 1); } 
@@ -22897,6 +21972,12 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
     [data-ui-theme="dark"] .config-body > label:has(.onoffswitch)                  { color: rgba(255, 255, 255, 0.5); } 
     [data-ui-theme="dark"] .config-body > label:has(.onoffswitch input:checked)    { color: rgba(255, 255, 255, 1); } 
 
+
+    label.config-range
+    {
+        width: 90%; 
+        box-sizing: border-box;
+    }
 
 
     /* NAZWA SEKCJI */
@@ -22981,7 +22062,7 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         border-radius: 5px;
         z-index: 1;
         
-        width: 70%; //
+
 
         & + label
         {
@@ -23199,8 +22280,13 @@ TODO var select     scrollbarsStyle                             `Paski przewijan
         {
             grid-template-columns: auto 10px;
             grid-template-rows: 1fr 1fr;
-            width: 100%;
+            width: 20%;
+            
         }
+        
+        
+
+        
         #message-box-contents div.config-body label.config-select span.config-name,
         #message-box-contents div.config-body label.config-text span.config-name
         {
