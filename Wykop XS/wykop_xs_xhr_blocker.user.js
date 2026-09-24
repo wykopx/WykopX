@@ -160,7 +160,7 @@
 	}
 
 
-	/* HIDE ADS ALWAYS */
+	/* HIDE ADS ALWAYS adsHide == 1 */
 	if (settings.hideAds)
 	{
 		CSS += `

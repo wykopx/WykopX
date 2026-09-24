@@ -156,7 +156,7 @@
 
 
 
-	/* HIDE ADS ALWAYS */
+	/* HIDE ADS ALWAYS adsHide == 1 */
 	if (settings.hideAds)
 	{
 		CSS += `
@@ -268,8 +268,8 @@
 		`;
 	}
 
+	/* PLUSY W PRAWYM GÓRNYM ROGU */
 	CSS += `
-        /* PLUSY W PRAWYM GÓRNYM ROGU */
         section.thread section.item>footer
         {
             position: static!important;

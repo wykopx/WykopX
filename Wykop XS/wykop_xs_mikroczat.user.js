@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Lista plusujących, animowane awatary
 // @name:en							Wykop XS - Lista plusujących, animowane awatary
 
-// @version							3.4.1
+// @version							3.5.1
 
 // @description 					Wykop XS - Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -45,7 +45,7 @@
 
 'use strict';
 
-const currentVersion = "3.4.1";
+const currentVersion = "3.5.1";
 let dev = false;
 
 const promoString = " - Wykop XS / #wykopx";
@@ -2468,20 +2468,57 @@ Widok dyskusji:
 	`;
 
 
-	/* HIDE ADS ALWAYS */
+	/* HIDE ADS ALWAYS adsHide == 1*/
 	if (settings.hideAds)
 	{
 		CSS += `
-		article:has(+ header),
+		/* 2026-06-22 nowe natrętne reklamy */
+        article:has(+ header),
 
-        section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),
+        /* 2026-09-24 aktualizacja nowych reklam */
+
+
+        nav > span::before,
+        nav > section::before,
+        nav > nav::before,
+        nav > header::before,
+        nav > article::before,
+
+        article > span::before,
+        article > nav::before,
+        article > section::before,
+        article > header::before,
+        article > article::before,
+
+        section > span::before,
+        section > nav::before,
+        section > section::before,
+        section > header::before,
+        section > article::before,
+
+        header > span::before,
+        header > nav::before,
+        header > section::before,
+        header > header::before,
+        header > article::before,
+
+        section[data-label="ad: top"] + section,
+        section[data-label="ad: top"] + aside,
+        section[data-label="ad: top"] + div,
+        a[href^="https://wykop.pl/comments/"][target="_blank"],
+        a[href^="https://wykop.pl/category/"][target="_blank"],
+        a[href^="https://wykop.pl/tag/"][target="_blank"],
+        a[href^="https://wykop.pl/article/"][target="_blank"],
+
 
         section.stream > nav,
         section.stream > span,
         section.stream > aside,
         section.stream > div:not(.content),
         section.stream > div.content > div:not(.notification-wrapper),
-        section.stream > section:not(.display-btns),
+
+        section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),
+
         section.stream > header:not(.stream-top),
         section.stream > section > div.content > section:not([id]),
 
@@ -2512,14 +2549,24 @@ Widok dyskusji:
 
         section.block-alert
         {
+            display: none;
             border: 20px solid red!important;
         }
+
+        /* NIEKTÓRYCH NAPISÓW "REKLAMA" NIE DA SIĘ USUNĄĆ */
+        [data-v-2d139c94]:before,
+        [data-v-30e10813]:before
+        {
+            content: "Wykop bez reklam - wejdź na www.wykopx.pl";
+            text-transform: none;
+        }
+
+
 
         .mgid-platform,
         .pub-slot-wrapper,
         div.content + nav,
         aside:has(.pub-slot-wrapper),
-        section[data-label="ad: top"],
         div.main-content > main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.register.observer.active,
         div.main-content > main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.content.observer.active
         {
@@ -2532,6 +2579,23 @@ Widok dyskusji:
         }
 		`;
 	}
+
+	/* PLUSY W PRAWYM GÓRNYM ROGU */
+	CSS += `
+			section.thread section.item>footer
+			{
+				position: static!important;
+
+				section.voting
+				{
+					z-index: 5;
+					position: absolute;
+					top: 0px;
+					right: 0px;
+				}
+			}
+		`;
+
 
 	/* HIDE WYKOP XS PROMO FROM STYLUS */
 	CSS += `.wykopxs, body div.main-content[class] section > section.sidebar::after  { display: none!important; }`;

@@ -9222,7 +9222,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 	} `;
 		}
 
-		/* HIDE ADS ALWAYS */
+		/* HIDE ADS ALWAYS adsHide == 1 */
 		CSS += `
 		/* 2026-06-22 nowe natrętne reklamy */
         article:has(+ header),
@@ -9350,8 +9350,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
+		/* PLUSY W PRAWYM GÓRNYM ROGU */
 		CSS += `
-			/* PLUSY W PRAWYM GÓRNYM ROGU */
 			section.thread section.item>footer
 			{
 				position: static!important;
