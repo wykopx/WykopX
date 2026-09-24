@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3
 // @name:en							Wykop XS 3
 
-// @version							3.4.1
+// @version							3.5.1
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://wykopx.pl/styl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://wykopx.pl/styl
@@ -48,7 +48,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.4.1";
+	const currentVersion = "3.5.1";
 	let dev = false;
 
 	const promoString = " - Wykop XS / #wykopx";
@@ -9224,16 +9224,53 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		/* HIDE ADS ALWAYS */
 		CSS += `
-		article:has(+ header),
+		/* 2026-06-22 nowe natrętne reklamy */
+        article:has(+ header),
 
-        section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),
+        /* 2026-09-24 aktualizacja nowych reklam */
+
+
+        nav > span::before,
+        nav > section::before,
+        nav > nav::before,
+        nav > header::before,
+        nav > article::before,
+
+        article > span::before,
+        article > nav::before,
+        article > section::before,
+        article > header::before,
+        article > article::before,
+
+        section > span::before,
+        section > nav::before,
+        section > section::before,
+        section > header::before,
+        section > article::before,
+
+        header > span::before,
+        header > nav::before,
+        header > section::before,
+        header > header::before,
+        header > article::before,
+
+        section[data-label="ad: top"] + section,
+        section[data-label="ad: top"] + aside,
+        section[data-label="ad: top"] + div,
+        a[href^="https://wykop.pl/comments/"][target="_blank"],
+        a[href^="https://wykop.pl/category/"][target="_blank"],
+        a[href^="https://wykop.pl/tag/"][target="_blank"],
+        a[href^="https://wykop.pl/article/"][target="_blank"],
+
 
         section.stream > nav,
         section.stream > span,
         section.stream > aside,
         section.stream > div:not(.content),
         section.stream > div.content > div:not(.notification-wrapper),
-        section.stream > section:not(.display-btns),
+
+        section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),
+
         section.stream > header:not(.stream-top),
         section.stream > section > div.content > section:not([id]),
 
@@ -9264,14 +9301,24 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
         section.block-alert
         {
+            display: none;
             border: 20px solid red!important;
         }
+
+        /* NIEKTÓRYCH NAPISÓW "REKLAMA" NIE DA SIĘ USUNĄĆ */
+        [data-v-2d139c94]:before,
+        [data-v-30e10813]:before
+        {
+            content: "Wykop bez reklam - wejdź na www.wykopx.pl";
+            text-transform: none;
+        }
+
+
 
         .mgid-platform,
         .pub-slot-wrapper,
         div.content + nav,
         aside:has(.pub-slot-wrapper),
-        section[data-label="ad: top"],
         div.main-content > main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.register.observer.active,
         div.main-content > main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.content.observer.active
         {
@@ -9303,6 +9350,21 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
+		CSS += `
+			/* PLUSY W PRAWYM GÓRNYM ROGU */
+			section.thread section.item>footer
+			{
+				position: static!important;
+
+				section.voting
+				{
+					z-index: 5;
+					position: absolute;
+					top: 0px;
+					right: 0px;
+				}
+			}
+		`;
 
 		/* ----- Wykop X Style promo banners ON */
 		CSS += `.wykopx_promo_banner a 
