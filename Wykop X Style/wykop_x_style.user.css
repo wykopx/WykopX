@@ -6143,16 +6143,30 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
         /* 2026-09-24 aktualizacja nowych reklam */
 
         
-        nav > section::before,
         nav > span::before,
+        nav > section::before,
         nav > nav::before,
         nav > header::before,
         nav > article::before,
+        
         article > span::before,
         article > nav::before,
         article > section::before,
         article > header::before,
         article > article::before,
+        
+        section > span::before,
+        section > nav::before,
+        section > section::before,
+        section > header::before,
+        section > article::before,
+        
+        header > span::before,
+        header > nav::before,
+        header > section::before,
+        header > header::before,
+        header > article::before,
+
         section[data-label="ad: top"] + section,
         section[data-label="ad: top"] + aside,
         section[data-label="ad: top"] + div,
@@ -6218,13 +6232,10 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
         .pub-slot-wrapper,
         div.content + nav,
         aside:has(.pub-slot-wrapper),
-        /* reklama lidl tylko na wykop.pl/moj/ */
-        section[data-label="ad: top"],
         div.main-content > main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.register.observer.active,
         div.main-content > main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.content.observer.active
         {
-            if(dev) { border: 3px solid darkviolet!important; }
-            else { display: none!important; min-height: 0px!important; }
+            display: none!important; min-height: 0px!important;
         }
 
         .pub-slot-wrapper:has(section.premium-pub.link-block)

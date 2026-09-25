@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Ban Info - Informacje o banach
 // @name:en							Wykop XS - Ban Info
 
-// @version							3.5.1
+// @version							3.5.2
 
 // @description 					Wykop XS - Informacje o banach na profilach zbanowanych użytkowników. Wykop X Style znajdziesz na: http://wykopx.pl/styl
 // @description:en 					Wykop XS - Shows precise info about banned users on Wykop.pl. Check out Wykop X Style here: http://wykopx.pl/styl
@@ -44,7 +44,7 @@
 {
 	'use strict';
 
-	const currentVersion = "3.5.1";
+	const currentVersion = "3.5.2";
 	let dev = false;
 
 	const promoString = " - Wykop XS / #wykopx";
@@ -52,9 +52,20 @@
 	const root = document.documentElement;
 	const head = document.head;
 	const body = document.body;
+
 	const bodySection = body.querySelector("section");
+	/* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
+	bodySection?.__vue__?.$store?.commit("config/setCommentsTreeEnabled", false);
+	/* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
+
+
 	const wykopxSettings = getComputedStyle(head);
 	const settings = {};
+
+	/* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
+	document.querySelector("body > section")?.__vue__?.$store?.commit("config/setCommentsTreeEnabled", false);
+	/* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
+
 
 	const styleElement = document.createElement('style');
 	styleElement.id = "wykopxs_ban_info";

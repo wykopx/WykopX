@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Lista plusujących, animowane awatary
 // @name:en							Wykop XS - Lista plusujących, animowane awatary
 
-// @version							3.5.1
+// @version							3.5.2
 
 // @description 					Wykop XS - Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -45,7 +45,7 @@
 
 'use strict';
 
-const currentVersion = "3.5.1";
+const currentVersion = "3.5.2";
 let dev = false;
 
 const promoString = " - Wykop XS / #wykopx";
@@ -54,7 +54,14 @@ const promoString = " - Wykop XS / #wykopx";
 const root = document.documentElement;
 const head = document.head;
 const body = document.body;
+
 const bodySection = body.querySelector("section");
+/* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
+bodySection?.__vue__?.$store?.commit("config/setCommentsTreeEnabled", false);
+/* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
+
+
+
 
 dayjs.locale("pl");
 dayjs.extend(window.dayjs_plugin_relativeTime); 		//dayjs.extend(relativeTime); // https://day.js.org/docs/en/plugin/relative-time // https://www.jsdelivr.com/package/npm/dayjs?tab=files&path=plugin
@@ -170,6 +177,7 @@ settings.mikroczatOpenMikroczatOnCTRLMiddleClick = false;
 		name: "wykopx",
 		storeName: "settings",
 	});
+
 
 
 
