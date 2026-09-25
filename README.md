@@ -1,3 +1,5 @@
+
+
 ### Wykop X
 
 <!--
@@ -17,7 +19,7 @@ Here are some ideas to get you started:
 
 **Wykop X** to połączenie kilku dodatków - arkuszy stylów CSS **Wykop X Style** oraz skryptów JavaScript **Wykop XS**    
  
-**Wykop X** dodaje aż kilkaset usprawnień dla strony wykop.pl - nowe funkcje, naprawianie Wykopowych błędów, zmiana intefejsu czy kolorystyki.
+**Wykop X** dodaje aż kilkaset usprawnień dla strony wykop.pl - nowe funkcje, naprawianie Wykopowych błędów, zmiana interfejsu czy kolorystyki.
 Zerknij na listę wszystkich funkcji:
 https://github.com/wykopx/WykopX/wiki/Lista-funkcji
 
