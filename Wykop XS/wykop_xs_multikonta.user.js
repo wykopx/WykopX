@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Multikonta
 // @name:en							Wykop XS - Multikonta
 
-// @version							3.4.1
+// @version							3.5.2
 
 // @description 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
 // @description:en 					Wykop XS - Multikonta - Możliwość korzystania z nieograniczonej liczby multikont. Dodajesz tyle kont ile chcesz i jednym kliknięciem przełączasz się pomiędzy nimi.
@@ -45,7 +45,7 @@
 
 'use strict';
 
-const currentVersion = "3.4.1";
+const currentVersion = "3.5.2";
 let dev = false;
 
 const promoString = " - Wykop XS / #wykopx";
@@ -97,7 +97,7 @@ Zmień je w przeglądarce w następujący sposób:
 
 Domyślne wartości wyglądają przykładowo tak:
 
-{"entryVotersListExpandIfLessThan": 5, "votersFollow":true, "votersBlacklist":true, "votersBanned":true, "votersSuspended":true, "votersRemoved":true, "votersGenderF":false, "votersGenderM":false, "votersColorGreen":true, "votersColorOrange":false,"votersColorBurgundy":true}
+{"entryVotersListExpandIfLessThan": 5, "votersFollow":true, "votersBlacklist":true, "votersBanned":true, "votersSuspended":true, "votersRemoved":true }
 
 */
 
@@ -126,36 +126,19 @@ if (settings.entryVotersListEnable)
 	settings.votersBanned = true;							// pokazuje użytkowników z aktywnym banem w kolorze i z ikonką 🍌
 	settings.votersSuspended = true;						// pokazuje ✖ przed kontami, które są w trakcie usuwania
 	settings.votersRemoved = true;							// pokazuje ✖ przed kontami, które są usunięte
-	settings.votersGenderF = false;							// pokazuje różową kropkę przed kobietami
-	settings.votersGenderM = false;							// pokazuje niebieską kropkę przed mężczyznami
-	settings.votersColorGreen = true;						// pokazuje zielonki w kolorze
-	settings.votersColorOrange = false;						// pokazuje pomarańczowych użytkowników w kolorze
-	settings.votersColorBurgundy = true;					// pokazuje użytkowników bordo w kolorze
-	settings.votersFollowFirst = true;						// pokazuje użytkowników, których obserwujesz pierwszych na liście
-	settings.votersBlackFirst = false;						// pokazuje plusy od moderacji pierwsze na liście (konta typu @wykop, @m__b, @a__s itd.)
-	settings.votersBurgundyFirst = false;					// pokazuje użytkowników bordo pierwszych na liście
-	settings.votersOrangeFirst = false;						// pokazuje zielonki pierwszych na liście
-	settings.votersGreenFirst = false;						// pokazuje pomarańczki pierwszych na liście
-	settings.votersBlacklistLast = false;					// pokazuje użytkowników, których zablokowałeś na końcu listy
-	settings.votersRemovedLast = false;						// pokazuje usunięte konta na końcu listy
-	settings.votersBannedLast = false;						// pokazuje zbanowanych na końcu listy
-	settings.votersSuspendedLast = false;					// pokazuje konta w trakcie usuwania na końcu listy
 }
 
-settings.hideShareButton = true;						// ukrywa przycisk "Udostępnij"
 settings.showFavouriteButton = true;					// pokazuje przycisk "Dodaj do ulubionych" (samą gwiazdkę)
 settings.showFavouriteButtonLabel = true;				// pokazuje oprócz gwiazdki także tekst "Ulubione"
-// settings.addCommentPlusWhenVotingOnEntry = false;		// gdy plusujesz wpis, dodaje komentarz "+1"
-// settings.addCommentPlusWhenVotingOnComment = false;		// gdy plusujesz komentarz, dodaje komentarz "+1"
 
 
 
 settings.mikroczatShowLeftMenuButton = false;
-settings.mikroczatShowLeftMenuLink = true;
-settings.mikroczatShowTopNavButton = true;
+settings.mikroczatShowLeftMenuLink = false;
+settings.mikroczatShowTopNavButton = false;
 settings.mikroczatOpenMikroczatOnMiddleClick = false;
-settings.mikroczatOpenMikroczatOnCTRLLeftClick = true;
-settings.mikroczatOpenMikroczatOnCTRLMiddleClick = true;
+settings.mikroczatOpenMikroczatOnCTRLLeftClick = false;
+settings.mikroczatOpenMikroczatOnCTRLMiddleClick = false;
 
 (async function ()
 {
@@ -197,12 +180,6 @@ settings.mikroczatOpenMikroczatOnCTRLMiddleClick = true;
 
 		}
 	}
-
-
-
-
-
-
 
 
 
@@ -1708,7 +1685,7 @@ Widok dyskusji:
 	function getListItemForUser(voter)
 	{
 		let userHTML = `<li>
-				<a href="/ludzie/${voter.username}" class="username`;
+				<a href="https://wykopx.pl/ludzie/${voter.username}" target="${voter.username}" class="username`;
 
 		userHTML += ` ${voter.color}-profile`; 		// orange-profile green-profile burgundy-profile
 		userHTML += ` ${voter.status}`;				// active banned suspended removed
@@ -1726,13 +1703,9 @@ Widok dyskusji:
 		if (settings?.votersFollow && voter.follow) userHTML += `<i class="follow-true" title="Obserwujesz tego użytkownika"></i>`;
 		if (settings?.votersVerified && voter.verified) userHTML += `<i class="verified-true" title="Ten użytkownik jest zweryfikowany"></i>`;
 		if (settings?.votersBlacklist && voter.blacklist) userHTML += `<i class="blacklist-true" title="Ten użytkownik jest na Twojej czarnej liście"></i>`;
-		if (settings?.votersOffline && !voter.online) userHTML += `<i class="online-false" title="Ten uzytkownik jest teraz offline"></i>`;
-		if (settings?.votersOnline && voter.online) userHTML += `<i class="online-true" title="Ten uzytkownik jest teraz online"></i>`;
-		if (settings?.votersBanned && voter.status == "banned") userHTML += `<i class="banned" title="Użytkownik dostał bana. Z dodatkiem Wykop XS - Ban Info możesz szybko sprawdzić przyczynę i długość trwania bana."></i>`;
+		if (settings?.votersBanned && voter.status == "banned") userHTML += `<i class="banned" title="Użytkownik dostał bana. Kliknij aby sprawdzić powód i długość trwania bana."></i>`;
 		if (settings?.votersSuspended && voter.status == "suspended") userHTML += `<i class="suspended" title="To konto jest w trakcie usuwania."></i>`;
 		if (settings?.votersRemoved && voter.status == "removed") userHTML += `<i class="removed" title="Konto usunięte"></i>`;
-		if (settings?.votersGenderM && voter.gender == "m") userHTML += `<i class="${voter.gender}-gender" title="Wpis od niebieskiego"></i>`;
-		if (settings?.votersGenderF && voter.gender == "f") userHTML += `<i class="${voter.gender}-gender" title="Plus od różowej"></i>`;
 
 		userHTML += `<span>${voter.username}</span>
 				</a>
@@ -1849,95 +1822,12 @@ Widok dyskusji:
 		});
 	}
 
-	// settings.addCommentPlusWhenVotingOnEntry, settings.addCommentPlusWhenVotingOnComment
-	function postCommentPlus1ToAPI(sectionEntry)
-	{
-		if (!sectionEntry || !sectionEntry.__vue__) return;
 
-		const resource = sectionEntry.__vue__.item.resource;
-		let entryId;
-		let authorUsername = sectionEntry.__vue__.item.author.username;
-		if (resource === "entry")
-			entryId = sectionEntry.__vue__.item.id;
-
-		else if (resource === "entry_comment")
-			entryId = sectionEntry.__vue__.item.parent.id;
-
-		// TODO ZNALEZISKA
-		let apiURL = `https://wykop.pl/api/v3/entries/${entryId}/comments`;
-		const method = "POST";
-		const body = {
-			data: {
-				"content": `@${authorUsername} [+](https://greasyfork.org/en/scripts/489949)1`,
-				"adult": false
-			}
-		}
-		/*
-		"data": 
-			{
-				"content": "**foobar** __foobar__ [lorem](https://www.wykop.pl) impsum!!! #nsfw #wykop",
-				"embed": "1fde707843ss3fbe9cb4eed0asdfsdfc64ab9a4df6084199b39d2",
-				"photo": "e07843ss3fbe9cb4saeed0asdfsdfc64b9a4df6084199b39d2",
-				"adult": false
-				}
-			}
-		*/
-
-		return new Promise(async (resolve, reject) =>
-		{
-			await fetch(apiURL, {
-				method: method,
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + window.localStorage.getItem("token"),
-				},
-				body: JSON.stringify(body)
-			})
-				.then((response) =>
-				{
-					if (!response.ok)
-					{
-						if (dev) console.log("HTTP error! status: ${response.status}");
-						// throw new Error(`HTTP error! status: ${response.status}`);
-					}
-					return response.json();
-				})
-				.then(async (responseJSON) =>
-				{
-					resolve(responseJSON.data);
-
-				}).catch((error) =>
-				{
-					if (error instanceof TypeError)
-					{
-						console.error('Network error:', error); // AWARIA SERWERA WYPOKU
-					} else
-					{
-						console.error('Other error:', error);
-					}
-					reject(error);
-				});
-		});
-	}
 
 	// li.more click
 	document.addEventListener("click", async function (e)
 	{
-		if (e.target.closest("div.buttons button.plus"))
-		{
-			const sectionEntry = e.target.closest("section.entry[id]");
-			if (sectionEntry.__vue__?.item?.voted == 1)
-			{
-				// if (settings.addCommentPlusWhenVotingOnEntry && sectionEntry && sectionEntry.__vue__?.item?.resource == "entry") 
-				// {
-				// 	postCommentPlus1ToAPI(sectionEntry);
-				// }
-				// else if (settings.addCommentPlusWhenVotingOnComment && sectionEntry && sectionEntry.__vue__?.item?.resource == "entry_comment")
-				// {
-				// 	postCommentPlus1ToAPI(sectionEntry);
-				// }
-			}
-		}
+
 
 		if (e.target.matches("li.more span"))
 		{
@@ -1995,7 +1885,6 @@ Widok dyskusji:
 
 
 	/* CSS WYKOP XS MIKROCZAT */
-	if (settings?.hideShareButton) CSS += `section.actions ul li.sharing 									{ display: none!important; }`;
 
 
 	/* Wykop X Style 3 */
@@ -2094,19 +1983,6 @@ Widok dyskusji:
 			section.entry-voters ul li.more 																	{ order: 100; }
 			`;
 
-		if (settings?.votersFollowFirst) CSS += `section.entry-voters ul li:has(a.username.follow-true) 		{ order: 1; }`;
-		if (settings?.votersBlackFirst) CSS += `section.entry-voters ul li:has(a.username.burgundy-profile) 	{ order: 3; }`;
-		if (settings?.votersOrangeFirst) CSS += `section.entry-voters ul li:has(a.username.orange-profile) 		{ order: 4; }`;
-		if (settings?.votersGreenFirst) CSS += `section.entry-voters ul li:has(a.username.green-profile) 		{ order: 5; }`;
-
-		if (settings?.votersBlacklistLast) CSS += `section.entry-voters ul li:has(a.username.blacklist-true) 	{ order: 7; }`;
-		if (settings?.votersBannedLast) CSS += `section.entry-voters ul li:has(a.username.banned) 				{ order: 8; }`;
-		if (settings?.votersSuspendedLast) CSS += `section.entry-voters ul li:has(a.username.banned) 			{ order: 9; }`;
-		if (settings?.votersRemovedLast) CSS += `section.entry-voters ul li:has(a.username.removed) 			{ order: 10; }`;
-
-		if (!settings?.votersColorOrange) CSS += `section.entry-voters ul li a.username.orange-profile 			{ color: var(--gullGray); }`;
-		if (!settings?.votersColorGreen) CSS += `section.entry-voters ul li a.username.green-profile 			{ color: var(--gullGray); }`;
-		if (!settings?.votersColorBurgundy) CSS += `section.entry-voters ul li a.username.burgundy-profile 		{ color: var(--gullGray); }`;
 
 		CSS += `
 			section.entry-voters ul li a.username.banned:not(.removed) span  				{ color: var(--kolorBananowy1); };

@@ -90,18 +90,6 @@
     {
         setSettingsValueFromCSSProperty("wxsBlockXHRExternal");
         setSettingsValueFromCSSProperty("wxsBlockXHRInternalAds");
-        // setSettingsValueFromCSSProperty("wxsBlockXHRConsoleLogAllowed", false);
-        // setSettingsValueFromCSSProperty("wxsBlockXHRConsoleLogBlocked", false);
-        // setSettingsValueFromCSSProperty("rightSidebarHidePopularTags", false);
-        // setSettingsValueFromCSSProperty("rightSidebarHideRelatedTags", false);
-        // setSettingsValueFromCSSProperty("rightSidebarHideHits", false);
-        // setSettingsValueFromCSSProperty("rightSidebarHideEntriesHot", false);
-        // setSettingsValueFromCSSProperty("rightSidebarHideEntriesActive", false);
-        // setSettingsValueFromCSSProperty("rightSidebarHideEntriesPopular", false);
-        // setSettingsValueFromCSSProperty("rightSidebarHideUpcomingActive", false);
-        // setSettingsValueFromCSSProperty("rightSidebarHideLinksNewest", false);
-        // setSettingsValueFromCSSProperty("rightSidebarHideLinksActive", false);
-        // setSettingsValueFromCSSProperty("rightSidebarHideLinksPopular", false);
     }
 
 
