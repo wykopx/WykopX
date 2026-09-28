@@ -1,17 +1,20 @@
 /* ==UserStyle==
 @name           Wykop X Style 3 Blank
-@version        3.3.0
+@version        3.5.5
 
 @description    Niniejsza wersja to wersja BLANK, w której wszystkie funkcje są wyłączone.
 @description    https://wykopx.pl/style
 
 
 
---  WEJDŹ NA NOWĄ, ALTERNATYWNĄ WERSJĘ WYKOPU --
 
-        Bez reklam
-        Bez spamu
-        Bez cenzury
+WEJDŹ NA NOWĄ, ALTERNATYWNĄ WERSJĘ WYKOPU:
+
+🧡  🧡 www.wykopx.pl 🧡 🧡 🧡
+
+    - Bez reklam
+    - Bez spamu
+    - Bez cenzury
 
 🧡  🧡 www.wykopx.pl 🧡 🧡 🧡
 
@@ -45,8 +48,13 @@ dodaje ponad 100 nowych funkcji oznaczonych jako ❎
 @description    https://userstyles.world/style/8174/wykop-x-style-3
 
 
-                ---- AUTOR ----
-@author         Wykop X <wykopx@gmail.com> | wykopx.pl/wiki
+---- AUTOR ----
+
+@author         Wykop X <wykopx@gmail.com> | wiki.wykopx.pl
 @homepageURL    http://wykopx.pl
 @supportURL     http://wykopx.pl
-                ---- AUTOR ---- 
+    
+---- AUTOR ---- 
+
+
+

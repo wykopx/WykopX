@@ -1,16 +1,21 @@
 /* ==UserStyle==
 @name           Wykop X Style 3
-@version        3.5.3
+@version        3.5.5
 
 @description    Wykop X Style 3 to 900 różnych funkcji zmieniających wykop!
 
---  WEJDŹ NA NOWĄ, ALTERNATYWNĄ WERSJĘ WYKOPU --
 
-            --  Bez reklam
-            --  Bez spamu
-            --  Bez cenzury
 
---- 🧡  🧡 www.wykopx.pl 🧡 🧡 🧡--- 
+WEJDŹ NA NOWĄ, ALTERNATYWNĄ WERSJĘ WYKOPU:
+
+🧡  🧡 www.wykopx.pl 🧡 🧡 🧡
+
+    - Bez reklam
+    - Bez spamu
+    - Bez cenzury
+
+🧡  🧡 www.wykopx.pl 🧡 🧡 🧡
+
 
 
 Chcesz zostać patronem projektu Wykop X?
@@ -65,7 +70,7 @@ https://wykopx.pl/skrypty
 
 
 @var range      HR_MICROBLOG_2026_09_24                       `🔹 NOWY MIKROBLOG I WPISY`                             [0, 0, 99900, 1, 'mm']
-@var checkbox   blockExploitLinks                                 `Blokuj exploity i złośliwe linki we wpisach`            1        
+@var checkbox   blockExploitLinks                                 `Blokuj exploity i złośliwe linki we wpisach` 1        
 
 @var checkbox   collapseEntryButtonHide                           `Ukryj przycisk zwijający cały wpis `                    1        
 @var checkbox   collapseCommentsButtonHide                        `Ukryj przycisk zwijający drzewo komentarzy `            1        
@@ -2764,6 +2769,7 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
 @var checkbox   swapYesNoButtonsPosition                        `Przycisk głównej akcji w komunikatach po lewej zamiast po prawej`                0       
 
 @var range      HR_FIXWYKOPBUGS                     `✔ NAPRAW BŁĘDY WYKOPU`                                                                                   [0, 0, 99900, 1, 'mm']
+@var checkbox   fixWhiteSelectBox                               `✔ Zmień biały kolor list <select> w Trybie Nocnym na ciemny ` 1   
 @var checkbox   fixMultipleErrorAlerts                          `✔ Ukrywaj zwielokrotnione alerty (np. '𝗪𝘆𝘀𝘁𝗮̨𝗽𝗶𝗹 𝗯𝗹𝗮̨𝗱') 🆗`                                    0   
 @var checkbox   fixCaseSensitiveTagsRedirection                 `✔🔹❎ Napraw przekierowania tagów z wielkimi literami (np. #Heheszki albo #WYKOP)`           0     
 
@@ -2772,14 +2778,17 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
 
 
 @var range      HR_NEW_NOTLOGGED                    `👤 DLA NIEZALOGOWANYCH`                                                    [0, 0, 99900, 1, 'mm']
-@var checkbox   notLoggedLoginButtonHide                         `🚫 Ukryj przycisk "Zaloguj się" (górna belka) (NOWE ⭐) 🆗`                                    1
-@var checkbox   notLoggedLeftMenuLoginButtonHide                 `🚫 Ukryj przycisk "Zaloguj się" (menu po lewej) (NOWE ⭐)`                                     0
+@var checkbox   notLoggedLoginButtonHide                         `🚫 Ukryj przycisk "Zaloguj się" (górna belka) 🆗`                                               1
 @var checkbox   notLoggedRegisterButtonHide                      `🚫 Ukryj przycisk "Zarejestruj się" (górna belka, na PC) 🆗`                                   1
+
+@var checkbox   notLoggedLeftMenuGoogleFbAppleButtonsHide        `🚫 Ukryj przyciski logowania Google/Facebook/Apple  w menu po lewej `                            1
+@var checkbox   notLoggedLeftMenuLoginButtonHide                 `🚫 Ukryj przycisk "Zaloguj się" (menu po lewej) `                                                0
+
 @var checkbox   notLoggedHomepagePromoYouCannotSeeHide           `🚫 Ukryj bloki "Nie widzisz nawet 30% treści" na głównej 🆗`                                   1
 @var checkbox   notLoggedHomepagePromoToRegisterHide             `🚫 Ukryj blok "Znalazłeś ciekawe treści? Podziel się nimi. Załóż konto" na głównej 🆗`         1
 @var checkbox   notLoggedPlusMinusButtonsHide                    `🚫 Nie pokazuj przycisków do plusowania/minusowania 🆗`                                        1
 @var checkbox   notLoggedVoteUpOnLinksHide                       `🚫 Ukryj przyciski "WYKOP" przy znaleziskach 🆗`                                               1
-@var checkbox   notLoggedMobileNavBarAddNewLinkButtonHide        `📱🚫 Ukryj przycisk "Dodaj znalezisko" (+) (belka mobilna na dole) (NOWE ⭐)`                             1
+@var checkbox   notLoggedMobileNavBarAddNewLinkButtonHide        `📱🚫 Ukryj przycisk "Dodaj znalezisko" (+) (belka mobilna na dole)`                             1
 
  
 
@@ -2839,7 +2848,7 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
 
 
 var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`                                                      [0, 0, 99900, 1, 'mm']
-@var checkbox   adsGDPRAlertHide                                 `🚫🕵️‍ Ukryj okno akceptowania ciasteczek "Dbamy o Twoją prywatność" 🆗`                            1
+@var checkbox   adsGDPRAlertHide                                 `🚫🕵️‍ Ukryj okno akceptowania ciasteczek "Dbamy o Twoją prywatność" 🆗` 1
 
 @var range     HR_HIDEADS                           `⛔ BLOKOWANIE REKLAM`                                                                                             [0, 0, 99900, 1, 'mm']
 @var checkbox  adsHide                                          `⛔ Blokuj reklamy 🆗` 1    
@@ -3979,7 +3988,6 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
     } 
     /* END skorka AMOLED */ 
 
-
     // Własne kolory tekstu, odnośników i tagów
     if(skinLight == "wlasne")
     {
@@ -4080,11 +4088,475 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
         } 
     } 
 
-    /* GENERAL */
     
+    
+    
+    
+    
+    
+    /* 
+       GENERAL STYLES
+       
+       PODSTAWOWE STYLE DLA WYKOPU - WYKOP X STYLE, BLANK
+       DLA WSZYSTKICH SKRYPTÓW WYKOP XS
+       DLA ROZSZERZENIA Awesome Wykop X Extension
+    */
+    
+    
+    
+    /* UKRYWANIE REKLAM */
+    /* 🆗 */
+    if(adsHide == 1)
+    {
+        /* 2026-06-22 nowe natrętne reklamy */
+        article:has(+ header),
+        
+        
+        /* NIEKTÓRYCH NAPISÓW "REKLAMA" NIE DA SIĘ USUNĄĆ */
+        [data-v-2d139c94]:before,
+        [data-v-bd3ef0f9]:before,
+        [data-v-30e10813]:before
+        {
+            content: "Wykop bez reklam - wejdź na www.wykopx.pl";
+            text-transform: none;
+        }
+        
+        /* 2026-09-24 aktualizacja nowych reklam */
+        nav > div::before,
+        nav > nav::before,
+        nav > span::before,
+        nav > header::before,
+        nav > article::before,
+        nav > section::before,
+        
+        header > div::before,
+        header > nav::before,
+        header > span::before,
+        header > header::before,
+        header > article::before,
+        header > section::before,
+        
+        article > div::before,
+        article > nav::before,
+        article > span::before,
+        article > header::before,
+        article > article::before,
+        article > section::before,
+
+        section > div::before,
+        section > nav::before,
+        section > span::before,
+        section > header::before,
+        section > article::before,
+        section > section::before,
+
+        
+        section[data-label="ad: top"] + section,
+        section[data-label="ad: top"] + aside,
+        section[data-label="ad: top"] + div,
+        a[href^="https://wykop.pl/comments/"][target="_blank"],
+        a[href^="https://wykop.pl/category/"][target="_blank"],
+        a[href^="https://wykop.pl/tag/"][target="_blank"],
+        a[href^="https://wykop.pl/article/"][target="_blank"],
+
+
+        section.stream > nav,
+        section.stream > span,
+        /*  section.stream > aside  --- ukrywa nowy panel z filtrami na strnie tagu */
+        
+        section.stream > div:not(.content), 
+        section.stream > div.content > div:not(.notification-wrapper),
+
+        section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),  
+
+        section.stream > header:not(.stream-top),
+        section.stream > section > div.content > section:not([id]),
+        
+        section.stream.tags-stream > article,
+        section.stream.microblog > article,
+
+        section > section.stream > div.content > nav,
+        section > section.stream > div.content > span 
+        section > section.stream > div.content > article,
+        section > section.stream > div.content > header:not(.stream-top),
+        
+        .stream section.stream > div.content > nav,
+        .stream section.stream > div.content > span,
+        .stream section.stream > div.content > article,
+        .stream section.stream > div.content > header:not(.stream-top),
+        
+        .sidebar > *:not(.custom-sidebar, .conversation-list, .ban-alert),
+        .sidebar > aside > section:not([id])
+        {
+            display: block!important;
+            height: 0px!important;
+            max-height: 0px!important;
+            overflow: hidden!important;
+            opacity: 0.01!important;
+            user-select: none!important;
+            pointer-events: none!important;
+        }
+        
+        section.block-alert
+        {
+            display: none;
+            border: 20px solid red!important;
+        }
+        
+        /* NIEKTÓRYCH NAPISÓW "REKLAMA" NIE DA SIĘ USUNĄĆ */
+        [data-v-2d139c94]:before,
+        [data-v-30e10813]:before
+        {
+            content: "Wykop bez reklam - wejdź na www.wykopx.pl";
+            text-transform: none;
+        }
+    
+        
+        
+        .mgid-platform,
+        .pub-slot-wrapper,
+        div.content + nav,
+        aside:has(.pub-slot-wrapper),
+        div.main-content > main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.register.observer.active,
+        div.main-content > main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.content.observer.active
+        {
+            display: none!important; min-height: 0px!important;
+        }
+
+        .pub-slot-wrapper:has(section.premium-pub.link-block)
+        { 
+            display: flex!important;
+        }
+    }
+    
+    
+    /* UKRYWANIE ZNALEZISK "WYKOP SPONSOROWANY" */
+    /* 🆗 + XS */
+    if(adsSponsoredLinksHide == 1)
+    {
+        .pub-slot-wrapper:has(section.premium-pub.link-block) 
+        {
+            if(dev) { border: 3px solid goldenrod!important; }
+            else { display: none!important; }
+        }
+    }
+
+
+    /* UKRYWANIE ZNALEZISK SPONSOROWANYCH */
+    if(adsRecommendedLinksHide == "niepokazuj")
+    {
+        section.stream section.link-block:has(li.recommend-label) 
+        {
+            if(dev) { border: 3px solid lime!important; }
+            else { display: none!important; }
+        }
+    } 
+    else if(adsRecommendedLinksHide == "wyszarzone")
+    {
+        section.stream section.link-block:has(li.recommend-label) { opacity: 0.3!important; } 
+        section.stream section.link-block:has(li.recommend-label):hover { opacity: 1!important; } 
+    }
+    
+    /* 
+       UKRYWANIE NOWEJ SEKCJI "WYBRANE DLA CIEBIE" (2026-05-05) 
+
+       .selected
+       <section class="selected"><header></header><div class="content"><section class="stream selected-stream"><div class="content"><section id="link-123456" class="link-block">
+    */
+    if(homepageSelectedForYouHide == 1)
+    {
+        section.stream section.selected,
+        aside.left-panel ul li.selected
+        {
+            display: none!important;
+        }
+    }
+    else
+    {
+        section.stream > div.content > section.selected
+        {
+            display: flex;
+            flex-direction: column;
+            
+            
+            opacity: 0.7;
+            
+            &:hover
+            {
+                opacity: 1;
+            }
+        }
+        section.selected > div.content > section.stream > div.content > section > section > article > section.selected
+        {
+            width: max-content;   
+        }
+        section.selected>header h3[data-v-8fbeeecc]:before
+        {
+            margin: none;
+        }
+        section.stream section.selected header h3
+        {
+            flex-wrap: wrap;
+        }
+       
+        section.stream section.selected header h3::after
+        {
+            content: 'Możesz wyłączyć tę sekcję w ustawieniach "Wykop X Style"';
+            
+            font-weight: 400;
+            color: var(--tuna);
+            font-size: 11px;
+            text-transform: none;
+
+            flex-basis: 100%;
+            width: 100%;
+        }
+    }
+    
+    
+    
+    /* 
+        UKRYWANIE LINKÓW DO ZŁOŚLIWYCH SKRYPTÓW (exploity) KTÓRE MOGĄ WYKRADAĆ DANE I DOSTĘP DO KONTA
+    */
+
+    if(blockExploitLinks==1)
+    {
+        a[href^="https://a/"],
+        a[onmouseover]
+        {
+            border: 1px solid goldenrod!important;
+            border-radius: 8px;
+            display: inline-block!important;
+            user-select: none!important;
+            pointer-events: none!important;
+            background-color: #393434!important;
+            padding-inline: 10px!important; 
+            color: red!important; 
+            margin-block: 20px;
+
+            &:after
+            {
+                z-index: 9;
+                display: block;
+                line-height: 1rem;
+                content: " Wykop X: Uważaj. Ten użytkownik dodał złośliwy link. Nie klikaj w niego. Niepożądane osoby mogą przejąć całkowitą kontrolę nad Twoim kontem i uzyskać dostęp do Twoich prywatnych informacji. Przejdź na www.wykopx.pl aby bezpiecznie przeglądać Wykop i nie być narażonym na oszustwa i utratę danych.";
+                color:  goldenrod;
+                font-size: 0.8rem;
+                padding-bottom: 10px;
+
+            }
+        }
+    }
+    
+        
+    /*
+        RODO SRODO
+        
+        - ukrywa przycisk ⚙ 𝗣𝗿𝗶𝘃𝗮𝗰𝘆 𝘀𝗲𝘁𝘁𝗶𝗻𝗴𝘀 
+        - ukrywa okienko "We value your privacy"
+        - przywraca możliwość scrollowania na całej stronie
+        
+        2026-09-26 Wykop dodał anty-blokowanie ukrywania okienka Privacy settings:
+        <div class="app_gdpr--SPx19r" style="display: block !important;">
+            <div class="ulheJb0a" style="display: flex;">
+        
+        // domyślnie włączone także w Wykop XS
+    */
+    body { overflow: initial!important; } 
+    
+    if(adsGDPRAlertHide == 1)
+    {
+        body > div[class^="app_gdpr"]
+        {           
+            & > *
+            {
+                display: none!important;
+            }
+        }
+    }
+    
+    /* 
+        UKRYCIE PRZYCISKÓW Google Accounts, Facebook Login, Apple login W LEWYM MENU 
+    */
+    if(notLoggedLeftMenuGoogleFbAppleButtonsHide==1)
+    {
+        body > section aside.left-panel > section.login > div.buttons { display: none!important; }
+    }
+    
+    
+    /* 
+        NOWY UI WYKOPU Z 2026-09-25
+        - przesunięcie przycisku do plusowania spod wpisu w prawy górny róg
+    */
+    if(plusesInTopRightCorner == 1)
+    {
+        /* PLUSY W PRAWYM GÓRNYM ROGU */
+        section.thread section.item>footer
+        {
+            position: static!important;
+            
+            section.voting
+            {
+                z-index: 5;
+                position: absolute;
+                top: -1px;
+                right: 0px;
+            }
+        }
+        section.entry-page section.item > footer section.voting
+        {
+            top: 2px;
+        }
+    }
+    
+    /*  */
+    if(fixWhiteSelectBox == 1)
+    {
+
+        select,
+        ::picker(select)
+        {
+            --_select-background-color: var(--whitish);
+            background-color: var(--_select-background-color)!important;
+            
+            appearance: base-select!important;
+            cursor: default!important;
+            border: 1px solid var(--cloud)!important;
+            border-radius: 6px!important;
+            
+            font-weight: 500!important;
+        }
+        
+        select::picker-icon {
+            display: none;
+        }
+        
+        ::picker(select)
+        {
+            flex-direction: column!important;
+        }
+        
+        select::picker(select)
+        {
+            border: 1px solid var(--cloud)!important;
+            border-radius: 0px 6px 6px 6px!important;
+            padding-top: 10px!important;
+            padding-bottom: 10px!important;
+            min-width: 130px!important;
+        }
+        
+        select:open::picker(select)
+        {
+            display: flex!important;
+        }
+
+        select:hover
+        {
+            border-color: var(--eastBay)!important;
+            background-color: var(--tropicalBlue)!important;
+        }
+        
+        option
+        {
+            background-color: var(--_select-background-color)!important;
+            color: var(--tuna)!important;
+            font-weight: 500!important;
+            
+            &:hover
+            {
+                color: var(--blackish)!important;
+                background-color: var(--loafer)!important;
+            }
+        }        
+    }
+    
+    
+    
+    /* 
+        NOWY MIKROBLOG 2026-09-24 
+        
+        - drzewo komentarzy
+        - 4 zdjęcia do wpisu
+        - plusy przesunięte na dół pod wpisem
+    */  
+    @media (min-width: 580px)
+    {
+        div.content > section.thread > section.item > header, 
+        section.entry > section.thread > section.item > header
+        {
+            margin-right: 10px;
+
+            & > div
+            {
+                width: 100%;
+                align-content: center;
+                margin-right: 40px;
+            }
+
+            div a.username + a[target="_blank"]
+            {
+                width: max-content;
+                display: inline flex;
+                flex-grow: 1;
+            }
+            /* tylko wpisy z numerkiem *******3 */
+            div a.username + a[target="_blank"][href*="55/"]::after,
+            div a.username + a[target="_blank"][href*="99/"]::after
+            {
+                content: "Otwórz wpis na: www.wykopx.pl" attr(href);
+                max-width: 39ch;
+                color: var(--apple);
+                display: inline-block;
+                white-space: nowrap;
+                overflow: hidden;
+                vertical-align: middle;
+                margin-left: auto;
+                cursor: text;
+                pointer-events: unset;
+                user-select: text;
+            }
+        }
+    }
 
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /* BASIC */
     body,
     body *,
     .switch label,
@@ -5571,7 +6043,7 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
             }
             main.main > section > div.content > section:is(.home-page, .hits-page, .upcoming-page) > section section.stream > div.content > section.link-block > aside:has(> section > button)
             {
-/*                 border: 2px solid red; */
+
             }
             main.main > section > div.content > section:is(.home-page, .hits-page, .upcoming-page) > section section.stream > div.content > section.link-block > aside > section 
             {
@@ -6134,219 +6606,6 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
     
         
 
-    
-    
-    /* 🆗 + XS */
-    if(adsHide == 1)
-    {
-        /* 2026-06-22 nowe natrętne reklamy */
-        article:has(+ header),
-        
-        
-        /* NIEKTÓRYCH NAPISÓW "REKLAMA" NIE DA SIĘ USUNĄĆ */
-        [data-v-2d139c94]:before,
-        [data-v-bd3ef0f9]:before,
-        [data-v-30e10813]:before
-        {
-            content: "Wykop bez reklam - wejdź na www.wykopx.pl";
-            text-transform: none;
-        }
-        
-        /* 2026-09-24 aktualizacja nowych reklam */
-        nav > div::before,
-        nav > nav::before,
-        nav > span::before,
-        nav > header::before,
-        nav > article::before,
-        nav > section::before,
-        
-        header > div::before,
-        header > nav::before,
-        header > span::before,
-        header > header::before,
-        header > article::before,
-        header > section::before,
-        
-        article > div::before,
-        article > nav::before,
-        article > span::before,
-        article > header::before,
-        article > article::before,
-        article > section::before,
-
-        section > div::before,
-        section > nav::before,
-        section > span::before,
-        section > header::before,
-        section > article::before,
-        section > section::before,
-
-        
-        section[data-label="ad: top"] + section,
-        section[data-label="ad: top"] + aside,
-        section[data-label="ad: top"] + div,
-        a[href^="https://wykop.pl/comments/"][target="_blank"],
-        a[href^="https://wykop.pl/category/"][target="_blank"],
-        a[href^="https://wykop.pl/tag/"][target="_blank"],
-        a[href^="https://wykop.pl/article/"][target="_blank"],
-
-
-        section.stream > nav,
-        section.stream > span,
-        section.stream > aside,
-        section.stream > div:not(.content), 
-        section.stream > div.content > div:not(.notification-wrapper),
-
-        section.stream > div.content > section:not([id], .no-items, .related-link, .item, .selected),  
-
-        section.stream > header:not(.stream-top),
-        section.stream > section > div.content > section:not([id]),
-        
-        section.stream.tags-stream > article,
-        section.stream.microblog > article,
-
-        section > section.stream > div.content > nav,
-        section > section.stream > div.content > span 
-        section > section.stream > div.content > article,
-        section > section.stream > div.content > header:not(.stream-top),
-        
-        .stream section.stream > div.content > nav,
-        .stream section.stream > div.content > span,
-        .stream section.stream > div.content > article,
-        .stream section.stream > div.content > header:not(.stream-top),
-        
-        .sidebar > *:not(.custom-sidebar, .conversation-list, .ban-alert),
-        .sidebar > aside > section:not([id])
-        {
-            display: block!important;
-            height: 0px!important;
-            max-height: 0px!important;
-            overflow: hidden!important;
-            opacity: 0.01!important;
-            user-select: none!important;
-            pointer-events: none!important;
-        }
-        
-        section.block-alert
-        {
-            display: none;
-            border: 20px solid red!important;
-        }
-        
-        /* NIEKTÓRYCH NAPISÓW "REKLAMA" NIE DA SIĘ USUNĄĆ */
-        [data-v-2d139c94]:before,
-        [data-v-30e10813]:before
-        {
-            content: "Wykop bez reklam - wejdź na www.wykopx.pl";
-            text-transform: none;
-        }
-    
-        
-        
-        .mgid-platform,
-        .pub-slot-wrapper,
-        div.content + nav,
-        aside:has(.pub-slot-wrapper),
-        div.main-content > main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.register.observer.active,
-        div.main-content > main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.content.observer.active
-        {
-            display: none!important; min-height: 0px!important;
-        }
-
-        .pub-slot-wrapper:has(section.premium-pub.link-block)
-        { 
-            display: flex!important;
-        }
-    }
-    
-    /* 🆗 + XS */
-    if(adsSponsoredLinksHide == 1)
-    {
-        .pub-slot-wrapper:has(section.premium-pub.link-block) 
-        {
-            if(dev) { border: 3px solid goldenrod!important; }
-            else { display: none!important; }
-        }
-    }
-
-
-
-
-    if(adsRecommendedLinksHide == "niepokazuj")
-    {
-        section.stream section.link-block:has(li.recommend-label) 
-        {
-            if(dev) { border: 3px solid lime!important; }
-            else { display: none!important; }
-        }
-    } 
-    else if(adsRecommendedLinksHide == "wyszarzone")
-    {
-        section.stream section.link-block:has(li.recommend-label) { opacity: 0.3!important; } 
-        section.stream section.link-block:has(li.recommend-label):hover { opacity: 1!important; } 
-    }
-
-
-
-
-    
-    /* 
-       .selected
-       UKRYWANIE NOWEJ SEKCJI "WYBRANE DLA CIEBIE" (2026-05-05) 
-       <section class="selected"><header></header><div class="content"><section class="stream selected-stream"><div class="content"><section id="link-123456" class="link-block">
-    */
-    if(homepageSelectedForYouHide == 1)
-    {
-        section.stream section.selected,
-        aside.left-panel ul li.selected
-        {
-            display: none!important;
-        }
-    }
-    else
-    {
-        section.stream > div.content > section.selected
-        {
-            display: flex;
-            flex-direction: column;
-            
-            
-            opacity: 0.7;
-            
-            &:hover
-            {
-                opacity: 1;
-            }
-        }
-        section.selected > div.content > section.stream > div.content > section > section > article > section.selected
-        {
-            width: max-content;   
-        }
-        section.selected>header h3[data-v-8fbeeecc]:before
-        {
-            margin: none;
-        }
-        section.stream section.selected header h3
-        {
-            flex-wrap: wrap;
-        }
-       
-        section.stream section.selected header h3::after
-        {
-            content: 'Możesz wyłączyć tę sekcję w ustawieniach "Wykop X Style"';
-            
-            font-weight: 400;
-            color: var(--tuna);
-            font-size: 11px;
-            text-transform: none;
-
-            flex-basis: 100%;
-            width: 100%;
-        }
-    }
-    
-    
-    
 
 
 
@@ -8389,7 +8648,6 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
             padding-top: 25px;
             border-top: 1px solid var(--userCustomColorAccent);
             border-bottom: 1px solid red;
-/*             box-shadow: 2px 6px 5px rgba(0, 0, 0, 0.3); */
         } 
 
         /* lewy border wyróżniający wpisy autora i moje własne */
@@ -10781,22 +11039,7 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
     
     
     
-    
-    /*
-        Ukrywa przycisk ⚙ 𝗣𝗿𝗶𝘃𝗮𝗰𝘆 𝘀𝗲𝘁𝘁𝗶𝗻𝗴𝘀 
-        ukrywa okienko "We value your privacy"
-        przywraca możliwość scrollowania na całej stronie
-        
-        // domyślnie włączone także w Wykop XS
-    */
-    if(adsGDPRAlertHide == 1)
-    {
-        body > div[class^="app_gdpr"] { display: none!important; }
-    }
-    body { overflow: initial!important; } 
-    
-    
-    
+
     
     
  
@@ -11045,7 +11288,6 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
         grid-column: 1 / 5
         align-items: end;
         display: flex;
-        //border: 1px solid red;
     }
     
     if(notatkowatorStyle == "obok_nicka_druga_linia")
@@ -13766,12 +14008,13 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
     {
 
 
-/* :has(section.notify:has(p.new-link-with-observed-tag)) */
-/* TODO          li.notifications.tags section.dropdown-body section.notifications section.notifications-stream > div.content:not(:has(section.notify))
-          {
-             border: 5px solid red i;
-          } 
- */   
+    /* :has(section.notify:has(p.new-link-with-observed-tag)) */
+
+    /* TODO          li.notifications.tags section.dropdown-body section.notifications section.notifications-stream > div.content:not(:has(section.notify))
+              {
+                 border: 5px solid red i;
+              } 
+     */   
     
         /* HEADER DLA POWIADOMIEŃ */
         li.notifications.tags section.dropdown-body section.notifications section.notifications-stream > div.content:has(p.new-entry-with-observed-tag):before,
@@ -15619,7 +15862,6 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
         a[href={"\/ludzie\/" + myUsername}] > span:first-child,       
         div.wrapper a[href={"\/ludzie\/" + myUsername}]
         {
-            border: 10px solid red!important;
             font-size: 0px!important;
         } 
 
@@ -16148,7 +16390,7 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
             { 
                 border: 10px solid red!important;
                 opacity: 0.69!important;
-            if(blackListTesting == 0) { display: none!important; } 
+                if(blackListTesting == 0) { display: none!important; } 
             } 
         } 
     } 
@@ -20920,7 +21162,7 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
     /* VARIABLES */
 
     versor = "style"; // "style", "blank", "block"
-    version = "3.5.3";   
+    version = "3.5.5";   
     /* xblocker = "2.49" */
     
     
@@ -21560,79 +21802,7 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
 
 
 
-    /* 
-        NOWY MIKROBLOG 2026-09-24 
-        
-        - drzewo komentarzy
-        - 4 zdjęcia do wpisu
-        - plusy przesunięte na dół pod wpisem
-        
-    */
-    if(plusesInTopRightCorner == 1)
-    {
 
-        /* PLUSY W PRAWYM GÓRNYM ROGU */
-        section.thread section.item>footer
-        {
-            position: static!important;
-            
-            section.voting
-            {
-                z-index: 5;
-                position: absolute;
-                top: -1px;
-                right: 0px;
-            }
-        }
-        section.entry-page section.item > footer section.voting
-        {
-            top: 2px;
-        }
-    }
-    
-    
-    @media (min-width: 580px)
-    {
-        section.thread > section.item > header 
-        {
-            margin-right: 10px;
-
-            & > div
-            {
-                width: 100%;
-                align-content: center;
-                margin-right: 40px;
-            }
-
-            div a.username + a[target="_blank"]
-            {
-                width: max-content;
-                display: inline flex;
-                flex-grow: 1;
-            }
-            /* tylko wpisy z numerkiem *******3 */
-            div a.username + a[target="_blank"][href*="11/"]::after,
-            div a.username + a[target="_blank"][href*="33/"]::after,
-            div a.username + a[target="_blank"][href*="55/"]::after,
-            div a.username + a[target="_blank"][href*="77/"]::after,
-            div a.username + a[target="_blank"][href*="99/"]::after
-            {
-                content: "Otwórz wpis na: www.wykopx.pl" attr(href);
-                max-width: 39ch;
-                color: var(--apple);
-                display: inline-block;
-                white-space: nowrap;
-                overflow: hidden;
-                vertical-align: middle;
-                margin-left: auto;
-                cursor: text;
-                pointer-events: unset;
-                user-select: text;
-            }
-        }
-    }
-
-    
                  
     if(plusesColor == "wykop2024")             { body { --plusesColor: #71be71; } body[data-night-mode] { --plusesColor: #71be71; } }
     else if(plusesColor == "wykop2022")        { body { --plusesColor: rgb(59, 145, 95); } body[data-night-mode] { --plusesColor: rgb(57, 166, 132); } }  /* TODO */
@@ -21677,26 +21847,6 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
     {
         section.comments > section.thread > section.item > button.toggle { display: none!important; }
     } 
-
-    if(blockExploitLinks==1)
-    {
-            section.entry-comment-page
-            {
-                border: 10px solid red!important;
-                display: block!important;
-                user-select: none!important;
-                pointer-events: none!important;
-                background-color: red!important;
-                color: black!important; 
-
-                &:after
-                {
-                    content: " (Złośliwy link) ";
-                    color: red;
-                }
-            }
-    }
-
 }
 
 
