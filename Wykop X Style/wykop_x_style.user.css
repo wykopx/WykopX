@@ -4087,6 +4087,7 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
             --transition-property: all;
         } 
     } 
+    categoryMenuWykopSectionLinks = categoryMenuRankingHide + categoryMenuBadgesHide + categoryMenuFAQHide
 
     
     
@@ -4102,7 +4103,7 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
        DLA ROZSZERZENIA Awesome Wykop X Extension
     */
     
-    
+
     
     /* UKRYWANIE REKLAM */
     /* 🆗 */
@@ -4185,7 +4186,7 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
         .stream section.stream > div.content > article,
         .stream section.stream > div.content > header:not(.stream-top),
         
-        .sidebar > *:not(.custom-sidebar, .conversation-list, .ban-alert),
+      .sidebar > *:not(.custom-sidebar, .conversation-list, .ban-alert),
         .sidebar > aside > section:not([id])
         {
             display: block!important;
@@ -4470,7 +4471,7 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
         }        
     }
     
-    
+
     
     /* 
         NOWY MIKROBLOG 2026-09-24 
@@ -4518,12 +4519,78 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
         }
     }
 
+
+    // categoryMenuWykopSectionLinks = 3;
+    if(categoryMenuWykopSectionLinks == 3)
+    {
+        aside.left-panel > section.fixed:has(li.ranking)
+        {
+            display: none !important
+        }
+    }
     
     
+    /* PANEL CENZUROWANYCH TREŚCI ZMUSZAJĄCY DO ZALOGOWANIA */
+    section:is(.tag-page, .link-page) .force-login-access-skeleton .info-box,
+    .modal.login .info-box p
+    {
+        font-size: 0;
+    }
+    .tag-page .force-login-access-skeleton .info-box a
+    {
+        display: none;
+    }
+    .modal.login .info-box p::before,
+    .modal.login .info-box p::after,
+    .force-login-access-skeleton .info-box p::before,
+    .force-login-access-skeleton .info-box p::after
+    {
+        font-size: 0.8rem;
+    }
+    .modal.login .info-box p::after,
+    .force-login-access-skeleton .info-box p::after
+    {
+        font-weight: bolder;
+    }
+    .tag-page .force-login-access-skeleton .info-box p::before
+    {
+        content: ' Wykop cenzuruje ten #tag. Na Wykopie musisz się zalogować by go otworzyć. Wszystkie ocenzurowane i ukryte #tagi są jednak dostępne dla niezalogowanych na stronie wykopx.pl. ';
+    }
+    .tag-page .force-login-access-skeleton .info-box p::after
+    {
+        content: ' Dodaj w adresie "wykop.pl" literę "x" aby przejść na wykopx.pl/tag/... i wejdź na tag bez cenzury i bez reklam.';
+    }
+    .link-page .force-login-access-skeleton .info-box p::before
+    {
+        content: ' Wykop cenzuruje ponad 30% znalezisk. Wszystkie ocenzurowane i ukryte znaleziska są jednak dostępne dla niezalogowanych na stronie wykopx.pl. ';
+    }
+    .link-page .force-login-access-skeleton .info-box p::after
+    {
+        content: ' Dodaj w adresie "wykop.pl" literę "x" aby przejść na wykopx.pl/link/... i otwórz znalezisko bez cenzury i bez reklam';
+    }
+    
+    .modal.login .info-box p::before
+    {
+       content: ' Ta strona jest ocenzurowana przez Wykop. Możesz jednak otworzyć ją na stronie Wykop X. ';
+    }
+    .modal.login .info-box p::after
+    {
+        content: ' Wejdź na "wykopx.pl" i zobacz to bez cenzury.';
+        font-weight: bolder;
+    }
+
+
+    /* UKRYWAJ WPISY ZE SPAMEM Z WORDZIEL.PL */
+    if(wordzielHide == 1)
+    {
+        main.main > section > div.content > section:is(.microblog-page) > section section.stream > div.content > section.entry:not(.own):not(.reply):has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper a:is( [href^="/tag/43"], [href^="/tag/44"], [href^="/tag/45"], [href^="/tag/46"], [href^="/tag/47"],[href^="/tag/48"],[href^="/tag/49"],[href^="/tag/5"],[href^="/tag/6"],[href^="/tag/7"],[href="https:\/\/wordziel.pl\/"], [href="https:\/\/www.flagle.io\/"]))
+        {
+            display: none!important;
+        }
+    }
     
     
-    
-    
+    /* END GENERAL */
     
     
     
@@ -6947,16 +7014,9 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
 
 
 
-        categoryMenuWykopSectionLinks = categoryMenuRankingHide + categoryMenuBadgesHide + categoryMenuFAQHide
 
-        if(categoryMenuWykopSectionLinks == 3)
-        {
-            aside.left-panel > section.fixed:has(li.ranking)
-            {
-                display: none !important
-            }
-        }
-        else
+
+        if(categoryMenuWykopSectionLinks != 1)
         {
             // PRZYCISK RANKING W MENU BOCZNYM
             if(categoryMenuRankingHide == 1)
@@ -21741,56 +21801,6 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
     }
 
         
-    /* PANEL CENZUROWANYCH TREŚCI ZMUSZAJĄCY DO ZALOGOWANIA */
-    section:is(.tag-page, .link-page) .force-login-access-skeleton .info-box,
-    .modal.login .info-box p
-    {
-        font-size: 0;
-    }
-    .tag-page .force-login-access-skeleton .info-box a
-    {
-        display: none;
-    }
-    .modal.login .info-box p::before,
-    .modal.login .info-box p::after,
-    .force-login-access-skeleton .info-box p::before,
-    .force-login-access-skeleton .info-box p::after
-    {
-        font-size: 0.8rem;
-    }
-    .modal.login .info-box p::after,
-    .force-login-access-skeleton .info-box p::after
-    {
-        font-weight: bolder;
-    }
-    .tag-page .force-login-access-skeleton .info-box p::before
-    {
-        content: ' Wykop cenzuruje ten #tag. Na Wykopie musisz się zalogować by go otworzyć. Wszystkie ocenzurowane i ukryte #tagi są jednak dostępne dla niezalogowanych na stronie wykopx.pl. ';
-    }
-    .tag-page .force-login-access-skeleton .info-box p::after
-    {
-        content: ' Dodaj w adresie "wykop.pl" literę "x" aby przejść na wykopx.pl/tag/... i wejdź na tag bez cenzury i bez reklam.';
-    }
-    .link-page .force-login-access-skeleton .info-box p::before
-    {
-        content: ' Wykop cenzuruje ponad 30% znalezisk. Wszystkie ocenzurowane i ukryte znaleziska są jednak dostępne dla niezalogowanych na stronie wykopx.pl. ';
-    }
-    .link-page .force-login-access-skeleton .info-box p::after
-    {
-        content: ' Dodaj w adresie "wykop.pl" literę "x" aby przejść na wykopx.pl/link/... i otwórz znalezisko bez cenzury i bez reklam';
-    }
-    
-    .modal.login .info-box p::before
-    {
-       content: ' Ta strona jest ocenzurowana przez Wykop. Możesz jednak otworzyć ją na stronie Wykop X. ';
-    }
-    .modal.login .info-box p::after
-    {
-        content: ' Wejdź na "wykopx.pl" i zobacz to bez cenzury.';
-        font-weight: bolder;
-    }
-
-
 
 
 
