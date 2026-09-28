@@ -6132,6 +6132,8 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
         } 
     }
     
+        
+
     
     
     /* 🆗 + XS */
@@ -21578,11 +21580,58 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
             {
                 z-index: 5;
                 position: absolute;
-                top: 0px;
+                top: -1px;
                 right: 0px;
             }
         }
+        section.entry-page section.item > footer section.voting
+        {
+            top: 2px;
+        }
     }
+    
+    
+    @media (min-width: 580px)
+    {
+        section.thread > section.item > header 
+        {
+            margin-right: 10px;
+
+            & > div
+            {
+                width: 100%;
+                align-content: center;
+                margin-right: 40px;
+            }
+
+            div a.username + a[target="_blank"]
+            {
+                width: max-content;
+                display: inline flex;
+                flex-grow: 1;
+            }
+            /* tylko wpisy z numerkiem *******3 */
+            div a.username + a[target="_blank"][href*="11/"]::after,
+            div a.username + a[target="_blank"][href*="33/"]::after,
+            div a.username + a[target="_blank"][href*="55/"]::after,
+            div a.username + a[target="_blank"][href*="77/"]::after,
+            div a.username + a[target="_blank"][href*="99/"]::after
+            {
+                content: "Otwórz wpis na: www.wykopx.pl" attr(href);
+                max-width: 39ch;
+                color: var(--apple);
+                display: inline-block;
+                white-space: nowrap;
+                overflow: hidden;
+                vertical-align: middle;
+                margin-left: auto;
+                cursor: text;
+                pointer-events: unset;
+                user-select: text;
+            }
+        }
+    }
+
     
                  
     if(plusesColor == "wykop2024")             { body { --plusesColor: #71be71; } body[data-night-mode] { --plusesColor: #71be71; } }
