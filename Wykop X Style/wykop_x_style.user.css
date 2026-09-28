@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style 3
-@version        3.5.0
+@version        3.5.3
 
 @description    Wykop X Style 3 to 900 różnych funkcji zmieniających wykop!
 
@@ -15,7 +15,6 @@
 
 Chcesz zostać patronem projektu Wykop X?
 Doborowolne wsparcie na stronie: https://buycoffee.to/wykopx
-
 
 
 
@@ -64,9 +63,10 @@ https://wykopx.pl/skrypty
 
 
 
-          
 
 @var range      HR_MICROBLOG_2026_09_24                       `🔹 NOWY MIKROBLOG I WPISY`                             [0, 0, 99900, 1, 'mm']
+@var checkbox   blockExploitLinks                                 `Blokuj exploity i złośliwe linki we wpisach`            1        
+
 @var checkbox   collapseEntryButtonHide                           `Ukryj przycisk zwijający cały wpis `                    1        
 @var checkbox   collapseCommentsButtonHide                        `Ukryj przycisk zwijający drzewo komentarzy `            1        
 
@@ -6140,33 +6140,46 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
         /* 2026-06-22 nowe natrętne reklamy */
         article:has(+ header),
         
-        /* 2026-09-24 aktualizacja nowych reklam */
-
         
-        nav > span::before,
-        nav > section::before,
+        /* NIEKTÓRYCH NAPISÓW "REKLAMA" NIE DA SIĘ USUNĄĆ */
+        [data-v-2d139c94]:before,
+        [data-v-bd3ef0f9]:before,
+        [data-v-30e10813]:before
+        {
+            content: "Wykop bez reklam - wejdź na www.wykopx.pl";
+            text-transform: none;
+        }
+        
+        /* 2026-09-24 aktualizacja nowych reklam */
+        nav > div::before,
         nav > nav::before,
+        nav > span::before,
         nav > header::before,
         nav > article::before,
+        nav > section::before,
         
-        article > span::before,
-        article > nav::before,
-        article > section::before,
-        article > header::before,
-        article > article::before,
-        
-        section > span::before,
-        section > nav::before,
-        section > section::before,
-        section > header::before,
-        section > article::before,
-        
-        header > span::before,
+        header > div::before,
         header > nav::before,
-        header > section::before,
+        header > span::before,
         header > header::before,
         header > article::before,
+        header > section::before,
+        
+        article > div::before,
+        article > nav::before,
+        article > span::before,
+        article > header::before,
+        article > article::before,
+        article > section::before,
 
+        section > div::before,
+        section > nav::before,
+        section > span::before,
+        section > header::before,
+        section > article::before,
+        section > section::before,
+
+        
         section[data-label="ad: top"] + section,
         section[data-label="ad: top"] + aside,
         section[data-label="ad: top"] + div,
@@ -7784,7 +7797,7 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
     /* UKRYWAJ WPISY ZE SPAMEM Z WORDZIEL.PL */
     if(wordzielHide == 1)
     {
-        main.main > section > div.content > section:is(.microblog-page) > section section.stream > div.content > section.entry:not(.own):not(.reply):has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper a:is( [href^="/tag/35"], [href^="/tag/36"], [href^="/tag/37"], [href^="/tag/38"], [href^="/tag/39"], [href="https:\/\/wordziel.pl\/"], [href="https:\/\/www.flagle.io\/"]))
+        main.main > section > div.content > section:is(.microblog-page) > section section.stream > div.content > section.entry:not(.own):not(.reply):has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper a:is( [href^="/tag/43"], [href^="/tag/44"], [href^="/tag/45"], [href^="/tag/46"], [href^="/tag/47"],[href^="/tag/48"],[href^="/tag/49"],[href^="/tag/5"],[href^="/tag/6"],[href^="/tag/7"],[href="https:\/\/wordziel.pl\/"], [href="https:\/\/www.flagle.io\/"]))
         {
             display: none!important;
         }
@@ -20905,7 +20918,7 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
     /* VARIABLES */
 
     versor = "style"; // "style", "blank", "block"
-    version = "3.5.0";   
+    version = "3.5.3";   
     /* xblocker = "2.49" */
     
     
@@ -21615,6 +21628,25 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
     {
         section.comments > section.thread > section.item > button.toggle { display: none!important; }
     } 
+
+    if(blockExploitLinks==1)
+    {
+            section.entry-comment-page
+            {
+                border: 10px solid red!important;
+                display: block!important;
+                user-select: none!important;
+                pointer-events: none!important;
+                background-color: red!important;
+                color: black!important; 
+
+                &:after
+                {
+                    content: " (Złośliwy link) ";
+                    color: red;
+                }
+            }
+    }
 
 }
 
