@@ -79,42 +79,47 @@ description     https://wykopx.pl/styl
 
 @var checkbox   dev                                         `Tryb developerski do testowania`                                 0
 
-
-
-
 @preprocessor   stylus
 @namespace      userstyles.world/user/wykopchanger
 @license        No License (YOU CAN USE THIS CODE ONLY IN STYLUS EXTENSIONS. You are NOT ALLOWED TO copy, share and use any part of this code anywhere else without author's written permission)
 
-
-
-
-
 ==/UserStyle== */
+
+
+
+
+
+
 
 @-moz-document url-prefix("https://wykop.pl")
 {
     adsHide = 1;
     adsSponsoredLinksHide = 1;
+    
+    wordzielHide = 1;
+    adsFralioHide = 1;
+
+
     homepageSelectedForYouHide = 1;
     blockExploitLinks = 1;
     adsGDPRAlertHide = 1;
     notLoggedLeftMenuGoogleFbAppleButtonsHide = 1;
     plusesInTopRightCorner = 1;
     fixWhiteSelectBox = 1;
-    wordzielHide = 1;
     categoryMenuWykopSectionLinks = 3;
 
 
     /* 
-       GENERAL STYLES
+
+       === START GENERAL FOR WYKOP X STYLE, WYKOP XS, AWESOME WYKOP EXTENSION ===
+
        
        PODSTAWOWE STYLE DLA WYKOPU - WYKOP X STYLE, BLANK
        DLA WSZYSTKICH SKRYPTÓW WYKOP XS
        DLA ROZSZERZENIA Awesome Wykop X Extension
     */
     
-    
+
     
     /* UKRYWANIE REKLAM */
     /* 🆗 */
@@ -196,8 +201,8 @@ description     https://wykopx.pl/styl
         .stream section.stream > div.content > span,
         .stream section.stream > div.content > article,
         .stream section.stream > div.content > header:not(.stream-top),
-        
-      .sidebar > *:not(.custom-sidebar, .conversation-list, .ban-alert),
+
+        .sidebar > *:not(.custom-sidebar, .conversation-list, .ban-alert),
         .sidebar > aside > section:not([id])
         {
             display: block!important;
@@ -230,45 +235,177 @@ description     https://wykopx.pl/styl
         div.content + nav,
         aside:has(.pub-slot-wrapper),
         div.main-content > main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.register.observer.active,
-        div.main-content > main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.content.observer.active
+        div.main-content > main.main > section > div.content > section.home-page > section.home > section.stream > div.content > section.content.observer.active,
+        
+         /* UKRYWANIE ZNALEZISK "WYKOP SPONSOROWANY" */
+        .pub-slot-wrapper:has(section.premium-pub.link-block) 
         {
             display: none!important; min-height: 0px!important;
         }
-
-        .pub-slot-wrapper:has(section.premium-pub.link-block)
-        { 
-            display: flex!important;
-        }
     }
     
     
-    /* UKRYWANIE ZNALEZISK "WYKOP SPONSOROWANY" */
-    /* 🆗 + XS */
-    if(adsSponsoredLinksHide == 1)
+
+
+
+
+
+
+    /* 
+        NOWY MIKROBLOG 2026-09-24 
+        
+        - drzewo komentarzy
+        - 4 zdjęcia do wpisu
+        - plusy przesunięte na dół pod wpisem
+    */  
+    @media (min-width: 580px)
     {
-        .pub-slot-wrapper:has(section.premium-pub.link-block) 
+        div.content > section.thread > section.item > header, 
+        section.entry > section.thread > section.item > header
         {
-            if(dev) { border: 3px solid goldenrod!important; }
-            else { display: none!important; }
+            margin-right: 10px;
+
+            & > div
+            {
+                width: 100%;
+                align-content: center;
+                margin-right: 40px;
+            }
+
+            div a.username + a[target="_blank"]
+            {
+                width: max-content;
+                display: inline flex;
+                flex-grow: 1;
+            }
+            /* tylko wpisy z numerkiem *******3 */
+            div a.username + a[target="_blank"][href*="55/"]::after,
+            div a.username + a[target="_blank"][href*="99/"]::after
+            {
+                content: "Otwórz wpis na: www.wykopx.pl" attr(href);
+                max-width: 39ch;
+                color: var(--apple);
+                display: inline-block;
+                white-space: nowrap;
+                overflow: hidden;
+                vertical-align: middle;
+                margin-left: auto;
+                cursor: text;
+                pointer-events: unset;
+                user-select: text;
+            }
         }
     }
 
-
-    /* UKRYWANIE ZNALEZISK SPONSOROWANYCH */
-    if(adsRecommendedLinksHide == "niepokazuj")
+    /* PANEL CENZUROWANYCH TREŚCI ZMUSZAJĄCY DO ZALOGOWANIA */
+    section:is(.tag-page, .link-page) .force-login-access-skeleton .info-box,
+    .modal.login .info-box p {  font-size: 0;    }
+    .tag-page .force-login-accebox ass-skeleton .info-box a    {        display: none;    }
+    .modal.login .info-box p::before,
+    .modal.login .info-box p::after,
+    .force-login-access-skeleton .info-box p::before,
+    .force-login-access-skeleton .info-box p::after    {        font-size: 0.8rem;    }
+    .modal.login .info-box p::after,
+    .force-login-access-skeleton .info-box p::after    {        font-weight: bolder;    }
+    .tag-page .force-login-access-skeleton .info-box p::before
     {
-        section.stream section.link-block:has(li.recommend-label) 
-        {
-            if(dev) { border: 3px solid lime!important; }
-            else { display: none!important; }
-        }
-    } 
-    else if(adsRecommendedLinksHide == "wyszarzone")
+        content: ' Wykop cenzuruje ten #tag. Na Wykopie musisz się zalogować by go otworzyć. Wszystkie ocenzurowane i ukryte #tagi są jednak dostępne dla niezalogowanych na stronie wykopx.pl. ';
+    }
+    .tag-page .force-login-access-skeleton .info-box p::after
     {
-        section.stream section.link-block:has(li.recommend-label) { opacity: 0.3!important; } 
-        section.stream section.link-block:has(li.recommend-label):hover { opacity: 1!important; } 
+        content: ' Dodaj w adresie "wykop.pl" literę "x" aby przejść na wykopx.pl/tag/... i wejdź na tag bez cenzury i bez reklam.';
+    }
+    .link-page .force-login-access-skeleton .info-box p::before
+    {
+        content: ' Wykop cenzuruje ponad 30% znalezisk. Wszystkie ocenzurowane i ukryte znaleziska są jednak dostępne dla niezalogowanych na stronie wykopx.pl. ';
+    }
+    .link-page .force-login-access-skeleton .info-box p::after
+    {
+        content: ' Dodaj w adresie "wykop.pl" literę "x" aby przejść na wykopx.pl/link/... i otwórz znalezisko bez cenzury i bez reklam';
     }
     
+    .modal.login .info-box p::before
+    {
+       content: ' Ta strona jest ocenzurowana przez Wykop. Możesz jednak otworzyć ją na stronie Wykop X. ';
+    }
+    .modal.login .info-box p::after
+    {
+        content: ' Wejdź na "wykopx.pl" i zobacz to bez cenzury.';
+        font-weight: bolder;
+    }
+
+
+   /*
+        RODO SRODO
+        
+        - ukrywa przycisk ⚙ 𝗣𝗿𝗶𝘃𝗮𝗰𝘆 𝘀𝗲𝘁𝘁𝗶𝗻𝗴𝘀 
+        - ukrywa okienko "We value your privacy"
+        - przywraca możliwość scrollowania na całej stronie
+        
+        2026-09-26 Wykop dodał anty-blokowanie ukrywania okienka Privacy settings:
+        <div class="app_gdpr--SPx19r" style="display: block !important;">
+            <div class="ulheJb0a" style="display: flex;">
+        
+        // domyślnie włączone także w Wykop XS
+    */
+    body { overflow: initial!important; } 
+    
+
+    
+    if(adsGDPRAlertHide == 1)
+    {
+    /* --- REMOVE IF --- */
+
+        body > div[class^="app_gdpr"]
+        {           
+            & > *
+            {
+                display: none!important;
+            }
+        }
+    }
+    
+    /* 
+        UKRYCIE PRZYCISKÓW Google Accounts, Facebook Login, Apple login W LEWYM MENU 
+    */
+    
+    if(notLoggedLeftMenuGoogleFbAppleButtonsHide==1)
+    {
+    /* --- REMOVE IF --- */
+
+        body > section aside.left-panel > section.login > div.buttons { display: none!important; }
+    }
+    
+    
+    /*  
+        PLUSY W PRAWYM GÓRNYM ROGU 
+        NOWY UI WYKOPU Z 2026-09-25
+        - przesunięcie przycisku do plusowania spod wpisu w prawy górny róg
+    */
+    if(plusesInTopRightCorner == 1)
+    {
+    /* --- REMOVE IF --- */
+
+        
+        section.thread section.item>footer
+        {
+            position: static!important;
+            
+            section.voting
+            {
+                z-index: 5;
+                position: absolute;
+                top: -1px;
+                right: 0px;
+            }
+        }
+        section.entry-page section.item > footer section.voting
+        {
+            top: 2px;
+        }
+    }
+    
+
     /* 
        UKRYWANIE NOWEJ SEKCJI "WYBRANE DLA CIEBIE" (2026-05-05) 
 
@@ -277,12 +414,18 @@ description     https://wykopx.pl/styl
     */
     if(homepageSelectedForYouHide == 1)
     {
+    /* --- REMOVE IF --- */
+
+
         section.stream section.selected,
         aside.left-panel ul li.selected
         {
             display: none!important;
         }
     }
+
+
+    /* --- REMOVE WHOLE else BELOW --- */
     else
     {
         section.stream > div.content > section.selected
@@ -324,106 +467,17 @@ description     https://wykopx.pl/styl
             width: 100%;
         }
     }
-    
-    
-    
-    /* 
-        UKRYWANIE LINKÓW DO ZŁOŚLIWYCH SKRYPTÓW (exploity) KTÓRE MOGĄ WYKRADAĆ DANE I DOSTĘP DO KONTA
-    */
+    /* --- REMOVE WHOLE else ABOVE --- */
 
-    if(blockExploitLinks==1)
-    {
-        a[href^="https://a/"],
-        a[onmouseover]
-        {
-            border: 1px solid goldenrod!important;
-            border-radius: 8px;
-            display: inline-block!important;
-            user-select: none!important;
-            pointer-events: none!important;
-            background-color: #393434!important;
-            padding-inline: 10px!important; 
-            color: red!important; 
-            margin-block: 20px;
+    
+    
 
-            &:after
-            {
-                z-index: 9;
-                display: block;
-                line-height: 1rem;
-                content: " Wykop X: Uważaj. Ten użytkownik dodał złośliwy link. Nie klikaj w niego. Niepożądane osoby mogą przejąć całkowitą kontrolę nad Twoim kontem i uzyskać dostęp do Twoich prywatnych informacji. Przejdź na www.wykopx.pl aby bezpiecznie przeglądać Wykop i nie być narażonym na oszustwa i utratę danych.";
-                color:  goldenrod;
-                font-size: 0.8rem;
-                padding-bottom: 10px;
 
-            }
-        }
-    }
-    
-        
-    /*
-        RODO SRODO
-        
-        - ukrywa przycisk ⚙ 𝗣𝗿𝗶𝘃𝗮𝗰𝘆 𝘀𝗲𝘁𝘁𝗶𝗻𝗴𝘀 
-        - ukrywa okienko "We value your privacy"
-        - przywraca możliwość scrollowania na całej stronie
-        
-        2026-09-26 Wykop dodał anty-blokowanie ukrywania okienka Privacy settings:
-        <div class="app_gdpr--SPx19r" style="display: block !important;">
-            <div class="ulheJb0a" style="display: flex;">
-        
-        // domyślnie włączone także w Wykop XS
-    */
-    body { overflow: initial!important; } 
-    
-    if(adsGDPRAlertHide == 1)
-    {
-        body > div[class^="app_gdpr"]
-        {           
-            & > *
-            {
-                display: none!important;
-            }
-        }
-    }
-    
-    /* 
-        UKRYCIE PRZYCISKÓW Google Accounts, Facebook Login, Apple login W LEWYM MENU 
-    */
-    if(notLoggedLeftMenuGoogleFbAppleButtonsHide==1)
-    {
-        body > section aside.left-panel > section.login > div.buttons { display: none!important; }
-    }
-    
-    
-    /* 
-        NOWY UI WYKOPU Z 2026-09-25
-        - przesunięcie przycisku do plusowania spod wpisu w prawy górny róg
-    */
-    if(plusesInTopRightCorner == 1)
-    {
-        /* PLUSY W PRAWYM GÓRNYM ROGU */
-        section.thread section.item>footer
-        {
-            position: static!important;
-            
-            section.voting
-            {
-                z-index: 5;
-                position: absolute;
-                top: -1px;
-                right: 0px;
-            }
-        }
-        section.entry-page section.item > footer section.voting
-        {
-            top: 2px;
-        }
-    }
-    
-    /*  */
+
+    /* naprawienie białego tła w liście rozwijanej na mikroblogu/tagach w Trybie Nocnym */
     if(fixWhiteSelectBox == 1)
     {
+    /* --- REMOVE IF --- */
 
         select,
         ::picker(select)
@@ -481,115 +535,77 @@ description     https://wykopx.pl/styl
             }
         }        
     }
-    
-
-    
-    /* 
-        NOWY MIKROBLOG 2026-09-24 
-        
-        - drzewo komentarzy
-        - 4 zdjęcia do wpisu
-        - plusy przesunięte na dół pod wpisem
-    */  
-    @media (min-width: 580px)
-    {
-        div.content > section.thread > section.item > header, 
-        section.entry > section.thread > section.item > header
-        {
-            margin-right: 10px;
-
-            & > div
-            {
-                width: 100%;
-                align-content: center;
-                margin-right: 40px;
-            }
-
-            div a.username + a[target="_blank"]
-            {
-                width: max-content;
-                display: inline flex;
-                flex-grow: 1;
-            }
-            /* tylko wpisy z numerkiem *******3 */
-            div a.username + a[target="_blank"][href*="55/"]::after,
-            div a.username + a[target="_blank"][href*="99/"]::after
-            {
-                content: "Otwórz wpis na: www.wykopx.pl" attr(href);
-                max-width: 39ch;
-                color: var(--apple);
-                display: inline-block;
-                white-space: nowrap;
-                overflow: hidden;
-                vertical-align: middle;
-                margin-left: auto;
-                cursor: text;
-                pointer-events: unset;
-                user-select: text;
-            }
-        }
-    }
 
 
-    // categoryMenuWykopSectionLinks = 3;
+    /* UKRYWANIE W MENU PO LEWEJ PRZYCISKÓW RANKING, OSIĄGNIĘCIA, FAQ, O NAS, KONTAKT, REKLAMA, REGULAMIN */
     if(categoryMenuWykopSectionLinks == 3)
     {
+    /* --- REMOVE IF --- */
+
         aside.left-panel > section.fixed:has(li.ranking)
         {
             display: none !important
         }
     }
+
+    /* UKRYWANIE PRZYCISKÓW "Doceń" do fralio.com */
+    if(adsFralioHide == 1)
+    {
+    /* --- REMOVE IF --- */
+        li.good-one { display: none!important; }
+    }
+
+    /* UKRYWAJ WPISY ZE SPAMEM Z WORDZIEL.PL */
+    if(wordzielHide == 1)
+    {
+    /* --- REMOVE IF --- */
+
+        main.main > section > div.content > section:is(.microblog-page) > section section.stream > div.content > section.entry:not(.own):not(.reply):has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper a:is( [href^="/tag/43"], [href^="/tag/44"], [href^="/tag/45"], [href^="/tag/46"], [href^="/tag/47"],[href^="/tag/48"],[href^="/tag/49"],[href^="/tag/5"],[href^="/tag/6"],[href^="/tag/7"],[href="https:\/\/wordziel.pl\/"], [href="https:\/\/www.flagle.io\/"]))
+        {
+            display: none!important;
+        }
+    }
+
+    /* UKRYWANIE LINKÓW DO ZŁOŚLIWYCH SKRYPTÓW (exploity) KTÓRE MOGĄ WYKRADAĆ DANE I DOSTĘP DO KONTA */
+
+    if(blockExploitLinks==1)
+    {
+    /* --- REMOVE IF --- */
     
-    
-    /* PANEL CENZUROWANYCH TREŚCI ZMUSZAJĄCY DO ZALOGOWANIA */
-    section:is(.tag-page, .link-page) .force-login-access-skeleton .info-box,
-    .modal.login .info-box p
-    {
-        font-size: 0;
+        a[href^="https://a/"],
+        a[onmouseover]
+        {
+            border: 1px solid goldenrod!important;
+            border-radius: 8px;
+            display: inline-block!important;
+            user-select: none!important;
+            pointer-events: none!important;
+            background-color: #393434!important;
+            padding-inline: 10px!important; 
+            color: red!important; 
+            margin-block: 20px;
+
+            &:after
+            {
+                z-index: 9;
+                display: block;
+                line-height: 1rem;
+                content: " Wykop X: Uważaj. Ten użytkownik dodał złośliwy link. Nie klikaj w niego. Niepożądane osoby mogą przejąć całkowitą kontrolę nad Twoim kontem i uzyskać dostęp do Twoich prywatnych informacji. Przejdź na www.wykopx.pl aby bezpiecznie przeglądać Wykop i nie być narażonym na oszustwa i utratę danych.";
+                color:  goldenrod;
+                font-size: 0.8rem;
+                padding-bottom: 10px;
+
+            }
+        }
     }
-    .tag-page .force-login-access-skeleton .info-box a
-    {
-        display: none;
-    }
-    .modal.login .info-box p::before,
-    .modal.login .info-box p::after,
-    .force-login-access-skeleton .info-box p::before,
-    .force-login-access-skeleton .info-box p::after
-    {
-        font-size: 0.8rem;
-    }
-    .modal.login .info-box p::after,
-    .force-login-access-skeleton .info-box p::after
-    {
-        font-weight: bolder;
-    }
-    .tag-page .force-login-access-skeleton .info-box p::before
-    {
-        content: ' Wykop cenzuruje ten #tag. Na Wykopie musisz się zalogować by go otworzyć. Wszystkie ocenzurowane i ukryte #tagi są jednak dostępne dla niezalogowanych na stronie wykopx.pl. ';
-    }
-    .tag-page .force-login-access-skeleton .info-box p::after
-    {
-        content: ' Dodaj w adresie "wykop.pl" literę "x" aby przejść na wykopx.pl/tag/... i wejdź na tag bez cenzury i bez reklam.';
-    }
-    .link-page .force-login-access-skeleton .info-box p::before
-    {
-        content: ' Wykop cenzuruje ponad 30% znalezisk. Wszystkie ocenzurowane i ukryte znaleziska są jednak dostępne dla niezalogowanych na stronie wykopx.pl. ';
-    }
-    .link-page .force-login-access-skeleton .info-box p::after
-    {
-        content: ' Dodaj w adresie "wykop.pl" literę "x" aby przejść na wykopx.pl/link/... i otwórz znalezisko bez cenzury i bez reklam';
-    }
-    
-    .modal.login .info-box p::before
-    {
-       content: ' Ta strona jest ocenzurowana przez Wykop. Możesz jednak otworzyć ją na stronie Wykop X. ';
-    }
-    .modal.login .info-box p::after
-    {
-        content: ' Wejdź na "wykopx.pl" i zobacz to bez cenzury.';
-        font-weight: bolder;
-    }
-    /* END GENERAL */
+    /* 
+        === END GENERAL FOR WYKOP X STYLE, WYKOP XS, AWESOME WYKOP EXTENSION ===
+    */
+
+
+
+
+}
 
 
 
@@ -602,6 +618,12 @@ description     https://wykopx.pl/styl
 
 
 
+
+
+
+
+@-moz-document url-prefix("https://wykop.pl")
+{
 
 
 
