@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Lista plusujących, animowane awatary
 // @name:en							Wykop XS - Lista plusujących, animowane awatary
 
-// @version							3.5.5
+// @version							3.5.6
 
 // @description 					Wykop XS - Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -45,7 +45,7 @@
 
 'use strict';
 
-const currentVersion = "3.5.5";
+const currentVersion = "3.5.6";
 let dev = false;
 
 const promoString = " - Wykop XS / #wykopx";
@@ -366,6 +366,9 @@ EXTRA:
 - będąc na profilu użytkownika lub rozmowie otworzysz kanał prywatnej rozmowy
     
 `;
+
+
+
 	const wykopXRedirectButtonTitle = `Otwórz tę stronę na nowym serwisie Wykop X (beta)
 
 Ten przycisk otworzy tę samą stronę, którą teraz przeglądasz,
@@ -381,6 +384,35 @@ stronę www.wykopx.pl
 
 WykopX to także nowa aplikacja na telefonie
 Dostępna na Androida i iPhone`;
+
+
+
+	/* CUSTOM WYKOPX.PL SIDEBAR LINK */
+	function addSidebarLink()
+	{
+		const sidebar = document.querySelector("section.sidebar");
+
+		if (sidebar)
+		{
+			if (!document.querySelector(".custom-sidebar-wykopx"))
+			{
+				let html = `
+				<section class="custom-sidebar custom-sidebar-wykopx" data-v-d5500d78 data-v-8397402c data-v-0a0cb29b title="${wykopXRedirectButtonTitle}">
+				<header data-v-d5500d78 class="redirectToWykopXButton"><h4 data-v-d5500d78 >Przejdź na wykopx.pl</h4></header>
+				</section>
+				`
+				const sectionSidebarWykopX = document.createElement("section");
+				sectionSidebarWykopX.classList.add("custom-sidebar", "custom-sidebar-wykopx");
+				sectionSidebarWykopX.href = "https://wykopx.pl";
+				sectionSidebarWykopX.target = "wykopx";
+				sectionSidebarWykopX.innerHTML = html;
+				sidebar.prepend(sectionSidebarWykopX);
+			}
+		}
+	}
+	addSidebarLink();
+	/* CUSTOM WYKOPX.PL SIDEBAR LINK */
+
 
 
 
@@ -1442,29 +1474,10 @@ Widok dyskusji:
 	}
 
 
-	function addSidebarLink()
-	{
-		const sidebar = document.querySelector("section.sidebar");
-		if (sidebar)
-		{
-			if (!document.querySelector(".custom-sidebar-wykopx"))
-			{
-				let html = `
-				<section class="custom-sidebar custom-sidebar-wykopx" data-v-d5500d78 data-v-8397402c data-v-0a0cb29b title="${wykopXRedirectButtonTitle}">
-				<header data-v-d5500d78 class="redirectToWykopXButton"><h4 data-v-d5500d78 >Przejdź na wykopx.pl</h4></header>
-				</section>
-				`
-				const sectionSidebarWykopX = document.createElement("section");
-				sectionSidebarWykopX.classList.add("custom-sidebar", "custom-sidebar-wykopx");
-				sectionSidebarWykopX.href = "https://wykopx.pl";
-				sectionSidebarWykopX.target = "wykopx";
-				sectionSidebarWykopX.innerHTML = html;
-				sidebar.prepend(sectionSidebarWykopX);
-			}
-		}
-	}
 
-	addSidebarLink();
+
+
+
 
 
 
@@ -1480,7 +1493,7 @@ Widok dyskusji:
 			class: "open_mikroczat", 		// wykopx_open_mikroczat_li
 			hideWithoutXStyle: false,
 			//url: mikroczatDomain,
-			url: "https://wykop.pl/czat",
+			url: "https://wykopx.pl/czat",
 			target: "_mikroczat",
 			number: null,
 		});
@@ -1957,7 +1970,7 @@ Widok dyskusji:
 
 
 
-	// li.more click
+	// CLICKS
 	document.addEventListener("click", async function (e)
 	{
 		// PRZYCISK DO PRZENIESIENIA NA TEN SAM ADRES W WYKOPX.PL
@@ -1989,8 +2002,6 @@ Widok dyskusji:
 				// przycisk w sidebarze
 				// newWykopXUrl.pathname = newWykopXUrl.pathname + newWykopXUrl.pathname.split("/").slice(-1) + newWykopXUrl.pathname.split("/").slice(-1);
 			}
-
-
 			if (newWykopXUrl.pathname.startsWith("/wpis/"))
 			{
 				newWykopXUrl.pathname = "/mikroblog/gorace" + newWykopXUrl.pathname;
@@ -2048,9 +2059,9 @@ Widok dyskusji:
 			}
 			return;
 		}
-
-
 	}, false);
+
+
 
 
 
@@ -2567,8 +2578,42 @@ Widok dyskusji:
         }
     }
 
+
+
+
+
+
+
+    /* KOLORY PLUSÓW Z 2022 ROKU */
+    body
+    {
+        --plusesColor: rgb(59, 145, 95);
+        --minusesColor: rgb(192, 57, 43);
+        --apple: var(--plusesColor)!important;
+    }
+
+    body[data-night-mode]
+    {
+        --plusesColor: rgb(57, 166, 132);
+        --minusesColor: rgb(255, 65, 54);
+    }
+
+    section.rating-box[class] ul[class] li[class].plus                        { color: var(--plusesColor);}
+    section.voting:not(:has(>.down))>div.up>span[data-v-049e7a74]             { color: var(--plusesColor);}
+    section.rating-box[class] div[class].buttons > button[class].plus         { border-color: var(--plusesColor);  }
+    section.rating-box[class] div[class].buttons > button[class].plus::after  { background-color: var(--plusesColor);  }
+    section.rating-box[class] ul[class] li[class].minus                       { color: var(--minusesColor);}
+    section.voting:not(:has(>.down))>div.down>span[data-v-049e7a74]           { color: var(--minusesColor);}
+    section.rating-box[class] div[class].buttons > button[class].minus::after { background-color: var(--minusesColor);  }
+    section.rating-box[class] div[class].buttons > button[class].minus        { border-color: var(--minusesColor);  }
+
+
+
+
+
+
     /* PANEL CENZUROWANYCH TREŚCI ZMUSZAJĄCY DO ZALOGOWANIA */
-    section:is(.tag-page, .link-page) .force-login-access-skeleton .info-box,
+        section:is(.tag-page, .link-page) .force-login-access-skeleton .info-box,
     .modal.login .info-box p {  font-size: 0;    }
     .tag-page .force-login-accebox ass-skeleton .info-box a    {        display: none;    }
     .modal.login .info-box p::before,
@@ -2770,11 +2815,12 @@ Widok dyskusji:
             display: none!important;
         }
 
+    /* UKRYWANIE BIAŁEGO PRZYCISKU DO NOWEGO WPISU W DOLNYM PRAWYM ROGU */
+        body > section > aside.main-editor { display: none!important; }
+
+
 
     /* UKRYWANIE LINKÓW DO ZŁOŚLIWYCH SKRYPTÓW (exploity) KTÓRE MOGĄ WYKRADAĆ DANE I DOSTĘP DO KONTA */
-
-
-
         a[href^="https://a/"],
         a[onmouseover]
         {

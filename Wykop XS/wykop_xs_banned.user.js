@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Ban Info - Informacje o banach
 // @name:en							Wykop XS - Ban Info
 
-// @version							3.5.5
+// @version							3.5.6
 
 // @description 					Wykop XS - Informacje o banach na profilach zbanowanych użytkowników. Wykop X Style znajdziesz na: http://wykopx.pl/styl
 // @description:en 					Wykop XS - Shows precise info about banned users on Wykop.pl. Check out Wykop X Style here: http://wykopx.pl/styl
@@ -44,7 +44,7 @@
 {
     'use strict';
 
-    const currentVersion = "3.5.5";
+    const currentVersion = "3.5.6";
     let dev = false;
 
     const promoString = " - Wykop XS / #wykopx";
@@ -370,8 +370,42 @@
         }
     }
 
+
+
+
+
+
+
+    /* KOLORY PLUSÓW Z 2022 ROKU */
+    body
+    {
+        --plusesColor: rgb(59, 145, 95);
+        --minusesColor: rgb(192, 57, 43);
+        --apple: var(--plusesColor)!important;
+    }
+
+    body[data-night-mode]
+    {
+        --plusesColor: rgb(57, 166, 132);
+        --minusesColor: rgb(255, 65, 54);
+    }
+
+    section.rating-box[class] ul[class] li[class].plus                        { color: var(--plusesColor);}
+    section.voting:not(:has(>.down))>div.up>span[data-v-049e7a74]             { color: var(--plusesColor);}
+    section.rating-box[class] div[class].buttons > button[class].plus         { border-color: var(--plusesColor);  }
+    section.rating-box[class] div[class].buttons > button[class].plus::after  { background-color: var(--plusesColor);  }
+    section.rating-box[class] ul[class] li[class].minus                       { color: var(--minusesColor);}
+    section.voting:not(:has(>.down))>div.down>span[data-v-049e7a74]           { color: var(--minusesColor);}
+    section.rating-box[class] div[class].buttons > button[class].minus::after { background-color: var(--minusesColor);  }
+    section.rating-box[class] div[class].buttons > button[class].minus        { border-color: var(--minusesColor);  }
+
+
+
+
+
+
     /* PANEL CENZUROWANYCH TREŚCI ZMUSZAJĄCY DO ZALOGOWANIA */
-    section:is(.tag-page, .link-page) .force-login-access-skeleton .info-box,
+        section:is(.tag-page, .link-page) .force-login-access-skeleton .info-box,
     .modal.login .info-box p {  font-size: 0;    }
     .tag-page .force-login-accebox ass-skeleton .info-box a    {        display: none;    }
     .modal.login .info-box p::before,
@@ -573,6 +607,8 @@
             display: none!important;
         }
 
+    /* UKRYWANIE BIAŁEGO PRZYCISKU DO NOWEGO WPISU W DOLNYM PRAWYM ROGU */
+        body > section > aside.main-editor { display: none!important; }
 
     /* UKRYWANIE LINKÓW DO ZŁOŚLIWYCH SKRYPTÓW (exploity) KTÓRE MOGĄ WYKRADAĆ DANE I DOSTĘP DO KONTA */
 
