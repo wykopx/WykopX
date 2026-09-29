@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style 3
-@version        3.5.5
+@version        3.5.6
 
 @description    Wykop X Style 3 to 900 różnych funkcji zmieniających wykop!
 
@@ -67,13 +67,19 @@ https://wykopx.pl/skrypty
 
 
 
+@var range      HR_COMMENTS_2                         `🔹🗨️ WPISY I KOMENTARZE (NOWE ⭐)`                                                                                   [0, 0, 99900, 1, 'mm']
+@var checkbox   autoOpenAllCommentsInTree                       `❎🔹 ⭐Rozwijaj wszystkie komentarze w drzewie `                                       1
+@var checkbox   autoOpenSpoilersEverywhere                      `❎🔹 𝗣𝗢𝗞𝗔𝗭̇ 𝗦𝗣𝗢𝗜𝗟𝗘𝗥 - rozwijaj spoilery`                                             0     
+@var checkbox   autoOpenMoreContentEverywhere                   `❎🔹 𝗣𝗢𝗞𝗔𝗭̇ 𝗖𝗔𝗟𝗢𝗦́𝗖́ - rozwijaj całą treść długich wpisów/komentarzy ⭐`                  1
 
 
-@var range      HR_MICROBLOG_2026_09_24                       `🔹 NOWY MIKROBLOG I WPISY`                             [0, 0, 99900, 1, 'mm']
-@var checkbox   blockExploitLinks                                 `Blokuj exploity i złośliwe linki we wpisach` 1        
 
-@var checkbox   collapseEntryButtonHide                           `Ukryj przycisk zwijający cały wpis `                    1        
-@var checkbox   collapseCommentsButtonHide                        `Ukryj przycisk zwijający drzewo komentarzy `            1        
+
+@var range      HR_MICROBLOG_2026_09_24                       `🔹 NOWY MIKROBLOG I WPISY (NOWE ⭐)`                             [0, 0, 99900, 1, 'mm']
+@var checkbox   blockExploitLinks                                 `Blokuj exploity i złośliwe linki we wpisach ⭐` 1        
+
+@var checkbox   collapseEntryButtonHide                           `Ukryj przycisk zwijający cały wpis ⭐`                    1        
+@var checkbox   collapseCommentsButtonHide                        `Ukryj przycisk zwijający drzewo komentarzy  ⭐`            1        
 
 
 @var range      SUB_HR_PLUSY_I_MINUSY_STYLE                    ` Plusy i minusy ➕`                                 [0, 0, 99999, 1, 'mm']
@@ -107,7 +113,7 @@ var checkbox   plusesMinusesSizeInSidebar                      `➕ Zastosuj ten
 
 
 @var range      HR_ANTY_RUMUN                       `🚫 BLOKOWANIE SPAMU`            [0, 0, 99900, 1, 'mm']
-@var checkbox   wordzielHide                                    `🔷 Blokuj spam z wordziel.pl i flagle.io`                                      1
+@var checkbox   wordzielHide                                    `🔷 Blokuj spam z wordziel.pl i flagle.io  (NOWE ⭐)`                                      1
 
 @var checkbox   userGreenEntriesWithPhotos                      `🟢🚯🔷 Blokuj wpisy zielonek ze zdjęciami`                                               0
 @var checkbox   userGreenEntriesWithVideos                      `🟢🚯🔷 Blokuj wpisy zielonek z filmikami`                                                0
@@ -602,8 +608,6 @@ var range      blockquoteItalicsVariableFontValue             `🆎 blockquoteIt
 @var range      WykopXSEnabled_ON                               `Skrypt Wykop XS jest włączony`                                                          [0, 0, 111100, 1, 'mm']
 
 @var checkbox   WykopXSEnabled                                  `Aktywuj skrypt Wykop XS i działanie włączonych funkcji ❎` 1
-@var checkbox   disableNewLinkEditorPastedTextLimit             `❎ Pokaż limity znaków + wklejanie tekstu o dowolnej długości`                             0
-@var checkbox   intersectionObserverRootMargin                  `❎ Wczytuj z wyprzedzeniem (Notatki, ActionBox, InfoBox, l.plusów i l.wykopów)`         0
 
 
 
@@ -650,24 +654,6 @@ TODO: checkbox   archiveXRemovedEntry                `❎ Pokazuj treść usuni�
 
 
 
-@var range      HR_ARCHIVE_NEWEST                   `🤍 NAJNOWSZY WPIS`                                                   [0, 0, 99900, 1, 'mm']
-@var checkbox   wxsArchiveXNewestEntry                         `❎ Najnowszy wpis z Mikrobloga 🤍`                                0
-@var checkbox   wxsArchiveXNewestEntryDailyCount               `❎ Liczba dodanych dzisiaj wpisów (od północy)` 1    
-@var select     wxsArchiveXNewestEntrySkin                     `❎ Animacja powiadomienia`   {
-                                                                            "Bez animacji"                          :   "brak_animacji",
-                                                                            "Delikatna *"                           :"delikatna",
-                                                                            "Pełnokolorowa"                          :   "pelnokolorowa",
-                                                                        }
-@var checkbox   wxsArchiveXNewestEntrySkinBlurFilter           `❎ Dodatkowe tło animacji`                                                 0
-@var select     wxsArchiveXNewestEntryRefresh                  `❎ Odświeżaj najnowszy wpis co`   {
-                                                                            "5s"        :"5",
-                                                                            "10s"       :"10",
-                                                                            "15s"       :"15",
-                                                                            "30s"       :"30",
-                                                                            "45s*"      :"45",
-                                                                            "60s"       :"60",
-                                                                        }
-@var checkbox   wxsArchiveXNewestEntryRefreshCounter           `❎ Odliczanie czasu odświeżania` 1     
 
 
 
@@ -677,72 +663,19 @@ TODO: checkbox   archiveXRemovedEntry                `❎ Pokazuj treść usuni�
 @var checkbox   paginationButtonsStyle                          `Wygodniejsza paginacja`                                                    0     
 @var checkbox   paginationButtonsFloating                       `Pływające przyciski paginacji ◀ POPRZEDNIA | NASTĘPNA ▶ 🆗`                  1      
 
-@var checkbox   infiniteScrollEntriesEnabled                    `❎🔹 Usuń paginację (komentarze pod wpisem na 1 stronie)` 1
-@var range      infiniteScrollEntriesEnabled_INFO               `Jeśli pod wpisem jest ponad 50 komentarzy Wykop dzieli je na podstrony dodając przyciski paginacji. Włącz tę funkcję, aby wszystkie komentarze były wczytane na jednej stronie bez tworzenia kolejnych podstron tak samo jak w aplikacji na smartfonie.`             [0, 0,88800, 1, 'mm']
-
-var checkbox   infiniteScrollLinksEnabled                      `❎🔶 Wszystkie komentarze pod znaleziskiem (tymczasowo nie działa)`              0
-var range      infiniteScrollLinksEnabled_INFO                 `Jeśli pod znaleziskiem jest ponad 50 komentarzy Wykop dzieli je na podstrony dodając przyciski paginacji. Włącz tę funkcję, aby wszystkie komentarze były wczytane na jednej stronie bez tworzenia kolejnych podstron tak samo jak w aplikacji na smartfonie.`             [0, 0,88800, 1, 'mm']
 
 
 
 
-@var range      HR_WYKOPY_I_ZAKOPY                  `➕ WYKOPY I ZAKOPY`                                                                                 [0, 0, 99900, 1, 'mm']
-@var checkbox   checkLinkVotesEnable                            `❎🔸 Aktualizuj liczbę wykopów i zakopów w czasie rzeczywistym`              0     
-@var range      checkLinkVotesEnable_INFO                       `Po włączeniu tej funkcji liczby wykopów i zakopów znalezisk w otwartej karcie odświeżane są w czasie rzeczywistym.`             [0, 0,88800, 1, 'mm']
-@var checkbox   checkLinkVotesPerHour                           `❎🔸 Oszacuj liczbę wykopów na godzinę`                                              0     
-@var range      checkLinkVotesPerHour_INFO                      `Pokazuje aktualną szybkość przybywania nowych wykopów (lub zakopów) przy znaleziskach. Wyświetlana wartość to bieżąca liczba wykopów na godzinę (w/h) obliczana od momentu wczytania strony. Nie jest to wartość "średnia" liczby wykopów od momentu dodania znaleziska. Wartość ujemna oznacza, że aktualnie znalezisko jest szybciej zakopywane niż wykopywane.`             [0, 0,88800, 1, 'mm']
-var checkbox   checkLinkCommentsPerHour                        `❎🔸 Oszacuj liczbę komentarzy na godzinę`                                           0     
 
 
 @var range      HR_PLUSY_I_MINUSY                   `➕ PLUSY I MINUSY`                                                                                 [0, 0, 99900, 1, 'mm']
-@var checkbox   votingExplosionEnable                           `❎➕🎇 Eksplozja plusów`                                                                            1     
-@var select     votingExplosionAnimation                        `❎➕🎆 Eksplozja - animacja` {
-                                                                            "Animacja 1"                :   "animacja1",
-                                                                            "Animacja 2"                :   "animacja2",
-                                                                            "Animacja 3"                :   "animacja3"
-                                                                    } 
 @var checkbox   plusesAndMinusesTransition                      `➕ Delikatna animacja plusowania (Wykop 2022)`                                                       1    
 @var checkbox   minimizedMinusedCommentInLinks                  `🔸 Zwiń zminusowane przez Ciebie komentarze pod znaleziskami`                    0 
 
 
-@var range      SUB_HR_PLUSY_I_MINUSY_REALTIME              `➕ PLUSY W CZASIE RZECZYWISTYM`                                 [0, 0, 99999, 1, 'mm']
-
-@var range      checkEntryPlusesEnable_ON                       `Liczby plusów i minusów będą aktualizowane na bieżąco w czasie rzeczywistym`                        [0, 0, 111100, 1, 'mm']
-@var checkbox   checkEntryPlusesEnable                          `❎➕ Plusy w czasie rzeczywistym`                       0
-@var range      checkEntryPlusesEnable_INFO                     `Włącz funkcję "Plusy w czasie rzeczywistym", aby aktywować poniższe funkcje dotyczące aktualizacji liczby plusów wpisów i komentarzy `             [0, 0,88800, 1, 'mm']
-
-@var checkbox   checkEntryPlusesWhenVoting                      `❎➕ Prawdziwa liczba plusów po zaplusowaniu`           0
-@var range      checkEntryPlusesWhenVoting_INFO                  `Domyślnie po zaplusowaniu Wykop wcale nie pokazuje prawdziwej liczby plusów tylko zwyczajnie zwiększa obecnie wyświetloną wartość o +1. Od czasu wczytania strony mogły jednak przybyć plusy, więc Twój plus prawdopodobnie wcale nie jest tym plusem, który pokazuje Wykop. Po włączeniu tej funkcji dostajesz prawdziwą informację ile plusów ma wpis/komentarz, który został przez Ciebie zaplusowany.`             [0, 0,88800, 1, 'mm']
-
-@var checkbox   checkEntryPlusesPerHour                         `❎➕ Liczba nowych plusów na godzinę `                   0
-@var range      checkEntryPlusesPerHour_INFO                    `Pokazuje aktualną szybkość przybywania plusów we wpisach i komentarzach. Wyświetlana wartość to bieżąca liczba plusów na godzinę (p/h) obliczana od momentu wczytania strony. Nie jest to wartość "średnia" liczby plusów i minusów od momentu dodania wpisu/komentarza. UWAGA. Komentarze pod znaleziskami można minusować, więc wartość ta uwzględnia również przybywające minusy. Wartość ujemna oznacza, że aktualnie komentarz jest szybciej minusowany niż plusowany.`             [0, 0,88800, 1, 'mm']
-
-@var checkbox   checkEntryPlusesForVotingGame                   `❎➕🔹 Zabawy Mirko "ostatnia cyfra po zaplusowaniu"`    0
-@var range      checkEntryPlusesForVotingGame_INFO              `Jeśli trafisz na wpis z popularną zabawą typu "ostatnia cyfra po zaplusowaniu wpisu powie Ci..." to liczba plusów zostanie przed Tobą ukryta, tak aby wzięcie udziału w grze i wynik zaplusowania wpisu było dla Ciebie niespodzianką. Po zaplusowaniu pojawi się prawdziwa, aktualna i odświeżona liczba plusów. Dodatkowo dla urozmaicenia zabawy pokaże się animacja cyfry, która została przez Ciebie wylosowana. Obecnie Wykop nie aktualizuje liczby plusów po zaplusowaniu tylko zawsze zwiększa tę liczbę o +1 co powoduje, że zabawa ta bez włączenia niniejszej funkcji nie ma żadnego sensu. Po pierwsze zawsze wiesz jaka liczba pokaże Ci się po zaplusowaniu, ponieważ po prostu zwiększy się o jeden. Po drugie po zaplusowaniu Wykop nie pokazuje rzeczywistej, odświeżonej liczby plusów.`             [0, 0,88800, 1, 'mm']
-
-TODO checkbox   checkEntryCommentsPerHour                       `❎➕ Liczba nowych komentarzy pod wpisem na godzinę`     0
-TODO range      checkEntryCommentsPerHour_INFO                  `Pokazuje aktualną szybkość przybywania komentarzy we wpisach i w komentarzach pod znaleziskami. Wyświetlana wartość to bieżąca liczba dodawanych komentarzy na godzinę (k/h) obliczana od momentu wczytania strony. Nie jest to wartość "średnia" liczby komentarzy od momentu dodania wpisu.`             [0, 0,88800, 1, 'mm']
 
 
-                                                                    
-
-@var select     prefixBeforePlusesCount                         `➕ Znak przed liczbą plusów 💭` {
-                                                                        "BRAK PLUSA (domyślnie)"                  :   "brak",
-                                                                        "+ (styl Wykop 2022)*":"plus",
-                                                                        "💚"                                :   "emoji_serce",
-                                                                        "☝"                                 :   "emoji_index_pointing_up",
-                                                                        "👍"                                :   "emoji_thumbs_up",
-                                                                        "👆"                                :   "emoji_backhand_index_pointing_up",
-                                                                        "🔼"                                :   "emoji_upwards_button",
-                                                                        "⬆"                                 :   "emoji_up_arrow",
-                                                                        "↗"                                 :   "emoji_up_right_arrow",
-                                                                        "↖"                                 :   "emoji_up_left_arrow",
-                                                                        "⤴"                                 :   "emoji_right_arrow_curving_up",
-                                                                        "✔"                                 :   "emoji_heavy_tick",
-                                                                        "➕"                                 :   "emoji_plus_sign",
-                                                                        "🔺"                                :   "emoji_red_triangle_pointed_up",
-                                                                    }
-                                                                    
                                                                     
 
 @var checkbox   minusesHide                                     `🚫🔸 Nie pokazuj liczby minusów `                                        0
@@ -771,21 +704,7 @@ TODO range      checkEntryCommentsPerHour_INFO                  `Pokazuje aktual
                                                                     }
 @var checkbox   voteButtonPlusNoBorder                          `➕ Przycisk plusowania bez ramki 💭`               0 
 
-@var select     prefixBeforeMinusesCount                        `➖ Znak przed liczbą minusów ` {
-                                                                        "- minus (domyślnie)":"minus",
-                                                                        "BRAK":"brak",
-                                                                        "❌":"emoji_cross_mark",
-                                                                        "👇":"emoji_backhand_index_pointing_down",
-                                                                        "👎":"emoji_thumbs_down",
-                                                                        "🔽":"emoji_downwards_button",
-                                                                        "⬇":"emoji_down_arrow",
-                                                                        "↘":"emoji_down_right_arrow",
-                                                                        "↙":"emoji_down_left_arrow",
-                                                                        "⤵":"emoji_right_arrow_curving_down",
-                                                                        "✔":"emoji_heavy_tick",
-                                                                        "➖":"emoji_minus_sign",
-                                                                        "🔻":"emoji_red_triangle_pointed_down",
-                                                                    }                                                                  
+                                                            
 @var select     voteButtonMinusEmoji                            `➖ Przycisk minusowania` {
                                                                         "minus (domyślnie)":"minus",
                                                                         "❌":"emoji_cross_mark",
@@ -804,7 +723,6 @@ TODO range      checkEntryCommentsPerHour_INFO                  `Pokazuje aktual
 
 @var range      voteButtonBorderRadius                          `Zaokrąglenie przycisków plusowania/minusowania 💭`     [20, 0, 100, 10, '%']
 
-@var checkbox   votePlusMinusOnHover                            `❎🐁 Plusuj i minusuj od razu po najechaniu myszką `                0
 @var checkbox   voteButtonHide                                  `🚫 Nie pokazuj przycisków do plusowania/minusowania 💭`             0
 
 
@@ -904,64 +822,6 @@ var range      notatkowatorUpdateInterval                      `📝❎ Odświe�
 @var checkbox   wxsUserLabelsTrolls                             `❎ Etykietuj boty, trolli, hejterów i ścianę wstydu #wykopaka`     1     
 
 
-@var range      HR_WYKOP_TAB                        `📏 KARTA Z WYKOPEM`                                                              [0, 0, 99900, 1, 'mm']
-@var checkbox   tabChangeEnabled                                `❎ Włącz modyfikacje karty Wykopu`                                                0
-@var checkbox   tabChangeOnlyOnHiddenState                      `❎ Zastosuj wybrane modyfikacje tylko na kartach w tle`                           0
-
-@var range      SUB_HR_NEW_TAB                                  `Favicon - ikona karty`                                                              [0, 0, 99999, 1, 'mm']
-@var checkbox   tabChangeFaviconEnabled                         `❎ Zmień ikonkę karty z Wykopem` 1
-@var select     tabChangeFaviconSelect                          `❎ Wybierz Favicon` {
-                                                                                "Wykop (domyślna)"         :"wykop",
-                                                                                "Wykop (biala)*"           :"wykop_white",
-                                                                                "Wykop (szara)"            :"wykop_gray",
-                                                                                "Google"                    :"google",
-                                                                                "Interia"                   :"interia",
-                                                                                "Digg"                      :"digg",
-                                                                                "Onet"                      :"onet",
-                                                                                "Reddit"                    :"reddit",
-                                                                                "Wirtualna Polska"          :"wp",
-                                                                                "YouTube"                   :"youtube",
-                                                                                "𝕏 (Twitter)"               :"x",
-                                                                            }
-@var range      SUB_HR_NEW_TAB_TITLE                 `TYTUŁ KARTY`                                                              [0, 0, 99999, 1, 'mm']
-@var checkbox   tabChangeTitleEnabled                          `❎ Włącz zmianę Tytułu karty z Wykopem` 1
-@var select     tabChangeTitleSuffix                           `❎ Zmień sufiks ":: 𝗪𝘆𝗸𝗼𝗽.𝗽𝗹" w tytule karty` {
-                                                                                ":: Wykop.pl (domyślny)":"domyslny",
-                                                                                "- Wykop.pl":"dashwykoppl",
-                                                                                "- Wykop*":"dashwykop",
-                                                                                "- Wykop X":"dashwykopx",                                                                              
-                                                                                "Usuń sufiks z tytułu":"usun",
-                                                                                
-                                                                            }
-@var checkbox   tabChangeTitlePrefix                           `❎ Dodaj Prefix Wykop X -`                                       0
-@var select     tabChangeTitleSelect                           `❎ Tytuł kart z Wykopem` {
-                                                                                "[-- Domyślny tytuł --]":"domyslny",
-                                                                                "[-- Pusty tytuł --]":"pusty_tytul",
-                                                                                "[-- Adres URL strony --]":"adres_url",
-                                                                                "[-- Własny tytuł kart (wpisz poniżej) --]":"wlasny",
-                                                                                "Wykop":"wykop",
-                                                                                "Wykop X":"wykopx",
-                                                                                "Google":"google",
-                                                                                "Interia - Polska i świat: informacje, sport, gwiazdy.":"interia",
-                                                                                "News and Trending Stories Around the Internet | Digg":"digg",
-                                                                                "Onet – Jesteś na bieżąco":"onet",
-                                                                                "Reddit - Dive into anything":"reddit",
-                                                                                "Wirtualna Polska - Wszystko co ważne":"wp",
-                                                                                "YouTube":"youtube",
-                                                                                "Home / X":"x",
-                                                                            }
-@var text       tabChangeTitleCustom                            `❎🧇 Mój własny tytuł kart`                                         `dowolny tekst tytulu karty`
-
-@var range      SUB_HR_NEW_TAB_NOTIFICATIONS                    `Liczba powiadomień na karcie (beta)`                         [0, 0, 99999, 1, 'mm']
-@var checkbox   tabChangeTitleShowNotificationsEnabled                `❎ Włącz liczbę powiadomień w tytule karty`                         0
-@var checkbox   tabChangeTitleShowNotificationsCountSeparated         `❎ Osobne liczby zamiast sumy powiadomień: ✉/🕭/#`                 0
-@var checkbox   tabChangeTitleShowNotificationsCountPM                `❎ ✉ Liczba nowych wiadomości prywatnych` 1
-@var checkbox   tabChangeTitleShowNotificationsCountEntries           `❎ 🕭 Liczba powiadomień z wołaniami` 1
-@var checkbox   tabChangeTitleShowNotificationsCountTagsNewLink       `❎ # Liczba nowych znalezisk z obserwowanych #tagów` 1
-@var checkbox   tabChangeTitleShowNotificationsCountTagsNewEntry      `❎ # Liczba nowych wpisów z obserwowanych #tagów` 1
-
-
-
 
 
 
@@ -1050,12 +910,7 @@ TODO: var checkbox   replyEditorShowTagsFollowers               `❎ Wyświetl l
 @var checkbox   editorAdultSwitcherHide                         `Ukryj przycisk 18+ (Nowe 3.0.54)`                                                        0    
                                                                     
 
-TODO var range      SUB_HR_IMAGEUPLOADER                    `WKLEJANIE ZDJĘĆ`                          [0, 0, 99999, 1, 'mm']
-TODO var checkbox   imageUploaderEnable                             `❎ CTRL + V - wklejanie zdjęć ze schowka`                                               0
-
-                                                                    
-                                                                    
-                                                                    
+                                                          
 @var range      SUB_HR_SHOWUSERNAME                     `✍ DODAWANIE NOWEGO WPISU / KOMENTARZA`                          [0, 0, 99999, 1, 'mm']
 @var checkbox   editorFocusOnDodajURL                           `❎ Aktywuj edytor nowego wpisu na stronie .../mikroblog/#dodaj`                                 0     
 
@@ -1565,12 +1420,6 @@ REMOVED checkbox   entryVotersListEmojiRemovedUserTextHide             `🔹❌ 
                                                                             "Na dole":                          "nadole"
                                                                         } 
                                                                         
-@var range      SUB_HR_QUICK_LINKS                      `QUICK LINKS `                                                    [0, 0, 99999, 1, 'mm']
-@var range      quickLinksEnable_OFF_INFO                       `Szybkie linki na górnej belce są wyłączone`              [0, 0, 100000, 1, 'mm']
-@var range      quickLinksEnable_ON_INFO                        `Szybkie linki na górnej belce są włączone`               [0, 0,111100, 1, 'mm']
-@var checkbox   quickLinksEnable                                `❎ Szybkie linki na górnej belce`                    0
-
-
 
 @var range      SUB_HR_TAPETA_TOP_NAV             `TAPETA W TLE BELKI`                          [0, 0, 99999, 1, 'mm']
 @var checkbox   presetTopNavWykop2022                           `[PRESET] Włącz wszystkie ustawienia belki w stylu Wykop 2022`    0                  
@@ -2122,8 +1971,7 @@ TODO range      mainContentWidthValue                           `⟺ Domyślna s
                                                                             "🚫 Ukryj opis"                                         :   "niepokazujviaappname"
                                                                         } 
 @var checkbox   showTargetIconOnLinks                           `🔹 🔗 Pokazuj ikony przy odnośnikach`                                                  0     
-@var checkbox   autoOpenSpoilersEverywhere                      `❎🔹 𝗣𝗢𝗞𝗔𝗭̇ 𝗦𝗣𝗢𝗜𝗟𝗘𝗥 - rozwijaj spoilery`                                             0     
-@var checkbox   autoOpenMoreContentEverywhere                   `❎🔹 𝗣𝗢𝗞𝗔𝗭̇ 𝗖𝗔𝗟𝗢𝗦́𝗖́ - rozwijaj całą treść długich wpisów/komentarzy`                     0     
+
 
 
 
@@ -2372,9 +2220,6 @@ TODO var select     defaultButtonToDownloadImageAlignment           `Położenie
 @var checkbox   rightSidebarHide                                `🚫 Całkowicie ukryj Sidebar 🆗`                       0
 
 
-@var checkbox   observedTagsInRightSidebarEnable                `❎ Pokazuj  # 𝗧𝘄𝗼𝗷𝗲 𝗼𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 𝘁𝗮𝗴𝗶`                                0
-@var checkbox   observedTagsInRightSidebarSortAlphabetically    `❎ # 𝗧𝘄𝗼𝗷𝗲 𝗼𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 𝘁𝗮𝗴𝗶 - sortuj alfabetycznie`                  0
-@var range      observedTagsInRightSidebarUpdateInterval        `❎ # 𝗧𝘄𝗼𝗷𝗲 𝗼𝗯𝘀𝗲𝗿𝘄𝗼𝘄𝗮𝗻𝗲 𝘁𝗮𝗴𝗶 - odświeżaj listę co X h`       [12, 0.5, 24, 0.5, '']
 
 
 
@@ -2881,13 +2726,6 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
 
     if(presetAntiEmbarrassment == 1)
     {
-        tabChangeEnabled = 1;
-        tabFaviconEnabled = 1;
-        tabChangeFaviconSelect = "youtube";
-        tabChangeTitleEnabled = 1;
-        tabChangeTitleSelect = "youtube";
-        tabChangeTitleSuffix = "usun";
-
         rightSidebarFooterHide = 1;
         hideHomepagePromoToRegister = 1;
         hideHomepagePromoToRegister2 = 1;
@@ -2906,7 +2744,6 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
     {   
         myWykopInTopNavJS               = 1;
         addNewEntryInTopNavJS           = 0;
-        prefixBeforePlusesCount         = "plus";
         topNavHamburgerButtonHide       = 1;
         categoryMenuAutohide            = 1;
         microActionsInline              = 1;
@@ -4398,7 +4235,28 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
         }
     }
     
+    
+    
+    
+    if(collapseEntryButtonHide == 1)
+    {
+    /* --- REMOVE IF --- */
 
+       section.listing > div.content > section.thread > section.item > button.toggle, 
+       section.entry > section.thread > section.item > button.toggle { display: none!important; }
+    }
+    
+    
+    
+    if(collapseCommentsButtonHide == 1)
+    {
+    /* --- REMOVE IF --- */
+
+        section.comments > section.thread > section.item > button.toggle { display: none!important; }
+    } 
+
+    
+    
     /* 
        UKRYWANIE NOWEJ SEKCJI "WYBRANE DLA CIEBIE" (2026-05-05) 
 
@@ -8107,6 +7965,22 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
 
     
  
+    
+    
+        
+    /* UKRYWAJ WPISY ZE SPAMEM Z WORDZIEL.PL */
+    if(wordzielHide == 1)
+    {
+        main.main > section > div.content > section:is(.microblog-page) > section section.stream > div.content > section.entry:not(.own):not(.reply):has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper a:is( [href^="/tag/43"], [href^="/tag/44"], [href^="/tag/45"], [href^="/tag/46"], [href^="/tag/47"],[href^="/tag/48"],[href^="/tag/49"],[href^="/tag/5"],[href^="/tag/6"],[href^="/tag/7"],[href="https:\/\/wordziel.pl\/"], [href="https:\/\/www.flagle.io\/"]))
+        {
+            display: none!important;
+        }
+    }
+    
+    
+    
+    
+    
 
     
     
@@ -19675,182 +19549,7 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
   
 
 
-    // -------------- WYKOP XS ----------------
-    // NEWEST ENTRY NOTIFICATION ANIMATION
-    if(wxsArchiveXNewestEntry == 1)
-    {
-        if(wxsArchiveXNewestEntryDailyCount == 0)
-        {
-            #wxs_newest_entry > .entry::after
-            {
-                display: none;
-            }
-        }
-        
-        if(wxsArchiveXNewestEntryRefreshCounter == 1)
-        {
-            #wxs_newest_entry:not(.animationRunning) .timer
-            {
-                //display: none;
-            }
-            #wxs_newest_entry.animationRunning
-            {
-                --size: 18;
-                --duration: wxsArchiveXNewestEntryRefresh;
-                --timerColor: var(--alto);
-                --timerBackground: white;
 
-                .timer
-                {
-                    position: absolute;
-                    bottom: 10px;
-                    right: 10px;
-                    
-                    background: linear-gradient(to right, var(--timerColor) 50%, var(--timerBackground) 50%);
-                    border-radius: 100%;
-                    height: calc(var(--size) * 1px);
-                    width: calc(var(--size) * 1px);
-                    animation-name: timeAnimation;
-                    animation-duration: calc(var(--duration) * 1s);
-                    animation-timing-function: steps(1000, start);
-                    animation-iteration-count: 1;
-                    animation-fill-mode: forwards;
-                    mask: radial-gradient(transparent 50%,#000 50%);
-                }
-                .mask {
-                    border-radius: 100% 0 0 100% / 50% 0 0 50%;
-                    height: 100%;
-                    left: 0;
-                    position: absolute;
-                    top: 0;
-                    width: 50%;
-                    animation-name: maskAnimation;
-                    animation-duration: calc(var(--duration) * 1s);
-                    animation-timing-function: steps(500, start);
-                    animation-fill-mode: forwards;
-                    animation-iteration-count: 1;
-                    
-                    transform-origin: 100% 50%;
-                }
-                @keyframes timeAnimation { 100% { transform: rotate(360deg); }}
-
-                @keyframes maskAnimation {
-                    0% {
-                        background: var(--timerBackground);
-                        transform: rotate(0deg);
-                    }
-                    50% {
-                        background: var(--timerBackground);
-                        transform: rotate(-180deg);
-                    }
-                    50.01% {
-                        background: var(--timerColor);
-                        transform: rotate(0deg);
-                    } 100% {
-                        background: var(--timerColor);
-                        transform: rotate(-180deg);
-                    }
-                }
-            }
-        }
-        else
-        {
-            #wxs_newest_entry .timer
-            {
-                display: none;
-            }
-        }
-        
-        
-        if(wxsArchiveXNewestEntrySkin == "brak_animacji")
-        {
-            
-        }
-        else
-        {
-            #wxs_newest_entry.animationRunning::before,
-            #wxs_newest_entry.animationRunning::after
-            {
-                content: '';
-                position: absolute;
-                left: -2px;
-                top: -2px;
-                opacity: 1;
-                width: calc(100% + 4px);
-                height: calc(100% + 4px);
-                z-index: -1;
-                
-            }
-            @keyframes steam {
-                0% {
-                    background-position: 0 0;
-                    opacity: 0;
-                }
-                20% {
-                    opacity: 1;
-                }
-                70% {
-                    opacity: 1;
-                } 100% {
-                    background-position: 400% 0;
-                    opacity: 0;
-                }
-            }
-        }
-        if(wxsArchiveXNewestEntrySkin == "delikatna")
-        {
-            #wxs_newest_entry.animationRunning:before,
-            #wxs_newest_entry.animationRunning:after
-            {
-                animation-name: steam;
-                animation-timing-function: linear;
-                animation-iteration-count: 1;
-                animation-fill-mode: forwards;
-                animation-duration: 3.5s;
-                background: linear-gradient(90deg, 
-                    rgba(5, 255, 255, 0.1),
-                    rgba(255, 255, 255, 0.3),
-                    rgba(5, 255, 255, 0.1));
-                background-size: 300%;
-            }
-        }
-        else if(wxsArchiveXNewestEntrySkin == "pelnokolorowa")
-        {
-            #wxs_newest_entry.animationRunning:before,
-		    #wxs_newest_entry.animationRunning:after
-            {
-                animation-name: steam;
-                animation-timing-function: linear;
-                animation-iteration-count: 1;
-                animation-fill-mode: forwards;
-                animation-duration: 15s;
-                background: linear-gradient(45deg, #00ff00, #ffff00, #ff0000, #fb0094, #0000ff, #00ff00, #ffff00, #ff0000, #fb0094, #0000ff, #00ff00);
-                background-size: 400%;
-            }
-        }
-        
-        if(wxsArchiveXNewestEntrySkinBlurFilter == 1)
-        {
-            #wxs_newest_entry.animationRunning:after
-            {
-                filter: blur(50px);
-            }
-        }
-    }
-    else
-    {
-        #wxs_newest_entry,
-        .wykopx_newest_entry_switcher 
-        {
-            display: none!important;
-        }
-    }
-    
-    
-
-    
-    
-    
   
     // NAV BAR SWITCHES
     body > section > header > div.left,
@@ -20488,198 +20187,7 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
     
     
     
-    // WYKOP XS
-    
-    //  QUICK LINKS NAV BAR
-    if(quickLinksEnable == 1)
-    {
-        :root 
-        {
-            --quickLinksAFontSize: var(--textFontSize13, 13px);
-            --quickLinksSpanFontSize: var(--textFontSize11, 11px);
-            }
 
-        header.header > div.left > #wxs_quick_links > nav
-        {
-            font-size: var(--quickLinksAFontSize, 13px);
-        }
-        header.header > div.left > #wxs_quick_links > nav > section span
-        {
-            font-size: var(--quickLinksSpanFontSize, 11px);
-        }
-
-        header.header > div.left > #wxs_quick_links
-        {
-            display: flex;
-            top: calc(var(--topNavHeigh, 48px) - 3px);
-            position: absolute;
-            left: -1px
-            width: 120%;
-            height: 1px;
-            z-index: 1;
-        }
-
-        @keyframes quickLinksAnimationOn
-        {
-            0% { display: none; top: -20px; opacity: 0; } 1% { display: flex; top: -20px; opacity: 0; }
-            99% { display: flex; top: -20px; opacity: 0; } 100% { display: flex; top: 0px; opacity: 1; }
-        }
-        @keyframes quickLinksAnimationOff
-        {
-            0% { display: flex; top: 0px; opacity: 1; }
-            50% { display: flex; top: 0px; opacity: 0; }
-            99% { display: flex; top: -20px; opacity: 0;} 100% { display: none; top: -20px; opacity: 0;}
-        }
-
-
-        header.header > div.left > #wxs_quick_links > nav
-        {
-            z-index: -999;
-            column-gap: 0px;
-            flex-wrap: nowrap;
-            position: absolute;
-            left: 0px;
-            width: 100%;
-        }
-        header.header > div.left > #wxs_quick_links > nav:not(:hover)
-        {
-            z-index: -1000!important;
-            display: flex;
-
-            animation-name: quickLinksAnimationOff!important;
-            animation-duration: 0s;
-            animation-delay: 0.4s;
-            animation-iteration-count: 1;
-            animation-direction: normal;
-            animation-fill-mode: forwards;
-        }
-        header.header > div.left > #wxs_quick_links > nav
-        {
-            z-index: -999;
-            column-gap: 0px;
-            flex-wrap: nowrap;
-            position: absolute;
-            left: 0px;
-            width: 100%;
-        }
-        header.header > div.left > #wxs_quick_links > nav:hover
-        {
-            z-index: 999!important;
-            display: flex!important;
-            animation-name: quickLinksAnimationOn!important;
-            animation-duration: 0s!important;
-            animation-delay: 0s!important;
-            animation-direction: normal!important;
-            animation-fill-mode: forwards!important;
-        }
-        
-        header.header > div.left > #wxs_quick_links > nav > section
-        {
-            display: flex;
-            flex-wrap: nowrap;
-            align-items: center;
-        }
-        header.header > div.left > #wxs_quick_links > nav > section div
-        {
-            display: flex;
-            height: 100%;
-        }
-        header.header > div.left > #wxs_quick_links > nav > section a,
-        header.header > div.left > #wxs_quick_links > nav > section span
-        {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/"])                   > #wxs_quick_links > nav.home,
-        header.header > div.left:has( > nav.main > ul > li a[href="/"]:hover)                   > #wxs_quick_links > nav.home,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/wykopalisko"])        > #wxs_quick_links > nav.upcoming,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/mikroblog"])          > #wxs_quick_links > nav.microblog,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/obserwowane"])        > #wxs_quick_links > nav.mywykop,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/hity"])               > #wxs_quick_links > nav.hits,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/ulubione"])           > #wxs_quick_links > nav.favorites,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/dodaj-link"])         > #wxs_quick_links > nav.add_new,
-        header.header > div.left:has( > nav.main > ul > li:hover a[href="/mikroblog/#dodaj"])   > #wxs_quick_links > nav.add_new
-        {
-            z-index: 999;
-            display: flex!important;
-            animation-name: quickLinksAnimationOn!important;
-            animation-duration: 0.2s;
-            animation-delay: 0s;
-            animation-direction: normal;
-            animation-fill-mode: forwards;
-        }
-
-
-        header.header > div.left > #wxs_quick_links > nav
-        {
-            height: 37px;
-            color: var(--blackOpacity07, rgba(255, 255, 255, 0.7));
-            border-bottom: 1px solid var(--blackOpacity03, rgba(255, 255, 255, 0.3));
-            box-shadow: 0px 4px 4px var(--whiteOpacity04, rgba(0, 0, 0, 0.4));
-            
-            background-color: var(--whiteOpacity08, rgba(0, 0, 0, 0.8));
-        }
-        
-        header.header > div.left > #wxs_quick_links > nav:hover
-        {
-
-        }
-
-        header.header > div.left > #wxs_quick_links > nav > section
-        {
-            column-gap: 5px;
-            padding-left: 20px;
-            padding-right: 0px;
-            border-left: 1px solid rgba(120, 120, 120, 0.2);
-        }
-
-        header.header > div.left > #wxs_quick_links > nav > section:hover
-        {
-            background-color: var(--whiteOpacity1, rgba(18, 18, 20, 1));
-        }
-        header.header > div.left > #wxs_quick_links > nav > section:hover span
-        {
-            color: var(--blackOpacity1, rgba(255, 255, 255, 1));
-        }
-
-        header.header > div.left > #wxs_quick_links > nav > section span
-        {
-            padding-right: 10px;
-            text-transform: uppercase;
-            font-weight: bolder;
-            cursor: default;
-            width: max-content;
-        }
-
-
-        header.header > div.left > #wxs_quick_links > nav > section a,
-        header.header > div.left > #wxs_quick_links > nav > section span
-        {
-            height: 100%;
-            min-width: 70px;
-            width: max-content;
-        }
-
-        header.header > div.left > #wxs_quick_links > nav > section .wxs_quicklink_short
-        {
-            min-width: 20px;
-        }
-
-
-        header.header > div.left > #wxs_quick_links > nav > section a
-        {
-            text-decoration: none;
-            padding: 0px 14px 0px 14px;
-        }
-
-        header.header > div.left > #wxs_quick_links > nav > section a:hover
-        {
-            color: var(--blackOpacity09, rgba(255, 255, 255, 1));
-            background-color: var(--blackOpacity01, rgba(255, 255, 255, 0.2));
-        }
-    }
-    /* QUICK LINKS - END */
     
    
 
@@ -21201,7 +20709,7 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
     /* VARIABLES */
 
     versor = "style"; // "style", "blank", "block"
-    version = "3.5.5";   
+    version = "3.5.6";   
     /* xblocker = "2.49" */
     
     
@@ -21250,11 +20758,6 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
             
             
 
-            --wxsArchiveXNewestEntry                        :   wxsArchiveXNewestEntry;      
-            if(wxsArchiveXNewestEntry == 1)
-            {
-                --wxsArchiveXNewestEntryRefresh            :   wxsArchiveXNewestEntryRefresh;
-            }
             
             --mouseClickOpensImageInNewTab:             mouseClickOpensImageInNewTab;   
             --homepagePinnedEntriesHideBelowLimit:      homepagePinnedEntriesHideBelowLimit;
@@ -21265,21 +20768,17 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
 
 
             /* - domyslnie WŁĄCZONE bez Wykop X Style */
-            --quickLinksEnable:                         quickLinksEnable;
             --myWykopInTopNavJS:                        myWykopInTopNavJS;
             --favoritesInTopNavJS:                      favoritesInTopNavJS;
-            // --imageUploaderEnable:                      imageUploaderEnable;
+
             --addNewEntryInTopNavJS:                    addNewEntryInTopNavJS;
             --disableNewLinkEditorPastedTextLimit:      disableNewLinkEditorPastedTextLimit;
+
+
+            --autoOpenAllCommentsInTree:                autoOpenAllCommentsInTree;
             --autoOpenMoreContentEverywhere:            autoOpenMoreContentEverywhere;
             --autoOpenSpoilersEverywhere:               autoOpenSpoilersEverywhere;
-            --observedTagsInRightSidebarEnable:         observedTagsInRightSidebarEnable;
-            --observedTagsInRightSidebarUpdateInterval: observedTagsInRightSidebarUpdateInterval; 
-            --observedTagsInRightSidebarSortAlphabetically: observedTagsInRightSidebarSortAlphabetically;
 
-
-            --infiniteScrollEntriesEnabled:             infiniteScrollEntriesEnabled
-            --infiniteScrollLinksEnabled:               infiniteScrollLinksEnabled
 
             --editorSendHotkey:                         editorSendHotkey; /* "domyslnie", "enter", "ctrl_enter", "ctrl_s" */
             --editorSendHotkeyShowOnSendButton:         editorSendHotkeyShowOnSendButton;
@@ -21364,31 +20863,10 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
             }
 
 
-            --checkLinkVotesEnable:                     checkLinkVotesEnable;
-            if(checkLinkVotesEnable == 1)
-            {
-                --checkLinkVotesPerHour:                checkLinkVotesPerHour;         
-                --checkLinkCommentsPerHour:             checkLinkCommentsPerHour;          
-            }
-
+    
             
-            --votePlusMinusOnHover:                     votePlusMinusOnHover;                      
-            
-            --checkEntryPlusesWhenVoting:               checkEntryPlusesWhenVoting;
-            --checkEntryPlusesEnable:                   checkEntryPlusesEnable;
-            
-            if(checkEntryPlusesEnable == 1)
-            {
-                --checkEntryPlusesPerHour:              checkEntryPlusesPerHour;      
-                --checkEntryCommentsPerHour:            checkEntryCommentsPerHour;      
-                --checkEntryPlusesForVotingGame:        checkEntryPlusesForVotingGame;
-            }
+        
 
-            --prefixBeforePlusesCount:                  prefixBeforePlusesCount;
-            --prefixBeforeMinusesCount:                 prefixBeforeMinusesCount;
-
-
-            --votingExplosionEnable                     votingExplosionEnable
 
             --topNavMyWykopButton:                      topNavMyWykopButton;
             --topNavMicroblogButton:                    topNavMicroblogButton;
@@ -21409,27 +20887,7 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
             }
 
             --linkVoteDownButton:                       linkVoteDownButton;
-            
-            --tabChangeEnabled:                         tabChangeEnabled;
-            if(tabChangeEnabled == 1)
-            {
-                --tabChangeOnlyOnHiddenState:                       tabChangeOnlyOnHiddenState;
-                --tabChangeFaviconEnabled:                          tabChangeFaviconEnabled;
-                --tabChangeFaviconSelect:                           tabChangeFaviconSelect; 
-                --tabChangeTitleEnabled:                            tabChangeTitleEnabled;
-                --tabChangeTitleShowNotificationsEnabled:           tabChangeTitleShowNotificationsEnabled;
-                --tabChangeTitleShowNotificationsCountSeparated:    tabChangeTitleShowNotificationsCountSeparated;
-                --tabChangeTitleShowNotificationsCountTagsNewLink:  tabChangeTitleShowNotificationsCountTagsNewLink;
-                --tabChangeTitleShowNotificationsCountTagsNewEntry: tabChangeTitleShowNotificationsCountTagsNewEntry;
-                --tabChangeTitleShowNotificationsCountPM:           tabChangeTitleShowNotificationsCountPM;
-                --tabChangeTitleShowNotificationsCountEntries:      tabChangeTitleShowNotificationsCountEntries;
-     
-                --tabChangeTitleSelect:                             tabChangeTitleSelect; 
-                --tabChangeTitleCustom:                             tabChangeTitleCustom; 
-                
-                --tabChangeTitlePrefix:                             tabChangeTitlePrefix;
-                --tabChangeTitleSuffix:                             tabChangeTitleSuffix; // "domyslny" :"dashwykop" :"dashwykopx" "usun",
-            }
+    
         }
     }                                                    
                                                                     
@@ -21825,17 +21283,7 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
     
     
     
-    if(collapseEntryButtonHide == 1)
-    {
-       section.listing > div.content > section.thread > section.item > button.toggle, 
-       section.entry > section.thread > section.item > button.toggle 
-       { display: none!important; }
-    }
-    
-    if(collapseCommentsButtonHide == 1)
-    {
-        section.comments > section.thread > section.item > button.toggle { display: none!important; }
-    } 
+
 }
 
 

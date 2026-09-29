@@ -32,7 +32,6 @@
 // @icon							https://www.google.com/s2/favicons?sz=64&domain=wykopx.pl
 
 
-// @require							https://unpkg.com/localforage@1.10.0/dist/localforage.min.js
 // @require							https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js
 // @require							https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/pl.js
 // @require							https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js
@@ -49,7 +48,7 @@
 
 
 	const currentVersion = "3.5.6";
-	let dev = false;
+	let dev = true;
 
 	const promoString = " - Wykop XS / #wykopx";
 
@@ -114,17 +113,18 @@
 
 
 
+
 		let loggedUser = {
 			username: null		// loggedUser.username -> nazwa zalogowanego uzytkownika
 		};
 		let wxs_modal = null;
-
 		let loadTime = dayjs();
+
+
 
 		// wykop_xs_mikroczat.user.js -MIKROCZAT/LISTA PLUSUJĄCYCH - settings
 		setSettingsValueFromCSSProperty("entryVotersListEnable", true);				// włącza pokazywanie listy plusujących z Wykop X Style
 		setSettingsValueFromCSSProperty("entryVotersListExpandIfLessThan", 50, true);
-
 
 		if (settings.entryVotersListEnable)
 		{
@@ -150,10 +150,18 @@
 
 		if (!dev) dev = setSettingsValueFromCSSProperty("wxsDev", false);
 
+		/* AUTOMATYCZNIE POKAŻ WSZYSTKIE KOMENTARZE W DRZEWIE W NOWYM UI WYKOPU */
+		setSettingsValueFromCSSProperty("autoOpenAllCommentsInTree", true);
+		/* AUTOMATYCZNIE POKAŻ CAŁOŚĆ DŁUGICH WPISÓW I KOMENTARZY */
+		setSettingsValueFromCSSProperty("autoOpenMoreContentEverywhere", true);
+		/* AUTOMATYCZNIE ROZWIJAJ SPOILERY */
+		setSettingsValueFromCSSProperty("autoOpenSpoilersEverywhere", true);
+
+
+
 
 
 		setSettingsValueFromCSSProperty("WykopXStyleEnabled", false);
-
 		setSettingsValueFromCSSProperty("myWykopInTopNavJS");
 		setSettingsValueFromCSSProperty("favoritesInTopNavJS", true);
 
@@ -161,10 +169,10 @@
 
 		/* wszystkie komentarze - rozwijanie drzewa komentarzy w nowym UI wykopu 2026-09 */
 		setSettingsValueFromCSSProperty("autoOpenAllCommentsInTree", true);
-		setSettingsValueFromCSSProperty("autoOpenMoreContentEverywhere", true);
-		setSettingsValueFromCSSProperty("autoOpenSpoilersEverywhere", true);
 
-		setSettingsValueFromCSSProperty("observedTagsInRightSidebarEnable");
+
+
+
 		setSettingsValueFromCSSProperty("linkVoteDownButton");
 
 		setSettingsValueFromCSSProperty("editorShowMyUsername");
@@ -214,74 +222,9 @@
 			IntersectionObserverEnabled = true;
 		}
 
-		setSettingsValueFromCSSProperty("checkLinkVotesEnable");
-		if (settings.checkLinkVotesEnable) 
-		{
-			IntersectionObserverEnabled = true;
-			setSettingsValueFromCSSProperty("checkLinkVotesPerHour");
-			setSettingsValueFromCSSProperty("checkLinkCommentsPerHour");
-		}
-
-		// voting explosion
-		setSettingsValueFromCSSProperty("votingExplosionEnable", false);
-
-		// checkPluses()
-		let votesFetchingLimitMinimumVotes = 1;
-		let votesFetchingLimitMaximumHoursOld = 48;
-		let votesFetchingFirstDelayInSeconds = 1;		// seconds
-		let votesFetchingOngoingDelayInSeconds = 990; 	// seconds
-
-		let votesFetchingHigherFrequencyLimitMinimumVotes = 30;
-		let votesFetchingHigherFrequencyLimitMaximumHoursOld = 24;
-		let votesFetchingHigherFrequencyDelayInSeconds = 990; // seconds
-
-		setSettingsValueFromCSSProperty("checkEntryPlusesWhenVoting");
-		setSettingsValueFromCSSProperty("checkEntryPlusesEnable");
-		setSettingsValueFromCSSProperty("prefixBeforePlusesCount", "brak", true); // domyslnie puste, dodajemy plus przed liczbą plusów
 
 
-		const prefixBeforePlusesCountMap = new Map([
-			['brak', ''],
-			['plus', '+'],	// domyslnie 
-			['emoji_serce', '💚'],
-			['emoji_index_pointing_up', '☝'],
-			['emoji_thumbs_up', '👍'],
-			['emoji_backhand_index_pointing_up', '👆'],
-			['emoji_upwards_button', '🔼'],
-			['emoji_up_arrow', '⬆'],
-			['emoji_up_right_arrow', '↗'],
-			['emoji_up_left_arrow', '↖'],
-			['emoji_right_arrow_curving_up', '⤴'],
-			['emoji_heavy_tick', '✔'],
-			['emoji_plus_sign', '➕'],
-			['emoji_red_triangle_pointed_up', '🔺']
-		]);
-		settings.prefixBeforePlusesCount = prefixBeforePlusesCountMap.get(settings.prefixBeforePlusesCount);
 
-		setSettingsValueFromCSSProperty("prefixBeforeMinusesCount", "minus", true); // domyślnie minus i tak zostawiamy
-		const prefixBeforeMinusesCountMap = new Map([
-			['brak', ''],
-			['minus', '-'],	// domyslnie
-			['emoji_cross_mark', '❌'],
-			['emoji_backhand_index_pointing_down', '👇'],
-			['emoji_thumbs_down', '👎'],
-			['emoji_downwards_button', '🔽'],
-			['emoji_down_arrow', '⬇'],
-			['emoji_down_right_arrow', '↘'],
-			['emoji_down_left_arrow', '↙'],
-			['emoji_right_arrow_curving_down', '⤵'],
-			['emoji_minus_sign', '➖'],
-			['emoji_red_triangle_pointed_down', '🔻']
-		]);
-		settings.prefixBeforeMinusesCount = prefixBeforeMinusesCountMap.get(settings.prefixBeforeMinusesCount);
-
-		if (settings.checkEntryPlusesEnable) 
-		{
-			IntersectionObserverEnabled = true;
-			setSettingsValueFromCSSProperty("checkEntryPlusesPerHour");
-			setSettingsValueFromCSSProperty("checkEntryCommentsPerHour");
-			setSettingsValueFromCSSProperty("checkEntryPlusesForVotingGame");
-		}
 
 
 		// SPRAWDZANIE UZYTKOWNIKOW KTORZY CIE BLOKUJA
@@ -290,23 +233,407 @@
 
 
 
-		// LOCAL STORAGE
-		let localStorageMirkoukrywacz = null;
-		let localStorageNotatkowator = null;
-		let localStorageUserLabels = null;
+		// ============================================================================
+		// WYKOP XS INDEXEDDB STORAGE (BEZ ZEWNĘTRZNYCH BIBLIOTEK)
+		// ============================================================================
+		class WykopXSStore
+		{
+			constructor(storeName, options = {})
+			{
+				this.storeName = storeName;
+				this.options = Object.assign({ preload: true }, options);
+				this._cache = new Map();
+				this._isPreloaded = false;
+				this._preloadPromise = null;
 
+				if (this.options.preload)
+				{
+					this.preload();
+				}
+			}
+
+			async preload()
+			{
+				if (this._preloadPromise) return this._preloadPromise;
+				this._preloadPromise = (async () =>
+				{
+					try
+					{
+						const db = await WykopXSStorage.getDB();
+						return await new Promise((resolve, reject) =>
+						{
+							const tx = db.transaction(this.storeName, "readonly");
+							const store = tx.objectStore(this.storeName);
+
+							if (store.getAll && store.getAllKeys)
+							{
+								const keysReq = store.getAllKeys();
+								const valsReq = store.getAll();
+								tx.oncomplete = () =>
+								{
+									const keys = keysReq.result || [];
+									const vals = valsReq.result || [];
+									for (let i = 0; i < keys.length; i++)
+									{
+										this._cache.set(keys[i], vals[i]);
+									}
+									this._isPreloaded = true;
+									resolve(this._cache);
+								};
+								tx.onerror = () => reject(tx.error);
+							}
+							else
+							{
+								const cursorReq = store.openCursor();
+								cursorReq.onsuccess = (e) =>
+								{
+									const cursor = e.target.result;
+									if (cursor)
+									{
+										this._cache.set(cursor.key, cursor.value);
+										cursor.continue();
+									}
+									else
+									{
+										this._isPreloaded = true;
+										resolve(this._cache);
+									}
+								};
+								cursorReq.onerror = () => reject(cursorReq.error);
+							}
+						});
+					}
+					catch (err)
+					{
+						if (dev) console.error(`[Wykop XS] Błąd preloading store ${this.storeName}:`, err);
+						this._isPreloaded = true;
+						return this._cache;
+					}
+				})();
+				return this._preloadPromise;
+			}
+
+			async getItem(key)
+			{
+				if (this.options.preload && !this._isPreloaded)
+				{
+					await this.preload();
+				}
+
+				if (this._cache.has(key))
+				{
+					const val = this._cache.get(key);
+					return val !== undefined ? val : null;
+				}
+
+				if (this._isPreloaded)
+				{
+					return null;
+				}
+
+				try
+				{
+					const db = await WykopXSStorage.getDB();
+					return await new Promise((resolve, reject) =>
+					{
+						const tx = db.transaction(this.storeName, "readonly");
+						const store = tx.objectStore(this.storeName);
+						const req = store.get(key);
+						req.onsuccess = () =>
+						{
+							const result = req.result !== undefined ? req.result : null;
+							this._cache.set(key, result);
+							resolve(result);
+						};
+						req.onerror = () => reject(req.error);
+					});
+				}
+				catch (err)
+				{
+					if (dev) console.error(`[Wykop XS] Błąd getItem (${this.storeName}, ${key}):`, err);
+					return null;
+				}
+			}
+
+			async setItem(key, value)
+			{
+				this._cache.set(key, value);
+				try
+				{
+					const db = await WykopXSStorage.getDB();
+					return await new Promise((resolve, reject) =>
+					{
+						const tx = db.transaction(this.storeName, "readwrite");
+						const store = tx.objectStore(this.storeName);
+						const req = store.put(value, key);
+						req.onsuccess = () => resolve(value);
+						req.onerror = () => reject(req.error);
+					});
+				}
+				catch (err)
+				{
+					if (dev) console.error(`[Wykop XS] Błąd setItem (${this.storeName}, ${key}):`, err);
+					return value;
+				}
+			}
+
+			async removeItem(key)
+			{
+				this._cache.delete(key);
+				try
+				{
+					const db = await WykopXSStorage.getDB();
+					return await new Promise((resolve, reject) =>
+					{
+						const tx = db.transaction(this.storeName, "readwrite");
+						const store = tx.objectStore(this.storeName);
+						const req = store.delete(key);
+						req.onsuccess = () => resolve();
+						req.onerror = () => reject(req.error);
+					});
+				}
+				catch (err)
+				{
+					if (dev) console.error(`[Wykop XS] Błąd removeItem (${this.storeName}, ${key}):`, err);
+				}
+			}
+
+			async iterate(callback)
+			{
+				if (!this._isPreloaded)
+				{
+					await this.preload();
+				}
+
+				const entries = Array.from(this._cache.entries());
+				let iterationNumber = 1;
+				for (const [key, value] of entries)
+				{
+					const result = callback(value, key, iterationNumber++);
+					if (result !== undefined)
+					{
+						return result;
+					}
+				}
+			}
+
+			async clear()
+			{
+				this._cache.clear();
+				const db = await WykopXSStorage.getDB();
+				return await new Promise((resolve, reject) =>
+				{
+					const tx = db.transaction(this.storeName, "readwrite");
+					const store = tx.objectStore(this.storeName);
+					const req = store.clear();
+					req.onsuccess = () => resolve();
+					req.onerror = () => reject(req.error);
+				});
+			}
+
+			async keys()
+			{
+				if (this._isPreloaded)
+				{
+					return Array.from(this._cache.keys());
+				}
+				const db = await WykopXSStorage.getDB();
+				return await new Promise((resolve, reject) =>
+				{
+					const tx = db.transaction(this.storeName, "readonly");
+					const store = tx.objectStore(this.storeName);
+					const req = store.getAllKeys ? store.getAllKeys() : null;
+					if (req)
+					{
+						req.onsuccess = () => resolve(req.result || []);
+						req.onerror = () => reject(req.error);
+					}
+					else
+					{
+						resolve(Array.from(this._cache.keys()));
+					}
+				});
+			}
+
+			async length()
+			{
+				if (this._isPreloaded)
+				{
+					return this._cache.size;
+				}
+				const db = await WykopXSStorage.getDB();
+				return await new Promise((resolve, reject) =>
+				{
+					const tx = db.transaction(this.storeName, "readonly");
+					const store = tx.objectStore(this.storeName);
+					const req = store.count();
+					req.onsuccess = () => resolve(req.result || 0);
+					req.onerror = () => reject(req.error);
+				});
+			}
+		}
+
+		const WykopXSStorage = {
+			dbName: "wykopx.pl",
+			requiredStores: ["mirkoukrywacz", "notatkowator", "userlabels", "observed", "settings"],
+			_dbPromise: null,
+			_stores: new Map(),
+
+			getDB()
+			{
+				if (this._dbPromise) return this._dbPromise;
+				this._dbPromise = new Promise((resolve, reject) =>
+				{
+					const req = indexedDB.open(this.dbName);
+					req.onupgradeneeded = (e) =>
+					{
+						const db = req.result;
+						for (const store of this.requiredStores)
+						{
+							if (!db.objectStoreNames.contains(store))
+							{
+								db.createObjectStore(store);
+							}
+						}
+					};
+					req.onsuccess = async () =>
+					{
+						const db = req.result;
+						const missing = this.requiredStores.filter(s => !db.objectStoreNames.contains(s));
+						if (missing.length > 0)
+						{
+							const nextVersion = db.version + 1;
+							db.close();
+							const upgradeReq = indexedDB.open(this.dbName, nextVersion);
+							upgradeReq.onupgradeneeded = () =>
+							{
+								const upDb = upgradeReq.result;
+								for (const store of this.requiredStores)
+								{
+									if (!upDb.objectStoreNames.contains(store))
+									{
+										upDb.createObjectStore(store);
+									}
+								}
+							};
+							upgradeReq.onsuccess = async () =>
+							{
+								await this._migrateFromLocalStorage(upgradeReq.result);
+								resolve(upgradeReq.result);
+							};
+							upgradeReq.onerror = () => reject(upgradeReq.error);
+						}
+						else
+						{
+							await this._migrateFromLocalStorage(db);
+							resolve(db);
+						}
+					};
+					req.onerror = () => reject(req.error);
+				});
+				return this._dbPromise;
+			},
+
+			async _migrateFromLocalStorage(db)
+			{
+				const migrationFlag = "wykopx_migrated_to_idb_v1";
+				try
+				{
+					if (window.localStorage.getItem(migrationFlag)) return;
+					const prefix = "wykopx/";
+					const keysToMigrate = [];
+					for (let i = 0; i < window.localStorage.length; i++)
+					{
+						const k = window.localStorage.key(i);
+						if (k && k.startsWith(prefix))
+						{
+							keysToMigrate.push(k);
+						}
+					}
+					if (keysToMigrate.length === 0)
+					{
+						window.localStorage.setItem(migrationFlag, "true");
+						return;
+					}
+
+					const batches = {};
+					for (const fullKey of keysToMigrate)
+					{
+						const rest = fullKey.substring(prefix.length);
+						const slashIdx = rest.indexOf("/");
+						if (slashIdx === -1) continue;
+						const storeName = rest.substring(0, slashIdx);
+						const itemKey = rest.substring(slashIdx + 1);
+
+						const rawVal = window.localStorage.getItem(fullKey);
+						let parsedVal = rawVal;
+						try { parsedVal = JSON.parse(rawVal); } catch (e) { }
+
+						if (!batches[storeName]) batches[storeName] = [];
+						batches[storeName].push({ key: itemKey, value: parsedVal });
+					}
+
+					for (const [storeName, items] of Object.entries(batches))
+					{
+						if (!db.objectStoreNames.contains(storeName)) continue;
+						await new Promise((res, rej) =>
+						{
+							const tx = db.transaction(storeName, "readwrite");
+							const store = tx.objectStore(storeName);
+							for (const item of items)
+							{
+								store.put(item.value, item.key);
+							}
+							tx.oncomplete = () => res();
+							tx.onerror = () => rej(tx.error);
+						});
+					}
+					window.localStorage.setItem(migrationFlag, "true");
+					if (dev) console.log(`[Wykop XS] Pomyślnie zmigrowano ${keysToMigrate.length} wpisów z localStorage do IndexedDB.`);
+				}
+				catch (err)
+				{
+					if (dev) console.error("[Wykop XS] Błąd migracji danych:", err);
+				}
+			},
+
+			getStore(storeName, options = {})
+			{
+				if (!this._stores.has(storeName))
+				{
+					this._stores.set(storeName, new WykopXSStore(storeName, options));
+				}
+				return this._stores.get(storeName);
+			},
+
+			createInstance(options = {})
+			{
+				const storeName = options.storeName || options.name || "default";
+				return this.getStore(storeName, { preload: options.preload !== false });
+			}
+		};
+
+		// INDEXEDDB STORAGE
+		let storageMirkoukrywacz = null;
+		let storageNotatkowator = null;
+		let storageUserLabels = null;
+		let storageObserved = null;
 
 
 
 		setSettingsValueFromCSSProperty("linkThumbnail", "poprawej", true); // "poprawej", "polewej", "niepokazuj"
 
-		setSettingsValueFromCSSProperty("actionBoxEnable");
+		setSettingsValueFromCSSProperty("actionBoxEnable", false);
+
 		if (settings.actionBoxEnable)
 		{
 			IntersectionObserverEnabled = true;
 			setSettingsValueFromCSSProperty("filterUserComments");
 			setSettingsValueFromCSSProperty("filterUserReplies");
+
+
 			setSettingsValueFromCSSProperty("mirkoukrywaczEnable");
+
 			if (settings.mirkoukrywaczEnable)
 			{
 				setSettingsValueFromCSSProperty("mirkoukrywaczMinimizedGrayedOut");
@@ -676,14 +1003,8 @@
 
 		if (settings.mirkoukrywaczEnable)
 		{
-			// LOCALSTORAGE
-			localStorageMirkoukrywacz = localforage.createInstance({
-				driver: localforage.LOCALSTORAGE,
-				name: "wykopx",
-				storeName: "mirkoukrywacz",
-			});
-
-
+			// INDEXEDDB STORAGE (z pamięcią podręczną w RAM)
+			storageMirkoukrywacz = WykopXSStorage.getStore("mirkoukrywacz", { preload: true });
 		}
 
 		setSettingsValueFromCSSProperty("notatkowatorEnable", true);
@@ -692,11 +1013,7 @@
 		if (settings.notatkowatorEnable)
 		{
 			IntersectionObserverEnabled = true;
-			localStorageNotatkowator = localforage.createInstance({
-				driver: localforage.LOCALSTORAGE,
-				name: "wykopx",
-				storeName: "notatkowator",
-			});
+			storageNotatkowator = WykopXSStorage.getStore("notatkowator", { preload: true });
 
 			//settings.notatkowatorUpdateInterval = parseFloat(wykopxSettings.getPropertyValue("--notatkowatorUpdateInterval")); // number 0 ... 120
 			setSettingsValueFromCSSProperty("notatkowatorVerticalBar");
@@ -715,11 +1032,7 @@
 		{
 
 			IntersectionObserverEnabled = true;
-			localStorageUserLabels = localforage.createInstance({
-				driver: localforage.LOCALSTORAGE,
-				name: "wykopx",
-				storeName: "userlabels",
-			});
+			storageUserLabels = WykopXSStorage.getStore("userlabels", { preload: true });
 			setSettingsValueFromCSSProperty("wxsUserLabelsFakeFemales", true);
 			setSettingsValueFromCSSProperty("wxsUserLabelsTrolls", true);
 
@@ -789,13 +1102,13 @@
 
 
 
-				localStorageUserLabels.setItem('falszyweRozowe', listafalszywychrozowych).then(() => { });
-				localStorageUserLabels.setItem('falszyweNiebieskie', listafalszywychniebieskich).then(() => { });
+				storageUserLabels.setItem('falszyweRozowe', listafalszywychrozowych).then(() => { });
+				storageUserLabels.setItem('falszyweNiebieskie', listafalszywychniebieskich).then(() => { });
 
 
 				// get from localstorage
-				falszyweRozoweArray = await localStorageUserLabels.getItem("falszyweRozowe");
-				falszyweNiebieskieArray = await localStorageUserLabels.getItem("falszyweNiebieskie");
+				falszyweRozoweArray = await storageUserLabels.getItem("falszyweRozowe");
+				falszyweNiebieskieArray = await storageUserLabels.getItem("falszyweNiebieskie");
 			}
 
 
@@ -879,10 +1192,10 @@
 
 
 				trollsMap.set("ChwilowaPomaranczka", { "label": "Wykopowy Troll" });
-				localStorageUserLabels.setItem('mapaTrolli', Object.fromEntries(trollsMap)).then(() => { });
+				storageUserLabels.setItem('mapaTrolli', Object.fromEntries(trollsMap)).then(() => { });
 
 				// get from localstorage
-				localStorageUserLabels.getItem('mapaTrolli').then(val => { mapaTrolli = new Map(Object.entries(val)); })
+				storageUserLabels.getItem('mapaTrolli').then(val => { mapaTrolli = new Map(Object.entries(val)); })
 			}
 		}
 
@@ -907,43 +1220,15 @@
 		}
 
 
-		setSettingsValueFromCSSProperty("tabChangeEnabled", false);
-		if (settings.tabChangeEnabled)
-		{
-			setSettingsValueFromCSSProperty("tabChangeOnlyOnHiddenState", false);
-			setSettingsValueFromCSSProperty("tabChangeFaviconEnabled", false);
-
-			if (settings.tabChangeFaviconEnabled)
-			{
-				setSettingsValueFromCSSProperty("tabChangeFaviconSelect", "wykop", true);
-			}
-
-			setSettingsValueFromCSSProperty("tabChangeTitleEnabled", false);
-			if (settings.tabChangeTitleEnabled)
-			{
-				setSettingsValueFromCSSProperty("tabChangeTitleShowNotificationsEnabled", false);
-				setSettingsValueFromCSSProperty("tabChangeTitleShowNotificationsCountPM", false);
-				setSettingsValueFromCSSProperty("tabChangeTitleShowNotificationsCountEntries", false);
-				setSettingsValueFromCSSProperty("tabChangeTitleShowNotificationsCountSeparated", false);
-				setSettingsValueFromCSSProperty("tabChangeTitleShowNotificationsCountTagsNewLink", false);
-				setSettingsValueFromCSSProperty("tabChangeTitleShowNotificationsCountTagsNewEntry", false);
-				setSettingsValueFromCSSProperty("tabChangeTitlePrefix", false);
-				setSettingsValueFromCSSProperty("tabChangeTitleSelect", "domyslny", true);
-				setSettingsValueFromCSSProperty("tabChangeTitleCustom", "Wykop X", true);
-				setSettingsValueFromCSSProperty("tabChangeTitleSuffix", "domyslny", true);
-			}
-		}
 
 
 
 		// DOMYŚLNIE WYŁĄCZONE BEZ WYKOP X STYLE
-		setSettingsValueFromCSSProperty("votePlusMinusOnHover", false);
-		setSettingsValueFromCSSProperty("observedTagsInRightSidebarSortAlphabetically", false);
 		setSettingsValueFromCSSProperty("topNavHomeButtonClickRefreshOrRedirect", false);
 		setSettingsValueFromCSSProperty("topNavMicroblogButtonClickRefreshOrRedirect", false);
 
 		// DODATKOWE PRZYCISKI NA GORNEJ BELCE
-		setSettingsValueFromCSSProperty("topNavNightSwitchButton", true);
+		setSettingsValueFromCSSProperty("topNavNightSwitchButton", false);
 
 		setSettingsValueFromCSSProperty("topNavMyWykopButton", false);
 		setSettingsValueFromCSSProperty("topNavMicroblogButton", false);
@@ -953,6 +1238,7 @@
 
 		// DODATKOWE PRZYCISKI NA BELCE MOBILNEJ
 		setSettingsValueFromCSSProperty("mobileNavBarHide", false);
+
 		if (settings.mobileNavBarHide == false)
 		{
 			setSettingsValueFromCSSProperty("mobileNavBarMyWykopButton", false);
@@ -961,10 +1247,6 @@
 			setSettingsValueFromCSSProperty("mobileNavBarNotificationsButton", false);
 		}
 
-
-		// default numbers
-		settings.observedTagsInRightSidebarUpdateInterval = 12;
-		if (wykopxSettings.getPropertyValue("--observedTagsInRightSidebarUpdateInterval")) settings.observedTagsInRightSidebarUpdateInterval = parseFloat(wykopxSettings.getPropertyValue("--observedTagsInRightSidebarUpdateInterval")); // number
 
 
 
@@ -1007,11 +1289,7 @@
 
 
 
-		let localStorageObserved = localforage.createInstance({
-			driver: localforage.LOCALSTORAGE,
-			name: "wykopx",
-			storeName: "observed",
-		});
+		storageObserved = WykopXSStorage.getStore("observed", { preload: true });
 
 		const topNavHeaderRightElement = document.querySelector('header.header > .right > nav > ul');
 
@@ -1221,7 +1499,7 @@
 
 		function redirectToTag(tag)
 		{
-			window.location.replace(`https://wykopx.pl/#${tag}`);
+			window.location.replace(`https://wykopx.pl/tag/${tag}`);
 		}
 
 		function redirectToUser(user)
@@ -1434,33 +1712,6 @@
 
 
 
-		/* LENNY FACE
-				let lennyArray = 
-				[
-					`( ͡° ͜ʖ ͡°)`,
-					`( ͡° ʖ̯ ͡°)`,
-					`( ͡º ͜ʖ͡º)`,
-					`( ͡°( ͡° ͜ʖ( ͡° ͜ʖ ͡°)ʖ ͡°) ͡°)`,
-					`(⌐ ͡■ ͜ʖ ͡■)`,
-					`(╥﹏╥)`,
-					`(╯︵╰,)`,
-					`(ʘ‿ʘ)`,
-					`(｡◕‿‿◕｡)`,
-					`ᕙ(⇀‸↼‶)ᕗ`,
-					`ᕦ(òóˇ)ᕤ`,
-					`(✌ ﾟ ∀ ﾟ)☞`,
-					`ʕ•ᴥ•ʔ`,
-					`ᶘᵒᴥᵒᶅ`,
-					`(⌒(oo)⌒)`
-				]
-			}
-		*/
-
-
-
-
-
-
 
 
 
@@ -1561,61 +1812,6 @@
 
 
 
-		/* RIGHT SIDEBAR — DODAJ LISTE OBSERWOWANYCH TAGÓW */
-		function addObservedTagsToRightSidebar()
-		{
-			consoleX("addObservedTagsToRightSidebar()", 1)
-
-			let fetchedValuesArray = [];
-
-			if (settings.observedTagsInRightSidebarEnable)
-			{
-				// consoleX("addObservedTagsToRightSidebar()", 1)
-
-				checkLocalForageupdatedDate(localStorageObserved, getObservedTags, settings.observedTagsInRightSidebarUpdateInterval * 3600);
-
-				// VUE SENSITIVE
-				/*
-					data-v-d5500d78
-					data-v-38d5cf90
-					data-v-7befdafc
-				*/
-				let section_html = `
-			<section class="wykopx_your_observed_tags custom-sidebar tags-sidebar" data-v-d5500d78 data-v-38d5cf90 data-v-0a0cb29b>
-				<header class="" data-v-d5500d78>
-					<h4 data-v-d5500d78>Przejdź na #tag lub @profil</h4>
-				</header>
-				<div class="content wykopx_quick_search_container" data-v-d5500d78>
-					<input type="text" class="wykopx_quick_search" placeholder="#wykopx" title="${promoString}" />
-				</div>
-				<header data-v-d5500d78>
-					<h4 data-v-d5500d78>Twoje obserwowane tagi</h4>
-				</header>
-				<div class="content" data-v-d5500d78>
-					<section class="tags" data-v-7befdafc data-v-d5500d78>
-						<ul data-v-7befdafc data-v-d5500d78>
-				`;
-
-				localStorageObserved.getItem('observedTags').then(function (tagsArray)
-				{
-					fetchedValuesArray = tagsArray;
-					if (settings.observedTagsInRightSidebarSortAlphabetically)
-					{
-						fetchedValuesArray.sort(); // sortowanie alfabetyczne tagów
-					}
-					fetchedValuesArray.forEach(function (tag)
-					{
-						section_html += `
-						<li data-v-7befdafc data-v-d5500d78 title="Przejdź na tag #${tag}  ${promoString}">
-							<span data-v-7befdafc data-v-d5500d78>#</span><a data-v-7befdafc href="https://wykopx.pl/#${tag}" class="hybrid" data-v-d5500d78>${tag}</a>
-						</li>`;
-					});
-					section_html += `</ul></section></div></section>`;
-					document.querySelector(`section.sidebar`).insertAdjacentHTML('beforeend', section_html);
-				}).catch(function (err) { });
-
-			}
-		}
 
 
 		async function checkLocalForageupdatedDate(wykopxStorageName, updateStorageFunction, updateIntervalSeconds)
@@ -1668,23 +1864,16 @@
 					const fetchedValuesArray = responseJSONData.map(function (item)
 					{ return item.name; });
 
-					localStorageObserved.setItem("storageUpdatedDate", loadTime)
-					localStorageObserved.setItem("observedTags", fetchedValuesArray)
+					storageObserved.setItem("storageUpdatedDate", loadTime)
+					storageObserved.setItem("observedTags", fetchedValuesArray)
 
 					return true;
 				});
 		}
 
-
-
-
-
-
-
-
 		async function POSTDATATOWYKOPX()
 		{
-			if (dev) console.log(" 🍌🍌🍌🍌 POSTDATATOWYKOPX() ")
+			// if (dev) console.log(" 🍌🍌🍌🍌 POSTDATATOWYKOPX() ")
 
 
 			await getSettingsList("blacklists", "tags");
@@ -1692,20 +1881,20 @@
 			await getSettingsList("blacklists", "users");
 			await getSettingsList("observed", "tags");
 
-			let settings_list_observed_tags = await localStorageObserved.getItem("settings_list_observed_tags");
-			let settings_list_blacklists_domains = await localStorageObserved.getItem("settings_list_blacklists_domains");
-			let settings_list_blacklists_users = await localStorageObserved.getItem("settings_list_blacklists_users");
-			let settings_list_blacklists_tags = await localStorageObserved.getItem("settings_list_blacklists_tags");
+			let settings_list_observed_tags = await storageObserved.getItem("settings_list_observed_tags");
+			let settings_list_blacklists_domains = await storageObserved.getItem("settings_list_blacklists_domains");
+			let settings_list_blacklists_users = await storageObserved.getItem("settings_list_blacklists_users");
+			let settings_list_blacklists_tags = await storageObserved.getItem("settings_list_blacklists_tags");
 
 
 			// await getSettingsList("observed", "users", "following");
 			// await getSettingsList("observed", "users", "followers");
-			// let settings_list_observed_users_followers = await localStorageObserved.getItem("settings_list_observed_users_followers");
-			// let settings_list_observed_users_following = await localStorageObserved.getItem("settings_list_observed_users_following");
+			// let settings_list_observed_users_followers = await storageObserved.getItem("settings_list_observed_users_followers");
+			// let settings_list_observed_users_following = await storageObserved.getItem("settings_list_observed_users_following");
 
 			let dataPOST = {};
 
-			// let settings_list_SHA256 = await localStorageObserved.getItem("settings_list_SHA256");
+			// let settings_list_SHA256 = await storageObserved.getItem("settings_list_SHA256");
 			let settings_list_SHA256 = null;
 
 			if (settings_list_blacklists_tags?.length > 0)
@@ -1734,7 +1923,7 @@
 
 			if (Object.keys(dataPOST).length >= 2)
 			{
-				if (dev) console.log(" 🍌🍌🍌🍌 Sending this data to wykopx.pl: ", dataPOST)
+				// if (dev) console.log(" 🍌🍌🍌🍌 Sending this data to wykopx.pl: ", dataPOST)
 
 				// TODO
 				// fetch('https://wykopx.pl/api/v3/', { 
@@ -1747,7 +1936,7 @@
 				// 	.then(response => response.text())
 				// 	.then(data =>
 				// 	{
-				// 		localStorageObserved.setItem(`settings_list_update`, loadTime);
+				// 		storageObserved.setItem(`settings_list_update`, loadTime);
 
 				// 		if(dev) console.log(" 🍌🍌🍌🍌 response from wykopx.pl: ")
 				// 		if(dev) console.log(data)
@@ -1803,7 +1992,7 @@
 				// {
 				// 	lastBlacklistTagCreatedAt = loggedUser.username + responseJSONData[responseJSONData.length - 1].created_at + responseJSONData[responseJSONData.length - 1].name; // WykopX2023-01-01 23:59:59famemma
 				// 	lastBlacklistTagCreatedAtSHA256 = await SHA256(lastBlacklistTagCreatedAt);
-				// 	localStorageObserved.setItem(`settings_list_SHA256`, lastBlacklistTagCreatedAtSHA256);
+				// 	storageObserved.setItem(`settings_list_SHA256`, lastBlacklistTagCreatedAtSHA256);
 				// }
 
 				let valueName = "name";
@@ -1819,7 +2008,7 @@
 			if (dev) console.log(fetchedValuesArray)
 
 			// localforage
-			localStorageObserved.setItem(`settings_list_${blacklistsOrObserved}_${type}${subtype ? "_" + subtype : ""}`, fetchedValuesArray); // zapisuje jako Array: ["tag1", "tag2", "tag3"]
+			storageObserved.setItem(`settings_list_${blacklistsOrObserved}_${type}${subtype ? "_" + subtype : ""}`, fetchedValuesArray); // zapisuje jako Array: ["tag1", "tag2", "tag3"]
 
 			// localstorage
 			//localStorage.setItem(`settings_list_${blacklistsOrObserved}_${type}${subtype ? "_" + subtype : ""}`, JSON.stringify(fetchedValuesArray)); // zapisuje jako Array: ["tag1", "tag2", "tag3"]
@@ -2571,80 +2760,31 @@
 		// strona wpisu, caly wpis: section:is(.entry:has(> article), .link-block:has(> section > article)):not(.deleted)
 		// tylko czesc wpisu bez komentarzy "section.entry:not(.deleted):has(> article), section.link-block:not(.deleted) > section > article)
 		/// :not(.deleted)
-		if (IntersectionObserverEnabled == true) waitForKeyElements("section.entry:has(> article), section.link-block:not(.premium-pub, .market-pub):has(> section > article)", sectionObjectDetected, false);
-
-		function sectionObjectDetected(sectionObjectElement)
-		{
-			// consoleX(`sectionObjectDetected()`, 1)
-			sectionObjectIntersectionObserver.observe(sectionObjectElement);
-		}
-
-
-
-		if (settings.linkToVideoDuration || settings.entryWithVideoDuration)
-		{
-			CSS += `
-			/* WYKOP XS CODE - START */
-			section.link-block > section > article > figure::before,
-			section.link-page section.link-block[data-wxs_video_duration] > section::before, 										/* WYKOP XS ONLY */
-			section.entry[data-wxs_video_duration] > article > div.edit-wrapper > section.embed > section.embed-ghost::before		/* WYKOP XS ONLY */
-			{
-				content: var(--wxs_video_duration);	/* WYKOP XS ONLY */
-
-				z-index: 1;
-				max-width: 80px;
-				animation-name: fadeIn;
-				animation-duration: 0.4s;
-				animation-delay: 1s;
-				animation-fill-mode: both;
-				animation-timing-function: ease-in-out;
-				position: absolute;
-				bottom: 10%;
-				padding: 4px 25px 4px 25px;
-				display: flex;
-				border-bottom: 1px solid var(--alto);
-				border-radius: 0 var(--borderRadius) var(--borderRadius) 0!important;
-				justify-content: center;
-				align-items: center;
-				color: rgba(180, 180, 180, 1);
-				background-color: rgba(0, 0, 0, 1);
-				opacity: 1;
-
-				@starting-style {
-					opacity: 0; scale: 0.9; translate: -40px;
-				}
-			}
-			/* WYKOP XS CODE - END */
-			section.link-page section.link-block[data-wxs_video_duration] > section,
-			section.entry[data-wxs_video_duration] > article > div.edit-wrapper > section.embed > section.embed-ghost
-			{
-				position: relative;
-			}
-			section.link-page section.link-block[data-wxs_video_duration] > section::before
-			{
-				bottom: unset;
-				top: -15px;
-				border-bottom: none;
-				border-radius: 0!important;
-			}
-			section.link-page section.link-block[data-wxs_video_duration] > section { margin-top: 15px; }
-			@keyframes fadeIn { 0% { opacity: 0; scale: 0.8; translate: -40px; } 100% { opacity: 1; scale: 1; translate: 0px; }}
-		`;
-		}
-
-
 		// INTERSECTION OBSERVED
 		const sectionObjectsAreIntersecting = async (intersectingObject, observer) =>
 		{
-			intersectingObject.forEach(async (IntersectionObserverEntry) =>															// InterIntersectionObserverEntry
-			{
 
+			// InterIntersectionObserverEntry
+			intersectingObject.forEach(async (IntersectionObserverEntry) =>
+			{
 
 				// ----- ANY INTERSECTION CHANGED 
 				let sectionObjectElement = IntersectionObserverEntry.target;														// element <section class="entry"> 
 				let resource = null;		// resource="link", "entry", "entry_comment"
 				// if(dev) console.log(`intersectingObject: `, sectionObjectElement)
-				if (!sectionObjectElement?.__vue__?.item) return false;
+				if (!sectionObjectElement?.__vue__)
+				{
+
+					console.log("sectionObjectElement.__vue__", sectionObjectElement)
+					if (sectionObjectElement.tagName == "BUTTON")
+					{
+						sectionObjectElement.click();
+					}
+
+
+
+					return false;
+				}
 
 
 				// ----- ONLY ONCE: INTERSECTION CHANGED FOR THE FIRST TIME:
@@ -2666,6 +2806,7 @@
 					let wxs_votes_all = wxs_votes_up - wxs_votes_down; 											// łączna liczba oddanych głosów 30 
 					let wxs_votes_up_percent = 0;
 					let wxs_votes_down_percent = 0;
+
 					if (wxs_votes_all > 0)
 					{
 						wxs_votes_down_percent = Math.ceil(wxs_votes_down * 100 / wxs_votes_all);
@@ -2675,28 +2816,6 @@
 					// wpisy i komentarze
 					if (resource != "link") 
 					{
-						if (settings.checkEntryPlusesEnable || settings.votingExplosionEnable)
-						{
-							sectionObjectElement.style.setProperty('--votesAll', `"👨${wxs_votes_all}"`);		// var(--votesAll)
-							sectionObjectElement.dataset.wxs_votes_all = wxs_votes_all;							// data-wxs_votes_all="-10"
-							sectionObjectElement.style.setProperty('--votesUp', `"${wxs_votes_up > 0 ? settings.prefixBeforePlusesCount : ""}${wxs_votes_up}"`);	// var(--votesUp);
-
-
-
-							sectionObjectElement.dataset.wxs_votes_up = wxs_votes_up;							// data-wxs_votes_all="10"
-							sectionObjectElement.style.setProperty('--votesDown', `"${wxs_votes_down > 0 ? settings.prefixBeforeMinusesCount : ""}${wxs_votes_down}"`);	//var(--votesDown)
-							sectionObjectElement.dataset.wxs_votes_down = wxs_votes_down;						// data-wxs_votes_all="20"
-							sectionObjectElement.style.setProperty('--votesCount', `"${wxs_votes_up > 0 ? settings.prefixBeforePlusesCount : wxs_votes_up < 0 ? settings.prefixBeforeMinusesCount : ""}${wxs_votes_count}"`); // var(--votesCount)
-							sectionObjectElement.dataset.wxs_votes_count = wxs_votes_count;						// data-wxs_votes_all="30"
-
-							sectionObjectElement.dataset.wxs_voted = sectionObjectElement.__vue__.item.voted;	// data-wxs_voted=1  data-wxs_voted=0
-
-							if (settings.votingExplosionEnable || settings.checkEntryPlusesPerHour && !sectionObjectElement.dataset.wxs_first_load_votes_count)
-							{
-								// liczba plusow podczas zaladowania strony
-								sectionObjectElement.dataset.wxs_first_load_votes_count = sectionObjectElement.__vue__.item.votes.up - sectionObjectElement.__vue__.item.votes.down;
-							}
-						}
 
 						if (settings.entryWithVideoDuration && sectionObjectElement?.__vue__?.item?.media?.embed?.video_metadata?.duration_in_seconds)
 						{
@@ -2704,6 +2823,8 @@
 							sectionObjectElement.dataset.wxs_video_duration = wxs_video_duration;							// data-wxs_video_duration="02:34"
 							sectionObjectElement.style.setProperty("--wxs_video_duration", `"${wxs_video_duration}"`);		// var(--wxs_video_duration) -> "02:34"
 						}
+
+
 
 						if (settings.filterUserReplies)
 						{
@@ -2751,35 +2872,7 @@
 								}
 							}
 
-							// sectionObjectElement.title = `Wykop X: 𝗕𝗹𝗼𝗰𝗸 𝗗𝗲𝘁𝗲𝗰𝘁𝗼𝗿❗\n\nUżytkownik @m__b dodał Cię na czarną listę\n\nNie możesz dodawać komentarzy w tym wpisie.`;
 
-							// sprawdzenie czy wpis zawiera grę w plusowanie
-							if (settings.checkEntryPlusesForVotingGame)
-							{
-								var substrings = ["z plusów", "tnia cyfra", "cyfra powie", "siaj jesteś", "siaj jestes", "niej cyfry", "iczba po zaplus", "yfra po zaplus"];
-								var containsSubstring = substrings.some(substring => sectionObjectElement.__vue__.item.content.includes(substring));
-
-								if (containsSubstring)
-								{
-									sectionObjectElement.dataset.wxs_voting_game = "true";
-
-									// string pokazujący zakrytą liczbę plusow - zamiast "1234" -> "12--"
-									//sectionObjectElement.style.setProperty('--votesUpHidden', `"+${replaceDigitsWithDot(sectionObjectElement.__vue__.item.votes.up)}"`);
-									sectionObjectElement.style.setProperty('--votesUpHidden', `"${settings.prefixBeforePlusesCount}` + replaceDigitsWithDot(wxs_votes_up) + `"`);
-									sectionObjectElement.style.wxs_votes_up_hidden = replaceDigitsWithDot(wxs_votes_up);				// data-wxs_votes_up_hidden
-
-									let votingGameLastDigit = wxs_votes_up + 1; 														// liczba po zaplusowaniu
-									votingGameLastDigit = votingGameLastDigit.toString().slice(-1);										// ostatnia cyfra po zaplusowaniu
-
-									sectionObjectElement.style.setProperty('--votingGameLastDigit', `"` + votingGameLastDigit + `"`);
-									sectionObjectElement.dataset.wxs_voting_game_last_digit = votingGameLastDigit;						// data-wxs_voting_game_last_digit="9"
-								}
-							}
-
-							if (settings.checkEntryCommentsPerHour && !sectionObjectElement.dataset.wxs_first_load_comments_count)
-							{
-								sectionObjectElement.dataset.wxs_first_load_comments_count = sectionObjectElement.__vue__.item.comments.count;
-							}
 						}
 					}
 					// znalezisko
@@ -2790,23 +2883,6 @@
 							let wxs_video_duration = timeDurationFromSeconds(sectionObjectElement?.__vue__?.item?.media?.embed?.video_metadata?.duration_in_seconds);
 							sectionObjectElement.dataset.wxs_video_duration = wxs_video_duration;					// data-wxs_video_duration="02:34"
 							sectionObjectElement.style.setProperty("--wxs_video_duration", `"${wxs_video_duration}"`);		// var(--wxs_video_duration) -> "02:34"
-						}
-
-						if (settings.checkLinkVotesEnable && settings.checkLinkVotesPerHour && !sectionObjectElement.dataset.wxs_first_load_votes_count)
-						{
-							//sectionObjectElement.style.setProperty('--votesUp', `"${sectionObjectElement.__vue__.item.votes.up}"`);
-							//sectionObjectElement.style.setProperty('--votesDown', `"${sectionObjectElement.__vue__.item.votes.down}"`);
-							sectionObjectElement.dataset.wxs_votes_up = sectionObjectElement.__vue__.item.votes.up;
-							sectionObjectElement.dataset.wxs_votes_down = sectionObjectElement.__vue__.item.votes.down;
-							sectionObjectElement.dataset.wxs_voted = sectionObjectElement.__vue__.item.voted;
-							sectionObjectElement.dataset.wxs_first_load_votes_count = sectionObjectElement.__vue__.item.votes.up - sectionObjectElement.__vue__.item.votes.down;
-							sectionObjectElement.dataset.wxs_votes_count = sectionObjectElement.__vue__.item.votes.up - sectionObjectElement.__vue__.item.votes.down;
-							sectionObjectElement.dataset.wxs_votes_all = sectionObjectElement.__vue__.item.votes.up + sectionObjectElement.__vue__.item.votes.down;
-						}
-						if (settings.checkLinkCommentsPerHour && !sectionObjectElement.dataset.wxs_first_load_comments_count)
-						{
-							if (!sectionObjectElement.dataset.wxs_first_load_time) sectionObjectElement.dataset.wxs_first_load_time = dayjs().valueOf(); // data unix kiedy przybyly ostatnio odswiezone plusy-tutaj czas załadowania strony
-							sectionObjectElement.dataset.wxs_first_load_comments_count = sectionObjectElement.__vue__.item.comments.count;
 						}
 					}
 					currentPageTotalVotesUpCount += sectionObjectElement.__vue__.item.votes.up;
@@ -2827,84 +2903,6 @@
 					sectionObjectElement.classList.remove("notIntersecting");
 
 
-					// ZNALEZISKO WIĘC WŁĄCZAMY ANALIZĘ ZNALEZISKA
-					if (resource == "link") 
-					{
-						if (settings.checkLinkVotesEnable)
-						{
-							if ((sectionObjectElement.__vue__.item.votes.up > votesFetchingLimitMinimumVotes || sectionObjectElement.__vue__.item.votes.down > votesFetchingLimitMinimumVotes) && loadTime.diff(dayjs(sectionObjectElement.__vue__.item.created_at), 'hour') < votesFetchingLimitMaximumHoursOld)
-							{
-								let i = 1;
-								let timeoutId = null
-								timeoutId = setTimeout(function checkPlusesAgain()
-								{
-									if (sectionObjectElement?.__vue__?.item)
-									{
-										checkPluses(sectionObjectElement, undefined, true);
-
-										if (sectionObjectElement.classList.contains("isIntersecting"))
-										{
-											if ((sectionObjectElement.dataset.wxs_votes_fetch_high_frequency)
-												|| ((loadTime.diff(dayjs(sectionObjectElement.__vue__.item.created_at), 'hour') < votesFetchingHigherFrequencyLimitMaximumHoursOld)
-													&& sectionObjectElement.__vue__.item.votes.up > votesFetchingHigherFrequencyLimitMinimumVotes))
-											{
-												if (!sectionObjectElement.dataset.wxs_votes_fetch_high_frequency) sectionObjectElement.dataset.wxs_votes_fetch_high_frequency = "true";
-												setTimeout(checkPlusesAgain, votesFetchingHigherFrequencyDelayInSeconds * 1000)
-											}
-											else
-											{
-												setTimeout(checkPlusesAgain, votesFetchingOngoingDelayInSeconds * 1000)
-											}
-										}
-									}
-								}, votesFetchingFirstDelayInSeconds * 1000);
-							}
-						}
-					}
-					// WPISY I KOMENTARZE
-					else
-					{
-						if (settings.checkEntryPlusesEnable)
-						{
-							// tylko wpisy i komentarze, które mają minimum X plusów i nie są starsze niż Y dni
-							if ((sectionObjectElement.__vue__.item.votes.up > votesFetchingLimitMinimumVotes || sectionObjectElement.__vue__.item.votes.down > votesFetchingLimitMinimumVotes) && loadTime.diff(dayjs(sectionObjectElement.__vue__.item.created_at), 'hour') < votesFetchingLimitMaximumHoursOld)
-							{
-								let timeoutId = null
-								let i = 1;
-								let timeoudId = setTimeout(function checkPlusesAgain()
-								{
-									if (sectionObjectElement?.__vue__?.item)
-									{
-										checkPluses(sectionObjectElement, undefined, true);
-
-										if (sectionObjectElement.classList.contains("isIntersecting"))
-										{
-											if ((sectionObjectElement.dataset.wxs_votes_fetch_high_frequency)
-												|| ((loadTime.diff(dayjs(sectionObjectElement.__vue__.item.created_at), 'hour') < votesFetchingHigherFrequencyLimitMaximumHoursOld)
-													&& sectionObjectElement.__vue__.item.votes.up > votesFetchingHigherFrequencyLimitMinimumVotes))
-											{
-												if (!sectionObjectElement.dataset.wxs_votes_fetch_high_frequency) sectionObjectElement.dataset.wxs_votes_fetch_high_frequency = "true";
-												setTimeout(checkPlusesAgain, votesFetchingHigherFrequencyDelayInSeconds * 1000)
-											}
-											else
-											{
-												setTimeout(checkPlusesAgain, votesFetchingOngoingDelayInSeconds * 1000)
-											}
-										}
-									}
-								}, votesFetchingFirstDelayInSeconds * 1000);
-
-								// ZABAWA W PLUSY
-								if (resource == "entry" && settings.checkEntryPlusesForVotingGame)
-								{
-
-								}
-							}
-
-						}
-					}
-
-
 					// ----- IS VISIBLE FOR THE FIRST TIME
 
 					// GDY PIERWSZY RAZ WIDZIMY WPIS/KOMENTARZ/ZNALEZISKO
@@ -2920,40 +2918,12 @@
 								linkSectionIntersected(sectionObjectElement)  // waitForKeyElements(`section.link-block[id^="link-"]`, , false);  // GM_wrench.waitForKeyElements(`section.link-block[id^="link-"]`, linkSectionIntersected, false);
 							}
 
-							if (settings.checkLinkVotesEnable && settings.checkLinkVotesPerHour)
-							{
-								const ratingBoxSection = sectionObjectElement.querySelector(".vote-box")
-
-								if ((sectionObjectElement.__vue__.item.votes.up > votesFetchingLimitMinimumVotes || sectionObjectElement.__vue__.item.votes.down > votesFetchingLimitMinimumVotes) && loadTime.diff(dayjs(sectionObjectElement.__vue__.item.created_at), 'day') < votesFetchingLimitMaximumHoursOld)
-								{
-									let wxs_votes_per_hourDivElement = document.createElement("div");
-									wxs_votes_per_hourDivElement.title = "Wykop X: Liczba wykopów na godzinę";
-									wxs_votes_per_hourDivElement.classList = "wxs_votes_per_hour";
-									ratingBoxSection.appendChild(wxs_votes_per_hourDivElement);
-								}
-							}
 						}
 						// WPISY, KOMENTARZE POD WPISAMI, KOMENTARZE POD ZNALEZISKAMI, 
 						else
 						{
 
-							const ratingBoxSection = sectionObjectElement.querySelector(".rating-box")
-							if (settings.votingExplosionEnable || settings.checkEntryPlusesWhenVoting) 
-							{
-								votingEventListener(sectionObjectElement, ratingBoxSection);
-							}
 
-							if (ratingBoxSection && settings.checkEntryPlusesEnable && settings.checkEntryPlusesPerHour)
-							{
-								if ((sectionObjectElement.__vue__.item.votes.up > votesFetchingLimitMinimumVotes || sectionObjectElement.__vue__.item.votes.down > votesFetchingLimitMinimumVotes) && loadTime.diff(dayjs(sectionObjectElement.__vue__.item.created_at), 'day') < votesFetchingLimitMaximumHoursOld)
-								{
-									let wxs_votes_per_hourDivElement = document.createElement("div");
-									wxs_votes_per_hourDivElement.title = "Wykop X: Liczba plusów na godzinę";
-									wxs_votes_per_hourDivElement.classList = "wxs_votes_per_hour";
-									ratingBoxSection.appendChild(wxs_votes_per_hourDivElement);
-								}
-
-							}
 						}
 
 
@@ -3100,7 +3070,7 @@
 				else if (sectionObjectElement.classList.contains("isIntersecting"))
 				{
 					// consoleX(`section.entry NOT intersecting: ${id}`, 1)
-					sectionObjectElement.classList.remove("isIntersecting", "plusesAdded", "plusesRemoved", "minusesAdded", "minusesRemoved");
+					sectionObjectElement.classList.remove("isIntersecting");
 					sectionObjectElement.classList.add("notIntersecting");
 				}
 			});
@@ -3110,13 +3080,55 @@
 		const sectionObjectIntersectionObserverOptions =
 		{
 			root: null,
-			rootMargin: "0px 0px -50px 0px",	// rootMargin: "0px 0px -100px 0px",
+			rootMargin: "0px 0px 10px 0px",	// rootMargin: "0px 0px -100px 0px",
 			threshold: 0,
 		};
 		// powiekszenie wczytywania ponizej viewportu
 		/* sectionObjectIntersectionObserverOptions.rootMargin = "0px 0px 700px 0px"; */
 
 		const sectionObjectIntersectionObserver = new IntersectionObserver(sectionObjectsAreIntersecting, sectionObjectIntersectionObserverOptions)
+
+		function sectionObjectDetected(sectionObjectElement)
+		{
+			if (dev) console.log(`sectionObjectDetected() - `, sectionObjectElement);
+
+			// consoleX(`sectionObjectDetected()`, 1)
+			sectionObjectIntersectionObserver.observe(sectionObjectElement);
+		}
+
+		// INTERSECTION OBSERVER
+		if (IntersectionObserverEnabled == true)
+		{
+			let IntersectionObservedElementsArray = [];
+
+			if (settings.autoOpenAllCommentsInTree)		
+			{
+				/* AUTOMATYCZNIE POKAŻ WSZYSTKIE KOMENTARZE W DRZEWIE W NOWYM UI WYKOPU */
+				IntersectionObservedElementsArray.push(`section.thread > section.comments > footer > button`);
+			}
+
+			if (settings.autoOpenMoreContentEverywhere)		
+			{
+				/* AUTOMATYCZNIE POKAŻ CAŁOŚĆ DŁUGICH WPISÓW I KOMENTARZY */
+				IntersectionObservedElementsArray.push(`section.thread > section.item div.content button.more`);
+			}
+
+			if (settings.autoOpenSpoilersEverywhere)
+			{
+				/* AUTOMATYCZNIE ROZWIJAJ SPOILERY */
+				IntersectionObservedElementsArray.push(`div.wrapper section.content-spoiler button`);
+			}
+
+			// IntersectionObservedElementsArray.push(`section.thread > section.item`);
+			IntersectionObservedElementsArray.push(`section.entry:has(> article)`);
+			IntersectionObservedElementsArray.push(`section.link-block:not(.premium-pub, .market-pub):has(> section > article)`);
+
+
+
+			IntersectionObservedElementsArray.join(", ");
+
+			waitForKeyElements(IntersectionObservedElementsArray, sectionObjectDetected, false);
+		}
 
 
 		/*
@@ -3617,7 +3629,7 @@
 				if (username)
 				{
 					let usernote = "";
-					let userNoteObject = await localStorageNotatkowator.getItem(username);
+					let userNoteObject = await storageNotatkowator.getItem(username);
 
 					// consoleX(`getUserNoteObjectByUsername()`, 1);
 					// if(dev) console.log(username);
@@ -3712,9 +3724,9 @@
 
 								// await displayUserNote(sectionObjectElement, usernote, username)
 
-								if (localStorageNotatkowator)
+								if (storageNotatkowator)
 								{
-									localStorageNotatkowator.setItem(username, userNoteObject)
+									storageNotatkowator.setItem(username, userNoteObject)
 										.then(function (value)
 										{
 											consoleX(`Notatkowator zapisał notatkę o użytkowniku @${userNoteObject.username}: "${userNoteObject.usernote}"`, 1);
@@ -3979,7 +3991,7 @@
 			consoleX(`mirkoukrywaczBlockNewElement(blockingType: ${blockingType})`, 1);
 
 
-			if (localStorageMirkoukrywacz && (sectionObjectElement || object_id))
+			if (storageMirkoukrywacz && (sectionObjectElement || object_id))
 			{
 				if (!sectionObjectElement)
 				{
@@ -4006,7 +4018,7 @@
 				// if(dev) console.log("sectionObjectElement")
 				// if(dev) console.log(sectionObjectElement);
 
-				localStorageMirkoukrywacz
+				storageMirkoukrywacz
 					.setItem(object_id,
 						{
 							object_id,
@@ -4034,16 +4046,16 @@
 			// console.clear();
 			if (dev) console.log(`mirkoukrywaczUnblockElement(${object_id})`)
 
-			if (localStorageMirkoukrywacz)
+			if (storageMirkoukrywacz)
 			{
-				localStorageMirkoukrywacz
+				storageMirkoukrywacz
 					.getItem(object_id)
 					.then(function (value)
 					{
 						if (dev) console.log("getItem: " + object_id)
 						if (dev) console.log(value)
 
-						localStorageMirkoukrywacz
+						storageMirkoukrywacz
 							.removeItem(object_id)
 							.then(function ()
 							{
@@ -4070,14 +4082,14 @@
 		function mirkoukrywaczHideAllBlockedElements()
 		{
 			consoleX(`mirkoukrywaczHideAllBlockedElements()`, 1)
-			if (localStorageMirkoukrywacz)
+			if (storageMirkoukrywacz)
 			{
 				//consoleX(`mirkoukrywaczHideAllBlockedElements()`, 1);
 
 				let hiddenElements = 0;
 				let minimizedElements = 0;
 
-				localStorageMirkoukrywacz.iterate(function (value, key, iterationNumber)
+				storageMirkoukrywacz.iterate(function (value, key, iterationNumber)
 				{
 					// if(dev) console.log("value");
 					// if(dev) console.log(value);
@@ -4085,12 +4097,17 @@
 					// if(dev) console.log(key);
 
 					let foundElementToHide = document.getElementById(`${key}`); // comment-1234   link-12345
+
 					if (foundElementToHide)
 					{
 
 						if (value.blockingType == "hidden")
 						{
-							if (sectionObjectIntersectionObserver) sectionObjectIntersectionObserver.unobserve(foundElementToHide);
+							if (sectionObjectIntersectionObserver)
+							{
+								sectionObjectIntersectionObserver.unobserve(foundElementToHide);
+							}
+
 							foundElementToHide.remove();
 							hiddenElements++;
 						}
@@ -4156,11 +4173,11 @@
 
 		function mirkoukrywaczRefreshHideList()
 		{
-			if (localStorageMirkoukrywacz)
+			if (storageMirkoukrywacz)
 			{
 				consoleX(`mirkoukrywaczRefreshHideList()`, 1);
 
-				localStorageMirkoukrywacz
+				storageMirkoukrywacz
 					.iterate(function (value, key, iterationNumber)
 					{
 						mirkoukrywaczAppendOneElementToHideList(value, key, iterationNumber);
@@ -4203,32 +4220,7 @@
 				}
 			}
 		}
-		function createMenuItemForNotatkowator()
-		{
-			if (settings.notatkowatorEnable)
-			{
-				consoleX(`createMenuItemForNotatkowator()`, 1)
 
-				createProfileDropdownMenuItem(
-					{
-						text: `Notatki: Wykop X`,
-						title: "Wykop X — Notatkowator — Twoje notatki do innych użytkowników",
-						className: `notatkowator`,
-						id: "wxs_open_modal_notatkowator_button",
-						url: null,
-						target: null,
-						icon: null,
-						number: null
-					});
-				document.getElementById("wxs_open_modal_notatkowator_button").onclick = function (event)
-				{
-					//mirkoukrywaczRefreshHideList();
-					event.preventDefault();
-					if (wxs_modal == null) createModalBox();
-					wxs_modal.style.display = "block";
-				};
-			}
-		}
 
 		function createModalBox()
 		{
@@ -4307,13 +4299,13 @@
 
 		function mirkoukrywaczRemoveTooOld(PointerEvent, options) 
 		{
-			if (localStorageMirkoukrywacz && options)
+			if (storageMirkoukrywacz && options)
 			{
 				consoleX(`mirkoukrywaczRemoveTooOld()`, 1);
 
 				let numberOfRemovedItems = 0;
 
-				localStorageMirkoukrywacz.iterate(function (value, id, iterationNumber)
+				storageMirkoukrywacz.iterate(function (value, id, iterationNumber)
 				{
 					if (value.blockingType == options.blockingType || options.blockingType == "all") // "hidden", "minimized"
 					{
@@ -4324,7 +4316,7 @@
 						{
 							numberOfRemovedItems++;
 
-							localStorageMirkoukrywacz.removeItem(id).then(function ()
+							storageMirkoukrywacz.removeItem(id).then(function ()
 							{
 								document.getElementById(`wykopx_mirkoukrywacz_element_${id}`).remove();
 							}).catch(function (err) { console.log(err); });
@@ -4356,72 +4348,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 
 
-
-
-		/* AUTOMATYCZNIE POKAŻ WSZYSTKIE KOMENTARZE W DRZEWIE W NOWYM UI WYKOPU */
-		function autoOpenAllCommentsInTree()
-		{
-			if (settings.autoOpenAllCommentsInTree)
-			{
-				consoleX("autoOpenAllCommentsInTree()", 1)
-
-				// section.thread > section.filters > li:last-child 
-				let showAllCommentsButton = document.querySelectorAll("section.comments > footer > button");
-
-				if (showAllCommentsButton?.length > 0)
-				{
-					showAllCommentsButton.forEach(button =>
-					{
-						button.click();
-					});
-					consoleX(`Automatycznie rozwinięto [${showAllCommentsButton.length}] komentarzy w drzewku`);
-
-					setTimeout(function ()
-					{
-						autoOpenAllCommentsInTree();
-					}, 1000);
-				}
-			}
-		}
-
-
-		/* AUTOMATYCZNIE POKAŻ CAŁOŚĆ DŁUGICH TREŚCI */
-		function autoOpenMoreContentEverywhere()
-		{
-			if (settings.autoOpenMoreContentEverywhere)
-			{
-				consoleX("autoOpenMoreContentEverywhere()", 1)
-
-				let showMoreButtons = document.querySelectorAll("div.wrapper button.more");
-
-				if (showMoreButtons?.length > 0)
-				{
-					showMoreButtons.forEach(button =>
-					{
-						button.click()
-					});
-					consoleX(`Automatycznie rozwinięto ${showMoreButtons.length} długich wpisów i komentarzy`);
-				}
-			}
-		}
-		/* AUTOMATYCZNIE ROZWIJAJ SPOILERY */
-		function autoOpenSpoilersEverywhere()
-		{
-			if (settings.autoOpenSpoilersEverywhere) 
-			{
-				consoleX("autoOpenMoreContentEverywhere()", 1)
-
-				let showSpoilerButtons = document.querySelectorAll("div.wrapper section.content-spoiler button");
-				if (showSpoilerButtons?.length > 0)
-				{
-					showSpoilerButtons.forEach(button =>
-					{
-						button.click()
-					});
-					consoleX(`Automatycznie rozwinięto ${showSpoilerButtons.length} spoilerów`);
-				}
-			}
-		}
 
 
 		/* Kliknięcie w stronę główną odświeża stronę główną */
@@ -4675,6 +4601,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 		}
 
 
+		/*
 		async function checkVersionForUpdates()
 		{
 			// if (!dev) console.clear();
@@ -4722,6 +4649,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				}
 			}
 		}
+		*/
 
 
 
@@ -4839,151 +4767,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 
 
-
-
-		const unreadNotifications = {
-			tags: 0,
-			tags_new_entry_with_observed_tag: 0,
-			tags_new_link_with_observed_tag: 0,
-			entries: 0,
-			pm: 0,
-			total: 0,
-		};
-
-		// ZLICZA NOWE POWIADOMIENIA Z MENU OD 1 DO 5+
-		function countNumberOfNotificationsOnDesktop()
-		{
-			consoleX(`countNumberOfNotificationsOnDesktop()`, 1)
-
-			unreadNotifications.tags = unreadNotifications.tags_new_entry_with_observed_tag = unreadNotifications.tags_new_link_with_observed_tag = unreadNotifications.entries = unreadNotifications.pm = unreadNotifications.total = 0;
-
-			let elements = document.querySelectorAll('header .right ul li.dropdown');
-			elements.forEach(function (element)
-			{
-				element.classList.remove('unread_5', 'unread_4', 'unread_3', 'unread_2', 'unread_1');
-			});
-
-
-
-			let li_dropdown = document.querySelectorAll("header .right ul li.dropdown:has(a.new)");
-			li_dropdown.forEach(function (dropdown)
-			{
-
-				const lastWord = dropdown.className.split(" ").pop();
-				let numberOfNotifications = 0;
-				let notifies = dropdown.querySelectorAll(".notify:not(.read)");
-				notifies.forEach(function (notify)
-				{
-					++numberOfNotifications;
-					notify.classList.add(`unread_${numberOfNotifications}`);
-					if (lastWord == "tags")
-					{
-						++unreadNotifications["total"];
-						if (notify.querySelector(`div.content p.new-entry-with-observed-tag`))
-						{
-							++unreadNotifications["tags_new_entry_with_observed_tag"];
-							++unreadNotifications["tags"];
-							++unreadNotifications["total"];
-						} else if (notify.querySelector(`div.content p.new-link-with-observed-tag`))
-						{
-							++unreadNotifications["tags_new_link_with_observed_tag"];
-							++unreadNotifications["tags"];
-							++unreadNotifications["total"];
-						}
-					} else if (lastWord == "entries")
-					{
-						++unreadNotifications["entries"];
-						++unreadNotifications["total"];
-					}
-				});
-				let parentNotification = dropdown.closest(`.notifications.dropdown`);
-				if (parentNotification)
-				{
-					parentNotification.classList.add(`unread_${numberOfNotifications}`);
-				}
-			});
-
-
-			if (unreadNotifications["tags"] > 0)
-			{
-				consoleX(`Liczba nowych powiadomień z obserwowanych tagów: ${unreadNotifications["tags"]} (w tym ${unreadNotifications["tags_new_entry_with_observed_tag"]} z wpisów i ${unreadNotifications["tags_new_link_with_observed_tag"]} ze znalezisk)`, 1);
-			}
-			if (unreadNotifications["entries"] > 0)
-			{
-				consoleX(`Liczba nowych zawołań: ${unreadNotifications["entries"]}`, 1);
-			}
-
-
-
-			let li_pm_dropdown = document.querySelectorAll("header .right ul li.pm.dropdown");
-			li_pm_dropdown.forEach(function (dropdown)
-			{
-				if (dropdown.querySelector('a.new'))
-				{
-					let numberOfNotifications = 0; // liczba powiadomień o wiadomościach PM
-					let unreadItems = dropdown.querySelectorAll(".item.unread");
-					unreadItems.forEach(function (item, index)
-					{
-						++numberOfNotifications;
-						++unreadNotifications["total"];
-						item.classList.add(`unread_${numberOfNotifications}`);
-					});
-					let parentDropdown = dropdown.closest(`.pm.dropdown`);
-					if (parentDropdown)
-					{
-						parentDropdown.classList.add(`unread_${numberOfNotifications}`);
-					}
-					unreadNotifications["pm"] = numberOfNotifications;
-					// if(dev) console.log(`Liczba nowych wiadomości: ${unreadNotifications["pm"]}`);
-				}
-			});
-
-
-			if (unreadNotifications.tags > 0)
-			{
-				createProfileDropdownMenuItem(
-					{
-						text: `Powiadomienia z #tagów: (${unreadNotifications.tags < 25 ? unreadNotifications.tags : "25+"})`,
-						title: "Masz nowe powiadomienia z obserwowanych #tagów",
-						className: `wykopx_notifications_tags`,
-						id: undefined,
-						url: "/powiadomienia/tagi",
-						target: "_self",
-						icon: null,
-						number: unreadNotifications.tags < 25 ? unreadNotifications.tags : "25+"
-					})
-			}
-			if (unreadNotifications.entries > 0)
-			{
-				createProfileDropdownMenuItem(
-					{
-						text: `Zawołania w komentarzach: (${unreadNotifications.entries < 25 ? unreadNotifications.entries : "25+"})`,
-						title: "Zawołano Cię w komentarzu",
-						className: `wykopx_notifications_entries`,
-						id: undefined,
-						url: "/powiadomienia/moje",
-						target: "_self",
-						icon: null,
-						number: unreadNotifications.entries < 25 ? unreadNotifications.entries : "25+"
-					})
-			}
-			if (unreadNotifications.pm > 0)
-			{
-				createProfileDropdownMenuItem(
-					{
-						text: `Nowe wiadomości: (${unreadNotifications.pm < 25 ? unreadNotifications.pm : "25+"})`,
-						title: "Masz nowe, nieprzeczytane wiadomości prywatne",
-						className: `wykopx_notifications_pm`,
-						id: undefined,
-						url: "/wiadomosci",
-						target: "_self",
-						icon: null,
-						number: unreadNotifications.pm < 25 ? unreadNotifications.pm : "25+"
-					})
-			}
-
-			if (settings.tabChangeEnabled) executeTabAndFaviconChanges();
-		}
 
 
 
@@ -5463,1085 +5246,6 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				document.querySelector(`section.microblog-page section.microblog section.editor div.content textarea`).focus();
 			}
 		}
-
-
-
-
-
-
-
-		/* ------ TAB TITLE AND WEBSITE FAVICON CHANGES --------- */
-		let pageTabTitleOriginal = document.title;
-		let pageTabTitleProcessed = pageTabTitleOriginal;
-		let tabTitles = new Map([
-			["domyslny", "           "],
-			["adres_url", "           "],
-			["pusty_tytul", "ᅟᅟ"],
-			["wlasny", settings.tabChangeTitleCustom],
-			["wykop", "Wykop"],
-			["wykopx", "Wykop X"],
-			["digg", "News and Trending Stories Around the Internet | Digg"],
-			["google", "Google"],
-			["interia", "Interia — Polska i świat: informacje, sport, gwiazdy."],
-			["onet", "Onet – Jesteś na bieżąco"],
-			["reddit", "Reddit — Dive into anything"],
-			["wp", "Wirtualna Polska — Wszystko co ważne"],
-			["x", "Home / X"],
-			["youtube", "YouTube"],
-		])
-
-		const defaultWykopFaviconURL = "https://wykop.pl/static/img/favicons/favicon.png";
-		let tabFaviconsMap = new Map([
-			["wykop", defaultWykopFaviconURL],
-			["wykop_white", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/W_white.png"],
-			["wykop_gray", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/W_black.png"],
-
-			["digg", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/digg.png"],
-			["google", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/google.svg"],
-			["interia", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/interia.ico"],
-			["onet", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/onet.png"],
-			["reddit", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/reddit.png"],
-			["wp", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/wp.png"],
-			["x", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/x.png"],
-			["youtube", "https://raw.githubusercontent.com/wykopx/wykopx-png/main/icons/favicons/youtube.ico"],
-		])
-		let tabSuffixesMap = new Map([
-			["domyslny", ":: Wykop.pl"],
-			["dashwykoppl", "- Wykop.pl"],
-			["dashwykop", "- Wykop"],
-			["dashwykopx", "- Wykop X"],
-			["", ""],
-		])
-
-
-		/*  TAB TITLE
-			changeDocumentTitle()
-			changeDocumentTitle("youtube")
-			changeDocumentTitle("Example new title")
-		*/
-
-
-		function changeDocumentTitle(new_document_title)
-		{
-			consoleX(`changeDocumentTitle(${new_document_title})`, 1)
-
-			// if(dev) console.log(`changeDocumentTitle() > start:  document.title:`);
-			// if(dev) console.log(document.title);
-			// if(dev) console.log(`changeDocumentTitle() > start:  pageTabTitleOriginal`);
-			// if(dev) console.log(pageTabTitleOriginal);
-
-			pageTabTitleProcessed = pageTabTitleOriginal;
-
-			// sufix :: Wykop.pl
-			if (settings.tabChangeTitleSuffix) pageTabTitleProcessed = pageTabTitleProcessed.replace(":: Wykop.pl", tabSuffixesMap.get(settings.tabChangeTitleSuffix));
-			// prefix 
-			if (settings.tabChangeTitlePrefix) pageTabTitleProcessed = `Wykop X - ${pageTabTitleProcessed}`;
-
-
-
-
-			let tabTitleNotifications = "";
-
-			if (settings.tabChangeTitleShowNotificationsEnabled == true)
-			{
-				let notificationsTotalCount = 0;
-
-				let tabNotificationsSeparated = "";
-
-				if (unreadNotifications["total"] > 0)
-				{
-					if (settings.tabChangeTitleShowNotificationsCountPM && unreadNotifications["pm"] > 0
-						|| settings.tabChangeTitleShowNotificationsCountTagsNewLink && unreadNotifications["tags_new_link_with_observed_tag"] > 0
-						|| settings.tabChangeTitleShowNotificationsCountTagsNewEntry && unreadNotifications["tags_new_entry_with_observed_tag"] > 0
-						|| settings.tabChangeTitleShowNotificationsCountEntries && unreadNotifications["entries"] > 0)
-					{
-						let notificationsEmoji = "";
-
-						if (settings.tabChangeTitleShowNotificationsCountPM && unreadNotifications["pm"] > 0)
-						{
-							notificationsTotalCount += unreadNotifications["pm"];
-							notificationsEmoji = "✉"; // 🔗✉📧📩✉ 🖂 🖃 🖄 🖅 🖆
-							tabNotificationsSeparated += `${notificationsEmoji}${unreadNotifications["pm"]} `;
-						}
-
-						if (settings.tabChangeTitleShowNotificationsCountEntries && unreadNotifications["entries"] > 0)
-						{
-							notificationsTotalCount += unreadNotifications["entries"];
-							notificationsEmoji = "🕭"; // 🕭🔔
-							tabNotificationsSeparated += `${notificationsEmoji}${unreadNotifications["entries"]} `;
-						}
-
-						if (unreadNotifications["tags"] && settings.tabChangeTitleShowNotificationsCountTagsNewLink || settings.tabChangeTitleShowNotificationsCountTagsNewEntry)
-						{
-							notificationsEmoji = "#"; // #🏷
-							if (settings.tabChangeTitleShowNotificationsCountTagsNewLink && unreadNotifications["tags_new_link_with_observed_tag"] > 0)
-							{
-								notificationsTotalCount += unreadNotifications["tags_new_link_with_observed_tag"];
-							}
-							if (settings.tabChangeTitleShowNotificationsCountTagsNewEntry && unreadNotifications["tags_new_entry_with_observed_tag"] > 0)
-							{
-								notificationsTotalCount += unreadNotifications["tags_new_entry_with_observed_tag"];
-							}
-							tabNotificationsSeparated += `${notificationsEmoji}${unreadNotifications["tags"]} `;
-						}
-
-						if (settings.tabChangeTitleShowNotificationsCountSeparated)
-						{
-							tabTitleNotifications = tabNotificationsSeparated; // 📧 2 🔔 3 # 14
-						}
-						else
-						{
-							tabTitleNotifications = notificationsTotalCount; 	// 19
-						}
-
-						if (new_document_title == "pusty_tytul") // jesli pusty tytul — ikonki powiadomien bez nawiasow
-						{
-							tabTitleNotifications = `${tabTitleNotifications} `						// 📧 2 🔔 3 # 14 albo 19
-						}
-						else
-						{
-							tabTitleNotifications = `${tabTitleNotifications} | `					// 📧 2 🔔 3 # 14 |   albo  19 |
-						}
-					}
-				}
-
-			}
-
-			let documentTitle = tabTitleNotifications;
-
-			if (new_document_title != "domyslny")
-			{
-				if (tabTitles.has(new_document_title)) // selected title from Map
-				{
-					documentTitle += `${tabTitles.get(new_document_title)}`;
-				}
-				else
-				{
-					documentTitle += `${new_document_title}`;
-				}
-			}
-			else
-			{
-				documentTitle += pageTabTitleProcessed;
-			}
-			document.title = documentTitle;
-			// if(dev) console.log("changeDocumentTitle() > zmieniam document.title na: " + documentTitle);
-		}
-
-
-		// FAVICON ICO
-		function changeDocumentFavicon(new_favicon = defaultWykopFaviconURL)
-		{
-			consoleX(`changeDocumentFavicon(new_favicon: "${new_favicon}")`, 1)
-			let selectedFaviconURL = new_favicon;
-			if (tabFaviconsMap.has(new_favicon)) selectedFaviconURL = tabFaviconsMap.get(new_favicon);
-
-			// <link rel="icon" type="image/svg+xml" href="/static/img/favicons/favicon.svg">
-			// <link rel="alternate icon" type="image/png" href="/static/img/favicons/favicon.png">
-			const oldFaviconElement = head.querySelector('link[rel="icon"]');
-
-			if (oldFaviconElement && !oldFaviconElement.href.startsWith(selectedFaviconURL))
-			{
-				head.removeChild(oldFaviconElement);
-				const faviconLinkElement = document.createElement('link');
-				faviconLinkElement.rel = 'icon';
-				faviconLinkElement.type = 'image/x-icon'; // "image/svg+xml" "image/png"
-				faviconLinkElement.href = selectedFaviconURL + '?=' + Math.random();
-				head.appendChild(faviconLinkElement);
-			}
-
-			const alternateFaviconElement = head.querySelector('link[rel="alternate icon"]');
-			if (alternateFaviconElement)
-			{
-				head.removeChild(alternateFaviconElement);
-			}
-		}
-
-
-
-		function executeTabAndFaviconChanges()
-		{
-			consoleX(`executeTabAndFaviconChanges()`, 1);
-
-			if (document.hidden || !settings.tabChangeOnlyOnHiddenState)
-			{
-				if (settings.tabChangeFaviconEnabled) changeDocumentFavicon(settings.tabChangeFaviconSelect);
-				if (settings.tabChangeTitleEnabled) changeDocumentTitle(settings.tabChangeTitleSelect);
-			}
-		}
-
-
-
-		// EVENT: KARTA JEST W TLE document.hidden == true
-		// https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
-		// https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilitychange_event
-		function browserTabVisibilityChanged()
-		{
-			consoleX(`browserTabVisibilityChanged() -> ${document.visibilityState}`, 1);
-
-			// if(dev) console.log("browserTabVisibilityChanged(): " + document.visibilityState)
-			// document.visibilityState > "visible"/"hidden"
-			// document.hidden > true/false
-			if (document.hidden == false)
-			{
-
-			}
-
-			if (settings.tabChangeEnabled)
-			{
-				if (document.hidden)
-				{
-					executeTabAndFaviconChanges();
-					// if(dev) console.log(`document.hidden -> true > document.visibilityState: ${document.visibilityState}`);
-				}
-				else
-				{
-					if (settings.tabChangeOnlyOnHiddenState)
-					{
-						if (settings.tabChangeTitleEnabled) changeDocumentTitle(pageTabTitleOriginal);
-						if (settings.tabChangeFaviconEnabled) changeDocumentFavicon();
-					}
-				}
-			}
-
-		}
-		// EVENT LISTENER
-		document.addEventListener("visibilitychange", browserTabVisibilityChanged, false); // ICO PNG GIF JPEG SVG
-
-
-
-
-		// TITLE MUTATION
-		let titleMutationObserver = new MutationObserver(mutationsList =>
-		{
-			if (dev) console.log("titleMutationObserver ->")
-			if (dev) console.log(mutationsList);
-
-			for (let mutation of mutationsList)
-			{
-				if (mutation.type === 'childList')
-				{
-					let mutatedTitle = mutation.addedNodes[0].textContent;
-					consoleX(`titleMutationObserver -> Nowy tytuł strony: ${mutatedTitle}`, 1);
-
-					// if (mutatedTitle.endsWith(":: Wykop.pl"))
-					// {
-					// 	pageTabTitleOriginal = mutatedTitle;
-					// 	if(dev) console.log(`mutatedTitle.endsWith(":: Wykop.pl")`);
-					// }
-
-					// if (!mutatedTitle.includes(specialCharacter)) // tytul nie zostal jeszcze zmieniony i dodane są liczby powiadomien zeby sie nie powtarzalo (1)(1)
-					// {
-					// 	pageTabTitleProcessed = mutatedTitle;
-					// 	// if(dev) console.log(`!mutatedTitle.includes("specialCharacter")`);
-					// }
-
-					// titleMutationObserver.disconnect();
-					// executeTabAndFaviconChanges();
-					// titleMutationObserver.observe(document.querySelector('title'), { childList: true, })
-					// if(dev) console.log("pageTabTitleProcessed: " + pageTabTitleProcessed)
-				}
-			}
-		});
-		// MUTATION OBSERVER
-		titleMutationObserver.observe(document.querySelector('title'), { childList: true, })
-
-
-
-
-
-		// PLUSES OBSERVER
-		function getVotesObject(sectionObjectElement, ratingBoxSection)
-		{
-			consoleX(`getVotesObject()`, 1);
-
-			/* returns:
-		
-			{
-				separated: false,
-		
-				votesUp: 50,
-				votesUpPercent: 100,
-				votesDown: 5,
-				votesDownPercent: 0,
-				
-				votesCount: 45,
-				votesAll: 55,
-				voted: 0
-		
-				votesUpPrevious: 49
-				votesDownPrevious: 4,
-				plusesDelta: 1
-				minusesDelta: 1
-		
-				commentsCount: 100,	// liczba komentarzy dla znalezisk, wpisów i main-comments pod znaleziskami
-				commentsHot: true // dla gorących znalezisk 
-			}
-		
-			{
-				resource: "link"
-				sectionObjectElement: <DOMElement>,
-				ratingBox: <DOMElement>,
-				link: <DOMElement>,
-				id: 123456,
-				link_id: 123456,
-			}
-		
-			{
-				resource: "entry"
-				sectionObjectElement: <DOMElement>,
-				ratingBox: <DOMElement>,
-				entry: <DOMElement>,
-				id: 123456,
-				entry_id: 123456,
-			}
-			or
-			{
-				resource: "entry_comment"
-				sectionObjectElement: <DOMElement>
-				ratingBox: <DOMElement>,
-				entry: <DOMElement>, // parent
-				comment: DOMElement,
-				id: 12345678,
-				entry_id: 123456,	// parent
-				comment_id: 12345678,
-			}
-			or
-			{
-				resource: "link_subcomment"
-				sectionObjectElement: DOMElement
-				ratingBox: <DOMElement>,
-				entry: <DOMElement>,
-				id: 12345678,
-				entry_id: 123456,
-				link_id: 12345678,
-				comment_id: 12345678123
-			
-				parent_id: 1234567 // znalezisko
-				parent_comment_id: 123456 // komentarz pod znaleziskiem
-				parent_element: <DOMElement>, // komentarz
-				fetchURL: 'https://wykop.pl/api/v3...'
-			}
-			
-			
-			ratingBoxSection.__vue__
-			{
-				voted: 		0  			// czy zaglosowane
-				down:		0
-				up:			278
-				value:		278
-				formattedValue: "278",
-				separated:	false	
-				id:			23456789
-				idParent:	1234567
-				linkId:		1234567
-				users: 		[{}, {}...],
-				type: "entryComment" / "???"
-				deleted: 	null
-				author:		"NadiaFrance"
-				showBtn:	true / false
-			}
-			
-			
-			*/
-
-			let votesObject =
-			{
-				separated: false,
-
-				votesUp: 0,
-				votesDown: 0,
-				votesCount: 0,
-				votesAll: 0,
-				votesCount: 0,
-				votesAll: 0,
-				votesDownPercent: 0,
-				votesUpPercent: 100,
-				voted: 0,
-
-				commentsCount: 0,
-				commentsHot: false,
-			};
-
-
-			votesObject.sectionObjectElement = sectionObjectElement; 								// returns the section element above .rating-box
-			votesObject.ratingBoxSection = ratingBoxSection; 										// returns .rating-box section
-
-			//blocks.id = blocks.sectionObjectElement.__vue__.item.id;
-			votesObject.id = ratingBoxSection.__vue__.id;
-			votesObject.separated = ratingBoxSection.__vue__.separated;
-			votesObject.votesUp = ratingBoxSection.__vue__.up;
-
-			if (dev) console.log(votesObject.votesUp)
-			votesObject.votesDown = ratingBoxSection.__vue__.down;
-
-			votesObject.votesCount = votesObject.votesUp - votesObject.votesDown;				// -10 (suma plusów i minusów nie dotyczy entry, entry_comment)
-			votesObject.votesAll = votesObject.votesUp + votesObject.votesDown;				// 30  (łączna liczba głosów nie dotyczy entry, entry_comment)
-
-			votesObject.votesDownPercent = Math.ceil(votesObject.votesDown * 100 / votesObject.votesAll);											// nie dotyczy entry, entry_comment
-			votesObject.votesUpPercent = Math.ceil(votesObject.votesUp * 100 / votesObject.votesAll);											// nie dotyczy entry, entry_comment zawsze 100%
-
-			votesObject.voted = ratingBoxSection.__vue__.voted;
-
-
-			/*  
-				block.commentsCount 
-				__vue__.item.comments = 
-		
-				- znalezisko na stronie głównej i stronie znaleziska 
-				comments = { count: 42, hot: false }
-				
-				- na stronie mikrobloga i wpisie (na stronie Mikrobloga Array[2])
-				comments = { count: 142, items: Array[50] }
-		
-				komentarze nie mają "comments"
-			*/
-
-			if (votesObject?.sectionObjectElement?.__vue__?.item?.comments?.count) votesObject.commentsCount = votesObject.sectionObjectElement.__vue__.item.comments.count;
-			if (votesObject?.sectionObjectElement?.__vue__?.item?.comments?.hot) votesObject.commentsHot = votesObject.sectionObjectElement.__vue__.item.comments.hot;
-
-
-			if (votesObject.sectionObjectElement.__vue__.item.resource == "link") // znalezisko
-			{
-				votesObject.resource = "link";
-				votesObject.fetchURL = `https://wykop.pl/api/v3/links/${votesObject.id}`; // TODO
-
-				votesObject.link_id = votesObject.id;
-				votesObject.link = votesObject.sectionObjectElement; 		// parent = this
-				votesObject.parent_element = votesObject.sectionObjectElement; 		// parent = this
-				votesObject.parent_id = votesObject.id;
-				votesObject.sectionObjectElement.dataset.wxs_resource = "link";
-			}
-			else
-			{
-				if (votesObject.sectionObjectElement.__vue__.item.resource == "link_comment")
-				{
-					votesObject.comment_element = votesObject.sectionObjectElement;
-
-					if (votesObject.comment_element.__vue__.item.parent.resource == "link_comment") // subkomentarz
-					{
-						votesObject.resource = "link_subcomment";
-						votesObject.comment_element.dataset.wxs_resource = "link_subcomment";
-
-						votesObject.comment_id = votesObject.comment_element.__vue__.item.id;
-						votesObject.parent_id = votesObject.comment_element.__vue__.item.parent.link.id; 	// id znaleziska
-						votesObject.parent_comment_id = votesObject.comment_element.__vue__.item.parent.id; // id nadkomentarza
-						votesObject.parent_element = document.getElementById(`comment-${votesObject.parent_comment_id}`) // nadkomentarz
-						votesObject.fetchURL = `https://wykop.pl/api/v3/links/${votesObject.parent_id}/comments/${votesObject.parent_comment_id}/comments`; // TODO
-					}
-					else
-					{
-						votesObject.resource = "link_comment";
-						votesObject.comment_element.dataset.wxs_resource = "link_comment";
-						votesObject.comment_id = votesObject.comment_element.__vue__.item.id;
-						votesObject.parent_id = votesObject.comment_element.__vue__.item.parent.id;
-						votesObject.parent_element = document.getElementById(`link-${votesObject.parent_id}`) // section.link-block
-						votesObject.fetchURL = `https://wykop.pl/api/v3/links/${votesObject.parent_id}/comments/${votesObject.comment_id}`;
-
-					}
-				}
-				// KOMENTARZ POD WPISEM
-				else if (votesObject.sectionObjectElement.__vue__.item.resource == "entry_comment")
-				{
-					votesObject.comment_element = votesObject.sectionObjectElement;
-
-					if (votesObject.comment_element.parentNode)
-					{
-						votesObject.resource = "entry_comment"; 								// komentarz pod wpisem
-						votesObject.comment_element.dataset.wxs_resource = "entry_comment";
-						votesObject.parent_element = votesObject.comment_element.parentNode.closest('section.entry');
-						votesObject.parent_id = votesObject.parent_element.__vue__.item.id;
-						votesObject.comment_id = votesObject.comment_element.__vue__.item.id;
-						votesObject.fetchURL = `https://wykop.pl/api/v3/entries/${votesObject.parent_id}/comments/${votesObject.comment_id}`;
-					}
-					else
-					{
-						return null;
-					}
-				}
-				// WPIS NA MIKROBLOGU
-				else if (votesObject.sectionObjectElement.__vue__.item.resource == "entry")
-				{
-					votesObject.parent_element = votesObject.sectionObjectElement; 	// parent = this
-					votesObject.parent_id = votesObject.id;
-					votesObject.resource = "entry";
-					votesObject.fetchURL = `https://wykop.pl/api/v3/entries/${votesObject.id}`;
-					votesObject.parent_element.dataset.wxs_resource = "entry";
-				}
-			}
-
-
-			// votesObject.sectionObjectElement.dataset.wxs_votes_up = votesObject.votesUp;			// <section data-wxs_votes_up="1" data_wxs_votes_down="8">
-			// votesObject.sectionObjectElement.dataset.wxs_votes_down = votesObject.votesDown;
-
-			if (dev) console.log("votesObject");
-			if (dev) console.log(votesObject);
-
-			return votesObject;
-		}
-
-
-
-
-
-
-
-
-		function checkPluses(sectionObjectElement, ratingBoxSection, showUpdatedValues = true)
-		{
-			// console.clear();
-			consoleX(`checkPluses(showUpdatedValues: ${showUpdatedValues})`, 0);
-
-			if (sectionObjectElement == null && ratingBoxSection?.__vue__?.$parent)
-			{
-				if (ratingBoxSection?.__vue__?.$parent.item.resource == "link")
-				{
-					sectionObjectElement = ratingBoxSection.closest("section.link-block")
-				}
-				else
-				{
-					sectionObjectElement = ratingBoxSection.closest("section.entry")
-				}
-			}
-
-
-			if (sectionObjectElement && sectionObjectElement.__vue__ && sectionObjectElement.__vue__.item.deleted == null)
-			{
-				if (!ratingBoxSection)
-				{
-					if (sectionObjectElement.__vue__.item.resource == "link")
-					{
-						ratingBoxSection = sectionObjectElement.querySelector("section.vote-box");
-					}
-					else
-					{
-						ratingBoxSection = sectionObjectElement.querySelector("section.rating-box");
-					}
-				}
-
-				if (dev) console.log("checkPluses() -> sectionObjectElement: ", sectionObjectElement)
-				if (dev) console.log("checkPluses() -> ratingBoxSection: ", ratingBoxSection)
-
-				const votesObject = getVotesObject(sectionObjectElement, ratingBoxSection);
-
-				if (votesObject) // TODO subkomentarze
-				{
-					if (dev) console.log("checkPluses() -> votesObject", votesObject);
-
-					// let sectionObjectElement = votesObject.sectionObjectElement;
-					sectionObjectElement.classList.remove("plusesAdded", "plusesRemoved", "minusesAdded", "minusesRemoved");
-
-					sectionObjectElement.style.removeProperty('--plusesAdded');
-					sectionObjectElement.style.removeProperty('--plusesRemoved');
-					sectionObjectElement.style.removeProperty('--minusesAdded');
-					sectionObjectElement.style.removeProperty('--minusesRemoved');
-
-					fetch(votesObject.fetchURL,
-						{
-							method: "GET",
-							headers: {
-								"Content-Type": "application/json",
-								Authorization: "Bearer " + window.localStorage.token,
-							},
-						})
-						.then(x => x.json())
-						.then(data =>
-						{
-							if (!data.data) return false;
-
-							let data_fetched;
-							if (Array.isArray(data.data) && data.data.length > 0) data_fetched = data.data.find(item => item.id === votesObject.id); // array from subcomments /api/v3/links/a/comments/b/comments => [array of subcomment objects]
-							else if (data.data && data.data.id === votesObject.id) data_fetched = data.data;
-							else { return false; }
-
-							if (dev) console.log(`checkPluses() -> data_fetched from ${votesObject.fetchURL}`, data_fetched);
-
-							votesObject.votesUpPrevious = votesObject.votesUp; 			// sectionObjectElement.dataset.wxs_votes_up;
-							votesObject.votesDownPrevious = votesObject.votesDown; 		// sectionObjectElement.dataset.wxs_votes_down;
-
-							votesObject.votesUp = data_fetched.votes.up;
-							votesObject.votesDown = data_fetched.votes.down;
-							votesObject.votesCount = data_fetched.votes.up - data_fetched.votes.down; 					// -10 (suma plusów i minusów nie dotyczy entry, entry_comment)
-							votesObject.votesAll = data_fetched.votes.up + data_fetched.votes.down; 					// 30  (liczba głosów nie dotyczy entry, entry_comment)
-							votesObject.votesUpPercent = 0;																// nie dotyczy entry, entry_comment zawsze 100%
-							votesObject.votesDownPercent = 0;															// nie dotyczy entry, entry_comment
-
-							if (data_fetched?.comments?.count) votesObject.commentsCount = data_fetched.comments.count;
-							if (data_fetched?.comments?.hot) votesObject.commentsHot = data_fetched.comments.hot;
-
-							// ile plusów przybyło/ubyło od ostatniego sprawdzenia
-							votesObject.plusesDelta = votesObject.votesUp - votesObject.votesUpPrevious;
-							votesObject.minusesDelta = votesObject.votesDown - votesObject.votesDownPrevious;
-							votesObject.votesCountChanged = (votesObject.plusesDelta != 0 || votesObject.minusesDelta != 0);
-
-
-							// if(dev) console.log("dataset.votesup: " + sectionObjectElement.dataset.wxs_votes_up + " / votesObject.plusesDelta: " + votesObject.plusesDelta)
-							// if(dev) console.log("sectionObjectElement.dataset")
-							// if(dev) console.log(sectionObjectElement.dataset)
-							// if(dev) console.log(sectionObjectElement)
-
-							// ZMIENIŁA SIĘ LICZBA PLUSÓW / WYKOPÓW
-							if (votesObject.votesCountChanged)
-							{
-								//alert("votesCountChanged")
-								if (dev) console.log("checkPluses() -> --------------------");
-								if (dev) console.log("checkPluses() -> VOTES COUNT CHANGED", sectionObjectElement)
-
-
-								sectionObjectElement.dataset.wxs_votes_up = votesObject.votesUp;				//  10
-								sectionObjectElement.dataset.wxs_votes_down = votesObject.votesDown;			//  20  — dodatnia nie dotyczy entry, entry_comment
-								sectionObjectElement.dataset.wxs_votes_count = votesObject.votesCount;			// -10 (suma plusów i minusów nie dotyczy entry, entry_comment)
-								sectionObjectElement.dataset.wxs_votes_all = votesObject.votesAll; 				//  30  (łączna liczba głosów nie dotyczy entry, entry_comment)
-								sectionObjectElement.dataset.wxs_voted = votesObject.voted;						// czy zaglosowano
-								sectionObjectElement.dataset.wxs_votes_separated = votesObject.separated || true;
-
-								updateFetchedVotesData(sectionObjectElement, votesObject, showUpdatedValues);
-							}
-						});
-				}
-			}
-		}
-
-		function updateFetchedVotesData(sectionObjectElement, votesObject, showUpdatedValues = true, onlyPluses = false)
-		{
-			consoleX(`updateFetchedVotesData() -> updateVisibleLinkVotesCount(showUpdatedValues: ${showUpdatedValues}, onlyPluses: ${onlyPluses})`, 1);
-
-			let ratingBoxSection;
-			let ratingBoxVotesUpCountElement;
-			let ratingBoxVotesDownCountElement;
-			let ratingBoxVotesDownPercentElement;
-			let ratingBoxVotesPerHourElement;
-
-			if (sectionObjectElement.__vue__.item.resource == "link")
-			{
-				ratingBoxSection = sectionObjectElement.querySelector("section.vote-box");
-
-				ratingBoxVotesUpCountElement = ratingBoxSection.querySelector("div.dig > p > span");
-				ratingBoxVotesDownCountElement = ratingBoxSection.querySelector(".wykopx_votesDownCount");
-				ratingBoxVotesDownPercentElement = ratingBoxSection.querySelector(".wykopx_votesDownPercent");
-				ratingBoxVotesPerHourElement = ratingBoxSection.querySelector(".wxs_votes_per_hour");
-			}
-			else
-			{
-				ratingBoxSection = sectionObjectElement.querySelector("section.rating-box");
-				sectionObjectElement.dataset.wxs_votes_separated = ratingBoxSection.__vue__.separated;
-
-				if (ratingBoxSection.__vue__.separated)
-				{
-					ratingBoxVotesUpCountElement = ratingBoxSection.querySelector("li.plus");	// li.plus.zero
-					ratingBoxVotesDownCountElement = ratingBoxSection.querySelector("li.minus"); // tylko przy komentarzach pod znaleziskiem
-				}
-				else
-				{
-					ratingBoxVotesUpCountElement = ratingBoxSection.querySelector("ul > li");
-				}
-
-				ratingBoxVotesPerHourElement = ratingBoxSection.querySelector(".wxs_votes_per_hour");
-			}
-
-
-
-			if (!votesObject && ratingBoxSection)
-			{
-				votesObject = getVotesObject(sectionObjectElement, ratingBoxSection);
-			}
-
-
-
-			// VOTES PER HOUR CALCULATION
-			if ((votesObject.resource == "link" && settings.checkLinkVotesEnable && settings.checkLinkVotesPerHour)
-				|| (votesObject.resource != "link" && settings.checkEntryPlusesEnable && settings.checkEntryPlusesPerHour))
-			{
-				const timeSinceFirtsLoad = (dayjs().valueOf() - sectionObjectElement.dataset.wxs_first_load_time) / 1000; // liczba sekund od zaladowania strony
-
-				if (timeSinceFirtsLoad > votesFetchingFirstDelayInSeconds + 5)
-				{
-					let votesPerHour = (votesObject.votesCount - sectionObjectElement.dataset.wxs_first_load_votes_count) * 3600 / timeSinceFirtsLoad;
-					let votesPerHourString;
-
-					// PLUSÓW NA GODZINE
-					if (votesPerHour == 0)
-					{
-						votesPerHourString = "0";
-					}
-					else if (votesPerHour > 0 && votesPerHour < 0.9)
-					{
-						votesPerHourString = "< 1";
-					}
-					else
-					{
-						let suffix_text;
-
-						if (votesObject.resource == "link")
-						{
-							suffix_text = "/h";
-							votesPerHour = votesPerHour.toFixed(0);
-						}
-						else
-						{
-							suffix_text = " plusa / h";
-							votesPerHour = votesPerHour.toFixed(1);
-						}
-
-						//votesPerHour = Math.round(votesPerHour)
-						votesPerHourString = `${votesPerHour}${suffix_text}`;
-					}
-
-					if (ratingBoxVotesPerHourElement) ratingBoxVotesPerHourElement.dataset.wxs_votes_per_hour = votesPerHourString; // data-wxs_votes_per_hour
-				}
-			}
-
-			// VOTES DOWN PERCENT
-			if (votesObject.votesAll > 0)
-			{
-				votesObject.votesDownPercent = Math.ceil(votesObject.votesDown * 100 / votesObject.votesAll);
-
-				sectionObjectElement.dataset.wxs_votes_down_percent = votesObject.votesDownPercent;
-
-
-				if (ratingBoxVotesDownPercentElement) 
-				{
-					ratingBoxVotesDownPercentElement.dataset.wxs_votes_down_percent = votesObject.votesDownPercent;
-					ratingBoxVotesDownPercentElement.textContent = `(${votesObject.votesDownPercent}%)`;
-				}
-			}
-
-			// COMMENTS COUNT
-			// if (votesObject.resource == "link" || votesObject.resource == "entry" || votesObject.resource == "link_comment")
-			// {
-			// 	sectionObjectElement.dataset.wxs_comment_count = votesObject.commentsCount;
-			// }
-
-			// if(dev) console.log("votesObject:");
-			// if(dev) console.log(votesObject);
-			// if(dev) console.log("sectionObjectElement.dataset:");
-			// if(dev) console.log(sectionObjectElement.dataset);
-
-
-
-
-			if (onlyPluses == false)
-			{
-				const votesDown = sectionObjectElement.dataset.wxs_votes_down;
-				sectionObjectElement.style.setProperty('--votesDown', `"${settings.prefixBeforeMinusesCount}` + votesDown + `"`);
-				// zbytek
-				let minusLi = sectionObjectElement.querySelector("section.rating-box > ul > li.minus");
-				if (minusLi) minusLi.textContent = votesDown;
-			}
-
-
-
-			// PRZYBYŁY PLUSY
-			if (votesObject.plusesDelta != 0)
-			{
-				ratingBoxVotesUpCountElement.dataset.wxs_votes_up = votesObject.votesUp;
-
-				if (votesObject.resource == "link")
-				{
-					ratingBoxVotesUpCountElement.textContent = votesObject.votesUp;
-				}
-				else 
-				{
-					const separated = sectionObjectElement.dataset.wxs_votes_separated || true;
-					let votesCountDisplayValue = ((separated === "true" || separated === true) ? votesObject.votesCount : votesObject.votesUp);
-					if (votesCountDisplayValue > 0) votesCountDisplayValue = `${settings.prefixBeforePlusesCount}${votesCountDisplayValue}`
-					else if (votesCountDisplayValue < 0) votesCountDisplayValue = `${settings.prefixBeforeMinusesCount}${votesCountDisplayValue}`;
-
-
-				}
-
-				if (votesObject.plusesDelta > 0)
-				{
-					sectionObjectElement.classList.add("plusesAdded");
-					ratingBoxSection.dataset.wxs_pluses_delta = `+${votesObject.plusesDelta}`;
-					//sectionObjectElement.style.setProperty('--plusesAdded', `"+${votesObject.plusesDelta}"`);
-				}
-				else
-				{
-					sectionObjectElement.classList.add("plusesRemoved");
-					ratingBoxSection.dataset.wxs_pluses_delta = `${votesObject.plusesDelta}`;
-					//sectionObjectElement.style.setProperty('--plusesRemoved', `"${votesObject.plusesDelta}"`); // jest z minusem
-				}
-			}
-
-			// PRZYBYŁY MINUSY POD KOMENTARZEM W ZNALEZISKU
-			if (votesObject.minusesDelta != 0 && ratingBoxVotesDownCountElement)
-			{
-				ratingBoxVotesDownCountElement.dataset.wxs_votes_down = votesObject.votesDown;
-
-				if (votesObject.resource == "link")
-				{
-					ratingBoxVotesDownCountElement.textContent = votesObject.votesDown;
-				}
-				else 
-				{
-					const separated = sectionObjectElement.dataset.wxs_votes_separated || true;
-					if (separated) // minusy i plusy są osobno, więc zmieniamy minusy
-					{
-						let votesCountDisplayValue = votesObject.votesDown;
-						if (votesCountDisplayValue < 0) votesCountDisplayValue = `${settings.prefixBeforeMinusesCount}${votesCountDisplayValue}`;
-						ratingBoxVotesDownCountElement.textContent = votesCountDisplayValue;
-					}
-					else // minusy i plusy są razem, więc zmieniamy plusy
-					{
-						let votesCountDisplayValue = votesObject.votesCount;
-						if (votesCountDisplayValue > 0) votesCountDisplayValue = `${settings.prefixBeforePlusesCount}${votesCountDisplayValue}`
-						else if (votesCountDisplayValue < 0) votesCountDisplayValue = `${settings.prefixBeforeMinusesCount}${votesCountDisplayValue}`;
-						ratingBoxVotesUpCountElement.textContent = votesCountDisplayValue;
-					}
-
-				}
-
-
-				if (votesObject.minusesDelta > 0)
-				{
-					sectionObjectElement.classList.add("minusesAdded");
-					ratingBoxSection.dataset.wxs_minuses_delta = `-${votesObject.minusesDelta}`;
-					//sectionObjectElement.style.setProperty('--minusesAdded', `"-${votesObject.minusesDelta}"`);
-				}
-				else
-				{
-					sectionObjectElement.classList.add("minusesRemoved");
-					ratingBoxSection.dataset.wxs_minuses_delta = `+${votesObject.minusesDelta}`;
-					//sectionObjectElement.style.setProperty('--minusesRemoved', `"+${votesObject.minusesDelta}"`);
-				}
-			}
-		}
-
-
-
-
-
-
-
-		// <section class="rating-box" data-wxs_pluses="269" data-wxs_minuses="0" data-wxs_pluses_minuses_total="269" data-wxs_pluses_below_limit="true">
-		function parseRatingBoxCurrentContentAndCreateDataValues(ratingBoxSection)
-		{
-			// dodanie data-wxs_pluses na podstawie aktualnych wartosci plusow w HTML
-			// if(dev) console.log("parseRatingBoxCurrentContentAndCreateDataValues(ratingBoxSection)")
-			consoleX(`parseRatingBoxCurrentContentAndCreateDataValues()`, 1);
-
-			const minusLi = ratingBoxSection.querySelector('li.minus');
-			let plusLi = ratingBoxSection.querySelector('li.plus');
-			if (!plusLi) plusLi = ratingBoxSection.querySelector('li.zero')
-			let votesUp = plusLi ? plusLi.textContent : 0; 				// 5liczba plusów
-			let votesDown = minusLi ? -1 * minusLi.textContent : 0; 	// 15 liczba minusów (dodatnia)
-			let votesCount = votesUp - votesDown;						// -10 suma plusów i minusów
-			let votesAll = votesUp + votesDown;							// 20 liczba glosow
-
-
-			ratingBoxSection.dataset.wxs_votes_up = votesUp;
-			ratingBoxSection.dataset.wxs_votes_down = votesDown;
-			ratingBoxSection.dataset.wxs_votes_count = votesCount;
-			ratingBoxSection.dataset.wxs_votes_all = votesAll;
-
-			// limit ukrywania wpisow przypietych na glownej
-			const homepagePinnedEntriesPlusesLimit = settings.homepagePinnedEntriesHideBelowLimit;
-			if (homepagePinnedEntriesPlusesLimit > 0)
-			{
-				// czy wpis jest poniżej limitu ukrywania wpisow przypietych na glownej
-				let plusesBelowLimit = (votesCount < homepagePinnedEntriesPlusesLimit ? true : false);
-				ratingBoxSection.dataset.wxs_pluses_below_limit = plusesBelowLimit;
-			}
-		}
-
-
-
-		// VOTING REAL UPDATE, VOTING EXPLOSION
-		function votingEventListener(sectionObjectElement, ratingBoxSection)
-		{
-			consoleX(`votingEventListener()`, 1);
-
-			if (sectionObjectElement && ratingBoxSection)
-			{
-				if (settings.checkEntryPlusesWhenVoting)
-				{
-					ratingBoxSection.addEventListener('mouseenter', function (event)
-					{
-						//var clickedButton = event.target;
-						if (dev) console.log("mouseenter rating box")
-						checkPluses(sectionObjectElement, ratingBoxSection, false);
-					});
-				}
-
-
-				/* 
-				
-				ratingBoxSection.__vue__
-				{
-					voted: 		0  			// czy zaglosowane
-					down:		0
-					up:			278
-					value:		278
-					formattedValue: "278",
-					separated:	false	
-					id:			23456789
-					idParent:	1234567
-					linkId:		1234567
-					users: 		[{}, {}...],
-					type: "entryComment" / "???"
-					deleted: 	null
-					author:		"NadiaFrance"
-					showBtn:	true / false
-				}
-				*/
-
-				if (settings.votePlusMinusOnHover)
-				{
-					ratingBoxSection.addEventListener('mouseover', function (event)
-					{
-
-						if (event.target.matches('button:not(.voted)'))
-						{
-							event.target.click();
-						}
-					});
-				}
-
-
-				ratingBoxSection.addEventListener('click', function (event)
-				{
-					var clickedButton = event.target;
-
-					let up = 0;
-					let down = 0;
-					let count = 0;
-					let all = 0;
-
-					let vote = "voted"; // "voted", "unvoted"
-					let action = "plused"; // "plused", "minused"
-					let sign = "+";
-
-					// let votesUp = ratingBoxSection.__vue__.up;
-					// let votesDown = ratingBoxSection.__vue__.down;
-
-					//let votesUp = sectionObjectElement.dataset.wxs_votes_up;
-					//let votesDown = sectionObjectElement.dataset.wxs_votes_down;
-
-
-					if (clickedButton.matches('button.plus.voted'))			// dodano plusa
-					{
-						action = "plused";
-						vote = "voted";
-						// count = votesUp;
-						up = Number(sectionObjectElement.dataset.wxs_votes_up) + 1;
-						count = Number(sectionObjectElement.dataset.wxs_votes_count) + 1;
-						all = Number(sectionObjectElement.dataset.wxs_votes_all) + 1;
-
-					}
-					else if (clickedButton.matches('button.plus:not(.voted)'))	// usunieto plusa
-					{
-						action = "plused";
-						vote = "unvoted";
-						//count = votesUp;
-						up = Number(sectionObjectElement.dataset.wxs_votes_up) - 1;
-						count = Number(sectionObjectElement.dataset.wxs_votes_count) - 1;
-						all = Number(sectionObjectElement.dataset.wxs_votes_all) - 1;
-					}
-					else if (clickedButton.matches('button.minus.voted')) 		//  dodano minusa
-					{
-						action = "minused";
-						vote = "voted";
-						sign = "-";
-						down = Number(sectionObjectElement.dataset.wxs_votes_down) - 1;
-						count = Number(sectionObjectElement.dataset.wxs_votes_count) - 1;
-						all = Number(sectionObjectElement.dataset.wxs_votes_all) + 1;	// liczba głosów
-					}
-					else if (clickedButton.matches('button.minus:not(.voted)')) // usunięto minusa
-					{
-						action = "minused";
-						vote = "unvoted";
-						sign = "-";
-						//count = votesDown;
-						down = Number(sectionObjectElement.dataset.wxs_votes_down) + 1;
-						count = Number(sectionObjectElement.dataset.wxs_votes_count) + 1;
-						all = Number(sectionObjectElement.dataset.wxs_votes_all) - 1;	// liczba głosów
-					}
-
-					sectionObjectElement.dataset.wxs_votes_up = up;
-					sectionObjectElement.dataset.wxs_votes_down = down;
-					sectionObjectElement.dataset.wxs_votes_all = all;
-					sectionObjectElement.dataset.wxs_votes_count = count;
-
-					updateFetchedVotesData(sectionObjectElement);
-
-					// voting explosion
-					if (settings.votingExplosionEnable && vote == "voted")
-					{
-						let maximumExpliosionTime = 1300; // default 0 delay, 1300 duration
-
-						let min_x = -60;
-						let max_x = 60;
-						let min_y = -60;
-						let max_y = -20;
-
-						if (count > 30) max_y = 60;
-						if (count > 300) { min_x = -90; max_x = 90; }
-
-						// let particlesCount = (count > 110 ? Math.ceil(count / 10) : count);
-						let particlesCount = count;
-						if (particlesCount > 2000) particlesCount = 200;
-						else if (particlesCount > 690) particlesCount = particlesCount / 10;
-						else if (particlesCount > 345) particlesCount = particlesCount / 5;
-						else if (particlesCount > 39) particlesCount = 39;
-
-
-						var newDivs = [];
-
-						for (var i = 0; i < particlesCount; i++)
-						{
-							var newDiv = document.createElement('div');
-							newDiv.textContent = sign;
-							newDiv.classList.add(`wykopxs_vote_animation`, `wykopxs_${vote}`, `wykopxs_${action}`); // class="wykopxs_vote_animation wykopxs_voted wykopxs_plused"
-
-							let color = (sign === "+" ? "green" : "red");
-							if (sign === "+")
-							{
-								if (count >= 666 && getRandomInt(1, 10) == 1) color = "golden";
-								if (count > 100 && count < 666 && getRandomInt(1, 80) == 1) newDiv.textContent = "💚";;
-							}
-							if (count > 100 && getRandomInt(1, 30) == 1) 
-							{
-								min_x += getRandomInt(-30, 30); max_x += getRandomInt(-30, 30)
-								min_y -= getRandomInt(-30, 30); max_y -= getRandomInt(-30, 30);
-							}
-
-							newDiv.classList.add(`wykopxs_${color}`);
-
-							newDiv.style.setProperty('--position_x', getRandomInt(min_x, max_x, "px"));
-							newDiv.style.setProperty('--position_y', getRandomInt(min_y, max_y, "px"));
-							newDiv.style.setProperty('--position_z', 0);
-
-
-							if (count > 30)
-							{
-								newDiv.style.setProperty('--explosionTiming', getRandomString("linear", "ease", "ease-in-out", "ease-in", "ease-out")); // "cubic-bezier(0.1, 0.7, 1, 0.1)"
-								newDiv.style.setProperty('--explosionDelay', getRandomInt(0, getRandomInt(0, Math.max(800, count)), "ms"));
-								newDiv.style.setProperty('--explosionDuration', getRandomInt(900, 1300), "ms");
-
-								maximumExpliosionTime = Math.max(800, count) + 1300;
-							}
-
-							clickedButton.after(newDiv);
-							newDivs.push(newDiv);
-						}
-
-						parseRatingBoxCurrentContentAndCreateDataValues(ratingBoxSection); // TODO
-
-						setTimeout(function ()
-						{
-							for (var i = 0; i < newDivs.length; i++)
-							{
-								newDivs[i].parentNode.removeChild(newDivs[i]);
-							}
-
-						}, maximumExpliosionTime);
-					}
-				});
-			}
-
-		}
-
 
 
 
@@ -7214,43 +5918,48 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		function sendOnCTRL_ENTER(sectionEditorElement)
 		{
-			consoleX("sendOnCTRL_ENTER", 1)
+			consoleX("sendOnCTRL_ENTER", 1);
 
 			const textareaEditorElement = sectionEditorElement.querySelector("textarea");
-			const buttonSendElement = sectionEditorElement.querySelector("div.button.send > button");
+			if (!textareaEditorElement) return;
+
+			const buttonSendElement = sectionEditorElement.querySelector("div.button.send > button, button.send, button[type=\"submit\"]");
 
 			if (settings.editorSendHotkey == "ctrl_enter")
 			{
-				sectionEditorElement.style.setProperty('--editorSendHotkey', `"CTRL+ENTER"`);
-				buttonSendElement.title = "Wykop X: Wciśnij CTRL + ENTER, aby wysłać "
+				sectionEditorElement.style.setProperty("--editorSendHotkey", `"CTRL+ENTER"`);
+				if (buttonSendElement) buttonSendElement.title = "Wykop X: Wciśnij CTRL + ENTER, aby wysłać ";
 			}
 			else if (settings.editorSendHotkey == "enter")
 			{
-				sectionEditorElement.style.setProperty('--editorSendHotkey', `"ENTER"`);
-				buttonSendElement.title = "Wykop X: Wciśnij ENTER, aby wysłać "
+				sectionEditorElement.style.setProperty("--editorSendHotkey", `"ENTER"`);
+				if (buttonSendElement) buttonSendElement.title = "Wykop X: Wciśnij ENTER, aby wysłać ";
 			}
 			else if (settings.editorSendHotkey == "ctrl_s")
 			{
-				sectionEditorElement.style.setProperty('--editorSendHotkey', `"CTRL+S"`);
-				buttonSendElement.title = "Wykop X: Wciśnij CTRL + S, aby wysłać ";
+				sectionEditorElement.style.setProperty("--editorSendHotkey", `"CTRL+S"`);
+				if (buttonSendElement) buttonSendElement.title = "Wykop X: Wciśnij CTRL + S, aby wysłać ";
 			}
 
-			textareaEditorElement.addEventListener('keydown', function (e)
+			textareaEditorElement.addEventListener("keydown", function (e)
 			{
-				if (settings.editorSendHotkey == "ctrl_enter" && e.ctrlKey && e.key === 'Enter')
+				const targetButton = buttonSendElement || sectionEditorElement.querySelector("div.button.send > button, button.send, button[type=\"submit\"]");
+				if (!targetButton) return;
+
+				if (settings.editorSendHotkey == "ctrl_enter" && e.ctrlKey && e.key === "Enter")
 				{
 					e.preventDefault();
-					buttonSendElement.dispatchEvent(new Event('click'));
+					targetButton.dispatchEvent(new Event("click"));
 				}
-				else if (settings.editorSendHotkey == "enter" && e.key === 'Enter')
+				else if (settings.editorSendHotkey == "enter" && e.key === "Enter")
 				{
 					e.preventDefault();
-					buttonSendElement.dispatchEvent(new Event('click'));
+					targetButton.dispatchEvent(new Event("click"));
 				}
-				else if (settings.editorSendHotkey == "ctrl_s" && e.ctrlKey && e.key === 's')
+				else if (settings.editorSendHotkey == "ctrl_s" && e.ctrlKey && e.key === "s")
 				{
 					e.preventDefault();
-					buttonSendElement.dispatchEvent(new Event('click'));
+					targetButton.dispatchEvent(new Event("click"));
 				}
 			});
 		}
@@ -7387,13 +6096,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 					addSwitchButtons();
 				});
 			}
-			if (settings.observedTagsInRightSidebarEnable)
-			{
-				runWithDelay(500, function ()
-				{
-					addObservedTagsToRightSidebar();
-				});
-			}
+
+
 
 			runWithDelay(400, function ()
 			{
@@ -7412,13 +6116,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			});
 
 
-			if (settings.notatkowatorEnable)
-			{
-				runWithDelay(17000, function ()
-				{
-					createMenuItemForNotatkowator();
-				});
-			}
 			if (settings.mirkoukrywaczEnable)
 			{
 				runWithDelay(17000, function ()
@@ -7431,15 +6128,16 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			//runWithDelay(25000, function ()
 			runWithDelay(1000, function ()
 			{
-				checkVersionForUpdates();
+				// checkVersionForUpdates();
+
 				createProfileDropdownMenuItem(
 					{
-						text: `Pomoc: Wykop X`,
-						title: "Otwórz stronę Wiki z informacjami o dodatku Wykop X",
+						text: `www.wykopx.pl`,
+						title: "Otwórz nieoficjalną stronę WykopX.pl",
 						className: `wykopx_wiki`,
 						id: undefined,
-						url: "http://wykopx.pl/wiki/",
-						target: "wykopx",
+						url: "https://wykopx.pl",
+						target: "_blank",
 						icon: null,
 						number: null
 					});
@@ -7453,7 +6151,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				{
 					try
 					{
-						let settings_list_update = await localStorageObserved.getItem("settings_list_update");
+						let settings_list_update = await storageObserved.getItem("settings_list_update");
+
 						if (settings_list_update == null)
 						{
 							POSTDATATOWYKOPX();
@@ -7483,16 +6182,9 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		// ----- PAGE NAVIGATION
 		async function browserExecuteOnPageChange(event)
 		{
-			consoleX(`browserExecuteOnPageChange() -> navigation -> navigate event — ${event.type}`, 1);
-			consoleX(`browserExecuteOnPageChange() -> document.title: ${document.title}`, 1);
-			// if(dev) console.log(event);
+			if (dev) consoleX(`browserExecuteOnPageChange() -> navigation -> navigate event — ${event.type}`, 1);
+			if (dev) consoleX(`browserExecuteOnPageChange() -> document.title: ${document.title}`, 1);
 
-			pageTabTitleOriginal = document.title;
-			pageTabTitleProcessed = pageTabTitleOriginal;
-
-			//visiblePlusesObserver.disconnect();
-			//if (sectionObjectIntersectionObserver) sectionObjectIntersectionObserver.disconnect();
-			//if (settings.actionBoxEnable && (settings.filterUserComments || settings.filterUserReplies)) filterUserOff(); // usuniecie filtra komentarzy
 
 			runWithDelay(500, function ()
 			{
@@ -7504,9 +6196,10 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				}
 			});
 
-			// 7s
-			if (!settings.tabChangeOnlyOnHiddenState) runWithDelay(7000, () => { executeTabAndFaviconChanges() })
 		}
+
+
+
 		// ---- PAGE OPENED 1st TIME + PAGE NAVIGATION
 		async function browserExecuteOnPageLoadAndPageChange()
 		{
@@ -7542,13 +6235,13 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			}
 
 
-			if (settings.autoOpenAllCommentsInTree)
-			{
-				runWithDelay(5000, function ()
-				{
-					autoOpenAllCommentsInTree();
-				})
-			}
+			// if (settings.autoOpenAllCommentsInTree)
+			// {
+			// 	runWithDelay(5000, function ()
+			// 	{
+			// 		autoOpenAllCommentsInTree();
+			// 	})
+			// }
 
 			if (settings.autoOpenMoreContentEverywhere)
 			{
@@ -7887,6 +6580,59 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			`;
 		}
 
+
+		if (settings.linkToVideoDuration || settings.entryWithVideoDuration)
+		{
+			CSS += `
+			/* WYKOP XS CODE - START */
+			section.link-block > section > article > figure::before,
+			section.link-page section.link-block[data-wxs_video_duration] > section::before, 										/* WYKOP XS ONLY */
+			section.entry[data-wxs_video_duration] > article > div.edit-wrapper > section.embed > section.embed-ghost::before		/* WYKOP XS ONLY */
+			{
+				content: var(--wxs_video_duration);	/* WYKOP XS ONLY */
+
+				z-index: 1;
+				max-width: 80px;
+				animation-name: fadeIn;
+				animation-duration: 0.4s;
+				animation-delay: 1s;
+				animation-fill-mode: both;
+				animation-timing-function: ease-in-out;
+				position: absolute;
+				bottom: 10%;
+				padding: 4px 25px 4px 25px;
+				display: flex;
+				border-bottom: 1px solid var(--alto);
+				border-radius: 0 var(--borderRadius) var(--borderRadius) 0!important;
+				justify-content: center;
+				align-items: center;
+				color: rgba(180, 180, 180, 1);
+				background-color: rgba(0, 0, 0, 1);
+				opacity: 1;
+
+				@starting-style {
+					opacity: 0; scale: 0.9; translate: -40px;
+				}
+			}
+			/* WYKOP XS CODE - END */
+			section.link-page section.link-block[data-wxs_video_duration] > section,
+			section.entry[data-wxs_video_duration] > article > div.edit-wrapper > section.embed > section.embed-ghost
+			{
+				position: relative;
+			}
+			section.link-page section.link-block[data-wxs_video_duration] > section::before
+			{
+				bottom: unset;
+				top: -15px;
+				border-bottom: none;
+				border-radius: 0!important;
+			}
+			section.link-page section.link-block[data-wxs_video_duration] > section { margin-top: 15px; }
+			@keyframes fadeIn { 0% { opacity: 0; scale: 0.8; translate: -40px; } 100% { opacity: 1; scale: 1; translate: 0px; }}
+		`;
+		}
+
+
 		if (settings.editorShowMyUsername)
 		{
 			CSS += `
@@ -7931,70 +6677,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			}
 		}
 
-		if (settings.observedTagsInRightSidebarEnable)
-		{
-			CSS += `
-		main.main > section > section.sidebar
-		{
-			display: flex;
-			flex-direction: column;
-		}
-		section.wykopx_your_observed_tags
-		{
-			order: -9999;
-			display: flex!important;
-			flex-direction: column;
-			gap: 16px;
-		} 
-
-		section.wykopx_your_observed_tags div.wykopx_quick_search_container
-		{
-			display: flex!important;
-			width: 100%;
-			position: relative;
-		} 
-		section.wykopx_your_observed_tags .wykopx_quick_search_container,
-		section.wykopx_your_observed_tags > div.content
-		{
-			margin-top: 0px!important;
-		} 
-
-		section.wykopx_your_observed_tags .wykopx_quick_search_container input.wykopx_quick_search
-		{
-			box-sizing: border-box;
-			width: 100%;
-			height: 25px; /*25px;*/
-			font-size: 15px; /* 15px; */
-			padding: 17px 10px 17px 34px;
-			opacity: 0.5;
-
-			color: var(--colorLinkTag, rgba(47, 174, 255, 1));
-			border: 1px solid var(--blackOpacity05, rgba(175, 175, 175, 0.5));
-			background-color: var(--whiteOpacity01, rgba(175, 175, 175, 0.1));
-		} 
-
-		section.wykopx_your_observed_tags .wykopx_quick_search_container:hover input.wykopx_quick_search,
-		section.wykopx_your_observed_tags .wykopx_quick_search_container       input.wykopx_quick_search:focus,
-		section.wykopx_your_observed_tags .wykopx_quick_search_container       input.wykopx_quick_search:not(:placeholder-shown)
-		{
-			opacity: 1;
-			background-color: var(--whiteOpacity03, rgba(175, 175, 175, 0.1));
-		} 
-
-		section.wykopx_your_observed_tags .wykopx_quick_search_container::before
-		{
-			content: "🔍";
-			font-size: 16px;
-			display: block;
-			position: absolute;
-			left: 8px;
-			top: 6px;
-			min-width: 20px;
-			min-height: 20px;
-			max-height: 20px;
-			max-width: 20px;
-		}`;
-		}
 
 
 
@@ -8297,6 +6979,9 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
             top: 2px;
         }
  
+        section.listing > div.content > section.thread > section.item > button.toggle,
+        section.entry > section.thread > section.item > button.toggle { display: none!important; }
+        section.comments > section.thread > section.item > button.toggle { display: none!important; }
 
 
     /*
@@ -8531,8 +7216,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		const mikroczatPath = "/"; /* /czat */
 		// let mikroczatChannel="/";
 		let mikroczatWindow = null;
-		const mikroczatButtonOpenTitle = "Otwórz wykopowy MikroCzat";
-		const mikroczatButtonOpenLabel = "Czat";
+		const mikroczatButtonOpenTitle = "Otwórz w WykopX";
+		const mikroczatButtonOpenLabel = "wykopx.pl";
 
 
 		function openMikroczat(channel, windowOptions, target = "mikroczat")
@@ -8541,10 +7226,10 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			if (bodySection.dataset.key_ctrl) delete bodySection.dataset.key_ctrl;
 			if (bodySection.dataset.key_alt) delete bodySection.dataset.key_alt;
 
-			let mikroczatURL = `${mikroczatDomain}`;
-			mikroczatURL += `${mikroczatPath}${channel}`;
+			let url = `${wxDomain}`;
+			url += `${mikroczatPath}${channel}`;
 
-			mikroczatWindow = window.open(mikroczatURL, target, windowOptions);
+			mikroczatWindow = window.open(url, target, windowOptions);
 		}
 
 		// OTWIERANIE MIKROCZATU Z PRZYCISKU
@@ -9008,20 +7693,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		createLeftPanelButton();
 
-		// MIKROCZAT BUTTON
-		/* createNewNavBarButton({
-			position: "left",
-			// text: "Mikro<strong>czat</strong>",
-			text: mikroczatButtonOpenLabel,
-			title: mikroczatButtonOpenTitle,
-			class: "open_mikroczat", // wykopx_open_mikroczat_li
-			hideWithoutXStyle: false,
-			url: mikroczatDomain,
-			target: "_mikroczat",
-			number: null,
-		});
-		*/
-
 
 		function throttle(func, delay)
 		{
@@ -9059,10 +7730,12 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 					{
 						console.log(`⭐ mutation.type: `, mutation.type)
 					}
+
 					if (mutation.attributeName)
 					{
 						console.log(`⭐ mutation.attributeName: ${mutation.attributeName}`, mutation.attributeName)
 					}
+
 					if (mutation.addedNodes.length > 0 && mutation.addedNodes[0] && mutation.addedNodes[0] instanceof Element)
 					{
 						console.log(`⭐ mutation.addedNodes.length: ${mutation.addedNodes.length}`, mutation.addedNodes[0])
@@ -9079,19 +7752,21 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 					}
 				}
 
-				// ADDED NODES
+				// MUTATION - ADDED NODES
 				if (mutation.addedNodes.length > 0 && mutation.addedNodes[0] && mutation.addedNodes[0] instanceof Element)
 				{
+
+
 					if (mutation.addedNodes[0].matches("section.entry[id]"))
 					{
 						const sectionEntry = mutation.addedNodes[0];
 
-						if (dev) console.log("mutation 1", sectionEntry);
+						if (dev) console.log("section.entry[id]", sectionEntry);
 
 						processSectionEntry(sectionEntry)
 
 						const sectionCommentsArray = sectionEntry.querySelectorAll("section.entry[id]");
-						if (dev) console.log("mutation 1 - forEach: sectionEntryArray", sectionCommentsArray);
+						if (dev) console.log("section.entry[id] - forEach: sectionEntryArray", sectionCommentsArray);
 						sectionCommentsArray.forEach((sectionComment) =>
 						{
 							processSectionEntry(sectionComment)
@@ -9100,7 +7775,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 					else if (mutation.addedNodes[0].matches("div.content:has(>section.entry[id])"))
 					{
 						const sectionEntriesArray = mutation.addedNodes[0].querySelectorAll("section.entry[id]");
-						if (dev) console.log("mutation 2 - forEach: sectionEntriesArray", sectionEntriesArray);
+						if (dev) console.log("div.content:has(>section.entry[id]) - forEach: sectionEntriesArray", sectionEntriesArray);
 						sectionEntriesArray.forEach((sectionEntry) =>
 						{
 							processSectionEntry(sectionEntry)
@@ -9109,18 +7784,19 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 					else if (mutation.target.tagName === "SECTION" && mutation.target.matches("section.entry.detailed[id]"))
 					{
 						const sectionEntry = mutation.target;
-						if (dev) console.log("mutation 3", sectionEntry)
-						if (dev) console.log("mutation 3: mutation.target", mutation.target);
+						if (dev) console.log("section.entry.detailed[id]", sectionEntry)
+						if (dev) console.log("section.entry.detailed[id]: mutation.target", mutation.target);
 
 						processSectionEntry(sectionEntry);
 
 						const sectionCommentsArray = sectionEntry.querySelectorAll("section.entry[id]");
-						if (dev) console.log("mutation 3 - forEach: sectionEntryArray", sectionCommentsArray);
+						if (dev) console.log("section.entry[id] - forEach: sectionEntryArray", sectionCommentsArray);
 						sectionCommentsArray.forEach((sectionComment) =>
 						{
 							processSectionEntry(sectionComment)
 						})
 					}
+
 					else if (settings.showAnimatedAvatars && mutation.addedNodes[0].matches("aside.profile-top"))
 					{
 						animatedAvatar(mutation.addedNodes[0]);

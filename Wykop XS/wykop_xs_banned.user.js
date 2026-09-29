@@ -42,127 +42,125 @@
 
 (async function ()
 {
-	'use strict';
+    'use strict';
 
-	const currentVersion = "3.5.5";
-	let dev = false;
+    const currentVersion = "3.5.5";
+    let dev = false;
 
-	const promoString = " - Wykop XS / #wykopx";
+    const promoString = " - Wykop XS / #wykopx";
 
-	const root = document.documentElement;
-	const head = document.head;
-	const body = document.body;
+    const root = document.documentElement;
+    const head = document.head;
+    const body = document.body;
 
-	const bodySection = body.querySelector("section");
-	/* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
-	bodySection?.__vue__?.$store?.commit("config/setCommentsTreeEnabled", false);
-	/* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
-
-
-	const wykopxSettings = getComputedStyle(head);
-	const settings = {};
-
-	/* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
-	document.querySelector("body > section")?.__vue__?.$store?.commit("config/setCommentsTreeEnabled", false);
-	/* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
+    const bodySection = body.querySelector("section");
+    /* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
+    bodySection?.__vue__?.$store?.commit("config/setCommentsTreeEnabled", false);
+    /* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
 
 
-	const styleElement = document.createElement('style');
-	styleElement.id = "wykopxs_ban_info";
-	let CSS = "";
+    const wykopxSettings = getComputedStyle(head);
+    const settings = {};
 
-	function setSettingsValueFromCSSProperty(settingName, defaultValueForWykopXS = true, propertyValueInsteadOfBoolean = false)
-	{
-		if (propertyValueInsteadOfBoolean) settings[settingName] = wykopxSettings.getPropertyValue(`--${settingName}`) ? wykopxSettings.getPropertyValue(`--${settingName}`).trim() : defaultValueForWykopXS;
-		else settings[settingName] = wykopxSettings.getPropertyValue(`--${settingName}`) ? wykopxSettings.getPropertyValue(`--${settingName}`).trim() === '1' : defaultValueForWykopXS;
-	}
-
-	setSettingsValueFromCSSProperty("WykopXSEnabled");
-	if (settings.WykopXSEnabled == false) return;
-	/* WYKOP XS HEADER */
+    /* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
+    document.querySelector("body > section")?.__vue__?.$store?.commit("config/setCommentsTreeEnabled", false);
+    /* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
 
 
+    const styleElement = document.createElement('style');
+    styleElement.id = "wykopxs_ban_info";
+    let CSS = "";
 
-	let loadTime = dayjs();
+    function setSettingsValueFromCSSProperty(settingName, defaultValueForWykopXS = true, propertyValueInsteadOfBoolean = false)
+    {
+        if (propertyValueInsteadOfBoolean) settings[settingName] = wykopxSettings.getPropertyValue(`--${settingName}`) ? wykopxSettings.getPropertyValue(`--${settingName}`).trim() : defaultValueForWykopXS;
+        else settings[settingName] = wykopxSettings.getPropertyValue(`--${settingName}`) ? wykopxSettings.getPropertyValue(`--${settingName}`).trim() === '1' : defaultValueForWykopXS;
+    }
 
-	// wykop_xs_banned.user.js - START - 1
-	setSettingsValueFromCSSProperty("infoboxUserBannedInfoOnProfilePage");
-	// wykop_xs_banned.user.js - END - 1
-
-	// wykop_xs_banned.user.js - START - 2
-	if (settings.infoboxUserBannedInfoOnProfilePage)
-	{
-		waitForKeyElements("aside.profile-top:has(aside.info-box.red)", bannedUserProfileAside, false);
-
-		// DODAJEMY INFO NA STRONIE PROFILOWEJ O SZCZEGÓŁACH BANA
-		function bannedUserProfileAside(element)
-		{
-			const bannedUserObject = element?.__vue__?.user;
-
-			if (!bannedUserObject) return;
-
-			if (bannedUserObject.status == "banned" || bannedUserObject.status == "suspended")
-			{
-				bannedUserObject.banned.wxs_reason_lowercase = bannedUserObject.banned.reason.toLowerCase();
-
-				bannedUserObject.banned.wxs_ban_end_date_string = bannedUserObject.banned.expired; 											// "2024-01-04 17:22:31" / null
-				if (bannedUserObject.banned.wxs_ban_end_date_string != null)
-				{
-					bannedUserObject.banned.wxs_ban_end_date_object = dayjs(bannedUserObject.banned.wxs_ban_end_date_string);
-					bannedUserObject.banned.wxs_ban_end_in_years = bannedUserObject.banned.wxs_ban_end_date_object.diff(loadTime, 'year');		// 5 > koniec bana za "5" lat
-					bannedUserObject.banned.wxs_ban_end_in_months = bannedUserObject.banned.wxs_ban_end_date_object.diff(loadTime, 'month');	// 3 > koniec bana za: "3" miesiące
-					bannedUserObject.banned.wxs_ban_end_in_days = bannedUserObject.banned.wxs_ban_end_date_object.diff(loadTime, 'day');		// 31 > koniec bana za 31 dni
-					bannedUserObject.banned.wxs_ban_end_in_days = bannedUserObject.banned.wxs_ban_end_date_object.diff(loadTime, 'day');		// 31 > koniec bana za 31 dni
-					// banEndDateDuration = banEndDateObject.toNow()
-
-				}
+    setSettingsValueFromCSSProperty("WykopXSEnabled");
+    if (settings.WykopXSEnabled == false) return;
+    /* WYKOP XS HEADER */
 
 
 
-				const bannedRedBox = element.querySelector("aside.info-box.red p");
-				let bannedRedBoxInnerHTML = `To konto jest ${bannedUserObject.status == "suspended" ? "w trakcie usuwania" : "zbanowane"}. <br/><br/><strong>Informacja z Wykop X - Ban Info:</strong> <br/>`;
+    let loadTime = dayjs();
 
-				// Ban permanentny
-				if (bannedUserObject.status == "banned" && (bannedUserObject.banned.wxs_ban_end_date_string == null || bannedUserObject.banned.wxs_ban_end_in_years > 100))
-				{
-					bannedRedBoxInnerHTML = `To konto jest zbanowane permanentnie. <br/><br/><strong>Wykop XS Ban Info:</strong> <br/>`;
-				}
+    // wykop_xs_banned.user.js - START - 1
+    setSettingsValueFromCSSProperty("infoboxUserBannedInfoOnProfilePage");
+    // wykop_xs_banned.user.js - END - 1
+
+    // wykop_xs_banned.user.js - START - 2
+    if (settings.infoboxUserBannedInfoOnProfilePage)
+    {
+        waitForKeyElements("aside.profile-top:has(aside.info-box.red)", bannedUserProfileAside, false);
+
+        // DODAJEMY INFO NA STRONIE PROFILOWEJ O SZCZEGÓŁACH BANA
+        function bannedUserProfileAside(element)
+        {
+            const bannedUserObject = element?.__vue__?.user;
+
+            if (!bannedUserObject) return;
+
+            if (bannedUserObject.status == "banned" || bannedUserObject.status == "suspended")
+            {
+                bannedUserObject.banned.wxs_reason_lowercase = bannedUserObject.banned.reason.toLowerCase();
+
+                bannedUserObject.banned.wxs_ban_end_date_string = bannedUserObject.banned.expired; 											// "2024-01-04 17:22:31" / null
+                if (bannedUserObject.banned.wxs_ban_end_date_string != null)
+                {
+                    bannedUserObject.banned.wxs_ban_end_date_object = dayjs(bannedUserObject.banned.wxs_ban_end_date_string);
+                    bannedUserObject.banned.wxs_ban_end_in_years = bannedUserObject.banned.wxs_ban_end_date_object.diff(loadTime, 'year');		// 5 > koniec bana za "5" lat
+                    bannedUserObject.banned.wxs_ban_end_in_months = bannedUserObject.banned.wxs_ban_end_date_object.diff(loadTime, 'month');	// 3 > koniec bana za: "3" miesiące
+                    bannedUserObject.banned.wxs_ban_end_in_days = bannedUserObject.banned.wxs_ban_end_date_object.diff(loadTime, 'day');		// 31 > koniec bana za 31 dni
+                    bannedUserObject.banned.wxs_ban_end_in_days = bannedUserObject.banned.wxs_ban_end_date_object.diff(loadTime, 'day');		// 31 > koniec bana za 31 dni
+                    // banEndDateDuration = banEndDateObject.toNow()
+
+                }
 
 
-				// "Użytkowniczka @NadiaFrance dsotała bana za naruszenie regulaminu"
-				if (bannedUserObject.status == "suspended")
-				{
-					bannedRedBoxInnerHTML += `${bannedUserObject.gender == "f" ? "Użytkowniczka @" + bannedUserObject.username + " rozpoczęła usuwanie konta" : "Użytkownik @" + bannedUserObject.username + " rozpoczął usuwanie konta"}`;
-				}
-				else
-				{
-					bannedRedBoxInnerHTML += `${bannedUserObject.gender == "f" ? "Użytkowniczka @" + bannedUserObject.username + " dostała" : "Użytkownik @" + bannedUserObject.username + " dostał"} bana za <strong>${bannedUserObject.banned.wxs_reason_lowercase}</strong>`;
-				}
 
-				// Ban permanentny
-				if (bannedUserObject.banned.wxs_ban_end_date_string == null || bannedUserObject.banned.wxs_ban_end_in_years > 100)
-				{
-					// Ban permanentny na 999 lat
-					bannedRedBoxInnerHTML += `<br/><small>Ban permanentny. Śpij słodko aniołku [*] </small>`;
-				}
-				else
-				{
-					// "Koniec bana za 14 dni"
-					bannedRedBoxInnerHTML += `<br/><small title="Czas końca bana dotyczy czasu letniego. \nWykop posiada błąd i nie rozpoznaje czasu zimowego, \ndlatego zimą i jesienią ban trwa o godzinę dłużej niż podany">
+                const bannedRedBox = element.querySelector("aside.info-box.red p");
+                let bannedRedBoxInnerHTML = `To konto jest ${bannedUserObject.status == "suspended" ? "w trakcie usuwania" : "zbanowane"}. <br/><br/><strong>Informacja z Wykop X - Ban Info:</strong> <br/>`;
+
+                // Ban permanentny
+                if (bannedUserObject.status == "banned" && (bannedUserObject.banned.wxs_ban_end_date_string == null || bannedUserObject.banned.wxs_ban_end_in_years > 100))
+                {
+                    bannedRedBoxInnerHTML = `To konto jest zbanowane permanentnie. <br/><br/><strong>Wykop XS Ban Info:</strong> <br/>`;
+                }
+
+
+                // "Użytkowniczka @NadiaFrance dsotała bana za naruszenie regulaminu"
+                if (bannedUserObject.status == "suspended")
+                {
+                    bannedRedBoxInnerHTML += `${bannedUserObject.gender == "f" ? "Użytkowniczka @" + bannedUserObject.username + " rozpoczęła usuwanie konta" : "Użytkownik @" + bannedUserObject.username + " rozpoczął usuwanie konta"}`;
+                }
+                else
+                {
+                    bannedRedBoxInnerHTML += `${bannedUserObject.gender == "f" ? "Użytkowniczka @" + bannedUserObject.username + " dostała" : "Użytkownik @" + bannedUserObject.username + " dostał"} bana za <strong>${bannedUserObject.banned.wxs_reason_lowercase}</strong>`;
+                }
+
+                // Ban permanentny
+                if (bannedUserObject.banned.wxs_ban_end_date_string == null || bannedUserObject.banned.wxs_ban_end_in_years > 100)
+                {
+                    // Ban permanentny na 999 lat
+                    bannedRedBoxInnerHTML += `<br/><small>Ban permanentny. Śpij słodko aniołku [*] </small>`;
+                }
+                else
+                {
+                    // "Koniec bana za 14 dni"
+                    bannedRedBoxInnerHTML += `<br/><small title="Czas końca bana dotyczy czasu letniego. \nWykop posiada błąd i nie rozpoznaje czasu zimowego, \ndlatego zimą i jesienią ban trwa o godzinę dłużej niż podany">
 						Koniec bana ${bannedUserObject.banned.wxs_ban_end_in_years > 1 ? "za <strong>" + bannedUserObject.banned.wxs_ban_end_in_years + " lat(a)" : bannedUserObject.banned.wxs_ban_end_in_months > 1 ? "za <strong>" + bannedUserObject.banned.wxs_ban_end_in_months + " miesiące(ęcy)" : bannedUserObject.banned.wxs_ban_end_in_days > 1 ? "za <strong>" + bannedUserObject.banned.wxs_ban_end_in_days + " dni" : bannedUserObject.banned.wxs_ban_end_date_object.isSame(loadTime, 'day') == true ? " <strong>już dzisiaj!  " : " jutro"}</strong><br/>`;
-					// "Ban trwa do 2024-12-12 23:59:59"
-					bannedRedBoxInnerHTML += `Ban trwa do ${bannedUserObject.banned.wxs_ban_end_date_string}<span style="cursor: help; padding: 0px 7px">ℹ</span></small>`;
-				}
+                    // "Ban trwa do 2024-12-12 23:59:59"
+                    bannedRedBoxInnerHTML += `Ban trwa do ${bannedUserObject.banned.wxs_ban_end_date_string}<span style="cursor: help; padding: 0px 7px">ℹ</span></small>`;
+                }
 
-				bannedRedBoxInnerHTML += `<br/><br/><ruby style="font-size: 0.6em; background-color: #ffb900; border-radius: 6px; corner-shape: squircle; border-color: #ffed26ff; color: black; padding: 0.2em 0.4em;">NOWOŚĆ</ruby> <br/>Szczegóły bana + historia banów użytkownika dostępne są teraz na: <a href="https://wykopx.pl/ludzie/${bannedUserObject.username}" target="wykopx" style="text-decoration: underline;"><strong>wykopx.pl</strong>/ludzie/${bannedUserObject.username}</a> `
+                bannedRedBoxInnerHTML += `<br/><br/><ruby style="font-size: 0.6em; background-color: #ffb900; border-radius: 6px; corner-shape: squircle; border-color: #ffed26ff; color: black; padding: 0.2em 0.4em;">NOWOŚĆ</ruby> <br/>Szczegóły bana + historia banów użytkownika dostępne są teraz na: <a href="https://wykopx.pl/ludzie/${bannedUserObject.username}" target="wykopx" style="text-decoration: underline;"><strong>wykopx.pl</strong>/ludzie/${bannedUserObject.username}</a> `
 
-				bannedRedBox.innerHTML = bannedRedBoxInnerHTML;
-			}
-		}
-	}
-	// wykop_xs_banned.user.js - END - 2
-
-
+                bannedRedBox.innerHTML = bannedRedBoxInnerHTML;
+            }
+        }
+    }
+    // wykop_xs_banned.user.js - END - 2
 
 
 
@@ -173,14 +171,16 @@
 
 
 
-	/*
-		   GENERAL STYLES
+
+
+    /*
+           GENERAL STYLES
 	
-		   PODSTAWOWE STYLE DLA WYKOPU - WYKOP X STYLE, BLANK
-		   DLA WSZYSTKICH SKRYPTÓW WYKOP XS
-		   DLA ROZSZERZENIA Awesome Wykop X Extension
-	*/
-	CSS += `
+           PODSTAWOWE STYLE DLA WYKOPU - WYKOP X STYLE, BLANK
+           DLA WSZYSTKICH SKRYPTÓW WYKOP XS
+           DLA ROZSZERZENIA Awesome Wykop X Extension
+    */
+    CSS += `
 		
 
      /*
@@ -468,6 +468,10 @@
         {
             top: 2px;
         }
+
+        section.listing > div.content > section.thread > section.item > button.toggle,
+        section.entry > section.thread > section.item > button.toggle { display: none!important; }
+        section.comments > section.thread > section.item > button.toggle { display: none!important; }
  
 
 
@@ -615,13 +619,13 @@
 
 
 
-	/* HIDE WYKOP XS PROMO FROM STYLUS */
-	CSS += `.wykopxs, body div.main-content[class] section > section.sidebar::after  { display: none!important; }`;
+    /* HIDE WYKOP XS PROMO FROM STYLUS */
+    CSS += `.wykopxs, body div.main-content[class] section > section.sidebar::after  { display: none!important; }`;
 
 
 
-	styleElement.textContent = CSS;
-	document.head.appendChild(styleElement);
+    styleElement.textContent = CSS;
+    document.head.appendChild(styleElement);
 })();
 
 
@@ -652,54 +656,54 @@
  */
 function waitForKeyElements(selectorOrFunction, callback, waitOnce, interval, maxIntervals)
 {
-	if (typeof waitOnce === "undefined")
-	{
-		waitOnce = true;
-	}
-	if (typeof interval === "undefined")
-	{
-		interval = 300;
-	}
-	if (typeof maxIntervals === "undefined")
-	{
-		maxIntervals = -1;
-	}
-	if (typeof waitForKeyElements.namespace === "undefined")
-	{
-		waitForKeyElements.namespace = Date.now().toString();
-	}
-	var targetNodes = (typeof selectorOrFunction === "function")
-		? selectorOrFunction()
-		: document.querySelectorAll(selectorOrFunction);
+    if (typeof waitOnce === "undefined")
+    {
+        waitOnce = true;
+    }
+    if (typeof interval === "undefined")
+    {
+        interval = 300;
+    }
+    if (typeof maxIntervals === "undefined")
+    {
+        maxIntervals = -1;
+    }
+    if (typeof waitForKeyElements.namespace === "undefined")
+    {
+        waitForKeyElements.namespace = Date.now().toString();
+    }
+    var targetNodes = (typeof selectorOrFunction === "function")
+        ? selectorOrFunction()
+        : document.querySelectorAll(selectorOrFunction);
 
-	var targetsFound = targetNodes && targetNodes.length > 0;
-	if (targetsFound)
-	{
-		targetNodes.forEach(function (targetNode)
-		{
-			var attrAlreadyFound = `data-userscript-${waitForKeyElements.namespace}-alreadyFound`;
-			var alreadyFound = targetNode.getAttribute(attrAlreadyFound) || false;
-			if (!alreadyFound)
-			{
-				var cancelFound = callback(targetNode);
-				if (cancelFound)
-				{
-					targetsFound = false;
-				}
-				else
-				{
-					targetNode.setAttribute(attrAlreadyFound, true);
-				}
-			}
-		});
-	}
+    var targetsFound = targetNodes && targetNodes.length > 0;
+    if (targetsFound)
+    {
+        targetNodes.forEach(function (targetNode)
+        {
+            var attrAlreadyFound = `data-userscript-${waitForKeyElements.namespace}-alreadyFound`;
+            var alreadyFound = targetNode.getAttribute(attrAlreadyFound) || false;
+            if (!alreadyFound)
+            {
+                var cancelFound = callback(targetNode);
+                if (cancelFound)
+                {
+                    targetsFound = false;
+                }
+                else
+                {
+                    targetNode.setAttribute(attrAlreadyFound, true);
+                }
+            }
+        });
+    }
 
-	if (maxIntervals !== 0 && !(targetsFound && waitOnce))
-	{
-		maxIntervals -= 1;
-		setTimeout(function ()
-		{
-			waitForKeyElements(selectorOrFunction, callback, waitOnce, interval, maxIntervals);
-		}, interval);
-	}
+    if (maxIntervals !== 0 && !(targetsFound && waitOnce))
+    {
+        maxIntervals -= 1;
+        setTimeout(function ()
+        {
+            waitForKeyElements(selectorOrFunction, callback, waitOnce, interval, maxIntervals);
+        }, interval);
+    }
 }

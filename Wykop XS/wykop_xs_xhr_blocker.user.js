@@ -449,6 +449,10 @@
         {
             top: 2px;
         }
+
+        section.listing > div.content > section.thread > section.item > button.toggle,
+        section.entry > section.thread > section.item > button.toggle { display: none!important; }
+        section.comments > section.thread > section.item > button.toggle { display: none!important; }
  
 
 
