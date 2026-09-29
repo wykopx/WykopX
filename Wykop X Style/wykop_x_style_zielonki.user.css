@@ -95,16 +95,16 @@ description     https://wykopx.pl/styl
 {
     adsHide = 1;
     adsSponsoredLinksHide = 1;
-    
     wordzielHide = 1;
     adsFralioHide = 1;
-
-
     homepageSelectedForYouHide = 1;
+        
     blockExploitLinks = 1;
     adsGDPRAlertHide = 1;
     notLoggedLeftMenuGoogleFbAppleButtonsHide = 1;
     plusesInTopRightCorner = 1;
+    collapseEntryButtonHide = 1;
+    collapseCommentsButtonHide = 1;
     fixWhiteSelectBox = 1;
     categoryMenuWykopSectionLinks = 3;
 
@@ -365,18 +365,6 @@ description     https://wykopx.pl/styl
         }
     }
     
-    /* 
-        UKRYCIE PRZYCISKÓW Google Accounts, Facebook Login, Apple login W LEWYM MENU 
-    */
-    
-    if(notLoggedLeftMenuGoogleFbAppleButtonsHide==1)
-    {
-    /* --- REMOVE IF --- */
-
-        body > section aside.left-panel > section.login > div.buttons { display: none!important; }
-    }
-    
-    
     /*  
         PLUSY W PRAWYM GÓRNYM ROGU 
         NOWY UI WYKOPU Z 2026-09-25
@@ -404,6 +392,24 @@ description     https://wykopx.pl/styl
             top: 2px;
         }
     }
+    
+
+    if(collapseEntryButtonHide == 1)
+    {
+    /* --- REMOVE IF --- */
+
+       section.listing > div.content > section.thread > section.item > button.toggle, 
+       section.entry > section.thread > section.item > button.toggle { display: none!important; }
+    }
+    
+    
+    
+    if(collapseCommentsButtonHide == 1)
+    {
+    /* --- REMOVE IF --- */
+
+        section.comments > section.thread > section.item > button.toggle { display: none!important; }
+    } 
     
 
     /* 

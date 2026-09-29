@@ -112,6 +112,8 @@ var checkbox    wordzielHide                                 `🚫 Blokuj spam z
     adsGDPRAlertHide = 1;
     notLoggedLeftMenuGoogleFbAppleButtonsHide = 1;
     plusesInTopRightCorner = 1;
+    collapseEntryButtonHide = 1;
+    collapseCommentsButtonHide = 1;
     fixWhiteSelectBox = 1;
     categoryMenuWykopSectionLinks = 3;
 
@@ -414,6 +416,25 @@ var checkbox    wordzielHide                                 `🚫 Blokuj spam z
     }
     
 
+    if(collapseEntryButtonHide == 1)
+    {
+    /* --- REMOVE IF --- */
+
+       section.listing > div.content > section.thread > section.item > button.toggle, 
+       section.entry > section.thread > section.item > button.toggle { display: none!important; }
+    }
+    
+    
+    
+    if(collapseCommentsButtonHide == 1)
+    {
+    /* --- REMOVE IF --- */
+
+        section.comments > section.thread > section.item > button.toggle { display: none!important; }
+    } 
+
+    
+    
     /* 
        UKRYWANIE NOWEJ SEKCJI "WYBRANE DLA CIEBIE" (2026-05-05) 
 

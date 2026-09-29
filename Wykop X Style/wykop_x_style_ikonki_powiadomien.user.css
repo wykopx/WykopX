@@ -37,11 +37,11 @@ description     https://wykopx.pl/styl
 
 
 
-@var range      HR_NOTIFICATIONS_GROUPING                    `❎ GRUPOWANIE POWIADOMIEŃ (Wykop XS - Odgrupuj powiadomienia)`                           [0, 0, 99900, 1, 'mm']
+@var range      HR_NOTIFICATIONS_GROUPING                    `❎ GRUPOWANIE POWIADOMIEŃ (Wykop XS Odgrupuj powiadomienia)`                           [0, 0, 99900, 1, 'mm']
 @var checkbox   disableNotificationsGroupingTags             `❌ Nie grupuj powiadomień z #tagów`                         1
 @var checkbox   disableNotificationsGroupingEntries          `❌ Nie grupuj powiadomień z komentarzami`                   1
 @var checkbox   disableNotificationsGroupingObserved         `❌ Nie grupuj powiadomień z obserwowanych dyskusji`         1
-
+@var range      HR_NOTIFICATIONS_GROUPING                    `🉑 GRUPOWANIE POWIADOMIEŃ (Wykop XS) `                           [0, 0, 99900, 1, 'mm']
 @var checkbox   dev                                         `Tryb developerski do testowania`                                 0
 
 
@@ -59,16 +59,16 @@ description     https://wykopx.pl/styl
 {
     adsHide = 1;
     adsSponsoredLinksHide = 1;
-    
     wordzielHide = 1;
     adsFralioHide = 1;
-
-
     homepageSelectedForYouHide = 1;
+        
     blockExploitLinks = 1;
     adsGDPRAlertHide = 1;
     notLoggedLeftMenuGoogleFbAppleButtonsHide = 1;
     plusesInTopRightCorner = 1;
+    collapseEntryButtonHide = 1;
+    collapseCommentsButtonHide = 1;
     fixWhiteSelectBox = 1;
     categoryMenuWykopSectionLinks = 3;
 
@@ -368,6 +368,25 @@ description     https://wykopx.pl/styl
             top: 2px;
         }
     }
+    
+
+    if(collapseEntryButtonHide == 1)
+    {
+    /* --- REMOVE IF --- */
+
+       section.listing > div.content > section.thread > section.item > button.toggle, 
+       section.entry > section.thread > section.item > button.toggle { display: none!important; }
+    }
+    
+    
+    
+    if(collapseCommentsButtonHide == 1)
+    {
+    /* --- REMOVE IF --- */
+
+        section.comments > section.thread > section.item > button.toggle { display: none!important; }
+    } 
+
     
 
     /* 
