@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3
 // @name:en							Wykop XS 3
 
-// @version							3.5.5
+// @version							3.5.6
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://wykopx.pl/styl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://wykopx.pl/styl
@@ -48,7 +48,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.5.5";
+	const currentVersion = "3.5.6";
 	let dev = false;
 
 	const promoString = " - Wykop XS / #wykopx";
@@ -115,7 +115,6 @@
 
 
 		let loggedUser = {
-			//data: null,
 			username: null		// loggedUser.username -> nazwa zalogowanego uzytkownika
 		};
 		let wxs_modal = null;
@@ -123,9 +122,9 @@
 		let loadTime = dayjs();
 
 		// wykop_xs_mikroczat.user.js -MIKROCZAT/LISTA PLUSUJĄCYCH - settings
-		setSettingsValueFromCSSProperty("entryVotersListEnable");				// włącza pokazywanie listy plusujących z Wykop X Style
+		setSettingsValueFromCSSProperty("entryVotersListEnable", true);				// włącza pokazywanie listy plusujących z Wykop X Style
 		setSettingsValueFromCSSProperty("entryVotersListExpandIfLessThan", 50, true);
-		setSettingsValueFromCSSProperty("hideAds");								// blokuje wszystkie reklamy na wykopie
+
 
 		if (settings.entryVotersListEnable)
 		{
@@ -154,27 +153,28 @@
 
 
 		setSettingsValueFromCSSProperty("WykopXStyleEnabled", false);
-		setSettingsValueFromCSSProperty("quickLinksEnable");
+
 		setSettingsValueFromCSSProperty("myWykopInTopNavJS");
-		setSettingsValueFromCSSProperty("favoritesInTopNavJS");
-		setSettingsValueFromCSSProperty("imageUploaderEnable", false); // https://github.com/wykopx/WykopX/wiki/X-Wklejanie-obrazkow-ze-schowka
-		setSettingsValueFromCSSProperty("disableNewLinkEditorPastedTextLimit");
-		setSettingsValueFromCSSProperty("autoOpenMoreContentEverywhere");
-		setSettingsValueFromCSSProperty("autoOpenSpoilersEverywhere");
+		setSettingsValueFromCSSProperty("favoritesInTopNavJS", true);
+
+		settings.disableNewLinkEditorPastedTextLimit = true;
+
+		/* wszystkie komentarze - rozwijanie drzewa komentarzy w nowym UI wykopu 2026-09 */
+		setSettingsValueFromCSSProperty("autoOpenAllCommentsInTree", true);
+		setSettingsValueFromCSSProperty("autoOpenMoreContentEverywhere", true);
+		setSettingsValueFromCSSProperty("autoOpenSpoilersEverywhere", true);
+
 		setSettingsValueFromCSSProperty("observedTagsInRightSidebarEnable");
 		setSettingsValueFromCSSProperty("linkVoteDownButton");
-		setSettingsValueFromCSSProperty("infiniteScrollEntriesEnabled");
-		setSettingsValueFromCSSProperty("infiniteScrollLinksEnabled");
+
 		setSettingsValueFromCSSProperty("editorShowMyUsername");
 		setSettingsValueFromCSSProperty("editorShowMyUsernameOnSendButton");
 		setSettingsValueFromCSSProperty("haveBanDisableTextarea");
 
-		// ARCHIWUM X
-		setSettingsValueFromCSSProperty("wxsArchiveXNewestEntry", false);
-		if (settings.wxsArchiveXNewestEntry) settings.wxsArchiveXNewestEntryRefresh = wykopxSettings.getPropertyValue("--wxsArchiveXNewestEntryRefresh") ? parseInt(wykopxSettings.getPropertyValue("--wxsArchiveXNewestEntryRefresh")) : 15000;
 
 		// PRZEŁĄCZNIKI
 		setSettingsValueFromCSSProperty("wxsSwitchesEnable", false);
+
 		if (settings.wxsSwitchesEnable) 
 		{
 			setSettingsValueFromCSSProperty("wxsSwitchPhotoViewer");
@@ -188,7 +188,8 @@
 		}
 
 
-		setSettingsValueFromCSSProperty("removeAnnoyancesEnable");
+		setSettingsValueFromCSSProperty("removeAnnoyancesEnable", false);
+
 		if (settings.removeAnnoyancesEnable) 
 		{
 			setSettingsValueFromCSSProperty("removeAnnoyancesIframes");
@@ -204,7 +205,7 @@
 
 		// WYKOP OBJECTS INTERSECTION OBSERVER
 		let IntersectionObserverEnabled = false;
-		setSettingsValueFromCSSProperty("intersectionObserverRootMargin");
+
 		setSettingsValueFromCSSProperty("linkToVideoDuration");
 		setSettingsValueFromCSSProperty("entryWithVideoDuration");
 
@@ -293,14 +294,6 @@
 		let localStorageMirkoukrywacz = null;
 		let localStorageNotatkowator = null;
 		let localStorageUserLabels = null;
-
-
-		// LOCALSTORAGE
-		const localStorageFirstDailyIDs = localforage.createInstance({
-			driver: localforage.LOCALSTORAGE,
-			name: "wykopx",
-			storeName: "firstDailyIDs",
-		});
 
 
 
@@ -948,7 +941,6 @@
 		setSettingsValueFromCSSProperty("observedTagsInRightSidebarSortAlphabetically", false);
 		setSettingsValueFromCSSProperty("topNavHomeButtonClickRefreshOrRedirect", false);
 		setSettingsValueFromCSSProperty("topNavMicroblogButtonClickRefreshOrRedirect", false);
-		setSettingsValueFromCSSProperty("quickLinksEnable", false);
 
 		// DODATKOWE PRZYCISKI NA GORNEJ BELCE
 		setSettingsValueFromCSSProperty("topNavNightSwitchButton", true);
@@ -996,7 +988,7 @@
 		setSettingsValueFromCSSProperty("myWykopInTopNavJS");
 		setSettingsValueFromCSSProperty("favoritesInTopNavJS");
 		setSettingsValueFromCSSProperty("addNewEntryInTopNavJS");
-		setSettingsValueFromCSSProperty("disableNewLinkEditorPastedTextLimit");
+
 
 
 		// strings
@@ -3122,7 +3114,8 @@
 			threshold: 0,
 		};
 		// powiekszenie wczytywania ponizej viewportu
-		if (settings.intersectionObserverRootMargin) sectionObjectIntersectionObserverOptions.rootMargin = "0px 0px 700px 0px";
+		/* sectionObjectIntersectionObserverOptions.rootMargin = "0px 0px 700px 0px"; */
+
 		const sectionObjectIntersectionObserver = new IntersectionObserver(sectionObjectsAreIntersecting, sectionObjectIntersectionObserverOptions)
 
 
@@ -3635,27 +3628,9 @@
 
 						if (userNoteObject == null || userNoteObject == "")
 						{
-							// if(dev) console.log("typeof userNoteObject", typeof userNoteObject)
-							// if(dev) console.log(userNoteObject);
-
 							const date2 = dayjs(userNoteObject.lastUpdate);
-
-							//if (loadTime.diff(date2, "second") > parseFloat(settings.notatkowatorUpdateInterval * 3600))
-							//{
-							// userNoteObject = null; /* notatka jest zbyt stara */
-							//}
-							//else
-							//{
-							// mamy aktualną notatkę z localforage
-							// consoleX(`Notatkowator wczytał notatkę z LocalStorage. Użytkownik: @${username}`);
-							// if(dev) console.log("userNoteObject")
-							// if(dev) console.log(userNoteObject)
-							// if(dev) console.log("userNoteObject.usernote")
-							// if(dev) console.log(userNoteObject.usernote)
 							usernote = userNoteObject.usernote;
-
 							return userNoteObject;
-							//}
 						}
 					}
 
@@ -4383,8 +4358,31 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 
 
 
+		/* AUTOMATYCZNIE POKAŻ WSZYSTKIE KOMENTARZE W DRZEWIE W NOWYM UI WYKOPU */
+		function autoOpenAllCommentsInTree()
+		{
+			if (settings.autoOpenAllCommentsInTree)
+			{
+				consoleX("autoOpenAllCommentsInTree()", 1)
 
+				// section.thread > section.filters > li:last-child 
+				let showAllCommentsButton = document.querySelectorAll("section.comments > footer > button");
 
+				if (showAllCommentsButton?.length > 0)
+				{
+					showAllCommentsButton.forEach(button =>
+					{
+						button.click();
+					});
+					consoleX(`Automatycznie rozwinięto [${showAllCommentsButton.length}] komentarzy w drzewku`);
+
+					setTimeout(function ()
+					{
+						autoOpenAllCommentsInTree();
+					}, 1000);
+				}
+			}
+		}
 
 
 		/* AUTOMATYCZNIE POKAŻ CAŁOŚĆ DŁUGICH TREŚCI */
@@ -4395,6 +4393,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				consoleX("autoOpenMoreContentEverywhere()", 1)
 
 				let showMoreButtons = document.querySelectorAll("div.wrapper button.more");
+
 				if (showMoreButtons?.length > 0)
 				{
 					showMoreButtons.forEach(button =>
@@ -5041,270 +5040,9 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				})
 			}
 
-			// TODO IF
-			/* createNewNavBarButton({
-				position: "left",
-				text: "Wykop X Style",
-				title: `Zainstaluj style CSS "𝗪𝘆𝗸𝗼𝗽 𝗫 𝗦𝘁𝘆𝗹𝗲" w rozszerzeniu Stylus i odkryj setki dodatkowych funkcji zmieniających i naprawiających Wykop`,
-				class: ["promo", "install_wykopx"], // wykopx_promo (ukrywane przez X Style) wykopx_install_wykopx_li hybrid" | a > wykopx_promo wykopx_install_wykopx_button hybrid
-				hideWithoutXStyle: false,
-				url: "https://userstyles.world/search?q=Wykop+X+Style+3&category=&sort=mostinstalls",
-				target: "_blank",
-				icon: null,
-				number: null,
-				data: "data-v-5182b5f6",
-			}) */
-
-			addQuickLinksToNavBar();
-
 		}
 
 
-		// QUICK LINKS
-		function addQuickLinksToNavBar()
-		{
-			consoleX("addQuickLinksToNavBar()", 1)
-
-			if (settings.quickLinksEnable == true)
-			{
-				let wxs_quick_links = document.getElementById("wxs_quick_links");
-				if (wxs_quick_links == null)
-				{
-					wxs_quick_links = document.createElement('div');
-					wxs_quick_links.id = "wxs_quick_links";
-					// wxs_quick_links.classList.add("wykopxs"); // nie dodajemy bo domyslnie wlaczone
-
-					wxs_quick_links.innerHTML = `
-
-		<nav class="home">
-			<section>
-				<span>
-					<a href="/" target="_self" title="Wykop X: Przejdź na stronę główną Wykopu">Główna</a>
-				</span>
-				<div>
-					<a href="/najnowsze" target="_self" title="Wykop X: Najnowsze znaleziska, które dostały się na główną">Najnowsze</a>
-					<a href="/aktywne" target="_self" title="Wykop X: Najpopularniejsze znaleziska na stronie głównej z ostatnich 24 godzin">Aktywne</a>
-				</div>
-			</section>
-
-			<section>
-				<span>
-					<a href="/hity" target="_self">Hity</a>
-				</span>
-				<div>
-					<a href="/hity/dnia" target="_self">Dnia</a>
-					<a href="/hity/tygodnia" target="_self">Tygodnia</a>
-					<a href="/hity/miesiaca" target="_self">Miesiąca</a>
-					<a href="/hity/roku" target="_self">Roku</a>
-				</div>
-			</section>
-
-			<section>
-				<span>Ulubione</span>
-				<div>
-					<a href="/ulubione/znaleziska" target="_self" title="Wykop X: Znaleziska dodane przez Ciebie do Ulubionych">Znaleziska</a>
-					<a href="/ulubione/komentarze-znaleziska" target="_self" title="Wykop X: Komentarze pod znaleziskami dodane przez Ciebie do Ulubionych">Komentarze do znalezisk</a>
-				</div>
-			</section>
-		</nav>
-		
-		<nav class="upcoming">
-			<section>
-				<span>Dodaj</span>
-				<div>
-					<a href="/dodaj-link" target="_self" title="Wykop X: Dodaj nowe znalezisko (link do strony internetowej)">Nowe znalezisko</a>
-				</div>
-			</section>
-			<section>
-				<span>Wykopalisko</span>
-				<div>
-					<a href="/wykopalisko/najnowsze" target="_self">Najnowsze</a>
-					<a href="/wykopalisko/aktywne" target="_self">Aktywne</a>
-					<a href="/wykopalisko/wykopywane" target="_self">Wykopywane</a>
-					<a href="/wykopalisko/komentowane" target="_self">Komentowane</a>
-				</div>
-				<span>Moja aktywność</span>
-				<div>
-					<a href="/ludzie/${loggedUser.username}/znaleziska/dodane" target="_self">Moje znaleziska</a>
-					<a href="/ludzie/${loggedUser.username}/znaleziska/komentowane" target="_self">Komentowane</a>
-					<a href="/ludzie/${loggedUser.username}/znaleziska/wykopane" target="_self">Wykopane</a>
-					<a href="/ludzie/${loggedUser.username}/znaleziska/zakopane" target="_self">Zakopane</a>
-				</div>
-			</section>
-
-			<section>
-				<span>Ulubione</span>
-				<div>
-				<a href="/ulubione/znaleziska" target="_self" title="Wykop X: Znaleziska dodane przez Ciebie do Ulubionych">Znaleziska</a>
-				<a href="/ulubione/komentarze-znaleziska" target="_self" title="Wykop X: Komentarze pod znaleziskami dodane przez Ciebie do Ulubionych">Komentarze do znalezisk</a>
-				</div>
-			</section>
-		</nav>
-
-		<nav class="hits">
-			<section>
-				<span>Hity</span>
-				<div>
-					<a href="/hity/dnia" target="_self">Dnia</a>
-					<a href="/hity/tygodnia" target="_self">Tygodnia</a>
-					<a href="/hity/miesiaca" target="_self">Miesiąca</a>
-					<a href="/hity/roku" target="_self">Roku</a>
-				</div>
-			</section>
-
-			<section>
-				<span>Archiwum</span>
-				<div>
-					<a href="/hity/2020" target="_self">2020</a>
-					<a href="/hity/2021" target="_self">2021</a>
-					<a href="/hity/2022" target="_self">2022</a>
-					<a href="/hity/2023" target="_self">2023</a>
-				</div>
-			</section>
-		</nav>
-
-
-		<nav class="microblog">
-			<section>
-				<span>Dodaj</span>
-				<div>
-				<a href="/mikroblog/#dodaj" target="_self" title="Wykop X: Dodaj nowy wpis na Mikroblogu">Nowy wpis na Mirko</a>
-				</div>
-			</section>
-
-			<section>
-				<span>Mikroblog</span>
-				<div>
-					<a href="/mikroblog/najnowsze" target="_self" title="Wykop X: Najnowsze wpisy na Mikroblogu">Najnowsze</a>
-					<a href="/mikroblog/aktywne" target="_self" title="Wykop X: Nowe, angażujące wpisy na Mikroblogu">Aktywne</a>
-				</div>
-			</section>
-
-			<section>
-				<span>
-					<a href="/mikroblog/gorace" target="_self" title="Wykop X: Przejdź na ostatnio wybrane gorące">Gorące</a>
-				</span>
-				<div>
-					<a href="/mikroblog/gorace/2" class="wxs_quicklink_short" target="_self" title="Wykop X: Najbardziej gorące wpisy z ostatnich 2 godzin">2h</a>
-					<a href="/mikroblog/gorace/6" class="wxs_quicklink_short" target="_self" title="Wykop X: Najbardziej gorące wpisy z ostatnich 6 godzin">6h</a>
-					<a href="/mikroblog/gorace/12" class="wxs_quicklink_short" target="_self" title="Wykop X: Najbardziej gorące wpisy z ostatnich 12 godzin">12h</a>
-					<a href="/mikroblog/gorace/24" class="wxs_quicklink_short" target="_self" title="Wykop X: Najbardziej gorące wpisy z ostatnich 24 godzin">24h</a>
-				</div>
-			</section>
-
-			<section>
-				<span>
-					Moje Mirko
-				</span>
-				<div>
-					<a href="/ludzie/${loggedUser.username}/wpisy/dodane" target="_self">Moje wpisy</a>
-					<a href="/ludzie/${loggedUser.username}/wpisy/komentowane" target="_self">Komentowane</a>
-					<a href="/ludzie/${loggedUser.username}/wpisy/plusowane" target="_self">Zaplusowane</a>
-				</div>
-			</section>
-
-			<section>
-				<span>Ulubione</span>
-				<div>
-					<a href="/ulubione/wpisy" target="_self">Wpisy</a>
-					<a href="/ulubione/komentarze-wpisy" target="_self">Komentarze do wpisów</a>
-				</div>
-			</section>
-		</nav>
-
-		<nav class="mywykop">
-			<section>
-				<span>Mój Wykop</span>
-				<div>
-					<a href="/obserwowane/" target="_self">Wszystko</a>
-					<a href="/obserwowane/tagi" target="_self">#Tagi</a>
-					<a href="/obserwowane/profile" target="_self">@Profile</a>
-				</div>
-			</section>
-
-			<section>
-				<span>Moja aktywność</span>
-				<span>Mikroblog</span>
-				<div>
-					<a href="/ludzie/${loggedUser.username}/wpisy/dodane" target="_self">Moje wpisy</a>
-					<a href="/ludzie/${loggedUser.username}/wpisy/komentowane" target="_self">Moje komentarze</a>
-					<a href="/ludzie/${loggedUser.username}/wpisy/plusowane" target="_self">Moje plusy</a>
-				</div>
-			</section>
-			<section>
-				<span>Znaleziska</span>
-				<div>
-					<a href="/ludzie/${loggedUser.username}/znaleziska/dodane" target="_self">Moje znaleziska</a>
-					<a href="/ludzie/${loggedUser.username}/znaleziska/komentowane" target="_self">Moje komentarze</a>
-					<a href="/ludzie/${loggedUser.username}/znaleziska/wykopane" target="_self">Wykopane</a>
-					<a href="/ludzie/${loggedUser.username}/znaleziska/zakopane" target="_self">Zakopane</a>
-				</div>
-			</section>
-		</nav>
-
-		<nav class="favorites">
-			<section>
-				<span>Ulubione</span>
-				<div>
-					<a href="/ulubione" target="_self">Wszystko</a>
-					<a href="/ulubione/znaleziska" target="_self">Znaleziska</a>
-					<a href="/ulubione/komentarze-znaleziska" target="_self">Komentarze do znalezisk</a>
-					<a href="/ulubione/wpisy" target="_self">Wpisy</a>
-					<a href="/ulubione/komentarze-wpisy" target="_self">Komentarze do wpisów</a>
-				</div>
-			</section>
-		</nav>
-
-		<nav class="profile_links">
-			<section>
-				<span>Mój profil</span>
-				<div>
-					<a href="/ludzie/${loggedUser.username}" target="_self">Profil</a>
-					<a href="/ludzie/${loggedUser.username}/znaleziska/dodane" target="_self">Dodane znaleziska</a>
-					<a href="/ludzie/${loggedUser.username}/znaleziska/komentowane" target="_self">Komentowane znaleziska</a>
-					<a href="/ludzie/${loggedUser.username}/znaleziska/wykopane" target="_self">Wykopane</a>
-					<a href="/ludzie/${loggedUser.username}/znaleziska/zakopane" target="_self">Zakopane</a>
-				</div>
-			</section>
-		</nav>
-
-		<nav class="profile_entries">
-			<section>
-				<span>Mój profil</span>
-				<div>
-					<a href="/ludzie/${loggedUser.username}/wpisy/dodane" target="_self">Dodane wpisy</a>
-					<a href="/ludzie/${loggedUser.username}/wpisy/komentowane" target="_self">Komentowane wpisy</a>
-					<a href="/ludzie/${loggedUser.username}/wpisy/plusowane" target="_self">Zaplusowane</a>
-				</div>
-			</section>
-		</nav>
-
-		<nav class="profile_observed">
-			<section>
-				<span>Mój profil</span>
-				<div>
-					<a href="/ludzie/${loggedUser.username}/obserwowane/profile" target="_self">Obserwowani @użytkownicy</a>
-					<a href="/ludzie/${loggedUser.username}/obserwowane/tagi" target="_self">Obserwowane #tagi</a>
-				</div>
-			</section>
-		</nav>
-
-		<nav class="add_new">
-			<section>
-				<span>Dodaj</span>
-				<div>
-					<a href="/dodaj-link" target="_self" title="Wykop X: Dodaj nowe znalezisko (link do strony internetowej)">Nowe znalezisko</a>
-					<a href="/mikroblog/#dodaj" target="_self" title="Wykop X: Dodaj nowy wpis na Mikroblogu">Nowy wpis na Mirko</a>
-				</div>
-			</section>
-		</nav>
-
-		`;
-					document.querySelector('body > section > header.header > div.left').appendChild(wxs_quick_links);
-				}
-			}
-
-		}
 
 
 
@@ -5946,7 +5684,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 			// document.hidden > true/false
 			if (document.hidden == false)
 			{
-				if (settings.wxsArchiveXNewestEntry && (wxs_newest_entry == 1 || wxs_newest_entry == 3)) runWithDelay(3000, getNewestEntryFromAPI);
+
 			}
 
 			if (settings.tabChangeEnabled)
@@ -7042,7 +6780,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		function disableNewLinkEditorPastedTextLimit(input)
 		{
-			consoleX(`disableNewLinkEditorPastedTextLimit()`, 1)
+			// consoleX(`disableNewLinkEditorPastedTextLimit()`, 1)
+
 			const maxLength = input.getAttribute('maxlength');
 			input.removeAttribute('maxlength');
 
@@ -7280,159 +7019,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
-		/* ARCHIWUM X */
-		let newestEntrySection = null;
-		let newestEntryID = null;
-		let wxs_newest_entry = 1;
-
-		async function archiveXNewestEntry()
-		{
-			let newestEntrySectionElem = document.createElement("div");
-			newestEntrySectionElem.id = "wxs_newest_entry";
-			newestEntrySectionElem.classList.add("hidden");	// .hidden
-
-			newestEntrySectionElem.innerHTML = `
-		<section data-v-2aacfeb5="" data-v-7693ae52="" class="entry" data-v-0a84d0a4=""><!-- id="comment-75364841"  -->
-			<article data-v-2aacfeb5="">
-				<header data-v-2aacfeb5="">
-					<div data-v-2aacfeb5="" class="left">
-						<a data-v-fb64f4be="" data-v-2aacfeb5="" class="avatar active" style="width: 40px; height: 40px;"> <!-- href="/ludzie/NICK" -->
-							<figure data-v-fb64f4be="" class="male orange-profile wxs_newest_entry_author_color wxs_newest_entry_author_gender">
-								<img class="wxs_newest_entry_author_avatar" data-v-ecb5ea3e="" data-v-fb64f4be="" loading="lazy" src="https://wykop.pl/cdn/c0834752/3f55ec16859056965fb5ef04e080527497a9abce924d2edb171680c11e34ce1c,q80.png" alt="NICK">
-							</figure>
-						</a>
-					</div>
-
-					<div data-v-2aacfeb5="" class="right">
-						<div data-v-2aacfeb5="">
-							<div data-v-0908378b="" data-v-2aacfeb5="" class="tooltip-slot">
-								<span data-v-0908378b="">
-									<a class="wxs_newest_entry_author_username_ahref wxs_newest_entry_author_color username orange-profile active" href="/ludzie/WykopX" data-v-ed9f6c56="" data-v-2aacfeb5="">
-										<span class="wxs_newest_entry_author_username" data-v-ed9f6c56="">WykopX</span>
-									</a>
-								</span>
-							</div>
-							<span data-v-0908378b="">
-									<span data-v-2aacfeb5="">
-										<a class="wxs_newest_entry_ahref" data-v-2aacfeb5="" href="">
-											<time class="date wxs_newest_entry_created_at"  data-v-0132bb98="" data-v-2aacfeb5="" title="2024-03-09 18:42:19" datetime="2024-03-09 18:42:19">przed chwilą</time>
-										</a>
-									</span>
-								</a>
-							</span>
-							</div>
-							<div data-v-2aacfeb5="">
-								<section data-v-76790450="" data-v-2aacfeb5="" class="rating-box">
-									<ul data-v-76790450="" class="">
-										<li data-v-76790450="" class="zero">0</li>
-									</ul>
-									<div data-v-76790450="" class="buttons">
-										<button data-v-76790450="" data-no-bubble="" class="plus">+</button>
-									</div>
-								</section>
-							</div>
-						</div>
-				</header>
-				<div data-v-2aacfeb5="" class="edit-wrapper">
-					<div data-v-2aacfeb5="" data-selectable="" class="content">
-						<section data-v-725caa02="" data-v-2aacfeb5="" class="entry-content">
-							<div data-v-725caa02="" class="wxs_newest_entry_content wrapper">Ładowanie...</div>
-						</section>
-					</div>
-				</div>
-			</article>
-			<div class="timer">
-				<div class="mask"></div>
-			</div>
-		</section>
-		`;
-
-			bodySection.appendChild(newestEntrySectionElem);
-			newestEntrySection = bodySection.querySelector("#wxs_newest_entry");
-
-			if (wxs_newest_entry && wxs_newest_entry != 0) getNewestEntryFromAPI(newestEntrySection);
-		}
-
-
-
-
-		let firstInDayID = {
-			entry: null,
-			link: null
-		}
-
-		// getEntryDailyNumber(wykopObjectData, "2023-01-01")		-> 678 - zwraca który wpis tego dnia
-		async function getEntryDailyNumber(objectData) // "2024-03-14 21:34:51",
-		{
-			// if(dev) console.log(`getEntryDailyNumber(objectData.id: ${objectData.id}, createdAtDate: ${objectData.created_at})`);
-			// if(dev) console.log(`getEntryDailyNumber() - firstInDayID[${objectData.resource}]: `, firstInDayID[objectData.resource]);
-
-			const dateToCheck = dayjs(objectData.created_at).format("YYYY-MM-DD");
-
-			if (firstInDayID[objectData.resource] != null)
-			{
-				// if(dev) console.log(`mapa firstInDayID[${objectData.resource}] = null, sprawdzamy localstorage`);
-
-				await localStorageFirstDailyIDs.getItem(`${objectData.resource}FirstInDayIDsMap`).then(val =>	// localstorage: entryFirstInDayIDsMap / linkFirstInDayIDsMap
-				{
-					if (val !== null)
-					{
-						firstInDayID[objectData.resource] = new Map(Object.entries(val));
-						// if(dev) console.log("znaleziono w localstorage val=", val);
-						// if(dev) console.log("znaleziono w localstorage firstInDayID[objectData.resource]=", firstInDayID[objectData.resource]);
-					}
-					else
-					{
-						// if(dev) console.log('Mapa nie istniała, a w localstorage nie było zapisanych danych');
-						firstInDayID[objectData.resource] = new Map();
-					}
-				}).catch(err =>
-				{
-					console.error(err);
-				});
-			}
-
-			if (firstInDayID[objectData.resource])
-			{
-				// if(dev) console.log('Mapa już istnieje: firstInDayID[objectData.resource]', firstInDayID[objectData.resource]);
-
-				if (firstInDayID[objectData.resource].has(dateToCheck))
-				{
-					// if(dev) console.log(`Mapa posiada dla daty ${dateToCheck}, wartość: ${firstInDayID[objectData.resource].get(dateToCheck)}`);
-					// if(dev) console.log("firstInDayID[objectData.resource]", firstInDayID[objectData.resource])
-
-					return (objectData.id - firstInDayID[objectData.resource].get(dateToCheck)) / 2;
-				}
-				else
-				{
-					// if(dev) console.log(`Mapa istnieje, ale dla daty ${dateToCheck} nie posiada jeszcze wartości`);
-				}
-			}
-			else
-			{
-				firstInDayID[objectData.resource] = new Map();
-			}
-
-
-			// if(dev) console.log('Mapa przed wyslaniem zapytania do API WykopX: firstInDayID[objectData.resource]', firstInDayID[objectData.resource]);
-
-			const firstEntryData = await getWykopXAPIData(objectData.resource, "first-by-date") // https://archiwum.wykopx.pl/api/entry/first-by-date  // https://archiwum.wykopx.pl/api/link/first-by-date
-			// if(dev) console.log('Pobrano z Archiwum Wykop X: firstEntryData, ', firstEntryData);
-
-			if (firstEntryData && firstEntryData.id != null)
-			{
-				firstInDayID[objectData.resource].set(dateToCheck, firstEntryData.id);
-				localStorageFirstDailyIDs.setItem(`${objectData.resource}FirstInDayIDsMap`, Object.fromEntries(firstInDayID[objectData.resource]));//.then(() => { });
-				// if(dev) console.log("firstInDayID[objectData.resource]", firstInDayID[objectData.resource])
-
-				return (objectData.id - firstEntryData.id) / 2;
-			}
-
-			return false;
-		}
-
-
-
 
 
 
@@ -7580,167 +7166,9 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
-		async function getNewestEntryFromAPI(sectionElement = newestEntrySection)
-		{
-			sectionElement.classList.remove("animationRunning");
-
-			let newestEntryObject = await getWykopAPIData(`entries?sort=newest&limit=1`); // https://wykop.pl/api/v3/entries?sort=newest&limit=1
-			newestEntryObject = newestEntryObject.data[0]
-
-			if (newestEntryObject.id != newestEntryID)
-			{
-				newestEntryID = newestEntryObject.id
-				sectionElement.classList.add("animationRunning");
-
-				let entries_today_count = await getEntryDailyNumber(newestEntryObject);
-
-				if (entries_today_count)
-				{
-					sectionElement.querySelectorAll(".entry").forEach((el) =>
-					{
-						el.dataset.entries_today_count = entries_today_count;
-					});
-				}
-
-				sectionElement.querySelectorAll(".wxs_newest_entry_author_username_ahref").forEach((el) =>
-				{
-					el.href = `/ludzie/${newestEntryObject.author.username}`;
-				});
-				sectionElement.querySelectorAll(".wxs_newest_entry_author_gender").forEach((el) =>
-				{
-					el.classList.remove("male", "female");
-					if (newestEntryObject.author.gender == "m") el.classList.add(`male`);
-					else if (newestEntryObject.author.gender == "f") el.classList.add(`female`);
-				});
-				sectionElement.querySelectorAll(".wxs_newest_entry_author_color").forEach((el) =>
-				{
-					el.classList.remove("orange-profile", "green-profile", "burgundy-progile");
-					el.classList.add(`${newestEntryObject.author.color}-profile`);
-				});
-				sectionElement.querySelectorAll(".wxs_newest_entry_author_username").forEach((el) =>
-				{
-					el.innerHTML = newestEntryObject.author.username;
-				});
-				sectionElement.querySelectorAll(".wxs_newest_entry_author_avatar").forEach((el) =>
-				{
-					if (newestEntryObject.author.avatar) el.src = newestEntryObject.author.avatar;
-					else el.src = "/static/img/svg/avatar-default.svg";
-
-					el.alt = newestEntryObject.author.username;
-				});
-
-				sectionElement.querySelectorAll(".wxs_newest_entry_ahref").forEach((el) =>
-				{
-					el.href = `https://wykop.pl/wpis/${newestEntryObject.id}/wykopx`;
-				});
-				sectionElement.querySelectorAll(".wxs_newest_entry_created_at").forEach((el) =>
-				{
-					el.title = newestEntryObject.created_at;
-					el.datetime = newestEntryObject.created_at;
-				});
-
-				sectionElement.querySelectorAll(".wxs_newest_entry_content").forEach((el) =>
-				{
-					el.innerHTML = newestEntryObject.content;
-				});
-
-			}
-
-			sectionElement.classList.remove("hidden");
-
-			if (document.hidden == false) runWithDelay(2000 + (settings.wxsArchiveXNewestEntryRefresh * 1000), getNewestEntryFromAPI);
-		}
 
 
-		if (settings.wxsArchiveXNewestEntry)
-		{
-			CSS += `
-		body[data-wxs_newest_entry="0"] #wxs_newest_entry { display: none!important; }
-		body[data-wxs_newest_entry="1"] .wykopx_newest_entry_switcher { background: linear-gradient(to bottom right, transparent 0%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 100%); }
-		body[data-wxs_newest_entry="2"] .wykopx_newest_entry_switcher { background: linear-gradient(to top left, transparent 0%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 100%); }
-		body[data-wxs_newest_entry="3"] .wykopx_newest_entry_switcher { background: rgba(255, 255, 255, 0.1); }
 
-		#wxs_newest_entry
-		{
-			right: 40px;
-			width: 400px;
-			
-			height: auto;
-			max-height: 50%;
-
-			--border-radius: 0px;
-			border-radius: var(--border-radius)!important;
-			position: fixed;
-			bottom: 15px;
-			z-index: 9999;
-			display: grid;
-			color: var(--blackish);
-			background-color: var(--alta);
-			background: linear-gradient(145deg, var(--whitish), var(--alta));
-			box-shadow:  5px 5px 10px var(--porcelain),  -5px -5px 10px var(--porcelain);
-		}
-		#wxs_newest_entry > .entry
-		{
-			border-radius: var(--border-radius)!important;
-		}
-
-		#wxs_newest_entry > .entry::after
-		{
-			bottom: 10px;
-			left: 20px;
-			content: attr(data-entries_today_count);
-			position: absolute;
-			font-size: 15px;
-			opacity: 0.2;
-		}`;
-		}
-
-
-		// TRYB NOCNY W BELCE NAWIGACYJNEJ
-		function addNewestEntryTopNavButton()
-		{
-			if (settings.wxsArchiveXNewestEntry)
-			{
-				wxs_newest_entry = localStorage.getItem('wxs_newest_entry');
-				if (!wxs_newest_entry) wxs_newest_entry = 1;
-				body.dataset.wxs_newest_entry = wxs_newest_entry;
-				// wykopx_newest_entry_switcher_status_0 - wylaczone
-				// wykopx_newest_entry_switcher_status_1 - wpisy
-				// wykopx_newest_entry_switcher_status_2 - linki
-				// wykopx_newest_entry_switcher_status_3 - oba
-				const wykopx_newest_entry_switcher_button = document.createElement("li");
-				wykopx_newest_entry_switcher_button.insertAdjacentHTML('afterbegin', `<a href="#"><figure>🤍</figure></a>`);
-				wykopx_newest_entry_switcher_button.classList.add("wykopx_newest_entry_switcher", "notifications", "dropdown");
-				wykopx_newest_entry_switcher_button.title = `Włącz/wyłącz powiadomienia o najnowszych wpisach na Mikroblogu ${promoString}`;
-				wykopx_newest_entry_switcher_button.addEventListener('click', function ()
-				{
-					wxs_newest_entry = localStorage.getItem('wxs_newest_entry');
-					// 0 - wylaczone
-					// 1 - wpisy
-					// 2 - linki
-					// 3 - wpisy + linki
-					if (wxs_newest_entry === null)
-					{
-						wxs_newest_entry = 1;
-					}
-					else if (wxs_newest_entry == 1)	// przy linkach zmienić na == 3
-					{
-						wxs_newest_entry = 0;
-					}
-					else
-					{
-						wxs_newest_entry++;
-					}
-
-					if (wxs_newest_entry > 0) getNewestEntryFromAPI();
-
-					localStorage.setItem('wxs_newest_entry', wxs_newest_entry);
-
-					body.dataset.wxs_newest_entry = wxs_newest_entry;
-				});
-				topNavHeaderRightElement.appendChild(wykopx_newest_entry_switcher_button);
-			}
-		}
 
 
 
@@ -7781,12 +7209,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			{
 				sendOnCTRL_ENTER(sectionEditorElement);
 			}
-
-			if (settings.imageUploaderEnable)
-			{
-				imagePasteFromClipboardListener(sectionEditorElement);
-			}
-
 		}
 
 
@@ -7833,205 +7255,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			});
 		}
 
-
-
-		function imagePasteFromClipboardListener(sectionEditorElement)
-		{
-			consoleX(`imagePasteFromClipboardListener()`, 1);
-			const textarea = sectionEditorElement.querySelector("textarea");
-			// if(dev) console.log(textarea);
-			const imageUploadPreview = document.createElement('figure');
-			imageUploadPreview.classList.add("wxs_uploaded_image_placeholder");
-			textarea.parentNode.appendChild(imageUploadPreview);
-
-			const imageUploaderCaption = document.createElement('div');
-			imageUploaderCaption.classList.add("wxs_uploader_caption");
-			imageUploaderCaption.innerHTML = `<span class="wxs_upload_first_image">CTRL + V - wklej obrazek ze schowka</span><span class="wxs_upload_and_replace_current_image">CTRL + V - wklej kolejny obrazek, aby zastąpić aktualnie dodany</span>`;
-			textarea.parentNode.appendChild(imageUploaderCaption);
-
-
-
-			// PASTE EVENT
-			document.addEventListener('paste', async (e) => 
-			{
-				// e.preventDefault();
-				// e.stopPropagation(); 
-				console.clear();
-				// if(dev) console.log("e.clipboardData.items") // object DataTransferItemList {0: DataTransferItem, 1: DataTransferItem, ...}
-				// if(dev) console.log(e.clipboardData.items)
-				// if(dev) console.log("clipboardData.types")
-				// if(dev) console.log(e.clipboardData.types) //  Array: ['Files', 'text/plain', 'text/html', 'application/vnd.code.copymetadata', 'vscode-editor-data']
-				// if(dev) console.log("clipboardData.files")
-				// if(dev) console.log(e.clipboardData.files)
-				/*
-					FileList = { 0: File, length: 1 }
-					FileList = { 0: 
-									{
-										lastModified: timestamp // 1702989703658
-										lastModifiedDate: DateTime
-										name: "image.png";
-										size: 1230133
-										type: "image/png"
-										webkitRelativePath: ""
-									},
-									length: 1
-								}
-				*/
-				// items ->text  files -> pliki png
-
-				const uploadModal = document.querySelector('#modals-container div[data-modal="entryPhoto"] section.modal.entryPhoto');
-				let fileInput, urlInput;
-				if (uploadModal)
-				{
-					fileInput = uploadModal.querySelector('form div.upload section.file div.upload input');
-					urlInput = uploadModal.querySelector('form div.field input[inputmode="url"]');
-				}
-
-				// W SCHOWKU BYŁ OBRAZEK
-				if (e.clipboardData.files.length > 0)
-				{
-					if (dev) console.log(e.clipboardData.files[0]);
-					let imageFile = e.clipboardData.files[0];
-					if (dev) console.log("imageFile (original)");
-					if (dev) console.log(imageFile);
-
-					// próba konwersji z WEBP na PNG
-					// if (imageFile.type == "image/webp") // image/gif				// image/png				// image/jpeg				// image/webp
-					// {
-					// 	let reader = new FileReader();
-					// 	reader.onload = function (event)
-					// 	{
-					// 		let img = new Image();
-					// 		img.onload = function ()
-					// 		{
-					// 			let canvas = document.createElement('canvas');
-					// 			canvas.width = this.width;
-					// 			canvas.height = this.height;
-					// 			let ctx = canvas.getContext('2d');
-					// 			ctx.drawImage(this, 0, 0);
-					// 			canvas.toBlob(function (blob)
-					// 			{
-					// 				imageFile = new File([blob], "test.png", { type: "image/png" });
-					// 				if(dev) console.log(imageFile);
-					// 			}, 'image/png');
-					// 		};
-					// 		img.src = event.target.result;
-					// 	};
-					// 	reader.readAsDataURL(imageFile);
-					// }
-
-					if (imageFile.name === "image.png")
-					{
-						imageFile = new File([imageFile], "WykopX", { type: imageFile.type });
-					}
-
-					if (dev) console.log("imageFile");
-					if (dev) console.log(imageFile);
-
-					const bitmap = await createImageBitmap(imageFile)
-					let canvas = document.createElement('canvas');
-					canvas.width = bitmap.width;
-					canvas.height = bitmap.height;
-					canvas.style.width = "100%";
-					canvas.style.maxWidth = "400px";
-					canvas.classList.add("wxs_uploaded_image_preview", `wxs_uploaded_image_${imageFile.type.split("/")[1]}`); // class="wxs_uploaded_image_png", class="wxs_uploaded_image_jpeg"
-					canvas.title = `WykopX: Plik ${imageFile.type.split("/")[1].toUpperCase()} o wielkości ${imageFile.size < 1048576 ? bytesToKB(imageFile.size, 2) : bytesToMB(imageFile.size)} i rozmiarach ${bitmap.width} x ${bitmap.height}`
-
-
-					canvas.getContext('2d').drawImage(bitmap, 0, 0, bitmap.width, bitmap.height);
-					imageUploadPreview.appendChild(canvas);
-
-					if (dev) console.log("bitmap");
-					if (dev) console.log(bitmap);
-
-					if (!fileInput)
-					{
-						let fakeDropEvent = new DragEvent('drop');
-
-						Object.defineProperty(fakeDropEvent, 'dataTransfer',
-							{
-								value: {
-									files: [imageFile],  // 'file' is the File object you want to drop
-									types: ['Files'],
-									effectAllowed: 'all',
-									dropEffect: 'move',
-									items: [
-										{
-											kind: 'file',
-											type: imageFile.type,
-											getAsFile: function () { return imageFile; }
-										}
-									],
-									getData: function () { return ''; },
-									setData: function () { },
-									clearData: function () { },
-									setDragImage: function () { }
-								}
-							});
-
-						// Dispatch the fake drop event
-						sectionEditorElement.dispatchEvent(fakeDropEvent);
-					}
-					else
-					{
-
-					}
-				}
-				// wklejono tekst
-				else if (e.clipboardData.files.length == 0 && e.clipboardData.items.length > 0)
-				{
-					if (dev) console.log("e.clipboardData.items.length > 0");
-					let textPlainFromClipboard = e.clipboardData.getData('text/plain');
-					if (dev) console.log("Clipboard text/plain: " + textPlainFromClipboard);
-
-					let urlsArray = getURLsFromString(textPlainFromClipboard, true);
-					if (urlsArray && urlsArray.length > 0)
-					{
-						urlsArray.forEach((urlFromClipboard) =>
-						{
-
-							if (urlFromClipboard.endsWith(".webp"))
-							{
-
-							}
-
-
-							if (dev) console.log("probuje pobrać plik: " + urlFromClipboard);
-
-							let img = new Image();
-							img.src = urlFromClipboard;
-
-							img.onload = function ()
-							{
-								let canvas = document.createElement('canvas');
-								canvas.width = this.width;
-								canvas.height = this.height;
-								canvas.style.width = "100%";
-								let ctx = canvas.getContext('2d');
-								ctx.drawImage(this, 0, 0);
-								imageUploadPreview.appendChild(canvas);
-
-								/* CORS POLICY ERROR:
-								canvas.toBlob(function (blob)
-								{
-									let imageFile = new File([blob], "test.png", { type: "image/png" });
-									// You now have a PNG File object, 'newFile', with image data from the original WebP file
-								}, 'image/png'); */
-							};
-							// img.crossOrigin = 'anonymous'; CORS
-						});
-
-						// e.preventDefault();
-
-					}
-					else
-					{
-						// wklejono tekst bez okna modalnego (wiekszosc wypadkow)
-					}
-				}
-			});
-		}
-		// IMAGE UPLOADER END
 
 
 
@@ -8253,13 +7476,10 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 					}
 				}
 			});
-
-			if (settings.wxsArchiveXNewestEntry)
-			{
-				addNewestEntryTopNavButton();
-				archiveXNewestEntry();
-			}
 		}
+
+
+
 		// ----- PAGE NAVIGATION
 		async function browserExecuteOnPageChange(event)
 		{
@@ -8321,6 +7541,15 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				// })
 			}
 
+
+			if (settings.autoOpenAllCommentsInTree)
+			{
+				runWithDelay(5000, function ()
+				{
+					autoOpenAllCommentsInTree();
+				})
+			}
+
 			if (settings.autoOpenMoreContentEverywhere)
 			{
 				runWithDelay(6000, function ()
@@ -8339,6 +7568,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				});
 			}
 
+
+			// USUWANIE TRACKERÓW IFRAME I ŚLEDZĄCYCH SKRYPTÓW
 			if (settings.removeAnnoyancesEnable)
 			{
 				runWithDelay(18000, function ()
@@ -8383,7 +7614,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 		// Wykop XS-XHR Blocker
 		// https://greasyfork.org/en/scripts/486722-wykop-xs-xhr-blocker
-		setSettingsValueFromCSSProperty("wxsBlockXHREnable");
+		setSettingsValueFromCSSProperty("wxsBlockXHREnable", false);
+
 		if (settings.wxsBlockXHREnable)
 		{
 			setSettingsValueFromCSSProperty("wxsBlockXHRExternal");
@@ -8403,7 +7635,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		}
 
 		let xhook = null;
-		if (settings.infiniteScrollEntriesEnabled || settings.infiniteScrollLinksEnabled || settings.wxsBlockXHREnable)
+		if (settings.wxsBlockXHREnable)
 		{
 			//XHook-v1.6.2-https://github.com/jpillora/xhook
 			//Jaime Pillora <dev@jpillora.com>-MIT Copyright 2023
@@ -8478,103 +7710,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			});
 		}
 
-		if (xhook != null && (settings.infiniteScrollEntriesEnabled || settings.infiniteScrollLinksEnabled))
-		{
-			xhook.after((request, response) =>
-			{
-				// if(dev) console.log("✔ xhook.after-request: " + request.url);
-				// if(dev) console.log(request);
-				// if(dev) console.log("✔ xhook.after-response");
-				// if(dev) console.log(response);
-
-				if (response.status == 200 && request.url.endsWith("page=1"))
-				{
-					// if(dev) console.log("request.url.endsWith(page = 1)")
-					if ((settings.infiniteScrollEntriesEnabled && pageType == "wpis") || (settings.infiniteScrollLinksEnabled && pageType == "znalezisko"))
-					{
-						let url = null;
-
-						try
-						{
-							url = new URL(request.url);
-						}
-						catch
-						{
-							return
-						}
-
-						// if(dev) console.log("xhook.after-request.url");
-						// if(dev) console.log(request.url);
-						// if(dev) console.log(url);
-
-						//if (url.host == "wykop.pl")
-						if (1)
-						{
-							let searchParams = new URLSearchParams(url.searchParams)
-
-							// if(dev) console.log("✔ xhook.after-url.href");
-							// if(dev) console.log(url.href);
-							// if(dev) console.log("✔ xhook.after-searchParams");
-							// if(dev) console.log(searchParams);
-							// if(dev) console.log(`✔ xhook.after-${url.href} searchParams.has('page'): ` + searchParams.has('page'))
-							// if(dev) console.log(`✔ xhook.after-${url.href} searchParams.get('page'): ` + searchParams.get('page'))
-
-							if (searchParams.has('page') && searchParams.get('page') == 1)
-							{
-								// if(dev) console.log("✔ xhook.after-INFINITE SCROLL");
-
-								let regex = /\/api\/v3\/entries\/\d+\/comments$/;
-								if (pageType == "znalezisko") regex = /\/api\/v3\/links\/\d+\/comments$/;
-
-								// if(dev) console.log("url.pathname");
-								// if(dev) console.log(url.pathname);
-
-								if (regex.test(url.pathname))
-								{
-									let json = JSON.parse(response.text)
-									// if(dev) console.log("json")
-									// if(dev) console.log(json)
-
-									for (let page = 2; page <= Math.ceil(json['pagination']['total'] / json['pagination']['per_page']); ++page)
-									{
-										searchParams.set('page', page.toString())
-
-										let req = new XMLHttpRequest();
-										req.open('GET', `${url.pathname} ? ${searchParams.toString()}`, false)
-
-										for (let key of Object.keys(request.headers))
-										{
-											req.setRequestHeader(key, request.headers[key])
-										}
-
-										req.send(null)
-
-										if (req.status !== 200)
-										{
-											break
-										}
-
-										let data = JSON.parse(req.responseText)['data']
-										if (data.length === 0)
-										{
-											break
-										}
-
-										json['data'] = json['data'].concat(data)
-									}
-
-									// Hide pagination
-									json['pagination']['total'] = 0
-
-									// Override response text
-									response.text = JSON.stringify(json)
-								}
-							}
-						}
-					}
-				}
-			});
-		}
 
 
 
@@ -8731,134 +7866,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			}
 		}
 
-		if (settings.imageUploaderEnable)
-		{
-			CSS += `
-		/* IMAGE UPLOADER */
-		section.editor figure.wxs_uploaded_image_placeholder
-		{
-			display: flex;
-			position: relative;	
-		}
-		section.editor div.wxs_uploader_caption > span
-		{
-			display: none;
-			font-size: 15px;
-			color: var(--gullGray);
-			text-transform: initial;
-			position: relative;
-			margin-top: 15px;
-			padding-top: 15px;
-			margin-bottom: 15px;
-			border-top: 1px dotted rgba(120, 120, 120, 0.3);
-		}
-		section.editor:has(aside li.photo) div.wxs_uploader_caption > span.wxs_upload_and_replace_current_image,
-		section.editor:not(:has(aside li.photo)) div.wxs_uploader_caption > span.wxs_upload_first_image
-		{
-			display: flex;
-		}
-		section.editor figure.wxs_uploaded_image_placeholder:has(canvas)
-		{
-			margin: 20px 0px;
-			border-radius: 4px!important;
-			display: flex;
-			flex-direction: row-reverse;
-			flex-wrap: wrap-reverse;
-			justify-content: start;
-			align-content: start;
-			gap: 10px;
-		}
-		section.editor figure.wxs_uploaded_image_placeholder > canvas
-		{
-			display: none;
-		}
-		section.editor:has(aside li.photo) figure.wxs_uploaded_image_placeholder > canvas
-		{
-			display: flex;
-			max-width: 400px!important;
-			border: 1px solid var(--whiteOpacity07, rgba(128, 128, 128, 0.7))!important;
-			border-radius: 4px!important;
-			box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3), -3px -3px 12px rgba(0, 0, 0, 0.3), 0px 0px 22px rgba(0, 0, 0, 0.3);
-			opacity: 0.7;
-			filter: brightness(0.8) grayscale(0.6);
-		}
-		section.editor:has(aside li.photo) figure.wxs_uploaded_image_placeholder > canvas:hover
-		{
-			max-width: 400px!important;
-			opacity: 1;
-			filter: brightness(1.3) grayscale(0)!important;
-			border: 1px solid var(--whiteOpacity07, rgba(128, 128, 128, 0.7))!important;
-		}
-		/* ten plik zostanie wysłany (ostatni na liscie) */
-		section.editor:has(aside li.photo) figure.wxs_uploaded_image_placeholder > canvas:nth-last-child(1 of canvas)
-		{
-			opacity: 1;
-			filter: brightness(1.1) grayscale(0);
-			border-color: rgba(21, 138, 255, .89)!important;
-			border: 20px solid red;
-		}
 
-
-
-		/* lista wgranych plików wraz z nazwami */
-		section.editor > aside > ul > li.photo > span
-		{
-			line-height: 24px;
-		}
-
-		section.editor > aside > ul > li.photo::before
-		{
-			top: unset!important;
-			left: unset!important;
-		}
-		section.editor > aside > ul > li.photo
-		{
-			padding: 8px 0px 8px 10px; 
-			border-radius: 4px;
-			background-color: rgba(255, 0, 0, 0.1);
-			opacity: 0.6;
-		}
-		section.editor > aside > ul > li:nth-last-child(1 of li.photo)
-		{
-			opacity: 1;
-			background-color: rgba(21, 138, 255, .01);
-		}
-
-
-		section.editor:has(aside li.photo) figure.wxs_uploaded_image_placeholder canvas.wxs_uploaded_image_preview::after
-		{
-			display: flex;
-			font-size: 14px;
-			color: rgba(254, 255, 255, 0.3);
-			background-color: rgba(0, 0, 0, 0.7);
-			border: 1px solid rgba(0, 0, 0, 1);
-			position: absolute;
-			left: 10px;
-			bottom: 10rem;
-			padding: 4px 11px;
-			border-radius: 3px;
-		}
-		section.editor:has(aside li.photo) figure.wxs_uploaded_image_placeholder canvas.wxs_uploaded_image_png::after
-		{
-			content: "PNG";
-		}
-		section.editor:has(aside li.photo) figure.wxs_uploaded_image_placeholder canvas.wxs_uploaded_image_jpeg::after,
-		section.editor:has(aside li.photo) figure.wxs_uploaded_image_placeholder canvas.wxs_uploaded_image_jpeg::after
-		{
-			content: "JPEG";
-		}
-		section.editor:has(aside li.photo) figure.wxs_uploaded_image_placeholder canvas.wxs_uploaded_image_gif::after
-		{
-			content: "GIF";
-		}
-		section.editor:has(aside li.photo) figure.wxs_uploaded_image_placeholder canvas.wxs_uploaded_image_webp::after
-		{
-			content: "WEBP"; 
-		}
-
-		/* IMAGE UPLOADER - END */
-	`;
-		}
 
 		if (settings.haveBanDisableTextarea)
 		{
@@ -8988,225 +7996,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		}`;
 		}
 
-		if (settings.quickLinksEnable)
-		{
-			CSS += `:root
-				{
-					--quickLinksAFontSize: var(--textFontSize13, 13px);
-					--quickLinksSpanFontSize: var(--textFontSize11, 11px);
-				}
-		header.header > div.left > #wxs_quick_links > nav
-		{
-			font-size: var(--quickLinksAFontSize, 13px);
-		}
-		header.header > div.left > #wxs_quick_links > nav > section span
-		{
-			font-size: var(--quickLinksSpanFontSize, 11px);
-		}
-		header.header > div.left > #wxs_quick_links
-		{
-			display: flex;
-			top: calc(var(--topNavHeigh, 48px) - 1px);
-			position: absolute;
-			left: -1px;
-			width: 100vw;
-			height: 1px;
-			z-index: -100;
-		}
-		@keyframes quickLinksAnimationOn
-		{
-			0% { display: none; top: -20px; opacity: 1; }
-			1% { display: flex; top: -20px; opacity: 0; }
-			99% { display: flex; top: -20px; opacity: 0; }
-			100% { display: flex; top: 0px; opacity: 1; }
-		}
-		@keyframes quickLinksAnimationOff
-		{
-			0% { display: flex; top: 0px; opacity: 1; }
-			50% { display: flex; top: 0px; opacity: 0; }
-			99% { display: flex; top: -20px; opacity: 0; }
-			100% { display: none; top: -20px; opacity: 0; }
-		}
-		header.header > div.left > #wxs_quick_links > nav
-		{
-			z-index: -999;
-			column-gap: 0px;
-			flex-wrap: nowrap;
-			position: absolute;
-			left: 0px;
-			width: 100%;
-		}
-		@starting-style
-		{
-			header.header > div.left > #wxs_quick_links > nav:hover
-			{
-
-			}
-		}
-		header.header > div.left > #wxs_quick_links > nav:not(:hover)
-		{
-			z-index: -1000!important;
-			display: none;
-			transition: display 1s ease-out allow-discrete;
-			/* animation-name: quickLinksAnimationOff!important;
-			animation-duration: 0s;
-			animation-delay: 0.4s;
-			animation-iteration-count: 1;
-			animation-direction: normal;
-			animation-fill-mode: forwards;*/
-		}
-		header.header > div.left > #wxs_quick_links > nav:hover
-		{
-			z-index: 999!important;
-			display: flex!important;
-			animation-name: quickLinksAnimationOn!important;
-			animation-duration: 0s!important;
-			animation-delay: 0s!important;
-			animation-direction: normal!important;
-			animation-fill-mode: forwards!important;
-		}
-
-		header.header > div.left > #wxs_quick_links > nav > section
-		{
-			display: flex;
-			flex-wrap: nowrap;
-			align-items: center;
-		}
-		header.header > div.left > #wxs_quick_links > nav > section div
-		{
-			display: flex;
-			height: 100%;
-		}
-		header.header > div.left > #wxs_quick_links > nav > section a,
-		header.header > div.left > #wxs_quick_links > nav > section span
-		{
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
-		header.header > div.left:has(a[href="/"]:hover) > #wxs_quick_links > nav.home,
-		header.header > div.left:has(> nav.main > ul > li:hover a[href="/"]) > #wxs_quick_links > nav.home,
-		header.header > div.left:has(> nav.main > ul > li a[href="/"]:hover) > #wxs_quick_links > nav.home,
-		header.header > div.left:has(> nav.main > ul > li:hover a[href="/wykopalisko"]) > #wxs_quick_links > nav.upcoming,
-		header.header > div.left:has(> nav.main > ul > li:hover a[href="/mikroblog"]) > #wxs_quick_links > nav.microblog,
-		header.header > div.left:has(> nav.main > ul > li:hover a[href="/obserwowane"]) > #wxs_quick_links > nav.mywykop,
-		header.header > div.left:has(> nav.main > ul > li:hover a[href="/hity"]) > #wxs_quick_links > nav.hits,
-		header.header > div.left:has(> nav.main > ul > li:hover a[href="/ulubione"]) > #wxs_quick_links > nav.favorites,
-		header.header > div.left:has(> nav.main > ul > li:hover a[href="/dodaj-link"]) > #wxs_quick_links > nav.add_new,
-		header.header > div.left:has(> nav.main > ul > li:hover a[href="/mikroblog/#dodaj"]) > #wxs_quick_links > nav.add_new
-		{
-			z-index: 999;
-			display: flex!important;
-			animation-name: quickLinksAnimationOn!important;
-			animation-duration: 2s;
-			animation-delay: 0s;
-			animation-direction: normal;
-			animation-fill-mode: forwards;
-		}
-		/* colors */
-		header.header > div.left > #wxs_quick_links > nav
-		{
-			height: 37px;
-			color: var(--blackOpacity07, rgba(255, 255, 255, 0.7));
-			border-bottom: 1px solid var(--blackOpacity03, rgba(255, 255, 255, 0.3));
-			box-shadow: 0px 4px 4px var(--whiteOpacity04, rgba(0, 0, 0, 0.4));
-		}
-		header.header > div.left > #wxs_quick_links > nav:hover
-		{
-
-		}
-		header.header > div.left > #wxs_quick_links > nav > section
-		{
-			background-color: var(--whiteOpacity1, rgba(18, 18, 20, 1));
-			column-gap: 5px;
-			padding-left: 20px;
-			padding-right: 0px;
-			border-left: 1px solid rgba(120, 120, 120, 0.2);
-		}
-
-		header.header > div.left > #wxs_quick_links > nav > section:hover
-		{
-			background-color: var(--whiteOpacity1, rgba(18, 18, 20, 1));
-		}
-		header.header > div.left > #wxs_quick_links > nav > section:hover span
-		{
-			color: var(--blackOpacity1, rgba(255, 255, 255, 1));
-		}
-
-		header.header > div.left > #wxs_quick_links > nav > section span
-		{
-			padding-right: 10px;
-			text-transform: uppercase;
-			font-weight: bolder;
-			cursor: default ;
-			width: max-content;
-		}
-
-		header.header > div.left > #wxs_quick_links > nav > section a,
-		header.header > div.left > #wxs_quick_links > nav > section span
-		{
-			height: 100%;
-			min-width: 70px;
-			width: max-content;
-		}
-
-		header.header > div.left > #wxs_quick_links > nav > section.wxs_quicklink_short
-		{
-			min-width: 20px;
-		}
-
-		header.header > div.left > #wxs_quick_links > nav > section a
-		{
-			text-decoration: none;
-			padding: 0px 14px 0px 14px;
-		}
-
-		header.header > div.left > #wxs_quick_links > nav > section a:hover
-		{
-			color: var(--blackOpacity09, rgba(255, 255, 255, 1));
-			background-color: var(--blackOpacity01, rgba(255, 255, 255, 0.2));
-		}
-
-		/* MOBILE */
-		@media(max-width: 600px)
-		{
-			header.header > div.left > #wxs_quick_links > nav:not(:hover)
-			{
-
-				animation-name: quickLinksAnimationOff!important;
-				animation-delay: 4s;
-			}
-
-			header.header > div.left > #wxs_quick_links > nav,
-			header.header > div.left > #wxs_quick_links > nav > section,
-			header.header > div.left > #wxs_quick_links > nav > section > div
-			{
-				flex-direction: column!important;
-				align-items: start!important;
-			}
-			header.header > div.left > #wxs_quick_links > nav,
-			header.header > div.left > #wxs_quick_links > nav > section,
-			header.header > div.left > #wxs_quick_links > nav > section > div,
-			header.header > div.left > #wxs_quick_links > nav > section > span,
-			header.header > div.left > #wxs_quick_links > nav > section a
-			{
-				width: 100%;
-				justify-content: start;
-			}
-			header.header > div.left > #wxs_quick_links > nav > section
-			{
-				border-top: 1px solid rgba(120, 120, 120, 0.3);
-			}
-			header.header > div.left > #wxs_quick_links > nav > section,
-			header.header > div.left > #wxs_quick_links > nav > section > div,
-			header.header > div.left > #wxs_quick_links > nav > section > span,
-			header.header > div.left > #wxs_quick_links > nav > section a
-			{
-				padding: 10px;
-			}
-		}
-	} `;
-		}
 
 
 
