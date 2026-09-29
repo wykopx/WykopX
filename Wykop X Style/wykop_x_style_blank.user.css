@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style 3 Blank
-@version        3.5.5
+@version        3.6.0
 
 @description    Niniejsza wersja to wersja BLANK, w której wszystkie funkcje są wyłączone.
 @description    https://wykopx.pl/style
@@ -4292,6 +4292,39 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
             }
         }
     }
+
+
+
+
+
+
+    /* KOLORY PLUSÓW Z 2022 ROKU */
+    body
+    { 
+        --plusesColor: rgb(59, 145, 95);
+        --minusesColor: rgb(192, 57, 43);
+        --apple: var(--plusesColor)!important;
+    }
+
+    body[data-night-mode]
+    {
+        --plusesColor: rgb(57, 166, 132); 
+        --minusesColor: rgb(255, 65, 54);
+    }
+
+    section.rating-box[class] ul[class] li[class].plus                        { color: var(--plusesColor);}
+    section.voting:not(:has(>.down))>div.up>span[data-v-049e7a74]             { color: var(--plusesColor);}
+    section.rating-box[class] div[class].buttons > button[class].plus         { border-color: var(--plusesColor);  }
+    section.rating-box[class] div[class].buttons > button[class].plus::after  { background-color: var(--plusesColor);  }
+    section.rating-box[class] ul[class] li[class].minus                       { color: var(--minusesColor);}
+    section.voting:not(:has(>.down))>div.down>span[data-v-049e7a74]           { color: var(--minusesColor);}
+    section.rating-box[class] div[class].buttons > button[class].minus::after { background-color: var(--minusesColor);  }
+    section.rating-box[class] div[class].buttons > button[class].minus        { border-color: var(--minusesColor);  }
+ 
+        
+        
+        
+        
 
     /* PANEL CENZUROWANYCH TREŚCI ZMUSZAJĄCY DO ZALOGOWANIA */
     section:is(.tag-page, .link-page) .force-login-access-skeleton .info-box,
@@ -21204,7 +21237,7 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
     /* VARIABLES */
 
     versor = "blank"; // "style", "blank", "block"
-    version = "3.5.5";
+    version = "3.6.0";
     /* xblocker = "2.49" */
     
     

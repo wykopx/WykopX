@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style - zielonki
-@version        3.5.5
+@version        3.6.0
 
 
 @description    Wykop X Style
@@ -107,6 +107,7 @@ description     https://wykopx.pl/styl
     collapseCommentsButtonHide = 1;
     fixWhiteSelectBox = 1;
     categoryMenuWykopSectionLinks = 3;
+    buttonForNewEntryBottomRightHide = 1;
 
 
     /* 
@@ -296,6 +297,39 @@ description     https://wykopx.pl/styl
             }
         }
     }
+
+
+
+
+
+
+    /* KOLORY PLUSÓW Z 2022 ROKU */
+    body
+    { 
+        --plusesColor: rgb(59, 145, 95);
+        --minusesColor: rgb(192, 57, 43);
+        --apple: var(--plusesColor)!important;
+    }
+
+    body[data-night-mode]
+    {
+        --plusesColor: rgb(57, 166, 132); 
+        --minusesColor: rgb(255, 65, 54);
+    }
+
+    section.rating-box[class] ul[class] li[class].plus                        { color: var(--plusesColor);}
+    section.voting:not(:has(>.down))>div.up>span[data-v-049e7a74]             { color: var(--plusesColor);}
+    section.rating-box[class] div[class].buttons > button[class].plus         { border-color: var(--plusesColor);  }
+    section.rating-box[class] div[class].buttons > button[class].plus::after  { background-color: var(--plusesColor);  }
+    section.rating-box[class] ul[class] li[class].minus                       { color: var(--minusesColor);}
+    section.voting:not(:has(>.down))>div.down>span[data-v-049e7a74]           { color: var(--minusesColor);}
+    section.rating-box[class] div[class].buttons > button[class].minus::after { background-color: var(--minusesColor);  }
+    section.rating-box[class] div[class].buttons > button[class].minus        { border-color: var(--minusesColor);  }
+ 
+        
+        
+        
+        
 
     /* PANEL CENZUROWANYCH TREŚCI ZMUSZAJĄCY DO ZALOGOWANIA */
     section:is(.tag-page, .link-page) .force-login-access-skeleton .info-box,
@@ -571,9 +605,17 @@ description     https://wykopx.pl/styl
             display: none!important;
         }
     }
+    
+    
+    if(buttonForNewEntryBottomRightHide==1)
+    {
+    /* --- REMOVE IF --- */
+
+        body > section > aside.main-editor { display: none!important; }
+    }    
+    
 
     /* UKRYWANIE LINKÓW DO ZŁOŚLIWYCH SKRYPTÓW (exploity) KTÓRE MOGĄ WYKRADAĆ DANE I DOSTĘP DO KONTA */
-
     if(blockExploitLinks==1)
     {
     /* --- REMOVE IF --- */
@@ -920,68 +962,6 @@ description     https://wykopx.pl/styl
     }
     
     
-    /* PANEL CENZUROWANYCH TREŚCI ZMUSZAJĄCY DO ZALOGOWANIA */
-    section:is(.tag-page, .link-page) .force-login-access-skeleton .info-box,
-    .modal.login .info-box p
-    {
-        font-size: 0;
-    }
-    .tag-page .force-login-access-skeleton .info-box a
-    {
-        display: none;
-    }
-    .modal.login .info-box p::before,
-    .modal.login .info-box p::after,
-    .force-login-access-skeleton .info-box p::before,
-    .force-login-access-skeleton .info-box p::after
-    {
-        font-size: 0.8rem;
-    }
-    .modal.login .info-box p::after,
-    .force-login-access-skeleton .info-box p::after
-    {
-        font-weight: bolder;
-    }
-    .tag-page .force-login-access-skeleton .info-box p::before
-    {
-        content: ' Wykop cenzuruje ten #tag. Na Wykopie musisz się zalogować by go otworzyć. Wszystkie ocenzurowane i ukryte #tagi są jednak dostępne dla niezalogowanych na stronie wykopx.pl. ';
-    }
-    .tag-page .force-login-access-skeleton .info-box p::after
-    {
-        content: ' Dodaj w adresie "wykop.pl" literę "x" aby przejść na wykopx.pl/tag/... i wejdź na tag bez cenzury i bez reklam.';
-    }
-    .link-page .force-login-access-skeleton .info-box p::before
-    {
-        content: ' Wykop cenzuruje ponad 30% znalezisk. Wszystkie ocenzurowane i ukryte znaleziska są jednak dostępne dla niezalogowanych na stronie wykopx.pl. ';
-    }
-    .link-page .force-login-access-skeleton .info-box p::after
-    {
-        content: ' Dodaj w adresie "wykop.pl" literę "x" aby przejść na wykopx.pl/link/... i otwórz znalezisko bez cenzury i bez reklam';
-    }
-    
-    .modal.login .info-box p::before
-    {
-       content: ' Ta strona jest ocenzurowana przez Wykop. Możesz jednak otworzyć ją na stronie Wykop X. ';
-    }
-    .modal.login .info-box p::after
-    {
-        content: ' Wejdź na "wykopx.pl" i zobacz to bez cenzury.';
-        font-weight: bolder;
-    }
-    
-
-    
-    /* UKRYWAJ WPISY ZE SPAMEM Z WORDZIEL.PL */
-    if(wordzielHide == 1)
-    {
-        main.main > section > div.content > section:is(.microblog-page) > section section.stream > div.content > section.entry:not(.own):not(.reply):has(> article > div.edit-wrapper > div.content > section.entry-content > div.wrapper a:is( [href^="/tag/43"], [href^="/tag/44"], [href^="/tag/45"], [href^="/tag/46"], [href^="/tag/47"],[href^="/tag/48"],[href^="/tag/49"],[href^="/tag/5"],[href^="/tag/6"],[href^="/tag/7"],[href="https:\/\/wordziel.pl\/"], [href="https:\/\/www.flagle.io\/"]))
-        {
-            display: none!important;
-        }
-    }
-    
-    
-    /* END GENERAL */
 }
 
 

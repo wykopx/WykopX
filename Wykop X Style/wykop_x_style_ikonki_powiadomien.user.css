@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style - Powiadomienia
-@version        3.5.5
+@version        3.6.0
 
 
 @description    Wykop X Style
@@ -71,6 +71,7 @@ description     https://wykopx.pl/styl
     collapseCommentsButtonHide = 1;
     fixWhiteSelectBox = 1;
     categoryMenuWykopSectionLinks = 3;
+    buttonForNewEntryBottomRightHide = 1;
 
 
     /* 
@@ -260,6 +261,39 @@ description     https://wykopx.pl/styl
             }
         }
     }
+
+
+
+
+
+
+    /* KOLORY PLUSÓW Z 2022 ROKU */
+    body
+    { 
+        --plusesColor: rgb(59, 145, 95);
+        --minusesColor: rgb(192, 57, 43);
+        --apple: var(--plusesColor)!important;
+    }
+
+    body[data-night-mode]
+    {
+        --plusesColor: rgb(57, 166, 132); 
+        --minusesColor: rgb(255, 65, 54);
+    }
+
+    section.rating-box[class] ul[class] li[class].plus                        { color: var(--plusesColor);}
+    section.voting:not(:has(>.down))>div.up>span[data-v-049e7a74]             { color: var(--plusesColor);}
+    section.rating-box[class] div[class].buttons > button[class].plus         { border-color: var(--plusesColor);  }
+    section.rating-box[class] div[class].buttons > button[class].plus::after  { background-color: var(--plusesColor);  }
+    section.rating-box[class] ul[class] li[class].minus                       { color: var(--minusesColor);}
+    section.voting:not(:has(>.down))>div.down>span[data-v-049e7a74]           { color: var(--minusesColor);}
+    section.rating-box[class] div[class].buttons > button[class].minus::after { background-color: var(--minusesColor);  }
+    section.rating-box[class] div[class].buttons > button[class].minus        { border-color: var(--minusesColor);  }
+ 
+        
+        
+        
+        
 
     /* PANEL CENZUROWANYCH TREŚCI ZMUSZAJĄCY DO ZALOGOWANIA */
     section:is(.tag-page, .link-page) .force-login-access-skeleton .info-box,
@@ -549,8 +583,16 @@ description     https://wykopx.pl/styl
         }
     }
 
-    /* UKRYWANIE LINKÓW DO ZŁOŚLIWYCH SKRYPTÓW (exploity) KTÓRE MOGĄ WYKRADAĆ DANE I DOSTĘP DO KONTA */
+    
+    if(buttonForNewEntryBottomRightHide==1)
+    {
+    /* --- REMOVE IF --- */
 
+        body > section > aside.main-editor { display: none!important; }
+    }
+    
+    
+    /* UKRYWANIE LINKÓW DO ZŁOŚLIWYCH SKRYPTÓW (exploity) KTÓRE MOGĄ WYKRADAĆ DANE I DOSTĘP DO KONTA */
     if(blockExploitLinks==1)
     {
     /* --- REMOVE IF --- */

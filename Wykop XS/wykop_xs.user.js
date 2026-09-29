@@ -6228,7 +6228,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				createProfileDropdownMenuItem(
 					{
 						text: `www.wykopx.pl`,
-						title: "Otwórz nieoficjalną stronę WykopX.pl",
+						title: "Otwórz nieoficjalną wersję Wykopu:\nwww.WykopX.pl",
 						className: `wykopx_wiki`,
 						id: undefined,
 						url: "https://wykopx.pl",
