@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3
 // @name:en							Wykop XS 3
 
-// @version							3.5.6
+// @version							3.6.0
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://wykopx.pl/styl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://wykopx.pl/styl
@@ -47,8 +47,8 @@
 	'use strict';
 
 
-	const currentVersion = "3.5.6";
-	let dev = true;
+	const currentVersion = "3.6.0";
+	let dev = false;
 
 	const promoString = " - Wykop XS / #wykopx";
 
@@ -473,6 +473,8 @@
 			}
 		}
 
+
+		/* INDEXED DB */
 		const WykopXSStorage = {
 			dbName: "wykopx.pl",
 			requiredStores: ["mirkoukrywacz", "notatkowator", "userlabels", "observed", "settings"],
@@ -612,6 +614,7 @@
 				return this.getStore(storeName, { preload: options.preload !== false });
 			}
 		};
+
 
 		// INDEXEDDB STORAGE
 		let storageMirkoukrywacz = null;
@@ -1269,7 +1272,6 @@
 		// boolean — domyslnie WŁĄCZONE bez Wykop X Style
 		setSettingsValueFromCSSProperty("myWykopInTopNavJS");
 		setSettingsValueFromCSSProperty("favoritesInTopNavJS");
-		setSettingsValueFromCSSProperty("addNewEntryInTopNavJS");
 
 
 
@@ -1437,6 +1439,112 @@
 				}
 			});
 		}
+
+
+
+
+
+
+
+
+		/* CUSTOM WYKOPX.PL SIDEBAR LINK */
+		function addSidebarLink()
+		{
+			const sidebar = document.querySelector("section.sidebar");
+
+			if (sidebar)
+			{
+				if (!document.querySelector(".custom-sidebar-wykopx"))
+				{
+					const wykopXRedirectButtonTitle = `Otwórz tę stronę na nowym serwisie Wykop X (beta)
+
+Ten przycisk otworzy tę samą stronę, którą teraz przeglądasz,
+zamieniając adres z "wykop.pl" na "wykopx.pl".
+
+Jeśli trafisz na wpis lub znalezisko usunięte przez moderatora,
+WykopX pokaże Ci wersję archiwalną sprzed usunięcia.
+
+Nowy WykopX
+Jako użytkownik Wykop XS masz teraz okazję być
+jednym z pierwszych, którzy zobaczą nową
+stronę www.wykopx.pl
+
+WykopX to także nowa aplikacja na telefonie
+Dostępna na Androida i iPhone`;
+
+
+					let html = `
+				<section class="custom-sidebar custom-sidebar-wykopx" data-v-d5500d78 data-v-8397402c data-v-0a0cb29b title="${wykopXRedirectButtonTitle}">
+				<header data-v-d5500d78 class="redirectToWykopXButton" style="cursor: pointer;"><a href="https://wykopx.pl" target="wykopx"><h4 data-v-d5500d78 >Otwórz w WykopX</h4></a></header>
+				</section>
+				`
+					const sectionSidebarWykopX = document.createElement("section");
+					sectionSidebarWykopX.classList.add("custom-sidebar", "custom-sidebar-wykopx");
+					sectionSidebarWykopX.href = "https://wykopx.pl";
+					sectionSidebarWykopX.target = "wykopx";
+					sectionSidebarWykopX.innerHTML = html;
+					sidebar.prepend(sectionSidebarWykopX);
+
+
+					// CLICKS
+					document.addEventListener("click", async function (e)
+					{
+						// PRZYCISK DO PRZENIESIENIA NA TEN SAM ADRES W WYKOPX.PL
+						if (e.target.closest(".redirectToWykopXButton"))
+						{
+							e.preventDefault();
+
+							let redirectToWykopXButton = e.target.closest(".redirectToWykopXButton");
+							let windowFeatures = "";
+
+							// LPM + CTRL
+							if (e.button === 0 && !e.shiftKey && !e.altKey && (e.ctrlKey || e.metaKey))
+							{
+								e.preventDefault();
+								windowFeatures = "location=false,toolbar=true";
+							}
+							let newWykopXUrl = new URL(window.location.href);
+							newWykopXUrl.hostname = wxHostname;
+
+							if (redirectToWykopXButton.dataset.routePath != null)
+							{
+								newWykopXUrl.pathname = redirectToWykopXButton.dataset.routePath;
+
+								if (redirectToWykopXButton.dataset.routeHash != "undefined")
+								{
+									newWykopXUrl.hash = redirectToWykopXButton.dataset.routeHash;
+								}
+							}
+							else
+							{
+								// przycisk w sidebarze
+								// newWykopXUrl.pathname = newWykopXUrl.pathname + newWykopXUrl.pathname.split("/").slice(-1) + newWykopXUrl.pathname.split("/").slice(-1);
+							}
+							if (newWykopXUrl.pathname.startsWith("/wpis/"))
+							{
+								newWykopXUrl.pathname = "/mikroblog/gorace" + newWykopXUrl.pathname;
+							}
+							else if (newWykopXUrl.pathname.startsWith("/link/"))
+							{
+								newWykopXUrl.pathname = "/glowna/najlepsze" + newWykopXUrl.pathname;
+							}
+
+							newWykopXUrl.searchParams.set("token", window.localStorage.getItem("token"));
+							newWykopXUrl.searchParams.set("rtoken", window.localStorage.getItem("userKeep"));
+
+							window.open(newWykopXUrl.href, newWykopXUrl.href, windowFeatures);
+
+							return;
+						}
+					});
+				}
+			}
+		}
+		addSidebarLink();
+		/* CUSTOM WYKOPX.PL SIDEBAR LINK */
+
+
+
 
 
 
@@ -2776,10 +2884,12 @@
 				{
 
 					console.log("sectionObjectElement.__vue__", sectionObjectElement)
+
 					if (sectionObjectElement.tagName == "BUTTON")
 					{
 						sectionObjectElement.click();
 					}
+
 
 
 
@@ -4806,22 +4916,7 @@ Od teraz będą się one znów wyświetlać na Wykopie`);
 				})
 			}
 
-			if (settings.addNewEntryInTopNavJS)
-			{
-				createNewNavBarButton({
-					position: "left",
-					text: "+",
-					title: `Dodaj nowy wpis na Mirko ${promoString}`,
-					class: ["add_new_entry", "plus"], // wykopx_add_new_entry_li wykopx_plus_li // a > wykopx_add_new_entry wykopx_plus_button
-					hideWithoutXStyle: false,
-					url: "/mikroblog/#dodaj",
-					target: "_self",
-					icon: null,
-					number: null,
-					data: "data-v-5182b5f6",
-					insertAfter: `li:has(a[href="/mikroblog"])`
-				})
-			}
+
 
 		}
 
@@ -5479,7 +5574,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		// <input data-v-714efcd5="" id="title" type="text" placeholder="Wpisz tytuł..." maxlength="80" class="highlight">
 		if (settings.disableNewLinkEditorPastedTextLimit)
 		{
-			waitForKeyElements("[maxlength]", disableNewLinkEditorPastedTextLimit, false);
+			waitForKeyElements('[maxlength]:not([type="search"]', disableNewLinkEditorPastedTextLimit, false);
 		}
 
 		function disableNewLinkEditorPastedTextLimit(input)
@@ -6205,11 +6300,6 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		{
 			consoleX(`browserExecuteOnPageLoadAndPageChange()`, 1);
 
-			runWithDelay(100, function ()
-			{
-				countNumberOfNotificationsOnDesktop();
-			});
-
 			if (settings.mirkoukrywaczEnable) 
 			{
 				runWithDelay(3000, function ()
@@ -6235,31 +6325,9 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 			}
 
 
-			// if (settings.autoOpenAllCommentsInTree)
-			// {
-			// 	runWithDelay(5000, function ()
-			// 	{
-			// 		autoOpenAllCommentsInTree();
-			// 	})
-			// }
-
-			if (settings.autoOpenMoreContentEverywhere)
-			{
-				runWithDelay(6000, function ()
-				{
-					autoOpenMoreContentEverywhere();
-				})
-			}
 
 
-			// 10s
-			if (settings.autoOpenSpoilersEverywhere)
-			{
-				runWithDelay(10000, function ()
-				{
-					autoOpenSpoilersEverywhere();
-				});
-			}
+
 
 
 			// USUWANIE TRACKERÓW IFRAME I ŚLEDZĄCYCH SKRYPTÓW
@@ -6880,6 +6948,40 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
         }
     }
 
+
+
+
+
+
+
+    /* KOLORY PLUSÓW Z 2022 ROKU */
+    body
+    {
+        --plusesColor: rgb(59, 145, 95);
+        --minusesColor: rgb(192, 57, 43);
+        --apple: var(--plusesColor)!important;
+    }
+
+    body[data-night-mode]
+    {
+        --plusesColor: rgb(57, 166, 132);
+        --minusesColor: rgb(255, 65, 54);
+    }
+
+    section.rating-box[class] ul[class] li[class].plus                        { color: var(--plusesColor);}
+    section.voting:not(:has(>.down))>div.up>span[data-v-049e7a74]             { color: var(--plusesColor);}
+    section.rating-box[class] div[class].buttons > button[class].plus         { border-color: var(--plusesColor);  }
+    section.rating-box[class] div[class].buttons > button[class].plus::after  { background-color: var(--plusesColor);  }
+    section.rating-box[class] ul[class] li[class].minus                       { color: var(--minusesColor);}
+    section.voting:not(:has(>.down))>div.down>span[data-v-049e7a74]           { color: var(--minusesColor);}
+    section.rating-box[class] div[class].buttons > button[class].minus::after { background-color: var(--minusesColor);  }
+    section.rating-box[class] div[class].buttons > button[class].minus        { border-color: var(--minusesColor);  }
+
+
+
+
+
+
     /* PANEL CENZUROWANYCH TREŚCI ZMUSZAJĄCY DO ZALOGOWANIA */
     section:is(.tag-page, .link-page) .force-login-access-skeleton .info-box,
     .modal.login .info-box p {  font-size: 0;    }
@@ -7083,6 +7185,11 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
         }
 
 
+	/* UKRYWANIE BIAŁEGO PRZYCISKU DO NOWEGO WPISU W DOLNYM PRAWYM ROGU */
+	body > section > aside.main-editor { display: none!important; }
+
+	
+
     /* UKRYWANIE LINKÓW DO ZŁOŚLIWYCH SKRYPTÓW (exploity) KTÓRE MOGĄ WYKRADAĆ DANE I DOSTĘP DO KONTA */
 
 
@@ -7212,6 +7319,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		// XS MIKROCZAT  -- START
 		let wykopDomain = "https://wykop.pl";
 		let wxDomain = "https://wykopx.pl";
+		let wxHostname = "wykopx.pl";
+
 		const mikroczatDomain = "https://wykopx.pl/czat";
 		const mikroczatPath = "/"; /* /czat */
 		// let mikroczatChannel="/";
@@ -7275,27 +7384,29 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		{
 			if (e.target.tagName.toLowerCase() === 'textarea') return;
 
-			if (!keys["SHIFT"] && e.key == "Shift")
-			{
-				keys["SHIFT"] = true;
-				bodySection.dataset.key_shift = "true";
-			}
-			else if (!keys["ALT"] && (e.key == "Alt" || e.key == "AltGraph"))
+			if (!keys["ALT"] && (e.key == "Alt" || e.key == "AltGraph"))
 			{
 				keys["ALT"] = true;
 				bodySection.dataset.key_alt = "true";
 			}
+
+			// if (!keys["SHIFT"] && e.key == "Shift")
+			// {
+			// 	keys["SHIFT"] = true;
+			// 	bodySection.dataset.key_shift = "true";
+			// }
+
 		});
 		document.addEventListener("keyup", (e) =>
 		{
 			if (e.target.tagName.toLowerCase() === 'textarea') return;
 
-			if (keys["SHIFT"] && e.key == "Shift")
-			{
-				keys["SHIFT"] = false;
-				delete bodySection.dataset.key_shift;
-			}
-			else if (keys["ALT"] && (e.key == "Alt" || e.key == "AltGraph"))
+			// if (keys["SHIFT"] && e.key == "Shift")
+			// {
+			// 	keys["SHIFT"] = false;
+			// 	delete bodySection.dataset.key_shift;
+			// }
+			if (keys["ALT"] && (e.key == "Alt" || e.key == "AltGraph"))
 			{
 				keys["ALT"] = false;
 				delete bodySection.dataset.key_alt;
@@ -7309,7 +7420,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		{
 			if (e.target.matches(`a[href^="/tag/"]`))
 			{
-				e.target.title = `Wciśnij klawisz ⇧ 𝗦𝗛𝗜𝗙𝗧 lub ⎇ 𝗔𝗟𝗧 (⌥ 𝗢𝗽𝘁𝗶𝗼𝗻 na Mac) klikając na tag,\naby otworzyć kanał #${e.target.innerText} na 🗯 Mikroczacie\n\n⎇ 𝗔𝗟𝗧 - mikroczat w nowej karcie\n⇧ 𝗦𝗛𝗜𝗙𝗧 - mikroczat w nowym oknie`;
+				e.target.title = `Wciśnij klawisz ⎇ 𝗔𝗟𝗧 (⌥ 𝗢𝗽𝘁𝗶𝗼𝗻 na Mac) klikając na tag,\naby otworzyć #${e.target.innerText} w aplikacji WykopX.pl`;
 
 				e.target.addEventListener("click", preventDefaultEvent, true);
 				e.target.addEventListener("mousedown", tagHrefEventListenerWithShift, true);
@@ -7357,31 +7468,31 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 		// WIADOMOŚCI OD MIKROCZAT.PL
-		window.addEventListener('message', function (event)
-		{
-			if (event.origin !== mikroczatDomain) return;
-			if (dev) console.log('Wiadomość z mikroczat.pl', event.data);
+		// window.addEventListener('message', function (event)
+		// {
+		// 	if (event.origin !== mikroczatDomain) return;
+		// 	if (dev) console.log('Wiadomość z mikroczat.pl', event.data);
 
-			//if (event.data == "MikroCzatOpened") mikroczatWindow.postMessage({ type: "token", token: window.localStorage.getItem("token") }, mikroczatDomain);
+		// 	//if (event.data == "MikroCzatOpened") mikroczatWindow.postMessage({ type: "token", token: window.localStorage.getItem("token") }, mikroczatDomain);
 
-			if (event.data == "MikroCzatOpened")
-			{
-				mikroczatWindow.postMessage({ type: "TokensObject", token: window.localStorage.getItem("token"), userKeep: window.localStorage.getItem("userKeep") }, mikroczatDomain);
-			}
+		// 	if (event.data == "MikroCzatOpened")
+		// 	{
+		// 		mikroczatWindow.postMessage({ type: "TokensObject", token: window.localStorage.getItem("token"), userKeep: window.localStorage.getItem("userKeep") }, mikroczatDomain);
+		// 	}
 
 
-			if (event.data == "MikroCzatLoggedIn")
-			{
-				if (dev) console.log("event.data", event.data)
-				bodySection.dataset.mikroczatLogged = true;
-			}
+		// 	if (event.data == "MikroCzatLoggedIn")
+		// 	{
+		// 		if (dev) console.log("event.data", event.data)
+		// 		bodySection.dataset.mikroczatLogged = true;
+		// 	}
 
-			if (event.data == "MikroCzatClosed")
-			{
-				bodySection.dataset.mikroczatLogged = false;
-				mikroczatWindow = null;
-			}
-		}, false);
+		// 	if (event.data == "MikroCzatClosed")
+		// 	{
+		// 		bodySection.dataset.mikroczatLogged = false;
+		// 		mikroczatWindow = null;
+		// 	}
+		// }, false);
 
 
 		function createLeftPanelButton()
@@ -7658,20 +7769,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 		{
 			content: "#";
 		}
-		body > section[data-key_shift="true"] 	section.entry-content a[href^="/tag/"]::after,
-		body > section[data-key_alt="true"] 	section.entry-content a[href^="/tag/"]::after,
-		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="/tag/"]::after,
-		body > section[data-key_shift="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"]::after,
-		body > section[data-key_alt="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"]::after,
-		body > section[data-key_ctrl="true"] 	section.entry-content a[href^="https://wykopx.pl/czat/"]::after
-		{
-			color: white;
-			content: "🗯";
-			position: absolute;
-			top: -1em;
-			right: -0.5em;
-		}
-		
+
 		body > section[data-mikroczat-logged="true"] li.wykopx_open_mikroczat_li span:after
 		{
 			content: "•";
@@ -7756,6 +7854,7 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				if (mutation.addedNodes.length > 0 && mutation.addedNodes[0] && mutation.addedNodes[0] instanceof Element)
 				{
 
+					if (dev) console.log("// MUTATION - ADDED NODES");
 
 					if (mutation.addedNodes[0].matches("section.entry[id]"))
 					{
@@ -7781,20 +7880,31 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 							processSectionEntry(sectionEntry)
 						})
 					}
-					else if (mutation.target.tagName === "SECTION" && mutation.target.matches("section.entry.detailed[id]"))
+					else if (mutation.addedNodes[0].matches("section.embed-preview"))
 					{
-						const sectionEntry = mutation.target;
-						if (dev) console.log("section.entry.detailed[id]", sectionEntry)
-						if (dev) console.log("section.entry.detailed[id]: mutation.target", mutation.target);
+						/* ZAMIANA FILMIKÓW NA STREAMABLE */
+						const StreamableIframe = mutation.addedNodes[0].querySelector("iframe[src^=\"https://streamable.com/\"]:not([src*=\"/t/\"])");
+						if (StreamableIframe) StreamableIframe.src = StreamableIframe.src.replace("streamable.com/", "streamable.com/t/");
+					}
 
-						processSectionEntry(sectionEntry);
-
-						const sectionCommentsArray = sectionEntry.querySelectorAll("section.entry[id]");
-						if (dev) console.log("section.entry[id] - forEach: sectionEntryArray", sectionCommentsArray);
-						sectionCommentsArray.forEach((sectionComment) =>
+					else if (mutation.target.tagName === "SECTION")
+					{
+						// wpis
+						if (mutation.target.matches("section.entry.detailed[id]"))
 						{
-							processSectionEntry(sectionComment)
-						})
+							const sectionEntry = mutation.target;
+							if (dev) console.log("section.entry.detailed[id]", sectionEntry)
+							if (dev) console.log("section.entry.detailed[id]: mutation.target", mutation.target);
+
+							processSectionEntry(sectionEntry);
+
+							const sectionCommentsArray = sectionEntry.querySelectorAll("section.entry[id]");
+							if (dev) console.log("section.entry[id] - forEach: sectionEntryArray", sectionCommentsArray);
+							sectionCommentsArray.forEach((sectionComment) =>
+							{
+								processSectionEntry(sectionComment)
+							})
+						}
 					}
 
 					else if (settings.showAnimatedAvatars && mutation.addedNodes[0].matches("aside.profile-top"))
