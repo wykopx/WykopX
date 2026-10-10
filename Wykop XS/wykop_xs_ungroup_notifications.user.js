@@ -32,7 +32,7 @@
 	'use strict';
 	const currentVersion = "3.3.6";
 	let dev = false;
-	const promoString = " - Wykop XS / #wykopx";
+	const promoString = " - Wykop XS / www.wykopx.pl";
 
 	let xhook = null;
 	//XHook - v1.6.2 - https://github.com/jpillora/xhook | Jaime Pillora <dev@jpillora.com> - MIT Copyright 2023

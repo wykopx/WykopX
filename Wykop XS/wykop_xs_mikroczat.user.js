@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Lista plusujących, animowane awatary
 // @name:en							Wykop XS - Lista plusujących, animowane awatary
 
-// @version							3.5.6
+// @version							3.6.1
 
 // @description 					Wykop XS - Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -45,10 +45,10 @@
 
 'use strict';
 
-const currentVersion = "3.5.6";
+const currentVersion = "3.6.1";
 let dev = false;
 
-const promoString = " - Wykop XS / #wykopx";
+const promoString = " - Wykop XS / www.wykopx.pl";
 
 
 const root = document.documentElement;
@@ -56,10 +56,10 @@ const head = document.head;
 const body = document.body;
 
 const bodySection = body.querySelector("section");
-/* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
-bodySection?.__vue__?.$store?.commit("config/setCommentsTreeEnabled", false);
-/* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
 
+/* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
+// bodySection?.__vue__?.$store?.commit("config/setCommentsTreeEnabled", false);
+/* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA - działało przez kilka dni do afery ze spoilerami */
 
 
 
@@ -150,6 +150,15 @@ settings.mikroczatShowTopNavButton = false;
 settings.mikroczatOpenMikroczatOnMiddleClick = false;
 settings.mikroczatOpenMikroczatOnCTRLLeftClick = false;
 settings.mikroczatOpenMikroczatOnCTRLMiddleClick = false;
+
+
+
+
+
+
+/* DODAWANIE USERNAME UŻYTKOWNIKA DO TEXTAREA PO KLIKNIĘCIU NA "ODPOWIEDZ" 2026-10-10 */
+settings.enterUsernameOnReplyButtonClick = true;
+
 
 (async function ()
 {
@@ -1973,6 +1982,30 @@ Widok dyskusji:
 	// CLICKS
 	document.addEventListener("click", async function (e)
 	{
+		/* DODAWANIE USERNAME UŻYTKOWNIKA DO TEXTAREA PO KLIKNIĘCIU NA "ODPOWIEDZ" 2026-10-10 */
+		if (settings.enterUsernameOnReplyButtonClick)
+		{
+			if (e.target.matches("button.reply > span"))
+			{
+				e.preventDefault();
+				const thread = e.target.closest("section.thread");
+				const textarea = thread.querySelector("textarea");
+
+				if (textarea)
+				{
+					const username = thread.__vue__.item.author.username;
+					const textareaValue = (textarea.value == "") ? "@" + username + ": " : textarea.value + " @" + username + " ";
+					textarea.value = textareaValue;
+					textarea._value = textareaValue;
+					textarea.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+					textarea.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+					textarea.focus();
+				}
+			}
+		}
+
+
+
 		// PRZYCISK DO PRZENIESIENIA NA TEN SAM ADRES W WYKOPX.PL
 		if (e.target.closest(".redirectToWykopXButton"))
 		{
@@ -2021,7 +2054,7 @@ Widok dyskusji:
 
 
 
-
+		/* DODAJE LISTĘ PLUSUJĄCYCH */
 		if (e.target.matches("li.more span"))
 		{
 			e.preventDefault();
@@ -2039,6 +2072,8 @@ Widok dyskusji:
 			return;
 		}
 
+
+		/* DODAJE PRZYCISK "DODAJ DO ULUBIONYCH */
 		if (e.target.matches("span.favouriteButton"))
 		{
 			e.preventDefault();

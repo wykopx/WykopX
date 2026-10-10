@@ -47,24 +47,58 @@
     const currentVersion = "3.5.6";
     let dev = false;
 
-    const promoString = " - Wykop XS / #wykopx";
+    const promoString = " - Wykop XS / www.wykopx.pl";
 
     const root = document.documentElement;
     const head = document.head;
     const body = document.body;
 
     const bodySection = body.querySelector("section");
-    /* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
-    bodySection?.__vue__?.$store?.commit("config/setCommentsTreeEnabled", false);
-    /* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
 
+
+    /* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
+    // bodySection?.__vue__?.$store?.commit("config/setCommentsTreeEnabled", false);
+    /* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA - działało przez kilka dni do afery ze spoilerami */
 
     const wykopxSettings = getComputedStyle(head);
     const settings = {};
 
-    /* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
-    document.querySelector("body > section")?.__vue__?.$store?.commit("config/setCommentsTreeEnabled", false);
-    /* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
+
+
+
+
+
+    /* DODAWANIE USERNAME UŻYTKOWNIKA DO TEXTAREA PO KLIKNIĘCIU NA "ODPOWIEDZ" 2026-10-10 */
+    settings.enterUsernameOnReplyButtonClick = true;
+
+    // CLICK EVENT LISTENER
+    document.addEventListener("click", async function (e)
+    {
+        /* DODAWANIE USERNAME UŻYTKOWNIKA DO TEXTAREA PO KLIKNIĘCIU NA "ODPOWIEDZ" 2026-10-10 */
+        if (settings.enterUsernameOnReplyButtonClick)
+        {
+            if (e.target.matches("button.reply > span"))
+            {
+                e.preventDefault();
+                const thread = e.target.closest("section.thread");
+                const textarea = thread.querySelector("textarea");
+
+                if (textarea)
+                {
+                    const username = thread.__vue__.item.author.username;
+                    const textareaValue = (textarea.value == "") ? "@" + username + ": " : textarea.value + " @" + username + " ";
+                    textarea.value = textareaValue;
+                    textarea._value = textareaValue;
+                    textarea.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+                    textarea.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+                    textarea.focus();
+                }
+            }
+        }
+    });
+
+
+
 
 
     const styleElement = document.createElement('style');

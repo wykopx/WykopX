@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3
 // @name:en							Wykop XS 3
 
-// @version							3.6.0
+// @version							3.6.1
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://wykopx.pl/styl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://wykopx.pl/styl
@@ -47,19 +47,21 @@
 	'use strict';
 
 
-	const currentVersion = "3.6.0";
+	const currentVersion = "3.6.1";
 	let dev = false;
 
-	const promoString = " - Wykop XS / #wykopx";
+	const promoString = " - Wykop XS / www.wykopx.pl";
 
 	const root = document.documentElement;
 	const head = document.head;
 	const body = document.body;
 
 	const bodySection = body.querySelector("section");
+
+
 	/* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
-	bodySection?.__vue__?.$store?.commit("config/setCommentsTreeEnabled", false);
-	/* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
+	// bodySection?.__vue__?.$store?.commit("config/setCommentsTreeEnabled", false);
+	/* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA - działało przez kilka dni do afery ze spoilerami */
 
 
 
@@ -167,8 +169,14 @@
 
 		settings.disableNewLinkEditorPastedTextLimit = true;
 
+
+
 		/* wszystkie komentarze - rozwijanie drzewa komentarzy w nowym UI wykopu 2026-09 */
 		setSettingsValueFromCSSProperty("autoOpenAllCommentsInTree", true);
+
+
+		/* DODAWANIE USERNAME UŻYTKOWNIKA DO TEXTAREA PO KLIKNIĘCIU NA "ODPOWIEDZ" 2026-10-10 */
+		settings.enterUsernameOnReplyButtonClick = true;
 
 
 
@@ -3985,11 +3993,14 @@ Dostępna na Androida i iPhone`;
 						bannedRedBoxInnerHTML += `Ban trwa do ${bannedUserObject.banned.wxs_ban_end_date_string}<span style="cursor: help; padding: 0px 7px">ℹ</span></small>`;
 					}
 
+					bannedRedBoxInnerHTML += `<br/><br/><ruby style="font-size: 0.6em; background-color: #ffb900; border-radius: 6px; corner-shape: squircle; border-color: #ffed26ff; color: black; padding: 0.2em 0.4em;">NOWOŚĆ</ruby> <br/>Szczegóły bana + historia banów użytkownika dostępne są teraz na: <a href="https://wykopx.pl/ludzie/${bannedUserObject.username}" target="wykopx" style="text-decoration: underline;"><strong>wykopx.pl</strong>/ludzie/${bannedUserObject.username}</a> `
+
 					bannedRedBox.innerHTML = bannedRedBoxInnerHTML;
 				}
 			}
 		}
 		// wykop_xs_banned.user.js - END - 2
+
 
 
 
@@ -8333,11 +8344,35 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 
 
 
-		// li.more click
+		// CLICK EVENT LISTENER
 		document.addEventListener("click", async function (e)
 		{
 
 
+			/* DODAWANIE USERNAME UŻYTKOWNIKA DO TEXTAREA PO KLIKNIĘCIU NA "ODPOWIEDZ" 2026-10-10 */
+			if (settings.enterUsernameOnReplyButtonClick)
+			{
+				if (e.target.matches("button.reply > span"))
+				{
+					e.preventDefault();
+					const thread = e.target.closest("section.thread");
+					const textarea = thread.querySelector("textarea");
+
+					if (textarea)
+					{
+						const username = thread.__vue__.item.author.username;
+						const textareaValue = (textarea.value == "") ? "@" + username + ": " : textarea.value + " @" + username + " ";
+						textarea.value = textareaValue;
+						textarea._value = textareaValue;
+						textarea.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+						textarea.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+						textarea.focus();
+					}
+				}
+			}
+
+
+			/* DODAJE LISTĘ PLUSUJĄCYCH */
 			if (e.target.matches("li.more span"))
 			{
 				e.preventDefault();
@@ -8354,6 +8389,8 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
 				return;
 			}
 
+
+			/* DODAJE PRZYCISK "DODAJ DO ULUBIONYCH */
 			if (e.target.matches("span.favouriteButton"))
 			{
 				e.preventDefault();

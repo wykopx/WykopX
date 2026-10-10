@@ -48,7 +48,7 @@
 const currentVersion = "3.5.6";
 let dev = false;
 
-const promoString = " - Wykop XS / #wykopx";
+const promoString = " - Wykop XS / www.wykopx.pl";
 
 
 const root = document.documentElement;
