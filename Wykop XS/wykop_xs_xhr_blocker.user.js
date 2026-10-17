@@ -3,7 +3,7 @@
 // @name:pl							Wykop XHR Blocker
 // @name:en							Wykop XHR Blocker
 
-// @version							3.6.1
+// @version							3.6.2
 
 // @description 					Wykop XHR Blocker | Wykop X Style znajdziesz na: http://wykopx.pl/style
 // @description:en 					Wykop XHR Blocker | Check out also: http://wykopx.pl/style
@@ -44,7 +44,7 @@
 {
     'use strict';
 
-    const currentVersion = "3.6.1";
+    const currentVersion = "3.6.2";
     let dev = false;
 
     const promoString = " - Wykop XHR Blocker / www.wykopx.pl";
@@ -347,6 +347,13 @@
         - 4 zdjęcia do wpisu
         - plusy przesunięte na dół pod wpisem
     */
+    section.voting > div.voted[class],
+    section.voting > div[class]:hover
+    {
+        /* usunięcie zielonego tła po zaplusowaniu */
+        background-color: unset!important;
+    }
+
     @media (min-width: 580px)
     {
         div.content > section.thread > section.item > header,

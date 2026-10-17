@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style - zielonki
-@version        3.6.0
+@version        3.6.2
 
 
 @description    Wykop X Style
@@ -102,7 +102,6 @@ description     https://wykopx.pl/styl
     blockExploitLinks = 1;
     adsGDPRAlertHide = 1;
     notLoggedLeftMenuGoogleFbAppleButtonsHide = 1;
-    plusesInTopRightCorner = 1;
     collapseEntryButtonHide = 1;
     collapseCommentsButtonHide = 1;
     fixWhiteSelectBox = 1;
@@ -259,6 +258,13 @@ description     https://wykopx.pl/styl
         - 4 zdjęcia do wpisu
         - plusy przesunięte na dół pod wpisem
     */  
+    section.voting > div.voted[class],
+    section.voting > div[class]:hover
+    {
+        /* usunięcie zielonego tła po zaplusowaniu */
+        background-color: unset!important;
+    }
+
     @media (min-width: 580px)
     {
         div.content > section.thread > section.item > header, 
@@ -399,33 +405,7 @@ description     https://wykopx.pl/styl
         }
     }
     
-    /*  
-        PLUSY W PRAWYM GÓRNYM ROGU 
-        NOWY UI WYKOPU Z 2026-09-25
-        - przesunięcie przycisku do plusowania spod wpisu w prawy górny róg
-    */
-    if(plusesInTopRightCorner == 1)
-    {
-    /* --- REMOVE IF --- */
 
-        
-        section.thread section.item>footer
-        {
-            position: static!important;
-            
-            section.voting
-            {
-                z-index: 5;
-                position: absolute;
-                top: -1px;
-                right: 0px;
-            }
-        }
-        section.entry-page section.item > footer section.voting
-        {
-            top: 2px;
-        }
-    }
     
 
     if(collapseEntryButtonHide == 1)

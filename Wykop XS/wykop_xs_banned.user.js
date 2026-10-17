@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Ban Info - Informacje o banach
 // @name:en							Wykop XS - Ban Info
 
-// @version							3.5.6
+// @version							3.6.2
 
 // @description 					Wykop XS - Informacje o banach na profilach zbanowanych użytkowników. Wykop X Style znajdziesz na: http://wykopx.pl/styl
 // @description:en 					Wykop XS - Shows precise info about banned users on Wykop.pl. Check out Wykop X Style here: http://wykopx.pl/styl
@@ -44,7 +44,7 @@
 {
     'use strict';
 
-    const currentVersion = "3.5.6";
+    const currentVersion = "3.6.2";
     let dev = false;
 
     const promoString = " - Wykop XS / www.wykopx.pl";
@@ -365,6 +365,13 @@
         - 4 zdjęcia do wpisu
         - plusy przesunięte na dół pod wpisem
     */
+    section.voting > div.voted[class],
+    section.voting > div[class]:hover
+    {
+        /* usunięcie zielonego tła po zaplusowaniu */
+        background-color: unset!important;
+    }
+
     @media (min-width: 580px)
     {
         div.content > section.thread > section.item > header,

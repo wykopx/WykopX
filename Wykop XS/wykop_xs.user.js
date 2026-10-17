@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3
 // @name:en							Wykop XS 3
 
-// @version							3.6.1
+// @version							3.6.2
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://wykopx.pl/styl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://wykopx.pl/styl
@@ -47,7 +47,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.6.1";
+	const currentVersion = "3.6.2";
 	let dev = false;
 
 	const promoString = " - Wykop XS / www.wykopx.pl";
@@ -6920,6 +6920,13 @@ Liczba zakopujących: ${link_data.votes.down} (${link_data.votes.votesDownPercen
         - 4 zdjęcia do wpisu
         - plusy przesunięte na dół pod wpisem
     */
+    section.voting > div.voted[class],
+    section.voting > div[class]:hover
+    {
+        /* usunięcie zielonego tła po zaplusowaniu */
+        background-color: unset!important;
+    }
+
     @media (min-width: 580px)
     {
         div.content > section.thread > section.item > header,

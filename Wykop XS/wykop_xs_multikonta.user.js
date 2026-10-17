@@ -45,7 +45,7 @@
 
 'use strict';
 
-const currentVersion = "3.5.6";
+const currentVersion = "3.6.2";
 let dev = false;
 
 const promoString = " - Wykop XS / www.wykopx.pl";
@@ -2200,6 +2200,13 @@ Widok dyskusji:
         - 4 zdjęcia do wpisu
         - plusy przesunięte na dół pod wpisem
     */
+    section.voting > div.voted[class],
+    section.voting > div[class]:hover
+    {
+        /* usunięcie zielonego tła po zaplusowaniu */
+        background-color: unset!important;
+    }
+
     @media (min-width: 580px)
     {
         div.content > section.thread > section.item > header,

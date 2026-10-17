@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Wykop X Style 3 Blank
-@version        3.6.0
+@version        3.6.2
 
 @description    Niniejsza wersja to wersja BLANK, w której wszystkie funkcje są wyłączone.
 @description    https://wykopx.pl/style
@@ -80,7 +80,6 @@ dodaje ponad 100 nowych funkcji oznaczonych jako ❎
 
 
 @var range      SUB_HR_PLUSY_I_MINUSY_STYLE                    ` Plusy i minusy ➕`                                 [0, 0, 99999, 1, 'mm']
-@var checkbox   plusesInTopRightCorner                          `Plusy w górnym prawym rogu `            0        
 
 
 @var select     plusesColor                                     `➕ Zmień kolor plusów`  {
@@ -4254,6 +4253,13 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
         - 4 zdjęcia do wpisu
         - plusy przesunięte na dół pod wpisem
     */  
+    section.voting > div.voted[class],
+    section.voting > div[class]:hover
+    {
+        /* usunięcie zielonego tła po zaplusowaniu */
+        background-color: unset!important;
+    }
+
     @media (min-width: 580px)
     {
         div.content > section.thread > section.item > header, 
@@ -4406,33 +4412,7 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
     }
     
     
-    /*  
-        PLUSY W PRAWYM GÓRNYM ROGU 
-        NOWY UI WYKOPU Z 2026-09-25
-        - przesunięcie przycisku do plusowania spod wpisu w prawy górny róg
-    */
-    if(plusesInTopRightCorner == 1)
-    {
-    /* --- REMOVE IF --- */
 
-        
-        section.thread section.item>footer
-        {
-            position: static!important;
-            
-            section.voting
-            {
-                z-index: 5;
-                position: absolute;
-                top: -1px;
-                right: 0px;
-            }
-        }
-        section.entry-page section.item > footer section.voting
-        {
-            top: 2px;
-        }
-    }
     
 
     /* 
@@ -21237,7 +21217,7 @@ var range      HR_XS_REMOVE_ANNOYANCES             `🕵️‍ PRYWATNOŚĆ`    
     /* VARIABLES */
 
     versor = "blank"; // "style", "blank", "block"
-    version = "3.6.0";
+    version = "3.6.2";
     /* xblocker = "2.49" */
     
     
