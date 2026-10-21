@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Lista plusujących, animowane awatary
 // @name:en							Wykop XS - Lista plusujących, animowane awatary
 
-// @version							3.6.2
+// @version							3.6.3
 
 // @description 					Wykop XS - Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -45,7 +45,7 @@
 
 'use strict';
 
-const currentVersion = "3.6.2";
+const currentVersion = "3.6.3";
 let dev = false;
 
 const promoString = " - Wykop XS / www.wykopx.pl";
@@ -60,6 +60,34 @@ const bodySection = body.querySelector("section");
 /* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
 // bodySection?.__vue__?.$store?.commit("config/setCommentsTreeEnabled", false);
 /* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA - działało przez kilka dni do afery ze spoilerami */
+
+const wykopIsDown = bodySection.querySelector('section a[onclick*="reloadURL"]:not(.wykopx)');
+if (wykopIsDown)
+{
+	wykopIsDown.classList.add("wykopx");
+	wykopIsDown.style.textTransform = "none";
+	wykopIsDown.setAttribute("onclick", `window.location.href="https://wykopx.pl"`);
+	wykopIsDown.innerHTML = "Wejdź na www.wykopx.pl";
+
+	// Jesteśmy chwilowo niedostępny
+	// Przerwa techniczna
+	bodySection.querySelector("header h1").innerHTML = "Maćki z serwerowni znowu coś zepsuły";
+	// Przepraszamy za utrudnienia i dziękujemy za cierpliwość :-)
+	bodySection.querySelector("div.content > p:last-child").innerHTML = `
+<br/><small>Sprawdź czy serwer wykopu nie działa: <a href="https://www.isitdownrightnow.com/wykop.pl.html" target="_blank">isitdownrightnow.com/wykop.pl</a><br/><br/></small>
+	Jako użytkownik skryptu <strong>Wykop XS</strong> możesz w tym czasie <br/> odwiedzić nieoficjalną wersję Wykopu która działa także offline: `;
+
+	const small = document.createElement("small");
+	small.style.cssText = "margin-top: 22px; display: block; text-align: left; opacity: 0.5";
+	small.innerHTML = `
+	<a href="https://wykopx.pl/ludzie/m__b" target="m__b">Michał Białek</a> kończył nocną wartę w serwerowni wykopu. Za oknem zadłużonej willi poznańskie koziołki ocierały się częściami, których Białek wolałby nigdy nie mieć. Przypomniał sobie o żonie, którą widywał głównie w niedzelne poranki.
+Stękanie ćwiczącego lewicę Kinera dobiegało zza rzędu wykopowych monitorów. Białek automatycznie podłożył ociekające potem dźwięki pod obraz żony osadzonej na knadze Kinera. Intuicja podpowiadała mu, że lekko otyły kolega z pracy przebiera palcami po najkrótszej części ciała oglądając zdjęcia białkowej połowicy na fejsbuku. Nie mylił się. Czuł jednak dziwaczną dumę połączoną z rozbawieniem, które przyniosła mu owa wizja.
+<br/>"Puk puk". Pierwsza myśl - <a href="https://wykopx.pl/ludzie/a__s" target="a__s">Elfik32</a>
+`;
+	bodySection.appendChild(small);
+}
+
+
 
 
 
