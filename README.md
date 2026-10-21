@@ -15,6 +15,12 @@ Here are some ideas to get you started:
 - ⚡ Fun fact: ...
 -->
 
+Wejdź na nowy Wykop: https://wykopx.pl
+- strona internetowa
+- aplikacja na telefony (Android, iPhone)
+- aplikacja na komputery (Windows, Linux)
+
+   
 **Wykop X** to połączenie kilku dodatków - arkuszy stylów CSS **Wykop X Style** oraz skryptów JavaScript **Wykop XS**    
  
 **Wykop X** dodaje aż kilkaset usprawnień dla strony wykop.pl - nowe funkcje, naprawianie Wykopowych błędów, zmiana intefejsu czy kolorystyki.
