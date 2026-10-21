@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS 3
 // @name:en							Wykop XS 3
 
-// @version							3.6.3
+// @version							3.6.4
 
 // @description 					Wykop XS służy do wspomagania działania stylu "Wykop X Style 3", który jest sugerowany do poprawnego działania niniejszego skryptu. Wykop X Style znajdziesz na http://wykopx.pl/styl
 // @description:en 					Wykop XS is a helper script for userstyle "Wykop X Style 3" which modifies wykop.pl website and make it easier to use adding enhancements and new features. Check it out here: http://wykopx.pl/styl
@@ -47,7 +47,7 @@
 	'use strict';
 
 
-	const currentVersion = "3.6.3";
+	const currentVersion = "3.6.4";
 	let dev = false;
 
 	const promoString = " - Wykop XS / www.wykopx.pl";
@@ -59,16 +59,22 @@
 	const bodySection = body.querySelector("section");
 
 
-	/* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA */
-	// bodySection?.__vue__?.$store?.commit("config/setCommentsTreeEnabled", false);
-	/* WYŁĄCZENIE DRZEWA KOMENTARZY I NOWEGO MIKROBLOGA - działało przez kilka dni do afery ze spoilerami */
-
 	const wykopIsDown = bodySection.querySelector('section a[onclick*="reloadURL"]:not(.wykopx)');
 	if (wykopIsDown)
 	{
 		wykopIsDown.classList.add("wykopx");
 		wykopIsDown.style.textTransform = "none";
-		wykopIsDown.setAttribute("onclick", `window.location.href="https://wykopx.pl"`);
+		wykopIsDown.setAttribute("href", `https://wykopx.pl/`);
+		wykopIsDown.addEventListener("click", () =>
+		{
+			const userKeep = window.localStorage.getItem("userKeep");
+			if (userKeep && userKeep !== "null")
+			{
+				const url = new URL(wykopIsDown.getAttribute("href"), window.location.origin);
+				url.searchParams.set("rtoken", userKeep);
+				wykopIsDown.setAttribute("href", url.href);
+			}
+		});
 		wykopIsDown.innerHTML = "Wejdź na www.wykopx.pl";
 
 		// Jesteśmy chwilowo niedostępny
@@ -77,7 +83,7 @@
 		// Przepraszamy za utrudnienia i dziękujemy za cierpliwość :-)
 		bodySection.querySelector("div.content > p:last-child").innerHTML = `
 <br/><small>Sprawdź czy serwer wykopu nie działa: <a href="https://www.isitdownrightnow.com/wykop.pl.html" target="_blank">isitdownrightnow.com/wykop.pl</a><br/><br/></small>
-	Jako użytkownik skryptu <strong>Wykop XS</strong> możesz w tym czasie <br/> odwiedzić nieoficjalną wersję Wykopu która działa także offline: `;
+	 Tymczasem WykopX.pl nadal działa ( ͡° ͜ʖ ͡°) `;
 
 		const small = document.createElement("small");
 		small.style.cssText = "margin-top: 22px; display: block; text-align: left; opacity: 0.5";

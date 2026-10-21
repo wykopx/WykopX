@@ -3,7 +3,7 @@
 // @name:pl							Wykop XS - Lista plusujących, animowane awatary
 // @name:en							Wykop XS - Lista plusujących, animowane awatary
 
-// @version							3.6.3
+// @version							3.6.4
 
 // @description 					Wykop XS - Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
 // @description:en 					Wykop XS - Dodatkowe funkcje na wykopie: animowane avatary, przywrócenie listy plusujących wpisy i komentarze oraz przycisku Ulubione
@@ -45,7 +45,7 @@
 
 'use strict';
 
-const currentVersion = "3.6.3";
+const currentVersion = "3.6.4";
 let dev = false;
 
 const promoString = " - Wykop XS / www.wykopx.pl";
@@ -66,7 +66,17 @@ if (wykopIsDown)
 {
 	wykopIsDown.classList.add("wykopx");
 	wykopIsDown.style.textTransform = "none";
-	wykopIsDown.setAttribute("onclick", `window.location.href="https://wykopx.pl"`);
+	wykopIsDown.setAttribute("href", `https://wykopx.pl/`);
+	wykopIsDown.addEventListener("click", () =>
+	{
+		const userKeep = window.localStorage.getItem("userKeep");
+		if (userKeep && userKeep !== "null")
+		{
+			const url = new URL(wykopIsDown.getAttribute("href"), window.location.origin);
+			url.searchParams.set("rtoken", userKeep);
+			wykopIsDown.setAttribute("href", url.href);
+		}
+	});
 	wykopIsDown.innerHTML = "Wejdź na www.wykopx.pl";
 
 	// Jesteśmy chwilowo niedostępny
@@ -75,7 +85,7 @@ if (wykopIsDown)
 	// Przepraszamy za utrudnienia i dziękujemy za cierpliwość :-)
 	bodySection.querySelector("div.content > p:last-child").innerHTML = `
 <br/><small>Sprawdź czy serwer wykopu nie działa: <a href="https://www.isitdownrightnow.com/wykop.pl.html" target="_blank">isitdownrightnow.com/wykop.pl</a><br/><br/></small>
-	Jako użytkownik skryptu <strong>Wykop XS</strong> możesz w tym czasie <br/> odwiedzić nieoficjalną wersję Wykopu która działa także offline: `;
+	 Tymczasem WykopX.pl nadal działa ( ͡° ͜ʖ ͡°) `;
 
 	const small = document.createElement("small");
 	small.style.cssText = "margin-top: 22px; display: block; text-align: left; opacity: 0.5";
